@@ -4105,6 +4105,43 @@ package android.telephony.data {
     field public static final int TYPE_COMMON = 0; // 0x0
   }
 
+  public abstract class DataServiceBase extends android.app.Service {
+    ctor protected DataServiceBase(java.lang.String);
+    method protected abstract android.telephony.data.DataServiceBase.DataServiceImpl createDataService(int);
+    method protected final void log(java.lang.String);
+    method protected final void loge(java.lang.String);
+    field public static final java.lang.String DATA_SERVICE_EXTRA_SLOT_ID = "slot_id";
+    field public static final java.lang.String DATA_SERVICE_INTERFACE = "android.telephony.data.DataService";
+  }
+
+  public class DataServiceBase.DataServiceImpl {
+    ctor public DataServiceBase.DataServiceImpl(java.lang.String, int);
+    method protected void deactivateDataCall(int, boolean, boolean, android.telephony.data.DataServiceCallback);
+    method protected void getDataCallList(android.telephony.data.DataServiceCallback);
+    method protected final int getSlotId();
+    method protected final void log(java.lang.String);
+    method protected final void loge(java.lang.String);
+    method protected final void notifyDataCallListChanged(java.util.List<android.telephony.data.DataCallResponse>);
+    method protected void onDestroy();
+    method protected void setDataProfile(java.util.List<android.telephony.data.DataProfile>, boolean, android.telephony.data.DataServiceCallback);
+    method protected void setInitialAttachApn(android.telephony.data.DataProfile, boolean, android.telephony.data.DataServiceCallback);
+    method protected void setupDataCall(int, android.telephony.data.DataProfile, boolean, boolean, boolean, android.telephony.data.DataServiceCallback);
+  }
+
+  public class DataServiceCallback {
+    method public void onDataCallListChanged(java.util.List<android.telephony.data.DataCallResponse>);
+    method public void onDeactivateDataCallComplete(int);
+    method public void onGetDataCallListComplete(int, java.util.List<android.telephony.data.DataCallResponse>);
+    method public void onSetDataProfileComplete(int);
+    method public void onSetInitialAttachApnComplete(int);
+    method public void onSetupDataCallComplete(int, android.telephony.data.DataCallResponse);
+    field public static final int RESULT_ERROR_BUSY = 3; // 0x3
+    field public static final int RESULT_ERROR_ILLEGAL_STATE = 4; // 0x4
+    field public static final int RESULT_ERROR_INVALID_ARG = 2; // 0x2
+    field public static final int RESULT_ERROR_UNSUPPORTED = 1; // 0x1
+    field public static final int RESULT_SUCCESS = 0; // 0x0
+  }
+
   public final class InterfaceAddress implements android.os.Parcelable {
     ctor public InterfaceAddress(java.net.InetAddress, int);
     ctor public InterfaceAddress(java.lang.String, int) throws java.net.UnknownHostException;

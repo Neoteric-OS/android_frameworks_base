@@ -1,0 +1,166 @@
+/*
+ * Copyright 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.telephony.data;
+
+import android.annotation.IntDef;
+import android.annotation.SystemApi;
+import android.os.RemoteException;
+import android.telephony.Rlog;
+import android.telephony.data.DataServiceBase.DataServiceImpl;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+/**
+ * Data service callback, which is for bound data service to invoke for solicited and unsolicited
+ * response. The caller is responsible to create a callback object for each single asynchronous
+ * request.
+ *
+ * @hide
+ */
+@SystemApi
+public class DataServiceCallback {
+
+    private static final String mTag = DataServiceCallback.class.getSimpleName();
+
+    /**
+     * Result of data requests
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({RESULT_SUCCESS, RESULT_ERROR_UNSUPPORTED, RESULT_ERROR_INVALID_ARG, RESULT_ERROR_BUSY,
+            RESULT_ERROR_ILLEGAL_STATE})
+    public @interface Result {}
+
+    /** Request is completed successfully */
+    public static final int RESULT_SUCCESS              = 0;
+    /** Request is not support */
+    public static final int RESULT_ERROR_UNSUPPORTED    = 1;
+    /** Request contains invalid arguments */
+    public static final int RESULT_ERROR_INVALID_ARG    = 2;
+    /** Service is busy */
+    public static final int RESULT_ERROR_BUSY           = 3;
+    /** Request sent in illegal state */
+    public static final int RESULT_ERROR_ILLEGAL_STATE  = 4;
+
+    private final WeakReference<IDataServiceCallback> mCallback;
+
+    /** @hide */
+    public DataServiceCallback(IDataServiceCallback callback) {
+        mCallback = new WeakReference<>(callback);
+    }
+
+    /**
+     * Called to indicate result for the request {@link DataServiceImpl#setupDataCall(int,
+     * DataProfile, boolean, boolean, boolean, DataServiceCallback)}.
+     *
+     * @param result The result code. Must be one of the {@link Result}.
+     * @param response Setup data call response.
+     */
+    public void onSetupDataCallComplete(@Result int result, DataCallResponse response) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onSetupDataCallComplete(result, response);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onSetupDataCallComplete on the remote");
+            }
+        }
+    }
+
+    /**
+     * Called to indicate result for the request {@link DataServiceImpl#deactivateDataCall(int,
+     * boolean, boolean, DataServiceCallback)}
+     *
+     * @param result The result code. Must be one of the {@link Result}.
+     */
+    public void onDeactivateDataCallComplete(@Result int result) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onDeactivateDataCallComplete(result);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onDeactivateDataCallComplete on the remote");
+            }
+        }
+    }
+
+    /**
+     * Called to indicate result for the request {@link DataServiceImpl#setInitialAttachApn(
+     * DataProfile, boolean, DataServiceCallback)}
+     *
+     * @param result The result code. Must be one of the {@link Result}.
+     */
+    public void onSetInitialAttachApnComplete(@Result int result) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onSetInitialAttachApnComplete(result);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onSetInitialAttachApnComplete on the remote");
+            }
+        }
+    }
+
+    /**
+     * Called to indicate result for the request {@link DataServiceImpl#setDataProfile(List,
+     * boolean, DataServiceCallback)}
+     *
+     * @param result The result code. Must be one of the {@link Result}.
+     */
+    @SystemApi
+    public void onSetDataProfileComplete(@Result int result) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onSetDataProfileComplete(result);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onSetDataProfileComplete on the remote");
+            }
+        }
+    }
+
+    /**
+     * Called to indicate result for the request {@link DataServiceImpl#getDataCallList(
+     * DataServiceCallback)}
+     *
+     * @param result The result code. Must be one of the {@link Result}.
+     * @param dataCallList List of the current active data connection.
+     */
+    public void onGetDataCallListComplete(@Result int result, List<DataCallResponse> dataCallList) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onGetDataCallListComplete(result, dataCallList);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onGetDataCallListComplete on the remote");
+            }
+        }
+    }
+
+    /**
+     * Called to indicate that data connection list changed.
+     *
+     * @param dataCallList List of the current active data connection.
+     */
+    public void onDataCallListChanged(List<DataCallResponse> dataCallList) {
+        if (mCallback.get() != null) {
+            try {
+                mCallback.get().onDataCallListChanged(dataCallList);
+            } catch (RemoteException e) {
+                Rlog.e(mTag, "Failed to onDataCallListChanged on the remote");
+            }
+        }
+    }
+}
