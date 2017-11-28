@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063bf60d_b633515d",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "Not synchronizing here?",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 28
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20a62c6f_6558b2ea",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t be indented.",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 15
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aca61293_55fbbe50",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "Can you reference the int constants which are appropriate here?",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 45
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78ca4fad_e0929245",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "nit: isRetry",
+      "range": {
+        "startLine": 129,
+        "startChar": 58,
+        "endLine": 129,
+        "endChar": 63
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f0efc7d_cf74d899",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "Please reference the format consts applicable here ({@link #IMS_SMS_FORMAT_3GPP} or {@link #IMS_SMS_FORMAT_3GPP2})",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 45
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aea56f38_3caaa5ee",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "Probably don\u0027t want to leave your ldap in there.",
+      "range": {
+        "startLine": 156,
+        "startChar": 11,
+        "endLine": 156,
+        "endChar": 23
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef413b3a_3dcdda8b",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "Are you going to do this now or later?",
+      "range": {
+        "startLine": 176,
+        "startChar": 11,
+        "endLine": 176,
+        "endChar": 23
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d52cd88_7b70ffa1",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-11-28T21:53:44Z",
+      "side": 1,
+      "message": "As in previous comment.",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 23
+      },
+      "revId": "44c17a920ccd3bc8f571558193f587b7cf194768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
