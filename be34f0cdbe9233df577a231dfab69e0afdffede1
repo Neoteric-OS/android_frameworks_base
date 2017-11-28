@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "4c88ebc5_721f7472",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3701,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-11-28T12:31:53Z",
+      "side": 1,
+      "message": "Without the ! of course",
+      "parentUuid": "a4e8f23f_d1e1eee6",
+      "range": {
+        "startLine": 3701,
+        "startChar": 12,
+        "endLine": 3701,
+        "endChar": 30
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dd0744a_e3345c4e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
