@@ -505,6 +505,16 @@ LOCAL_SRC_FILES += \
 	telecomm/java/com/android/internal/telecom/IInCallService.aidl \
 	telecomm/java/com/android/internal/telecom/ITelecomService.aidl \
 	telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsCallSessionListener.aidl \
+    telephony/java/android/telephony/ims/internal/aidl/IImsCapabilityCallback.aidl \
+    telephony/java/android/telephony/ims/internal/aidl/IImsConfig.aidl \
+    telephony/java/android/telephony/ims/internal/aidl/IImsConfigCallback.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsMMTelFeature.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsMMTelListener.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsRcsFeature.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsRegistration.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsRegistrationCallback.aidl \
+	telephony/java/android/telephony/ims/internal/aidl/IImsServiceController.aidl \
 	telephony/java/android/telephony/mbms/IMbmsDownloadSessionCallback.aidl \
 	telephony/java/android/telephony/mbms/IMbmsStreamingSessionCallback.aidl \
 	telephony/java/android/telephony/mbms/IDownloadStateCallback.aidl \
