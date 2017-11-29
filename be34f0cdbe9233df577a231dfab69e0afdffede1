@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f919bc3_657e6108",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "\u003e Would it be reasonable in a future change to remove this boolean completely and call that method whenever needed ? It would simplify the locking logic.\n\nThat would seem reasonnable yes, however we would need to be sure that LockdownVpnTracker.isEnabled() has no side-effects or other surprise.\n\nAdded a TODO for now.",
+      "parentUuid": "bad214dd_c7e5acb4",
+      "range": {
+        "startLine": 230,
+        "startChar": 20,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb79704_d8028ee5",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "23f8cbdc_e6819cb7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "Good catch. I missed it. Done.",
+      "parentUuid": "2cb79704_d8028ee5",
+      "range": {
+        "startLine": 1067,
+        "startChar": 12,
+        "endLine": 1067,
+        "endChar": 28
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772519a9_98564156",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881fbcff_b8fd2f6c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772519a9_98564156",
+      "range": {
+        "startLine": 1575,
+        "startChar": 12,
+        "endLine": 1575,
+        "endChar": 28
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "1c6c68de_eeece084",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3701,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "This can probably be simplified, but I would like to avoid doing so in this patch because:\n - that makes the change easier to reason about and better scoped,\n - if we start looking at simplifying the vpn code, there are probably higher level changes to do first (such as potentially taking it outside of ConnService into its own subclass).\n\nAdded synchronization.",
+      "parentUuid": "4c88ebc5_721f7472",
+      "range": {
+        "startLine": 3701,
+        "startChar": 12,
+        "endLine": 3701,
+        "endChar": 30
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd0744a_e3345c4e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d36e07f2_2b41d688",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3883,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd0744a_e3345c4e",
+      "range": {
+        "startLine": 3882,
+        "startChar": 60,
+        "endLine": 3883,
+        "endChar": 32
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac043cec_1acf8a26",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -161,6 +281,30 @@
       "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84513c1_90b3d99e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3924,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-29T01:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac043cec_1acf8a26",
+      "range": {
+        "startLine": 3921,
+        "startChar": 60,
+        "endLine": 3924,
+        "endChar": 37
+      },
+      "revId": "be34f0cdbe9233df577a231dfab69e0afdffede1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
