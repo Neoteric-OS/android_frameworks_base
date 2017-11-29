@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.android.ims.internal;
+package android.telephony.ims.internal.aidl;
 
 /**
- * See SmsFeature for more information.
+ * See ImsFeature#CapabilityCallback for more information.
  * {@hide}
  */
-interface ISmsListener {
-    void setSentSmsResult(in int messageRef, in int result);
-    void setSentSmsStatusReport(in int messageRef, in int format, in byte[] pdu);
-    void deliverSms(in int format, in byte[] pdu);
+oneway interface IImsCapabilityCallback {
+    void onQueryCapabilities(long config);
+    void onSetCapabilitiesError(int result);
+    void onCapabilitiesChanged(long config);
+    void onCapabilitiesStatusChanged(long config);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 The Android Open Source Project
+ * Copyright (c) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.ims.internal;
+
+package android.telephony.ims.internal.aidl;
 
 /**
- * See SmsFeature for more information.
+ * Provides callback interface for ImsConfig when a value has changed.
+ *
  * {@hide}
  */
-interface ISmsListener {
-    void setSentSmsResult(in int messageRef, in int result);
-    void setSentSmsStatusReport(in int messageRef, in int format, in byte[] pdu);
-    void deliverSms(in int format, in byte[] pdu);
+oneway interface IImsConfigCallback {
+
+    void onIntConfigChanged(int item, int value);
+    void onStringConfigChanged(int item, String value);
 }
