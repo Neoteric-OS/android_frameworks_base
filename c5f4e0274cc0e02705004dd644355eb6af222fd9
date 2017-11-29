@@ -22,6 +22,30 @@
       "revId": "c5f4e0274cc0e02705004dd644355eb6af222fd9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56be3c67_ad3a2a38",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-11-29T01:26:29Z",
+      "side": 1,
+      "message": "As discussed offline illegalstateexception is more accurate as it will be thrown if user called before onFeatureREady being triggered.\n\nas for the remote exception as discussed offline we will call the callback with an error code so apps handle errors in one place.",
+      "parentUuid": "e9b81125_482d3805",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 31
+      },
+      "revId": "c5f4e0274cc0e02705004dd644355eb6af222fd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
