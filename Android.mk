@@ -511,6 +511,7 @@ LOCAL_SRC_FILES += \
     telephony/java/android/telephony/ims/internal/aidl/IImsConfigCallback.aidl \
 	telephony/java/android/telephony/ims/internal/aidl/IImsMmTelFeature.aidl \
 	telephony/java/android/telephony/ims/internal/aidl/IImsMmTelListener.aidl \
+        telephony/java/android/telephony/ims/internal/aidl/IImsSmsListener.aidl \
 	telephony/java/android/telephony/ims/internal/aidl/IImsRcsFeature.aidl \
 	telephony/java/android/telephony/ims/internal/aidl/IImsRegistration.aidl \
 	telephony/java/android/telephony/ims/internal/aidl/IImsRegistrationCallback.aidl \
