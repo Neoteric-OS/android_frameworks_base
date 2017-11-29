@@ -22,6 +22,30 @@
       "revId": "76bb2075752a9b4e4af04a15073e7011494a9b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35773e83_3bb1bef3",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-11-29T10:21:47Z",
+      "side": 1,
+      "message": "Ah, I see.\n\nThanks for the sharing. The tips are quite \"resource-aware\" and seems not common in general java (not sure).",
+      "parentUuid": "7b76f570_de78a242",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "76bb2075752a9b4e4af04a15073e7011494a9b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
