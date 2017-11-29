@@ -18,6 +18,7 @@ package android.telephony.ims.internal.aidl;
 
 import android.os.Message;
 import android.telephony.ims.internal.aidl.IImsMmTelListener;
+import android.telephony.ims.internal.aidl.IImsSmsListener;
 import android.telephony.ims.internal.aidl.IImsCapabilityCallback;
 import android.telephony.ims.internal.aidl.IImsCallSessionListener;
 
@@ -34,6 +35,7 @@ import com.android.ims.internal.IImsUt;
  */
 interface IImsMmTelFeature {
     void setListener(IImsMmTelListener l);
+    void setSmsListener(IImsSmsListener l);
     boolean isConnected(int callSessionType, int callType);
     boolean isOpened();
     int getFeatureStatus();
@@ -50,4 +52,8 @@ interface IImsMmTelFeature {
     oneway void removeCapability(long capability, IImsCapabilityCallback c);
     long queryCapabilities();
     long queryCapabilityStatus();
+    // SMS APIs
+    void sendSms(in int format, in int messageRef, in boolean retry, in byte[] pdu);
+    void acknowledgeSms(in int messageRef, in int result);
+    int getSmsFormat();
 }
