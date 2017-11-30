@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "633c72be_bfc919dc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-30T20:43:36Z",
+      "side": 1,
+      "message": "is this cast necessary? could we be consistent with the other findViewById calls?",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 38
+      },
+      "revId": "1428e2a826f07bce73df7b2f88d20c43e7f32634",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b61ebef_6efca82f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-30T20:43:36Z",
+      "side": 1,
+      "message": "nitpick: could you move this down 1 line so the DEBUG log is grouped with mVpnVisible logic?",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 83
+      },
+      "revId": "1428e2a826f07bce73df7b2f88d20c43e7f32634",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2e1cdd5_a741949b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-30T20:43:36Z",
+      "side": 1,
+      "message": "Can you add comments that VoWifi is voice-over-wifi and ViWifi is video-over-wifi? I\u0027m not sure ViWifi is commonly known",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "1428e2a826f07bce73df7b2f88d20c43e7f32634",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7ee1bcb_6a4638b8",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-30T20:43:36Z",
+      "side": 1,
+      "message": "This could be -1 on error or voice-only device, should we check that it\u0027s not, incase getSubscriptionId also returns -1? (I\u0027m not sure if this will ever be the case)",
+      "range": {
+        "startLine": 315,
+        "startChar": 12,
+        "endLine": 315,
+        "endChar": 63
+      },
+      "revId": "1428e2a826f07bce73df7b2f88d20c43e7f32634",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
