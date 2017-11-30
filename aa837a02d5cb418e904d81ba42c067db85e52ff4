@@ -22,6 +22,30 @@
       "revId": "aa837a02d5cb418e904d81ba42c067db85e52ff4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6be33fb_83fd4767",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2098,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-11-30T22:31:33Z",
+      "side": 1,
+      "message": "This code will die soon.  This is only the automatic formatting patch so that the following CLs are easier to review.",
+      "parentUuid": "ae03cc24_df13bd34",
+      "range": {
+        "startLine": 2086,
+        "startChar": 16,
+        "endLine": 2098,
+        "endChar": 17
+      },
+      "revId": "aa837a02d5cb418e904d81ba42c067db85e52ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
