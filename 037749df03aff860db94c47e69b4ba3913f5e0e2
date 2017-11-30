@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22f606f4_8a558a85",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-30T16:11:52Z",
+      "side": 1,
+      "message": "this could be called onFeatureAdded, because they will be functionally strictly symmetrical (we will always call onFeatureReady after the feature is added and the framework does its initialization). \n\nWe wanted to convey that the feature is ready for communication with the framework ONLY after this is called. This is important for things like registration, where we want to make sure registration for SMS/MMTel happens after the underlying comm structures to the framework have been created. If not, then we can miss incoming calls or incoming SMS.\n\nI agree though, we need to follow up this CL with a better comment for this method.",
+      "parentUuid": "1b1777f0_17fd99c9",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 42
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2808ff_c4d5990a",
         "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
         "patchSetId": 5
