@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b1777f0_17fd99c9",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-30T02:18:09Z",
+      "side": 1,
+      "message": "this is a little bit too vague for my taste. The relationship between featureReady() and featureRemoved() also isn\u0027t clear from the CL. They aren\u0027t strictly symmetrical (there\u0027s no onFeatureAdded...). This might be resolved with some as simple as more-verbose docstrings pending clarification from breadley@",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 42
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e2808ff_c4d5990a",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-30T02:18:09Z",
+      "side": 1,
+      "message": "is it an error if someone calls registerSmsListener and mSmsListener is already nonnull? Or is the intention to possibly allow this to unlink the SmsListener as well during cleanup (by passing null)? Else suggest @NonNull on listener param.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79840346_271e90b3",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-30T02:18:09Z",
+      "side": 1,
+      "message": "suggest that rather than overriding this function we take the value in the constructor and make it final... or something? Basically, this seems (to me, who isn\u0027t a java ninja) like a weird way to have a child class provide a compile-time constant.",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 3
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d61e597_ca671202",
+        "filename": "telephony/java/com/android/ims/internal/ISmsListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-30T02:18:09Z",
+      "side": 1,
+      "message": "Normally I\u0027d expect a listener to use onSentSmsResult() or something listener-callbacky rather than something that sounds like it\u0027s manipulating persistent state.",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
