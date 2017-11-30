@@ -28,7 +28,6 @@ import com.android.internal.telephony.ITelephony;
  *
  * The caller of {@link #requestNetworkScan(NetworkScanRequest, NetworkScanCallback)} will
  * receive a NetworkScan which contains the callback method to stop the scan requested.
- * @hide
  */
 public class NetworkScan {
 
@@ -83,7 +82,6 @@ public class NetworkScan {
      *
      * @param scanId The id of the scan
      * @param subId the id of the subscription
-     * @hide
      */
     public NetworkScan(int scanId, int subId) {
         mScanId = scanId;

@@ -38,7 +38,6 @@ import com.android.internal.telephony.ITelephony;
 
 /**
  * Manages the radio access network scan requests and callbacks.
- * @hide
  */
 public final class TelephonyScanManager {
 

@@ -43305,6 +43305,36 @@ package android.telephony {
     field public static final int UNKNOWN_RSSI = 99; // 0x63
   }
 
+  public class NetworkScan {
+    ctor public NetworkScan(int, int);
+    method public void stop() throws android.os.RemoteException;
+    field public static final int ERROR_INTERRUPTED = 10002; // 0x2712
+    field public static final int ERROR_INVALID_SCAN = 2; // 0x2
+    field public static final int ERROR_INVALID_SCANID = 10001; // 0x2711
+    field public static final int ERROR_MODEM_BUSY = 3; // 0x3
+    field public static final int ERROR_MODEM_ERROR = 1; // 0x1
+    field public static final int ERROR_RIL_ERROR = 10000; // 0x2710
+    field public static final int ERROR_UNSUPPORTED = 4; // 0x4
+    field public static final int SUCCESS = 0; // 0x0
+    field public static final java.lang.String TAG = "NetworkScan";
+  }
+
+  public final class NetworkScanRequest implements android.os.Parcelable {
+    ctor public NetworkScanRequest(int, android.telephony.RadioAccessSpecifier[], int, int, boolean, int, java.util.ArrayList<java.lang.String>);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.NetworkScanRequest> CREATOR;
+    field public static final int SCAN_TYPE_ONE_SHOT = 0; // 0x0
+    field public static final int SCAN_TYPE_PERIODIC = 1; // 0x1
+    field public boolean incrementalResults;
+    field public int incrementalResultsPeriodicity;
+    field public int maxSearchTime;
+    field public java.util.ArrayList<java.lang.String> mccMncs;
+    field public int scanType;
+    field public int searchPeriodicity;
+    field public android.telephony.RadioAccessSpecifier[] specifiers;
+  }
+
   public class PhoneNumberFormattingTextWatcher implements android.text.TextWatcher {
     ctor public PhoneNumberFormattingTextWatcher();
     ctor public PhoneNumberFormattingTextWatcher(java.lang.String);
@@ -43395,6 +43425,16 @@ package android.telephony {
     field public static final int LISTEN_SERVICE_STATE = 1; // 0x1
     field public static final deprecated int LISTEN_SIGNAL_STRENGTH = 2; // 0x2
     field public static final int LISTEN_SIGNAL_STRENGTHS = 256; // 0x100
+  }
+
+  public final class RadioAccessSpecifier implements android.os.Parcelable {
+    ctor public RadioAccessSpecifier(int, int[], int[]);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.RadioAccessSpecifier> CREATOR;
+    field public int[] bands;
+    field public int[] channels;
+    field public int radioAccessNetwork;
   }
 
   public class ServiceState implements android.os.Parcelable {
@@ -43728,6 +43768,7 @@ package android.telephony {
     method public boolean isWorldPhone();
     method public void listen(android.telephony.PhoneStateListener, int);
     method public boolean needsOtaServiceProvisioning();
+    method public android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, android.telephony.TelephonyScanManager.NetworkScanCallback);
     method public void sendDialerSpecialCode(java.lang.String);
     method public java.lang.String sendEnvelopeWithStatus(java.lang.String);
     method public void sendUssdRequest(java.lang.String, android.telephony.TelephonyManager.UssdResponseCallback, android.os.Handler);
@@ -43736,7 +43777,10 @@ package android.telephony {
     method public void setDataEnabled(boolean);
     method public void setDataEnabled(int, boolean);
     method public boolean setLine1NumberForDisplay(java.lang.String, java.lang.String);
+    method public void setNetworkSelectionModeAutomatic(int);
+    method public boolean setNetworkSelectionModeManual(int, java.lang.String, boolean);
     method public boolean setOperatorBrandOverride(java.lang.String);
+    method public boolean setPreferredNetworkType(int, int);
     method public boolean setPreferredNetworkTypeToGlobal();
     method public boolean setRadio(boolean);
     method public boolean setRadioPower(boolean);
@@ -43836,6 +43880,17 @@ package android.telephony {
     ctor public TelephonyManager.UssdResponseCallback();
     method public void onReceiveUssdResponse(android.telephony.TelephonyManager, java.lang.String, java.lang.CharSequence);
     method public void onReceiveUssdResponseFailed(android.telephony.TelephonyManager, java.lang.String, int);
+  }
+
+  public final class TelephonyScanManager {
+    ctor public TelephonyScanManager();
+  }
+
+  public static abstract class TelephonyScanManager.NetworkScanCallback {
+    ctor public TelephonyScanManager.NetworkScanCallback();
+    method public void onComplete();
+    method public void onError(int);
+    method public void onResults(java.util.List<android.telephony.CellInfo>);
   }
 
   public abstract class VisualVoicemailService extends android.app.Service {

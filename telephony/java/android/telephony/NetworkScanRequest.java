@@ -28,7 +28,6 @@ import java.util.Arrays;
  * This class defines whether the network scan will be performed only once or periodically until
  * cancelled, when the scan is performed periodically, the time interval is not controlled by the
  * user but defined by the modem vendor.
- * @hide
  */
 public final class NetworkScanRequest implements Parcelable {
 

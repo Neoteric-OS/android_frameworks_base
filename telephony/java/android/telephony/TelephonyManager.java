@@ -4711,14 +4711,14 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
      * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
      *
-     * @hide
-     * TODO: Add an overload that takes no args.
+     * @param subId the ID of the subscription to automatically select the network for.
      */
     public void setNetworkSelectionModeAutomatic(int subId) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
+            if (telephony != null) {
                 telephony.setNetworkSelectionModeAutomatic(subId);
+            }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "setNetworkSelectionModeAutomatic RemoteException", ex);
         } catch (NullPointerException ex) {
@@ -4767,7 +4767,6 @@ public class TelephonyManager {
      * @param request Contains all the RAT with bands/channels that need to be scanned.
      * @param callback Returns network scan results or errors.
      * @return A NetworkScan obj which contains a callback which can stop the scan.
-     * @hide
      */
     public NetworkScan requestNetworkScan(
             NetworkScanRequest request, TelephonyScanManager.NetworkScanCallback callback) {
@@ -4787,15 +4786,21 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
      * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
      *
-     * @hide
-     * TODO: Add an overload that takes no args.
+     * @param subId the ID of the subscription to manually select the network for.
+     * @param operatorNumeric the PLMN ID of the network to select.
+     * @param persistSelection whether the selection will persist until reboot. If true, only allows
+     * attaching to the selected PLMN until reboot; otherwise, attach to the chosen PLMN and resume
+     * normal network selection next time.
+     * @return true on success; false on any failure.
      */
-    public boolean setNetworkSelectionModeManual(int subId, OperatorInfo operator,
+    public boolean setNetworkSelectionModeManual(int subId, String operatorNumeric,
             boolean persistSelection) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.setNetworkSelectionModeManual(subId, operator, persistSelection);
+            if (telephony != null) {
+                return telephony.setNetworkSelectionModeManual(
+                        subId, operatorNumeric, persistSelection);
+            }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "setNetworkSelectionModeManual RemoteException", ex);
         } catch (NullPointerException ex) {
@@ -4815,13 +4820,13 @@ public class TelephonyManager {
      * @param subId the id of the subscription to set the preferred network type for.
      * @param networkType the preferred network type, defined in RILConstants.java.
      * @return true on success; false on any failure.
-     * @hide
      */
     public boolean setPreferredNetworkType(int subId, int networkType) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
+            if (telephony != null) {
                 return telephony.setPreferredNetworkType(subId, networkType);
+            }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "setPreferredNetworkType RemoteException", ex);
         } catch (NullPointerException ex) {

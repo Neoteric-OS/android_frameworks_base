@@ -25,7 +25,6 @@ import java.util.Arrays;
  * Describes a particular radio access network to be scanned.
  *
  * The scan can be performed on either bands or channels for a specific radio access network type.
- * @hide
  */
 public final class RadioAccessSpecifier implements Parcelable {
 
