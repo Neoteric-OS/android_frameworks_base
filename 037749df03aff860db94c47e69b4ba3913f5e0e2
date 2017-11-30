@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "38d0e350_c825ff61",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-30T16:04:51Z",
+      "side": 1,
+      "message": "This should be a private method, actually.\n\nIt is only used by the framework once during initialization to register the listener back to the framework.\n\nWe then call onFeatureReady() after to signal to the feature that the framework has initialized everything. Any usage of the mSmsListener while it is still null should result in an exception.",
+      "parentUuid": "0e2808ff_c4d5990a",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79840346_271e90b3",
         "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "18dc0522_47b69a8b",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-30T16:04:51Z",
+      "side": 1,
+      "message": "Basically this is to accommodate vendor ImsServices that can switch between 3gpp and 3gpp2 format, depending on the carrier network they are registered to.\n\nBy default, if the SmsFeature doesn\u0027t override this method, then we assume the SmsFeature is always using 3gpp. If the SmsFeature overrides the method, then they can switch between the two formats.",
+      "parentUuid": "79840346_271e90b3",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 3
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d61e597_ca671202",
         "filename": "telephony/java/com/android/ims/internal/ISmsListener.aidl",
         "patchSetId": 5
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-30T02:18:09Z",
       "side": 1,
       "message": "Normally I\u0027d expect a listener to use onSentSmsResult() or something listener-callbacky rather than something that sounds like it\u0027s manipulating persistent state.",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "813661f1_aa868788",
+        "filename": "telephony/java/com/android/ims/internal/ISmsListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-30T16:04:51Z",
+      "side": 1,
+      "message": "i agree, these should sound more callback-y",
+      "parentUuid": "5d61e597_ca671202",
       "range": {
         "startLine": 24,
         "startChar": 9,
