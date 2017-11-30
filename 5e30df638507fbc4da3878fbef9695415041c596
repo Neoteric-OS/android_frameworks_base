@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38dbd6bd_465c6065",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-30T15:48:19Z",
+      "side": 1,
+      "message": "nit: \"unless overridden by -p/-j\"",
+      "range": {
+        "startLine": 65,
+        "startChar": 73,
+        "endLine": 65,
+        "endChar": 79
+      },
+      "revId": "5e30df638507fbc4da3878fbef9695415041c596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2a4e8b7_66b07fce",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-30T15:48:19Z",
+      "side": 1,
+      "message": "nit: spacing:\n\n  } else {",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 14
+      },
+      "revId": "5e30df638507fbc4da3878fbef9695415041c596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
