@@ -54,11 +54,15 @@ static uint32_t DEFAULT_DISPLAY_ID = ISurfaceComposer::eDisplayIdMain;
 static void usage(const char* pname)
 {
     fprintf(stderr,
-            "usage: %s [-hp] [-d display-id] [FILENAME]\n"
+            "usage: %s [-hpj] [-d display-id] [-W width] [-H height]\n"
+            "          [-m MinLayer] [-M MaxLayer] [FILENAME]\n"
             "   -h: this message\n"
-            "   -p: save the file as a png.\n"
+            "   -p: force the capture format to be png.\n"
+            "   -j: force the capture format to be jpeg.\n"
             "   -d: specify the display id to capture, default %d.\n"
-            "If FILENAME ends with .png it will be saved as a png.\n"
+            "   -W/H: specify the size of the capture, default display size.\n"
+            "   -m/M: specify the layers range to capture, default fullrange.\n"
+            "If FILENAME ends with .png/.jp(e)g it will be saved in that format.\n"
             "If FILENAME is not given, the results will be printed to stdout.\n",
             pname, DEFAULT_DISPLAY_ID
     );
@@ -114,16 +118,41 @@ static status_t notifyMediaScanner(const char* fileName) {
 int main(int argc, char** argv)
 {
     const char* pname = argv[0];
-    bool png = false;
+    SkEncodedImageFormat type = static_cast<SkEncodedImageFormat>(-1);
     int32_t displayId = DEFAULT_DISPLAY_ID;
+    uint32_t reqWidth = 0, reqHeight = 0;
+    uint32_t minLayer = INT32_MIN, maxLayer = INT32_MAX;
     int c;
-    while ((c = getopt(argc, argv, "phd:")) != -1) {
+    while ((c = getopt(argc, argv, "pjhd:W:H:m:M:")) != -1) {
         switch (c) {
             case 'p':
-                png = true;
+                if ((int)type != -1) {
+                    fprintf(stderr, "Only one image format can be forced\n");
+                    return 1;
+                }
+                type = SkEncodedImageFormat::kPNG;
+                break;
+            case 'j':
+                if ((int)type != -1) {
+                    fprintf(stderr, "Only one image format can be forced\n");
+                    return 1;
+                }
+                type = SkEncodedImageFormat::kJPEG;
                 break;
             case 'd':
                 displayId = atoi(optarg);
+                break;
+            case 'W':
+                reqWidth = atoi(optarg);
+                break;
+            case 'H':
+                reqHeight = atoi(optarg);
+                break;
+            case 'M':
+                maxLayer = atoi(optarg);
+                break;
+            case 'm':
+                minLayer = atoi(optarg);
                 break;
             case '?':
             case 'h':
@@ -146,8 +175,20 @@ int main(int argc, char** argv)
             return 1;
         }
         const int len = strlen(fn);
+        SkEncodedImageFormat type_ext = type;
         if (len >= 4 && 0 == strcmp(fn+len-4, ".png")) {
-            png = true;
+            type_ext = SkEncodedImageFormat::kPNG;
+        }
+        if (len >= 4 && 0 == strcmp(fn+len-4, ".jpg")) {
+            type_ext = SkEncodedImageFormat::kJPEG;
+        }
+        if (len >= 5 && 0 == strcmp(fn+len-5, ".jpeg")) {
+            type_ext = SkEncodedImageFormat::kJPEG;
+        }
+        if ((int)type == -1 || type == type_ext) {
+            type = type_ext;
+        }else{
+            fprintf(stdout, "Warning: Format does not match extension\n");
         }
     }
 
@@ -200,8 +241,8 @@ int main(int argc, char** argv)
     uint32_t captureOrientation = ORIENTATION_MAP[displayOrientation];
 
     status_t result = screenshot.update(display, Rect(),
-            0 /* reqWidth */, 0 /* reqHeight */,
-            INT32_MIN, INT32_MAX, /* all layers */
+            reqWidth, reqHeight,
+            minLayer, maxLayer,
             false, captureOrientation);
     if (result == NO_ERROR) {
         base = screenshot.getPixels();
@@ -214,7 +255,7 @@ int main(int argc, char** argv)
     }
 
     if (base != NULL) {
-        if (png) {
+        if ((int)type != -1) {
             const SkImageInfo info =
                 SkImageInfo::Make(w, h, flinger2skia(f), kPremul_SkAlphaType,
                     dataSpaceToColorSpace(d));
@@ -229,7 +270,10 @@ int main(int argc, char** argv)
                 return size == 0 || ::write(fFd, buffer, size) > 0;
               }
             } fdStream(fd);
-            (void)SkEncodeImage(&fdStream, pixmap, SkEncodedImageFormat::kPNG, 100);
+            if (!SkEncodeImage(&fdStream, pixmap, type, 100)) {
+                fprintf(stderr, "Error encoding image\n");
+                _exit(1);
+            }
             if (fn != NULL) {
                 notifyMediaScanner(fn);
             }
