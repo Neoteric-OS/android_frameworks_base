@@ -63,6 +63,24 @@
       "revId": "c5f4e0274cc0e02705004dd644355eb6af222fd9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501c036_07e0112a",
+        "filename": "telephony/java/com/android/ims/internal/IImsSmsFeature.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-11-30T00:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89755192_35ba6402",
+      "revId": "c5f4e0274cc0e02705004dd644355eb6af222fd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
