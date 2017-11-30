@@ -22,6 +22,30 @@
       "revId": "b83a41ae60051a680db018ef580a4333bf163e54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad9a781_9d3a732f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-11-30T23:19:30Z",
+      "side": 1,
+      "message": "I agree, but \"Automatic\" means consistent, so I let it format it automatically.",
+      "parentUuid": "4e67c6e6_96c46520",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 84
+      },
+      "revId": "b83a41ae60051a680db018ef580a4333bf163e54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
