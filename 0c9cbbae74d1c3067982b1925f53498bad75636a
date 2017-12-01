@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18aa8298_e4f31dc0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4716,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "suggest remove the todo.",
+      "range": {
+        "startLine": 4716,
+        "startChar": 7,
+        "endLine": 4716,
+        "endChar": 48
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7567183a_f7e24e32",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4790,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "ID",
+      "range": {
+        "startLine": 4790,
+        "startChar": 24,
+        "endLine": 4790,
+        "endChar": 26
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "390adcf8_76a9c80e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4791,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "select.",
+      "range": {
+        "startLine": 4791,
+        "startChar": 57,
+        "endLine": 4791,
+        "endChar": 62
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5fc6e47_4045cd4c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4791,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "PLMN ID.",
+      "range": {
+        "startLine": 4791,
+        "startChar": 38,
+        "endLine": 4791,
+        "endChar": 39
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2cb6a15_9be7541e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "Please see my comment on the other comment. I\u0027d like this to be more specific about what the behavior is.",
+      "range": {
+        "startLine": 4792,
+        "startChar": 31,
+        "endLine": 4792,
+        "endChar": 89
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20d3080d_382853ae",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4795,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "remove the TODO. It doesn\u0027t really make sense.",
+      "range": {
+        "startLine": 4795,
+        "startChar": 7,
+        "endLine": 4795,
+        "endChar": 48
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc205d2f_92f9fb4d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-01T20:43:04Z",
+      "side": 1,
+      "message": "this comment could do for some cleanup. Suggest something like:\n\nif true, only allow attach to the selected PLMN until reboot; otherwise, attach to the chosen PLMN and resume normal network selection thereafter.",
+      "range": {
+        "startLine": 850,
+        "startChar": 31,
+        "endLine": 852,
+        "endChar": 45
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
