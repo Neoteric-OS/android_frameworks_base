@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fea07b4_de5b94da",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-12-01T01:58:31Z",
+      "side": 1,
+      "message": "The dataUsage thing down below suggests that you can\u0027t actually put null values in. Is that true?",
+      "range": {
+        "startLine": 680,
+        "startChar": 83,
+        "endLine": 680,
+        "endChar": 87
+      },
+      "revId": "f763cf33ad17eefdb9e50fa3a358f12ca819594b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
