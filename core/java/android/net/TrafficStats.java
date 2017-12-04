@@ -150,6 +150,8 @@ public class TrafficStats {
 
     private static Object sProfilingLock = new Object();
 
+    private static final String LOOPBACK_IFACE = "lo";
+
     /**
      * Set active tag to use when accounting {@link Socket} traffic originating
      * from the current thread. Only one active tag per thread is supported.
@@ -491,6 +493,42 @@ public class TrafficStats {
     /** {@hide} */
     public static long getRxBytes(String iface) {
         return nativeGetIfaceStat(iface, TYPE_RX_BYTES);
+    }
+
+    /**
+     * TODO: Change to @testAPI once API window opens
+     *
+     * @hide
+     */
+    public static long getLocalhostTxPackets() {
+        return nativeGetIfaceStat(LOOPBACK_IFACE, TYPE_TX_PACKETS);
+    }
+
+    /**
+     * TODO: Change to @testAPI once API window opens
+     *
+     * @hide
+     */
+    public static long getLocalhostRxPackets() {
+        return nativeGetIfaceStat(LOOPBACK_IFACE, TYPE_RX_PACKETS);
+    }
+
+    /**
+     * TODO: Change to @testAPI once API window opens
+     *
+     * @hide
+     */
+    public static long getLocalhostTxBytes() {
+        return nativeGetIfaceStat(LOOPBACK_IFACE, TYPE_TX_BYTES);
+    }
+
+    /**
+     * TODO: Change to @testAPI once API window opens
+     *
+     * @hide
+     */
+    public static long getLocalhostRxBytes() {
+        return nativeGetIfaceStat(LOOPBACK_IFACE, TYPE_RX_BYTES);
     }
 
     /**
