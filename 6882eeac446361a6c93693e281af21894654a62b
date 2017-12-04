@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91a291f4_4b052c01",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4322406_68c094c1",
+      "range": {
+        "startLine": 33,
+        "startChar": 76,
+        "endLine": 33,
+        "endChar": 94
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bd2d5c4_f877835f",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-04T02:37:30Z",
       "side": 1,
       "message": "This should throw an exception somewhere (here, or in the constructor, or...) if the long has bits set that are not in VALID_LONG_MASK.",
+      "range": {
+        "startLine": 164,
+        "startChar": 27,
+        "endLine": 164,
+        "endChar": 56
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "503539e7_f57f29f5",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done with masking in the ctor.",
+      "parentUuid": "8bd2d5c4_f877835f",
       "range": {
         "startLine": 164,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "338bd842_cebdc625",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7798777a_1e26b92c",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 9
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "007d4845_7aed3c25",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-04T02:37:30Z",
       "side": 1,
       "message": "Looks like this method duplicates the code in byteAddrFromStringAddr and longAddrFromByteAddr. Can you use those instead?",
+      "range": {
+        "startLine": 274,
+        "startChar": 24,
+        "endLine": 274,
+        "endChar": 46
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "140e0714_44739c25",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "That method should have replaced longAddrFromByteAddr(byteAddrFromStringAddr()) in one of the static ctor but I had forgotten to use it.\n\nNote that byteAddrFromStringAddr and stringAddrFromByteAddr although not used here will allow to eliminate redundant codes in a few places that deals with mac addresses.",
+      "parentUuid": "007d4845_7aed3c25",
       "range": {
         "startLine": 274,
         "startChar": 24,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a2b60467_b403ff58",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8741f8a5_44388eda",
+      "range": {
+        "startLine": 306,
+        "startChar": 64,
+        "endLine": 306,
+        "endChar": 67
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c30133b5_29c77001",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-04T02:37:30Z",
       "side": 1,
       "message": "corresponding",
+      "range": {
+        "startLine": 310,
+        "startChar": 30,
+        "endLine": 310,
+        "endChar": 40
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf1892b8_0ddd1308",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c30133b5_29c77001",
       "range": {
         "startLine": 310,
         "startChar": 30,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "91cf13ce_31b72a62",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2998079_c2d0921e",
+      "range": {
+        "startLine": 330,
+        "startChar": 71,
+        "endLine": 330,
+        "endChar": 82
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f8d91ad_9c09d0c2",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "5ce34f9e_9882021b",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f8d91ad_9c09d0c2",
+      "range": {
+        "startLine": 331,
+        "startChar": 35,
+        "endLine": 331,
+        "endChar": 44
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e9a290_2f45d8be",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -220,6 +412,30 @@
       "writtenOn": "2017-12-04T02:37:30Z",
       "side": 1,
       "message": "Looks like the intent is to make this method public. What do we expect it to be used for?\n\nI\u0027m not sure we should encourage device manufacturers to use BASE_GOOGLE_MAC for actual MAC addresses, because of the chance of collision. Rule of thumb would is that addresses with 24 random bits will have a 50% chance of collision once about 24/2 \u003d 12 bits of such addresses are created.\n\nThat would make it likely that multiple collisions (and thus broken networking) would occur on large networks, such conference networks or large corporate networks (e.g., GoogleGuest).\n\nMaybe leave this @hide or make it private?",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 41
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d96a99f6_2a06f2bd",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T04:47:17Z",
+      "side": 1,
+      "message": "Marked at @hide.",
+      "parentUuid": "e5e9a290_2f45d8be",
       "range": {
         "startLine": 338,
         "startChar": 15,
