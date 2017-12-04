@@ -31,36 +31,33 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Provides the public APIs to control the Bluetooth HID Device
- * profile.
+ * Provides the public APIs to control the Bluetooth HID Device profile.
  *
- * BluetoothHidDevice is a proxy object for controlling the Bluetooth HID
- * Device Service via IPC. Use {@link BluetoothAdapter#getProfileProxy} to get
- * the BluetoothHidDevice proxy object.
+ * <p>BluetoothHidDevice is a proxy object for controlling the Bluetooth HID Device Service via IPC.
+ * Use {@link BluetoothAdapter#getProfileProxy} to get the BluetoothHidDevice proxy object.
  *
- * {@hide}
+ * <p>{@hide}
  */
 public final class BluetoothHidDevice implements BluetoothProfile {
 
     private static final String TAG = BluetoothHidDevice.class.getSimpleName();
 
     /**
-     * Intent used to broadcast the change in connection state of the Input
-     * Host profile.
+     * Intent used to broadcast the change in connection state of the Input Host profile.
      *
      * <p>This intent will have 3 extras:
+     *
      * <ul>
-     * <li> {@link #EXTRA_STATE} - The current state of the profile. </li>
-     * <li> {@link #EXTRA_PREVIOUS_STATE}- The previous state of the profile.</li>
-     * <li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
+     *   <li>{@link #EXTRA_STATE} - The current state of the profile.
+     *   <li>{@link #EXTRA_PREVIOUS_STATE}- The previous state of the profile.
+     *   <li>{@link BluetoothDevice#EXTRA_DEVICE} - The remote device.
      * </ul>
      *
-     * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of
-     * {@link #STATE_DISCONNECTED}, {@link #STATE_CONNECTING},
-     * {@link #STATE_CONNECTED}, {@link #STATE_DISCONNECTING}.
+     * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of {@link
+     * #STATE_DISCONNECTED}, {@link #STATE_CONNECTING}, {@link #STATE_CONNECTED}, {@link
+     * #STATE_DISCONNECTING}.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission to
-     * receive.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission to receive.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_CONNECTION_STATE_CHANGED =
@@ -69,11 +66,11 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     /**
      * Constants representing device subclass.
      *
-     * @see #registerApp
-     * (BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceAppQosSettings,
-     * BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)
+     * @see #registerApp (BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceAppQosSettings,
+     *     BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)
      */
     public static final byte SUBCLASS1_NONE = (byte) 0x00;
+
     public static final byte SUBCLASS1_KEYBOARD = (byte) 0x40;
     public static final byte SUBCLASS1_MOUSE = (byte) 0x80;
     public static final byte SUBCLASS1_COMBO = (byte) 0xC0;
@@ -94,6 +91,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
      * @see BluetoothHidDeviceCallback#onIntrData(BluetoothDevice, byte, byte[])
      */
     public static final byte REPORT_TYPE_INPUT = (byte) 1;
+
     public static final byte REPORT_TYPE_OUTPUT = (byte) 2;
     public static final byte REPORT_TYPE_FEATURE = (byte) 3;
 
@@ -103,6 +101,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
      * @see BluetoothHidDeviceCallback#onSetReport(BluetoothDevice, byte, byte, byte[])
      */
     public static final byte ERROR_RSP_SUCCESS = (byte) 0;
+
     public static final byte ERROR_RSP_NOT_READY = (byte) 1;
     public static final byte ERROR_RSP_INVALID_RPT_ID = (byte) 2;
     public static final byte ERROR_RSP_UNSUPPORTED_REQ = (byte) 3;
@@ -110,12 +109,13 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     public static final byte ERROR_RSP_UNKNOWN = (byte) 14;
 
     /**
-     * Constants representing protocol mode used set by host. Default is always
-     * {@link #PROTOCOL_REPORT_MODE} unless notified otherwise.
+     * Constants representing protocol mode used set by host. Default is always {@link
+     * #PROTOCOL_REPORT_MODE} unless notified otherwise.
      *
      * @see BluetoothHidDeviceCallback#onSetProtocol(BluetoothDevice, byte)
      */
     public static final byte PROTOCOL_BOOT_MODE = (byte) 0;
+
     public static final byte PROTOCOL_REPORT_MODE = (byte) 1;
 
     private Context mContext;
@@ -126,8 +126,8 @@ public final class BluetoothHidDevice implements BluetoothProfile {
 
     private BluetoothAdapter mAdapter;
 
-    private static class BluetoothHidDeviceCallbackWrapper extends
-            IBluetoothHidDeviceCallback.Stub {
+    private static class BluetoothHidDeviceCallbackWrapper
+            extends IBluetoothHidDeviceCallback.Stub {
 
         private BluetoothHidDeviceCallback mCallback;
 
@@ -184,13 +184,17 @@ public final class BluetoothHidDevice implements BluetoothProfile {
                                     doBind();
                                 }
                             } catch (IllegalStateException e) {
-                                Log.e(TAG,
+                                Log.e(
+                                        TAG,
                                         "onBluetoothStateChange: could not bind to HID Dev "
-                                                + "service: ", e);
+                                                + "service: ",
+                                        e);
                             } catch (SecurityException e) {
-                                Log.e(TAG,
+                                Log.e(
+                                        TAG,
                                         "onBluetoothStateChange: could not bind to HID Dev "
-                                                + "service: ", e);
+                                                + "service: ",
+                                        e);
                             }
                         } else {
                             Log.d(TAG, "Unbinding service...");
@@ -200,23 +204,25 @@ public final class BluetoothHidDevice implements BluetoothProfile {
                 }
             };
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.d(TAG, "onServiceConnected()");
-            mService = IBluetoothHidDevice.Stub.asInterface(service);
-            if (mServiceListener != null) {
-                mServiceListener.onServiceConnected(BluetoothProfile.HID_DEVICE,
-                        BluetoothHidDevice.this);
-            }
-        }
-        public void onServiceDisconnected(ComponentName className) {
-            Log.d(TAG, "onServiceDisconnected()");
-            mService = null;
-            if (mServiceListener != null) {
-                mServiceListener.onServiceDisconnected(BluetoothProfile.HID_DEVICE);
-            }
-        }
-    };
+    private final ServiceConnection mConnection =
+            new ServiceConnection() {
+                public void onServiceConnected(ComponentName className, IBinder service) {
+                    Log.d(TAG, "onServiceConnected()");
+                    mService = IBluetoothHidDevice.Stub.asInterface(service);
+                    if (mServiceListener != null) {
+                        mServiceListener.onServiceConnected(
+                                BluetoothProfile.HID_DEVICE, BluetoothHidDevice.this);
+                    }
+                }
+
+                public void onServiceDisconnected(ComponentName className) {
+                    Log.d(TAG, "onServiceDisconnected()");
+                    mService = null;
+                    if (mServiceListener != null) {
+                        mServiceListener.onServiceDisconnected(BluetoothProfile.HID_DEVICE);
+                    }
+                }
+            };
 
     BluetoothHidDevice(Context context, ServiceListener listener) {
         Log.v(TAG, "BluetoothHidDevice");
@@ -241,8 +247,9 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         Intent intent = new Intent(IBluetoothHidDevice.class.getName());
         ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
         intent.setComponent(comp);
-        if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
-                android.os.Process.myUserHandle())) {
+        if (comp == null
+                || !mContext.bindServiceAsUser(
+                        intent, mConnection, 0, android.os.Process.myUserHandle())) {
             Log.e(TAG, "Could not bind to Bluetooth HID Device Service with " + intent);
             return false;
         }
@@ -280,9 +287,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         mServiceListener = null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<BluetoothDevice> getConnectedDevices() {
         Log.v(TAG, "getConnectedDevices()");
@@ -301,9 +306,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         return new ArrayList<BluetoothDevice>();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states) {
         Log.v(TAG, "getDevicesMatchingConnectionStates(): states=" + Arrays.toString(states));
@@ -322,9 +325,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         return new ArrayList<BluetoothDevice>();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectionState(BluetoothDevice device) {
         Log.v(TAG, "getConnectionState(): device=" + device);
@@ -344,33 +345,40 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Registers application to be used for HID device. Connections to HID
-     * Device are only possible when application is registered. Only one
-     * application can be registered at time. When no longer used, application
-     * should be unregistered using
-     * {@link #unregisterApp()}.
-     * The registration status should be tracked by the application by handling callback from
-     * BluetoothHidDeviceCallback#onAppStatusChanged. The app registration status is not related
-     * to the return value of this method.
+     * Registers application to be used for HID device. Connections to HID Device are only possible
+     * when application is registered. Only one application can be registered at time. When no
+     * longer used, application should be unregistered using {@link #unregisterApp()}. The
+     * registration status should be tracked by the application by handling callback from
+     * BluetoothHidDeviceCallback#onAppStatusChanged. The app registration status is not related to
+     * the return value of this method.
      *
-     * @param sdp {@link BluetoothHidDeviceAppSdpSettings} object of HID Device SDP record.
-     * The HID Device SDP record is required.
-     * @param inQos {@link BluetoothHidDeviceAppQosSettings} object of Incoming QoS Settings.
-     * The Incoming QoS Settings is not required. Use null or default
-     * BluetoothHidDeviceAppQosSettings.Builder for default values.
-     * @param outQos {@link BluetoothHidDeviceAppQosSettings} object of Outgoing QoS Settings.
-     * The Outgoing QoS Settings is not required. Use null or default
-     * BluetoothHidDeviceAppQosSettings.Builder for default values.
+     * @param sdp {@link BluetoothHidDeviceAppSdpSettings} object of HID Device SDP record. The HID
+     *     Device SDP record is required.
+     * @param inQos {@link BluetoothHidDeviceAppQosSettings} object of Incoming QoS Settings. The
+     *     Incoming QoS Settings is not required. Use null or default
+     *     BluetoothHidDeviceAppQosSettings.Builder for default values.
+     * @param outQos {@link BluetoothHidDeviceAppQosSettings} object of Outgoing QoS Settings. The
+     *     Outgoing QoS Settings is not required. Use null or default
+     *     BluetoothHidDeviceAppQosSettings.Builder for default values.
      * @param callback {@link BluetoothHidDeviceCallback} object to which callback messages will be
-     * sent.
-     * The BluetoothHidDeviceCallback object is required.
+     *     sent. The BluetoothHidDeviceCallback object is required.
      * @return true if the command is successfully sent; otherwise false.
      */
-    public boolean registerApp(BluetoothHidDeviceAppSdpSettings sdp,
-            BluetoothHidDeviceAppQosSettings inQos, BluetoothHidDeviceAppQosSettings outQos,
+    public boolean registerApp(
+            BluetoothHidDeviceAppSdpSettings sdp,
+            BluetoothHidDeviceAppQosSettings inQos,
+            BluetoothHidDeviceAppQosSettings outQos,
             BluetoothHidDeviceCallback callback) {
-        Log.v(TAG, "registerApp(): sdp=" + sdp + " inQos=" + inQos + " outQos=" + outQos
-                + " callback=" + callback);
+        Log.v(
+                TAG,
+                "registerApp(): sdp="
+                        + sdp
+                        + " inQos="
+                        + inQos
+                        + " outQos="
+                        + outQos
+                        + " callback="
+                        + callback);
 
         boolean result = false;
 
@@ -395,14 +403,13 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Unregisters application. Active connection will be disconnected and no
-     * new connections will be allowed until registered again using
-     * {@link #registerApp
+     * Unregisters application. Active connection will be disconnected and no new connections will
+     * be allowed until registered again using {@link #registerApp
      * (BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceAppQosSettings,
-     * BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)}
-     * The registration status should be tracked by the application by handling callback from
-     * BluetoothHidDeviceCallback#onAppStatusChanged. The app registration status is not related
-     * to the return value of this method.
+     * BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)} The registration status should
+     * be tracked by the application by handling callback from
+     * BluetoothHidDeviceCallback#onAppStatusChanged. The app registration status is not related to
+     * the return value of this method.
      *
      * @return true if the command is successfully sent; otherwise false.
      */
@@ -429,7 +436,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
      * Sends report to remote host using interrupt channel.
      *
      * @param id Report Id, as defined in descriptor. Can be 0 in case Report Id are not defined in
-     * descriptor.
+     *     descriptor.
      * @param data Report data, not including Report Id.
      * @return true if the command is successfully sent; otherwise false.
      */
@@ -451,8 +458,8 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Sends report to remote host as reply for GET_REPORT request from
-     * {@link BluetoothHidDeviceCallback#onGetReport(BluetoothDevice, byte, byte, int)}.
+     * Sends report to remote host as reply for GET_REPORT request from {@link
+     * BluetoothHidDeviceCallback#onGetReport(BluetoothDevice, byte, byte, int)}.
      *
      * @param type Report Type, as in request.
      * @param id Report Id, as in request.
@@ -479,8 +486,8 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Sends error handshake message as reply for invalid SET_REPORT request
-     * from {@link BluetoothHidDeviceCallback#onSetReport(BluetoothDevice, byte, byte, byte[])}.
+     * Sends error handshake message as reply for invalid SET_REPORT request from {@link
+     * BluetoothHidDeviceCallback#onSetReport(BluetoothDevice, byte, byte, byte[])}.
      *
      * @param error Error to be sent for SET_REPORT via HANDSHAKE.
      * @return true if the command is successfully sent; otherwise false.
@@ -529,11 +536,11 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Initiates connection to host which is currently paired with this device.
-     * If the application is not registered, #connect(BluetoothDevice) will fail.
-     * The connection state should be tracked by the application by handling callback from
-     * BluetoothHidDeviceCallback#onConnectionStateChanged. The connection state is not related
-     * to the return value of this method.
+     * Initiates connection to host which is currently paired with this device. If the application
+     * is not registered, #connect(BluetoothDevice) will fail. The connection state should be
+     * tracked by the application by handling callback from
+     * BluetoothHidDeviceCallback#onConnectionStateChanged. The connection state is not related to
+     * the return value of this method.
      *
      * @return true if the command is successfully sent; otherwise false.
      */
@@ -557,10 +564,9 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     /**
-     * Disconnects from currently connected host.
-     * The connection state should be tracked by the application by handling callback from
-     * BluetoothHidDeviceCallback#onConnectionStateChanged. The connection state is not related
-     * to the return value of this method.
+     * Disconnects from currently connected host. The connection state should be tracked by the
+     * application by handling callback from BluetoothHidDeviceCallback#onConnectionStateChanged.
+     * The connection state is not related to the return value of this method.
      *
      * @return true if the command is successfully sent; otherwise false.
      */
