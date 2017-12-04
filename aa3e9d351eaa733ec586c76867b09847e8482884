@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7378522a_c34df4b7",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-04T10:25:55Z",
+      "side": 0,
+      "message": "So we\u0027re not longer moving this from secure to global when upgrading the database from version 88 to version 89. Do we know when that was?\n\nAlso, in the current version of the file, should we delete the setting as well? I see other code that deletes settings in this file.",
+      "range": {
+        "startLine": 1367,
+        "startChar": 28,
+        "endLine": 1367,
+        "endChar": 70
+      },
+      "revId": "aa3e9d351eaa733ec586c76867b09847e8482884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
