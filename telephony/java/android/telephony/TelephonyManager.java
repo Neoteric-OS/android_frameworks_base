@@ -50,7 +50,6 @@ import android.provider.Settings.SettingNotFoundException;
 import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
-import android.telecom.TelecomManager;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
 import android.telephony.ims.aidl.IImsConfig;
 import android.telephony.ims.aidl.IImsMmTelFeature;
@@ -1462,16 +1461,16 @@ public class TelephonyManager {
      * @return List of NeighboringCellInfo or null if info unavailable.
      *
      * @deprecated Use {@link #getAllCellInfo} which returns a superset of the information
-     *             from NeighboringCellInfo.
+     *             from NeighboringCellInfo, including LTE cell information.
      */
-    @Deprecated
     @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
     public List<NeighboringCellInfo> getNeighboringCellInfo() {
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
                 return null;
-            return telephony.getNeighboringCellInfo(mContext.getOpPackageName());
+            return telephony.getNeighboringCellInfo(mContext.getOpPackageName(),
+                    mContext.getApplicationInfo().targetSdkVersion);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
