@@ -22,6 +22,29 @@
       "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa1cc147_0ff4e513",
+        "filename": "telephony/java/com/android/ims/internal/IImsUtListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-12-04T23:32:09Z",
+      "side": 1,
+      "message": "This can be used for more than STK, please remove STK specific portion of comment",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 34
+      },
+      "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
