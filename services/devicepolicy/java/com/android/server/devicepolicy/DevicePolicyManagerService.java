@@ -88,6 +88,7 @@ import android.app.backup.IBackupManager;
 import android.app.trust.TrustManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -106,6 +107,7 @@ import android.content.pm.StringParceledListSlice;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -144,11 +146,13 @@ import android.provider.ContactsContract.QuickContact;
 import android.provider.ContactsInternal;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.provider.Telephony;
 import android.security.IKeyChainAliasCallback;
 import android.security.IKeyChainService;
 import android.security.KeyChain;
 import android.security.KeyChain.KeyChainConnection;
 import android.service.persistentdata.PersistentDataBlockManager;
+import android.telephony.ApnSetting;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -11164,6 +11168,112 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         synchronized (this) {
             return new StringParceledListSlice(
                     new ArrayList<>(getUserData(userId).mOwnerInstalledCaCerts));
+        }
+    }
+
+    @Override
+    public int addOverrideApn(@NonNull ComponentName who, @NonNull ApnSetting apnSetting) {
+        Preconditions.checkNotNull(who, "ComponentName is null in addOverrideApn");
+        Preconditions.checkNotNull(apnSetting, "ApnSetting is null in addOverrideApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        Log.d("DevicePolicyManagerService", "insertoverrideapn:" + apnSetting.getApnName());
+        Log.d("DevicePolicyManagerService", "insertoverrideapn:" + apnSetting.getOperatorNumeric());
+
+        int operatedId = 0;
+        if (apnSetting.getId() == 0) {
+            Uri resultUri;
+            long id = mInjector.binderClearCallingIdentity();
+            try {
+                 resultUri = mContext.getContentResolver().insert(
+                    Uri.parse("content://telephony/carriers/dpc"), apnSetting.toContentValues());
+            } finally {
+                mInjector.binderRestoreCallingIdentity(id);
+            }
+            if (resultUri != null) {
+                try {
+                    operatedId = Integer.parseInt(resultUri.getPathSegments().get(1));
+                }
+                catch (NumberFormatException e) {
+                }
+            }
+        } else {
+            return 0;
+        }
+        return operatedId;
+    }
+
+    @Override
+    public int updateOverrideApn(@NonNull ComponentName who, @NonNull ApnSetting apnSetting) {
+        Preconditions.checkNotNull(who, "ComponentName is null in updateOverrideApn");
+        Preconditions.checkNotNull(apnSetting, "ApnSetting is null in updateOverrideApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        int operatedId = 0;
+        if (apnSetting.getId() == 0) {
+            return 0;
+        } else {
+            long id = mInjector.binderClearCallingIdentity();
+            int numUpdated = 0;
+            try {
+                numUpdated = mContext.getContentResolver().update(
+                    Uri.parse("content://telephony/carriers/dpc/" + apnSetting.getId()),
+                    apnSetting.toContentValues(), null, null);
+            } finally {
+                mInjector.binderRestoreCallingIdentity(id);
+            }
+            operatedId = numUpdated == 1 ? apnSetting.getId() : 0;
+        }
+        return operatedId;
+    }
+
+    @Override
+    public boolean removeOverrideApn(@NonNull ComponentName who, int apnId) {
+        Preconditions.checkNotNull(who, "ComponentName is null in removeOverrideApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        final Uri URI_DPC = Uri.parse("content://telephony/carriers/dpc/" + apnId);
+        return mContext.getContentResolver().delete(URI_DPC, null, null) > 0;
+    }
+
+    @Override
+    public List<ApnSetting> getOverrideApns(@NonNull ComponentName who) {
+        Preconditions.checkNotNull(who, "ComponentName is null in getOverrideApns");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+        ArrayList<ApnSetting> apnList = new ArrayList<ApnSetting>();
+
+        final Uri URI_DPC = Uri.parse("content://telephony/carriers/dpc");
+        Cursor cursor = mContext.getContentResolver().query(URI_DPC, null, "",
+                new String[]{}, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ApnSetting apn = ApnSetting.makeApnSetting(cursor);
+                if (apn == null) {
+                    continue;
+                }
+                apnList.add(apn);
+            } while (cursor.moveToNext());
+        }
+        return apnList;
+    }
+
+    @Override
+    public void setOverrideApnEnabled(@NonNull ComponentName who, boolean enabled) {
+        Log.d("DevicePolicyManagerService", "setoverrideapnenabled:" + enabled);
+        Preconditions.checkNotNull(who, "ComponentName is null in setOverrideApnEnabled");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        final String ENFORCED_KEY = "enforced";
+        ContentValues value = new ContentValues();
+        value.put(ENFORCED_KEY, enabled);
+        long id = mInjector.binderClearCallingIdentity();
+        try {
+            mContext.getContentResolver().update(
+            Uri.parse("content://telephony/carriers/enforce_managed"),
+            value, null, null);
+        } finally {
+            mInjector.binderRestoreCallingIdentity(id);
         }
     }
 }
