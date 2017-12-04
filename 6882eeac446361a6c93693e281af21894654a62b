@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bc0de463_eff69128",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-04T09:00:52Z",
+      "side": 1,
+      "message": "SGTM. An app hitting this is really not using the APIs properly anyway.",
+      "parentUuid": "503539e7_f57f29f5",
+      "range": {
+        "startLine": 164,
+        "startChar": 27,
+        "endLine": 164,
+        "endChar": 56
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7798777a_1e26b92c",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "That method should have replaced longAddrFromByteAddr(byteAddrFromStringAddr()) in one of the static ctor but I had forgotten to use it.\n\nNote that byteAddrFromStringAddr and stringAddrFromByteAddr although not used here will allow to eliminate redundant codes in a few places that deals with mac addresses.",
       "parentUuid": "007d4845_7aed3c25",
+      "range": {
+        "startLine": 274,
+        "startChar": 24,
+        "endLine": 274,
+        "endChar": 46
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9081e455_e7433c22",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-04T09:00:52Z",
+      "side": 1,
+      "message": "The question was mostly why is the body of this method is not simply \"return longAddrFromByteAddr(byteAddrFromStringAddr(addr));\". That would work, right? If so, suggest either doing that or adding a comment explaining why not (perhaps you want to save the extra allocation and deallocation of a byte[6]?).",
+      "parentUuid": "140e0714_44739c25",
       "range": {
         "startLine": 274,
         "startChar": 24,
