@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0025ec45_4d1631a4",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2017-12-04T19:27:19Z",
+      "side": 1,
+      "message": "Based on the written test, this line should probably be:\n\nqsTypeIcon \u003d (showDataIcon || mConfig.alwaysShowDataRatIcon) ? icons.mQsDataType : 0;\n\nOtherwise the written test always will fail.",
+      "revId": "63364fe24a487f2632c2b57e4a443ca171da25dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3883931f_5a8d1c4a",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/policy/NetworkControllerDataTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2017-12-04T19:27:19Z",
+      "side": 1,
+      "message": "Looks like because the test is `@Ignore`, this test never actually ran and is failing internally. \n\nThe issue here is that the test implies that both status bar and QS icons should be displaying the data RAT icon, but this CL only checks `mConfig.alawysShowDataRatIcon` for statusBar, not qsTypeIcon. See my other comment for the fix.",
+      "revId": "63364fe24a487f2632c2b57e4a443ca171da25dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
