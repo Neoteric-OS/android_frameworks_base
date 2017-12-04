@@ -618,9 +618,6 @@ class SettingsProtoDumpUtil {
                 Settings.Global.SYNC_MAX_RETRY_DELAY_IN_SECONDS,
                 GlobalSettingsProto.SYNC_MAX_RETRY_DELAY_IN_SECONDS);
         dumpSetting(s, p,
-                Settings.Global.CONNECTIVITY_CHANGE_DELAY,
-                GlobalSettingsProto.CONNECTIVITY_CHANGE_DELAY);
-        dumpSetting(s, p,
                 Settings.Global.CONNECTIVITY_SAMPLING_INTERVAL_IN_SECONDS,
                 GlobalSettingsProto.CONNECTIVITY_SAMPLING_INTERVAL_IN_SECONDS);
         dumpSetting(s, p,

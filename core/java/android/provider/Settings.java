@@ -4640,7 +4640,6 @@ public final class Settings {
             MOVED_TO_GLOBAL.add(Settings.Global.SYS_STORAGE_THRESHOLD_MAX_BYTES);
             MOVED_TO_GLOBAL.add(Settings.Global.SYS_STORAGE_FULL_THRESHOLD_BYTES);
             MOVED_TO_GLOBAL.add(Settings.Global.SYNC_MAX_RETRY_DELAY_IN_SECONDS);
-            MOVED_TO_GLOBAL.add(Settings.Global.CONNECTIVITY_CHANGE_DELAY);
             MOVED_TO_GLOBAL.add(Settings.Global.CAPTIVE_PORTAL_DETECTION_ENABLED);
             MOVED_TO_GLOBAL.add(Settings.Global.CAPTIVE_PORTAL_SERVER);
             MOVED_TO_GLOBAL.add(Settings.Global.NSD_ON);
@@ -8946,15 +8945,6 @@ public final class Settings {
          */
         public static final String
                 SYNC_MAX_RETRY_DELAY_IN_SECONDS = "sync_max_retry_delay_in_seconds";
-
-        /**
-         * The number of milliseconds to delay before sending out
-         * {@link ConnectivityManager#CONNECTIVITY_ACTION} broadcasts. Ignored.
-         *
-         * @hide
-         */
-        public static final String CONNECTIVITY_CHANGE_DELAY = "connectivity_change_delay";
-
 
         /**
          * Network sampling interval, in seconds. We'll generate link information

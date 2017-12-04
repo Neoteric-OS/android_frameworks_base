@@ -1364,7 +1364,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
                             Settings.Global.SYS_STORAGE_THRESHOLD_MAX_BYTES,
                             Settings.Global.SYS_STORAGE_FULL_THRESHOLD_BYTES,
                             Settings.Global.SYNC_MAX_RETRY_DELAY_IN_SECONDS,
-                            Settings.Global.CONNECTIVITY_CHANGE_DELAY,
                             Settings.Global.CAPTIVE_PORTAL_DETECTION_ENABLED,
                             Settings.Global.CAPTIVE_PORTAL_SERVER,
                             Settings.Global.NSD_ON,

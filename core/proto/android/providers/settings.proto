@@ -222,7 +222,7 @@ message GlobalSettingsProto {
     SettingProto sys_storage_threshold_max_bytes = 177;
     SettingProto sys_storage_full_threshold_bytes = 178;
     SettingProto sync_max_retry_delay_in_seconds = 179;
-    SettingProto connectivity_change_delay = 180;
+    SettingProto connectivity_change_delay = 180 [deprecated=true];
     SettingProto connectivity_sampling_interval_in_seconds = 181;
     SettingProto pac_change_delay = 182;
     SettingProto captive_portal_mode = 183;
