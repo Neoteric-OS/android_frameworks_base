@@ -165,12 +165,14 @@ public class ZoneGetter {
                 }
                 xrp.next();
             }
+            return olsonIds;
         } catch (XmlPullParserException xppe) {
             Log.e(TAG, "Ill-formatted timezones.xml file");
         } catch (java.io.IOException ioe) {
             Log.e(TAG, "Unable to read timezones.xml file");
+        } finally {
+            xrp.close();
         }
-        return olsonIds;
     }
 
     private static boolean shouldUseExemplarLocationForLocalNames(ZoneGetterData data,
