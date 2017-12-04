@@ -20,7 +20,6 @@ import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-
 import com.android.internal.telephony.RILConstants;
 
 /**

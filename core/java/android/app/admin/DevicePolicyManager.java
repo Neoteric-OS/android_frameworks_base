@@ -57,6 +57,7 @@ import android.os.UserManager;
 import android.provider.ContactsContract.Directory;
 import android.security.Credentials;
 import android.service.restrictions.RestrictionsReceiver;
+import android.telephony.ApnSetting;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Log;
@@ -8107,6 +8108,113 @@ public class DevicePolicyManager {
             return mService.getOwnerInstalledCaCerts(user).getList();
         } catch (RemoteException re) {
             throw re.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Called by device owner to add APN.
+     * {@link android.telephony.ApnSetting#id} should not be provided.
+     * May replace existing APN if conflicted.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param apnSetting the APN to insert
+     * @return The id of inserted APN. Or {@code 0} when
+     *         {@link android.telephony.ApnSetting#id} is provided or
+     *         failed to insert into the database.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    public int addOverrideApn(@NonNull ComponentName admin, @NonNull ApnSetting apnSetting) {
+        throwIfParentInstance("addOverrideApn");
+        if (mService != null) {
+            try {
+                return mService.addOverrideApn(admin, apnSetting);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Called by device owner to update APN.
+     * {@link android.telephony.ApnSetting#id} should be provided.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param apnSetting the APN to update
+     * @return The id of inserted or updated APN.Or {@code 0} when
+     *         {@link android.telephony.ApnSetting#id} is not provided
+     *         or failed to update into the database.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    public int updateOverrideApn(@NonNull ComponentName admin, @NonNull ApnSetting apnSetting) {
+        throwIfParentInstance("addOverrideApn");
+        if (mService != null) {
+            try {
+                return mService.addOverrideApn(admin, apnSetting);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Called by device owner to remove an existing APN.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param apnId the id of the APN to remove
+     * @return {@code true} if successfully removed this APN, {@code false} otherwise.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    public boolean removeOverrideApn(@NonNull ComponentName admin, int apnId) {
+        throwIfParentInstance("removeOverrideApn");
+        if (mService != null) {
+            try {
+                return mService.removeOverrideApn(admin, apnId);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Called by device owner to get all APN records inserted by device owner.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @return A list of APN inserted by device owner.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    @Nullable
+    public List<ApnSetting> getOverrideApns(@NonNull ComponentName admin) {
+        throwIfParentInstance("getOverrideApns");
+        if (mService != null) {
+            try {
+                return mService.getOverrideApns(admin);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Called by device owner to set if override APN should be used. When in used only override
+     * APNs will be used, APNs from any other sources won't be used.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param enabled whether override APN should be used
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    @Nullable
+    public void setOverrideApnEnabled(@NonNull ComponentName admin, boolean enabled) {
+        throwIfParentInstance("setOverrideApnEnabled");
+        if (mService != null) {
+            try {
+                mService.setOverrideApnEnabled(admin, enabled);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
     }
 }
