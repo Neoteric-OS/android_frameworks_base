@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e2dedd_f419a8ae",
+        "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-04T23:26:41Z",
+      "side": 1,
+      "message": "Can you add some documentation on how to use these methods? At least the standard @param explanations",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 68
+      },
+      "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
