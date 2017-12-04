@@ -100,6 +100,33 @@ public class NeighboringCellInfo implements Parcelable
         mCid = cid;
     }
 
+    /** @hide */
+    public NeighboringCellInfo(final CellInfoGsm info) {
+       mNetworkType = TelephonyManager.NETWORK_TYPE_GPRS;
+       mRssi = info.getCellSignalStrength().getAsuLevel();
+
+       mLac = info.getCellIdentity().getLac();
+       if (mLac == Integer.MAX_VALUE) mLac = UNKNOWN_CID;
+
+       mCid = info.getCellIdentity().getCid();
+       if (mLac == Integer.MAX_VALUE) mCid = UNKNOWN_CID;
+    }
+
+    /** @hide */
+    public NeighboringCellInfo(final CellInfoWcdma info) {
+       mNetworkType = TelephonyManager.NETWORK_TYPE_UMTS;
+       mRssi = info.getCellSignalStrength().getAsuLevel();
+
+       mLac = info.getCellIdentity().getLac();
+       if (mLac == Integer.MAX_VALUE) mLac = UNKNOWN_CID;
+
+       mCid = info.getCellIdentity().getCid();
+       if (mCid == Integer.MAX_VALUE) mCid = UNKNOWN_CID;
+
+       mPsc = info.getCellIdentity().getPsc();
+       if (mPsc == Integer.MAX_VALUE) mPsc = UNKNOWN_CID;
+    }
+
     /**
      * Initialize the object from rssi, location string, and radioType
      * radioType is one of following

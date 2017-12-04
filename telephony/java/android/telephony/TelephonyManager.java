@@ -1408,16 +1408,17 @@ public class TelephonyManager {
      * @return List of NeighboringCellInfo or null if info unavailable.
      *
      * @deprecated Use {@link #getAllCellInfo} which returns a superset of the information
-     *             from NeighboringCellInfo.
+     *             from NeighboringCellInfo, including LTE cell information.
+     * @removed
      */
-    @Deprecated
     @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
     public List<NeighboringCellInfo> getNeighboringCellInfo() {
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
                 return null;
-            return telephony.getNeighboringCellInfo(mContext.getOpPackageName());
+            return telephony.getNeighboringCellInfo(mContext.getOpPackageName(),
+                    mContext.getApplicationInfo().targetSdkVersion);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
