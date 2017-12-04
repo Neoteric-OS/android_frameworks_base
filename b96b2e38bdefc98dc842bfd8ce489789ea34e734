@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8469e6c_8b5a2769",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4720,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-04T20:14:03Z",
+      "side": 1,
+      "message": "@ying, I know you didn\u0027t change this line, but a one-liner if statement should be all on one line; if it needs to be multi-line then it should have curly-braces around it. Since we\u0027re making this public, could you tweak this?\n\nhttps://source.android.com/setup/code-style#use-standard-brace-style",
+      "range": {
+        "startLine": 4719,
+        "startChar": 34,
+        "endLine": 4720,
+        "endChar": 66
+      },
+      "revId": "b96b2e38bdefc98dc842bfd8ce489789ea34e734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cba0527_0d9faf07",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4790,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-04T20:14:03Z",
+      "side": 1,
+      "message": "nit, consistent capital/lowercase for the first letter following the variable name.",
+      "range": {
+        "startLine": 4790,
+        "startChar": 30,
+        "endLine": 4790,
+        "endChar": 31
+      },
+      "revId": "b96b2e38bdefc98dc842bfd8ce489789ea34e734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf85939d_15fe96d6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4801,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-04T20:14:03Z",
+      "side": 1,
+      "message": "same style comment... braces?",
+      "range": {
+        "startLine": 4800,
+        "startChar": 16,
+        "endLine": 4801,
+        "endChar": 66
+      },
+      "revId": "b96b2e38bdefc98dc842bfd8ce489789ea34e734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e0c984f_3dd1727e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4826,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-04T20:14:03Z",
+      "side": 1,
+      "message": "sigh",
+      "range": {
+        "startLine": 4826,
+        "startChar": 16,
+        "endLine": 4826,
+        "endChar": 77
+      },
+      "revId": "b96b2e38bdefc98dc842bfd8ce489789ea34e734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
