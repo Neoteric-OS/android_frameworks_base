@@ -6280,6 +6280,7 @@ package android.app.admin {
   public class DevicePolicyManager {
     method public void addCrossProfileIntentFilter(android.content.ComponentName, android.content.IntentFilter, int);
     method public boolean addCrossProfileWidgetProvider(android.content.ComponentName, java.lang.String);
+    method public int addOverrideApn(android.content.ComponentName, android.telephony.ApnSetting);
     method public void addPersistentPreferredActivity(android.content.ComponentName, android.content.IntentFilter, android.content.ComponentName);
     method public void addUserRestriction(android.content.ComponentName, java.lang.String);
     method public boolean bindDeviceAdminServiceAsUser(android.content.ComponentName, android.content.Intent, android.content.ServiceConnection, int, android.os.UserHandle);
@@ -6319,6 +6320,7 @@ package android.app.admin {
     method public long getMaximumTimeToLock(android.content.ComponentName);
     method public int getOrganizationColor(android.content.ComponentName);
     method public java.lang.CharSequence getOrganizationName(android.content.ComponentName);
+    method public java.util.List<android.telephony.ApnSetting> getOverrideApns(android.content.ComponentName);
     method public android.app.admin.DevicePolicyManager getParentProfileInstance(android.content.ComponentName);
     method public long getPasswordExpiration(android.content.ComponentName);
     method public long getPasswordExpirationTimeout(android.content.ComponentName);
@@ -6374,6 +6376,7 @@ package android.app.admin {
     method public void removeActiveAdmin(android.content.ComponentName);
     method public boolean removeCrossProfileWidgetProvider(android.content.ComponentName, java.lang.String);
     method public boolean removeKeyPair(android.content.ComponentName, java.lang.String);
+    method public boolean removeOverrideApn(android.content.ComponentName, int);
     method public boolean removeUser(android.content.ComponentName, android.os.UserHandle);
     method public boolean requestBugreport(android.content.ComponentName);
     method public boolean resetPassword(java.lang.String, int);
@@ -6407,6 +6410,7 @@ package android.app.admin {
     method public void setNetworkLoggingEnabled(android.content.ComponentName, boolean);
     method public void setOrganizationColor(android.content.ComponentName, int);
     method public void setOrganizationName(android.content.ComponentName, java.lang.CharSequence);
+    method public void setOverrideApnEnabled(android.content.ComponentName, boolean);
     method public java.lang.String[] setPackagesSuspended(android.content.ComponentName, java.lang.String[], boolean);
     method public void setPasswordExpirationTimeout(android.content.ComponentName, long);
     method public void setPasswordHistoryLength(android.content.ComponentName, int);
@@ -6442,6 +6446,7 @@ package android.app.admin {
     method public boolean switchUser(android.content.ComponentName, android.os.UserHandle);
     method public void uninstallAllUserCaCerts(android.content.ComponentName);
     method public void uninstallCaCert(android.content.ComponentName, byte[]);
+    method public int updateOverrideApn(android.content.ComponentName, android.telephony.ApnSetting);
     method public void wipeData(int);
     field public static final java.lang.String ACTION_ADD_DEVICE_ADMIN = "android.app.action.ADD_DEVICE_ADMIN";
     field public static final java.lang.String ACTION_APPLICATION_DELEGATION_SCOPES_CHANGED = "android.app.action.APPLICATION_DELEGATION_SCOPES_CHANGED";
