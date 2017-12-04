@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63e97e3b_ca0e956e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4716,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18aa8298_e4f31dc0",
+      "range": {
+        "startLine": 4716,
+        "startChar": 7,
+        "endLine": 4716,
+        "endChar": 48
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7567183a_f7e24e32",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T20:43:04Z",
       "side": 1,
       "message": "ID",
+      "range": {
+        "startLine": 4790,
+        "startChar": 24,
+        "endLine": 4790,
+        "endChar": 26
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78b0bd88_c8134ddc",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4790,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7567183a_f7e24e32",
       "range": {
         "startLine": 4790,
         "startChar": 24,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "62c08d25_8e1d98ed",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4791,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fc6e47_4045cd4c",
+      "range": {
+        "startLine": 4791,
+        "startChar": 38,
+        "endLine": 4791,
+        "endChar": 39
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eadbbc62_27845903",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4791,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "390adcf8_76a9c80e",
+      "range": {
+        "startLine": 4791,
+        "startChar": 57,
+        "endLine": 4791,
+        "endChar": 62
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2cb6a15_9be7541e",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-01T20:43:04Z",
       "side": 1,
       "message": "Please see my comment on the other comment. I\u0027d like this to be more specific about what the behavior is.",
+      "range": {
+        "startLine": 4792,
+        "startChar": 31,
+        "endLine": 4792,
+        "endChar": 89
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fc8e888_e25d0920",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2cb6a15_9be7541e",
       "range": {
         "startLine": 4792,
         "startChar": 31,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cc78c82f_36714ed4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4795,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d3080d_382853ae",
+      "range": {
+        "startLine": 4795,
+        "startChar": 7,
+        "endLine": 4795,
+        "endChar": 48
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc205d2f_92f9fb4d",
         "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-01T20:43:04Z",
       "side": 1,
       "message": "this comment could do for some cleanup. Suggest something like:\n\nif true, only allow attach to the selected PLMN until reboot; otherwise, attach to the chosen PLMN and resume normal network selection thereafter.",
+      "range": {
+        "startLine": 850,
+        "startChar": 31,
+        "endLine": 852,
+        "endChar": 45
+      },
+      "revId": "0c9cbbae74d1c3067982b1925f53498bad75636a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25d69c3c_8adff7b4",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-04T19:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc205d2f_92f9fb4d",
       "range": {
         "startLine": 850,
         "startChar": 31,
