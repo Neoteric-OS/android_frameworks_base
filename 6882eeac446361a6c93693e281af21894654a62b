@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ca1b0004_adc01bd7",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-12-04T13:39:35Z",
+      "side": 1,
+      "message": "I have 3 types for representing a mac address: long, byte[] and String. That\u0027s 3 possible pairs. Which makes 6 possible conversion functions.\n\n2 of them are the natural thing that comes up when writing the two static ctor fromBytes and fromString. That\u0027s longAddrFromByteAddr and longAddrFromStringAddr.\n\n2 of them are the natural thing that comes up when writing the toString() and toByteArray() method. That\u0027s byteAddrFromLongAddr and stringAddrFromLongAddr.\n\nThe last 2 are conversions between the \"external\" representations byte[] and String, which as we discussed, already exist multiple times in the android codebase and can no be consolidated in one place here.\n\nIt is true that directly converting byte[] or String into longs saves some intermediary allocations, which is half the point of using long as an internal representation (the other half being easy masking and bitwise operations). So I ll just write that as a justification.",
+      "parentUuid": "9081e455_e7433c22",
+      "range": {
+        "startLine": 274,
+        "startChar": 24,
+        "endLine": 274,
+        "endChar": 46
+      },
+      "revId": "6882eeac446361a6c93693e281af21894654a62b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8741f8a5_44388eda",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 9
