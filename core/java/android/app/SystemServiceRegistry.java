@@ -150,6 +150,8 @@ import com.android.internal.policy.PhoneLayoutInflater;
 
 import java.util.HashMap;
 
+import android.telephony.euicc.EuiccCardManager;
+
 /**
  * Manages all of the system services that can be returned by {@link Context#getSystemService}.
  * Used by {@link ContextImpl}.
@@ -499,6 +501,13 @@ final class SystemServiceRegistry {
             @Override
             public EuiccManager createService(ContextImpl ctx) {
                 return new EuiccManager(ctx.getOuterContext());
+            }});
+
+        registerService(Context.EUICC_CARD_SERVICE, EuiccCardManager.class,
+                new CachedServiceFetcher<EuiccCardManager>() {
+            @Override
+            public EuiccCardManager createService(ContextImpl ctx) {
+                return new EuiccCardManager(ctx.getOuterContext());
             }});
 
         registerService(Context.UI_MODE_SERVICE, UiModeManager.class,

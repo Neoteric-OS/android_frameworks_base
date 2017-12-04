@@ -3574,6 +3574,11 @@ public abstract class Context {
     public static final String EUICC_SERVICE = "euicc_service";
 
     /**
+     * @hide
+     */
+    public static final String EUICC_CARD_SERVICE = "euicc_card_service";
+
+    /**
      * Use with {@link #getSystemService} to retrieve a
      * {@link android.text.ClipboardManager} for accessing and modifying
      * {@link android.content.ClipboardManager} for accessing and modifying
