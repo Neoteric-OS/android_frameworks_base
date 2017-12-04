@@ -291,6 +291,8 @@ public class BootReceiver extends BroadcastReceiver {
         Slog.i(TAG, "Copying " + filename + " to DropBox (" + tag + ")");
         db.addText(tag, headers + FileUtils.readTextFile(file, maxSize, "[[TRUNCATED]]\n") +
                 footers);
+        Slog.i(TAG, String.format("Copied to Dropbox: filename=%s, maxSize=%d, tag=%s",
+                filename, maxSize, tag));
     }
 
     private static void addAuditErrorsToDropBox(DropBoxManager db,
