@@ -2681,7 +2681,17 @@ public final class Telephony {
          * <P>Type: INTEGER</P>
          * @hide
          */
+        @Deprecated
         public static final String BEARER_BITMASK = "bearer_bitmask";
+
+        /**
+         * Radio technology (network type) bitmask.
+         * To check what values can be contained, refer to
+         * {@link android.telephony.TelephonyManager}.
+         * Bitmask for a radio tech R is (1 << (R - 1))
+         * <P>Type: INTEGER</P>
+         */
+        public static final String NETWORK_TYPE_BITMASK = "network_type_bitmask";
 
         /**
          * MVNO type:
