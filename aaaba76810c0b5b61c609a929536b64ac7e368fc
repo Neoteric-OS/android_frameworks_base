@@ -22,6 +22,30 @@
       "revId": "aaaba76810c0b5b61c609a929536b64ac7e368fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61ffcfb_aba2e3c5",
+        "filename": "test-runner/src/android/test/ClassPathPackageInfoSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2017-12-05T10:32:30Z",
+      "side": 1,
+      "message": "AFAICT from looking at the changes I made this is the same behavior that it had before, this change just moves the code around a bit.\n\nIf you look at the old version of this method instead of calling cache.get(name) it called source.getPackageInfo(name). The getPackageInfo(String) method then simply called cache.get(name).\n\nI am not sure that it is worth spending any time on improving this given that this and the other classes in this package are already deprecated in favor of using the Android Test Support Library.",
+      "parentUuid": "5f3f9752_375ee5e5",
+      "range": {
+        "startLine": 230,
+        "startChar": 31,
+        "endLine": 230,
+        "endChar": 34
+      },
+      "revId": "aaaba76810c0b5b61c609a929536b64ac7e368fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
