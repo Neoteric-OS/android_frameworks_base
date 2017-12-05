@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e1aff425_2026fab1",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-12-05T17:45:59Z",
+      "side": 1,
+      "message": "Sorry missed your response to Nathan. Either renaming or better documentation work as long as it is clear what the purpose of the method is \" feature is ready for communication with the framework ONLY after this is called\"",
+      "parentUuid": "91cb235b_ae3b5f48",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 42
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2808ff_c4d5990a",
         "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
         "patchSetId": 5
