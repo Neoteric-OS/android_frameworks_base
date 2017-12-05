@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414c18f0_f67396c7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-05T14:43:05Z",
+      "side": 1,
+      "message": "Checks if the two file descriptors point to the same file\n\nPer the \u003csys/stat.h\u003e specification: http://pubs.opengroup.org/onlinepubs/009696699/basedefs/sys/stat.h.html\n\nThe st_ino and st_dev fields taken together uniquely identify the file within the system.",
+      "range": {
+        "startLine": 426,
+        "startChar": 28,
+        "endLine": 427,
+        "endChar": 72
+      },
+      "revId": "1d3f8c1397a872f3c084b5466746a6f89a41e53c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
