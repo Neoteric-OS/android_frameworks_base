@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5e78751a_f836b704",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-12-05T03:25:12Z",
+      "side": 1,
+      "message": "Brad, can you rename in ag/549943",
+      "parentUuid": "22f606f4_8a558a85",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 42
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2808ff_c4d5990a",
         "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "This should be a private method, actually.\n\nIt is only used by the framework once during initialization to register the listener back to the framework.\n\nWe then call onFeatureReady() after to signal to the feature that the framework has initialized everything. Any usage of the mSmsListener while it is still null should result in an exception.",
       "parentUuid": "0e2808ff_c4d5990a",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d822e34e_5b80ca2b",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-12-05T03:25:12Z",
+      "side": 1,
+      "message": "Things are fairly restructured while I agree this can be private here, can no longer be in ag/555848. lets move discussion there.",
+      "parentUuid": "38d0e350_c825ff61",
       "range": {
         "startLine": 117,
         "startChar": 0,
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9fc9df5a_b6be1c9e",
+        "filename": "telephony/java/android/telephony/ims/feature/SmsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-12-05T03:25:12Z",
+      "side": 1,
+      "message": "I agree this can move to constructor. Brad, any reason once SmsBaseImpl is initialized they would need to change this again? Also lets move discussion to ag/555848",
+      "parentUuid": "18dc0522_47b69a8b",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 3
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d61e597_ca671202",
         "filename": "telephony/java/com/android/ims/internal/ISmsListener.aidl",
         "patchSetId": 5
@@ -178,6 +250,30 @@
       "side": 1,
       "message": "i agree, these should sound more callback-y",
       "parentUuid": "5d61e597_ca671202",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "037749df03aff860db94c47e69b4ba3913f5e0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a11c448f_d521098f",
+        "filename": "telephony/java/com/android/ims/internal/ISmsListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-12-05T03:25:12Z",
+      "side": 1,
+      "message": "done in ag/555848",
+      "parentUuid": "813661f1_aa868788",
       "range": {
         "startLine": 24,
         "startChar": 9,
