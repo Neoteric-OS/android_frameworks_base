@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b33fb91_924589ce",
+        "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-05T19:50:22Z",
+      "side": 1,
+      "message": "So this handler runs code that requests to be registered? Or is the handler what is notified when there is an ss indication?",
+      "range": {
+        "startLine": 195,
+        "startChar": 42,
+        "endLine": 195,
+        "endChar": 64
+      },
+      "revId": "758a4aa52996c0fbfbf64b5df9d8fefca9427642",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
