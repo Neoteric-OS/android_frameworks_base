@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a3d4477_89576fc5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1097598
+      },
+      "writtenOn": "2017-12-05T22:40:55Z",
+      "side": 1,
+      "message": "Hi Evan,\n\nI am very sorry. We missed to perform that unit test before uploading this time (although we performed all necessary test when we previously uploaded). As I have uploaded fix gerrit below, could you review?\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/556553\n\nWe performed following verification with new gerrit.\n - unit test pass\n - rat icon always shown on both status bar and quick setting UI when configured.",
+      "parentUuid": "0025ec45_4d1631a4",
+      "revId": "63364fe24a487f2632c2b57e4a443ca171da25dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3883931f_5a8d1c4a",
         "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/policy/NetworkControllerDataTest.java",
         "patchSetId": 1
