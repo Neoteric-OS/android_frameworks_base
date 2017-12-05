@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d56a67b7_0a505c9e",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsUtListenerImplBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1228381
+      },
+      "writtenOn": "2017-12-05T15:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ebd8e1_0c2342dd",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e2dedd_f419a8ae",
         "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3ab1fa2f_cac15ba4",
+        "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228381
+      },
+      "writtenOn": "2017-12-05T15:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37e2dedd_f419a8ae",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 68
+      },
+      "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1cc147_0ff4e513",
         "filename": "telephony/java/com/android/ims/internal/IImsUtListener.aidl",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T23:32:09Z",
       "side": 1,
       "message": "This can be used for more than STK, please remove STK specific portion of comment",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 34
+      },
+      "revId": "7bbf5edc7986b17c1a72f00cf898f4adb7300d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b524a9f_00ff1302",
+        "filename": "telephony/java/com/android/ims/internal/IImsUtListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228381
+      },
+      "writtenOn": "2017-12-05T15:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1cc147_0ff4e513",
       "range": {
         "startLine": 62,
         "startChar": 28,
