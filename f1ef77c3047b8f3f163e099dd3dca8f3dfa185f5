@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d116ecf_98572f89",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14155,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-12-06T14:56:26Z",
+      "side": 1,
+      "message": "remove comment",
+      "range": {
+        "startLine": 14155,
+        "startChar": 8,
+        "endLine": 14155,
+        "endChar": 17
+      },
+      "revId": "f1ef77c3047b8f3f163e099dd3dca8f3dfa185f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
