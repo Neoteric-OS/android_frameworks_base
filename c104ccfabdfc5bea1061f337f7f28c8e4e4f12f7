@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "22282446_ec3856b6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-06T00:54:53Z",
+      "side": 1,
+      "message": "rename to OVERRIDDEN",
+      "range": {
+        "startLine": 1677,
+        "startChar": 50,
+        "endLine": 1677,
+        "endChar": 58
+      },
+      "revId": "c104ccfabdfc5bea1061f337f7f28c8e4e4f12f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "525eca9b_702d230b",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 4
