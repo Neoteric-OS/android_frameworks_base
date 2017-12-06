@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44751d94_2e53b189",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-12-06T00:27:16Z",
+      "side": 1,
+      "message": "My attempts to read the IPCThreadState code turned up no hint as to why this might be true for the implementation. Is there a comment we can add to the lower level code to explain to a reader where this is coming from? It looks like this is really coming from a subtle but undocumented property of IPCThreadState.getCallingPid?",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
