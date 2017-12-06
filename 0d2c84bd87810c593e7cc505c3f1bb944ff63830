@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae35068f_3498a759",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-06T21:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28639f23_87a17a9c",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 60
+      },
+      "revId": "0d2c84bd87810c593e7cc505c3f1bb944ff63830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4ff3dd_cb9c8937",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T01:53:04Z",
       "side": 1,
       "message": "consider defining and using @IntDef constants for the various int-enum types here. Given that we\u0027re passing different types of constants back and forth, it\u0027s critical that we avoid mixing up types, and we get no type safety from vanilla ints alone.",
+      "range": {
+        "startLine": 1163,
+        "startChar": 54,
+        "endLine": 1163,
+        "endChar": 60
+      },
+      "revId": "0d2c84bd87810c593e7cc505c3f1bb944ff63830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18a6768_7843a2fd",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-06T21:37:22Z",
+      "side": 1,
+      "message": "The only type passed here is radio access technology, we do not pass network type here.",
+      "parentUuid": "7f4ff3dd_cb9c8937",
       "range": {
         "startLine": 1163,
         "startChar": 54,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1bf49bf0_e12fe391",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-06T21:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ceb70ea_055ea807",
+      "revId": "0d2c84bd87810c593e7cc505c3f1bb944ff63830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42877d99_73ff6759",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9465beda_73cafd7a",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-06T21:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42877d99_73ff6759",
+      "revId": "0d2c84bd87810c593e7cc505c3f1bb944ff63830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ca3b44c_610d0321",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
@@ -93,6 +177,30 @@
       "writtenOn": "2017-12-06T01:53:04Z",
       "side": 1,
       "message": "Either just use i or declare this in the for loop as for (int bearerInt \u003d 0;...). There\u0027s no reason to have a second variable for the same thing.",
+      "range": {
+        "startLine": 1335,
+        "startChar": 0,
+        "endLine": 1335,
+        "endChar": 30
+      },
+      "revId": "0d2c84bd87810c593e7cc505c3f1bb944ff63830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b538a33d_284ecfea",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-06T21:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca3b44c_610d0321",
       "range": {
         "startLine": 1335,
         "startChar": 0,
