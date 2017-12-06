@@ -1273,6 +1273,7 @@ public class IpClient extends StateMachine {
             stopAllIP();
 
             resetLinkProperties();
+            mCallback.onLinkPropertiesChange(new LinkProperties(mLinkProperties));
             if (mStartTimeMillis > 0) {
                 recordMetric(IpManagerEvent.COMPLETE_LIFECYCLE);
                 mStartTimeMillis = 0;
