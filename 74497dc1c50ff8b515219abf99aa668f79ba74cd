@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "a396a857_db06e9b1",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-06T02:30:01Z",
+      "side": 1,
+      "message": "I think it\u0027s worth having these as public @hide functions actually that are isAuthentication() isEncryption() isAead().",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c5a52f_d6b73c5b",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
