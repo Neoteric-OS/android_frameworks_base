@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothA2dpSink;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothHeadsetClient;
+import android.bluetooth.BluetoothHidDevice;
 import android.bluetooth.BluetoothHidHost;
 import android.bluetooth.BluetoothMap;
 import android.bluetooth.BluetoothMapClient;
@@ -84,6 +85,7 @@ public class LocalBluetoothProfileManager {
     private MapProfile mMapProfile;
     private MapClientProfile mMapClientProfile;
     private final HidProfile mHidProfile;
+    private HidDeviceProfile mHidDeviceProfile;
     private OppProfile mOppProfile;
     private final PanProfile mPanProfile;
     private PbapClientProfile mPbapClientProfile;
@@ -120,7 +122,7 @@ public class LocalBluetoothProfileManager {
             updateLocalProfiles(uuids);
         }
 
-        // Always add HID and PAN profiles
+        // Always add HID host, HID device, and PAN profiles
         mHidProfile = new HidProfile(context, mLocalAdapter, mDeviceManager, this);
         addProfile(mHidProfile, HidProfile.NAME,
                 BluetoothHidHost.ACTION_CONNECTION_STATE_CHANGED);
@@ -128,6 +130,10 @@ public class LocalBluetoothProfileManager {
         mPanProfile = new PanProfile(context);
         addPanProfile(mPanProfile, PanProfile.NAME,
                 BluetoothPan.ACTION_CONNECTION_STATE_CHANGED);
+
+        mHidDeviceProfile = new HidDeviceProfile(context, mLocalAdapter, mDeviceManager, this);
+        addProfile(mHidDeviceProfile, HidDeviceProfile.NAME,
+                BluetoothHidDevice.ACTION_CONNECTION_STATE_CHANGED);
 
         if(DEBUG) Log.d(TAG, "Adding local MAP profile");
         if (mUseMapClient) {
@@ -478,6 +484,12 @@ public class LocalBluetoothProfileManager {
             mHidProfile != null) {
             profiles.add(mHidProfile);
             removedProfiles.remove(mHidProfile);
+        }
+
+        if (mHidProfile != null && mHidDeviceProfile.getConnectionStatus(device)
+                != BluetoothProfile.STATE_DISCONNECTED) {
+            profiles.add(mHidDeviceProfile);
+            removedProfiles.remove(mHidDeviceProfile);
         }
 
         if(isPanNapConnected)
