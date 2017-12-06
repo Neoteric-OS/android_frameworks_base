@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97a26ff5_42bc5932",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T08:38:14Z",
+      "side": 1,
+      "message": "Seems like it would be more natural to make this an interface instead of a class.\n\n    public interface UidFdTagger {\n        /**\n         * Sets socket tag to assign all traffic to the provided UID.\n         *\n         * \u003cp\u003eSince the socket is created on behalf of a userspace application, all traffic should\n         * be accounted to the UID of the userspace application.\n         */\n        public void tag(FileDescriptor fd, int uid) throws IOException {\n        }\n    }\n\nYou might even be able to make the default tagger be a lambda.",
+      "range": {
+        "startLine": 799,
+        "startChar": 4,
+        "endLine": 799,
+        "endChar": 37
+      },
+      "revId": "cedfc1e001ad8d77719fdbcaf864a767842f926b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f04b93_9598f9d5",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T08:38:14Z",
+      "side": 1,
+      "message": "\"an unprivileged application\" (All applications run in userspace.)",
+      "range": {
+        "startLine": 803,
+        "startChar": 55,
+        "endLine": 803,
+        "endChar": 78
+      },
+      "revId": "cedfc1e001ad8d77719fdbcaf864a767842f926b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8d2c0f_747e6703",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T08:38:14Z",
+      "side": 1,
+      "message": "Is there a way to verify the value as well?",
+      "range": {
+        "startLine": 401,
+        "startChar": 52,
+        "endLine": 401,
+        "endChar": 53
+      },
+      "revId": "cedfc1e001ad8d77719fdbcaf864a767842f926b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0321b406_000a6e36",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T08:38:14Z",
+      "side": 1,
+      "message": "Can you just compare the value of FileDescriptor#getInt$() instead of calling fstat?\n\nIf not, suggest renaming this to something clearer. isSameFile, maybe?",
+      "range": {
+        "startLine": 421,
+        "startChar": 35,
+        "endLine": 421,
+        "endChar": 42
+      },
+      "revId": "cedfc1e001ad8d77719fdbcaf864a767842f926b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
