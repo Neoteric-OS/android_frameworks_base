@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c5a52f_d6b73c5b",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T01:55:37Z",
+      "side": 1,
+      "message": "Indentation?",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edb76a7_77669045",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T01:55:37Z",
+      "side": 1,
+      "message": "This looks like a lie, since this exception is not thrown by this method. :-)",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 97
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e78d402_87f1a925",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T01:55:37Z",
+      "side": 1,
+      "message": "Is there a reason why the check for \"can\u0027t use AEAD in combination with auth or enc\" is not in the same place as this check?",
+      "range": {
+        "startLine": 292,
+        "startChar": 4,
+        "endLine": 292,
+        "endChar": 5
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f5a90f_1ea67fbd",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-06T01:55:37Z",
+      "side": 1,
+      "message": "For completeness, we\u0027ll want this codepath covered in the IpSecServiceTest as well. After all, the important thing behaviour here is that the service doesn\u0027t accept invalid combinations.\n\nDoes it make sense to move these test cases to that test? If not (perhaps because the resulting code would be too complicated), it\u0027s fine to leave them here, as long as we have a single test case in that test that ensures that one such combination does not work.",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 45
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
