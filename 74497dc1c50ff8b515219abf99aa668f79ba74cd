@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f8e1524_24f5d7f0",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-06T02:16:31Z",
+      "side": 1,
+      "message": "If you really intend these to be package-private, please add a comment saying so.",
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c5a52f_d6b73c5b",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
@@ -22,6 +39,29 @@
       "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fc4f32_7d77d44c",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-06T02:16:31Z",
+      "side": 1,
+      "message": "of course this could be \u0027return getName() \u003d\u003d CRYPT_AES_CBC;\u0027",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 9
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -48,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "ad6944ea_a2e2ccdd",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-06T02:16:31Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "2edb76a7_77669045",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 97
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e78d402_87f1a925",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 8
@@ -59,6 +123,30 @@
       "writtenOn": "2017-12-06T01:55:37Z",
       "side": 1,
       "message": "Is there a reason why the check for \"can\u0027t use AEAD in combination with auth or enc\" is not in the same place as this check?",
+      "range": {
+        "startLine": 292,
+        "startChar": 4,
+        "endLine": 292,
+        "endChar": 5
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f87f9e_7605166b",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-06T02:16:31Z",
+      "side": 1,
+      "message": "Actually, we need to ensure that this gets checked on the IpSecService() side of the equation as well... it\u0027s not good enough to simply do the validation on the write-to-parcel. The reason we have the other validation inside IpSecService is to avoid that problem. We *can* move at least some of that logic to IpSecConfig, but we still have to do any cross-validation inside IpSecService, so the more I think about it, the more I think we should move this validation into IpSecService where we already have a method to validate the config.",
+      "parentUuid": "5e78d402_87f1a925",
       "range": {
         "startLine": 292,
         "startChar": 4,
