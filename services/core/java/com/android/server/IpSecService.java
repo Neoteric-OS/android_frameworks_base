@@ -837,6 +837,8 @@ public class IpSecService extends IIpSecService.Stub {
             sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
             mUidFdTagger.tag(sockFd, callingUid);
 
+            // Set owner (fchown) before binding
+            mSrvConfig.getNetdInstance().ipSecSetSocketOwner(sockFd, callingUid);
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
                 Os.bind(sockFd, INADDR_ANY, port);

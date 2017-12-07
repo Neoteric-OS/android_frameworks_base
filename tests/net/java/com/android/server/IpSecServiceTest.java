@@ -432,4 +432,26 @@ public class IpSecServiceTest {
         testIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
         udpEncapResp.fileDescriptor.close();
     }
+
+    @Test
+    public void testOpenUdpEncapsulationSocketCallsSetSocketOwner() throws Exception {
+        IpSecUdpEncapResponse udpEncapResp =
+                mIpSecService.openUdpEncapsulationSocket(0, new Binder());
+
+        FileDescriptor sockFd = udpEncapResp.fileDescriptor.getFileDescriptor();
+        ArgumentMatcher<FileDescriptor> fdMatcher = (arg) -> {
+                    try {
+                        StructStat sockStat = Os.fstat(sockFd);
+                        StructStat argStat = Os.fstat(arg);
+
+                        return sockStat.st_ino == argStat.st_ino
+                                && sockStat.st_dev == argStat.st_dev;
+                    } catch (ErrnoException e) {
+                        return false;
+                    }
+                };
+
+        verify(mMockNetd).ipSecSetSocketOwner(argThat(fdMatcher), eq(Os.getuid()));
+        mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
+    }
 }
