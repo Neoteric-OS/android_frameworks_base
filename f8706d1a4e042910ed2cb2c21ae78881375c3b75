@@ -94,6 +94,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcca207_8c305790",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-12-07T18:45:15Z",
+      "side": 1,
+      "message": "You\u0027ve convinced me that we definitely want this change.\n\nIt\u0027s still rather disconcerting though that there seems to be no way to explain how/why this happens. AFAICT, the actual value comes from the sender_pid field of binder_transaction_data, which is set by the kernel? I can find no documentation of how sender_pid is set. I did eventually find the kernel source that sets it, but that also seems really obscure, and I would never have been able to extract this insight from there. It would be really great if, in addition to this CL, we could get some corresponding documentation into the lower layers.",
+      "parentUuid": "d955d3d9_75967b7c",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
