@@ -37389,6 +37389,21 @@ package android.service.dreams {
 
 }
 
+package android.service.euicc {
+
+  public class OperatorId implements android.os.Parcelable {
+    ctor public OperatorId(byte[], byte[], byte[]);
+    method public int describeContents();
+    method public byte[] getGid1();
+    method public byte[] getGid2();
+    method public java.lang.String getMcc();
+    method public java.lang.String getMnc();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.service.euicc.OperatorId> CREATOR;
+  }
+
+}
+
 package android.service.media {
 
   public abstract class CameraPrewarmService extends android.app.Service {
