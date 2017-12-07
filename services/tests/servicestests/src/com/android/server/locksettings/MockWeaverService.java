@@ -12,8 +12,8 @@ import android.util.Pair;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MockWeaverService implements IWeaver {
 
@@ -21,7 +21,7 @@ public class MockWeaverService implements IWeaver {
     private static final int KEY_LENGTH = 256 / 8;
     private static final int VALUE_LENGTH = 256 / 8;
 
-    private Pair<ArrayList<Byte>, ArrayList<Byte>>[] slots = new Pair[MAX_SLOTS];
+    private Pair<List<Byte>, List<Byte>>[] slots = new Pair[MAX_SLOTS];
     @Override
     public void getConfig(getConfigCallback cb) throws RemoteException {
         WeaverConfig config = new WeaverConfig();
@@ -32,17 +32,17 @@ public class MockWeaverService implements IWeaver {
     }
 
     @Override
-    public int write(int slotId, ArrayList<Byte> key, ArrayList<Byte> value)
+    public int write(int slotId, List<Byte> key, List<Byte> value)
             throws RemoteException {
         if (slotId < 0 || slotId >= MAX_SLOTS) {
             throw new RuntimeException("Invalid slot id");
         }
-        slots[slotId] = Pair.create((ArrayList<Byte>) key.clone(), (ArrayList<Byte>) value.clone());
+        slots[slotId] = Pair.create(key, value);
         return WeaverStatus.OK;
     }
 
     @Override
-    public void read(int slotId, ArrayList<Byte> key, readCallback cb) throws RemoteException {
+    public void read(int slotId, List<Byte> key, readCallback cb) throws RemoteException {
         if (slotId < 0 || slotId >= MAX_SLOTS) {
             throw new RuntimeException("Invalid slot id");
         }
@@ -62,7 +62,7 @@ public class MockWeaverService implements IWeaver {
     }
 
     @Override
-    public ArrayList<String> interfaceChain() throws RemoteException {
+    public List<String> interfaceChain() throws RemoteException {
         throw new UnsupportedOperationException();
     }
 
@@ -102,7 +102,7 @@ public class MockWeaverService implements IWeaver {
     }
 
     @Override
-    public ArrayList<byte[]> getHashChain() throws RemoteException {
+    public List<byte[]> getHashChain() throws RemoteException {
         throw new UnsupportedOperationException();
     }
 }

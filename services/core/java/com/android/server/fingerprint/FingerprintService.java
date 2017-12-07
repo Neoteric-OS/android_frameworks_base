@@ -417,7 +417,7 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
     }
 
     protected void handleAuthenticated(long deviceId, int fingerId, int groupId,
-            ArrayList<Byte> token) {
+            List<Byte> token) {
         ClientMonitor client = mCurrentClient;
         if (fingerId != 0) {
             // Ugh...
@@ -972,7 +972,7 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
 
         @Override
         public void onAuthenticated(final long deviceId, final int fingerId, final int groupId,
-                ArrayList<Byte> token) {
+                List<Byte> token) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {

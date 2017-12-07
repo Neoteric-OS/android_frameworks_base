@@ -31,6 +31,7 @@ import android.util.Log;
 import android.util.Singleton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MediaCas can be used to obtain keys for descrambling protected media streams, in
@@ -144,7 +145,7 @@ public final class MediaCas implements AutoCloseable {
 
     private final ICasListener.Stub mBinder = new ICasListener.Stub() {
         @Override
-        public void onEvent(int event, int arg, @Nullable ArrayList<Byte> data)
+        public void onEvent(int event, int arg, @Nullable List<Byte> data)
                 throws RemoteException {
             mEventHandler.sendMessage(mEventHandler.obtainMessage(
                     EventHandler.MSG_CAS_EVENT, event, arg, data));
@@ -215,9 +216,9 @@ public final class MediaCas implements AutoCloseable {
      * Class for an open session with the CA system.
      */
     public final class Session implements AutoCloseable {
-        final ArrayList<Byte> mSessionId;
+        final List<Byte> mSessionId;
 
-        Session(@NonNull ArrayList<Byte> sessionId) {
+        Session(@NonNull List<Byte> sessionId) {
             mSessionId = sessionId;
         }
 
@@ -300,7 +301,7 @@ public final class MediaCas implements AutoCloseable {
         }
     }
 
-    Session createFromSessionId(@NonNull ArrayList<Byte> sessionId) {
+    Session createFromSessionId(@NonNull List<Byte> sessionId) {
         if (sessionId == null || sessionId.size() == 0) {
             return null;
         }
@@ -336,7 +337,7 @@ public final class MediaCas implements AutoCloseable {
 
         if (service != null) {
             try {
-                ArrayList<HidlCasPluginDescriptor> descriptors =
+                List<HidlCasPluginDescriptor> descriptors =
                         service.enumeratePlugins();
                 if (descriptors.size() == 0) {
                     return null;
@@ -452,7 +453,7 @@ public final class MediaCas implements AutoCloseable {
         public Session mSession;
         public int mStatus;
         @Override
-        public void onValues(int status, ArrayList<Byte> sessionId) {
+        public void onValues(int status, List<Byte> sessionId) {
             mStatus = status;
             mSession = createFromSessionId(sessionId);
         }

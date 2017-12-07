@@ -380,7 +380,7 @@ public class Watchdog extends Thread {
     private ArrayList<Integer> getInterestingHalPids() {
         try {
             IServiceManager serviceManager = IServiceManager.getService();
-            ArrayList<IServiceManager.InstanceDebugInfo> dump =
+            List<IServiceManager.InstanceDebugInfo> dump =
                     serviceManager.debugDump();
             HashSet<Integer> pids = new HashSet<>();
             for (IServiceManager.InstanceDebugInfo info : dump) {
