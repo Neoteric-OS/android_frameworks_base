@@ -46,6 +46,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bd83d4_8217bc26",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-12-07T09:50:18Z",
+      "side": 1,
+      "message": "This seems to have been discussed several times on internal mailing lists so people are definitely running into this problem and it\u0027s worth documenting.\n\nI\u0027d suggest changing \"may\" to \"will\"",
+      "parentUuid": "58fabfae_4f2047fa",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
