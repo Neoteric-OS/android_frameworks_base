@@ -190,6 +190,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2823a702_31083422",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-12-07T19:16:41Z",
+      "side": 1,
+      "message": "Yeah but that\u0027s just how the driver is implemented. We could save it if we wanted to, right? I guess my question is, do we want to.",
+      "parentUuid": "47bab957_8f5dcc88",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
