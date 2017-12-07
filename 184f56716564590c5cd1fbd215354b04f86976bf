@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4991024e_9f099263",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T08:20:45Z",
+      "side": 1,
+      "message": "This seems out of place here.\n\nIf we want to tag explicitly (but see other proposal below), it seems like we should cherry-pick https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/3287717 and use TrafficStats#tagFileDescriptor instead of SocketTagger.get(). This is fine for now though.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f1c865_ca69f326",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T08:20:45Z",
+      "side": 1,
+      "message": "Nit: given that interfaces can\u0027t have protected or private methods, I don\u0027t think @VisibleForTesting is appropriate here.",
+      "range": {
+        "startLine": 810,
+        "startChar": 8,
+        "endLine": 810,
+        "endChar": 26
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd2354b_b7422791",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T08:20:45Z",
+      "side": 1,
+      "message": "Instead of going through the trouble of doing manual tagging, adding the interface, etc. etc., why not just do:\n\n    try {\n        // Create a socket that\u0027s tagged to callingUid.\n        TrafficStats.setThreadStatsUid(callingUid);\n        sockFd \u003d Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);\n    } finally {\n        TrafficStats.clearThreadStatsUid());\n    }",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 49
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
