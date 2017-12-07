@@ -262,6 +262,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6713f8d3_d127305f",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2017-12-07T19:52:48Z",
+      "side": 1,
+      "message": "I think we should just be discouraging apps from using this API.  We should definitely get rid of the comments about using it to determine identity and check permissions.  Checking permissions is always with uids; identify should be done by having the two sides pass an IBinder token around.",
+      "parentUuid": "ead65bc9_62e84951",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
