@@ -118,6 +118,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a3d7d0_42c859cf",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2017-12-07T18:59:38Z",
+      "side": 1,
+      "message": "The pid is never provided for oneway calls. It can also be 0 for other calls if the calling thread died before the transaction was read.",
+      "parentUuid": "8dcca207_8c305790",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
