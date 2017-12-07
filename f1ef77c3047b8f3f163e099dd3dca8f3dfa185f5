@@ -22,6 +22,30 @@
       "revId": "f1ef77c3047b8f3f163e099dd3dca8f3dfa185f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f641efa_c3c85a71",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14155,
+      "author": {
+        "id": 1153583
+      },
+      "writtenOn": "2017-12-07T02:09:17Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t remove it . A reader comment is In the function startCleaningPackages.",
+      "parentUuid": "3d116ecf_98572f89",
+      "range": {
+        "startLine": 14155,
+        "startChar": 8,
+        "endLine": 14155,
+        "endChar": 17
+      },
+      "revId": "f1ef77c3047b8f3f163e099dd3dca8f3dfa185f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
