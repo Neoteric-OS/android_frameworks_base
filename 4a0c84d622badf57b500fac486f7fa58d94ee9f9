@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4e9734c_48991741",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T07:53:47Z",
+      "side": 1,
+      "message": "It\u0027s non-obvious why this is necessary as compared to, say, a simple \"return arg.getInt$() \u003d\u003d sockFd.getInt$();\".\n\nCan you add a comment to explain why we need to do it?",
+      "range": {
+        "startLine": 442,
+        "startChar": 0,
+        "endLine": 453,
+        "endChar": 0
+      },
+      "revId": "4a0c84d622badf57b500fac486f7fa58d94ee9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
