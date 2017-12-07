@@ -47,6 +47,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.FgThread;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -417,7 +418,7 @@ public class UsbPortManager {
             this.portManager = portManager;
         }
 
-        public void notifyPortStatusChange(ArrayList<PortStatus> currentPortStatus, int retval) {
+        public void notifyPortStatusChange(List<PortStatus> currentPortStatus, int retval) {
             if (!portManager.mSystemReady) {
                 return;
             }
@@ -448,7 +449,7 @@ public class UsbPortManager {
         }
 
 
-        public void notifyPortStatusChange_1_1(ArrayList<PortStatus_1_1> currentPortStatus,
+        public void notifyPortStatusChange_1_1(List<PortStatus_1_1> currentPortStatus,
                 int retval) {
             if (!portManager.mSystemReady) {
                 return;

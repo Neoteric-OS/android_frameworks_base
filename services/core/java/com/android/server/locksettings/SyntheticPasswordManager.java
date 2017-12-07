@@ -360,7 +360,7 @@ public class SyntheticPasswordManager {
             switch (status) {
                 case WeaverReadStatus.OK:
                     response[0] = new VerifyCredentialResponse(
-                            fromByteArrayList(readResponse.value));
+                            fromByteList(readResponse.value));
                     break;
                 case WeaverReadStatus.THROTTLE:
                     response[0] = new VerifyCredentialResponse(readResponse.timeout);
@@ -1110,7 +1110,7 @@ public class SyntheticPasswordManager {
         return result;
     }
 
-    protected static byte[] fromByteArrayList(ArrayList<Byte> data) {
+    protected static byte[] fromByteList(List<Byte> data) {
         byte[] result = new byte[data.size()];
         for (int i = 0; i < data.size(); i++) {
             result[i] = data.get(i);
