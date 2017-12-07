@@ -37235,9 +37235,12 @@ package android.service.carrier {
 
   public class CarrierIdentifier implements android.os.Parcelable {
     ctor public CarrierIdentifier(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+    ctor public CarrierIdentifier(byte[], byte[], byte[]);
     method public int describeContents();
     method public java.lang.String getGid1();
+    method public byte[] getGid1Bytes();
     method public java.lang.String getGid2();
+    method public byte[] getGid2Bytes();
     method public java.lang.String getImsi();
     method public java.lang.String getMcc();
     method public java.lang.String getMnc();
