@@ -18,6 +18,7 @@ package android.os;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import libcore.util.NativeAllocationRegistry;
 
@@ -65,6 +66,85 @@ public class HwParcel {
     private native final void writeDoubleVector(double[] val);
     private native final void writeStringVector(String[] val);
 
+    public final void writeBoolVector(List<Boolean> val) {
+        final int n = val.size();
+        boolean[] array = new boolean[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeBoolVector(array);
+    }
+
+    public final void writeInt8Vector(List<Byte> val) {
+        final int n = val.size();
+        byte[] array = new byte[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt8Vector(array);
+    }
+
+    public final void writeInt16Vector(List<Short> val) {
+        final int n = val.size();
+        short[] array = new short[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt16Vector(array);
+    }
+
+    public final void writeInt32Vector(List<Integer> val) {
+        final int n = val.size();
+        int[] array = new int[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt32Vector(array);
+    }
+
+    public final void writeInt64Vector(List<Long> val) {
+        final int n = val.size();
+        long[] array = new long[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt64Vector(array);
+    }
+
+    public final void writeFloatVector(List<Float> val) {
+        final int n = val.size();
+        float[] array = new float[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeFloatVector(array);
+    }
+
+    public final void writeDoubleVector(List<Double> val) {
+        final int n = val.size();
+        double[] array = new double[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeDoubleVector(array);
+    }
+
+    public final void writeStringVector(List<String> val) {
+        writeStringVector(val.toArray(new String[val.size()]));
+    }
+
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeBoolVector(ArrayList<Boolean> val) {
         final int n = val.size();
         boolean[] array = new boolean[n];
@@ -75,6 +155,11 @@ public class HwParcel {
         writeBoolVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt8Vector(ArrayList<Byte> val) {
         final int n = val.size();
         byte[] array = new byte[n];
@@ -85,6 +170,11 @@ public class HwParcel {
         writeInt8Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt16Vector(ArrayList<Short> val) {
         final int n = val.size();
         short[] array = new short[n];
@@ -95,6 +185,11 @@ public class HwParcel {
         writeInt16Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt32Vector(ArrayList<Integer> val) {
         final int n = val.size();
         int[] array = new int[n];
@@ -105,6 +200,11 @@ public class HwParcel {
         writeInt32Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt64Vector(ArrayList<Long> val) {
         final int n = val.size();
         long[] array = new long[n];
@@ -115,6 +215,11 @@ public class HwParcel {
         writeInt64Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeFloatVector(ArrayList<Float> val) {
         final int n = val.size();
         float[] array = new float[n];
@@ -125,6 +230,11 @@ public class HwParcel {
         writeFloatVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeDoubleVector(ArrayList<Double> val) {
         final int n = val.size();
         double[] array = new double[n];
@@ -135,6 +245,11 @@ public class HwParcel {
         writeDoubleVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeStringVector(ArrayList<String> val) {
         writeStringVector(val.toArray(new String[val.size()]));
     }
