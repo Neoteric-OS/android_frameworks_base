@@ -242,6 +242,8 @@ aidl_files := \
 	system/bt/binder/android/bluetooth/BluetoothDevice.aidl \
 	system/netd/server/binder/android/net/UidRange.aidl \
 	frameworks/base/telephony/java/android/telephony/PcoData.aidl \
+	frameworks/base/core/java/android/omapi/OpenLogicalChannelResponse.aidl \
+	frameworks/base/core/java/android/omapi/SmartcardError.aidl \
 
 gen := $(TARGET_OUT_COMMON_INTERMEDIATES)/framework.aidl
 $(gen): PRIVATE_SRC_FILES := $(aidl_files)
