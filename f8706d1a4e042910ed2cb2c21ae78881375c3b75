@@ -214,6 +214,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc78b04_65d91722",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2017-12-07T19:16:47Z",
+      "side": 1,
+      "message": "The rest of this comment should also be revised. I don\u0027t think there is any safe way to use the pid to check for permissions as it can get recycled at any time. I might be better to remove this api completely.",
+      "parentUuid": "47bab957_8f5dcc88",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
