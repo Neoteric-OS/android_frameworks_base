@@ -166,6 +166,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bab957_8f5dcc88",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2017-12-07T19:14:33Z",
+      "side": 1,
+      "message": "We don\u0027t save the calling thread for oneway calls, so we don\u0027t have a source task to convert to a pid when reading a transaction in that case.",
+      "parentUuid": "e71b817a_8c689435",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
