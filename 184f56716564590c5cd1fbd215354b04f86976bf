@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd5f8cd3_7405b7cb",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-07T12:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4991024e_9f099263",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f1c865_ca69f326",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0098a289_85836a69",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-07T12:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f1c865_ca69f326",
+      "range": {
+        "startLine": 810,
+        "startChar": 8,
+        "endLine": 810,
+        "endChar": 26
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd2354b_b7422791",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a13e851_d446490c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-07T12:51:29Z",
+      "side": 1,
+      "message": "Noted; I\u0027ve switched to using jsharkey\u0027s new TrafficStats API. I do like having it explicit, so that it\u0027s easy to test without the intermediate layers, and verify that the correct UID was passed in from openUdpEncapsulationSocket",
+      "parentUuid": "8fd2354b_b7422791",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 49
+      },
+      "revId": "184f56716564590c5cd1fbd215354b04f86976bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
