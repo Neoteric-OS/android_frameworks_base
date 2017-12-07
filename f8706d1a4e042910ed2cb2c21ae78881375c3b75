@@ -238,6 +238,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead65bc9_62e84951",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2017-12-07T19:21:00Z",
+      "side": 1,
+      "message": "We can\u0027t save the pid in the sender because it could be in a different namespace than the receiver. We could save the task struct, but that would require additional references and overhead which I don\u0027t think is worth it.",
+      "parentUuid": "dfc78b04_65d91722",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
