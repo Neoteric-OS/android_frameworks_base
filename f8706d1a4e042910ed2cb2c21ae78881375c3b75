@@ -22,6 +22,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fabfae_4f2047fa",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2017-12-07T02:54:37Z",
+      "side": 1,
+      "message": "I just wanted to document somewhere about my finding. I don\u0027t have any knowledge about the underlying IPCThreadState code, so might be \u0027subtle but undocumented property of IPCTHreadState.getCallingPid\u0027. But wouldn\u0027t it better for 3rd party developers to aware about it?\nIf it doesn\u0027t look good, then I\u0027m fine with abandoning the CL. Could you advise on this?",
+      "parentUuid": "44751d94_2e53b189",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
