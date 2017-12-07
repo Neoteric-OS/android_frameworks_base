@@ -20,6 +20,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.CellInfo;
 
 /**
  * @hide
@@ -44,6 +45,8 @@ public class OperatorInfo implements Parcelable {
     @UnsupportedAppUsage
     private State mState = State.UNKNOWN;
 
+    @UnsupportedAppUsage
+    private @CellInfo.Type int mCellType = CellInfo.TYPE_UNKNOWN;
 
     @UnsupportedAppUsage
     public String
@@ -67,6 +70,12 @@ public class OperatorInfo implements Parcelable {
     public State
     getState() {
         return mState;
+    }
+
+    @UnsupportedAppUsage
+    public @CellInfo.Type int
+    getCellType() {
+        return mCellType;
     }
 
     @UnsupportedAppUsage
@@ -99,6 +108,25 @@ public class OperatorInfo implements Parcelable {
         this(operatorAlphaLong, operatorAlphaShort, operatorNumeric, State.UNKNOWN);
     }
 
+    @UnsupportedAppUsage
+    OperatorInfo(String operatorAlphaLong,
+                 String operatorAlphaShort,
+                 String operatorNumeric,
+                 State state,
+                 @CellInfo.Type int cellType) {
+        this(operatorAlphaLong, operatorAlphaShort, operatorNumeric, state);
+        mCellType = cellType;
+    }
+
+    @UnsupportedAppUsage
+    public OperatorInfo(String operatorAlphaLong,
+            String operatorAlphaShort,
+            String operatorNumeric,
+            @CellInfo.Type int cellType) {
+        this(operatorAlphaLong, operatorAlphaShort, operatorNumeric);
+        mCellType = cellType;
+    }
+
     /**
      * See state strings defined in ril.h RIL_REQUEST_QUERY_AVAILABLE_NETWORKS
      */
@@ -124,7 +152,8 @@ public class OperatorInfo implements Parcelable {
         return "OperatorInfo " + mOperatorAlphaLong
                 + "/" + mOperatorAlphaShort
                 + "/" + mOperatorNumeric
-                + "/" + mState;
+                + "/" + mState
+                + "/" + mCellType;
     }
 
     /**
@@ -150,6 +179,7 @@ public class OperatorInfo implements Parcelable {
         dest.writeString(mOperatorAlphaShort);
         dest.writeString(mOperatorNumeric);
         dest.writeSerializable(mState);
+        dest.writeInt(mCellType);
     }
 
     /**
@@ -165,7 +195,8 @@ public class OperatorInfo implements Parcelable {
                         in.readString(), /*operatorAlphaLong*/
                         in.readString(), /*operatorAlphaShort*/
                         in.readString(), /*operatorNumeric*/
-                        (State) in.readSerializable()); /*state*/
+                        (State) in.readSerializable(), /*state*/
+                        in.readInt()); /* cellType*/
                 return opInfo;
             }
 
