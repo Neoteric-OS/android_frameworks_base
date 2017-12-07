@@ -46,6 +46,30 @@
       "revId": "f1ef77c3047b8f3f163e099dd3dca8f3dfa185f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5df98dd_bc1d3fd7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14155,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-12-07T15:04:47Z",
+      "side": 1,
+      "message": "the comments \"// writer\" and \"// reader\" apply specifically to the usage of \"synchronized (mPackages)\"\n\nso, even if we kept it, it should be moved to be above the synchronized() block.\n\nhowever, the reason for these comments was an aborted attempt to break apart the mPackages lock into separate reader and writer locks. at this point, we are not going to pursue that course. instead, we\u0027re going to do other things to help reduce the contention for the package manager lock.\n\nas such, \"// writer\" here is obsolete and irrelevant.",
+      "parentUuid": "3f641efa_c3c85a71",
+      "range": {
+        "startLine": 14155,
+        "startChar": 8,
+        "endLine": 14155,
+        "endChar": 17
+      },
+      "revId": "f1ef77c3047b8f3f163e099dd3dca8f3dfa185f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
