@@ -31,7 +31,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.media.AudioManager;
-import android.media.AudioManagerInternal;
 import android.media.AudioSystem;
 import android.media.IAudioService;
 import android.media.IRemoteVolumeController;
@@ -104,7 +103,6 @@ public class MediaSessionService extends SystemService implements Monitor {
 
     private KeyguardManager mKeyguardManager;
     private IAudioService mAudioService;
-    private AudioManagerInternal mAudioManagerInternal;
     private ContentResolver mContentResolver;
     private SettingsObserver mSettingsObserver;
     private INotificationManager mNotificationManager;
@@ -151,7 +149,6 @@ public class MediaSessionService extends SystemService implements Monitor {
                 }
             }
         });
-        mAudioManagerInternal = LocalServices.getService(AudioManagerInternal.class);
         mContentResolver = getContext().getContentResolver();
         mSettingsObserver = new SettingsObserver();
         mSettingsObserver.observe();
