@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d68bef7c_1b2533be",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T09:23:18Z",
+      "side": 1,
+      "message": "Nit: I find the previous ManagedResource name much clearer, since this doesn\u0027t really have much to do with the kernel.",
+      "range": {
+        "startLine": 107,
+        "startChar": 18,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba563d82_9bd252ff",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T09:23:18Z",
+      "side": 1,
+      "message": "Is it safe to change mRefCount without locking? The methods that subtract from mRefCount all seem to lock on the IpSecService class lock, so it seems risky. If it is safe, can you add a comment to explain why?",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 34
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1561070b_04e0c5ef",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T09:23:18Z",
+      "side": 1,
+      "message": "I find this name unclear. Perhaps something like releaseRecursivelyWhenUnreferenced or releaseRecursivelyForUnreference? releaseAndReleaseChildren?",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 52
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
