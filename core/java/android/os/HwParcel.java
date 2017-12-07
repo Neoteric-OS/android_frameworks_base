@@ -18,6 +18,7 @@ package android.os;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import libcore.util.NativeAllocationRegistry;
 
@@ -65,6 +66,85 @@ public class HwParcel {
     private native final void writeDoubleVector(double[] val);
     private native final void writeStringVector(String[] val);
 
+    public final void writeBoolList(List<Boolean> val) {
+        final int n = val.size();
+        boolean[] array = new boolean[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeBoolVector(array);
+    }
+
+    public final void writeInt8List(List<Byte> val) {
+        final int n = val.size();
+        byte[] array = new byte[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt8Vector(array);
+    }
+
+    public final void writeInt16List(List<Short> val) {
+        final int n = val.size();
+        short[] array = new short[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt16Vector(array);
+    }
+
+    public final void writeInt32List(List<Integer> val) {
+        final int n = val.size();
+        int[] array = new int[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt32Vector(array);
+    }
+
+    public final void writeInt64List(List<Long> val) {
+        final int n = val.size();
+        long[] array = new long[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeInt64Vector(array);
+    }
+
+    public final void writeFloatList(List<Float> val) {
+        final int n = val.size();
+        float[] array = new float[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeFloatVector(array);
+    }
+
+    public final void writeDoubleList(List<Double> val) {
+        final int n = val.size();
+        double[] array = new double[n];
+        for (int i = 0; i < n; ++i) {
+            array[i] = val.get(i);
+        }
+
+        writeDoubleVector(array);
+    }
+
+    public final void writeStringList(List<String> val) {
+        writeStringVector(val.toArray(new String[val.size()]));
+    }
+
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeBoolVector(ArrayList<Boolean> val) {
         final int n = val.size();
         boolean[] array = new boolean[n];
@@ -75,6 +155,11 @@ public class HwParcel {
         writeBoolVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt8Vector(ArrayList<Byte> val) {
         final int n = val.size();
         byte[] array = new byte[n];
@@ -85,6 +170,11 @@ public class HwParcel {
         writeInt8Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt16Vector(ArrayList<Short> val) {
         final int n = val.size();
         short[] array = new short[n];
@@ -95,6 +185,11 @@ public class HwParcel {
         writeInt16Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt32Vector(ArrayList<Integer> val) {
         final int n = val.size();
         int[] array = new int[n];
@@ -105,6 +200,11 @@ public class HwParcel {
         writeInt32Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeInt64Vector(ArrayList<Long> val) {
         final int n = val.size();
         long[] array = new long[n];
@@ -115,6 +215,11 @@ public class HwParcel {
         writeInt64Vector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeFloatVector(ArrayList<Float> val) {
         final int n = val.size();
         float[] array = new float[n];
@@ -125,6 +230,11 @@ public class HwParcel {
         writeFloatVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeDoubleVector(ArrayList<Double> val) {
         final int n = val.size();
         double[] array = new double[n];
@@ -135,6 +245,11 @@ public class HwParcel {
         writeDoubleVector(array);
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final void writeStringVector(ArrayList<String> val) {
         writeStringVector(val.toArray(new String[val.size()]));
     }
@@ -160,48 +275,134 @@ public class HwParcel {
     private native final double[] readDoubleVectorAsArray();
     private native final String[] readStringVectorAsArray();
 
+    public final List<Boolean> readBoolList() {
+        Boolean[] array = HwBlob.wrapArray(readBoolVectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Byte> readInt8List() {
+        Byte[] array = HwBlob.wrapArray(readInt8VectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Short> readInt16List() {
+        Short[] array = HwBlob.wrapArray(readInt16VectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Integer> readInt32List() {
+        Integer[] array = HwBlob.wrapArray(readInt32VectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Long> readInt64List() {
+        Long[] array = HwBlob.wrapArray(readInt64VectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Float> readFloatList() {
+        Float[] array = HwBlob.wrapArray(readFloatVectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<Double> readDoubleList() {
+        Double[] array = HwBlob.wrapArray(readDoubleVectorAsArray());
+
+        return Arrays.asList(array);
+    }
+
+    public final List<String> readStringList() {
+        return Arrays.asList(readStringVectorAsArray());
+    }
+
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Boolean> readBoolVector() {
         Boolean[] array = HwBlob.wrapArray(readBoolVectorAsArray());
 
         return new ArrayList<Boolean>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Byte> readInt8Vector() {
         Byte[] array = HwBlob.wrapArray(readInt8VectorAsArray());
 
         return new ArrayList<Byte>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Short> readInt16Vector() {
         Short[] array = HwBlob.wrapArray(readInt16VectorAsArray());
 
         return new ArrayList<Short>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Integer> readInt32Vector() {
         Integer[] array = HwBlob.wrapArray(readInt32VectorAsArray());
 
         return new ArrayList<Integer>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Long> readInt64Vector() {
         Long[] array = HwBlob.wrapArray(readInt64VectorAsArray());
 
         return new ArrayList<Long>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Float> readFloatVector() {
         Float[] array = HwBlob.wrapArray(readFloatVectorAsArray());
 
         return new ArrayList<Float>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<Double> readDoubleVector() {
         Double[] array = HwBlob.wrapArray(readDoubleVectorAsArray());
 
         return new ArrayList<Double>(Arrays.asList(array));
     }
 
+    /**
+     * @deprecated Replaced with List variant.
+     * @removed
+     */
+    @Deprecated
     public final ArrayList<String> readStringVector() {
         return new ArrayList<String>(Arrays.asList(readStringVectorAsArray()));
     }
