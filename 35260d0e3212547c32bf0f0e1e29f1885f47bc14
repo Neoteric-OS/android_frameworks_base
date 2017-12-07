@@ -25,6 +25,121 @@
     },
     {
       "key": {
+        "uuid": "96e1b9ef_a1eaa045",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "It feels strange that for every object that we want to refcount/track (e.g., SpiRecord) we need both the object itself (SpiRecord) and a wrapper (RefcountedResource\u003cSpiRecord\u003e). Is there a way to simplify that? For example, could SpiRecord itself extend RefcountedResource?",
+      "range": {
+        "startLine": 141,
+        "startChar": 21,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e34651c_49b05f10",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "Suggestion: instead of teaching each class (SpiRecord, etc.) how to free things in IpSecService, can we have IpSecService tell the class how to do this by passing in a lambda at construction time? So you could do something like:\n\n    new RefcountedResource\u003cSpiRecord\u003e(\n            new SpiRecord(...),\n            binder,\n            (resourceId) -\u003e getUserRecord().removeSpiRecord(resourceId))\n\n(that last line might just be UserRecord::removeSpiRecord).\n\nI think that would break the dependency between this scheme and IpSecService. This would later allow us to move this code out of IpSecService, which would make it more generic and easier to test.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11deac81_f601e32d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "Should this be called invalidate()?",
+      "range": {
+        "startLine": 156,
+        "startChar": 13,
+        "endLine": 156,
+        "endChar": 34
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393a20b6_fd14e2d0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "Suggest renaming to releaseUnderlyingResources.",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c21cd5_cf703856",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "I think this class needs a docstring explaining how to use it. I find it a bit confusing that the class supports both explicit use (which starts when this object is constructed and ends when someone calls cleanupAndRelease or when its creator dies) and implicit use (which lasts for as long as the object is referenced), so that should be clearly explained here.",
+      "range": {
+        "startLine": 170,
+        "startChar": 17,
+        "endLine": 170,
+        "endChar": 35
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba563d82_9bd252ff",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -48,6 +163,52 @@
     },
     {
       "key": {
+        "uuid": "79d5a0d8_553ef1a0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "I think this name is confusing because the method may or may not clean up and release its resources. Perhaps \"unlink\" or \"unregister\", or \"delete\", since what this method really does is signal to the object that its caller is no longer interested in it?",
+      "range": {
+        "startLine": 225,
+        "startChar": 20,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c32fdf_6986c361",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "I think things would be clearer if this was moved into the function below.",
+      "range": {
+        "startLine": 237,
+        "startChar": 12,
+        "endLine": 237,
+        "endChar": 24
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1561070b_04e0c5ef",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -59,6 +220,30 @@
       "writtenOn": "2017-12-07T09:23:18Z",
       "side": 1,
       "message": "I find this name unclear. Perhaps something like releaseRecursivelyWhenUnreferenced or releaseRecursivelyForUnreference? releaseAndReleaseChildren?",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 52
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6501ffb9_c5a87b88",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-07T10:40:26Z",
+      "side": 1,
+      "message": "Actually, now that I understand a bit more about this code, I would suggest making this a method that has a clear user-visible purpose: remove a reference to this object.\n\nEverything else (involving children, ...) is handled by this method so its caller doesn\u0027t have to worry about it. So perhaps just name this to \"decRef\", \"releaseReference\", \"unreference\" or similar?\n\nWith a view to rewording the docstring to something that emphasizes the primary purpose, would suggest:\n\n         * Removes a reference to this resource. If as a result of this operation this resource\n         * becomes unreferenced, then the underlying resources are freed, and references to all its\n         * child resources are dropped. Any child resources that as a result become unreferenced\n         * will free their underlying resources and drop references to their children, and so on.\n         *\n         * There must be at least one reference to this object. Calling this method on a resource\n         * that is already unreferenced will result in an IllegalStateException.",
+      "parentUuid": "1561070b_04e0c5ef",
       "range": {
         "startLine": 254,
         "startChar": 20,
