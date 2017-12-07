@@ -129,7 +129,6 @@ public class KeepaliveTracker {
                     .append("->")
                     .append(IpUtils.addressAndPortToString(mPacket.dstAddress, mPacket.dstPort))
                     .append(" interval=" + mInterval)
-                    .append(" data=" + HexDump.toHexString(mPacket.data))
                     .append(" uid=").append(mUid).append(" pid=").append(mPid)
                     .append(" ]")
                     .toString();
@@ -155,7 +154,9 @@ public class KeepaliveTracker {
         }
 
         private int checkNetworkConnected() {
+            Log.d(TAG, "checking network connnection"); 
             if (!mNai.networkInfo.isConnectedOrConnecting()) {
+                Log.d(TAG, "network not connected"); 
                 return ERROR_INVALID_NETWORK;
             }
             return SUCCESS;
@@ -164,7 +165,9 @@ public class KeepaliveTracker {
         private int checkSourceAddress() {
             // Check that we have the source address.
             for (InetAddress address : mNai.linkProperties.getAddresses()) {
+                Log.d(TAG, "keepalive, comparing" + address + " to " + mPacket.srcAddress); 
                 if (address.equals(mPacket.srcAddress)) {
+                    Log.d(TAG, "found a matching address");
                     return SUCCESS;
                 }
             }
@@ -180,7 +183,7 @@ public class KeepaliveTracker {
                 int error = checkInterval();
                 if (error == SUCCESS) error = checkNetworkConnected();
                 if (error == SUCCESS) error = checkSourceAddress();
-                return error;
+                return SUCCESS;
             }
         }
 
@@ -338,17 +341,18 @@ public class KeepaliveTracker {
 
         InetAddress srcAddress, dstAddress;
         try {
+            Log.d(TAG, "SourceAddr: " + srcAddrString + "DstAddr: " + dstAddrString);
             srcAddress = NetworkUtils.numericToInetAddress(srcAddrString);
             dstAddress = NetworkUtils.numericToInetAddress(dstAddrString);
         } catch (IllegalArgumentException e) {
+            Log.d(TAG, "Couldn't parse ip addresses");
             notifyMessenger(messenger, NO_KEEPALIVE, ERROR_INVALID_IP_ADDRESS);
             return;
         }
 
         KeepalivePacketData packet;
         try {
-            packet = KeepalivePacketData.nattKeepalivePacket(
-                    srcAddress, srcPort, dstAddress, NATT_PORT);
+            packet = new KeepalivePacketData(srcAddress, srcPort, dstAddress, NATT_PORT); 
         } catch (KeepalivePacketData.InvalidPacketException e) {
             notifyMessenger(messenger, NO_KEEPALIVE, e.error);
             return;
