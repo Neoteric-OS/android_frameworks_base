@@ -142,6 +142,30 @@
       "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71b817a_8c689435",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-12-07T19:08:17Z",
+      "side": 1,
+      "message": "Do you know why it is that way? Even for oneway calls, we do of course know the calling pid in the driver, so we could pass it. Is it because the pid could be recycled and so technically be invalid by the time the receiver gets it?",
+      "parentUuid": "78a3d7d0_42c859cf",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 80
+      },
+      "revId": "f8706d1a4e042910ed2cb2c21ae78881375c3b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
