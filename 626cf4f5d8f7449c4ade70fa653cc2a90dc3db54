@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21426ccc_cb102083",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-08T20:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c31d6aa_f4e71d82",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 10
+      },
+      "revId": "626cf4f5d8f7449c4ade70fa653cc2a90dc3db54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8caba837_5dfbb7c2",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T19:29:48Z",
       "side": 1,
       "message": "I think the line should be wrapped as\n\nif (DBG) {\n  Rlog.d(LOG_TAG, \"[ServiceState] Unexpected networkType\u003d\" + networkType);\n}",
+      "range": {
+        "startLine": 1321,
+        "startChar": 0,
+        "endLine": 1321,
+        "endChar": 40
+      },
+      "revId": "626cf4f5d8f7449c4ade70fa653cc2a90dc3db54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe8a02c_c9dba7bc",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-08T20:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8caba837_5dfbb7c2",
       "range": {
         "startLine": 1321,
         "startChar": 0,
