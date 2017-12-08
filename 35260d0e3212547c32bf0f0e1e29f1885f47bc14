@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a38c851_0be885ee",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Since these resources are tracking kernel resources, should we call the individual objects KernelResourceTracker, and then the arrays as KernelResourceTrackerArray? The term managedResource seemed a little nebulous in the context of a new object that managed the reference counts.",
+      "parentUuid": "d68bef7c_1b2533be",
+      "range": {
+        "startLine": 107,
+        "startChar": 18,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96e1b9ef_a1eaa045",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T10:40:26Z",
       "side": 1,
       "message": "It feels strange that for every object that we want to refcount/track (e.g., SpiRecord) we need both the object itself (SpiRecord) and a wrapper (RefcountedResource\u003cSpiRecord\u003e). Is there a way to simplify that? For example, could SpiRecord itself extend RefcountedResource?",
+      "range": {
+        "startLine": 141,
+        "startChar": 21,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d33bb62_71822b2e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Inheritance was one of the ways in which we originally considered implementing this, but I think we wanted a way to separate the responsibility of refcounting from the managedResource objects. This does end up a little more complicated, but it also does allow us to do testing as completely separate from the IpSecService (without dealing with quotas, UIDs and whatnot)\n\nThat said, I am open to revising this to use inheritance if the separation of responsibilities does not justify the additional layer of abstraction.",
+      "parentUuid": "96e1b9ef_a1eaa045",
       "range": {
         "startLine": 141,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f33bf9c_2f208187",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Yep. When misterikkit and I were considering this, we felt that a callback design was harder to trace, and potentially harder to understand. Ultimately, it would still be the IResource reaching back and removing itself, since it is the only one that \"knows\" how to do so (via the lambda). Because the binder-death listener is the object itself, it somehow would always be triggering it\u0027s own removal from the array.\n\nThe one way we thought of solving this was to have a single binder per UID/PID (stored in UserRecord), which would then be able to call an external cleanup method, which would do the array cleanup, and subsequently the resource cleanup",
+      "parentUuid": "3e34651c_49b05f10",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11deac81_f601e32d",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ddca83_8e609470",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11deac81_f601e32d",
+      "range": {
+        "startLine": 156,
+        "startChar": 13,
+        "endLine": 156,
+        "endChar": 34
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f0bd48ba_66128b80",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393a20b6_fd14e2d0",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c21cd5_cf703856",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5261ca38_83c6290b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c21cd5_cf703856",
+      "range": {
+        "startLine": 170,
+        "startChar": 17,
+        "endLine": 170,
+        "endChar": 35
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a5c4f11f_b8681200",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Yep; this method is called exclusively within methods that are also locked. I\u0027ve added the GuardedBy() annotation for clarity.",
+      "parentUuid": "ba563d82_9bd252ff",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 34
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d5a0d8_553ef1a0",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-07T10:40:26Z",
       "side": 1,
       "message": "I think this name is confusing because the method may or may not clean up and release its resources. Perhaps \"unlink\" or \"unregister\", or \"delete\", since what this method really does is signal to the object that its caller is no longer interested in it?",
+      "range": {
+        "startLine": 225,
+        "startChar": 20,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6874ec_6219098f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "I took the comment on releaseIfUnreferencedRecursively with this, and ended up with a name \"userRelease\", signifying that this is a method called when the user wishes to release their reference to this object.\n\nWould that accurately describe the method\u0027s purpose?",
+      "parentUuid": "79d5a0d8_553ef1a0",
       "range": {
         "startLine": 225,
         "startChar": 20,
@@ -206,6 +398,30 @@
       "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbef4421_cf97b2bb",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c32fdf_6986c361",
+      "range": {
+        "startLine": 237,
+        "startChar": 12,
+        "endLine": 237,
+        "endChar": 24
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +469,30 @@
       "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3a4f9c_d2c5553a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-08T19:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6501ffb9_c5a87b88",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 52
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
