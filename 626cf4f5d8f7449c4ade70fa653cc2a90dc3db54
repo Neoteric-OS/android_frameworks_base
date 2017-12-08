@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c31d6aa_f4e71d82",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2017-12-08T19:29:48Z",
+      "side": 1,
+      "message": "This looks a bit safer to be private, because it\u0027s value is not really a constant but may change later when we add new tech.",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 10
+      },
+      "revId": "626cf4f5d8f7449c4ade70fa653cc2a90dc3db54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caba837_5dfbb7c2",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2017-12-08T19:29:48Z",
+      "side": 1,
+      "message": "I think the line should be wrapped as\n\nif (DBG) {\n  Rlog.d(LOG_TAG, \"[ServiceState] Unexpected networkType\u003d\" + networkType);\n}",
+      "range": {
+        "startLine": 1321,
+        "startChar": 0,
+        "endLine": 1321,
+        "endChar": 40
+      },
+      "revId": "626cf4f5d8f7449c4ade70fa653cc2a90dc3db54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c68b35_4911eb3d",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2017-12-08T19:29:48Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1327,
+        "startChar": 16,
+        "endLine": 1328,
+        "endChar": 75
+      },
+      "revId": "626cf4f5d8f7449c4ade70fa653cc2a90dc3db54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
