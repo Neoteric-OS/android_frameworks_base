@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb4db5e_ac88d1e3",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2017-12-08T22:54:32Z",
+      "side": 1,
+      "message": "The indentation doesn\u0027t look right, and it\u0027s better to put this above all RIL_RADIO_TECHNOLOGY_* constants.",
+      "range": {
+        "startLine": 1168,
+        "startChar": 4,
+        "endLine": 1188,
+        "endChar": 49
+      },
+      "revId": "7f78eac6cf2825984106d48ade99cce05a9ce25a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
