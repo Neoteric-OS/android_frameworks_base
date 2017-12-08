@@ -36795,6 +36795,55 @@ package android.sax {
 
 }
 
+package android.se.omapi {
+
+  public class Channel {
+    method public void close();
+    method public byte[] getSelectResponse();
+    method public android.se.omapi.Session getSession();
+    method public boolean isBasicChannel();
+    method public boolean isClosed();
+    method public boolean selectNext();
+    method public byte[] transmit(byte[]) throws java.io.IOException;
+    field public static final java.lang.String TAG = "OMAPI.Channel";
+  }
+
+  public class Reader {
+    method public void closeSessions();
+    method public java.lang.String getName();
+    method public android.se.omapi.SEService getSEService();
+    method public boolean isSecureElementPresent();
+    method public android.se.omapi.Session openSession() throws java.io.IOException;
+    field public static final java.lang.String TAG = "OMAPI.Reader";
+  }
+
+  public class SEService {
+    ctor public SEService(android.content.Context, android.se.omapi.SEService.CallBack);
+    method public android.se.omapi.Reader[] getReaders();
+    method public java.lang.String getVersion();
+    method public boolean isConnected();
+    method public void shutdown();
+  }
+
+  public static abstract interface SEService.CallBack {
+    method public abstract void serviceConnected(android.se.omapi.SEService);
+  }
+
+  public class Session {
+    method public void close();
+    method public void closeChannels();
+    method public byte[] getATR();
+    method public android.se.omapi.Reader getReader();
+    method public boolean isClosed();
+    method public android.se.omapi.Channel openBasicChannel(byte[], byte) throws java.io.IOException;
+    method public android.se.omapi.Channel openBasicChannel(byte[]) throws java.io.IOException;
+    method public android.se.omapi.Channel openLogicalChannel(byte[], byte) throws java.io.IOException;
+    method public android.se.omapi.Channel openLogicalChannel(byte[]) throws java.io.IOException;
+    field public static final java.lang.String TAG = "OMAPI.Session";
+  }
+
+}
+
 package android.security {
 
   public final class KeyChain {
