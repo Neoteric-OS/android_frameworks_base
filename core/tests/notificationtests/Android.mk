@@ -16,6 +16,9 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     legacy-android-test \
     ub-uiautomator
 
+LOCAL_IS_INSTRUMENTATION_TEST := true
+
 include $(BUILD_PACKAGE)
+include $(BUILD_AUTOGEN_TEST_CONFIG)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
