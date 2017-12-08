@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c9f3d79_42fd603d",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-08T10:45:08Z",
+      "side": 1,
+      "message": "Because it can avoid that each listener don\u0027t clobber each other.\n\nThere is similar code at line 1860 in this class.\n\n        if ((events \u0026 PhoneStateListener.LISTEN_SERVICE_STATE) !\u003d 0) {\n            try {\n                if (VDBG) log(\"checkPossibleMissNotify: onServiceStateChanged state\u003d\" +\n                        mServiceState[phoneId]);\n                r.callback.onServiceStateChanged(",
+      "parentUuid": "608c64e9_86fc2645",
+      "range": {
+        "startLine": 682,
+        "startChar": 36,
+        "endLine": 682,
+        "endChar": 62
+      },
+      "revId": "4e0a2751efd4b0f66586e1ff1f745f99411a2a9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c14f86c_71aadfa2",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T22:24:08Z",
       "side": 1,
       "message": "same question",
+      "range": {
+        "startLine": 1971,
+        "startChar": 24,
+        "endLine": 1971,
+        "endChar": 50
+      },
+      "revId": "4e0a2751efd4b0f66586e1ff1f745f99411a2a9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c94dca6a_44b9e1cc",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-08T10:45:08Z",
+      "side": 1,
+      "message": "Same comment.",
+      "parentUuid": "4c14f86c_71aadfa2",
       "range": {
         "startLine": 1971,
         "startChar": 24,
