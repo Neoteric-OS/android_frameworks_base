@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5117e38_443654f1",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Good catch! Done",
+      "parentUuid": "c6b08097_7280c4dc",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 71
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a89e9ce0_3505d1de",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "This link doesn\u0027t refer to a method in the current class; please be sure to prefix with the correct class.  I think its TelephonyManager in this case?",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 85
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dc5b490_367917fc",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a89e9ce0_3505d1de",
       "range": {
         "startLine": 29,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e7e7cd65_1278df47",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0b5e8e_4932c92b",
+      "range": {
+        "startLine": 30,
+        "startChar": 40,
+        "endLine": 30,
+        "endChar": 52
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d01f1436_bcc7cbb1",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "Should be private; we don\u0027t normally expose this in the log tags.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fd7cb78_a3858f02",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d01f1436_bcc7cbb1",
       "range": {
         "startLine": 34,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d46202ae_0d5c35f4",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c65faa_8da85ed8",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 95
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf2d752_27ce0a23",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "Same comment.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 84
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d366028_cf2eece5",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf2d752_27ce0a23",
       "range": {
         "startLine": 48,
         "startChar": 4,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3980d73e_b6d21292",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c58a45_480aebb3",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef338598_fb65c3aa",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "These should be private and there should be getter methods defined for them.\n\nThe values shouldn\u0027t be modified after creation, so no setters should be required.  If some of these are optional, adding a builder would provide the caller a cleaner means of creating instances.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 37
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c9166c6_1104a20a",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef338598_fb65c3aa",
       "range": {
         "startLine": 66,
         "startChar": 4,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "1d406e3d_33f56daf",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Actually the class RadioNetworkConstants should also be exposed, I have corrected that in the new patch",
+      "parentUuid": "e39c908a_ce682b91",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1ac0ab0_905185d2",
         "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "This sentence doesn\u0027t make sense.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf0ce3cc_a421fc84",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ac0ab0_905185d2",
       "range": {
         "startLine": 48,
         "startChar": 7,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "a8bcafd1_140d3f02",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d01ceb98_834a3120",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42507290_f9d1703e",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -266,6 +530,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "This shouldn\u0027t take sub Id as a parameter; the other TelephonyManager classes use the SubId associated with the current TelephonyManager instance.",
+      "range": {
+        "startLine": 4716,
+        "startChar": 16,
+        "endLine": 4716,
+        "endChar": 61
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b32404a_a6b73ceb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4716,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42507290_f9d1703e",
       "range": {
         "startLine": 4716,
         "startChar": 16,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "c299ae54_fe7651fd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4769,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a2f79d8_1330597d",
+      "range": {
+        "startLine": 4769,
+        "startChar": 39,
+        "endLine": 4769,
+        "endChar": 68
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecdfdb13_6e8e16e7",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -312,6 +624,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "Add RequiresPermission annotation.",
+      "range": {
+        "startLine": 4770,
+        "startChar": 4,
+        "endLine": 4771,
+        "endChar": 22
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b58f202_e82c181e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4771,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecdfdb13_6e8e16e7",
       "range": {
         "startLine": 4770,
         "startChar": 4,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "dd7b818f_228a685c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4796,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b490d4_b60a35d4",
+      "range": {
+        "startLine": 4796,
+        "startChar": 49,
+        "endLine": 4796,
+        "endChar": 58
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a8a15ff_cfa8325d",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -358,6 +718,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "Make sure to @link to the individual constants which are appropriate here.  Since RILConstants is @hide, the applicable constants should be copied here so that the caller can access them.",
+      "range": {
+        "startLine": 4821,
+        "startChar": 53,
+        "endLine": 4821,
+        "endChar": 83
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1856d96_3e767870",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4821,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "This is a mistake, this function should be @hide",
+      "parentUuid": "2a8a15ff_cfa8325d",
       "range": {
         "startLine": 4821,
         "startChar": 53,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "e3760263_f83fce91",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4825,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "This is a mistake, this function should be @hide",
+      "parentUuid": "4c934cad_f44cfd93",
+      "range": {
+        "startLine": 4824,
+        "startChar": 4,
+        "endLine": 4825,
+        "endChar": 13
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b523709d_2161c431",
         "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
         "patchSetId": 3
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "ffc041fa_a2d20d55",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "The inner class \"NetworkScanCallback\" needs to be exposed.",
+      "parentUuid": "b523709d_2161c431",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd8acf04_f15b7783",
         "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
         "patchSetId": 3
@@ -427,6 +859,30 @@
       "writtenOn": "2017-12-07T20:52:20Z",
       "side": 1,
       "message": "Please add @param to describe what the error code is and @link to the valid error code values.",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "d8361af1a2e7ea25498533a06ac66d142abf8c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af03529d_059b1cca",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T23:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd8acf04_f15b7783",
       "range": {
         "startLine": 78,
         "startChar": 32,
