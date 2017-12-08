@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6bb5b09_31b0a104",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-12-08T08:32:59Z",
+      "side": 1,
+      "message": "\"representing\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "79683b2ac375db7e9f8d88e767c639729d09b8f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc868a00_94e3fc62",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-12-08T08:32:59Z",
+      "side": 1,
+      "message": "Also fine with me if you want to just have an unconditional line, e.g.:\n\n    mIsCurrentlyValid \u003d (newNai !\u003d null);\n    mCurrentDefaultNetwork \u003d ev;\n\nMight be easier to read.",
+      "range": {
+        "startLine": 155,
+        "startChar": 10,
+        "endLine": 155,
+        "endChar": 14
+      },
+      "revId": "79683b2ac375db7e9f8d88e767c639729d09b8f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
