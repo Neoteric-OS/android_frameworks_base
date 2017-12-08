@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24aa708_ba015728",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-12-08T20:21:01Z",
+      "side": 1,
+      "message": "This flips the logic, making quiet mode enabled by default.",
+      "range": {
+        "startLine": 1631,
+        "startChar": 32,
+        "endLine": 1631,
+        "endChar": 44
+      },
+      "revId": "b5cd11a4046e1fa2f69ad040911ecba756290e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
