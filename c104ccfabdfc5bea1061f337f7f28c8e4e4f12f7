@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa7621b9_9a0631f1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T00:33:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22282446_ec3856b6",
+      "range": {
+        "startLine": 1677,
+        "startChar": 50,
+        "endLine": 1677,
+        "endChar": 58
+      },
+      "revId": "c104ccfabdfc5bea1061f337f7f28c8e4e4f12f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "525eca9b_702d230b",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 4
@@ -59,6 +83,54 @@
       "writtenOn": "2017-12-05T23:23:27Z",
       "side": 1,
       "message": "A few things:\n1. W would make this static since it has no dependencies.\n2. We should choose a name that better reflects what it does.  Something like isConfigForIdentifiedCarrier or isConfigReady.\n3. We should make it very clear what this method is for:\nE.g, something like\nDetermines whether a configuration {@link Bundle} obtained from {@link #getConfig()} or {@link getConfigForSubId(int)} represents the configuration for a carrier identified by the system.\u003cp\u003e\nWhen an app receives the {@link CarrierConfigManager#ACTION_CARRIER_CONFIG_CHANGED} broadcast to inform it that the carrier configuration has changed, it is possible that another reload of the carrier configuration has begun since the intent was sent.  In this case, the carrier configuration the app fetches (e.g. via {@link #getConfig()}) may not represent the configuration for an identified carrier.  After using {@link #getConfig()} or {@link getConfigForSubId(int)} an app should ensure that it uses this method to confirm the validity of the configuration.",
+      "range": {
+        "startLine": 2011,
+        "startChar": 4,
+        "endLine": 2011,
+        "endChar": 74
+      },
+      "revId": "c104ccfabdfc5bea1061f337f7f28c8e4e4f12f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0681ae8d_b31b3bcd",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T00:33:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "525eca9b_702d230b",
+      "range": {
+        "startLine": 2011,
+        "startChar": 19,
+        "endLine": 2011,
+        "endChar": 46
+      },
+      "revId": "c104ccfabdfc5bea1061f337f7f28c8e4e4f12f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25598bf9_9b5b542a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-08T00:33:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1983685a_a82f4f37",
       "range": {
         "startLine": 2011,
         "startChar": 4,
