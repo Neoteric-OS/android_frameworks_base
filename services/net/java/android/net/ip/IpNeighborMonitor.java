@@ -16,6 +16,7 @@
 
 package android.net.ip;
 
+import android.net.MacAddress;
 import android.net.netlink.NetlinkConstants;
 import android.net.netlink.NetlinkErrorMessage;
 import android.net.netlink.NetlinkMessage;
@@ -92,16 +93,16 @@ public class IpNeighborMonitor extends PacketReader {
         final int ifindex;
         final InetAddress ip;
         final short nudState;
-        final byte[] linkLayerAddr;
+        final MacAddress macAddr;
 
         public NeighborEvent(long elapsedMs, short msgType, int ifindex, InetAddress ip,
-                short nudState, byte[] linkLayerAddr) {
+                short nudState, MacAddress macAddr) {
             this.elapsedMs = elapsedMs;
             this.msgType = msgType;
             this.ifindex = ifindex;
             this.ip = ip;
             this.nudState = nudState;
-            this.linkLayerAddr = linkLayerAddr;
+            this.macAddr = macAddr;
         }
 
         boolean isConnected() {
@@ -122,7 +123,7 @@ public class IpNeighborMonitor extends PacketReader {
                     .add("if=" + ifindex)
                     .add(ip.getHostAddress())
                     .add(StructNdMsg.stringForNudState(nudState))
-                    .add("[" + NetlinkConstants.hexify(linkLayerAddr) + "]")
+                    .add("[" + macAddr + "]")
                     .toString();
         }
     }
@@ -222,7 +223,8 @@ public class IpNeighborMonitor extends PacketReader {
                 : ndMsg.ndm_state;
 
         final NeighborEvent event = new NeighborEvent(
-                whenMs, msgType, ifindex, destination, nudState, neighMsg.getLinkLayerAddress());
+                whenMs, msgType, ifindex, destination, nudState,
+                getMacAddress(neighMsg.getLinkLayerAddress()));
 
         if (VDBG) {
             Log.d(TAG, neighMsg.toString());
@@ -232,5 +234,15 @@ public class IpNeighborMonitor extends PacketReader {
         }
 
         mConsumer.accept(event);
+    }
+
+    private static MacAddress getMacAddress(byte[] linkLayerAddress) {
+        if (linkLayerAddress != null) {
+            try {
+                return MacAddress.fromBytes(linkLayerAddress);
+            } catch (IllegalArgumentException e) {}
+        }
+
+        return null;
     }
 }
