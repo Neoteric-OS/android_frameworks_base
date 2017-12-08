@@ -34,6 +34,7 @@ import android.net.TrafficStats;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
+import android.net.util.InterfaceParams;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -50,7 +51,6 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.lang.Thread;
 import java.net.Inet4Address;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -187,7 +187,8 @@ public class DhcpClient extends StateMachine {
     private final String mIfaceName;
 
     private boolean mRegisteredForPreDhcpNotification;
-    private NetworkInterface mIface;
+    private InterfaceParams mIface;
+    // TODO: MacAddress-ify more of this class hierarchy.
     private byte[] mHwAddr;
     private PacketSocketAddress mInterfaceBroadcastAddr;
     private int mTransactionId;
@@ -268,17 +269,24 @@ public class DhcpClient extends StateMachine {
         return client;
     }
 
+    public static DhcpClient makeDhcpClient(
+            Context context, StateMachine controller, InterfaceParams ifParams) {
+        DhcpClient client = new DhcpClient(context, controller, ifParams.name);
+        client.mIface = ifParams;
+        client.start();
+        return client;
+    }
+
     private boolean initInterface() {
-        try {
-            mIface = NetworkInterface.getByName(mIfaceName);
-            mHwAddr = mIface.getHardwareAddress();
-            mInterfaceBroadcastAddr = new PacketSocketAddress(mIface.getIndex(),
-                    DhcpPacket.ETHER_BROADCAST);
-            return true;
-        } catch(SocketException | NullPointerException e) {
-            Log.e(TAG, "Can't determine ifindex or MAC address for " + mIfaceName, e);
+        if (mIface == null) mIface = InterfaceParams.getByName(mIfaceName);
+        if (mIface == null) {
+            Log.e(TAG, "Can't determine InterfaceParams for " + mIfaceName);
             return false;
         }
+
+        mHwAddr = mIface.macAddr.toByteArray();
+        mInterfaceBroadcastAddr = new PacketSocketAddress(mIface.index, DhcpPacket.ETHER_BROADCAST);
+        return true;
     }
 
     private void startNewTransaction() {
@@ -293,7 +301,7 @@ public class DhcpClient extends StateMachine {
     private boolean initPacketSocket() {
         try {
             mPacketSock = Os.socket(AF_PACKET, SOCK_RAW, ETH_P_IP);
-            PacketSocketAddress addr = new PacketSocketAddress((short) ETH_P_IP, mIface.getIndex());
+            PacketSocketAddress addr = new PacketSocketAddress((short) ETH_P_IP, mIface.index);
             Os.bind(mPacketSock, addr);
             NetworkUtils.attachDhcpFilter(mPacketSock);
         } catch(SocketException|ErrnoException e) {
