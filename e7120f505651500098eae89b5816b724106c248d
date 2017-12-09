@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02db9af9_30e23eb9",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-09T00:27:10Z",
+      "side": 0,
+      "message": "Replaced by getConnectionState.",
+      "revId": "e7120f505651500098eae89b5816b724106c248d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6848d787_ef2976ed",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-09T00:27:10Z",
+      "side": 0,
+      "message": "Replaced by getConnectedDevices.",
+      "revId": "e7120f505651500098eae89b5816b724106c248d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0286cd_4a625c15",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-09T00:27:10Z",
+      "side": 0,
+      "message": "No use case. Remove.",
+      "range": {
+        "startLine": 302,
+        "startChar": 26,
+        "endLine": 302,
+        "endChar": 44
+      },
+      "revId": "e7120f505651500098eae89b5816b724106c248d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
