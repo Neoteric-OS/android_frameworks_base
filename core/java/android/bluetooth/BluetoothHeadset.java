@@ -82,7 +82,8 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * <li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
      * </ul>
      * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of
-     * {@link #STATE_AUDIO_CONNECTED}, {@link #STATE_AUDIO_DISCONNECTED},
+     * {@link #STATE_AUDIO_DISCONNECTED}, {@link #STATE_AUDIO_CONNECTED},
+     * {@link #STATE_AUDIO_CONNECTING}, {@link #STATE_AUDIO_DISCONNECTING}
      *
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission
      * to receive.
@@ -257,6 +258,15 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * {@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} of
      * {@link #ACTION_AUDIO_STATE_CHANGED} intent.
      */
+    public static final int STATE_AUDIO_CONNECTED = 12;
+
+    /**
+     * Headset state when SCO audio is disconnecting.
+     * This state can be one of
+     * {@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} of
+     * {@link #ACTION_AUDIO_STATE_CHANGED} intent.
+     */
+    public static final int STATE_AUDIO_DISCONNECTING = 13;
 
     /**
      * Intent used to broadcast the headset's indicator status
@@ -298,8 +308,6 @@ public final class BluetoothHeadset implements BluetoothProfile {
      */
     public static final String EXTRA_HF_INDICATORS_IND_VALUE =
             "android.bluetooth.headset.extra.HF_INDICATORS_IND_VALUE";
-
-    public static final int STATE_AUDIO_CONNECTED = 12;
 
     private static final int MESSAGE_HEADSET_SERVICE_CONNECTED = 100;
     private static final int MESSAGE_HEADSET_SERVICE_DISCONNECTED = 101;

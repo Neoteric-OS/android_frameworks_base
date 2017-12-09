@@ -7867,6 +7867,7 @@ package android.bluetooth {
     field public static final int STATE_AUDIO_CONNECTED = 12; // 0xc
     field public static final int STATE_AUDIO_CONNECTING = 11; // 0xb
     field public static final int STATE_AUDIO_DISCONNECTED = 10; // 0xa
+    field public static final int STATE_AUDIO_DISCONNECTING = 13; // 0xd
     field public static final java.lang.String VENDOR_RESULT_CODE_COMMAND_ANDROID = "+ANDROID";
     field public static final java.lang.String VENDOR_SPECIFIC_HEADSET_EVENT_COMPANY_ID_CATEGORY = "android.bluetooth.headset.intent.category.companyid";
   }
