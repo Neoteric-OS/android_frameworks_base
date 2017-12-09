@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fadc72c_460b5cf4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T01:17:25Z",
+      "side": 1,
+      "message": "As I understand it that\u0027s not going to be the intention of this API. Even if the system doesn\u0027t recognize the carrier... if the CarrierConfig was chosen with information from the UICC, this should return true.",
+      "range": {
+        "startLine": 2031,
+        "startChar": 63,
+        "endLine": 2032,
+        "endChar": 40
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e210fa5_d8327e62",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T01:17:25Z",
+      "side": 1,
+      "message": "If you need it to be for the identified carrier, then this API is not sufficient:\n1) carrier A config loads\n2) carrier B config loads \u003c--reloaded\n\nbundle from config A should return true since it was chosen for a specific carrier.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 7,
+        "endLine": 2038,
+        "endChar": 69
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b9af752_24a6262f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T01:17:25Z",
+      "side": 1,
+      "message": "How does the app know that the bundle is for any particular carrier?",
+      "range": {
+        "startLine": 2041,
+        "startChar": 7,
+        "endLine": 2042,
+        "endChar": 68
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8917139d_cd8c8c82",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T01:17:25Z",
+      "side": 1,
+      "message": "If the carrier doesn\u0027t override the CC but the SIM is loaded and the CC was chosen with that carrier\u0027s info... would we want the API to return \"true\" or \"false\"? I think \"true\", but that doesn\u0027t mean that the CC was overridden.",
+      "range": {
+        "startLine": 2046,
+        "startChar": 65,
+        "endLine": 2046,
+        "endChar": 86
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
