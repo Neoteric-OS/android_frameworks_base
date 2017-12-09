@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a75edeb5_8b7cc56d",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T02:25:44Z",
+      "side": 1,
+      "message": "ERROR_LOWER_LAYER_FAILURE?",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "121cefcf_ccd8f90b",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T02:25:44Z",
+      "side": 1,
+      "message": "ERROR_TEMPORARILY_UNAVAILABLE?",
+      "range": {
+        "startLine": 61,
+        "startChar": 28,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b650bb0_3c857671",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T02:25:44Z",
+      "side": 1,
+      "message": "The concept of RIL should not be exposed. It no longer even exists now that it\u0027s the IRadio interface.",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb3a5bd_592f8090",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 5
