@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb3a5bd_592f8090",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T02:23:14Z",
+      "side": 1,
+      "message": "If you return the object like this then it becomes mutable. You need to return copies to prevent people from messing with it.",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 26
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58608586_688a6e30",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-09T02:23:14Z",
+      "side": 1,
+      "message": "getPlmns?",
+      "range": {
+        "startLine": 182,
+        "startChar": 29,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
