@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37cb642c_b68af2f7",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-09T09:02:32Z",
+      "side": 1,
+      "message": "Good point. Can do the same thing for other methods.",
+      "parentUuid": "b517efca_7ad1db1e",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 30
+      },
+      "revId": "d5d84464183c0a4096d1f71edba9d216b68d6f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d310fd9_5b7f4aef",
         "filename": "core/java/android/bluetooth/BluetoothPbap.java",
         "patchSetId": 1
