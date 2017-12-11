@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11634094_e648a94d",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T19:26:26Z",
+      "side": 1,
+      "message": "I think \"MODEM ERROR\" is more clear than \"LOWER LAYER ERROR\" since \"LOWER LAYER\" is kind of too general.",
+      "parentUuid": "a75edeb5_8b7cc56d",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121cefcf_ccd8f90b",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-09T02:25:44Z",
       "side": 1,
       "message": "ERROR_TEMPORARILY_UNAVAILABLE?",
+      "range": {
+        "startLine": 61,
+        "startChar": 28,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7684816c_4c309014",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T19:26:26Z",
+      "side": 1,
+      "message": "Changed to ERROR_MODEM_UNAVAILABLE     (Since we don\u0027t want to distinguish MODEM_TEMPORARILY_UNAVAILABLE and MODEM_PERMANENTLY_UNAVAILABLE)",
+      "parentUuid": "121cefcf_ccd8f90b",
       "range": {
         "startLine": 61,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f3369d27_780226ea",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T19:26:26Z",
+      "side": 1,
+      "message": "Changed to ERROR_RADIO_INTERFACE_ERROR",
+      "parentUuid": "4b650bb0_3c857671",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb3a5bd_592f8090",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1fac68eb_76a92729",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T19:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb3a5bd_592f8090",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 26
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58608586_688a6e30",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-09T02:23:14Z",
       "side": 1,
       "message": "getPlmns?",
+      "range": {
+        "startLine": 182,
+        "startChar": 29,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "c8042f8d37f016eb573abe692f1eb077e723853c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4ca96b6_b4ed5d29",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T19:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58608586_688a6e30",
       "range": {
         "startLine": 182,
         "startChar": 29,
