@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "d0ee1a2b_73e445a0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-11T18:00:40Z",
+      "side": 1,
+      "message": "So apparently the @guardedBy doesn\u0027t work for constructors; I\u0027ve changed it to use a synchronized block.",
+      "parentUuid": "a5c4f11f_b8681200",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 34
+      },
+      "revId": "35260d0e3212547c32bf0f0e1e29f1885f47bc14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d5a0d8_553ef1a0",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
