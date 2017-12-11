@@ -22,6 +22,30 @@
       "revId": "5252b97d6c8417e92a8918862be83e8afff1ca35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b69084_3dc8820e",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-12-11T22:18:13Z",
+      "side": 1,
+      "message": "Since BluetoothProfile is an interface, this method should be public by default. \n\nAccording to:\nhttps://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html\n\"All method declarations in an interface, including default methods, are implicitly public, so you can omit the public modifier.\"",
+      "parentUuid": "3b5d390f_f65af107",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 267,
+        "endChar": 10
+      },
+      "revId": "5252b97d6c8417e92a8918862be83e8afff1ca35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
