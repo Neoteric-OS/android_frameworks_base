@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40f0a85b_6bc0c606",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-11T18:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ecdbdc1_e8e1aed9",
+      "revId": "f6ca9bf4aceb1154fb2f9624dfba5f1fa423fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cde79c4a_3267e6f8",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-11T02:46:32Z",
       "side": 1,
       "message": "what if the value is negative or some other invalid integer?\n\nPerhaps it makes sense to call getBitmaskForTech first, assuming that converts any unknown value to UNKNOWN or some other similar value, and then check the result to make sure it\u0027s not UNKNOWN.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 0,
+        "endLine": 1356,
+        "endChar": 38
+      },
+      "revId": "f6ca9bf4aceb1154fb2f9624dfba5f1fa423fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0ed059_6e5a4296",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-12-11T18:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde79c4a_3267e6f8",
       "range": {
         "startLine": 1356,
         "startChar": 0,
