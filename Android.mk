@@ -473,11 +473,20 @@ LOCAL_MODULE := api-stubs
 
 LOCAL_DROIDDOC_STUB_OUT_DIR := $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES/android_stubs_current_intermediates/src
 
+last_released_public_api_version := $(lastword $(call numerically_sort, \
+    $(filter-out current %-removed, \
+        $(patsubst $(SRC_API_DIR)/%.txt,%, $(wildcard $(SRC_API_DIR)/*.txt)) \
+    )\
+))
+
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
 		-referenceonly \
 		-api $(INTERNAL_PLATFORM_API_FILE) \
 		-removedApi $(INTERNAL_PLATFORM_REMOVED_API_FILE) \
+		-deletedApi $(INTERNAL_PLATFORM_DELETED_API_FILE) \
+		$(SRC_API_DIR)/$(last_released_public_api_version).txt \
+		$(SRC_API_DIR)/$(last_released_public_api_version)-removed.txt \
 		-nodocs
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=external/doclava/res/assets/templates-sdk
@@ -508,6 +517,12 @@ LOCAL_MODULE := system-api-stubs
 
 LOCAL_DROIDDOC_STUB_OUT_DIR := $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES/android_system_stubs_current_intermediates/src
 
+last_released_system_api_version := $(lastword $(call numerically_sort, \
+    $(filter-out current %-removed, \
+        $(patsubst $(SRC_SYSTEM_API_DIR)/%.txt,%, $(wildcard $(SRC_SYSTEM_API_DIR)/*.txt)) \
+    )\
+))
+
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
 		-referenceonly \
@@ -515,6 +530,9 @@ LOCAL_DROIDDOC_OPTIONS:=\
 		-api $(INTERNAL_PLATFORM_SYSTEM_API_FILE) \
 		-removedApi $(INTERNAL_PLATFORM_SYSTEM_REMOVED_API_FILE) \
 		-exactApi $(INTERNAL_PLATFORM_SYSTEM_EXACT_API_FILE) \
+		-deletedApi $(INTERNAL_PLATFORM_SYSTEM_DELETED_API_FILE) \
+		$(SRC_SYSTEM_API_DIR)/$(last_released_system_api_version).txt \
+		$(SRC_SYSTEM_API_DIR)/$(last_released_system_api_version)-removed.txt \
 		-nodocs
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=external/doclava/res/assets/templates-sdk
