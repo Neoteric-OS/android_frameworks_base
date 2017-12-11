@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac794434_698324bc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T18:26:11Z",
+      "side": 1,
+      "message": "It depends on how we define \"recognize the carrier\". Once the platform successfully read the \"PLMN\" from the UICC, then it will try to get the bundle of that carrier. If there is no overridden values for that carrier, the platform will still return an empty bundle and this API will return true.  I think it is OK to define \"identified\" as \"successfully get the PLMN\", right?",
+      "parentUuid": "0fadc72c_460b5cf4",
+      "range": {
+        "startLine": 2031,
+        "startChar": 63,
+        "endLine": 2032,
+        "endChar": 40
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e210fa5_d8327e62",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-09T01:17:25Z",
       "side": 1,
       "message": "If you need it to be for the identified carrier, then this API is not sufficient:\n1) carrier A config loads\n2) carrier B config loads \u003c--reloaded\n\nbundle from config A should return true since it was chosen for a specific carrier.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 7,
+        "endLine": 2038,
+        "endChar": 69
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d76e8c1b_41f20706",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T18:26:11Z",
+      "side": 1,
+      "message": "If the user get the bundle before carrier B is loaded, the API will return true since it is the bundle from carrier A (currently identified by platform), right? When carrier B config is loaded, the user will receive the broadcast saying the carrier config has been changed, and the API will also return true since it is now the carrier B config (now carrier B is identified by platform).",
+      "parentUuid": "1e210fa5_d8327e62",
       "range": {
         "startLine": 2034,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d739fe5c_8f7ec1d7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T18:26:11Z",
+      "side": 1,
+      "message": "This key only tells whether the platform has successfully got the PLMN from UICC and retrieved the config bundle for it, it can not provide the details for the carrier, we can add the carrier ID for that purpose in the future",
+      "parentUuid": "9b9af752_24a6262f",
+      "range": {
+        "startLine": 2041,
+        "startChar": 7,
+        "endLine": 2042,
+        "endChar": 68
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8917139d_cd8c8c82",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-09T01:17:25Z",
       "side": 1,
       "message": "If the carrier doesn\u0027t override the CC but the SIM is loaded and the CC was chosen with that carrier\u0027s info... would we want the API to return \"true\" or \"false\"? I think \"true\", but that doesn\u0027t mean that the CC was overridden.",
+      "range": {
+        "startLine": 2046,
+        "startChar": 65,
+        "endLine": 2046,
+        "endChar": 86
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f3145f3_94e8f5c7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-11T18:26:11Z",
+      "side": 1,
+      "message": "This API will return true. No matter the carrier override the values or not, we all treat the bundle as overridden. This new key and API is used to provide the information that \"Carrier has been discovered and carrier config has been applied\", so although the values of the key are the same as the default, but we can still say the \"carrier overridden\" has been applied, right? For example, Tycho can change the values to whatever it needs, no matter those values are different from the default or not, it just needs to know whether its own config bundle has been loaded or not.",
+      "parentUuid": "8917139d_cd8c8c82",
       "range": {
         "startLine": 2046,
         "startChar": 65,
