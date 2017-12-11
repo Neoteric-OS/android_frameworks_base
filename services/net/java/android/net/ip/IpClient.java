@@ -163,10 +163,10 @@ public class IpClient extends StateMachine {
     // TODO: Find an lighter weight approach.
     private class LoggingCallbackWrapper extends Callback {
         private static final String PREFIX = "INVOKE ";
-        private Callback mCallback;
+        private final Callback mCallback;
 
         public LoggingCallbackWrapper(Callback callback) {
-            mCallback = callback;
+            mCallback = (callback != null) ? callback : new Callback();
         }
 
         private void log(String msg) {
@@ -523,6 +523,12 @@ public class IpClient extends StateMachine {
     private static final int CMD_SET_MULTICAST_FILTER             = 9;
     private static final int EVENT_PROVISIONING_TIMEOUT           = 10;
     private static final int EVENT_DHCPACTION_TIMEOUT             = 11;
+
+    // Internal commands to use instead of trying to call transitionTo()
+    // inside a given State's enter() method.
+    private static final int INTERNAL_KICK_STARTING_TO_RUNNING    = 100;
+    private static final int INTERNAL_KICK_RUNNING_TO_STOPPING    = 101;
+    private static final int INTERNAL_KICK_STOPPING_TO_STOPPED    = 102;
 
     private static final int MAX_LOG_RECORDS = 500;
     private static final int MAX_PACKET_RECORDS = 100;
@@ -1284,6 +1290,9 @@ public class IpClient extends StateMachine {
 
             resetLinkProperties();
             if (mStartTimeMillis > 0) {
+                // Completed a life-cycle; send a final empty LinkProperties
+                // (cleared in resetLinkProperties() above) and record an event.
+                mCallback.onLinkPropertiesChange(new LinkProperties(mLinkProperties));
                 recordMetric(IpManagerEvent.COMPLETE_LIFECYCLE);
                 mStartTimeMillis = 0;
             }
@@ -1342,13 +1351,17 @@ public class IpClient extends StateMachine {
         public void enter() {
             if (mDhcpClient == null) {
                 // There's no DHCPv4 for which to wait; proceed to stopped.
-                transitionTo(mStoppedState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_STOPPING_TO_STOPPED);
             }
         }
 
         @Override
         public boolean processMessage(Message msg) {
             switch (msg.what) {
+                case INTERNAL_KICK_STOPPING_TO_STOPPED:
+                    transitionTo(mStoppedState);
+                    break;
+
                 case CMD_STOP:
                     break;
 
@@ -1382,7 +1395,7 @@ public class IpClient extends StateMachine {
             }
 
             if (readyToProceed()) {
-                transitionTo(mRunningState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_STARTING_TO_RUNNING);
             } else {
                 // Clear all IPv4 and IPv6 before proceeding to RunningState.
                 // Clean up any leftover state from an abnormal exit from
@@ -1399,6 +1412,10 @@ public class IpClient extends StateMachine {
         @Override
         public boolean processMessage(Message msg) {
             switch (msg.what) {
+                case INTERNAL_KICK_STARTING_TO_RUNNING:
+                    transitionTo(mRunningState);
+                    break;
+
                 case CMD_STOP:
                     transitionTo(mStoppingState);
                     break;
@@ -1427,7 +1444,7 @@ public class IpClient extends StateMachine {
             return HANDLED;
         }
 
-        boolean readyToProceed() {
+        private boolean readyToProceed() {
             return (!mLinkProperties.hasIPv4Address() &&
                     !mLinkProperties.hasGlobalIPv6Address());
         }
@@ -1459,13 +1476,13 @@ public class IpClient extends StateMachine {
 
             if (mConfiguration.mEnableIPv6 && !startIPv6()) {
                 doImmediateProvisioningFailure(IpManagerEvent.ERROR_STARTING_IPV6);
-                transitionTo(mStoppingState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_RUNNING_TO_STOPPING);
                 return;
             }
 
             if (mConfiguration.mEnableIPv4 && !startIPv4()) {
                 doImmediateProvisioningFailure(IpManagerEvent.ERROR_STARTING_IPV4);
-                transitionTo(mStoppingState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_RUNNING_TO_STOPPING);
                 return;
             }
 
@@ -1473,14 +1490,14 @@ public class IpClient extends StateMachine {
             if ((config != null) && !applyInitialConfig(config)) {
                 // TODO introduce a new IpManagerEvent constant to distinguish this error case.
                 doImmediateProvisioningFailure(IpManagerEvent.ERROR_INVALID_PROVISIONING);
-                transitionTo(mStoppingState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_RUNNING_TO_STOPPING);
                 return;
             }
 
             if (mConfiguration.mUsingIpReachabilityMonitor && !startIpReachabilityMonitor()) {
                 doImmediateProvisioningFailure(
                         IpManagerEvent.ERROR_STARTING_IPREACHABILITYMONITOR);
-                transitionTo(mStoppingState);
+                sendMessageAtFrontOfQueue(INTERNAL_KICK_RUNNING_TO_STOPPING);
                 return;
             }
         }
@@ -1542,6 +1559,7 @@ public class IpClient extends StateMachine {
         @Override
         public boolean processMessage(Message msg) {
             switch (msg.what) {
+                case INTERNAL_KICK_RUNNING_TO_STOPPING:
                 case CMD_STOP:
                     transitionTo(mStoppingState);
                     break;
