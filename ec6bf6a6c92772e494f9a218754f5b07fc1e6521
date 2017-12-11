@@ -22,6 +22,30 @@
       "revId": "ec6bf6a6c92772e494f9a218754f5b07fc1e6521",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a233f808_af4063ad",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-12-11T20:14:04Z",
+      "side": 1,
+      "message": "Good catch. This is redundant. Removed in latest patch.",
+      "parentUuid": "ac51a2fc_50552072",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 7
+      },
+      "revId": "ec6bf6a6c92772e494f9a218754f5b07fc1e6521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
