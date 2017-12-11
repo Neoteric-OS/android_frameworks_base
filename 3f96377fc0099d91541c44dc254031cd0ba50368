@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "985567f5_0255a6bd",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-12-11T20:17:41Z",
+      "side": 1,
+      "message": "Should we turn this to false? If this is true, any user of BluetoothPbap will print a line of log when log() method is triggered by a systematic callback. If a system-wide log is needed, it should be logged in BluetoothPbapService instead. What do you think?",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "3f96377fc0099d91541c44dc254031cd0ba50368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63236792_fa1021a1",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-12-11T20:17:41Z",
+      "side": 1,
+      "message": "Be careful with Log.v() as it only appears when you explicitly enable verbose logging for a tag/uid.",
+      "range": {
+        "startLine": 119,
+        "startChar": 24,
+        "endLine": 119,
+        "endChar": 29
+      },
+      "revId": "3f96377fc0099d91541c44dc254031cd0ba50368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
