@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44f2e482_eb80747e",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-11T20:39:39Z",
+      "side": 1,
+      "message": "I agree. There are duplicated logs in both here and PBAP service - though the only user of BluetoothPbap is Settings at this time.",
+      "parentUuid": "985567f5_0255a6bd",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "3f96377fc0099d91541c44dc254031cd0ba50368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63236792_fa1021a1",
         "filename": "core/java/android/bluetooth/BluetoothPbap.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T20:17:41Z",
       "side": 1,
       "message": "Be careful with Log.v() as it only appears when you explicitly enable verbose logging for a tag/uid.",
+      "range": {
+        "startLine": 119,
+        "startChar": 24,
+        "endLine": 119,
+        "endChar": 29
+      },
+      "revId": "3f96377fc0099d91541c44dc254031cd0ba50368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481df925_2e826220",
+        "filename": "core/java/android/bluetooth/BluetoothPbap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-12-11T20:39:39Z",
+      "side": 1,
+      "message": "This is intended. We don\u0027t need this info most likely.",
+      "parentUuid": "63236792_fa1021a1",
       "range": {
         "startLine": 119,
         "startChar": 24,
