@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ecdbdc1_e8e1aed9",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-12-11T02:46:32Z",
+      "side": 1,
+      "message": "IIUC, both of these log statements are triggered on what look like errors (unexpected bad data in the APN table / input), right? Or would these potentially happen in normal non-error situations?\n\nIf they\u0027re truly errors, I think it makes sense to log at a higher level (warn or error) and not gate them behind the DBG constant, as the default value will mean nobody will see these and have a clue that something went wrong. But it\u0027s only okay to do so if it\u0027s not spammy and reflects a true bug that needs to be fixed.",
+      "revId": "f6ca9bf4aceb1154fb2f9624dfba5f1fa423fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde79c4a_3267e6f8",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-12-11T02:46:32Z",
+      "side": 1,
+      "message": "what if the value is negative or some other invalid integer?\n\nPerhaps it makes sense to call getBitmaskForTech first, assuming that converts any unknown value to UNKNOWN or some other similar value, and then check the result to make sure it\u0027s not UNKNOWN.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 0,
+        "endLine": 1356,
+        "endChar": 38
+      },
+      "revId": "f6ca9bf4aceb1154fb2f9624dfba5f1fa423fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
