@@ -630,7 +630,19 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         mBandwidthControlEnabled = false;
 
         // only enable bandwidth control when support exists
-        final boolean hasKernelSupport = new File("/proc/net/xt_qtaguid/ctrl").exists();
+        final boolean hasKernelSupport;
+        boolean hasBpfSupport = false;
+        try {
+            hasBpfSupport = mNetdService.checkBpfStatsEnable();
+        } catch (Exception e) {
+            Slog.e(TAG, "check eBPF support failed" + e);
+        }
+
+        if (hasBpfSupport) {
+            hasKernelSupport = true;
+        } else {
+            hasKernelSupport = new File("/proc/net/xt_qtaguid/ctrl").exists();
+        }
 
         // push any existing quota or UID rules
         synchronized (mQuotaLock) {
