@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8028a194_e4569ec3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-12T21:20:33Z",
+      "side": 1,
+      "message": "nit: BlockGuardOS",
+      "range": {
+        "startLine": 396,
+        "startChar": 65,
+        "endLine": 396,
+        "endChar": 66
+      },
+      "revId": "82e84f2ccb3bdf848e4b34180026d76faf61b427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4c59f64_7c709fe9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-12T21:20:33Z",
+      "side": 1,
+      "message": "Now that I know what this is doing, I think at least a comment would be good. Even better would be a helper like FileDescriptor.isDuplicateOf(FileDescriptor).",
+      "range": {
+        "startLine": 420,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 21
+      },
+      "revId": "82e84f2ccb3bdf848e4b34180026d76faf61b427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
