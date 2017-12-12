@@ -46,6 +46,30 @@
       "revId": "a644ea99f48edf97019dba06c70cddbe93e19603",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbfd1b6_15a11fed",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1075396
+      },
+      "writtenOn": "2017-12-12T09:43:41Z",
+      "side": 1,
+      "message": "I uploaded it as Patch set 2. Please review it again.",
+      "parentUuid": "02e7c20d_63c083e0",
+      "range": {
+        "startLine": 997,
+        "startChar": 68,
+        "endLine": 997,
+        "endChar": 74
+      },
+      "revId": "a644ea99f48edf97019dba06c70cddbe93e19603",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
