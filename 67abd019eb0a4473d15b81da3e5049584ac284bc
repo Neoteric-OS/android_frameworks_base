@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a277681_f0bd7756",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-12T20:04:04Z",
+      "side": 1,
+      "message": "if needed/available? That is, the carrier has been identified and config applied if it was available.",
+      "range": {
+        "startLine": 1698,
+        "startChar": 54,
+        "endLine": 1698,
+        "endChar": 64
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fadc72c_460b5cf4",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 6
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "It depends on how we define \"recognize the carrier\". Once the platform successfully read the \"PLMN\" from the UICC, then it will try to get the bundle of that carrier. If there is no overridden values for that carrier, the platform will still return an empty bundle and this API will return true.  I think it is OK to define \"identified\" as \"successfully get the PLMN\", right?",
       "parentUuid": "0fadc72c_460b5cf4",
+      "range": {
+        "startLine": 2031,
+        "startChar": 63,
+        "endLine": 2032,
+        "endChar": 40
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41c463af_b128b440",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-12T20:04:04Z",
+      "side": 1,
+      "message": "The bundle wont be empty; it will have default values.\n\nHow about we replace the highlighted text with something like \"corresponds to an identified carrier\" and maybe also clearly mention that this does not necessarily belong to the current carrier and that getConfig() should be called again after a CARRIER_CONFIG_CHANGED.",
+      "parentUuid": "ac794434_698324bc",
       "range": {
         "startLine": 2031,
         "startChar": 63,
@@ -143,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7d3ab653_f366006d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-12T20:04:04Z",
+      "side": 1,
+      "message": "Maybe we shouldn\u0027t just say \u0027validity\u0027 because it may cause people to think that it belongs to the current carrier. We should clearly define what we mean by validity here.",
+      "parentUuid": "d739fe5c_8f7ec1d7",
+      "range": {
+        "startLine": 2041,
+        "startChar": 7,
+        "endLine": 2042,
+        "endChar": 68
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8917139d_cd8c8c82",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 6
@@ -187,6 +258,53 @@
       "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f892efbf_88e5c91f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-12T20:04:04Z",
+      "side": 1,
+      "message": "Instead of simply saying overridden, we should probably say what I suggested above where the key is defined.",
+      "parentUuid": "4f3145f3_94e8f5c7",
+      "range": {
+        "startLine": 2046,
+        "startChar": 65,
+        "endLine": 2046,
+        "endChar": 86
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31640419_90d927c1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-12T20:04:04Z",
+      "side": 1,
+      "message": "\"bundle !\u003d null \u0026\u0026\"\nbundle should not be null after a carrier has been identified, correct? we should return false if bundle is null.",
+      "range": {
+        "startLine": 2050,
+        "startChar": 15,
+        "endLine": 2050,
+        "endChar": 33
+      },
+      "revId": "67abd019eb0a4473d15b81da3e5049584ac284bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
