@@ -44,6 +44,7 @@ import android.os.ShellCommand;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.Vibrator;
+import android.os.VibrationAmplitude;
 import android.os.VibrationEffect;
 import android.os.WorkSource;
 import android.provider.Settings;
@@ -371,7 +372,7 @@ public class VibratorService extends IVibratorService.Stub
             VibrationEffect.OneShot currentOneShot =
                     (VibrationEffect.OneShot) mCurrentVibration.mEffect;
             if (mCurrentVibration.hasLongerTimeout(newOneShot.getTiming())
-                    && newOneShot.getAmplitude() == currentOneShot.getAmplitude()) {
+                    && newOneShot.getAmplitude().equals(currentOneShot.getAmplitude())) {
                 if (DEBUG) {
                     Slog.d(TAG, "Ignoring incoming vibration in favor of current vibration");
                 }
@@ -689,10 +690,19 @@ public class VibratorService extends IVibratorService.Stub
         return vibratorExists();
     }
 
-    private void doVibratorOn(long millis, int amplitude, int uid, int usageHint) {
+    private void doVibratorOn(long millis, VibrationAmplitude amplitude, int uid, int usageHint) {
         synchronized (mInputDeviceVibrators) {
-            if (amplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
-                amplitude = mDefaultVibrationAmplitude;
+            int strongAmplitude = amplitude.strong;
+            int weakAmplitude = amplitude.weak;
+            if (strongAmplitude == VibrationEffect.DEFAULT_AMPLITUDE ||
+                    weakAmplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
+                if(strongAmplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
+                    strongAmplitude = mDefaultVibrationAmplitude;
+                }
+                if(weakAmplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
+                    weakAmplitude = mDefaultVibrationAmplitude;
+                }
+                amplitude = VibrationAmplitude.createSplit(strongAmplitude, weakAmplitude);
             }
             if (DEBUG) {
                 Slog.d(TAG, "Turning vibrator on for " + millis + " ms" +
@@ -704,7 +714,8 @@ public class VibratorService extends IVibratorService.Stub
                 final AudioAttributes attributes =
                         new AudioAttributes.Builder().setUsage(usageHint).build();
                 for (int i = 0; i < vibratorCount; i++) {
-                    mInputDeviceVibrators.get(i).vibrate(millis, attributes);
+                    mInputDeviceVibrators.get(i).vibrate(VibrationEffect.createOneShot(millis,
+                            amplitude), attributes);
                 }
             } else {
                 // Note: ordering is important here! Many haptic drivers will reset their amplitude
@@ -715,9 +726,9 @@ public class VibratorService extends IVibratorService.Stub
         }
     }
 
-    private void doVibratorSetAmplitude(int amplitude) {
+    private void doVibratorSetAmplitude(VibrationAmplitude amplitude) {
         if (mSupportsAmplitudeControl) {
-            vibratorSetAmplitude(amplitude);
+            vibratorSetAmplitude(amplitude.getSingleAmplitude());
         }
     }
 
@@ -838,7 +849,7 @@ public class VibratorService extends IVibratorService.Stub
         public boolean playWaveform() {
             synchronized (this) {
                 final long[] timings = mWaveform.getTimings();
-                final int[] amplitudes = mWaveform.getAmplitudes();
+                final VibrationAmplitude[] amplitudes = mWaveform.getAmplitudes();
                 final int len = timings.length;
                 final int repeat = mWaveform.getRepeatIndex();
 
@@ -846,12 +857,12 @@ public class VibratorService extends IVibratorService.Stub
                 long onDuration = 0;
                 while (!mForceStop) {
                     if (index < len) {
-                        final int amplitude = amplitudes[index];
+                        final VibrationAmplitude amplitude = amplitudes[index];
                         final long duration = timings[index++];
                         if (duration <= 0) {
                             continue;
                         }
-                        if (amplitude != 0) {
+                        if (amplitude != null && amplitude.getSingleAmplitude() != 0) {
                             if (onDuration <= 0) {
                                 // Telling the vibrator to start multiple times usually causes
                                 // effects to feel "choppy" because the motor resets at every on
@@ -868,7 +879,7 @@ public class VibratorService extends IVibratorService.Stub
                         }
 
                         long waitTime = delayLocked(duration);
-                        if (amplitude != 0) {
+                        if (amplitude != null && amplitude.getSingleAmplitude() != 0) {
                             onDuration -= waitTime;
                         }
                     } else if (repeat < 0) {
@@ -893,10 +904,10 @@ public class VibratorService extends IVibratorService.Stub
          * off.
          */
         private long getTotalOnDuration(
-                long[] timings, int[] amplitudes, int startIndex, int repeatIndex) {
+                long[] timings, VibrationAmplitude[] amplitudes, int startIndex, int repeatIndex) {
             int i = startIndex;
             long timing = 0;
-            while(amplitudes[i] != 0) {
+            while(amplitudes[i] != null && amplitudes[i].getSingleAmplitude() != 0) {
                 timing += timings[i++];
                 if (i >= timings.length) {
                     if (repeatIndex >= 0) {

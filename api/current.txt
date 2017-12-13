@@ -31801,10 +31801,24 @@ package android.os {
     field public static final int USER_CREATION_FAILED_NO_MORE_USERS = 2; // 0x2
   }
 
+  public class VibrationAmplitude implements android.os.Parcelable {
+    method public static android.os.VibrationAmplitude create(int);
+    method public static android.os.VibrationAmplitude createDefault();
+    method public static android.os.VibrationAmplitude createSplit(int, int);
+    method public int describeContents();
+    method public int getSingleAmplitude();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.os.VibrationAmplitude> CREATOR;
+    field public final int strong;
+    field public final int weak;
+  }
+
   public abstract class VibrationEffect implements android.os.Parcelable {
     method public static android.os.VibrationEffect createOneShot(long, int);
+    method public static android.os.VibrationEffect createOneShot(long, android.os.VibrationAmplitude);
     method public static android.os.VibrationEffect createWaveform(long[], int);
     method public static android.os.VibrationEffect createWaveform(long[], int[], int);
+    method public static android.os.VibrationEffect createWaveform(long[], android.os.VibrationAmplitude[], int);
     method public int describeContents();
     field public static final android.os.Parcelable.Creator<android.os.VibrationEffect> CREATOR;
     field public static final int DEFAULT_AMPLITUDE = -1; // 0xffffffff

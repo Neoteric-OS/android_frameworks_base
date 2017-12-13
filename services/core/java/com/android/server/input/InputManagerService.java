@@ -81,6 +81,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ShellCommand;
 import android.os.UserHandle;
+import android.os.VibrationAmplitude;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
@@ -229,7 +230,7 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeSetInteractive(long ptr, boolean interactive);
     private static native void nativeReloadCalibration(long ptr);
     private static native void nativeVibrate(long ptr, int deviceId, long[] pattern,
-            int repeat, int token);
+            VibrationAmplitude[] amplitude, int repeat, int token);
     private static native void nativeCancelVibrate(long ptr, int deviceId, int token);
     private static native void nativeReloadKeyboardLayouts(long ptr);
     private static native void nativeReloadDeviceAliases(long ptr);
@@ -1719,7 +1720,8 @@ public class InputManagerService extends IInputManager.Stub
 
     // Binder call
     @Override
-    public void vibrate(int deviceId, long[] pattern, int repeat, IBinder token) {
+    public void vibrate(int deviceId, long[] pattern, VibrationAmplitude[] amplitude,
+            int repeat, IBinder token) {
         if (repeat >= pattern.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
@@ -1741,7 +1743,7 @@ public class InputManagerService extends IInputManager.Stub
 
         synchronized (v) {
             v.mVibrating = true;
-            nativeVibrate(mPtr, deviceId, pattern, repeat, v.mTokenValue);
+            nativeVibrate(mPtr, deviceId, pattern, amplitude, repeat, v.mTokenValue);
         }
     }
 
