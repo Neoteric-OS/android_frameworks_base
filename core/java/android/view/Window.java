@@ -1090,6 +1090,10 @@ public abstract class Window {
         setPrivateFlags(flags, flags);
     }
 
+    private void addInputFeatures(int features) {
+        setInputFeatures(features, features);
+    }
+
     /**
      * Convenience function to clear the flag bits as specified in flags, as
      * per {@link #setFlags}.
@@ -1099,6 +1103,10 @@ public abstract class Window {
      */
     public void clearFlags(int flags) {
         setFlags(0, flags);
+    }
+
+    private void clearInputFeatures(int features) {
+        setInputFeatures(0, features);
     }
 
     /**
@@ -1131,6 +1139,41 @@ public abstract class Window {
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.privateFlags = (attrs.privateFlags & ~mask) | (flags & mask);
         dispatchWindowAttributesChanged(attrs);
+    }
+
+    private void setInputFeatures(int features, int mask) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.inputFeatures = (attrs.inputFeatures & ~mask) | (features & mask);
+        dispatchWindowAttributesChanged(attrs);
+    }
+
+    /**
+     * Enable or disable pointer gestures for this window.
+     *
+     * <p>Note that the window must have focus when this is requested. Pointer gestures
+     * are enabled by default.</p>
+     *
+     * @param enable true to enable pointer gestures
+     */
+    public void setPointerGesturesEnabled(boolean enable) {
+        int feature = WindowManager.LayoutParams.INPUT_FEATURE_ENABLE_POINTER_GESTURES;
+        if (enable) {
+            addInputFeatures(feature);
+        } else {
+            clearInputFeatures(feature);
+        }
+    }
+
+    /**
+     * Returns true if pointer gestures are enabled for this window.
+     *
+     * @return true when pointer gestures are enabled.
+     * @see setPointerGesturesEnabled
+     */
+    public boolean getPointerGesturesEnabled() {
+        int feature = WindowManager.LayoutParams.INPUT_FEATURE_ENABLE_POINTER_GESTURES;
+        final WindowManager.LayoutParams attrs = getAttributes();
+        return (attrs.inputFeatures & feature) != 0;
     }
 
     /**

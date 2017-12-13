@@ -19,12 +19,13 @@ package com.android.server.wm;
 import static android.app.ActivityManager.RESIZE_MODE_USER;
 import static android.app.ActivityManager.RESIZE_MODE_USER_FORCED;
 import static android.os.Trace.TRACE_TAG_WINDOW_MANAGER;
+
+import static com.android.server.wm.DragResizeMode.DRAG_RESIZE_MODE_FREEFORM;
 import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_ORIENTATION;
 import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_TASK_POSITIONING;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
 import static com.android.server.wm.WindowManagerService.dipToPixel;
-import static com.android.server.wm.DragResizeMode.DRAG_RESIZE_MODE_FREEFORM;
 import static com.android.server.wm.WindowState.MINIMUM_VISIBLE_HEIGHT_IN_DP;
 import static com.android.server.wm.WindowState.MINIMUM_VISIBLE_WIDTH_IN_DP;
 
@@ -49,7 +50,6 @@ import android.view.WindowManager;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.input.InputApplicationHandle;
 import com.android.server.input.InputWindowHandle;
-import com.android.server.wm.WindowManagerService.H;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -273,7 +273,7 @@ class TaskPositioner {
         mDragWindowHandle.paused = false;
         mDragWindowHandle.ownerPid = Process.myPid();
         mDragWindowHandle.ownerUid = Process.myUid();
-        mDragWindowHandle.inputFeatures = 0;
+        mDragWindowHandle.inputFeatures = WindowManager.LayoutParams.DEFAULT_INPUT_FEATURES;
         mDragWindowHandle.scaleFactor = 1.0f;
 
         // The drag window cannot receive new touches.

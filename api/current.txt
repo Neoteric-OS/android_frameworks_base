@@ -49513,6 +49513,7 @@ package android.view {
     method public android.media.session.MediaController getMediaController();
     method @ColorInt public abstract int getNavigationBarColor();
     method @ColorInt public int getNavigationBarDividerColor();
+    method public boolean getPointerGesturesEnabled();
     method public android.transition.Transition getReenterTransition();
     method public android.transition.Transition getReturnTransition();
     method public android.transition.Transition getSharedElementEnterTransition();
@@ -49583,6 +49584,7 @@ package android.view {
     method public void setMediaController(android.media.session.MediaController);
     method public abstract void setNavigationBarColor(@ColorInt int);
     method public void setNavigationBarDividerColor(@ColorInt int);
+    method public void setPointerGesturesEnabled(boolean);
     method public void setReenterTransition(android.transition.Transition);
     method public abstract void setResizingCaptionDrawable(android.graphics.drawable.Drawable);
     method public final void setRestrictedCaptionAreaListener(android.view.Window.OnRestrictedCaptionAreaChangedListener);

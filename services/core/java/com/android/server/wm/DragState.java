@@ -31,17 +31,14 @@ import android.animation.ValueAnimator;
 import android.annotation.Nullable;
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.Context;
 import android.graphics.Point;
 import android.hardware.input.InputManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.os.IUserManager;
 import android.os.UserManagerInternal;
 import android.util.Slog;
 import android.view.Display;
@@ -239,7 +236,7 @@ class DragState {
             mDragWindowHandle.paused = false;
             mDragWindowHandle.ownerPid = Process.myPid();
             mDragWindowHandle.ownerUid = Process.myUid();
-            mDragWindowHandle.inputFeatures = 0;
+            mDragWindowHandle.inputFeatures = WindowManager.LayoutParams.DEFAULT_INPUT_FEATURES;
             mDragWindowHandle.scaleFactor = 1.0f;
 
             // The drag window cannot receive new touches.

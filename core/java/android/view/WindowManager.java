@@ -2384,13 +2384,13 @@ public interface WindowManager extends ViewManager {
 
 
         /**
-         * When this window has focus, disable touch pad pointer gesture processing.
-         * The window will receive raw position updates from the touch pad instead
-         * of pointer movements and synthetic touch events.
+         * When this window has focus, enable touch pad pointer gesture processing.
+         * The window will receive pointer movements and synthetic touch events
+         * instead of raw position updates from the touch pad.
          *
          * @hide
          */
-        public static final int INPUT_FEATURE_DISABLE_POINTER_GESTURES = 0x00000001;
+        public static final int INPUT_FEATURE_ENABLE_POINTER_GESTURES = 0x00000001;
 
         /**
          * Does not construct an input channel for this window.  The channel will therefore
@@ -2414,15 +2414,22 @@ public interface WindowManager extends ViewManager {
         public static final int INPUT_FEATURE_DISABLE_USER_ACTIVITY = 0x00000004;
 
         /**
+         * Default set of input features
+         *
+         * @hide
+         */
+        public static final int DEFAULT_INPUT_FEATURES = INPUT_FEATURE_ENABLE_POINTER_GESTURES;
+
+        /**
          * Control special features of the input subsystem.
          *
-         * @see #INPUT_FEATURE_DISABLE_POINTER_GESTURES
+         * @see #INPUT_FEATURE_ENABLE_POINTER_GESTURES
          * @see #INPUT_FEATURE_NO_INPUT_CHANNEL
          * @see #INPUT_FEATURE_DISABLE_USER_ACTIVITY
          * @hide
          */
         @UnsupportedAppUsage
-        public int inputFeatures;
+        public int inputFeatures = DEFAULT_INPUT_FEATURES;
 
         /**
          * Sets the number of milliseconds before the user activity timeout occurs
@@ -3280,8 +3287,8 @@ public interface WindowManager extends ViewManager {
 
         private static String inputFeatureToString(int inputFeature) {
             switch (inputFeature) {
-                case INPUT_FEATURE_DISABLE_POINTER_GESTURES:
-                    return "DISABLE_POINTER_GESTURES";
+                case INPUT_FEATURE_ENABLE_POINTER_GESTURES:
+                    return "ENABLE_POINTER_GESTURES";
                 case INPUT_FEATURE_NO_INPUT_CHANNEL:
                     return "NO_INPUT_CHANNEL";
                 case INPUT_FEATURE_DISABLE_USER_ACTIVITY:

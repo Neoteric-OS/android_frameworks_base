@@ -23,6 +23,7 @@ import android.os.UserHandle;
 import android.view.Display;
 import android.view.InputChannel;
 import android.view.WindowManager;
+
 import com.android.server.input.InputApplicationHandle;
 import com.android.server.input.InputWindowHandle;
 
@@ -79,7 +80,7 @@ class InputConsumerImpl implements IBinder.DeathRecipient {
         mWindowHandle.paused = false;
         mWindowHandle.ownerPid = Process.myPid();
         mWindowHandle.ownerUid = Process.myUid();
-        mWindowHandle.inputFeatures = 0;
+        mWindowHandle.inputFeatures = WindowManager.LayoutParams.DEFAULT_INPUT_FEATURES;
         mWindowHandle.scaleFactor = 1.0f;
     }
 

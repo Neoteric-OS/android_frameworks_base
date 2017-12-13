@@ -759,14 +759,14 @@ void NativeInputManager::setInputWindows(JNIEnv* env, jobjectArray windowHandleO
     mInputManager->getDispatcher()->setInputWindows(windowHandles);
 
     // Do this after the dispatcher has updated the window handle state.
-    bool newPointerGesturesEnabled = true;
+    bool newPointerGesturesEnabled = false;
     size_t numWindows = windowHandles.size();
     for (size_t i = 0; i < numWindows; i++) {
         const sp<InputWindowHandle>& windowHandle = windowHandles.itemAt(i);
         const InputWindowInfo* windowInfo = windowHandle->getInfo();
         if (windowInfo && windowInfo->hasFocus && (windowInfo->inputFeatures
-                & InputWindowInfo::INPUT_FEATURE_DISABLE_TOUCH_PAD_GESTURES)) {
-            newPointerGesturesEnabled = false;
+                & InputWindowInfo::INPUT_FEATURE_ENABLE_POINTER_GESTURES)) {
+            newPointerGesturesEnabled = true;
         }
     }
 
