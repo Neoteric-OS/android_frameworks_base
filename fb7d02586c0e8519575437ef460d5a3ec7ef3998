@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9492b973_eb671203",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T07:20:26Z",
+      "side": 1,
+      "message": "If the stats UID is already set, this will be a problem. Maybe we can add an @TestApi getAndSetThreadStatsUid to TrafficStats?",
+      "range": {
+        "startLine": 614,
+        "startChar": 29,
+        "endLine": 614,
+        "endChar": 46
+      },
+      "revId": "fb7d02586c0e8519575437ef460d5a3ec7ef3998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
