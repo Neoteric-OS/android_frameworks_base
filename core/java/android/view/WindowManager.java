@@ -1886,16 +1886,12 @@ public interface WindowManager extends ViewManager {
          * When this window has focus, disable touch pad pointer gesture processing.
          * The window will receive raw position updates from the touch pad instead
          * of pointer movements and synthetic touch events.
-         *
-         * @hide
          */
         public static final int INPUT_FEATURE_DISABLE_POINTER_GESTURES = 0x00000001;
 
         /**
          * Does not construct an input channel for this window.  The channel will therefore
          * be incapable of receiving input.
-         *
-         * @hide
          */
         public static final int INPUT_FEATURE_NO_INPUT_CHANNEL = 0x00000002;
 
@@ -1906,8 +1902,6 @@ public interface WindowManager extends ViewManager {
          * <p>
          * Should only be used by the keyguard and phone app.
          * </p>
-         *
-         * @hide
          */
         public static final int INPUT_FEATURE_DISABLE_USER_ACTIVITY = 0x00000004;
 
@@ -1917,7 +1911,6 @@ public interface WindowManager extends ViewManager {
          * @see #INPUT_FEATURE_DISABLE_POINTER_GESTURES
          * @see #INPUT_FEATURE_NO_INPUT_CHANNEL
          * @see #INPUT_FEATURE_DISABLE_USER_ACTIVITY
-         * @hide
          */
         public int inputFeatures;
 
@@ -2216,7 +2209,6 @@ public interface WindowManager extends ViewManager {
         public static final int SYSTEM_UI_VISIBILITY_CHANGED = 1<<14;
         /** {@hide} */
         public static final int SYSTEM_UI_LISTENER_CHANGED = 1<<15;
-        /** {@hide} */
         public static final int INPUT_FEATURES_CHANGED = 1<<16;
         /** {@hide} */
         public static final int PRIVATE_FLAGS_CHANGED = 1<<17;
