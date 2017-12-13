@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78816b81_48435d7f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T08:11:02Z",
+      "side": 1,
+      "message": "underlying",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "409c8ca7beabb98340d0c579ff134ec07f21b865",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cca93df6_29044d43",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T08:11:02Z",
+      "side": 1,
+      "message": "OwnedResource might be a good alternative name.",
+      "range": {
+        "startLine": 523,
+        "startChar": 48,
+        "endLine": 523,
+        "endChar": 62
+      },
+      "revId": "409c8ca7beabb98340d0c579ff134ec07f21b865",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36d8d1d7_fc707559",
+        "filename": "tests/net/java/com/android/server/IpSecServiceRefcountedResourceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T08:11:02Z",
+      "side": 1,
+      "message": "Should this be run in a loop X times?",
+      "range": {
+        "startLine": 320,
+        "startChar": 16,
+        "endLine": 320,
+        "endChar": 24
+      },
+      "revId": "409c8ca7beabb98340d0c579ff134ec07f21b865",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
