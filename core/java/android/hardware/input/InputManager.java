@@ -23,6 +23,8 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemService;
 import android.app.IInputForwarder;
 import android.content.Context;
+import android.hardware.Light;
+import android.hardware.LightState;
 import android.media.AudioAttributes;
 import android.os.Binder;
 import android.os.Handler;
@@ -51,6 +53,7 @@ import com.android.internal.os.SomeArgs;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -1103,6 +1106,28 @@ public final class InputManager {
     }
 
     /**
+     * Gets the lights associated with an input device.
+     * @return Array of lights, never null.
+     * @hide
+     */
+    public Light[] getInputDeviceLights(int deviceId) {
+        int lightCount = 0;
+        try {
+            lightCount = mIm.getLightCount(deviceId);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+
+        InputDeviceLight[] lights = new InputDeviceLight[lightCount];
+        for (int i = 0; i < lightCount; i++) {
+            lights[i] = new InputDeviceLight(deviceId, i);
+        }
+        // probe order of lights is not always the same, so sort by name,
+        Arrays.sort(lights);
+        return lights;
+    }
+
+    /**
      * Listens for changes in input devices.
      */
     public interface InputDeviceListener {
@@ -1268,6 +1293,102 @@ public final class InputManager {
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
+        }
+    }
+
+    private final class InputDeviceLight extends Light
+            implements Comparable<InputDeviceLight> {
+        private final String mName;
+        private final int mMaximumBrightness;
+
+        private final int mDeviceId;
+        private final int mLightId;
+
+        InputDeviceLight(int deviceId, int lightId) {
+            mDeviceId = deviceId;
+            mLightId = lightId;
+            try {
+                // cache properties that remain constant for the life of the device
+                mName = mIm.getLightName(mDeviceId, mLightId);
+                mMaximumBrightness = mIm.getLightMaximumBrightness(mDeviceId,
+                        mLightId);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public String getName() {
+            return mName;
+        }
+
+        @Override
+        public void setBrightness(int brightness) {
+            try {
+                mIm.setLightBrightness(mDeviceId, mLightId, brightness);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public int getBrightness() {
+            try {
+                LightState state = mIm.getLightState(mDeviceId, mLightId);
+                if (state != null) {
+                    return state.brightness;
+                } else {
+                    return Light.LIGHT_OFF;
+                }
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public int getMaximumBrightness() {
+            return mMaximumBrightness;
+        }
+
+        @Override
+        public void startBlinking(int onInterval, int offInterval) {
+            try {
+                mIm.setLightBlinking(mDeviceId, mLightId, onInterval, offInterval);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public void stopBlinking() {
+            /**
+             * The Linux LED specification says to set the brightness to LED_OFF
+             * (represented here as 'LIGHT_OFF') to disable blinking.  This also
+             * turns off the light, which isn't necessarily what the user wants,
+             * so we provide a helper that restores the original brightness.
+             */
+            int currentBrightness = getBrightness();
+            setBrightness(Light.LIGHT_OFF);
+            setBrightness(currentBrightness);
+        }
+
+        @Override
+        public boolean isBlinking() {
+            try {
+                LightState state = mIm.getLightState(mDeviceId, mLightId);
+                if (state != null) {
+                    return state.isBlinking;
+                } else {
+                    return false;
+                }
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public int compareTo(InputDeviceLight other) {
+            return getName().compareTo(other.getName());
         }
     }
 }
