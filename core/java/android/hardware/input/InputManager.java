@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.SystemClock;
+import android.os.VibrationAmplitude;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -1229,7 +1230,15 @@ public final class InputManager {
 
         @Override
         public boolean hasAmplitudeControl() {
-            return false;
+            /**
+             * InputDeviceVibrator is only added when the input device supports
+             * FF_RUMBLE, which always takes amplitude values.  It's up to the various
+             * drivers to decide to do something with those values.  At the moment,
+             * there isn't a mechanism to detect whether or not the magnitude values
+             * accepted by FF_RUMBLE do anything, so we assume that the device DOES
+             * have amplitude control
+             */
+            return true;
         }
 
         /**
@@ -1239,15 +1248,18 @@ public final class InputManager {
         public void vibrate(int uid, String opPkg,
                 VibrationEffect effect, AudioAttributes attributes) {
             long[] pattern;
+            VibrationAmplitude[] amplitude;
             int repeat;
             if (effect instanceof VibrationEffect.OneShot) {
                 VibrationEffect.OneShot oneShot = (VibrationEffect.OneShot) effect;
                 pattern = new long[] { 0, oneShot.getTiming() };
+                amplitude = new VibrationAmplitude[] { null, oneShot.getAmplitude() };
                 repeat = -1;
             } else if (effect instanceof VibrationEffect.Waveform) {
                 VibrationEffect.Waveform waveform = (VibrationEffect.Waveform) effect;
                 pattern = waveform.getTimings();
                 repeat = waveform.getRepeatIndex();
+                amplitude = waveform.getAmplitudes();
             } else {
                 // TODO: Add support for prebaked effects
                 Log.w(TAG, "Pre-baked effects aren't supported on input devices");
@@ -1255,7 +1267,7 @@ public final class InputManager {
             }
 
             try {
-                mIm.vibrate(mDeviceId, pattern, repeat, mToken);
+                mIm.vibrate(mDeviceId, pattern, amplitude, repeat, mToken);
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }

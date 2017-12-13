@@ -1527,7 +1527,7 @@ static void nativeReloadCalibration(JNIEnv* env, jclass clazz, jlong ptr) {
 
 static void nativeVibrate(JNIEnv* env,
         jclass /* clazz */, jlong ptr, jint deviceId, jlongArray patternObj,
-        jint repeat, jint token) {
+        jobjectArray amplitudeObj, jint repeat, jint token) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
 
     size_t patternSize = env->GetArrayLength(patternObj);
@@ -1536,6 +1536,14 @@ static void nativeVibrate(JNIEnv* env,
                 "which is more than the maximum supported size of %d.",
                 patternSize, MAX_VIBRATE_PATTERN_SIZE);
         return; // limit to reasonable size
+    }
+
+    size_t amplitudeSize = env->GetArrayLength(amplitudeObj);
+    if (amplitudeSize != patternSize) {
+        ALOGI("Skipped requested vibration because the amplitude size is %zu "
+                "which does not match pattern size of %zu.",
+                amplitudeSize, patternSize);
+        return;
     }
 
     jlong* patternMillis = static_cast<jlong*>(env->GetPrimitiveArrayCritical(
@@ -1547,7 +1555,28 @@ static void nativeVibrate(JNIEnv* env,
     }
     env->ReleasePrimitiveArrayCritical(patternObj, patternMillis, JNI_ABORT);
 
-    im->getInputManager()->getReader()->vibrate(deviceId, pattern, patternSize, repeat, token);
+    jclass pairClass = env->FindClass("android/os/VibrationAmplitude");
+    jfieldID strongFieldId = env->GetFieldID(pairClass, "strong", "I");
+    jfieldID weakFieldId = env->GetFieldID(pairClass, "weak", "I");
+
+    uint16_t amplitude[MAX_VIBRATE_PATTERN_SIZE][2];
+    for (size_t i = 0; i < amplitudeSize; i++) {
+        jobject vibrationAmplitude = env->GetObjectArrayElement(amplitudeObj, i);
+
+        // scale the 0-255 range that android uses to the 0-65535 range linux uses
+        if (vibrationAmplitude != NULL) {
+            jint strongAmplitude = env->GetIntField(vibrationAmplitude, strongFieldId);
+            jint weakAmplitude = env->GetIntField(vibrationAmplitude, weakFieldId);
+
+            amplitude[i][0] = (strongAmplitude == -1) ? 0xc000 : ((uint16_t) strongAmplitude << 8);
+            amplitude[i][1] = (weakAmplitude == -1) ? 0xc000 : ((uint16_t) weakAmplitude << 8);
+        } else {
+            amplitude[i][0] = 0;
+            amplitude[i][1] = 0;
+        }
+    }
+
+    im->getInputManager()->getReader()->vibrate(deviceId, pattern, amplitude, patternSize, repeat, token);
 }
 
 static void nativeCancelVibrate(JNIEnv* /* env */,
@@ -1695,7 +1724,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetInteractive },
     { "nativeReloadCalibration", "(J)V",
             (void*) nativeReloadCalibration },
-    { "nativeVibrate", "(JI[JII)V",
+    { "nativeVibrate", "(JI[J[Landroid/os/VibrationAmplitude;II)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(JII)V",
             (void*) nativeCancelVibrate },
