@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b9b207_21cd8dab",
+        "filename": "core/java/android/net/KeepalivePacketData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T06:36:01Z",
+      "side": 0,
+      "message": "Let\u0027s not delete this. We should be able to use this class to represent other keepalives than just NAT keepalives (e.g., TCP keepalives).",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "a3ebf5c4d26d6332f26d3db9202c79a73d2399e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0a76e17_4bccdd5d",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T06:36:01Z",
+      "side": 0,
+      "message": "I don\u0027t think we should delete these, it\u0027s useful for debugging to have the entire IP packet here.",
+      "range": {
+        "startLine": 132,
+        "startChar": 20,
+        "endLine": 132,
+        "endChar": 73
+      },
+      "revId": "a3ebf5c4d26d6332f26d3db9202c79a73d2399e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
