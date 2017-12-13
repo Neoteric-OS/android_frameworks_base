@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2026c467_24fd8f85",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T07:45:23Z",
+      "side": 1,
+      "message": "Nit: in this case I\u0027m not sure it matters, since we don\u0027t set SO_REUSEPORT or SO_REUSEADDR.",
+      "range": {
+        "startLine": 848,
+        "startChar": 12,
+        "endLine": 848,
+        "endChar": 48
+      },
+      "revId": "6eb957d58472ac661683520e0d7b4022d8a29505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
