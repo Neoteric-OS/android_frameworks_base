@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49971aa7_e67249b5",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-13T06:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a6b3d0_a79fe8a7",
+      "range": {
+        "startLine": 548,
+        "startChar": 32,
+        "endLine": 548,
+        "endChar": 53
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df012822_f9344d6b",
         "filename": "core/java/android/net/TrafficStats.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T05:31:18Z",
       "side": 1,
       "message": "I think getLoopbackTxPackets would be more correct.",
+      "range": {
+        "startLine": 552,
+        "startChar": 23,
+        "endLine": 552,
+        "endChar": 44
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd8c6e90_faf80e7b",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-13T06:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df012822_f9344d6b",
       "range": {
         "startLine": 552,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c1468350_95f701a1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-13T06:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaae6e50_88964fba",
+      "range": {
+        "startLine": 613,
+        "startChar": 25,
+        "endLine": 613,
+        "endChar": 42
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d22805_d6bfbf34",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "01a6e258_18b61184",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-13T06:27:49Z",
+      "side": 1,
+      "message": "This isn\u0027t particularly part of this change, and I\u0027d prefer to keep the change history consistent.",
+      "parentUuid": "10d22805_d6bfbf34",
+      "range": {
+        "startLine": 296,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9d3bff5_97f10cd2",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-13T05:31:18Z",
       "side": 1,
       "message": "Add a check that the UID is the same as it was at the beginning of the method.",
+      "range": {
+        "startLine": 402,
+        "startChar": 8,
+        "endLine": 402,
+        "endChar": 9
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fe42aac_21432c68",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-13T06:27:49Z",
+      "side": 1,
+      "message": "Cannot be done; TrafficStats uses static methods, and there is no way to pull the UID out from TrafficStats/NetworkManagementSocketTagger",
+      "parentUuid": "e9d3bff5_97f10cd2",
       "range": {
         "startLine": 402,
         "startChar": 8,
