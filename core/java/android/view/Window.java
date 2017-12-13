@@ -1090,6 +1090,11 @@ public abstract class Window {
         setPrivateFlags(flags, flags);
     }
 
+    @UnsupportedAppUsage
+    private void addInputFeatures(int features) {
+        setInputFeatures(features, features);
+    }
+
     /**
      * Convenience function to clear the flag bits as specified in flags, as
      * per {@link #setFlags}.
@@ -1099,6 +1104,11 @@ public abstract class Window {
      */
     public void clearFlags(int flags) {
         setFlags(0, flags);
+    }
+
+    @UnsupportedAppUsage
+    private void clearInputFeatures(int features) {
+        setInputFeatures(0, features);
     }
 
     /**
@@ -1131,6 +1141,37 @@ public abstract class Window {
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.privateFlags = (attrs.privateFlags & ~mask) | (flags & mask);
         dispatchWindowAttributesChanged(attrs);
+    }
+
+    @UnsupportedAppUsage
+    private void setInputFeatures(int features, int mask) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.inputFeatures = (attrs.inputFeatures & ~mask) | (features & mask);
+        dispatchWindowAttributesChanged(attrs);
+    }
+
+    /**
+     * Disable pointer gestures.
+     * @param disable true to disable pointer gestures.
+     */
+    public void setDisablePointerGestures(boolean disable) {
+        int feature = WindowManager.LayoutParams.INPUT_FEATURE_DISABLE_POINTER_GESTURES;
+        if (disable) {
+            addInputFeatures(feature);
+        } else {
+            clearInputFeatures(feature);
+        }
+    }
+
+    /**
+     * Returns if pointer gestures is disabled.
+     *
+     * @return true when pointer gestures is disabled.
+     */
+    public boolean getDisablePointerGestures() {
+        int feature = WindowManager.LayoutParams.INPUT_FEATURE_DISABLE_POINTER_GESTURES;
+        final WindowManager.LayoutParams attrs = getAttributes();
+        return (attrs.inputFeatures & feature) != 0;
     }
 
     /**

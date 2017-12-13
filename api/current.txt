@@ -49504,6 +49504,7 @@ package android.view {
     method @Nullable public abstract android.view.View getCurrentFocus();
     method @NonNull public abstract android.view.View getDecorView();
     method public static int getDefaultFeatures(android.content.Context);
+    method public boolean getDisablePointerGestures();
     method public android.transition.Transition getEnterTransition();
     method public android.transition.Transition getExitTransition();
     method protected final int getFeatures();
@@ -49565,6 +49566,7 @@ package android.view {
     method public abstract void setDecorCaptionShade(int);
     method protected void setDefaultWindowFormat(int);
     method public void setDimAmount(float);
+    method public void setDisablePointerGestures(boolean);
     method public void setElevation(float);
     method public void setEnterTransition(android.transition.Transition);
     method public void setExitTransition(android.transition.Transition);
