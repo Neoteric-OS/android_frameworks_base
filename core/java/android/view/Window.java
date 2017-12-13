@@ -1078,6 +1078,17 @@ public abstract class Window {
     }
 
     /**
+     * Convenience function to set the input features as specified in flags, as
+     * per {@link #setInputFeatures}.
+     * @param features The input features to be set.
+     * @see #setInputFeatures
+     * @see #clearInputFeatures
+     */
+    public void addInputFeatures(int features) {
+        setInputFeatures(features, features);
+    }
+
+    /**
      * Convenience function to clear the flag bits as specified in flags, as
      * per {@link #setFlags}.
      * @param flags The flag bits to be cleared.
@@ -1086,6 +1097,17 @@ public abstract class Window {
      */
     public void clearFlags(int flags) {
         setFlags(0, flags);
+    }
+
+    /**
+     * Convenience function to clear the input features as specified in flags, as
+     * per {@link #setInputFeatures}.
+     * @param features The input features to be cleared.
+     * @see #setInputFeatures
+     * @see #addInputFeatures
+     */
+    public void clearInputFeatures(int features) {
+        setInputFeatures(0, features);
     }
 
     /**
@@ -1117,6 +1139,22 @@ public abstract class Window {
     private void setPrivateFlags(int flags, int mask) {
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.privateFlags = (attrs.privateFlags & ~mask) | (flags & mask);
+        dispatchWindowAttributesChanged(attrs);
+    }
+
+    /**
+     * Set the input features of the window, as per the
+     * {@link WindowManager.LayoutParams WindowManager.LayoutParams}
+     * input features.
+     *
+     * @param features The new window input features (see WindowManager.LayoutParams).
+     * @param mask Which of the window input feature bits to modify.
+     * @see #addInputFeatures
+     * @see #clearInputFeatures
+     */
+    public void setInputFeatures(int features, int mask) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.inputFeatures = (attrs.inputFeatures & ~mask) | (features & mask);
         dispatchWindowAttributesChanged(attrs);
     }
 
