@@ -1822,6 +1822,25 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING
             = "carrier_network_service_wwan_package_override_string";
 
+    /**
+     * List of thresholds of RSCP for determining the display level of WCDMA signal bar.
+     * Default value is 255, which means RSCP is not used for the display level of WCDMA signal bar.
+     * Reference: 3GPP TS 27.007 sec 8.69 The WCDMA RSCP valid values are (0-96, 255) as defined.
+     * @hide
+     */
+    public static final String KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY =
+            "wcdma_rscp_thresholds_int_array";
+
+    /**
+     * Determine the default WCDMA signal strength measurement.
+     * if using a RSCP value for default measurement, sets the "rscp" string to this item.
+     * And if sets the "rscp" string, using to the KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY
+     * when WCDMA signal level calculation.
+     * @hide
+     */
+    public static final String KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING =
+            "wcdma_default_signal_strength_measurement_string";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2125,6 +2144,14 @@ public class CarrierConfigManager {
                         -98,  /* SIGNAL_STRENGTH_GREAT */
                         -44
                 });
+        sDefaults.putIntArray(KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY,
+                new int[] {
+                        6,  /* SIGNAL_STRENGTH_POOR */
+                        16, /* SIGNAL_STRENGTH_MODERATE */
+                        26, /* SIGNAL_STRENGTH_GOOD */
+                        36  /* SIGNAL_STRENGTH_GREAT */
+                });
+        sDefaults.putString(KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING, "");
     }
 
     /**
