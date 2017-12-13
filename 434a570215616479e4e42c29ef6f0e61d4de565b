@@ -22,6 +22,52 @@
       "revId": "434a570215616479e4e42c29ef6f0e61d4de565b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3de72df3_7310fc6b",
+        "filename": "core/java/android/net/KeepalivePacketData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T17:27:58Z",
+      "side": 1,
+      "message": "Per in-person discussion, if we make this a build method that\u0027s used by the recipient of the parcel, then if we want to send a new type of keepalive packet, then the ensure that the recipient of the parcel must has the knowledge of all the information necessary to generate the full header.\n\nThat means we\u0027ll need to modify this class to store such new information and that the recipient will need access to any information that is necessary to construct the packet. ISTM that that is a reduction in functionality compared to having the network stack construct the whole packet and passing it around.\n\nGiven that we\u0027ll need to pass around the payload anyway it seems like we could continue to pass around the whole packet.",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "434a570215616479e4e42c29ef6f0e61d4de565b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52308259_e0170fea",
+        "filename": "core/java/android/net/KeepalivePacketData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T17:27:58Z",
+      "side": 1,
+      "message": "This class was intended to represent a packet that could be passed down to the lower layers for offload. As such it contained the whole packet. It also contains some convenience metadata to make logging and hashing/comparisons easy/fast at the expense of a slight increase in storage. This method is a factory method to construct such a packet. It is currently the only such method, but it was expected that in the future there could be others (e.g., to generate TCP keepalives, QUIC keepalives, ...).\n\nPer in-person discussion, if we instead make this a method that\u0027s used by the recipient of the parcel, that if we want to send a new type of keepalive packet, then the ensure that the recipient of the parcel must has the knowledge of all the information necessary to generate the full header.\n\nThat means we\u0027ll need to modify this class to store such new information and that the recipient will need access to any information that is necessary to construct the packet. This is in some sense a layering violation (layer 2 code shouldn\u0027t really be concerned with layer 3 networking parameters) and also it means that the data must be accessible to the lower layers in terms of permissions. So in ISTM that that is a reduction in functionality compared to having the network stack construct the whole packet and passing it around.\n\nGiven that we\u0027ll need to pass around the payload anyway it seems like we could continue to pass around the whole packet.",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "434a570215616479e4e42c29ef6f0e61d4de565b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
