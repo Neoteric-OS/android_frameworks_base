@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58bc7b87_157b72fe",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-13T18:09:53Z",
+      "side": 1,
+      "message": "Do you mean the current carrier? Regardless of the race condition, true means the bundle is for an identified carrier, just that it may not be the current carrier.",
+      "range": {
+        "startLine": 2038,
+        "startChar": 47,
+        "endLine": 2038,
+        "endChar": 68
+      },
+      "revId": "40f518cf5bf1a9c40f64a48ae540f1920c2d4526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4a39be_184d3dab",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2040,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-13T18:09:53Z",
+      "side": 1,
+      "message": "belong",
+      "range": {
+        "startLine": 2040,
+        "startChar": 34,
+        "endLine": 2040,
+        "endChar": 41
+      },
+      "revId": "40f518cf5bf1a9c40f64a48ae540f1920c2d4526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66189e83_e0145ab2",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-13T18:09:53Z",
+      "side": 1,
+      "message": "a carrier specific",
+      "range": {
+        "startLine": 2046,
+        "startChar": 42,
+        "endLine": 2046,
+        "endChar": 53
+      },
+      "revId": "40f518cf5bf1a9c40f64a48ae540f1920c2d4526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf653f35_92409439",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-13T18:09:53Z",
+      "side": 1,
+      "message": "a carrier specific",
+      "range": {
+        "startLine": 2050,
+        "startChar": 31,
+        "endLine": 2050,
+        "endChar": 42
+      },
+      "revId": "40f518cf5bf1a9c40f64a48ae540f1920c2d4526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1b3065_352c1260",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-13T18:09:53Z",
+      "side": 1,
+      "message": "Simply say \"otherwise\"? Reason being that carrier specific configuration may be same as default one.",
+      "range": {
+        "startLine": 2050,
+        "startChar": 88,
+        "endLine": 2051,
+        "endChar": 36
+      },
+      "revId": "40f518cf5bf1a9c40f64a48ae540f1920c2d4526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
