@@ -130,6 +130,7 @@ import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.XmlUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.DataConnectionStats;
+import com.android.server.connectivity.DnsManager;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.LingerMonitor;
@@ -407,6 +408,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     final private InternalHandler mHandler;
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
+    private final DnsManager mDnsManager;
 
     private boolean mSystemReady;
     private Intent mInitialBroadcast;
@@ -857,6 +859,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mMultinetworkPolicyTracker = createMultinetworkPolicyTracker(
                 mContext, mHandler, () -> rematchForAvoidBadWifiUpdate());
         mMultinetworkPolicyTracker.start();
+
+        mDnsManager = new DnsManager(mHandler, mContext, mNetd);
     }
 
     private Tethering makeTethering() {
@@ -1800,24 +1804,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final String sysctlKey = "sys.sysctl.tcp_def_init_rwnd";
         if (rwndValue != 0) {
             mSystemProperties.set(sysctlKey, rwndValue.toString());
-        }
-    }
-
-    private void flushVmDnsCache() {
-        /*
-         * Tell the VMs to toss their DNS caches
-         */
-        Intent intent = new Intent(Intent.ACTION_CLEAR_DNS_CACHE);
-        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
-        /*
-         * Connectivity events can happen before boot has completed ...
-         */
-        intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
-        final long ident = Binder.clearCallingIdentity();
-        try {
-            mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
-        } finally {
-            Binder.restoreCallingIdentity(ident);
         }
     }
 
@@ -4561,16 +4547,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         Collection<InetAddress> dnses = newLp.getDnsServers();
         if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
         try {
-            mNetd.setDnsConfigurationForNetwork(
-                    netId, NetworkUtils.makeStrings(dnses), newLp.getDomains());
+            mDnsManager.setDnsConfigurationForNetwork(netId, dnses, newLp.getDomains());
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
+
+        // TODO: netd should listen on [::1]:53 and proxy queries to the current
+        // default network, and we should just set net.dns1 to ::1.
         final NetworkAgentInfo defaultNai = getDefaultNetwork();
         if (defaultNai != null && defaultNai.network.netId == netId) {
             setDefaultDnsSystemProperties(dnses);
         }
-        flushVmDnsCache();
+        mDnsManager.flushVmDnsCache();
     }
 
     private void setDefaultDnsSystemProperties(Collection<InetAddress> dnses) {
