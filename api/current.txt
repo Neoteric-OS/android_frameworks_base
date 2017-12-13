@@ -26,6 +26,7 @@ package android {
     field public static final java.lang.String BIND_CONDITION_PROVIDER_SERVICE = "android.permission.BIND_CONDITION_PROVIDER_SERVICE";
     field public static final java.lang.String BIND_DEVICE_ADMIN = "android.permission.BIND_DEVICE_ADMIN";
     field public static final java.lang.String BIND_DREAM_SERVICE = "android.permission.BIND_DREAM_SERVICE";
+    field public static final java.lang.String BIND_EUICC_SERVICE = "android.permission.BIND_EUICC_SERVICE";
     field public static final java.lang.String BIND_INCALL_SERVICE = "android.permission.BIND_INCALL_SERVICE";
     field public static final java.lang.String BIND_INPUT_METHOD = "android.permission.BIND_INPUT_METHOD";
     field public static final java.lang.String BIND_MIDI_DEVICE_SERVICE = "android.permission.BIND_MIDI_DEVICE_SERVICE";
@@ -147,6 +148,7 @@ package android {
     field public static final java.lang.String WRITE_CALENDAR = "android.permission.WRITE_CALENDAR";
     field public static final java.lang.String WRITE_CALL_LOG = "android.permission.WRITE_CALL_LOG";
     field public static final java.lang.String WRITE_CONTACTS = "android.permission.WRITE_CONTACTS";
+    field public static final java.lang.String WRITE_EMBEDDED_SUBSCRIPTIONS = "android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS";
     field public static final java.lang.String WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
     field public static final java.lang.String WRITE_GSERVICES = "android.permission.WRITE_GSERVICES";
     field public static final java.lang.String WRITE_SECURE_SETTINGS = "android.permission.WRITE_SECURE_SETTINGS";
@@ -6532,6 +6534,7 @@ package android.app.admin {
     field public static final int RESET_PASSWORD_DO_NOT_ASK_CREDENTIALS_ON_BOOT = 2; // 0x2
     field public static final int RESET_PASSWORD_REQUIRE_ENTRY = 1; // 0x1
     field public static final int SKIP_SETUP_WIZARD = 1; // 0x1
+    field public static final int WIPE_EUICC = 4; // 0x4
     field public static final int WIPE_EXTERNAL_STORAGE = 1; // 0x1
     field public static final int WIPE_RESET_PROTECTION_DATA = 2; // 0x2
   }
@@ -9046,6 +9049,7 @@ package android.content {
     field public static final java.lang.String DISPLAY_SERVICE = "display";
     field public static final java.lang.String DOWNLOAD_SERVICE = "download";
     field public static final java.lang.String DROPBOX_SERVICE = "dropbox";
+    field public static final java.lang.String EUICC_SERVICE = "euicc_service";
     field public static final java.lang.String FINGERPRINT_SERVICE = "fingerprint";
     field public static final java.lang.String HARDWARE_PROPERTIES_SERVICE = "hardware_properties";
     field public static final java.lang.String INPUT_METHOD_SERVICE = "input_method";
@@ -10849,6 +10853,7 @@ package android.content.pm {
     field public static final java.lang.String FEATURE_SIP_VOIP = "android.software.sip.voip";
     field public static final java.lang.String FEATURE_TELEPHONY = "android.hardware.telephony";
     field public static final java.lang.String FEATURE_TELEPHONY_CDMA = "android.hardware.telephony.cdma";
+    field public static final java.lang.String FEATURE_TELEPHONY_EUICC = "android.hardware.telephony.euicc";
     field public static final java.lang.String FEATURE_TELEPHONY_GSM = "android.hardware.telephony.gsm";
     field public static final java.lang.String FEATURE_TELEPHONY_MBMS = "android.hardware.telephony.mbms";
     field public static final deprecated java.lang.String FEATURE_TELEVISION = "android.hardware.type.television";
@@ -40695,6 +40700,7 @@ package android.telephony {
   }
 
   public class SubscriptionInfo implements android.os.Parcelable {
+    method public boolean canManageSubscription(android.content.Context);
     method public android.graphics.Bitmap createIconBitmap(android.content.Context);
     method public int describeContents();
     method public java.lang.CharSequence getCarrierName();
@@ -40708,6 +40714,7 @@ package android.telephony {
     method public java.lang.String getNumber();
     method public int getSimSlotIndex();
     method public int getSubscriptionId();
+    method public boolean isEmbedded();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.telephony.SubscriptionInfo> CREATOR;
   }
@@ -40715,6 +40722,7 @@ package android.telephony {
   public class SubscriptionManager {
     method public void addOnSubscriptionsChangedListener(android.telephony.SubscriptionManager.OnSubscriptionsChangedListener);
     method public static android.telephony.SubscriptionManager from(android.content.Context);
+    method public java.util.List<android.telephony.SubscriptionInfo> getAccessibleSubscriptionInfoList();
     method public android.telephony.SubscriptionInfo getActiveSubscriptionInfo(int);
     method public int getActiveSubscriptionInfoCount();
     method public int getActiveSubscriptionInfoCountMax();
@@ -41052,6 +41060,44 @@ package android.telephony.data {
     method public android.telephony.data.ApnSetting.Builder setRoamingProtocol(java.lang.String);
     method public android.telephony.data.ApnSetting.Builder setTypes(java.util.List<java.lang.String>);
     method public android.telephony.data.ApnSetting.Builder setUser(java.lang.String);
+  }
+
+}
+
+package android.telephony.euicc {
+
+  public final class DownloadableSubscription implements android.os.Parcelable {
+    method public int describeContents();
+    method public static android.telephony.euicc.DownloadableSubscription forActivationCode(java.lang.String);
+    method public java.lang.String getConfirmationCode();
+    method public void setConfirmationCode(java.lang.String);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.euicc.DownloadableSubscription> CREATOR;
+  }
+
+  public final class EuiccInfo implements android.os.Parcelable {
+    ctor public EuiccInfo(java.lang.String);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.euicc.EuiccInfo> CREATOR;
+    field public final java.lang.String osVersion;
+  }
+
+  public class EuiccManager {
+    method public void deleteSubscription(int, android.app.PendingIntent);
+    method public void downloadSubscription(android.telephony.euicc.DownloadableSubscription, boolean, android.app.PendingIntent);
+    method public java.lang.String getEid();
+    method public android.telephony.euicc.EuiccInfo getEuiccInfo();
+    method public boolean isEnabled();
+    method public void startResolutionActivity(android.app.Activity, int, android.content.Intent, android.app.PendingIntent) throws android.content.IntentSender.SendIntentException;
+    method public void switchToSubscription(int, android.app.PendingIntent);
+    field public static final java.lang.String ACTION_MANAGE_EMBEDDED_SUBSCRIPTIONS = "android.telephony.euicc.action.MANAGE_EMBEDDED_SUBSCRIPTIONS";
+    field public static final java.lang.String ACTION_NOTIFY_CARRIER_SETUP = "android.telephony.euicc.action.NOTIFY_CARRIER_SETUP";
+    field public static final int EMBEDDED_SUBSCRIPTION_RESULT_ERROR = 2; // 0x2
+    field public static final int EMBEDDED_SUBSCRIPTION_RESULT_OK = 0; // 0x0
+    field public static final int EMBEDDED_SUBSCRIPTION_RESULT_RESOLVABLE_ERROR = 1; // 0x1
+    field public static final java.lang.String EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE = "android.telephony.euicc.extra.EMBEDDED_SUBSCRIPTION_DETAILED_CODE";
+    field public static final java.lang.String META_DATA_CARRIER_ICON = "android.telephony.euicc.carriericon";
   }
 
 }

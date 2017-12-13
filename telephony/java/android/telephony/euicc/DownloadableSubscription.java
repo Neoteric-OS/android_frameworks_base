@@ -16,18 +16,14 @@
 package android.telephony.euicc;
 
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.UiccAccessRule;
 
 import com.android.internal.util.Preconditions;
 
-/**
- * Information about a subscription which is available for download.
- *
- * TODO(b/35851809): Make this public.
- * @hide
- */
+/** Information about a subscription which is available for download. */
 public final class DownloadableSubscription implements Parcelable {
 
     public static final Creator<DownloadableSubscription> CREATOR =
@@ -47,9 +43,8 @@ public final class DownloadableSubscription implements Parcelable {
      * Activation code. May be null for subscriptions which are not based on activation codes, e.g.
      * to download a default subscription assigned to this device.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     @Nullable
     public final String encodedActivationCode;
 
@@ -103,9 +98,8 @@ public final class DownloadableSubscription implements Parcelable {
     /**
      * Set the user-visible carrier name.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void setCarrierName(String carrierName) {
         this.carrierName = carrierName;
     }
@@ -117,9 +111,8 @@ public final class DownloadableSubscription implements Parcelable {
      * those created with {@link #forActivationCode}). May be populated with
      * {@link EuiccManager#getDownloadableSubscriptionMetadata}.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     @Nullable
     public String getCarrierName() {
         return carrierName;
@@ -132,9 +125,8 @@ public final class DownloadableSubscription implements Parcelable {
      * those created with {@link #forActivationCode}). May be populated with
      * {@link EuiccManager#getDownloadableSubscriptionMetadata}.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public UiccAccessRule[] getAccessRules() {
         return accessRules;
     }
@@ -142,9 +134,8 @@ public final class DownloadableSubscription implements Parcelable {
     /**
      * Set the {@link UiccAccessRule}s dictating access to this subscription.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void setAccessRules(UiccAccessRule[] accessRules) {
         this.accessRules = accessRules;
     }

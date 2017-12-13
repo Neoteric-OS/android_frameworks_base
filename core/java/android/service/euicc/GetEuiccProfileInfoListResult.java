@@ -16,15 +16,15 @@
 package android.service.euicc;
 
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Result of a {@link EuiccService#onGetEuiccProfileInfoList} operation.
  * @hide
- *
- * TODO(b/35851809): Make this a SystemApi.
  */
+@SystemApi
 public final class GetEuiccProfileInfoListResult implements Parcelable {
 
     public static final Creator<GetEuiccProfileInfoListResult> CREATOR =

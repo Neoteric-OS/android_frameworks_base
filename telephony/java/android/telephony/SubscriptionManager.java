@@ -752,9 +752,8 @@ public class SubscriptionManager {
      * then by {@link SubscriptionInfo#getSubscriptionId}.
      * </ul>
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public List<SubscriptionInfo> getAvailableSubscriptionInfoList() {
         List<SubscriptionInfo> result = null;
 
@@ -792,9 +791,6 @@ public class SubscriptionManager {
      * if the list is non-empty the list is sorted by {@link SubscriptionInfo#getSimSlotIndex}
      * then by {@link SubscriptionInfo#getSubscriptionId}.
      * </ul>
-     * @hide
-     *
-     * TODO(b/35851809): Make this public.
      */
     public List<SubscriptionInfo> getAccessibleSubscriptionInfoList() {
         List<SubscriptionInfo> result = null;
@@ -820,9 +816,8 @@ public class SubscriptionManager {
      *
      * <p>Requires the {@link android.Manifest.permission#WRITE_EMBEDDED_SUBSCRIPTIONS} permission.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void requestEmbeddedSubscriptionInfoListRefresh() {
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));

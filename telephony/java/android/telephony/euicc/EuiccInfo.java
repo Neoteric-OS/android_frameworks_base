@@ -23,9 +23,6 @@ import android.os.Parcelable;
  * Information about an eUICC chip/device.
  *
  * @see EuiccManager#getEuiccInfo
- * @hide
- *
- * TODO(b/35851809): Make this public.
  */
 // WARNING: Do not add any privacy-sensitive fields to this class (such as an eUICC identifier)!
 // This API is accessible to all applications. Privacy-sensitive fields should be returned in their

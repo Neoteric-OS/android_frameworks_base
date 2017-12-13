@@ -17,6 +17,7 @@ package android.telephony.euicc;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,9 +32,8 @@ import java.util.Objects;
  * disabling, or deleting).
  *
  * @hide
- *
- * TODO(b/35851809): Make this a @SystemApi.
  */
+@SystemApi
 public class EuiccNotification implements Parcelable {
     /** Event */
     @Retention(RetentionPolicy.SOURCE)

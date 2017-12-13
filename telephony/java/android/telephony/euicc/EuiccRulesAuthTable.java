@@ -16,6 +16,7 @@
 package android.telephony.euicc;
 
 import android.annotation.IntDef;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.service.carrier.CarrierIdentifier;
@@ -30,11 +31,9 @@ import java.util.Arrays;
 
 /**
  * This represents the RAT (Rules Authorisation Table) stored on eUICC.
- *
  * @hide
- *
- * TODO(b/35851809): Make this a @SystemApi.
  */
+@SystemApi
 public final class EuiccRulesAuthTable implements Parcelable {
     /** Profile policy rule flags */
     @Retention(RetentionPolicy.SOURCE)

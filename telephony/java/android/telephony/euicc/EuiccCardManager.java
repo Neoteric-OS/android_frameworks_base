@@ -17,6 +17,7 @@ package android.telephony.euicc;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -52,11 +53,9 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * EuiccCardManager is the application interface to an eSIM card.
- *
  * @hide
- *
- * TODO(b/35851809): Make this a SystemApi.
  */
+@SystemApi
 public class EuiccCardManager {
     private static final String TAG = "EuiccCardManager";
 
@@ -109,6 +108,9 @@ public class EuiccCardManager {
 
     /** Result code of execution with no error. */
     public static final int RESULT_OK = 0;
+
+    /** Result code of an unknown error. */
+    public static final int RESULT_UNKNOWN_ERROR = -1;
 
     /**
      * Callback to receive the result of an eUICC card API.

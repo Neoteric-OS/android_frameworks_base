@@ -17,6 +17,7 @@ package android.service.euicc;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.service.carrier.CarrierIdentifier;
@@ -32,9 +33,8 @@ import java.util.Objects;
  * Information about an embedded profile (subscription) on an eUICC.
  *
  * @hide
- *
- * TODO(b/35851809): Make this a SystemApi.
  */
+@SystemApi
 public final class EuiccProfileInfo implements Parcelable {
 
     /** Profile policy rules (bit mask) */

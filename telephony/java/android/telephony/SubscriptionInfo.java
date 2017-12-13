@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -332,12 +333,7 @@ public class SubscriptionInfo implements Parcelable {
         return this.mCountryIso;
     }
 
-    /**
-     * @return whether the subscription is an embedded one.
-     * @hide
-     *
-     * TODO(b/35851809): Make this public.
-     */
+    /** @return whether the subscription is an embedded one. */
     public boolean isEmbedded() {
         return this.mIsEmbedded;
     }
@@ -350,9 +346,6 @@ public class SubscriptionInfo implements Parcelable {
      * @param context Context of the application to check.
      * @return whether the app is authorized to manage this subscription per its metadata.
      * @throws UnsupportedOperationException if this subscription is not embedded.
-     * @hide
-     *
-     * TODO(b/35851809): Make this public.
      */
     public boolean canManageSubscription(Context context) {
         return canManageSubscription(context, context.getPackageName());
@@ -395,9 +388,8 @@ public class SubscriptionInfo implements Parcelable {
      * @return the {@link UiccAccessRule}s dictating who is authorized to manage this subscription.
      * @throws UnsupportedOperationException if this subscription is not embedded.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public @Nullable UiccAccessRule[] getAccessRules() {
         if (!isEmbedded()) {
             throw new UnsupportedOperationException("Not an embedded subscription");
