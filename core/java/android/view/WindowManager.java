@@ -2387,8 +2387,6 @@ public interface WindowManager extends ViewManager {
          * When this window has focus, disable touch pad pointer gesture processing.
          * The window will receive raw position updates from the touch pad instead
          * of pointer movements and synthetic touch events.
-         *
-         * @hide
          */
         public static final int INPUT_FEATURE_DISABLE_POINTER_GESTURES = 0x00000001;
 
@@ -2419,9 +2417,7 @@ public interface WindowManager extends ViewManager {
          * @see #INPUT_FEATURE_DISABLE_POINTER_GESTURES
          * @see #INPUT_FEATURE_NO_INPUT_CHANNEL
          * @see #INPUT_FEATURE_DISABLE_USER_ACTIVITY
-         * @hide
          */
-        @UnsupportedAppUsage
         public int inputFeatures;
 
         /**

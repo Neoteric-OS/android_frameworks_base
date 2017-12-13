@@ -49488,8 +49488,10 @@ package android.view {
     ctor public Window(android.content.Context);
     method public abstract void addContentView(android.view.View, android.view.ViewGroup.LayoutParams);
     method public void addFlags(int);
+    method public void addInputFeatures(int);
     method public final void addOnFrameMetricsAvailableListener(@NonNull android.view.Window.OnFrameMetricsAvailableListener, android.os.Handler);
     method public void clearFlags(int);
+    method public void clearInputFeatures(int);
     method public abstract void closeAllPanels();
     method public abstract void closePanel(int);
     method public <T extends android.view.View> T findViewById(@IdRes int);
@@ -49577,6 +49579,7 @@ package android.view {
     method public void setFormat(int);
     method public void setGravity(int);
     method public void setIcon(@DrawableRes int);
+    method public void setInputFeatures(int, int);
     method public void setLayout(int, int);
     method public void setLocalFocus(boolean, boolean);
     method public void setLogo(@DrawableRes int);
@@ -49809,6 +49812,7 @@ package android.view {
     field @Deprecated public static final int FLAG_TURN_SCREEN_ON = 2097152; // 0x200000
     field public static final int FLAG_WATCH_OUTSIDE_TOUCH = 262144; // 0x40000
     field public static final int FORMAT_CHANGED = 8; // 0x8
+    field public static final int INPUT_FEATURE_DISABLE_POINTER_GESTURES = 1; // 0x1
     field public static final int LAST_APPLICATION_WINDOW = 99; // 0x63
     field public static final int LAST_SUB_WINDOW = 1999; // 0x7cf
     field public static final int LAST_SYSTEM_WINDOW = 2999; // 0xbb7
@@ -49877,6 +49881,7 @@ package android.view {
     field public int gravity;
     field public float horizontalMargin;
     field @android.view.ViewDebug.ExportedProperty public float horizontalWeight;
+    field public int inputFeatures;
     field public int layoutInDisplayCutoutMode;
     field @Deprecated public int memoryType;
     field public String packageName;
