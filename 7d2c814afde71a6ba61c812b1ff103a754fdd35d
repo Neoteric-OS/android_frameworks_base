@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a6b3d0_a79fe8a7",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T05:31:18Z",
+      "side": 1,
+      "message": "I think it\u0027s open now. Consider prepping a change to unhide them.",
+      "range": {
+        "startLine": 548,
+        "startChar": 32,
+        "endLine": 548,
+        "endChar": 53
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df012822_f9344d6b",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T05:31:18Z",
+      "side": 1,
+      "message": "I think getLoopbackTxPackets would be more correct.",
+      "range": {
+        "startLine": 552,
+        "startChar": 23,
+        "endLine": 552,
+        "endChar": 44
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eaae6e50_88964fba",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T05:31:18Z",
+      "side": 1,
+      "message": "You need to clear this before returning.\n\nTo ensure that the tag is cleared even if an exception is thrown, suggest using try / finally.",
+      "range": {
+        "startLine": 613,
+        "startChar": 25,
+        "endLine": 613,
+        "endChar": 42
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10d22805_d6bfbf34",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T05:31:18Z",
+      "side": 1,
+      "message": "Consider using assertFalse and removing the !)",
+      "range": {
+        "startLine": 296,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9d3bff5_97f10cd2",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-13T05:31:18Z",
+      "side": 1,
+      "message": "Add a check that the UID is the same as it was at the beginning of the method.",
+      "range": {
+        "startLine": 402,
+        "startChar": 8,
+        "endLine": 402,
+        "endChar": 9
+      },
+      "revId": "7d2c814afde71a6ba61c812b1ff103a754fdd35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
