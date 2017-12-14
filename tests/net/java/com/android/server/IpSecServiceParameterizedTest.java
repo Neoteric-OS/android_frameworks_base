@@ -348,6 +348,90 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
+    public void testCreateTwoTransportModeTransformsWithSameSpis() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+        addAuthAndCryptToIpSecConfig(ipSecConfig);
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        // Attempting to create transform a second time with the same SPIs should throw an error...
+        try {
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+                fail("IpSecService should have thrown an error for reuse of SPI");
+        } catch (IllegalStateException expected) {
+        }
+
+        // ... even if the transform is deleted
+        mIpSecService.deleteTransportModeTransform(createTransformResp.resourceId);
+        try {
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+                fail("IpSecService should have thrown an error for reuse of SPI");
+        } catch (IllegalStateException expected) {
+        }
+    }
+
+    @Test
+    public void testCreateInvalidConfigAeadWithAuth() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+
+        for (int direction : DIRECTIONS) {
+            ipSecConfig.setAuthentication(direction, AUTH_ALGO);
+            ipSecConfig.setAuthenticatedEncryption(direction, AEAD_ALGO);
+        }
+
+        try {
+            mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            fail(
+                    "IpSecService should have thrown an error on authentication being"
+                            + " enabled with authenticated encryption");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
+    public void testCreateInvalidConfigAeadWithCrypt() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+
+        for (int direction : DIRECTIONS) {
+            ipSecConfig.setEncryption(direction, CRYPT_ALGO);
+            ipSecConfig.setAuthenticatedEncryption(direction, AEAD_ALGO);
+        }
+
+        try {
+            mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            fail(
+                    "IpSecService should have thrown an error on encryption being"
+                            + " enabled with authenticated encryption");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
+    public void testCreateInvalidConfigAeadWithAuthAndCrypt() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+
+        for (int direction : DIRECTIONS) {
+            ipSecConfig.setAuthentication(direction, AUTH_ALGO);
+            ipSecConfig.setEncryption(direction, CRYPT_ALGO);
+            ipSecConfig.setAuthenticatedEncryption(direction, AEAD_ALGO);
+        }
+
+        try {
+            mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            fail(
+                    "IpSecService should have thrown an error on authentication and encryption being"
+                            + " enabled with authenticated encryption");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
     public void testDeleteTransportModeTransform() throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);

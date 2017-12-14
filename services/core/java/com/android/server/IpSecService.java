@@ -62,7 +62,6 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import libcore.io.IoUtils;
 
@@ -545,6 +544,10 @@ public class IpSecService extends IIpSecService.Stub {
             mConfig = config;
             mSpis = spis;
             mSocket = socket;
+
+            for (SpiRecord spiRecord : spis) {
+                spiRecord.setOwnedByTransform();
+            }
         }
 
         public IpSecConfig getConfig() {
@@ -632,16 +635,6 @@ public class IpSecService extends IIpSecService.Stub {
         /** always guarded by IpSecService#this */
         @Override
         public void freeUnderlyingResources() {
-            if (mOwnedByTransform) {
-                Log.d(TAG, "Cannot release Spi " + mSpi + ": Currently locked by a Transform");
-                // Because SPIs are "handed off" to transform, objects, they should never be
-                // freed from the SpiRecord once used in a transform. (They refer to the same SA,
-                // thus ownership and responsibility for freeing these resources passes to the
-                // Transform object). Thus, we should let the user free them without penalty once
-                // they are applied in a Transform object.
-                return;
-            }
-
             try {
                 mSrvConfig
                         .getNetdInstance()
@@ -669,6 +662,10 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             mOwnedByTransform = true;
+        }
+
+        public boolean getOwnedByTransform() {
+            return mOwnedByTransform;
         }
 
         @Override
@@ -1107,7 +1104,14 @@ public class IpSecService extends IIpSecService.Stub {
             validateAlgorithms(config, direction);
 
             // Retrieve SPI record; will throw IllegalArgumentException if not found
-            userRecord.mSpiRecords.getResourceOrThrow(config.getSpiResourceId(direction));
+            SpiRecord record =
+                    userRecord.mSpiRecords.getResourceOrThrow(config.getSpiResourceId(direction));
+
+            // Check to ensure that SPI has not already been used.
+            if (record.getOwnedByTransform()) {
+                throw new IllegalStateException(
+                        "SPI already in use; cannot be used in new Transforms");
+            }
         }
     }
 
