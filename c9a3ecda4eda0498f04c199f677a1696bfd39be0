@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c5c479f_e5e4ba46",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-12-14T18:40:05Z",
+      "side": 1,
+      "message": "What does batch operation exactly mean here?",
+      "range": {
+        "startLine": 3019,
+        "startChar": 16,
+        "endLine": 3019,
+        "endChar": 52
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c0553d_b859b96d",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-12-14T18:40:05Z",
+      "side": 1,
+      "message": "How come we have missing values 144 and 145?",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 34
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb3192f_14eae745",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-12-14T18:40:05Z",
+      "side": 1,
+      "message": "Where is 1050?",
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
