@@ -240,8 +240,11 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_FOREGROUND = 19;
 
+    /** @hide */
+    public static final int NET_CAPABILITY_OEM_PAID = 20;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_FOREGROUND;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -299,6 +302,15 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_MMS) |
             (1 << NET_CAPABILITY_SUPL) |
             (1 << NET_CAPABILITY_WIFI_P2P);
+
+    /**
+     * Contains a list of capabilities that must to be explicitly requested to match the network.
+     * For example if network provides capabilities 1,2,[3] and [3] must be explicitly requested,
+     * then the network capabilities will be satisfied only for request 1,2,[3]
+     * and request 1,2 won't be satisfied.
+     */
+    private static final long EXPLICITLY_REQUESTED_CAPABILITIES =
+            (1 << NET_CAPABILITY_OEM_PAID);
 
     /**
      * Adds the given capability to this {@code NetworkCapability} instance.
@@ -404,11 +416,19 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     private boolean satisfiedByNetCapabilities(NetworkCapabilities nc, boolean onlyImmutable) {
-        long networkCapabilities = this.mNetworkCapabilities;
+        long networkCapabilities = this.mNetworkCapabilities & ~EXPLICITLY_REQUESTED_CAPABILITIES;
+
         if (onlyImmutable) {
             networkCapabilities = networkCapabilities & ~MUTABLE_CAPABILITIES;
         }
-        return ((nc.mNetworkCapabilities & networkCapabilities) == networkCapabilities);
+
+        return ((nc.mNetworkCapabilities & networkCapabilities) == networkCapabilities)
+                && (satisfiedByExplicitlyRequestedCapabilities(nc));
+    }
+
+    private boolean satisfiedByExplicitlyRequestedCapabilities(NetworkCapabilities that) {
+        return (this.mNetworkCapabilities & EXPLICITLY_REQUESTED_CAPABILITIES)
+                == (that.mNetworkCapabilities & EXPLICITLY_REQUESTED_CAPABILITIES);
     }
 
     /** @hide */
@@ -417,8 +437,8 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     private boolean equalsNetCapabilitiesRequestable(NetworkCapabilities that) {
-        return ((this.mNetworkCapabilities & ~NON_REQUESTABLE_CAPABILITIES) ==
-                (that.mNetworkCapabilities & ~NON_REQUESTABLE_CAPABILITIES));
+        return ((this.mNetworkCapabilities & ~NON_REQUESTABLE_CAPABILITIES)
+                == (that.mNetworkCapabilities & ~NON_REQUESTABLE_CAPABILITIES));
     }
 
     /**
@@ -963,6 +983,7 @@ public final class NetworkCapabilities implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mNetworkCapabilities);
@@ -1058,6 +1079,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_CAPTIVE_PORTAL: return "CAPTIVE_PORTAL";
             case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
             case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
+            case NET_CAPABILITY_OEM_PAID:       return "OEM_PAID";
             default:                            return Integer.toString(capability);
         }
     }
