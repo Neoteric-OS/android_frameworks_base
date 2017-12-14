@@ -100,8 +100,14 @@ public class IpSecService extends IIpSecService.Stub {
     /* Binder context for this service */
     private final Context mContext;
 
-    /** Should be a never-repeating global ID for resources */
-    private static AtomicInteger mNextResourceId = new AtomicInteger(0x00FADED0);
+    /**
+     * The next non-repeating global ID for tracking resources between users, this service,
+     * and kernel data structures. Accessing this variable is not thread safe, so it is
+     * only read or modified within blocks synchronized on IpSecService.this. We want to
+     * avoid -1 (INVALID_RESOURCE_ID) and 0 (we probably forgot to initialize it).
+     */
+    @GuardedBy("IpSecService.this")
+    private static int mNextResourceId = 1;
 
     interface IpSecServiceConfiguration {
         INetd getNetdInstance() throws RemoteException;
@@ -838,7 +844,7 @@ public class IpSecService extends IIpSecService.Stub {
         checkNotNull(binder, "Null Binder passed to allocateSecurityParameterIndex");
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
-        int resourceId = mNextResourceId.getAndIncrement();
+        final int resourceId = mNextResourceId++;
 
         int spi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
         String localAddress = "";
@@ -940,7 +946,7 @@ public class IpSecService extends IIpSecService.Stub {
         checkNotNull(binder, "Null Binder passed to openUdpEncapsulationSocket");
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
-        int resourceId = mNextResourceId.getAndIncrement();
+        final int resourceId = mNextResourceId++;
         FileDescriptor sockFd = null;
         try {
             if (!userRecord.mSocketQuotaTracker.isAvailable()) {
@@ -1060,7 +1066,7 @@ public class IpSecService extends IIpSecService.Stub {
             IpSecConfig c, IBinder binder) throws RemoteException {
         checkIpSecConfig(c);
         checkNotNull(binder, "Null Binder passed to createTransportModeTransform");
-        int resourceId = mNextResourceId.getAndIncrement();
+        final int resourceId = mNextResourceId++;
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
 
