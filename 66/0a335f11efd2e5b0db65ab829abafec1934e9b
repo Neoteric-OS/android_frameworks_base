@@ -1,0 +1,8 @@
+Build-Cop-Override+1: Colin Cross <ccross@android.com>
+Presubmit-Ready+1: nharold <nharold@google.com>
+Code-Review+1: Jack He <siyuanh@google.com>
+Submitted-by: nharold <nharold@google.com>
+Submitted-at: Thu, 14 Dec 2017 23:07:52 +0000
+Reviewed-on: https://android-review.googlesource.com/569162
+Project: platform/frameworks/base
+Branch: refs/heads/master
