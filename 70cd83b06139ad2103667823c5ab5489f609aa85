@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2a969b_f9c82ab3",
+        "filename": "services/usage/java/com/android/server/usage/IntervalStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2017-12-14T21:40:55Z",
+      "side": 1,
+      "message": "If the last event was a MOVE_TO_FOREGROUND, and the stats rollover, we know to continue counting the current package as in the foreground.\n\nWith your change, a system interaction will override this last event, and if a rollover happens, we will forget that the package was in the foreground.",
+      "revId": "70cd83b06139ad2103667823c5ab5489f609aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
