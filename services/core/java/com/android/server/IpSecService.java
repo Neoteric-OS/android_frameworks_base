@@ -535,6 +535,10 @@ public class IpSecService extends IIpSecService.Stub {
             mConfig = config;
             mSpis = spis;
             mSocket = socket;
+
+            for (SpiRecord spiRecord : spis) {
+                spiRecord.setOwnedByTransform();
+            }
         }
 
         public IpSecConfig getConfig() {
@@ -659,6 +663,10 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             mOwnedByTransform = true;
+        }
+
+        public boolean getOwnedByTransform() {
+            return mOwnedByTransform;
         }
 
         @Override
@@ -1044,7 +1052,14 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             // Retrieve SPI record; will throw IllegalArgumentException if not found
-            userRecord.mSpiRecords.getResourceOrThrow(config.getSpiResourceId(direction));
+            SpiRecord record =
+                    userRecord.mSpiRecords.getResourceOrThrow(config.getSpiResourceId(direction));
+
+            // Check to ensure that SPI has not already been used.
+            if (record.getOwnedByTransform()) {
+                throw new IllegalArgumentException(
+                        "SPI already in use; cannot be used in new Transforms");
+            }
         }
     }
 

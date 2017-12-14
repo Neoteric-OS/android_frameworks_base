@@ -348,6 +348,24 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
+    public void testCreateTwoTransportModeTransformsWithSameSpis() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+        addAuthAndCryptToIpSecConfig(ipSecConfig);
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        // Attempting to create transform a second time with the same SPIs should throw an error
+        try {
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+                fail("IpSecService should have thrown an error for reuse of SPI");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
     public void testCreateInvalidConfigAeadWithAuth() throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
