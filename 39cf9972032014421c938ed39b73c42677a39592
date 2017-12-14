@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef8677f_825a0735",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-12-14T19:15:16Z",
+      "side": 1,
+      "message": "Just curious if you have more details here so we can be confident this is stamped out. I\u0027d expect something like open the LPA or Fi app, kill the phone process, and then make sure eSIM stuff still works when it comes back up. (And, ideally, do the same steps without this fix to make sure that the bug still reproduces as expected).",
+      "revId": "39cf9972032014421c938ed39b73c42677a39592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1430d194_baeb4669",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-12-14T19:15:16Z",
+      "side": 1,
+      "message": "(could be static)",
+      "revId": "39cf9972032014421c938ed39b73c42677a39592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
