@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18f7bb51_05c064e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2017-12-15T18:43:51Z",
+      "side": 1,
+      "message": "Done. The same code was tested on master instead of AOSP in order to run LPA on device.",
+      "parentUuid": "5ef8677f_825a0735",
+      "revId": "39cf9972032014421c938ed39b73c42677a39592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1430d194_baeb4669",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "39cf9972032014421c938ed39b73c42677a39592",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaae5d2_f2ec0679",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2017-12-15T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1430d194_baeb4669",
+      "revId": "39cf9972032014421c938ed39b73c42677a39592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
