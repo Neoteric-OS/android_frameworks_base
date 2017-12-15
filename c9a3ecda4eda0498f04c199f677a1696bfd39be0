@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ceeb720e_daaeb3a1",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1170335
+      },
+      "writtenOn": "2017-12-15T06:49:37Z",
+      "side": 1,
+      "message": "This means reading and writing sim contacts once for all， instead of writing and reading each record to EFADN，EFEMAIL， EFANR， EFEXT1 separately by SIM_IO.",
+      "parentUuid": "0c5c479f_e5e4ba46",
+      "range": {
+        "startLine": 3019,
+        "startChar": 16,
+        "endLine": 3019,
+        "endChar": 52
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c0553d_b859b96d",
         "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "11c7f38b_9a1a2c0c",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1170335
+      },
+      "writtenOn": "2017-12-15T06:49:37Z",
+      "side": 1,
+      "message": "144 is already defined for RIL_REQUEST_START_KEEPALIVE and 145 is already defined for RIL_REQUEST_STOP_KEEPALIVE in include/telephony/ril.h",
+      "parentUuid": "15c0553d_b859b96d",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 34
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb3192f_14eae745",
         "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97159e93_30f17e0b",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1170335
+      },
+      "writtenOn": "2017-12-15T06:49:37Z",
+      "side": 1,
+      "message": "1050 is already defined for RIL_UNSOL_KEEPALIVE_STATUS in include/telephony/ril.h",
+      "parentUuid": "8bb3192f_14eae745",
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
