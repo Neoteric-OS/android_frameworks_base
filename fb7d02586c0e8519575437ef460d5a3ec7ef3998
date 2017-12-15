@@ -22,6 +22,30 @@
       "revId": "fb7d02586c0e8519575437ef460d5a3ec7ef3998",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a04a2096_6eb3af18",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-15T07:03:33Z",
+      "side": 1,
+      "message": "What I mean is that this operation is not a no-op. I think the intent of this code is to be a no-op: temporarily set the stats UID to |uid|, tag the socket, and then return the UID to what it was before.\n\nBut if the stats UID is already set, then what it does is set the stats UID to |UID|, tag the socket, and then clear the tag.\n\nI think we can deal with this in a separate CL though.",
+      "parentUuid": "9492b973_eb671203",
+      "range": {
+        "startLine": 614,
+        "startChar": 29,
+        "endLine": 614,
+        "endChar": 46
+      },
+      "revId": "fb7d02586c0e8519575437ef460d5a3ec7ef3998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
