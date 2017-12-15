@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d33fe6c_dddbd1c1",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "good point, the constructor can be @hide since the user is not supposed to instantiate this class",
+      "parentUuid": "f976d389_3102a473",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a47e8000_eb1ee06d",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T21:35:15Z",
       "side": 1,
       "message": "If the caller does not wish to receive incremental results, what would they pass in for the incrementalResultsPeriodicity?\n\nIt might make sense to employ the Builder pattern which allows the caller to specify the periodicity if incrementalResults is true.  \n\nAlternatively since everything else is a required parameter, you could just have two constructors.  One that specifies the incrementalResultsPEriodicity and one that doesn\u0027t.  If you specify a periodicity then you can assume mIncrementalResults is true.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 54
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a908ce7_9789af90",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "When caller does not want incremental results, they should set \"incremental \u003d false\", and the value of incrementalResultsPeriodicity will be ignored. \nI didn\u0027t use Builder pattern here, and didn\u0027t user two constructors either, because we have the same issue for \"scanType\" and \"searchPeriodicity\", when scanType is one shot scan, the value of searchPeriodicity will be ignored.\nIn stead of having 4 or even more constructors, I would recommend just use this single constructor and require the user to provide all the parameters. I also modified the comments to make it more clear, please let me know whether this acceptable in API council\u0027s point of view.",
+      "parentUuid": "a47e8000_eb1ee06d",
       "range": {
         "startLine": 127,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "24d4f487_deac8631",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f850da7_7b64547c",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 37
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfd033c_95ffc99d",
         "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-15T21:35:15Z",
       "side": 1,
       "message": "Should @link to the values which are applicable here.  An @IntDef would make it more clear to consumers of the API as well.",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92726738_1bf61e62",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "The values are defined in RadioNetworkConstants.java, and we use multiple sub-classes for different radio technologies. So it is not quite applicable to use @IntDef for the radio tech and bands, I modified the comments and add some @link, is this acceptable?",
+      "parentUuid": "cbfd033c_95ffc99d",
       "range": {
         "startLine": 79,
         "startChar": 9,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "22b72f2d_cb9018f8",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "51c54487_a1326de5",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fecd1df_d104f746",
         "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3d90881c_7a4ae603",
+        "filename": "telephony/java/android/telephony/RadioAccessSpecifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "channels is a little different from bands. Since there are too may possible channels so that we didn\u0027t define any enums or ints in the code for enumerate all the channels. The user does need to figure out what channel they should use if they want to do per-channel scan, in case of any invalid channel is used, the scan will fail with error code \"not supported\"",
+      "parentUuid": "7fecd1df_d104f746",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 66
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1779ef4a_d683b340",
         "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-15T21:35:15Z",
       "side": 1,
       "message": "Can we make an @IntDef for these?",
+      "range": {
+        "startLine": 81,
+        "startChar": 28,
+        "endLine": 81,
+        "endChar": 37
+      },
+      "revId": "aaf5029f0b77ea52aaf30dee04cc96419c97b5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd2a7883_2d34f8a6",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-15T23:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1779ef4a_d683b340",
       "range": {
         "startLine": 81,
         "startChar": 28,
