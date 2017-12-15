@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c52aa45a_6c069bad",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-15T07:46:54Z",
+      "side": 1,
+      "message": "It\u0027s not immediately clear where this is done. Care to add a comment to explain?",
+      "range": {
+        "startLine": 551,
+        "startChar": 68,
+        "endLine": 551,
+        "endChar": 82
+      },
+      "revId": "ccf2143f88f78b06270e6e2333320daf9e1adbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
