@@ -457,7 +457,6 @@ public final class WindowManagerGlobal {
         }
         boolean deferred = root.die(immediate);
         if (view != null) {
-            view.assignParent(null);
             if (deferred) {
                 mDyingViews.add(view);
             }
