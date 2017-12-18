@@ -16,6 +16,24 @@
       "revId": "70cd83b06139ad2103667823c5ab5489f609aa85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c5da72_b123b2e1",
+        "filename": "services/usage/java/com/android/server/usage/IntervalStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1106638
+      },
+      "writtenOn": "2017-12-18T10:12:58Z",
+      "side": 1,
+      "message": "Hi Adam, I\u0027m still thinking about solution to fix the issue you mentioned, do you have any good ideas? Because we want to fix this bug, and find a better solution. Thanks",
+      "parentUuid": "2f2a969b_f9c82ab3",
+      "revId": "70cd83b06139ad2103667823c5ab5489f609aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
