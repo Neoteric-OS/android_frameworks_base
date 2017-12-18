@@ -1712,6 +1712,13 @@ public class CarrierConfigManager {
     public static final String KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL =
             "spn_display_rule_use_roaming_from_service_state_bool";
 
+    /**
+     * Flag specifying whether to show an alert dialog for video call charges.
+     * By default this value is {@code false}.
+     */
+    public static final String KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL =
+            "show_video_call_charges_alert_dialog_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1995,6 +2002,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_IDENTIFY_HIGH_DEFINITION_CALLS_IN_CALL_LOG_BOOL, false);
         sDefaults.putBoolean(KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL, false);
     }
 
     /**
