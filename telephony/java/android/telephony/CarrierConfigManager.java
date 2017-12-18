@@ -1816,6 +1816,13 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING
             = "carrier_network_service_wwan_package_override_string";
 
+    /**
+     * Flag specifying whether to show an alert dialog for video call charges.
+     * By default this value is {@code false}.
+     */
+    public static final String KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL =
+            "show_video_call_charges_alert_dialog_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2118,6 +2125,7 @@ public class CarrierConfigManager {
                         -98,  /* SIGNAL_STRENGTH_GREAT */
                         -44
                 });
+        sDefaults.putBoolean(KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL, false);
     }
 
     /**
