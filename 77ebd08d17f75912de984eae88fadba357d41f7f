@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08b4e26_6d061da3",
+        "filename": "Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2017-12-18T02:05:30Z",
+      "side": 1,
+      "message": "Curious: Why not just \"sort -u $^\"?",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 18
+      },
+      "revId": "77ebd08d17f75912de984eae88fadba357d41f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
