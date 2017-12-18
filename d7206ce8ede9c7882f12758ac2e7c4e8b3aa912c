@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33f9a171_06d629dc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-18T21:34:33Z",
+      "side": 1,
+      "message": "nit: is there a missing \" \" in here?",
+      "range": {
+        "startLine": 351,
+        "startChar": 15,
+        "endLine": 351,
+        "endChar": 39
+      },
+      "revId": "d7206ce8ede9c7882f12758ac2e7c4e8b3aa912c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

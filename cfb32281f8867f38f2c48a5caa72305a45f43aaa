@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418ab46a_e5473308",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-18T21:34:33Z",
+      "side": 1,
+      "message": "the user doesn\u0027t call releaseResource directly. I think in a future CL we can probably eliminate the quota trackers now that we have per-UID hashes of resources.",
+      "range": {
+        "startLine": 366,
+        "startChar": 52,
+        "endLine": 368,
+        "endChar": 99
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "533e0c5c_a19343d2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-18T21:34:33Z",
+      "side": 1,
+      "message": "This class associates kernel resources with the UID that owns and controls them.",
+      "range": {
+        "startLine": 450,
+        "startChar": 10,
+        "endLine": 451,
+        "endChar": 22
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f02cd7fc_6f1c4040",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-18T21:34:33Z",
+      "side": 1,
+      "message": "nit SpiRecords",
+      "range": {
+        "startLine": 553,
+        "startChar": 24,
+        "endLine": 553,
+        "endChar": 35
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0153aa9c_a4fb7cc3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-18T21:34:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this has to do with the EncapSocketRecord.",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 734,
+        "endChar": 42
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
