@@ -70,6 +70,30 @@
       "revId": "4d21a12de2d32e35c88dd22dc5458697831a6a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b34b207_04a087bf",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-19T21:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae2a16d_a2c04dbf",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "4d21a12de2d32e35c88dd22dc5458697831a6a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
