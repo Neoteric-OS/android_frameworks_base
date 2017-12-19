@@ -161,6 +161,7 @@ public class ChooserActivity extends ResolverActivity {
             super.onCreate(null);
             return;
         }
+        mPinnedSharedPrefs = getPinnedSharedPrefs(this);
         Intent target = (Intent) targetParcelable;
         if (target != null) {
             modifyTargetIntent(target);
@@ -172,7 +173,10 @@ public class ChooserActivity extends ResolverActivity {
             Intent[] additionalTargets =
                     new Intent[offset ? targetsParcelable.length - 1 : targetsParcelable.length];
             for (int i = 0; i < targetsParcelable.length; i++) {
-                if (!(targetsParcelable[i] instanceof Intent)) {
+                if (targetsParcelable[i] == null) {
+                    Log.w(TAG, "EXTRA_ALTERNATE_INTENTS array entry #" + i + " is not an Intent: null");
+                    continue;
+                } else if (!(targetsParcelable[i] instanceof Intent)) {
                     Log.w(TAG, "EXTRA_ALTERNATE_INTENTS array entry #" + i + " is not an Intent: "
                             + targetsParcelable[i]);
                     finish();
@@ -226,7 +230,10 @@ public class ChooserActivity extends ResolverActivity {
         if (pa != null) {
             ComponentName[] names = new ComponentName[pa.length];
             for (int i = 0; i < pa.length; i++) {
-                if (!(pa[i] instanceof ComponentName)) {
+                if (pa[i] == null) {
+                    Log.w(TAG, "EXTRA_ALTERNATE_INTENTS array entry #" + i + " is not an Intent: null");
+                    continue;
+                } else if (!(pa[i] instanceof ComponentName)) {
                     Log.w(TAG, "Filtered component #" + i + " not a ComponentName: " + pa[i]);
                     names = null;
                     break;
@@ -250,7 +257,6 @@ public class ChooserActivity extends ResolverActivity {
             mCallerChooserTargets = targets;
         }
 
-        mPinnedSharedPrefs = getPinnedSharedPrefs(this);
         super.onCreate(savedInstanceState, target, title, defaultTitleRes, initialIntents,
                 null, false);
 
