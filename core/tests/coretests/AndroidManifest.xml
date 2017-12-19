@@ -118,6 +118,9 @@
     <!-- vr test permissions -->
     <uses-permission android:name="android.permission.RESTRICTED_VR_ACCESS" />
 
+    <!-- broadcast test permissions -->
+    <uses-permission android:name="com.android.frameworks.coretests.permission.TEST_GRANTED" />
+
     <application android:theme="@style/Theme" android:supportsRtl="true">
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
@@ -1229,12 +1232,14 @@
             </intent-filter>
         </receiver>
         <receiver android:name="android.app.activity.RemoteGrantedReceiver"
+                android:process=":remoteReceiver"
                 android:permission="com.android.frameworks.coretests.permission.TEST_GRANTED">
             <intent-filter android:priority="2">
                 <action android:name="com.android.frameworks.coretests.activity.BROADCAST_REMOTE_GRANTED" />
             </intent-filter>
         </receiver>
         <receiver android:name="android.app.activity.RemoteDeniedReceiver"
+                android:process=":remoteReceiver"
                 android:permission="com.android.frameworks.coretests.permission.TEST_DENIED">
             <intent-filter android:priority="2">
                 <action android:name="com.android.frameworks.coretests.activity.BROADCAST_REMOTE_DENIED" />

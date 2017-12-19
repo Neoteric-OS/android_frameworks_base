@@ -438,6 +438,7 @@ public class LaunchpadActivity extends Activity {
     private Intent makeBroadcastIntent(String action) {
         Intent intent = new Intent(action, null);
         intent.putExtra("caller", mCallTarget);
+        intent.addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
         return intent;
     }
 

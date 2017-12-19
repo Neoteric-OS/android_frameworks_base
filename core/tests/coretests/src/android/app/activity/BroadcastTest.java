@@ -108,6 +108,7 @@ public class BroadcastTest extends ActivityTestsBase {
     public Intent makeBroadcastIntent(String action) {
         Intent intent = new Intent(action, null);
         intent.putExtra("caller", mCallTarget);
+        intent.addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
         return intent;
     }
 
@@ -277,7 +278,8 @@ public class BroadcastTest extends ActivityTestsBase {
             map.putString("foo", "you");
             map.putString("remove", "me");
             getContext().sendOrderedBroadcast(
-                    new Intent("com.android.frameworks.coretests.activity.BROADCAST_RESULT"),
+                    new Intent("com.android.frameworks.coretests.activity.BROADCAST_RESULT")
+                            .addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND),
                     null, broadcastReceiver, null, 1, "foo", map);
             while (!broadcastReceiver.mHaveResult) {
                 try {
@@ -307,7 +309,7 @@ public class BroadcastTest extends ActivityTestsBase {
         ActivityManager.getService().unbroadcastIntent(null, intent,
                 UserHandle.myUserId());
 
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
         addIntermediate("finished-broadcast");
 
         IntentFilter filter = new IntentFilter(LaunchpadActivity.BROADCAST_STICKY1);
@@ -319,7 +321,7 @@ public class BroadcastTest extends ActivityTestsBase {
     public void testClearSticky() throws Exception {
         Intent intent = new Intent(LaunchpadActivity.BROADCAST_STICKY1, null);
         intent.putExtra("test", LaunchpadActivity.DATA_1);
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
 
         ActivityManager.getService().unbroadcastIntent(
                 null, new Intent(LaunchpadActivity.BROADCAST_STICKY1, null),
@@ -334,10 +336,10 @@ public class BroadcastTest extends ActivityTestsBase {
     public void testReplaceSticky() throws Exception {
         Intent intent = new Intent(LaunchpadActivity.BROADCAST_STICKY1, null);
         intent.putExtra("test", LaunchpadActivity.DATA_1);
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
         intent.putExtra("test", LaunchpadActivity.DATA_2);
 
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
         addIntermediate("finished-broadcast");
 
         IntentFilter filter = new IntentFilter(LaunchpadActivity.BROADCAST_STICKY1);
@@ -351,7 +353,7 @@ public class BroadcastTest extends ActivityTestsBase {
     public void testReceiveSticky() throws Exception {
         Intent intent = new Intent(LaunchpadActivity.BROADCAST_STICKY1, null);
         intent.putExtra("test", LaunchpadActivity.DATA_1);
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
 
         runLaunchpad(LaunchpadActivity.BROADCAST_STICKY1);
     }
@@ -361,10 +363,10 @@ public class BroadcastTest extends ActivityTestsBase {
     public void testReceive2Sticky() throws Exception {
         Intent intent = new Intent(LaunchpadActivity.BROADCAST_STICKY1, null);
         intent.putExtra("test", LaunchpadActivity.DATA_1);
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
         intent = new Intent(LaunchpadActivity.BROADCAST_STICKY2, null);
         intent.putExtra("test", LaunchpadActivity.DATA_2);
-        ActivityManager.broadcastStickyIntent(intent, UserHandle.myUserId());
+        getContext().sendStickyBroadcastAsUser(intent, UserHandle.CURRENT);
 
         runLaunchpad(LaunchpadActivity.BROADCAST_STICKY2);
     }
@@ -439,7 +441,7 @@ public class BroadcastTest extends ActivityTestsBase {
 
         getContext().sendOrderedBroadcast(
                 makeBroadcastIntent(BROADCAST_LOCAL_DENIED),
-                null, finish, null, Activity.RESULT_CANCELED,
+                PERMISSION_DENIED, finish, null, Activity.RESULT_CANCELED,
                 null, null);
         waitForResultOrThrow(BROADCAST_TIMEOUT);
     }
@@ -485,7 +487,7 @@ public class BroadcastTest extends ActivityTestsBase {
 
         getContext().sendOrderedBroadcast(
                 makeBroadcastIntent(BROADCAST_REMOTE_DENIED),
-                null, finish, null, Activity.RESULT_CANCELED,
+                PERMISSION_DENIED, finish, null, Activity.RESULT_CANCELED,
                 null, null);
         waitForResultOrThrow(BROADCAST_TIMEOUT);
     }
