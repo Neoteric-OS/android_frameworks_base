@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5096edf_9f3d7136",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-19T19:30:59Z",
+      "side": 1,
+      "message": "@hide these",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "4d21a12de2d32e35c88dd22dc5458697831a6a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
