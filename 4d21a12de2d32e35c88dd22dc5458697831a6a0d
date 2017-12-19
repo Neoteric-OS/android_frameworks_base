@@ -22,6 +22,30 @@
       "revId": "4d21a12de2d32e35c88dd22dc5458697831a6a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b8548da_0b0853b4",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-12-19T19:57:39Z",
+      "side": 1,
+      "message": "we can not hide these if we want to link to the {@link NetworkScan.ScanErrorCode}.\nLike the comment in TelephonyScanManager.java\n\n         * @param error Error code when the scan is failed, as defined in\n         * {@link NetworkScan.ScanErrorCode}.\n         */\n        public void onError(@NetworkScan.ScanErrorCode int error) {}\n\nSince now we also have the (@NetworkScan.ScanErrorCode int error) in the argument, do you think whether we should remove the @link so that we can hide the \"@NetworkScan.ScanErrorCode int error\"",
+      "parentUuid": "e5096edf_9f3d7136",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "4d21a12de2d32e35c88dd22dc5458697831a6a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
