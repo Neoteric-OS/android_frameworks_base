@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b7d854_b442551c",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-20T02:02:05Z",
+      "side": 1,
+      "message": "This code duplicates code in TrafficController instead. That\u0027s usually not a good idea, in case the two implementations get out of sync over time.\n\nInstead of doing this, can we just send an IPC to TrafficController to see if eBPF is in use?",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 648,
+        "endChar": 9
+      },
+      "revId": "8c46b952387d907c9957b80d123a613465fb5a04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
