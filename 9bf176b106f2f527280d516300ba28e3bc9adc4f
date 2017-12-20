@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eab6cd2_46f4ed89",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-20T18:53:24Z",
+      "side": 1,
+      "message": "Question - If this is a static field, is it checking for locks on the right object? There should be no reference to IpSecService.this afaik.",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "9bf176b106f2f527280d516300ba28e3bc9adc4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
