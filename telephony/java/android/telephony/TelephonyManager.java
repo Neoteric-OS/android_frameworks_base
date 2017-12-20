@@ -891,6 +891,17 @@ public class TelephonyManager {
     public static final String EVENT_CALL_FORWARDED =
             "android.telephony.event.EVENT_CALL_FORWARDED";
 
+    /**
+     * {@link android.telecom.Connection} event used to indicate that an outgoing call is waiting.
+     * This means the party being dialed is being informed of THIS call using call waiting.
+     * <p>
+     * Sent via {@link android.telecom.Connection#sendConnectionEvent(String, Bundle)}.
+     * The {@link Bundle} parameter is expected to be null when this connection event is used.
+     * @hide
+     */
+    public static final String EVENT_CALL_IS_WAITING =
+            "android.telephony.event.EVENT_CALL_IS_WAITING";
+
     /* Visual voicemail protocols */
 
     /**
