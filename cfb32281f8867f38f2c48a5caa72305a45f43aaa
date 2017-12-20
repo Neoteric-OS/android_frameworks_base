@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97e01914_884772dd",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-20T18:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418ab46a_e5473308",
+      "range": {
+        "startLine": 366,
+        "startChar": 52,
+        "endLine": 368,
+        "endChar": 99
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "533e0c5c_a19343d2",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T21:34:33Z",
       "side": 1,
       "message": "This class associates kernel resources with the UID that owns and controls them.",
+      "range": {
+        "startLine": 450,
+        "startChar": 10,
+        "endLine": 451,
+        "endChar": 22
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6292947e_43901b1e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-20T18:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533e0c5c_a19343d2",
       "range": {
         "startLine": 450,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "efe3b6c1_439a53a1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-20T18:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02cd7fc_6f1c4040",
+      "range": {
+        "startLine": 553,
+        "startChar": 24,
+        "endLine": 553,
+        "endChar": 35
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0153aa9c_a4fb7cc3",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-18T21:34:33Z",
       "side": 1,
       "message": "I\u0027m not sure what this has to do with the EncapSocketRecord.",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 734,
+        "endChar": 42
+      },
+      "revId": "cfb32281f8867f38f2c48a5caa72305a45f43aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94f6a9c3_82766b7b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-20T18:38:33Z",
+      "side": 1,
+      "message": "It\u0027s more of why this class of records even exists, instead of having users create, and then pass in the encap socket. It seemed like we asked ourselves why we weren\u0027t passing it in from userspace a few times, so I wanted to add some additional documentation regarding why that decision was made.",
+      "parentUuid": "0153aa9c_a4fb7cc3",
       "range": {
         "startLine": 732,
         "startChar": 0,
