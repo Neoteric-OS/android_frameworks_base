@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "492fafb1_21984485",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-20T08:42:26Z",
+      "side": 0,
+      "message": "Even though this link is not public, I think it\u0027s useful to keep it in the comments, so we can refer to it.",
+      "range": {
+        "startLine": 614,
+        "startChar": 43,
+        "endLine": 614,
+        "endChar": 62
+      },
+      "revId": "6991266aa6e985748c61f845383d1055fee5a56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2272b5_c6e6da39",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-20T08:42:26Z",
+      "side": 0,
+      "message": "FWIW I thought this name was pretty good. The new name is fine though.",
+      "range": {
+        "startLine": 2087,
+        "startChar": 21,
+        "endLine": 2087,
+        "endChar": 35
+      },
+      "revId": "6991266aa6e985748c61f845383d1055fee5a56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
