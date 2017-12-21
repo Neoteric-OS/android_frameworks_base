@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a84763ee_4ac03532",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-21T02:29:17Z",
+      "side": 1,
+      "message": "Is this needed? Isn\u0027t this identical to getBitmaskFromString?",
+      "range": {
+        "startLine": 1340,
+        "startChar": 22,
+        "endLine": 1340,
+        "endChar": 53
+      },
+      "revId": "90289bdf2f5737389dc146f4beb60e02495577a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba94bbc_7c7fcc2e",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2696,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-12-21T02:29:17Z",
+      "side": 1,
+      "message": "Mark this Deprecated as well.",
+      "revId": "90289bdf2f5737389dc146f4beb60e02495577a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
