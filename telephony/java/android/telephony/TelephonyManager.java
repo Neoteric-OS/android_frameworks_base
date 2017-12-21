@@ -4338,6 +4338,20 @@ public class TelephonyManager {
     }
 
     /**
+     * Sets the telephony property with the value specified.
+     *
+     * @hide
+     */
+    public static void setTelephonyProperty(String property, String value) {
+        if (value == null) {
+            value = "";
+        }
+        Rlog.d(TAG, "setTelephonyProperty: success" + " property=" +
+                property + " value: " + value);
+        SystemProperties.set(property, value);
+    }
+
+    /**
      * Convenience function for retrieving a value from the secure settings
      * value list as an integer.  Note that internally setting values are
      * always stored as strings; this function converts the string to an
