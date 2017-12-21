@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b6c91e3_ebe8a19d",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8e1524_24f5d7f0",
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a396a857_db06e9b1",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-06T02:30:01Z",
       "side": 1,
       "message": "I think it\u0027s worth having these as public @hide functions actually that are isAuthentication() isEncryption() isAead().",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "937fd36f_d387a0a4",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a396a857_db06e9b1",
       "range": {
         "startLine": 205,
         "startChar": 12,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5c5aeb21_8446b5e1",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98c5a52f_d6b73c5b",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75fc4f32_7d77d44c",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-06T02:16:31Z",
       "side": 1,
       "message": "of course this could be \u0027return getName() \u003d\u003d CRYPT_AES_CBC;\u0027",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 9
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a72ef39_5d9d3f98",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75fc4f32_7d77d44c",
       "range": {
         "startLine": 220,
         "startChar": 0,
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "e89b2963_76888456",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6944ea_a2e2ccdd",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 97
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e78d402_87f1a925",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 8
@@ -179,6 +293,30 @@
       "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a3944a_22ca70d7",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-12-21T01:10:00Z",
+      "side": 1,
+      "message": "Done; I think it\u0027s worth having all of that in the same place.\n\nContext: I was considering pulling the \"can\u0027t use AEAD in combination with auth or enc\" into this check, but then we would have two methods checking that the IpSecConfig is valid. It made sense to put it all in IpSecService.",
+      "parentUuid": "43f87f9e_7605166b",
+      "range": {
+        "startLine": 292,
+        "startChar": 4,
+        "endLine": 292,
+        "endChar": 5
+      },
+      "revId": "74497dc1c50ff8b515219abf99aa668f79ba74cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
