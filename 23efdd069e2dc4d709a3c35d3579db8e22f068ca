@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29679829_e999d5e5",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-12-21T01:56:44Z",
+      "side": 1,
+      "message": "not in aosp... please remove.",
+      "range": {
+        "startLine": 168,
+        "startChar": 60,
+        "endLine": 168,
+        "endChar": 95
+      },
+      "revId": "23efdd069e2dc4d709a3c35d3579db8e22f068ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
