@@ -1328,7 +1328,7 @@ class AppWindowToken extends WindowToken implements WindowManagerService.AppFree
         // The {@link AppWindowToken} should only specify an orientation when it is not closing or
         // going to the bottom. Allowing closing {@link AppWindowToken} to participate can lead to
         // an Activity in another task being started in the wrong orientation during the transition.
-        if (!(sendingToBottom || mService.mClosingApps.contains(this))
+        if (!(sendingToBottom || mService.mClosingApps.contains(this) || isTopRemoving())
                 && (isVisible() || mService.mOpeningApps.contains(this) || isOnTop())) {
             return mOrientation;
         }
@@ -1654,6 +1654,14 @@ class AppWindowToken extends WindowToken implements WindowManagerService.AppFree
             }
         }
         return candidate;
+    }
+
+    boolean isTopRemoving() {
+        if (mChildren.size() > 0) {
+            final WindowState w = mChildren.get(0);
+            return w.mDestroying;
+        }
+        return false;
     }
 
     /**
