@@ -17,8 +17,27 @@
 package com.android.internal.telephony.euicc;
 
 import com.android.internal.telephony.euicc.IGetAllProfilesCallback;
+import com.android.internal.telephony.euicc.IGetProfileCallback;
+import com.android.internal.telephony.euicc.IDisableProfileCallback;
+import com.android.internal.telephony.euicc.ISwitchToProfileCallback;
+import com.android.internal.telephony.euicc.ISetNicknameCallback;
+import com.android.internal.telephony.euicc.IDeleteProfileCallback;
+import com.android.internal.telephony.euicc.IResetMemoryCallback;
+import com.android.internal.telephony.euicc.IGetDefaultSmdpAddressCallback;
+import com.android.internal.telephony.euicc.IGetSmdsAddressCallback;
+import com.android.internal.telephony.euicc.ISetDefaultSmdpAddressCallback;
 
 /** @hide */
 interface IEuiccCardController {
     oneway void getAllProfiles(String callingPackage, in IGetAllProfilesCallback callback);
+    oneway void getProfile(String callingPackage, String iccid, in IGetProfileCallback callback);
+    oneway void disableProfile(String callingPackage, String iccid, boolean refresh, in IDisableProfileCallback callback);
+    oneway void switchToProfile(String callingPackage, String iccid, boolean refresh, in ISwitchToProfileCallback callback);
+    String getEid();
+    oneway void setNickname(String callingPackage, String iccid, String nickname, in ISetNicknameCallback callback);
+    oneway void deleteProfile(String callingPackage, String iccid, in IDeleteProfileCallback callback);
+    oneway void resetMemory(String callingPackage, int options, in IResetMemoryCallback callback);
+    oneway void getDefaultSmdpAddress(String callingPackage, in IGetDefaultSmdpAddressCallback callback);
+    oneway void getSmdsAddress(String callingPackage, in IGetSmdsAddressCallback callback);
+    oneway void setDefaultSmdpAddress(String callingPackage, String address, in ISetDefaultSmdpAddressCallback callback);
 }
