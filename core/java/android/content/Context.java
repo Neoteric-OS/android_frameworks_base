@@ -3590,7 +3590,17 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a
-     * {@link android.text.ClipboardManager} for accessing and modifying
+     * {@link android.telephony.euicc.EuiccCardManager} to access the device eUICC (embedded SIM).
+     *
+     * @see #getSystemService
+     * @see android.telephony.euicc.EuiccCardManager
+     * TODO(b/35851809): Make this a SystemApi.
+     * @hide
+     */
+    public static final String EUICC_CARD_SERVICE = "euicc_card_service";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a
      * {@link android.content.ClipboardManager} for accessing and modifying
      * the contents of the global clipboard.
      *
