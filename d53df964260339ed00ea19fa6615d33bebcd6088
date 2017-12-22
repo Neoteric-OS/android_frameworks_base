@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d34e7b0_ab85464e",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-22T21:30:17Z",
+      "side": 1,
+      "message": "no need @hide for private",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 12
+      },
+      "revId": "d53df964260339ed00ea19fa6615d33bebcd6088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
