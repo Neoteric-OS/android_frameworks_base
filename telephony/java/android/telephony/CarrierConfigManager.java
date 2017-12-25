@@ -1272,8 +1272,13 @@ public class CarrierConfigManager {
 
     /**
      * The duration in seconds that platform call and message blocking is disabled after the user
-     * contacts emergency services. Platform considers values in the range 0 to 604800 (one week) as
-     * valid. See {@link android.provider.BlockedNumberContract#isBlocked(Context, String)}).
+     * contacts emergency services. Platform considers values for below cases:
+     *  1) 0 <= VALUE <= 604800(one week): the value will be used as the duration directly.
+     *  2) VALUE > 604800(one week): will use the default value as duration instead.
+     *  3) VALUE < 0: block will be disabled forever until user re-eanble block manually,
+     *     the suggested value to disable forever is -1.
+     * See {@link android.provider.BlockedNumberContract#notifyEmergencyContact(Context)}
+     * See {@link android.provider.BlockedNumberContract#isBlocked(Context, String)}.
      */
     public static final String KEY_DURATION_BLOCKING_DISABLED_AFTER_EMERGENCY_INT =
             "duration_blocking_disabled_after_emergency_int";
@@ -1800,12 +1805,31 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_CONFIG_APPLIED_BOOL = "carrier_config_applied_bool";
 
     /**
+     * Determines whether to enable enhanced call blocking feature on the device.
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_UNREGISTERED
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_PRIVATE
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_PAYPHONE
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_UNKNOWN
+     *
+     * <p>
+     * 1. For Single SIM(SS) device, it can be customized in both carrier_config_mccmnc.xml
+     *    and vendor.xml.
+     * <p>
+     * 2. For Dual SIM(DS) device, it should be customized in vendor.xml, since call blocking
+     *    function is used regardless of SIM.
+     * <p>
+     * If {@code true} enable enhanced call blocking feature on the device, {@code false} otherwise.
+     * @hide
+     */
+    public static final String KEY_SUPPORT_ENHANCED_CALL_BLOCKING_BOOL =
+            "support_enhanced_call_blocking_bool";
+
+    /**
      * List of thresholds of RSRP for determining the display level of LTE signal bar.
      * @hide
      */
     public static final String KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY =
             "lte_rsrp_thresholds_int_array";
-
     /**
      * Decides when clients try to bind to iwlan network service, which package name will
      * the binding intent go to.
@@ -1990,6 +2014,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SUPPORT_DIRECT_FDN_DIALING_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORT_ENHANCED_CALL_BLOCKING_BOOL, false);
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);
