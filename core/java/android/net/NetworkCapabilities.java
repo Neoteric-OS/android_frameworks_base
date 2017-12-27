@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.BitUtils;
@@ -28,6 +29,7 @@ import com.android.internal.util.Preconditions;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
+import java.util.Set;
 import java.util.StringJoiner;
 
 /**
@@ -63,6 +65,7 @@ public final class NetworkCapabilities implements Parcelable {
             mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
             mNetworkSpecifier = nc.mNetworkSpecifier;
             mSignalStrength = nc.mSignalStrength;
+            mAllowedUids = nc.mAllowedUids;
         }
     }
 
@@ -828,6 +831,137 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * List of UIDs this network is available to. No restriction if null.
+     * This is typically used by VPN. A VPN service provider can decide which app can access
+     * and which can't.
+     * If this member is null, then the network is not restricted by app UID. If it's an empty
+     * list, then it means nobody can use it.
+     * Please note that a single app can be associated with multiple UIDs because each app
+     * will have a different UID when it's run as a different user.
+     * Also please be aware this class does not try to enforce any normalization on this.
+     * Callers can only alter the allowed UIDs by setting them wholesale : this class does
+     * not provide any utility to add or remove individual UIDs or ranges. If callers have
+     * any normalization needs on their own (like requiring sortedness or no overlap) they
+     * need to enforce it themselves. Some of the internal methods also assume this is
+     * normalized as in no adjacent or overlapping ranges are present.
+     * @hide
+     */
+    private Set<UidRange> mAllowedUids = null;
+
+    /**
+     * Set the list of allowed UIDs.
+     * This makes a copy of the set so that callers can't modify it after the call.
+     * @hide
+     */
+    public NetworkCapabilities setAllowedUids(Set<UidRange> allowedUids) {
+        if (null == allowedUids) {
+            mAllowedUids = null;
+        } else {
+            mAllowedUids = new ArraySet<>(allowedUids);
+        }
+        return this;
+    }
+
+    /**
+     * Get the list of allowed UIDs.
+     * This returns a copy of the set so that callers can't modify the original object.
+     * @hide
+     */
+    public Set<UidRange> getAllowedUids() {
+        return null == mAllowedUids ? null : new ArraySet<>(mAllowedUids);
+    }
+
+    /**
+     * Test whether this UID is allowed on this network.
+     * @hide
+     */
+    public boolean allowsUid(int uid) {
+        if (null == mAllowedUids) return true;
+        for (UidRange range : mAllowedUids) {
+            if (range.contains(uid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tests whether the set of allowed UIDs is the same of the passed set of UIDs.
+     * This test only checks whether equal range objects are in both sets. It will
+     * return false if the ranges are not exactly the same, even if the covered UIDs
+     * are for an equivalent result.
+     * nc is assumed nonnull.
+     * @hide
+     */
+    @VisibleForTesting
+    public boolean equalsAllowedUids(NetworkCapabilities nc) {
+        Set<UidRange> comparedUids = nc.mAllowedUids;
+        if (null == comparedUids) return null == mAllowedUids;
+        if (null == mAllowedUids) return false;
+        // Make a copy so it can be mutated to check that all ranges in mAllowedUids
+        // also are in allowedUids.
+        final Set<UidRange> allowedUids = new ArraySet<>(mAllowedUids);
+        for (UidRange range : comparedUids) {
+            if (!allowedUids.contains(range)) {
+                return false;
+            }
+            allowedUids.remove(range);
+        }
+        return allowedUids.isEmpty();
+    }
+
+    /**
+     * Test whether the passed NetworkCapabilities satisfies these allowed UIDs.
+     *
+     * This is called on the NetworkCapabilities embedded in a request with the capabilities
+     * of an available network.
+     * nc is assumed nonnull.
+     * @see #allowsUid
+     * @hide
+     */
+    public boolean satisfiedByAllowedUids(NetworkCapabilities nc) {
+        if (null == nc.mAllowedUids) return true; // The network satisfies everything.
+        if (null == mAllowedUids) return false; // Not everything allowed but requires everything
+        for (UidRange requiredRange : mAllowedUids) {
+            if (!nc.allowsUidRange(requiredRange)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns whether the passed ranged is allowed.
+     * This assumes that to be allowed, the passed range has to be entirely contained
+     * within one of the ranges allowed. If the allowed ranges are not normalized, it
+     * may return false even though all required UIDs are covered because no single
+     * range contained them all.
+     * @hide
+     */
+    @VisibleForTesting
+    public boolean allowsUidRange(UidRange requiredRange) {
+        if (null == mAllowedUids) return true;
+        for (UidRange allowedRange : mAllowedUids) {
+            if (allowedRange.containsRange(requiredRange)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Combine the currently allowed UIDs with the allowed UIDs of the passed NetworkCapabilities.
+     * nc is assumed nonnull.
+     */
+    private void combineAllowedUids(NetworkCapabilities nc) {
+        if (null == nc.mAllowedUids || null == mAllowedUids) {
+            mAllowedUids = null;
+            return;
+        }
+        mAllowedUids.addAll(nc.mAllowedUids);
+    }
+
+    /**
      * Combine a set of Capabilities to this one.  Useful for coming up with the complete set
      * @hide
      */
@@ -837,6 +971,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineLinkBandwidths(nc);
         combineSpecifiers(nc);
         combineSignalStrength(nc);
+        combineAllowedUids(nc);
     }
 
     /**
@@ -849,12 +984,13 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     private boolean satisfiedByNetworkCapabilities(NetworkCapabilities nc, boolean onlyImmutable) {
-        return (nc != null &&
-                satisfiedByNetCapabilities(nc, onlyImmutable) &&
-                satisfiedByTransportTypes(nc) &&
-                (onlyImmutable || satisfiedByLinkBandwidths(nc)) &&
-                satisfiedBySpecifier(nc) &&
-                (onlyImmutable || satisfiedBySignalStrength(nc)));
+        return (nc != null
+                && satisfiedByNetCapabilities(nc, onlyImmutable)
+                && satisfiedByTransportTypes(nc)
+                && (onlyImmutable || satisfiedByLinkBandwidths(nc))
+                && satisfiedBySpecifier(nc)
+                && (onlyImmutable || satisfiedBySignalStrength(nc))
+                && (onlyImmutable || satisfiedByAllowedUids(nc)));
     }
 
     /**
@@ -937,24 +1073,26 @@ public final class NetworkCapabilities implements Parcelable {
     @Override
     public boolean equals(Object obj) {
         if (obj == null || (obj instanceof NetworkCapabilities == false)) return false;
-        NetworkCapabilities that = (NetworkCapabilities)obj;
-        return (equalsNetCapabilities(that) &&
-                equalsTransportTypes(that) &&
-                equalsLinkBandwidths(that) &&
-                equalsSignalStrength(that) &&
-                equalsSpecifier(that));
+        NetworkCapabilities that = (NetworkCapabilities) obj;
+        return (equalsNetCapabilities(that)
+                && equalsTransportTypes(that)
+                && equalsLinkBandwidths(that)
+                && equalsSignalStrength(that)
+                && equalsSpecifier(that)
+                && equalsAllowedUids(that));
     }
 
     @Override
     public int hashCode() {
-        return ((int)(mNetworkCapabilities & 0xFFFFFFFF) +
-                ((int)(mNetworkCapabilities >> 32) * 3) +
-                ((int)(mTransportTypes & 0xFFFFFFFF) * 5) +
-                ((int)(mTransportTypes >> 32) * 7) +
-                (mLinkUpBandwidthKbps * 11) +
-                (mLinkDownBandwidthKbps * 13) +
-                Objects.hashCode(mNetworkSpecifier) * 17 +
-                (mSignalStrength * 19));
+        return ((int) (mNetworkCapabilities & 0xFFFFFFFF)
+                + ((int) (mNetworkCapabilities >> 32) * 3)
+                + ((int) (mTransportTypes & 0xFFFFFFFF) * 5)
+                + ((int) (mTransportTypes >> 32) * 7)
+                + (mLinkUpBandwidthKbps * 11)
+                + (mLinkDownBandwidthKbps * 13)
+                + Objects.hashCode(mNetworkSpecifier) * 17
+                + (mSignalStrength * 19)
+                + Objects.hashCode(mAllowedUids) * 23);
     }
 
     @Override
@@ -969,6 +1107,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeInt(mLinkDownBandwidthKbps);
         dest.writeParcelable((Parcelable) mNetworkSpecifier, flags);
         dest.writeInt(mSignalStrength);
+        dest.writeArraySet(new ArraySet<>(mAllowedUids));
     }
 
     public static final Creator<NetworkCapabilities> CREATOR =
@@ -983,6 +1122,8 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mLinkDownBandwidthKbps = in.readInt();
                 netCap.mNetworkSpecifier = in.readParcelable(null);
                 netCap.mSignalStrength = in.readInt();
+                netCap.mAllowedUids = (ArraySet<UidRange>) in.readArraySet(
+                        null /* ClassLoader, null for default */);
                 return netCap;
             }
             @Override
@@ -1015,7 +1156,10 @@ public final class NetworkCapabilities implements Parcelable {
 
         String signalStrength = (hasSignalStrength() ? " SignalStrength: " + mSignalStrength : "");
 
-        return "[" + transports + capabilities + upBand + dnBand + specifier + signalStrength + "]";
+        String allowedUids = (null != mAllowedUids ? " AllowedUids: <" + mAllowedUids + ">" : "");
+
+        return "[" + transports + capabilities + upBand + dnBand + specifier + signalStrength
+            + allowedUids + "]";
     }
 
     /**
