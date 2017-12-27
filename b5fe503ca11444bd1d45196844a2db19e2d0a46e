@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69be32d_651e474d",
+        "filename": "telephony/java/com/android/ims/internal/IImsUt.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-12-27T18:25:29Z",
+      "side": 1,
+      "message": "Will be good to document the possible return values in the comment above.",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 7
+      },
+      "revId": "b5fe503ca11444bd1d45196844a2db19e2d0a46e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
