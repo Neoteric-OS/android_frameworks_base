@@ -17,6 +17,7 @@
 package android.net;
 
 import android.content.Context;
+import android.net.ConnectivityManager.PacketKeepalive;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,9 +27,9 @@ import android.util.Log;
 
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
-import android.net.ConnectivityManager.PacketKeepalive;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -224,6 +225,11 @@ public abstract class NetworkAgent extends Handler {
                 Context.CONNECTIVITY_SERVICE);
         netId = cm.registerNetworkAgent(new Messenger(this), new NetworkInfo(ni),
                 new LinkProperties(lp), new NetworkCapabilities(nc), score, misc);
+
+        final Set<UidRange> uids = nc.getUids();
+        if (null != uids) {
+            addUidRanges(uids.toArray(new UidRange[uids.size()]));
+        }
     }
 
     @Override
