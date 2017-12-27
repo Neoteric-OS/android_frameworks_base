@@ -34,12 +34,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.ArraySet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -188,5 +191,85 @@ public class NetworkCapabilitiesTest {
                 .maxBandwidth(10, LINK_BANDWIDTH_UNSPECIFIED));
         assertEquals(20, NetworkCapabilities
                 .maxBandwidth(10, 20));
+    }
+
+    @Test
+    public void testSetAllowedUids() {
+        final NetworkCapabilities netCap = new NetworkCapabilities();
+        final Set<UidRange> uids = new ArraySet<>();
+        uids.add(new UidRange(50, 100));
+        uids.add(new UidRange(3000, 4000));
+        netCap.setAllowedUids(uids);
+        assertTrue(netCap.allowsUid(50));
+        assertTrue(netCap.allowsUid(80));
+        assertTrue(netCap.allowsUid(100));
+        assertTrue(netCap.allowsUid(3000));
+        assertTrue(netCap.allowsUid(3001));
+        assertFalse(netCap.allowsUid(10));
+        assertFalse(netCap.allowsUid(25));
+        assertFalse(netCap.allowsUid(49));
+        assertFalse(netCap.allowsUid(101));
+        assertFalse(netCap.allowsUid(2000));
+        assertFalse(netCap.allowsUid(100000));
+
+        assertTrue(netCap.allowsUidRange(new UidRange(50, 100)));
+        assertTrue(netCap.allowsUidRange(new UidRange(70, 72)));
+        assertTrue(netCap.allowsUidRange(new UidRange(3500, 3912)));
+        assertFalse(netCap.allowsUidRange(new UidRange(1, 100)));
+        assertFalse(netCap.allowsUidRange(new UidRange(49, 100)));
+        assertFalse(netCap.allowsUidRange(new UidRange(1, 10)));
+        assertFalse(netCap.allowsUidRange(new UidRange(60, 101)));
+        assertFalse(netCap.allowsUidRange(new UidRange(60, 3400)));
+
+        NetworkCapabilities netCap2 = new NetworkCapabilities();
+        assertFalse(netCap.satisfiedByAllowedUids(netCap2));
+        assertFalse(netCap.equalsAllowedUids(netCap2));
+        netCap2.setAllowedUids(uids);
+        assertTrue(netCap.satisfiedByAllowedUids(netCap2));
+        assertTrue(netCap.equalsAllowedUids(netCap2));
+        assertTrue(netCap2.equalsAllowedUids(netCap));
+
+        uids.add(new UidRange(600, 700));
+        netCap2.setAllowedUids(uids);
+        assertFalse(netCap.satisfiedByAllowedUids(netCap2));
+        assertFalse(netCap.allowsUid(650));
+        assertTrue(netCap2.allowsUid(650));
+        netCap.combineCapabilities(netCap2);
+        assertTrue(netCap.satisfiedByAllowedUids(netCap2));
+        assertTrue(netCap.allowsUid(650));
+        assertFalse(netCap.allowsUid(500));
+
+        assertFalse(netCap.satisfiedByAllowedUids(new NetworkCapabilities()));
+        netCap.combineCapabilities(new NetworkCapabilities());
+        assertTrue(netCap.allowsUid(500));
+        assertTrue(netCap.allowsUidRange(new UidRange(1, 100000)));
+        assertFalse(netCap2.allowsUid(500));
+        assertFalse(netCap2.allowsUidRange(new UidRange(1, 100000)));
+        assertTrue(netCap.satisfiedByAllowedUids(new NetworkCapabilities()));
+    }
+
+    @Test
+    public void testParcelNetworkCapabilities() {
+        final Set<UidRange> uids = new ArraySet<>();
+        uids.add(new UidRange(50, 100));
+        uids.add(new UidRange(3000, 4000));
+        final NetworkCapabilities netCap = new NetworkCapabilities()
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .setAllowedUids(uids)
+            .addCapability(NET_CAPABILITY_EIMS)
+            .addCapability(NET_CAPABILITY_NOT_METERED);
+        assertEqualsThroughMarshalling(netCap);
+    }
+
+    private void assertEqualsThroughMarshalling(NetworkCapabilities netCap) {
+        Parcel p = Parcel.obtain();
+        netCap.writeToParcel(p, /* flags */ 0);
+        p.setDataPosition(0);
+        byte[] marshalledData = p.marshall();
+
+        p = Parcel.obtain();
+        p.unmarshall(marshalledData, 0, marshalledData.length);
+        p.setDataPosition(0);
+        assertEquals(NetworkCapabilities.CREATOR.createFromParcel(p), netCap);
     }
 }
