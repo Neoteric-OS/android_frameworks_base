@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d80e68ae_dc8087fd",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-12-27T06:18:50Z",
+      "side": 0,
+      "message": "Done (though as we spoke offline, replaced it with its public counterpart).",
+      "parentUuid": "492fafb1_21984485",
+      "range": {
+        "startLine": 614,
+        "startChar": 43,
+        "endLine": 614,
+        "endChar": 62
+      },
+      "revId": "6991266aa6e985748c61f845383d1055fee5a56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2272b5_c6e6da39",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "6991266aa6e985748c61f845383d1055fee5a56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793a39a1_776f603a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-12-27T06:18:50Z",
+      "side": 0,
+      "message": "Ack. I was thinking that at the call site it was unclear that this would spin and make the caller wait.",
+      "parentUuid": "ae2272b5_c6e6da39",
+      "range": {
+        "startLine": 2087,
+        "startChar": 21,
+        "endLine": 2087,
+        "endChar": 35
+      },
+      "revId": "6991266aa6e985748c61f845383d1055fee5a56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
