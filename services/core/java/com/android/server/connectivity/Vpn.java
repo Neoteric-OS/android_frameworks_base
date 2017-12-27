@@ -163,19 +163,6 @@ public class Vpn {
     private boolean mLockdown = false;
 
     /**
-     * List of UIDs that are set to use this VPN by default. Normally, every UID in the user is
-     * added to this set but that can be changed by adding allowed or disallowed applications. It
-     * is non-null iff the VPN is connected.
-     *
-     * Unless the VPN has set allowBypass=true, these UIDs are forced into the VPN.
-     *
-     * @see VpnService.Builder#addAllowedApplication(String)
-     * @see VpnService.Builder#addDisallowedApplication(String)
-     */
-    @GuardedBy("this")
-    private Set<UidRange> mVpnUsers = null;
-
-    /**
      * List of UIDs for which networking should be blocked until VPN is ready, during brief periods
      * when VPN is not running. For example, during system startup or after a crash.
      * @see mLockdown
@@ -691,7 +678,7 @@ public class Vpn {
                 agentDisconnect();
                 jniReset(mInterface);
                 mInterface = null;
-                mVpnUsers = null;
+                mNetworkCapabilities.setUids(null);
             }
 
             // Revoke the connection or stop LegacyVpnRunner.
@@ -860,6 +847,8 @@ public class Vpn {
         NetworkMisc networkMisc = new NetworkMisc();
         networkMisc.allowBypass = mConfig.allowBypass && !mLockdown;
 
+        mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserHandle,
+                mConfig.allowedApplications, mConfig.disallowedApplications));
         long token = Binder.clearCallingIdentity();
         try {
             mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,
@@ -872,11 +861,6 @@ public class Vpn {
         } finally {
             Binder.restoreCallingIdentity(token);
         }
-
-        mVpnUsers = createUserAndRestrictedProfilesRanges(mUserHandle,
-                mConfig.allowedApplications, mConfig.disallowedApplications);
-        mNetworkAgent.addUidRanges(mVpnUsers.toArray(new UidRange[mVpnUsers.size()]));
-
         mNetworkInfo.setIsAvailable(true);
         updateState(DetailedState.CONNECTED, "agentConnect");
     }
@@ -956,7 +940,7 @@ public class Vpn {
         Connection oldConnection = mConnection;
         NetworkAgent oldNetworkAgent = mNetworkAgent;
         mNetworkAgent = null;
-        Set<UidRange> oldUsers = mVpnUsers;
+        Set<UidRange> oldUsers = mNetworkCapabilities.getUids();
 
         // Configure the interface. Abort if any of these steps fails.
         ParcelFileDescriptor tun = ParcelFileDescriptor.adoptFd(jniCreate(config.mtu));
@@ -1014,7 +998,7 @@ public class Vpn {
             // restore old state
             mConfig = oldConfig;
             mConnection = oldConnection;
-            mVpnUsers = oldUsers;
+            mNetworkCapabilities.setUids(oldUsers);
             mNetworkAgent = oldNetworkAgent;
             mInterface = oldInterface;
             throw e;
@@ -1134,10 +1118,10 @@ public class Vpn {
 
     // Returns the subset of the full list of active UID ranges the VPN applies to (mVpnUsers) that
     // apply to userHandle.
-    private List<UidRange> uidRangesForUser(int userHandle) {
+    static private List<UidRange> uidRangesForUser(int userHandle, Set<UidRange> existingRanges) {
         final UidRange userRange = UidRange.createForUser(userHandle);
         final List<UidRange> ranges = new ArrayList<UidRange>();
-        for (UidRange range : mVpnUsers) {
+        for (UidRange range : existingRanges) {
             if (userRange.containsRange(range)) {
                 ranges.add(range);
             }
@@ -1145,28 +1129,20 @@ public class Vpn {
         return ranges;
     }
 
-    private void removeVpnUserLocked(int userHandle) {
-        if (mVpnUsers == null) {
-            throw new IllegalStateException("VPN is not active");
-        }
-        final List<UidRange> ranges = uidRangesForUser(userHandle);
-        if (mNetworkAgent != null) {
-            mNetworkAgent.removeUidRanges(ranges.toArray(new UidRange[ranges.size()]));
-        }
-        mVpnUsers.removeAll(ranges);
-    }
-
     public void onUserAdded(int userHandle) {
         // If the user is restricted tie them to the parent user's VPN
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
             synchronized(Vpn.this) {
-                if (mVpnUsers != null) {
+                final Set<UidRange> existingRanges = mNetworkCapabilities.getUids();
+                if (existingRanges != null) {
                     try {
-                        addUserToRanges(mVpnUsers, userHandle, mConfig.allowedApplications,
+                        addUserToRanges(existingRanges, userHandle, mConfig.allowedApplications,
                                 mConfig.disallowedApplications);
+                        mNetworkCapabilities.setUids(existingRanges);
                         if (mNetworkAgent != null) {
-                            final List<UidRange> ranges = uidRangesForUser(userHandle);
+                            final List<UidRange> ranges =
+                                uidRangesForUser(userHandle, mNetworkCapabilities.getUids());
                             mNetworkAgent.addUidRanges(ranges.toArray(new UidRange[ranges.size()]));
                         }
                     } catch (Exception e) {
@@ -1183,9 +1159,17 @@ public class Vpn {
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
             synchronized(Vpn.this) {
-                if (mVpnUsers != null) {
+                final Set<UidRange> existingRanges = mNetworkCapabilities.getUids();
+                if (existingRanges != null) {
                     try {
-                        removeVpnUserLocked(userHandle);
+                        final List<UidRange> removedRanges =
+                            uidRangesForUser(userHandle, existingRanges);
+                        if (mNetworkAgent != null) {
+                            mNetworkAgent.removeUidRanges(removedRanges.toArray(
+                                new UidRange[removedRanges.size()]));
+                        }
+                        existingRanges.removeAll(removedRanges);
+                        mNetworkCapabilities.setUids(existingRanges);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to remove restricted user to owner", e);
                     }
@@ -1229,15 +1213,6 @@ public class Vpn {
     private void setVpnForcedLocked(boolean enforce) {
         final List<String> exemptedPackages =
                 isNullOrLegacyVpn(mPackage) ? null : Collections.singletonList(mPackage);
-        setVpnForcedWithExemptionsLocked(enforce, exemptedPackages);
-    }
-
-    /**
-     * @see #setVpnForcedLocked
-     */
-    @GuardedBy("this")
-    private void setVpnForcedWithExemptionsLocked(boolean enforce,
-            @Nullable List<String> exemptedPackages) {
         final Set<UidRange> removedRanges = new ArraySet<>(mBlockedUsers);
 
         Set<UidRange> addedRanges = Collections.emptySet();
@@ -1317,7 +1292,7 @@ public class Vpn {
             synchronized (Vpn.this) {
                 if (interfaze.equals(mInterface) && jniCheck(interfaze) == 0) {
                     mStatusIntent = null;
-                    mVpnUsers = null;
+                    mNetworkCapabilities.setUids(null);
                     mConfig = null;
                     mInterface = null;
                     if (mConnection != null) {
@@ -1436,12 +1411,7 @@ public class Vpn {
         if (!isRunningLocked()) {
             return false;
         }
-        for (UidRange uidRange : mVpnUsers) {
-            if (uidRange.contains(uid)) {
-                return true;
-            }
-        }
-        return false;
+        return mNetworkCapabilities.appliesToUid(uid);
     }
 
     /**
