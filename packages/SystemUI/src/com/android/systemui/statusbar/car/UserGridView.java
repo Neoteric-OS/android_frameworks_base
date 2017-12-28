@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.KeyEvent;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.StatusBar;
@@ -316,6 +317,24 @@ public class UserGridView extends ViewPager {
             } else {
                 iconView.setImageBitmap(record.picture);
             }
+
+            iconView.setOnKeyListener(new OnKeyListener(){
+                public boolean onKey(View v, int keyCode, KeyEvent event)
+                {
+                    if (event.getAction() == KeyEvent.ACTION_DOWN)
+                    {
+                        switch (keyCode)
+                        {
+                            case KeyEvent.KEYCODE_MENU:
+                                iconView.performClick();
+                                return true;
+                            default:
+                                break;
+                        }
+                    }
+                    return false;
+                }
+            });
 
             iconView.setOnClickListener(v -> {
                 if (record == null) {
