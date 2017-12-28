@@ -40,9 +40,11 @@ aidl_files := \
         frameworks/base/telephony/java/android/telephony/mbms/StreamingServiceInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/ServiceState.aidl \
 	frameworks/base/telephony/java/android/telephony/SubscriptionInfo.aidl \
+	frameworks/base/telephony/java/android/telephony/CellIdentity.aidl \
 	frameworks/base/telephony/java/android/telephony/CellIdentityCdma.aidl \
 	frameworks/base/telephony/java/android/telephony/CellIdentityGsm.aidl \
 	frameworks/base/telephony/java/android/telephony/CellIdentityLte.aidl \
+	frameworks/base/telephony/java/android/telephony/CellIdentityTdscdma.aidl \
 	frameworks/base/telephony/java/android/telephony/CellIdentityWcdma.aidl \
 	frameworks/base/telephony/java/android/telephony/CellInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/SignalStrength.aidl \

@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * CellIdentity is to represent a unique LTE cell
  */
-public final class CellIdentityLte implements Parcelable {
+public final class CellIdentityLte extends CellIdentity {
 
     private static final String LOG_TAG = "CellIdentityLte";
     private static final boolean DBG = false;
@@ -52,6 +52,7 @@ public final class CellIdentityLte implements Parcelable {
      * @hide
      */
     public CellIdentityLte() {
+        super(TYPE_UNKNOWN);
         mCi = Integer.MAX_VALUE;
         mPci = Integer.MAX_VALUE;
         mTac = Integer.MAX_VALUE;
@@ -106,6 +107,7 @@ public final class CellIdentityLte implements Parcelable {
      */
     public CellIdentityLte (int ci, int pci, int tac, int earfcn, String mccStr,
                             String mncStr, String alphal, String alphas) {
+        super(TYPE_LTE);
         mCi = ci;
         mPci = pci;
         mTac = tac;
@@ -276,14 +278,9 @@ public final class CellIdentityLte implements Parcelable {
 
     /** Implement the Parcelable interface */
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /** Implement the Parcelable interface */
-    @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
+        super.writeToParcel(dest, flags, TYPE_LTE);
         dest.writeInt(mCi);
         dest.writeInt(mPci);
         dest.writeInt(mTac);
@@ -308,7 +305,8 @@ public final class CellIdentityLte implements Parcelable {
             new Creator<CellIdentityLte>() {
                 @Override
                 public CellIdentityLte createFromParcel(Parcel in) {
-                    return new CellIdentityLte(in);
+                    in.readInt();   // skip;
+                    return createFromParcelBody(in);
                 }
 
                 @Override
@@ -316,6 +314,11 @@ public final class CellIdentityLte implements Parcelable {
                     return new CellIdentityLte[size];
                 }
             };
+
+    /** @hide */
+    protected static CellIdentityLte createFromParcelBody(Parcel in) {
+        return new CellIdentityLte(in);
+    }
 
     /**
      * log

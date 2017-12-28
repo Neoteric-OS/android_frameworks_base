@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * CellIdentity is to represent a unique CDMA cell
  */
-public final class CellIdentityCdma implements Parcelable {
+public final class CellIdentityCdma extends CellIdentity {
 
     private static final String LOG_TAG = "CellSignalStrengthCdma";
     private static final boolean DBG = false;
@@ -60,6 +60,7 @@ public final class CellIdentityCdma implements Parcelable {
      * @hide
      */
     public CellIdentityCdma() {
+        super(TYPE_UNKNOWN);
         mNetworkId = Integer.MAX_VALUE;
         mSystemId = Integer.MAX_VALUE;
         mBasestationId = Integer.MAX_VALUE;
@@ -101,6 +102,7 @@ public final class CellIdentityCdma implements Parcelable {
      */
     public CellIdentityCdma (int nid, int sid, int bid, int lon, int lat, String alphal,
                              String alphas) {
+        super(TYPE_CDMA);
         mNetworkId = nid;
         mSystemId = sid;
         mBasestationId = bid;
@@ -222,14 +224,9 @@ public final class CellIdentityCdma implements Parcelable {
 
     /** Implement the Parcelable interface */
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /** Implement the Parcelable interface */
-    @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
+        super.writeToParcel(dest, flags, TYPE_CDMA);
         dest.writeInt(mNetworkId);
         dest.writeInt(mSystemId);
         dest.writeInt(mBasestationId);
@@ -253,7 +250,8 @@ public final class CellIdentityCdma implements Parcelable {
             new Creator<CellIdentityCdma>() {
         @Override
         public CellIdentityCdma createFromParcel(Parcel in) {
-            return new CellIdentityCdma(in);
+            in.readInt();   // skip
+            return createFromParcelBody(in);
         }
 
         @Override
@@ -261,6 +259,11 @@ public final class CellIdentityCdma implements Parcelable {
             return new CellIdentityCdma[size];
         }
     };
+
+    /** @hide */
+    protected static CellIdentityCdma createFromParcelBody(Parcel in) {
+        return new CellIdentityCdma(in);
+    }
 
     /**
      * log
