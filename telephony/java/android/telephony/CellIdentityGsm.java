@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * CellIdentity to represent a unique GSM cell
  */
-public final class CellIdentityGsm implements Parcelable {
+public final class CellIdentityGsm extends CellIdentity {
 
     private static final String LOG_TAG = "CellIdentityGsm";
     private static final boolean DBG = false;
@@ -52,6 +52,7 @@ public final class CellIdentityGsm implements Parcelable {
      * @hide
      */
     public CellIdentityGsm() {
+        super(TYPE_UNKNOWN);
         mLac = Integer.MAX_VALUE;
         mCid = Integer.MAX_VALUE;
         mArfcn = Integer.MAX_VALUE;
@@ -105,6 +106,7 @@ public final class CellIdentityGsm implements Parcelable {
      */
     public CellIdentityGsm (int lac, int cid, int arfcn, int bsic, String mccStr,
                             String mncStr, String alphal, String alphas) {
+        super(TYPE_GSM);
         mLac = lac;
         mCid = cid;
         mArfcn = arfcn;
@@ -288,14 +290,9 @@ public final class CellIdentityGsm implements Parcelable {
 
     /** Implement the Parcelable interface */
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /** Implement the Parcelable interface */
-    @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
+        super.writeToParcel(dest, flags, TYPE_GSM);
         dest.writeInt(mLac);
         dest.writeInt(mCid);
         dest.writeInt(mArfcn);
@@ -320,7 +317,8 @@ public final class CellIdentityGsm implements Parcelable {
             new Creator<CellIdentityGsm>() {
                 @Override
                 public CellIdentityGsm createFromParcel(Parcel in) {
-                    return new CellIdentityGsm(in);
+                    in.readInt();   // skip
+                    return createFromParcelBody(in);
                 }
 
                 @Override
@@ -328,6 +326,11 @@ public final class CellIdentityGsm implements Parcelable {
                     return new CellIdentityGsm[size];
                 }
             };
+
+    /** @hide */
+    protected static CellIdentityGsm createFromParcelBody(Parcel in) {
+        return new CellIdentityGsm(in);
+    }
 
     /**
      * log

@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * CellIdentity to represent a unique UMTS cell
  */
-public final class CellIdentityWcdma implements Parcelable {
+public final class CellIdentityWcdma extends CellIdentity {
 
     private static final String LOG_TAG = "CellIdentityWcdma";
     private static final boolean DBG = false;
@@ -52,6 +52,7 @@ public final class CellIdentityWcdma implements Parcelable {
      * @hide
      */
     public CellIdentityWcdma() {
+        super(TYPE_UNKNOWN);
         mLac = Integer.MAX_VALUE;
         mCid = Integer.MAX_VALUE;
         mPsc = Integer.MAX_VALUE;
@@ -106,6 +107,7 @@ public final class CellIdentityWcdma implements Parcelable {
      */
     public CellIdentityWcdma (int lac, int cid, int psc, int uarfcn,
                               String mccStr, String mncStr, String alphal, String alphas) {
+        super(TYPE_WCDMA);
         mLac = lac;
         mCid = cid;
         mPsc = psc;
@@ -278,14 +280,9 @@ public final class CellIdentityWcdma implements Parcelable {
 
     /** Implement the Parcelable interface */
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /** Implement the Parcelable interface */
-    @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
+        super.writeToParcel(dest, flags, TYPE_WCDMA);
         dest.writeInt(mLac);
         dest.writeInt(mCid);
         dest.writeInt(mPsc);
@@ -310,7 +307,8 @@ public final class CellIdentityWcdma implements Parcelable {
             new Creator<CellIdentityWcdma>() {
                 @Override
                 public CellIdentityWcdma createFromParcel(Parcel in) {
-                    return new CellIdentityWcdma(in);
+                    in.readInt();   // skip
+                    return createFromParcelBody(in);
                 }
 
                 @Override
@@ -318,6 +316,11 @@ public final class CellIdentityWcdma implements Parcelable {
                     return new CellIdentityWcdma[size];
                 }
             };
+
+    /** @hide */
+    protected static CellIdentityWcdma createFromParcelBody(Parcel in) {
+        return new CellIdentityWcdma(in);
+    }
 
     /**
      * log
