@@ -39032,6 +39032,7 @@ package android.telecom {
   public final class Call {
     method public void answer(int);
     method public void conference(android.telecom.Call);
+    method public void deflect(java.lang.String);
     method public void disconnect();
     method public java.util.List<java.lang.String> getCannedTextResponses();
     method public java.util.List<android.telecom.Call> getChildren();
@@ -39287,6 +39288,7 @@ package android.telecom {
     method public void onAnswer();
     method public void onCallAudioStateChanged(android.telecom.CallAudioState);
     method public void onCallEvent(java.lang.String, android.os.Bundle);
+    method public void onDeflect(java.lang.String);
     method public void onDisconnect();
     method public void onExtrasChanged(android.os.Bundle);
     method public void onHold();

@@ -29,6 +29,8 @@ import android.telecom.PhoneAccountHandle;
 oneway interface IInCallAdapter {
     void answerCall(String callId, int videoState);
 
+    void deflectCall(String callId, String deflectNumber);
+
     void rejectCall(String callId, boolean rejectWithMessage, String textMessage);
 
     void disconnectCall(String callId);

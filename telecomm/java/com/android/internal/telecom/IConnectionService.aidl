@@ -58,6 +58,8 @@ oneway interface IConnectionService {
 
     void answer(String callId, in Session.Info sessionInfo);
 
+    void deflect(String callId, String number, in Session.Info sessionInfo);
+
     void reject(String callId, in Session.Info sessionInfo);
 
     void rejectWithMessage(String callId, String message, in Session.Info sessionInfo);

@@ -124,6 +124,7 @@ public abstract class ConnectionService extends Service {
     private static final String SESSION_ABORT = "CS.ab";
     private static final String SESSION_ANSWER = "CS.an";
     private static final String SESSION_ANSWER_VIDEO = "CS.anV";
+    private static final String SESSION_DEFLECT = "CS.def";
     private static final String SESSION_REJECT = "CS.r";
     private static final String SESSION_REJECT_MESSAGE = "CS.rWM";
     private static final String SESSION_SILENCE = "CS.s";
@@ -174,6 +175,7 @@ public abstract class ConnectionService extends Service {
     private static final int MSG_ON_STOP_RTT = 27;
     private static final int MSG_RTT_UPGRADE_RESPONSE = 28;
     private static final int MSG_CREATE_CONNECTION_COMPLETE = 29;
+    private static final int MSG_DEFLECT = 30;
     private static final int MSG_HANDOVER_FAILED = 32;
 
     private static Connection sNullConnection;
@@ -328,6 +330,20 @@ public abstract class ConnectionService extends Service {
                 args.arg1 = callId;
                 args.arg2 = Log.createSubsession();
                 mHandler.obtainMessage(MSG_ANSWER, args).sendToTarget();
+            } finally {
+                Log.endSession();
+            }
+        }
+
+        @Override
+        public void deflect(String callId, String number, Session.Info sessionInfo) {
+            Log.startSession(sessionInfo, SESSION_DEFLECT);
+            try {
+                SomeArgs args = SomeArgs.obtain();
+                args.arg1 = callId;
+                args.arg2 = number;
+                args.arg3 = Log.createSubsession();
+                mHandler.obtainMessage(MSG_DEFLECT, args).sendToTarget();
             } finally {
                 Log.endSession();
             }
@@ -802,6 +818,17 @@ public abstract class ConnectionService extends Service {
                         String callId = (String) args.arg1;
                         int videoState = args.argi1;
                         answerVideo(callId, videoState);
+                    } finally {
+                        args.recycle();
+                        Log.endSession();
+                    }
+                    break;
+                }
+                case MSG_DEFLECT: {
+                    SomeArgs args = (SomeArgs) msg.obj;
+                    Log.continueSession((Session) args.arg3, SESSION_HANDLER + SESSION_DEFLECT);
+                    try {
+                        deflect((String) args.arg1, (String) args.arg2);
                     } finally {
                         args.recycle();
                         Log.endSession();
@@ -1540,6 +1567,11 @@ public abstract class ConnectionService extends Service {
     private void answer(String callId) {
         Log.d(this, "answer %s", callId);
         findConnectionForAction(callId, "answer").onAnswer();
+    }
+
+    private void deflect(String callId, String number) {
+        Log.d(this, "deflect %s - %s", callId, number);
+        findConnectionForAction(callId, "deflect").onDeflect(number);
     }
 
     private void reject(String callId) {

@@ -2746,6 +2746,12 @@ public abstract class Connection extends Conferenceable {
 
     /**
      * Notifies this Connection, which is in {@link #STATE_RINGING}, of
+     * a request to deflect.
+     */
+    public void onDeflect(String number) {}
+
+    /**
+     * Notifies this Connection, which is in {@link #STATE_RINGING}, of
      * a request to reject.
      */
     public void onReject() {}
