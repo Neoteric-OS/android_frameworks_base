@@ -19,7 +19,6 @@ package android.telephony;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.Rlog;
 import android.text.TextUtils;
 
 /**
@@ -1212,12 +1211,20 @@ public class ServiceState implements Parcelable {
         return this.mCssIndicator ? 1 : 0;
     }
 
-    /** @hide */
+    /**
+     * Get the CDMA NID (Network Identification Number), a number uniquely identifying a network
+     * within a wireless system
+     * @return The Network Identification Number
+     */
     public int getNetworkId() {
         return this.mNetworkId;
     }
 
-    /** @hide */
+    /**
+     * Get the CDMA SID (System Identification Number), a number uniquely identifying a wireless
+     * system.
+     * @return The System Identification Number
+     */
     public int getSystemId() {
         return this.mSystemId;
     }
