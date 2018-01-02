@@ -1984,9 +1984,12 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         final boolean keyguardShowing = mStackSupervisor.mKeyguardController.isKeyguardShowing(
                 mDisplayId != INVALID_DISPLAY ? mDisplayId : DEFAULT_DISPLAY);
         final boolean keyguardLocked = mStackSupervisor.mKeyguardController.isKeyguardLocked();
-        final boolean showWhenLocked = r.canShowWhenLocked() && !isInPinnedStack;
-        final boolean dismissKeyguard = r.hasDismissKeyguardWindows();
         if (shouldBeVisible) {
+            boolean showWhenLocked = false;
+            if (isTop || keyguardLocked) {
+                showWhenLocked = !isInPinnedStack && r.canShowWhenLocked();
+            }
+            final boolean dismissKeyguard = r.hasDismissKeyguardWindows();
             if (dismissKeyguard && mTopDismissingKeyguardActivity == null) {
                 mTopDismissingKeyguardActivity = r;
             }
@@ -2002,19 +2005,18 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             if (canShowWithKeyguard) {
                 return true;
             }
-        }
-        if (keyguardShowing) {
+            if (keyguardShowing) {
 
-            // If keyguard is showing, nothing is visible, except if we are able to dismiss Keyguard
-            // right away.
-            return shouldBeVisible && mStackSupervisor.mKeyguardController
-                    .canShowActivityWhileKeyguardShowing(r, dismissKeyguard);
-        } else if (keyguardLocked) {
-            return shouldBeVisible && mStackSupervisor.mKeyguardController.canShowWhileOccluded(
-                    dismissKeyguard, showWhenLocked);
-        } else {
-            return shouldBeVisible;
+                // If keyguard is showing, nothing is visible, except if we are able to dismiss Keyguard
+                // right away.
+                return mStackSupervisor.mKeyguardController
+                        .canShowActivityWhileKeyguardShowing(r, dismissKeyguard);
+            } else if (keyguardLocked) {
+                return mStackSupervisor.mKeyguardController.canShowWhileOccluded(
+                        dismissKeyguard, showWhenLocked);
+            }
         }
+        return false;
     }
 
     /**
