@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8a7c72_c5f331b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-01-02T21:08:22Z",
+      "side": 1,
+      "message": "Fixes: 62048110",
+      "revId": "22e67d5c24500d1793909e8d0fed9b65facf46a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
