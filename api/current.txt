@@ -44157,6 +44157,12 @@ package android.util {
     method public void previousMonth();
   }
 
+  public final class Mutable<E> {
+    ctor public Mutable();
+    ctor public Mutable(E);
+    field public E value;
+  }
+
   public final class MutableBoolean {
     ctor public MutableBoolean(boolean);
     field public boolean value;
