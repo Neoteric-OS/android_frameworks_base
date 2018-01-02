@@ -16,6 +16,29 @@
       "revId": "22e67d5c24500d1793909e8d0fed9b65facf46a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7be487a0_cc80787d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4345,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-01-02T23:58:06Z",
+      "side": 1,
+      "message": "how about read Telephony Property? calling existing get function might returns wrong result.",
+      "range": {
+        "startLine": 4345,
+        "startChar": 23,
+        "endLine": 4345,
+        "endChar": 43
+      },
+      "revId": "22e67d5c24500d1793909e8d0fed9b65facf46a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
