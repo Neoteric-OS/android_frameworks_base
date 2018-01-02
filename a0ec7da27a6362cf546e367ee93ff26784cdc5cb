@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90295849_ad05940a",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18103,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-01-02T17:37:26Z",
+      "side": 1,
+      "message": "deletedPackage may be located on /data and actually require code. However, for deletedPackage to point there, we had to pass a code check at some point. So, while technically not correct, I think this is fine. It\u0027s better than having even more conditionals.",
+      "range": {
+        "startLine": 18103,
+        "startChar": 51,
+        "endLine": 18103,
+        "endChar": 99
+      },
+      "revId": "a0ec7da27a6362cf546e367ee93ff26784cdc5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
