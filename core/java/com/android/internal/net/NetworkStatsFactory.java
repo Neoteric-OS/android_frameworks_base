@@ -21,6 +21,7 @@ import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static com.android.server.NetworkManagementSocketTagger.kernelToTag;
+import static android.provider.Settings.Global.ENABLE_BPF_NETSTATS;
 
 import android.content.Context;
 import android.net.INetd;
@@ -31,6 +32,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.provider.Settings.Global;
 import android.util.ArrayMap;
 import android.util.Slog;
 

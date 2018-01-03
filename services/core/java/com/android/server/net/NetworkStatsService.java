@@ -40,6 +40,7 @@ import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
+import static android.provider.Settings.Global.ENABLE_BPF_NETSTATS;
 import static android.provider.Settings.Global.NETSTATS_AUGMENT_ENABLED;
 import static android.provider.Settings.Global.NETSTATS_DEV_BUCKET_DURATION;
 import static android.provider.Settings.Global.NETSTATS_DEV_DELETE_AGE;
@@ -883,7 +884,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         } catch (Exception e) {
             Slog.e(TAG, "check eBPF support failed" + e);
         }
-        return nativeGetUidStat(uid, type, bpfStatsReady);
+        boolean useBpfStats = bpfStatsReady &&
+            (Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.ENABLE_BPF_NETSTATS, 0) == 1);
+        return nativeGetUidStat(uid, type, useBpfStats);
     }
 
     @Override
@@ -895,7 +899,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         } catch (Exception e) {
             Slog.e(TAG, "check eBPF support failed" + e);
         }
-        return nativeGetIfaceStat(iface, type, bpfStatsReady);
+        boolean useBpfStats = bpfStatsReady &&
+            (Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.ENABLE_BPF_NETSTATS, 0) == 1);
+        return nativeGetIfaceStat(iface, type, useBpfStats);
     }
 
     @Override
@@ -907,7 +914,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         } catch (Exception e) {
             Slog.e(TAG, "check eBPF support failed" + e);
         }
-        return nativeGetTotalStat(type, bpfStatsReady);
+        boolean useBpfStats = bpfStatsReady &&
+            (Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.ENABLE_BPF_NETSTATS, 0) == 1);
+        return nativeGetTotalStat(type, useBpfStats);
     }
 
     /**

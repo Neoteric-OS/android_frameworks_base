@@ -10934,6 +10934,9 @@ public final class Settings {
          */
         public static final String NOTIFICATION_SNOOZE_OPTIONS =
                 "notification_snooze_options";
+
+        /** @hide */
+        public static final String ENABLE_BPF_NETSTATS = "enable_bpf_netstats";
     }
 
     /**

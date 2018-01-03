@@ -52,6 +52,7 @@ import static com.android.server.NetworkManagementService.NetdResponseCode.Tethe
 import static com.android.server.NetworkManagementService.NetdResponseCode.TetheringStatsListResult;
 import static com.android.server.NetworkManagementService.NetdResponseCode.TtyListResult;
 import static com.android.server.NetworkManagementSocketTagger.PROP_QTAGUID_ENABLED;
+import static android.provider.Settings.Global.ENABLE_BPF_NETSTATS;
 
 import android.annotation.NonNull;
 import android.app.ActivityManager;
@@ -91,6 +92,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.provider.Settings;
+import android.provider.Settings.Global;
 import android.telephony.DataConnectionRealTimeInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.SubscriptionManager;
@@ -632,10 +634,13 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         // only enable bandwidth control when support exists
         final boolean hasKernelSupport;
         boolean hasBpfSupport = false;
-        try {
-            hasBpfSupport = mNetdService.checkBpfStatsEnable();
-        } catch (Exception e) {
-            Slog.e(TAG, "check eBPF support failed" + e);
+        if (Settings.Global.getInt(mContext.getContentResolver(),
+              Settings.Global.ENABLE_BPF_NETSTATS, 0) == 1) {
+            try {
+                hasBpfSupport = mNetdService.checkBpfStatsEnable();
+            } catch (Exception e) {
+                Slog.e(TAG, "check eBPF support failed" + e);
+            }
         }
 
         if (hasBpfSupport) {
