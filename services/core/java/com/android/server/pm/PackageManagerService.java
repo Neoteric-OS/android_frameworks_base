@@ -3708,7 +3708,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
         // Nothing valid explicitly set? Make the factory-installed browser the explicit
         // default.  If there's more than one, just leave everything alone.
-        if (browserPkg == null) {
+        if (TextUtils.isEmpty(browserPkg)) {
             calculateDefaultBrowserLPw(userId);
         }
     }
