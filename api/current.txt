@@ -44585,6 +44585,7 @@ package android.telephony {
     field public static final String KEY_MMS_UA_PROF_URL_STRING = "uaProfUrl";
     field public static final String KEY_MMS_USER_AGENT_STRING = "userAgent";
     field public static final String KEY_MONTHLY_DATA_CYCLE_DAY_INT = "monthly_data_cycle_day_int";
+    field public static final String KEY_NETWORK_MODE_VISIBLE_OPTIONS_INT_ARRAY = "network_mode_visible_options_int_array";
     field public static final String KEY_ONLY_AUTO_SELECT_IN_HOME_NETWORK_BOOL = "only_auto_select_in_home_network";
     field public static final String KEY_ONLY_SINGLE_DC_ALLOWED_INT_ARRAY = "only_single_dc_allowed_int_array";
     field public static final String KEY_OPERATOR_SELECTION_EXPAND_BOOL = "operator_selection_expand_bool";

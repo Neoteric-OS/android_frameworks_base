@@ -216,6 +216,25 @@ public class CarrierConfigManager {
     public static final String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
 
     /**
+     * Integer array where the carrier can configure which network modes that should be visible in
+     * the preferred network type dialog. If null, the default options will be shown in the dialog.
+     *
+     * Valid values are the NETWORK_MODE_ constants in {@link TelephonyManager#PrefNetworkMode}.
+     *
+     * Example:
+     * <int-array name="network_mode_visible_options_int_array" num="4">
+     *     <item value="2" /> <!-- "WCDMA only" -->
+     *     <item value="1" /> <!-- "GSM only" -->
+     *     <item value="0" /> <!-- "GSM/WCDMA preferred" -->
+     *     <item value="9" /> <!-- "GSM/WCDMA/LTE" -->
+     * </int-array>
+     *
+     * @see TelephonyManager#PrefNetworkMode
+     */
+    public static final String KEY_NETWORK_MODE_VISIBLE_OPTIONS_INT_ARRAY =
+            "network_mode_visible_options_int_array";
+
+    /**
      * Flag to require or skip entitlement checks.
      * If true, entitlement checks will be executed if device has been configured for it,
      * If false, entitlement checks will be skipped.
@@ -3448,6 +3467,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL, false);
         sDefaults.putBoolean(KEY_VOICE_PRIVACY_DISABLE_UI_BOOL, false);
         sDefaults.putBoolean(KEY_WORLD_PHONE_BOOL, false);
+        sDefaults.putIntArray(KEY_NETWORK_MODE_VISIBLE_OPTIONS_INT_ARRAY, null);
         sDefaults.putBoolean(KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
         sDefaults.putBoolean(KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL, false);
         sDefaults.putIntArray(KEY_RADIO_RESTART_FAILURE_CAUSES_INT_ARRAY, new int[]{});
