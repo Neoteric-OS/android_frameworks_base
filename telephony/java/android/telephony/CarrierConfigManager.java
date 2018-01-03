@@ -185,6 +185,67 @@ public class CarrierConfigManager {
     public static final String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
 
     /**
+     * String array used to select visible options in enabled networks type dialog.
+     *
+     * The config is only applied when "world_phone_bool = false".
+     *
+     * Example:
+     * <string-array name="enabled_network_mode_marshal_string_array" num="4">
+     *     <item value="2" /> <!-- "3G only" -->
+     *     <item value="1" /> <!-- "2G only" -->
+     *     <item value="0" /> <!-- "2G/3G preferred" -->
+     *     <item value="9" /> <!-- "2G/3G/LTE" -->
+     * </string-array>
+     *
+     * Available options are:
+     *
+     * 0  = GSM/WCDMA preferred
+     * 1  = GSM only
+     * 2  = WCDMA only
+     * 3  = GSM/WCDMA auto
+     * 4  = CDMA/EvDo auto
+     * 5  = CDMA w/o EvDo
+     * 6  = EvDo only
+     * 7  = CDMA/EvDo/GSM/WCDMA
+     * 8  = CDMA + LTE/EvDo
+     * 9  = GSM/WCDMA/LTE
+     * 10 = Global
+     * 11 = LTE
+     * 12 = LTE / WCDMA
+     * 13 = TDSCDMA only
+     * 14 = TDSCDMA/WCDMA
+     * 15 = LTE/TDSCDMA
+     * 16 = TDSCDMA/GSM
+     * 17 = LTE/TDSCDMA/GSM
+     * 18 = TDSCDMA/GSM/WCDMA
+     * 19 = LTE/TDSCDMA/WCDMA
+     * 20 = LTE/TDSCDMA/GSM/WCDMA
+     * 21 = TDSCDMA/CDMA/EVDO/GSM/WCDMA
+     * 22 = LTE/TDSCDMA/CDMA/EVDO/GSM/WCDMA
+     *
+     * @hide
+     */
+    public static final String KEY_ENABLED_NETWORK_MODE_MARSHAL_STRING_ARRAY =
+            "enabled_network_mode_marshal_string_array";
+
+   /**
+     * String array used to specify the name of network technologies.
+     *
+     * Example:
+     * <string-array name="rat_names_string_array" num="6">
+     *     <item value="2G" />
+     *     <item value="3G" />
+     *     <item value="1x" />
+     *     <item value="EvDo" />
+     *     <item value="LTE" />
+     *     <item value="TDSCDMA" />
+     * </string-array>
+     * @hide
+     */
+    public static final String KEY_RAT_NAMES_STRING_ARRAY =
+            "rat_names_string_array";
+
+    /**
      * Flag to require or skip entitlement checks.
      * If true, entitlement checks will be executed if device has been configured for it,
      * If false, entitlement checks will be skipped.
@@ -2417,6 +2478,9 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL, false);
         sDefaults.putBoolean(KEY_VOICE_PRIVACY_DISABLE_UI_BOOL, false);
         sDefaults.putBoolean(KEY_WORLD_PHONE_BOOL, false);
+        sDefaults.putStringArray(KEY_ENABLED_NETWORK_MODE_MARSHAL_STRING_ARRAY, null);
+        sDefaults.putStringArray(KEY_RAT_NAMES_STRING_ARRAY,
+                new String[]{"2G", "3G", "1x", "EvDo", null, "TDSCDMA"});
         sDefaults.putBoolean(KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
         sDefaults.putBoolean(KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL, false);
         sDefaults.putIntArray(KEY_RADIO_RESTART_FAILURE_CAUSES_INT_ARRAY, new int[]{});
