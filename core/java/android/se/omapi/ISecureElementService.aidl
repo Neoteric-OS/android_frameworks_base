@@ -48,4 +48,8 @@ interface ISecureElementService {
     boolean[] isNFCEventAllowed(String reader, in byte[] aid,
             in String[] packageNames, ISecureElementCallback callback);
 
+    /**
+     * Factory Resets all the Secure Elements on the device.
+     */
+    void factoryReset();
 }

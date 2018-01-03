@@ -155,6 +155,7 @@ package android {
     field public static final java.lang.String SET_TIME = "android.permission.SET_TIME";
     field public static final java.lang.String SET_VOLUME_KEY_LONG_PRESS_LISTENER = "android.permission.SET_VOLUME_KEY_LONG_PRESS_LISTENER";
     field public static final java.lang.String SET_WALLPAPER_COMPONENT = "android.permission.SET_WALLPAPER_COMPONENT";
+    field public static final java.lang.String SE_PRIVILEGED = "android.permission.SE_PRIVILEGED";
     field public static final java.lang.String SHUTDOWN = "android.permission.SHUTDOWN";
     field public static final java.lang.String SIGNAL_PERSISTENT_PROCESSES = "android.permission.SIGNAL_PERSISTENT_PROCESSES";
     field public static final java.lang.String STATUS_BAR = "android.permission.STATUS_BAR";
@@ -697,6 +698,7 @@ package android.content {
     field public static final java.lang.String NETWORK_SCORE_SERVICE = "network_score";
     field public static final java.lang.String OEM_LOCK_SERVICE = "oem_lock";
     field public static final java.lang.String PERSISTENT_DATA_BLOCK_SERVICE = "persistent_data_block";
+    field public static final java.lang.String SE_SERVICE = "secure_element";
     field public static final java.lang.String VR_SERVICE = "vrmanager";
     field public static final java.lang.String WIFI_RTT_SERVICE = "rttmanager";
     field public static final java.lang.String WIFI_SCANNING_SERVICE = "wifiscanner";
