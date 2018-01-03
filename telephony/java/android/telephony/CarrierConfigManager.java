@@ -1738,6 +1738,70 @@ public class CarrierConfigManager {
     public static final String KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL =
             "skip_cf_fail_to_disable_dialog_bool";
 
+   /**
+     * String array used to select visible options in preferred networks type dialog.
+     *
+     * The config is only applied when "world_phone_bool = true".
+     * All options are shown if null.
+     *
+     * Example:
+     * <string-array name="preferred_network_mode_marshal_string_array" num="4">
+     *     <item value="2" /> <!-- "WCDMA only" -->
+     *     <item value="1" /> <!-- "GSM only" -->
+     *     <item value="0" /> <!-- "GSM/WCDMA preferred" -->
+     *     <item value="9" /> <!-- "GSM/WCDMA/LTE" -->
+     * </string-array>
+     *
+     * Available options are:
+     *
+     * 0  = GSM/WCDMA preferred
+     * 1  = GSM only
+     * 2  = WCDMA only
+     * 3  = GSM/WCDMA auto
+     * 4  = CDMA/EvDo auto
+     * 5  = CDMA w/o EvDo
+     * 6  = EvDo only
+     * 7  = CDMA/EvDo/GSM/WCDMA
+     * 8  = CDMA + LTE/EvDo
+     * 9  = GSM/WCDMA/LTE
+     * 10 = Global
+     * 11 = LTE
+     * 12 = LTE / WCDMA
+     * 13 = TDSCDMA only
+     * 14 = TDSCDMA/WCDMA
+     * 15 = LTE/TDSCDMA
+     * 16 = TDSCDMA/GSM
+     * 17 = LTE/TDSCDMA/GSM
+     * 18 = TDSCDMA/GSM/WCDMA
+     * 19 = LTE/TDSCDMA/WCDMA
+     * 20 = LTE/TDSCDMA/GSM/WCDMA
+     * 21 = TDSCDMA/CDMA/EVDO/GSM/WCDMA
+     * 22 = LTE/TDSCDMA/CDMA/EVDO/GSM/WCDMA
+     *
+     * @hide
+     */
+    public static final String KEY_PREFERRED_NETWORK_MODE_MARSHAL_STRING_ARRAY =
+            "preferred_network_mode_marshal_string_array";
+
+   /**
+     * String array used to specify the name of network technologies that should be used in the
+     * preferred network menu.
+     *
+     * The config only applies when "world_phone_bool" = true".
+     * Example:
+     * <string-array name="preferred_network_mode_rat_names_string_array" num="6">
+     *     <item value="GSM" />
+     *     <item value="WCDMA" />
+     *     <item value="CDMA" />
+     *     <item value="EvDo" />
+     *     <item value="LTE" />
+     *     <item value="TDSCDMA" />
+     * </string-array>
+     * @hide
+     */
+    public static final String KEY_PREFERRED_NETWORK_MODE_RAT_NAMES_STRING_ARRAY =
+            "preferred_network_mode_rat_names_string_array";
+
     /**
      * List of the FAC (feature access codes) to dial as a normal call.
      * @hide
@@ -1949,6 +2013,9 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SUPPORT_DIRECT_FDN_DIALING_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL, false);
+        sDefaults.putStringArray(KEY_PREFERRED_NETWORK_MODE_MARSHAL_STRING_ARRAY, null);
+        sDefaults.putStringArray(KEY_PREFERRED_NETWORK_MODE_RAT_NAMES_STRING_ARRAY,
+                new String[]{"GSM", "WCDMA", "CDMA", "EvDo", "LTE", "TDSCDMA"});
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);
