@@ -1414,6 +1414,12 @@
     <permission android:name="android.permission.NFC_TRANSACTION_EVENT"
         android:protectionLevel="normal" />
 
+    <!-- @SystemApi Allows settings application to factory reset all the Secure Elements
+         on the device.
+         This is not available to third party applications. -->
+    <permission android:name="android.permission.SE_PRIVILEGED"
+        android:protectionLevel="signature|privileged" />
+
     <!-- @SystemApi Allows an internal user to use privileged ConnectivityManager APIs.
          @hide -->
     <permission android:name="android.permission.CONNECTIVITY_INTERNAL"
