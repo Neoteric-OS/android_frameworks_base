@@ -352,6 +352,17 @@ public class CarrierConfigManager {
     public static final String KEY_DEFAULT_VM_NUMBER_STRING = "default_vm_number_string";
 
     /**
+     * Flag that specifies to use the user's own phone number as the voicemail number when there is
+     * no pre-loaded voicemail number on the SIM card.
+     * <p>
+     * {@link #KEY_DEFAULT_VM_NUMBER_STRING} takes precedence over this flag.
+     * <p>
+     * If false, the system default (*86) will be used instead.
+     */
+    public static final String KEY_CONFIG_TELEPHONY_USE_OWN_NUMBER_FOR_VOICEMAIL_BOOL =
+            "config_telephony_use_own_number_for_voicemail_bool";
+
+    /**
      * When {@code true}, changes to the mobile data enabled switch will not cause the VT
      * registration state to change.  That is, turning on or off mobile data will not cause VT to be
      * enabled or disabled.
