@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ed31d8_904d9af3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T05:00:17Z",
+      "side": 1,
+      "message": "I think this code is correct as written. However, given that mNetTransitionWakeLockTimeout is not final, it seems like it might be good practice to put this if statement inside the synchronized block instead of outside it. How about doing the following?\n\n        synchronized (this) {\n            if (mNetTransitionWakeLockTimeout \u003c\u003d 0 || mNetTransitionWakeLock.isHeld()) {\n                return;\n            }",
+      "range": {
+        "startLine": 3037,
+        "startChar": 0,
+        "endLine": 3039,
+        "endChar": 9
+      },
+      "revId": "14297c8771eeddb75229d2513b07a380cd62c006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
