@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8f732f_ca58e97e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:07:16Z",
+      "side": 1,
+      "message": "Remove this, you already have it below.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "07a9f35d5f05889c7176da1c9dd3effd0a7fdc5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f2cce4_febcd453",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:07:16Z",
+      "side": 1,
+      "message": "Nit: maybe use DIRECTION_OUT sometimes too?",
+      "range": {
+        "startLine": 324,
+        "startChar": 54,
+        "endLine": 324,
+        "endChar": 56
+      },
+      "revId": "07a9f35d5f05889c7176da1c9dd3effd0a7fdc5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177f59d8_29d7f065",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:07:16Z",
+      "side": 1,
+      "message": "Nit: this comment is incorrect, right? Nothing is succeeding here.",
+      "range": {
+        "startLine": 371,
+        "startChar": 8,
+        "endLine": 371,
+        "endChar": 56
+      },
+      "revId": "07a9f35d5f05889c7176da1c9dd3effd0a7fdc5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08047f11_0d3cbafc",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:07:16Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 56
+      },
+      "revId": "07a9f35d5f05889c7176da1c9dd3effd0a7fdc5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
