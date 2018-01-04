@@ -147,6 +147,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private int[] mDataActivationState;
 
+    private boolean[] mCellularData;
+
     private SignalStrength[] mSignalStrength;
 
     private boolean[] mMessageWaiting;
@@ -304,6 +306,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mServiceState = new ServiceState[numPhones];
         mVoiceActivationState = new int[numPhones];
         mDataActivationState = new int[numPhones];
+        mCellularData = new boolean[numPhones];
         mSignalStrength = new SignalStrength[numPhones];
         mMessageWaiting = new boolean[numPhones];
         mCallForwarding = new boolean[numPhones];
@@ -320,6 +323,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mCallIncomingNumber[i] =  "";
             mServiceState[i] =  new ServiceState();
             mSignalStrength[i] =  new SignalStrength();
+            mCellularData[i] = false;
             mMessageWaiting[i] =  false;
             mCallForwarding[i] =  false;
             mCellLocation[i] = new Bundle();
@@ -652,6 +656,14 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     if ((events & PhoneStateListener.LISTEN_DATA_ACTIVATION_STATE) !=0) {
                         try {
                             r.callback.onDataActivationStateChanged(mDataActivationState[phoneId]);
+                        } catch (RemoteException ex) {
+                            remove(r.binder);
+                        }
+                    }
+                    if ((events & PhoneStateListener.LISTEN_CELLULAR_DATA_INDICATOR) != 0) {
+                        try {
+                            r.callback.onCellularDataIndicatorChanged(
+                                    mCellularData[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -1002,6 +1014,33 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             idMatch(r.subId, subId, phoneId)) {
                         try {
                             r.callback.onMessageWaitingIndicatorChanged(mwi);
+                        } catch (RemoteException ex) {
+                            mRemoveList.add(r.binder);
+                        }
+                    }
+                }
+            }
+            handleRemoveListLocked();
+        }
+    }
+
+    public void notifyCellularDataChangedForPhoneId(int phoneId, int subId, boolean cdi) {
+        if (!checkNotifyPermission("notifyCellularDataChanged()")) {
+            return;
+        }
+        if (VDBG) {
+            log("notifyCellularDataChangedForSubscriberPhoneID: subId=" + phoneId
+                    + " cdi=" + cdi);
+        }
+        synchronized (mRecords) {
+            if (validatePhoneId(phoneId)) {
+                mMessageWaiting[phoneId] = cdi;
+                for (Record r : mRecords) {
+                    if (r.matchPhoneStateListenerEvent(
+                            PhoneStateListener.LISTEN_CELLULAR_DATA_INDICATOR) &&
+                            idMatch(r.subId, subId, phoneId)) {
+                        try {
+                            r.callback.onCellularDataIndicatorChanged(cdi);
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
@@ -1374,6 +1413,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mServiceState=" + mServiceState[i]);
                 pw.println("mVoiceActivationState= " + mVoiceActivationState[i]);
                 pw.println("mDataActivationState= " + mDataActivationState[i]);
+                pw.println("mCellularData= " + mCellularData[i]);
                 pw.println("mSignalStrength=" + mSignalStrength[i]);
                 pw.println("mMessageWaiting=" + mMessageWaiting[i]);
                 pw.println("mCallForwarding=" + mCallForwarding[i]);
@@ -1750,6 +1790,19 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             + mCellInfo.get(phoneId));
                 }
                 r.callback.onCellInfoChanged(mCellInfo.get(phoneId));
+            } catch (RemoteException ex) {
+                mRemoveList.add(r.binder);
+            }
+        }
+
+        if ((events & PhoneStateListener.LISTEN_CELLULAR_DATA_INDICATOR) != 0) {
+            try {
+                if (VDBG) {
+                    log("checkPossibleMissNotify: onCellularDataIndicatorChanged phoneId="
+                            + phoneId + " cdi=" + mCellularData[phoneId]);
+                }
+                r.callback.onCellularDataIndicatorChanged(
+                        mCellularData[phoneId]);
             } catch (RemoteException ex) {
                 mRemoveList.add(r.binder);
             }
