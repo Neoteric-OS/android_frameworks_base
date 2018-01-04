@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a29a26_e3da096d",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "Parse",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "3168b62e2dc565174d2ebbc64aceb60215cecbfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

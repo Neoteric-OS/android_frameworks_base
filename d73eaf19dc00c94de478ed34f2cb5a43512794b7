@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc09b585_b1af0aa6",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "No tabs please :-)",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 1
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6527f2c_6dc742f0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "This is a read-only parameter, right? limitIfaces is not modified? If so, this should be a const ref (i.e., \"const Vector\u003cString8\u003e\u0026 limitifaces\").",
+      "range": {
+        "startLine": 95,
+        "startChar": 68,
+        "endLine": 95,
+        "endChar": 95
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec11898_f9255470",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "Suggest renaming this to legacyReadNetworkStatsDetail, for consistency.\n\nBut if you don\u0027t want to rename it, then s/Parce/Parse/ .",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d4f2fe_ad732c33",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "Can this be a std::vector\u003cstats_line\u003e* ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 41,
+        "endLine": 95,
+        "endChar": 60
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df63dff6_c4f02839",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "If this were new code I\u0027d say use a std::vector (or perhaps a std::set, in order to eliminate the linear search), and the strings would be std::string instead of String8. But since you\u0027re just moving code around, there\u0027s probably no need to change it.",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 10
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574fae86_bd89efe1",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "Can this be a std::vector\u003cstats_line\u003e?",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 29
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f3f25_f6ba92c8",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "This could get really expensive. On a device with 100 apps and both cell and wifi, we\u0027re going to be logging 100-200 lines every 2MB of data transferred. Can we change it to a level that\u0027s not visible by default? (ALOGD or ALOGV, not sure which.)\n\nEventually we\u0027d want to be able to list only those lines where qtaguid differ by a minimum percentage and a minimum byte/packet count, but that\u0027s probably more work than we can do in this patch series.\n\nAlso, long line.",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 102
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407b30e0_817164e0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-04T13:39:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 254,
+        "startChar": 96,
+        "endLine": 254,
+        "endChar": 102
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
