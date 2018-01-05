@@ -5556,6 +5556,20 @@ public class AudioService extends IAudioService.Stub
             return;
         }
 
+        /*
+        do not send ACTION_HEADSET_PLUG(out) if any of the headset types is still plugged-in.
+        */
+        if((state == 0) && (intent.getAction() == Intent.ACTION_HEADSET_PLUG)) {
+            if ((AudioSystem.getDeviceConnectionState(AudioSystem.DEVICE_OUT_USB_HEADSET, "")
+                == AudioSystem.DEVICE_STATE_AVAILABLE)
+                ||(AudioSystem.getDeviceConnectionState(AudioSystem.DEVICE_OUT_WIRED_HEADPHONE, "")
+                == AudioSystem.DEVICE_STATE_AVAILABLE)
+                ||(AudioSystem.getDeviceConnectionState(AudioSystem.DEVICE_OUT_WIRED_HEADSET, "")
+                == AudioSystem.DEVICE_STATE_AVAILABLE)){
+                    return;
+            }
+        }
+
         intent.putExtra(CONNECT_INTENT_KEY_STATE, state);
         intent.putExtra(CONNECT_INTENT_KEY_ADDRESS, address);
         intent.putExtra(CONNECT_INTENT_KEY_PORT_NAME, deviceName);
