@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1b0b1559_24354730",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-01-05T18:14:39Z",
+      "side": 1,
+      "message": "Sorry, I meant HalDeviceManager, and I also was wrong about it tracking whether the value was set - instead, it tracks whether the status code indicates success.\n\nAnd further, I thought that the status codes were always int values, where the int value Result.OK indicates success. But it turns out that this is not always the case because in:\n\nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/HalDeviceManager.java?l\u003d1267\u0026rcl\u003dfc8efe44f2f2231678b0f07b5662a8d8c9e71005\n\nthe status code is an Object, and the success status code is WifiStatusCode.SUCCESS.\n\nSo I was wrong. If there was more consistency, then you could have had something like:\n\nprivate int statusCode;\nprivate E value;\n\npublic boolean set(int statusCode, E value) {\n  boolean okay \u003d (statusCode \u003d\u003d Result.OK);\n  if (okay !\u003d (value !\u003d null)) {\n    throw new IllegalArgumentException(\"Expected value to be null iff statusCode !\u003d OK, got \"\n       + statusCode + \", \" + value);\n  }\n  this.statusCode \u003d statusCode;\n  this.value \u003d value;\n  return okay;\n}\n\n\nand then your lambdas would have become:\n\nchip.getId((WifiStatus status, int id) -\u003e {\n   if (result.set(status,id))) {\n     Log.e(TAG, \"getSupportedIfaceTypesInternal: IWifiChip.getId() error: \"\n                                 + statusString(status));\n   }\n});\n\n\nbut, that won\u0027t work because of the differences in how the status code / success is communicated in different HAL calls.\n\nIt does look like the int and the boolean belong together, but if those particular types are only used in one place then maybe it doesn\u0027t matter.\n\nSo, disregard my comment.",
+      "parentUuid": "2ab2b165_8e1eb740",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a46c9b9_753f79c3",
         "filename": "core/java/android/os/HidlSupport.java",
         "patchSetId": 1
