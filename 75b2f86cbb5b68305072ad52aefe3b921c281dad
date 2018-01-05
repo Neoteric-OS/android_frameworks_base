@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba64e1d3_56293b33",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2018-01-05T17:51:23Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a46c9b9_753f79c3",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2018-01-05T17:51:23Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "242a771c_6ada71f1",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2018-01-05T17:51:23Z",
+      "side": 1,
+      "message": "public as well",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
