@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b978d43_d13fdf46",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-01-05T11:29:16Z",
+      "side": 1,
+      "message": "The UID 1024 is already used by fs config, next available value is 1065.\n\nrefer: https://android.googlesource.com/platform/system/core/+/master/libcutils/include/private/android_filesystem_config.h\n\n#define AID_MTP 1024             /* MTP USB driver access */",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "49b629169f2432abab3b51e0e5d23208afb8c5dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
