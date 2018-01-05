@@ -22,6 +22,30 @@
       "revId": "49b629169f2432abab3b51e0e5d23208afb8c5dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28be7c88_42a5f821",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-05T17:51:42Z",
+      "side": 1,
+      "message": "Yes. I will update the patch with other changes as well.",
+      "parentUuid": "7b978d43_d13fdf46",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "49b629169f2432abab3b51e0e5d23208afb8c5dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
