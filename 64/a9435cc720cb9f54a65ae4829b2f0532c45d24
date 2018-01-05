@@ -1,0 +1,11 @@
+Presubmit-Ready+1: Pavlin Radoslavov <pavlin@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Andre Eisenbach <eisenbach@google.com>
+Code-Review+1: Jack He <siyuanh@google.com>
+Verified+1: Pavlin Radoslavov <pavlin@google.com>
+Autosubmit+1: Pavlin Radoslavov <pavlin@google.com>
+Submitted-by: Pavlin Radoslavov <pavlin@google.com>
+Submitted-at: Fri, 05 Jan 2018 21:45:30 +0000
+Reviewed-on: https://android-review.googlesource.com/579629
+Project: platform/frameworks/base
+Branch: refs/heads/master
