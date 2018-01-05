@@ -86,6 +86,25 @@ public class HidlSupport {
     }
 
     /**
+     * Class which can be used to fetch an object out of a lambda. Fetching an object
+     * out of a local scope with HIDL is a common operation (although usually it can
+     * and should be avoided).
+     *
+     * @param <E> Inner object type.
+     */
+    public static class Mutable<E> {
+        public E value;
+
+        Mutable() {
+            value = null;
+        }
+
+        Mutable(E value) {
+            this.value = value;
+        }
+    }
+
+    /**
      * Similar to Arrays.deepHashCode, but also take care of lists.
      */
     public static int deepHashCode(Object o) {
