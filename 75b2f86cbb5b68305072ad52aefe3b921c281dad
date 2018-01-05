@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87b69bd4_af5c8680",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-01-05T17:58:23Z",
+      "side": 1,
+      "message": "Should we add @hide so that this class stays hidden even if the toplevel class ever becomes public?",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba64e1d3_56293b33",
         "filename": "core/java/android/os/HidlSupport.java",
         "patchSetId": 1
@@ -22,6 +45,29 @@
       "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cf210c3_50421e89",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-01-05T17:58:23Z",
+      "side": 1,
+      "message": "Since the purpose of this class is for fetching an object out of a lambda for HIDL, can we use a better / more tailored name than \"Mutable\", eg. HidlResult?\n\nCurrently, the common usages of classes like this\n - duplicate logic, namely checking whether the result code is Result.OK;\n - omit logic out of laziness, eg. enforcing that the result value is null if the result code is anything other than Result.OK\n - don\u0027t keep track of whether or not the result value has ever been set, which is why HidlDeviceManager needs both a MutableInt and a MutableBoolean\n\nPerhaps the value field should be encapsulated (private, accessible only via setters/getters), so that the setters/getters can be responsible for this logic, as well as carry corresponding documentation?",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "75b2f86cbb5b68305072ad52aefe3b921c281dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
