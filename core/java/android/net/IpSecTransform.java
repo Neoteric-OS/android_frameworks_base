@@ -38,36 +38,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
 
 /**
- * This class represents an IPsec transform, which comprises security associations in one or both
- * directions.
+ * This class represents an IPsec transform, which represents a security association.
  *
  * <p>Transforms are created using {@link IpSecTransform.Builder}. Each {@code IpSecTransform}
- * object encapsulates the properties and state of an inbound and outbound IPsec security
- * association. That includes, but is not limited to, algorithm choice, key material, and allocated
- * system resources.
+ * object encapsulates the properties and state of an IPsec security association. That includes,
+ * but is not limited to, algorithm choice, key material, and allocated system resources.
  *
  * @see <a href="https://tools.ietf.org/html/rfc4301">RFC 4301, Security Architecture for the
  *     Internet Protocol</a>
  */
 public final class IpSecTransform implements AutoCloseable {
     private static final String TAG = "IpSecTransform";
-
-    /**
-     * For direction-specific attributes of an {@link IpSecTransform}, indicates that an attribute
-     * applies to traffic towards the host.
-     */
-    public static final int DIRECTION_IN = 0;
-
-    /**
-     * For direction-specific attributes of an {@link IpSecTransform}, indicates that an attribute
-     * applies to traffic from the host.
-     */
-    public static final int DIRECTION_OUT = 1;
-
-    /** @hide */
-    @IntDef(value = {DIRECTION_IN, DIRECTION_OUT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface TransformDirection {}
 
     /** @hide */
     public static final int MODE_TRANSPORT = 0;
@@ -170,7 +151,7 @@ public final class IpSecTransform implements AutoCloseable {
      *
      * <p>Deactivating a transform while it is still applied to a socket will result in errors on
      * that socket. Make sure to remove transforms by calling {@link
-     * IpSecManager#removeTransportModeTransform}. Note, removing an {@code IpSecTransform} from a
+     * IpSecManager#removeTransportModeTransforms}. Note, removing an {@code IpSecTransform} from a
      * socket will not deactivate it (because one transform may be applied to multiple sockets).
      *
      * <p>It is safe to call this method on a transform that has already been deactivated.
@@ -272,85 +253,65 @@ public final class IpSecTransform implements AutoCloseable {
         private IpSecConfig mConfig;
 
         /**
-         * Set the encryption algorithm for the given direction.
-         *
-         * <p>If encryption is set for a direction without also providing an SPI for that direction,
-         * creation of an {@code IpSecTransform} will fail when attempting to build the transform.
+         * Set the encryption algorithm.
          *
          * <p>Encryption is mutually exclusive with authenticated encryption.
          *
-         * @param direction either {@link #DIRECTION_IN} or {@link #DIRECTION_OUT}
          * @param algo {@link IpSecAlgorithm} specifying the encryption to be applied.
          */
-        public IpSecTransform.Builder setEncryption(
-                @TransformDirection int direction, IpSecAlgorithm algo) {
+        public IpSecTransform.Builder setEncryption(IpSecAlgorithm algo) {
             // TODO: throw IllegalArgumentException if algo is not an encryption algorithm.
-            mConfig.setEncryption(direction, algo);
+            mConfig.setEncryption(algo);
             return this;
         }
 
         /**
-         * Set the authentication (integrity) algorithm for the given direction.
-         *
-         * <p>If authentication is set for a direction without also providing an SPI for that
-         * direction, creation of an {@code IpSecTransform} will fail when attempting to build the
-         * transform.
+         * Set the authentication (integrity) algorithm.
          *
          * <p>Authentication is mutually exclusive with authenticated encryption.
          *
-         * @param direction either {@link #DIRECTION_IN} or {@link #DIRECTION_OUT}
          * @param algo {@link IpSecAlgorithm} specifying the authentication to be applied.
          */
-        public IpSecTransform.Builder setAuthentication(
-                @TransformDirection int direction, IpSecAlgorithm algo) {
+        public IpSecTransform.Builder setAuthentication(IpSecAlgorithm algo) {
             // TODO: throw IllegalArgumentException if algo is not an authentication algorithm.
-            mConfig.setAuthentication(direction, algo);
+            mConfig.setAuthentication(algo);
             return this;
         }
 
         /**
-         * Set the authenticated encryption algorithm for the given direction.
+         * Set the authenticated encryption algorithm.
          *
-         * <p>If an authenticated encryption algorithm is set for a given direction without also
-         * providing an SPI for that direction, creation of an {@code IpSecTransform} will fail when
-         * attempting to build the transform.
-         *
-         * <p>The Authenticated Encryption (AE) class of algorithms are also known as Authenticated
-         * Encryption with Associated Data (AEAD) algorithms, or Combined mode algorithms (as
-         * referred to in <a href="https://tools.ietf.org/html/rfc4301">RFC 4301</a>).
+         * <p>The Authenticated Encryption (AE) class of algorithms are also known as 
+         * Authenticated Encryption with Associated Data (AEAD) algorithms, or Combined mode 
+         * algorithms (as referred to in 
+         * <a href="https://tools.ietf.org/html/rfc4301">RFC 4301</a>).
          *
          * <p>Authenticated encryption is mutually exclusive with encryption and authentication.
          *
-         * @param direction either {@link #DIRECTION_IN} or {@link #DIRECTION_OUT}
          * @param algo {@link IpSecAlgorithm} specifying the authenticated encryption algorithm to
          *     be applied.
          */
         public IpSecTransform.Builder setAuthenticatedEncryption(
-                @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.setAuthenticatedEncryption(direction, algo);
+                IpSecAlgorithm algo) {
+            mConfig.setAuthenticatedEncryption(algo);
             return this;
         }
 
         /**
-         * Set the SPI for the given direction.
+         * Set the SPI.
          *
          * <p>Because IPsec operates at the IP layer, this 32-bit identifier uniquely identifies
          * packets to a given destination address. To prevent SPI collisions, values should be
          * reserved by calling {@link IpSecManager#allocateSecurityParameterIndex}.
          *
-         * <p>If the SPI and algorithms are omitted for one direction, traffic in that direction
-         * will not be encrypted or authenticated.
-         *
-         * @param direction either {@link #DIRECTION_IN} or {@link #DIRECTION_OUT}
          * @param spi a unique {@link IpSecManager.SecurityParameterIndex} to identify transformed
          *     traffic
          */
-        public IpSecTransform.Builder setSpi(
-                @TransformDirection int direction, IpSecManager.SecurityParameterIndex spi) {
+        public IpSecTransform.Builder setSpi(IpSecManager.SecurityParameterIndex spi) {
             if (spi.getResourceId() == INVALID_RESOURCE_ID) {
                 throw new IllegalArgumentException("Invalid SecurityParameterIndex");
             }
-            mConfig.setSpiResourceId(direction, spi.getResourceId());
+            mConfig.setSpiResourceId(spi.getResourceId());
             return this;
         }
 
@@ -419,8 +380,9 @@ public final class IpSecTransform implements AutoCloseable {
          * will not affect any network traffic until it has been applied to one or more sockets.
          *
          * @see IpSecManager#applyTransportModeTransform
-         * @param remoteAddress the remote {@code InetAddress} of traffic on sockets that will use
-         *     this transform
+         * @param sourceAddress the source {@code InetAddress} of traffic on sockets that will use
+         *     this transform; this address must belong to the Network used by all sockets that
+         *     utilize this transform
          * @throws IllegalArgumentException indicating that a particular combination of transform
          *     properties is invalid
          * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms are
@@ -429,23 +391,46 @@ public final class IpSecTransform implements AutoCloseable {
          *     collides with an existing transform
          * @throws IOException indicating other errors
          */
-        public IpSecTransform buildTransportModeTransform(InetAddress remoteAddress)
+        public IpSecTransform buildTransportModeTransform(InetAddress sourceAddress)
                 throws IpSecManager.ResourceUnavailableException,
                         IpSecManager.SpiUnavailableException, IOException {
-            if (remoteAddress == null) {
-                throw new IllegalArgumentException("Remote address may not be null or empty!");
-            }
             mConfig.setMode(MODE_TRANSPORT);
-            mConfig.setRemoteAddress(remoteAddress.getHostAddress());
+            mConfig.setSourceAddress(sourceAddress.getHostAddress());
             // FIXME: modifying a builder after calling build can change the built transform.
             return new IpSecTransform(mContext, mConfig).activate();
         }
 
         /**
+         * Build a transport mode {@link IpSecTransform}.
+         *
+         * <p>This builds and activates a transport mode transform. Note that an active transform
+         * will not affect any network traffic until it has been applied to one or more sockets.
+         *
+         * <p>If an underlying network is set, then this transform will be created for the address
+         * or addresses used by that Network. If no network is provided, then this transform will
+         * be created for addresses of the active (default) Network.
+         *
+         * @see IpSecManager#applyTransportModeTransform
+         * @throws IllegalArgumentException indicating that a particular combination of transform
+         *     properties is invalid
+         * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms 
+         *     are active
+         * @throws IpSecManager.SpiUnavailableException indicating the rare case where an SPI
+         *     collides with an existing transform
+         * @throws IOException indicating other errors
+         */
+        public IpSecTransform buildTransportModeTransform()
+                throws IpSecManager.ResourceUnavailableException,
+                        IpSecManager.SpiUnavailableException, IOException {
+            mConfig.setMode(MODE_TRANSPORT);
+            // FIXME: modifying a builder after calling build can change the built transform.
+            return new IpSecTransform(mContext, mConfig).activate();
+        }
+        /**
          * Build and return an {@link IpSecTransform} object as a Tunnel Mode Transform. Some
          * parameters have interdependencies that are checked at build time.
          *
-         * @param localAddress the {@link InetAddress} that provides the local endpoint for this
+         * @param sourceAddress the {@link InetAddress} that provides the source address for this
          *     IPsec tunnel. This is almost certainly an address belonging to the {@link Network}
          *     that will originate the traffic, which is set as the {@link #setUnderlyingNetwork}.
          * @param remoteAddress the {@link InetAddress} representing the remote endpoint of this
@@ -455,15 +440,11 @@ public final class IpSecTransform implements AutoCloseable {
          * @hide
          */
         public IpSecTransform buildTunnelModeTransform(
-                InetAddress localAddress, InetAddress remoteAddress) {
-            if (localAddress == null) {
-                throw new IllegalArgumentException("Local address may not be null or empty!");
+                InetAddress sourceAddress) {
+            if (sourceAddress == null) {
+                throw new IllegalArgumentException("Source address may not be null or empty!");
             }
-            if (remoteAddress == null) {
-                throw new IllegalArgumentException("Remote address may not be null or empty!");
-            }
-            mConfig.setLocalAddress(localAddress.getHostAddress());
-            mConfig.setRemoteAddress(remoteAddress.getHostAddress());
+            mConfig.setSourceAddress(sourceAddress.getHostAddress());
             mConfig.setMode(MODE_TUNNEL);
             return new IpSecTransform(mContext, mConfig);
         }
