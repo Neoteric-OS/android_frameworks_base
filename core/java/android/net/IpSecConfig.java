@@ -20,6 +20,8 @@ import android.os.Parcelable;
 
 import com.android.internal.annotations.VisibleForTesting;
 
+import java.util.Arrays;
+
 /**
  * This class encapsulates all the configuration parameters needed to create IPsec transforms and
  * policies.
@@ -34,7 +36,7 @@ public final class IpSecConfig implements Parcelable {
 
     // Needs to be valid only for tunnel mode
     // Preventing this from being null simplifies Java->Native binder
-    private String mLocalAddress = "";
+    private String[] mLocalAddresses = new String[]{""};
 
     // Preventing this from being null simplifies Java->Native binder
     private String mRemoteAddress = "";
@@ -102,7 +104,12 @@ public final class IpSecConfig implements Parcelable {
 
     /** Set the local IP address for Tunnel mode */
     public void setLocalAddress(String localAddress) {
-        mLocalAddress = localAddress;
+        mLocalAddresses[0] = localAddress;
+    }
+
+    /** Set the local IP address for Tunnel mode */
+    public void setLocalAddresses(String[] localAddresses) {
+        mLocalAddresses = localAddresses.clone();
     }
 
     /** Set the remote IP address for this IPsec transform */
@@ -130,6 +137,7 @@ public final class IpSecConfig implements Parcelable {
         mFlow[direction].mAuthenticatedEncryption = authenticatedEncryption;
     }
 
+    /** Set the underlying network that will carry traffic for this transform */
     public void setNetwork(Network network) {
         mNetwork = network;
     }
@@ -156,7 +164,11 @@ public final class IpSecConfig implements Parcelable {
     }
 
     public String getLocalAddress() {
-        return mLocalAddress;
+        return mLocalAddresses[0];
+    }
+
+    public String[] getLocalAddresses() {
+        return mLocalAddresses.clone();
     }
 
     public int getSpiResourceId(int direction) {
@@ -209,7 +221,7 @@ public final class IpSecConfig implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mMode);
-        out.writeString(mLocalAddress);
+        out.writeStringArray(mLocalAddresses);
         out.writeString(mRemoteAddress);
         out.writeParcelable(mNetwork, flags);
         out.writeInt(mFlow[IpSecTransform.DIRECTION_IN].mSpiResourceId);
@@ -231,7 +243,7 @@ public final class IpSecConfig implements Parcelable {
 
     private IpSecConfig(Parcel in) {
         mMode = in.readInt();
-        mLocalAddress = in.readString();
+        mLocalAddresses = in.readStringArray();
         mRemoteAddress = in.readString();
         mNetwork = (Network) in.readParcelable(Network.class.getClassLoader());
         mFlow[IpSecTransform.DIRECTION_IN].mSpiResourceId = in.readInt();
@@ -260,8 +272,8 @@ public final class IpSecConfig implements Parcelable {
         strBuilder
                 .append("{mMode=")
                 .append(mMode == IpSecTransform.MODE_TUNNEL ? "TUNNEL" : "TRANSPORT")
-                .append(", mLocalAddress=")
-                .append(mLocalAddress)
+                .append(", mLocalAddresses=")
+                .append(Arrays.toString(mLocalAddresses))
                 .append(", mRemoteAddress=")
                 .append(mRemoteAddress)
                 .append(", mNetwork=")
@@ -299,7 +311,7 @@ public final class IpSecConfig implements Parcelable {
     public static boolean equals(IpSecConfig lhs, IpSecConfig rhs) {
         if (lhs == null || rhs == null) return (lhs == rhs);
         return (lhs.mMode == rhs.mMode
-                && lhs.mLocalAddress.equals(rhs.mLocalAddress)
+                && Arrays.deepEquals(lhs.mLocalAddresses, rhs.mLocalAddresses)
                 && lhs.mRemoteAddress.equals(rhs.mRemoteAddress)
                 && ((lhs.mNetwork != null && lhs.mNetwork.equals(rhs.mNetwork))
                         || (lhs.mNetwork == rhs.mNetwork))

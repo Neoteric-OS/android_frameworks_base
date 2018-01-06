@@ -419,8 +419,9 @@ public final class IpSecTransform implements AutoCloseable {
          * will not affect any network traffic until it has been applied to one or more sockets.
          *
          * @see IpSecManager#applyTransportModeTransform
-         * @param remoteAddress the remote {@code InetAddress} of traffic on sockets that will use
-         *     this transform
+         * @param localAddress the local {@code InetAddress} of traffic on sockets that will use
+         *     this transform; this address must belong to the Network used by all sockets that
+         *     utilize this transform
          * @throws IllegalArgumentException indicating that a particular combination of transform
          *     properties is invalid
          * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms are
@@ -429,18 +430,41 @@ public final class IpSecTransform implements AutoCloseable {
          *     collides with an existing transform
          * @throws IOException indicating other errors
          */
-        public IpSecTransform buildTransportModeTransform(InetAddress remoteAddress)
+        public IpSecTransform buildTransportModeTransform(InetAddress localAddress)
                 throws IpSecManager.ResourceUnavailableException,
                         IpSecManager.SpiUnavailableException, IOException {
-            if (remoteAddress == null) {
-                throw new IllegalArgumentException("Remote address may not be null or empty!");
-            }
             mConfig.setMode(MODE_TRANSPORT);
-            mConfig.setRemoteAddress(remoteAddress.getHostAddress());
+            mConfig.setLocalAddress(localAddress.getHostAddress());
             // FIXME: modifying a builder after calling build can change the built transform.
             return new IpSecTransform(mContext, mConfig).activate();
         }
 
+        /**
+         * Build a transport mode {@link IpSecTransform}.
+         *
+         * <p>This builds and activates a transport mode transform. Note that an active transform
+         * will not affect any network traffic until it has been applied to one or more sockets.
+         *
+         * <p>If an underlying network is set, then this transform will be created for the address
+         * or addresses used by that Network. If no network is provided, then this transform will
+         * be created for addresses of the active (default) Network.
+         *
+         * @see IpSecManager#applyTransportModeTransform
+         * @throws IllegalArgumentException indicating that a particular combination of transform
+         *     properties is invalid
+         * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms are
+         *     active
+         * @throws IpSecManager.SpiUnavailableException indicating the rare case where an SPI
+         *     collides with an existing transform
+         * @throws IOException indicating other errors
+         */
+        public IpSecTransform buildTransportModeTransform()
+                throws IpSecManager.ResourceUnavailableException,
+                        IpSecManager.SpiUnavailableException, IOException {
+            mConfig.setMode(MODE_TRANSPORT);
+            // FIXME: modifying a builder after calling build can change the built transform.
+            return new IpSecTransform(mContext, mConfig).activate();
+        }
         /**
          * Build and return an {@link IpSecTransform} object as a Tunnel Mode Transform. Some
          * parameters have interdependencies that are checked at build time.
