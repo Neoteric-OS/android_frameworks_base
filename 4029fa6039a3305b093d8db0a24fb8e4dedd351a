@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c89bcd_e2f03053",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2018-01-06T01:45:31Z",
+      "side": 1,
+      "message": "None of these constants are labeled as @SystemApi",
+      "range": {
+        "startLine": 1448,
+        "startChar": 34,
+        "endLine": 1449,
+        "endChar": 25
+      },
+      "revId": "4029fa6039a3305b093d8db0a24fb8e4dedd351a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
