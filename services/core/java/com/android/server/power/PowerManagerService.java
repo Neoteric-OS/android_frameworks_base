@@ -630,6 +630,7 @@ public final class PowerManagerService extends SystemService
     private native void nativeInit();
 
     private static native void nativeAcquireSuspendBlocker(String name);
+    private static native int nativeForceSuspend(int timeoutMs);
     private static native void nativeReleaseSuspendBlocker(String name);
     private static native void nativeSetInteractive(boolean enable);
     private static native void nativeSetAutoSuspend(boolean enable);
@@ -4466,6 +4467,25 @@ public final class PowerManagerService extends SystemService
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
+        }
+
+        /**
+         * Force device to suspend
+         *
+         * @param timeoutMs
+         */
+        @Override // Binder call
+        public int forceSuspend(int timeoutMs) {
+            int retVal;
+            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.SUSPEND, null);
+
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                retVal = nativeForceSuspend(timeoutMs);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+            return retVal;
         }
 
         /**

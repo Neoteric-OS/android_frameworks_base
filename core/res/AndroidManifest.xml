@@ -2955,6 +2955,11 @@
     <permission android:name="android.permission.REBOOT"
         android:protectionLevel="signature|privileged" />
 
+    <!-- @SystemApi Required to be able to suspend the device.
+    <p>Not for use by third-party applications. -->
+    <permission android:name="android.permission.SUSPEND"
+        android:protectionLevel="signature|privileged" />
+
    <!-- @SystemApi Allows low-level access to power management.
         <p>Not for use by third-party applications.
         @hide
