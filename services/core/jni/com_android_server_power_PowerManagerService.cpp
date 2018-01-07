@@ -159,6 +159,12 @@ static void nativeAcquireSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring
     acquire_wake_lock(PARTIAL_WAKE_LOCK, name.c_str());
 }
 
+static jint nativeForceSuspend(JNIEnv* /* env */, jclass /* clazz */, jint timeoutMs) {
+    jint ret = autosuspend_force_suspend(timeoutMs);
+    ALOGD("nativeForceSuspend returned %d", ret);
+    return ret;
+}
+
 static void nativeReleaseSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring nameStr) {
     ScopedUtfChars name(env, nameStr);
     release_wake_lock(name.c_str());
@@ -222,6 +228,8 @@ static const JNINativeMethod gPowerManagerServiceMethods[] = {
             (void*) nativeInit },
     { "nativeAcquireSuspendBlocker", "(Ljava/lang/String;)V",
             (void*) nativeAcquireSuspendBlocker },
+    { "nativeForceSuspend", "(I)I",
+            (void*) nativeForceSuspend },
     { "nativeReleaseSuspendBlocker", "(Ljava/lang/String;)V",
             (void*) nativeReleaseSuspendBlocker },
     { "nativeSetInteractive", "(Z)V",

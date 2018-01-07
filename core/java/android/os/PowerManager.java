@@ -1120,6 +1120,23 @@ public final class PowerManager {
     }
 
     /**
+     * Force the device to suspend.
+     *
+     * @param timeoutMs Amount of time to try suspending 'nicely' before forcing
+     *
+     * @SystemApi  @hide
+     */
+    public int forceSuspend(int timeoutMs) {
+        int retVal = -1;
+        try {
+            retVal = mService.forceSuspend(timeoutMs);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return retVal;
+    }
+
+    /**
      * This function checks if the device has implemented Sustained Performance
      * Mode. This needs to be checked only once and is constant for a particular
      * device/release.
