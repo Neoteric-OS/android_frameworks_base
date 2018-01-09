@@ -390,6 +390,7 @@ public class LocationManagerService extends ILocationManager.Stub {
         intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
         intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
         intentFilter.addAction(Intent.ACTION_SHUTDOWN);
+        intentFilter.addAction(Intent.ACTION_SIM_STATE_CHANGED);
 
         mContext.registerReceiverAsUser(new BroadcastReceiver() {
             @Override
@@ -405,6 +406,11 @@ public class LocationManagerService extends ILocationManager.Stub {
                     if(D) Log.d(TAG, "Shutdown received with UserId: " + getSendingUserId());
                     if (getSendingUserId() == UserHandle.USER_ALL) {
                         shutdownComponents();
+                    }
+                } else if (Intent.ACTION_SIM_STATE_CHANGED.equals(action)) {
+                    synchronized (mLock) {
+                        loadProvidersLocked();
+                        updateProvidersLocked();
                     }
                 }
             }
