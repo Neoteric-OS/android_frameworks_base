@@ -46,6 +46,30 @@
       "revId": "87da093ee38c75732bfb9a500c3feee81e0c482a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65db1978_bd931853",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2018-01-09T20:29:21Z",
+      "side": 1,
+      "message": "Oh you\u0027re right, with the package name being hard-coded to android here, the target SDK version must be the current SDK version.",
+      "parentUuid": "d6fdceac_8c674ad2",
+      "range": {
+        "startLine": 3637,
+        "startChar": 36,
+        "endLine": 3637,
+        "endChar": 57
+      },
+      "revId": "87da093ee38c75732bfb9a500c3feee81e0c482a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
