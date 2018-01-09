@@ -271,7 +271,7 @@ public final class AutofillManagerService extends SystemService {
     @Override
     public void onBootPhase(int phase) {
         if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
-            new SettingsObserver(BackgroundThread.getHandler());
+            new SettingsObserver(null);
         }
     }
 
