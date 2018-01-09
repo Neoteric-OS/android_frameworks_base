@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd67150c_73bca8fc",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2018-01-09T01:19:39Z",
+      "side": 1,
+      "message": "We should be taking this as an argument rather than assuming this is the right value for whatever we are making the isolated process for.",
+      "range": {
+        "startLine": 3637,
+        "startChar": 36,
+        "endLine": 3637,
+        "endChar": 57
+      },
+      "revId": "87da093ee38c75732bfb9a500c3feee81e0c482a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
