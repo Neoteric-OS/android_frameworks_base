@@ -22,6 +22,30 @@
       "revId": "87da093ee38c75732bfb9a500c3feee81e0c482a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fdceac_8c674ad2",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2018-01-09T17:46:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth making this an argument when the owning UID, package name, etc are hardcoded. The entry point passed here is always in the framework (since the classpath of the child process doesn\u0027t contain anything else) so assuming the framework\u0027s SDK level doesn\u0027t seem any worse than the other fixed values.",
+      "parentUuid": "bd67150c_73bca8fc",
+      "range": {
+        "startLine": 3637,
+        "startChar": 36,
+        "endLine": 3637,
+        "endChar": 57
+      },
+      "revId": "87da093ee38c75732bfb9a500c3feee81e0c482a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
