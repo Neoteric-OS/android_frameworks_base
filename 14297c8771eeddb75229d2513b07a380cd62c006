@@ -46,6 +46,30 @@
       "revId": "14297c8771eeddb75229d2513b07a380cd62c006",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3564b175_86b0e3c5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2018-01-09T00:30:52Z",
+      "side": 1,
+      "message": "If you do this I would strongly suggest to also lock around the last statement in this function where the same variable is read again, otherwise that\u0027s going to create more confusion later than help now.\n\nAlternatively, simply read mNetTransitionWakeLockTimeout into a local variable at the top of the function and only use that local variable inside the function. Native field reads are atomic, so no need to lock if you do this.",
+      "parentUuid": "5647d3f7_e267363f",
+      "range": {
+        "startLine": 3037,
+        "startChar": 0,
+        "endLine": 3039,
+        "endChar": 9
+      },
+      "revId": "14297c8771eeddb75229d2513b07a380cd62c006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
