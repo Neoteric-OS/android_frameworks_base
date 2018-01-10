@@ -281,7 +281,7 @@ public class IpSecServiceTest {
     @Test
     public void testRemoveTransportModeTransform() throws Exception {
         ParcelFileDescriptor pfd = ParcelFileDescriptor.fromSocket(new Socket());
-        mIpSecService.removeTransportModeTransform(pfd, 1);
+        mIpSecService.removeTransportModeTransforms(pfd, 1);
 
         verify(mMockNetd).ipSecRemoveTransportModeTransform(pfd.getFileDescriptor());
     }
@@ -294,7 +294,7 @@ public class IpSecServiceTest {
             try {
                 IpSecSpiResponse spiResp =
                         mIpSecService.allocateSecurityParameterIndex(
-                                IpSecTransform.DIRECTION_OUT, address, DROID_SPI, new Binder());
+                                address, DROID_SPI, new Binder());
                 fail("Invalid address was passed through IpSecService validation: " + address);
             } catch (IllegalArgumentException e) {
             } catch (Exception e) {
@@ -366,7 +366,6 @@ public class IpSecServiceTest {
         // tracks the resource ID.
         when(mMockNetd.ipSecAllocateSpi(
                         anyInt(),
-                        eq(IpSecTransform.DIRECTION_OUT),
                         anyString(),
                         eq(InetAddress.getLoopbackAddress().getHostAddress()),
                         anyInt()))
@@ -375,7 +374,6 @@ public class IpSecServiceTest {
         for (int i = 0; i < MAX_NUM_SPIS; i++) {
             IpSecSpiResponse newSpi =
                     mIpSecService.allocateSecurityParameterIndex(
-                            0x1,
                             InetAddress.getLoopbackAddress().getHostAddress(),
                             DROID_SPI + i,
                             new Binder());
@@ -391,7 +389,6 @@ public class IpSecServiceTest {
         // Try to reserve one more SPI, and should fail.
         IpSecSpiResponse extraSpi =
                 mIpSecService.allocateSecurityParameterIndex(
-                        0x1,
                         InetAddress.getLoopbackAddress().getHostAddress(),
                         DROID_SPI + MAX_NUM_SPIS,
                         new Binder());
@@ -405,7 +402,6 @@ public class IpSecServiceTest {
         // Should successfully reserve one more spi.
         extraSpi =
                 mIpSecService.allocateSecurityParameterIndex(
-                        0x1,
                         InetAddress.getLoopbackAddress().getHostAddress(),
                         DROID_SPI + MAX_NUM_SPIS,
                         new Binder());
