@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f689a2_02ff7200",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-10T19:04:32Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "2413ef806cde5051c61312f3ceeabcc5262c639f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d04f3b0_b50681d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-10T19:04:32Z",
+      "side": 1,
+      "message": "Add Merged-in?",
+      "revId": "2413ef806cde5051c61312f3ceeabcc5262c639f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
