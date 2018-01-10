@@ -47,6 +47,22 @@ public abstract class CellInfo implements Parcelable {
     /** @hide */
     public static final int TIMESTAMP_TYPE_JAVA_RIL = 4;
 
+    // Type to determine cell's connection status
+
+    /** Cell is not a serving cell. */
+    public static final int CONNECTION_NONE = 0;
+
+    /** UE is connected to cell for signalling and possibly data. */
+    public static final int CONNECTION_PRIMARY_SERVING = 1;
+
+    /** UE is connected to cell for data. */
+    public static final int CONNECTION_SECONDARY_SERVING = 2;
+
+    /** Connection status is unsupported on this device. */
+    public static final int CONNECTION_UNSUPPORTED = Integer.MAX_VALUE;
+
+    private int mCellConnectionStatus = CONNECTION_NONE;
+
     // True if device is mRegistered to the mobile network
     private boolean mRegistered;
 
@@ -69,6 +85,7 @@ public abstract class CellInfo implements Parcelable {
         this.mRegistered = ci.mRegistered;
         this.mTimeStampType = ci.mTimeStampType;
         this.mTimeStamp = ci.mTimeStamp;
+        this.mCellConnectionStatus = ci.mCellConnectionStatus;
     }
 
     /** True if this cell is registered to the mobile network */
@@ -87,6 +104,15 @@ public abstract class CellInfo implements Parcelable {
     /** @hide */
     public void setTimeStamp(long timeStamp) {
         mTimeStamp = timeStamp;
+    }
+
+    /** Returns the connection status of this cell. */
+    public int getCellConnectionStatus() {
+        return mCellConnectionStatus;
+    }
+    /** @hide */
+    public void setCellConnectionStatus(int cellConnectionStatus) {
+        mCellConnectionStatus = cellConnectionStatus;
     }
 
     /**
@@ -181,6 +207,7 @@ public abstract class CellInfo implements Parcelable {
         dest.writeInt(mRegistered ? 1 : 0);
         dest.writeInt(mTimeStampType);
         dest.writeLong(mTimeStamp);
+        dest.writeInt(mCellConnectionStatus);
     }
 
     /**
@@ -192,6 +219,7 @@ public abstract class CellInfo implements Parcelable {
         mRegistered = (in.readInt() == 1) ? true : false;
         mTimeStampType = in.readInt();
         mTimeStamp = in.readLong();
+        mCellConnectionStatus = in.readInt();
     }
 
     /** Implement the Parcelable interface */
