@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b40f02e8_bb054874",
+        "filename": "telephony/java/android/telephony/euicc/EuiccNotification.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T23:22:14Z",
+      "side": 1,
+      "message": "Add a blank line above each field",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 49
+      },
+      "revId": "ff45312e8e84d1e88e5b3fe8e2f169799bc2c0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f27ad0b_3783b244",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T23:22:14Z",
+      "side": 1,
+      "message": "Add a blank line above.",
+      "revId": "ff45312e8e84d1e88e5b3fe8e2f169799bc2c0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05b8d8d_297d050b",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T23:22:14Z",
+      "side": 1,
+      "message": "!TextUtil.isEmpty(gid)",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 51
+      },
+      "revId": "ff45312e8e84d1e88e5b3fe8e2f169799bc2c0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3388b7_b5340085",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T23:22:14Z",
+      "side": 1,
+      "message": "!TextUtil.isEmpty(gid)",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "ff45312e8e84d1e88e5b3fe8e2f169799bc2c0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
