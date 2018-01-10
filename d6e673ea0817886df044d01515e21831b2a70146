@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a90a3ce4_de5282b3",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "Need to update this enum too.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df4cc85_b81e54c4",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "It\u0027s safe to call writeIntArray on the array anyway and no need to check null or empty.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634f32d3_f35c4cba",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "The length of the array will be written by writeIntArray. No need to write it again.",
+      "range": {
+        "startLine": 197,
+        "startChar": 17,
+        "endLine": 197,
+        "endChar": 25
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5da4a6a_e892ab40",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "This is unnecessary.",
+      "range": {
+        "startLine": 199,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 47
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc92be3_85786aa6",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "use writeTypedArray",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 17
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d4cbe1_911b5b72",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "Need to compare the length of the arrays first.",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 225,
+        "endChar": 54
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a388f5_e7ff5917",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "Please see the above comment. The parsing code can be much simpler by using readIntArray and readTypedArray",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 35
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0f9eaa_8a5ba685",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-10T21:13:32Z",
+      "side": 1,
+      "message": "Please see the above comment. The parsing code can be much simpler by using readIntArray and readTypedArray",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 35
+      },
+      "revId": "d6e673ea0817886df044d01515e21831b2a70146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
