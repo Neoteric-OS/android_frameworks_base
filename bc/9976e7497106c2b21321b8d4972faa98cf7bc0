@@ -1,0 +1,9 @@
+Presubmit-Ready+1: Jack He <siyuanh@google.com>
+Verified+1: Jack He <siyuanh@google.com>
+Autosubmit+1: Jack He <siyuanh@google.com>
+Code-Review+2: Andre Eisenbach <eisenbach@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 10 Jan 2018 00:07:09 +0000
+Reviewed-on: https://android-review.googlesource.com/582066
+Project: platform/frameworks/base
+Branch: refs/heads/master
