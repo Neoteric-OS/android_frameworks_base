@@ -711,12 +711,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mSystemProperties = getSystemProperties();
 
         mMetricsLog = logger;
-        mDefaultRequest = createInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
+        mDefaultRequest = createDefaultInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
         NetworkRequestInfo defaultNRI = new NetworkRequestInfo(null, mDefaultRequest, new Binder());
         mNetworkRequests.put(mDefaultRequest, defaultNRI);
         mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);
 
-        mDefaultMobileDataRequest = createInternetRequestForTransport(
+        mDefaultMobileDataRequest = createDefaultInternetRequestForTransport(
                 NetworkCapabilities.TRANSPORT_CELLULAR, NetworkRequest.Type.BACKGROUND_REQUEST);
 
         mHandlerThread = new HandlerThread("ConnectivityServiceThread");
@@ -881,7 +881,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 deps);
     }
 
-    private NetworkRequest createInternetRequestForTransport(
+    private NetworkRequest createDefaultInternetRequestForTransport(
             int transportType, NetworkRequest.Type type) {
         NetworkCapabilities netCap = new NetworkCapabilities();
         netCap.addCapability(NET_CAPABILITY_INTERNET);
@@ -889,6 +889,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (transportType > -1) {
             netCap.addTransportType(transportType);
         }
+        // For historical reasons NOT_VPN is a default capability in NetworkCapabilities.
+        // Changing this for all networks is likely to cause trouble to existing apps,
+        // and the documentation already says apps interested in VPNs must clear the
+        // capability explicitly. ConnectivityService keeps that behavior for regular
+        // network callbacks.
+        // However for the default network callback this default behavior is problematic
+        // as an app that is simply interested in knowing what network its packets will
+        // go to would need to clear this explicitly which is very counter-intuitive.
+        // To alleviate this issue but still keep maximum backward compatibility,
+        // ConnectivityService clears the NOT_VPN capability only for default network
+        // callback requests. This will let apps that simply register a default network
+        // callback know about the network their packets will actually go to, without
+        // having to care about history or details of VPN : this is the behavior apps
+        // would find least surprising.
+        // DO NOT COMMIT WITH THIS : this also affects the default mobile internet
+        // request that is used to keep the mobile data up when system settings say it
+        // should be always up. The network that should alwayse be kept up is the
+        // actual physical network, not any VPN on top of it (the always on state of
+        // such a network would be handled in a separate setting).
+        netCap.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
         return new NetworkRequest(netCap, TYPE_NONE, nextNetworkRequestId(), type);
     }
 
@@ -1259,6 +1279,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         for (Network network : networks) {
                             nai = getNetworkAgentInfoForNetwork(network);
                             nc = getNetworkCapabilitiesInternal(nai);
+                            // nc is a copy of the capabilities in nai, so it's fine to mutate it
+                            nc.setSingleUid(userId);
                             if (nc != null) {
                                 result.put(network, nc);
                             }
@@ -4200,6 +4222,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             enforceMeteredApnPolicy(networkCapabilities);
         }
         ensureRequestableCapabilities(networkCapabilities);
+        // Set the UID range for this request to the single UID of the requester.
+        // This will overwrite any allowed UIDs in the requested capabilities. Though there
+        // are no visible methods to set the UIDs, an app could use reflection to try and get
+        // networks for other apps so it's essential that the UIDs are overwritten.
+        networkCapabilities.setSingleUid(Binder.getCallingUid());
 
         if (timeoutMs < 0) {
             throw new IllegalArgumentException("Bad timeout specified");
@@ -4273,6 +4300,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceMeteredApnPolicy(networkCapabilities);
         ensureRequestableCapabilities(networkCapabilities);
         ensureValidNetworkSpecifier(networkCapabilities);
+        networkCapabilities.setSingleUid(Binder.getCallingUid());
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, TYPE_NONE,
                 nextNetworkRequestId(), NetworkRequest.Type.REQUEST);
@@ -4325,7 +4353,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             enforceAccessPermission();
         }
 
+        // TODO : Clean up the network capabilities in this method. It looks like is called
+        // from IPC only so the networkCapabilities argument will only be GC'd and could be
+        // used without the defensive copy. Check this and do away with the copy.
         NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
+        nc.setSingleUid(Binder.getCallingUid());
         if (!ConnectivityManager.checkChangePermission(mContext)) {
             // Apps without the CHANGE_NETWORK_STATE permission can't use background networks, so
             // make all their listens include NET_CAPABILITY_FOREGROUND. That way, they will get
@@ -4354,8 +4386,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         ensureValidNetworkSpecifier(networkCapabilities);
 
-        NetworkRequest networkRequest = new NetworkRequest(
-                new NetworkCapabilities(networkCapabilities), TYPE_NONE, nextNetworkRequestId(),
+        // TODO : this defensive copy is almost certainly useless. Check this and remove it.
+        final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
+        nc.setSingleUid(Binder.getCallingUid());
+
+        NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
         NetworkRequestInfo nri = new NetworkRequestInfo(networkRequest, operation);
         if (VDBG) log("pendingListenForNetwork for " + nri);
@@ -4904,7 +4939,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 break;
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
-                putParcelable(bundle, new NetworkCapabilities(networkAgent.networkCapabilities));
+                final NetworkCapabilities nc =
+                        new NetworkCapabilities(networkAgent.networkCapabilities);
+                nc.setSingleUid(nri.mUid);
+                putParcelable(bundle, nc);
                 break;
             }
             case ConnectivityManager.CALLBACK_IP_CHANGED: {
