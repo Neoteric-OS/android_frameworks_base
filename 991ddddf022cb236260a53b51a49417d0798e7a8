@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8bc7b5_349b865a",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-10T19:37:12Z",
+      "side": 1,
+      "message": "This is not part of your change.",
+      "range": {
+        "startLine": 566,
+        "startChar": 0,
+        "endLine": 567,
+        "endChar": 88
+      },
+      "revId": "991ddddf022cb236260a53b51a49417d0798e7a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
