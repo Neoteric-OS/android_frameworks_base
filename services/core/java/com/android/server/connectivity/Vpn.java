@@ -130,6 +130,14 @@ public class Vpn {
     // the device idle whitelist during service launch and VPN bootstrap.
     private static final long VPN_LAUNCH_IDLE_WHITELIST_DURATION_MS = 60 * 1000;
 
+    /**
+     * VPNs typically have priority over other networks. Give them a score that will
+     * let them win every single time.
+     * @hide
+     */
+    @VisibleForTesting
+    public static final int VPN_DEFAULT_SCORE = 101;
+
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
 
@@ -853,7 +861,7 @@ public class Vpn {
         long token = Binder.clearCallingIdentity();
         try {
             mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,
-                    mNetworkInfo, mNetworkCapabilities, lp, 0 /* score */, networkMisc) {
+                    mNetworkInfo, mNetworkCapabilities, lp, VPN_DEFAULT_SCORE, networkMisc) {
                             @Override
                             public void unwanted() {
                                 // We are user controlled, not driven by NetworkRequest.
