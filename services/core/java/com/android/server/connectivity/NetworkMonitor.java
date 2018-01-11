@@ -261,6 +261,8 @@ public class NetworkMonitor extends StateMachine {
 
     public boolean systemReady = false;
 
+    private DnsManager.ResolvedPrivateDnsHostname mPrivateDns = null;
+
     private final State mDefaultState = new DefaultState();
     private final State mValidatedState = new ValidatedState();
     private final State mMaybeNotifyState = new MaybeNotifyState();
@@ -421,7 +423,7 @@ public class NetworkMonitor extends StateMachine {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
             mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
-                    NETWORK_TEST_RESULT_VALID, mNetId, null));
+                    NETWORK_TEST_RESULT_VALID, mNetId, mPrivateDns));
             mValidations++;
         }
 
@@ -570,6 +572,7 @@ public class NetworkMonitor extends StateMachine {
                     if (!mDefaultRequest.networkCapabilities.satisfiedByNetworkCapabilities(
                             mNetworkAgentInfo.networkCapabilities)) {
                         validationLog("Network would not satisfy default request, not validating");
+                        mPrivateDns = null;
                         transitionTo(mValidatedState);
                         return HANDLED;
                     }
@@ -582,6 +585,7 @@ public class NetworkMonitor extends StateMachine {
                     // if this is found to cause problems.
                     CaptivePortalProbeResult probeResult = isCaptivePortal();
                     if (probeResult.isSuccessful()) {
+                        maybeResolvePrivateDnsHostname();
                         transitionTo(mValidatedState);
                     } else if (probeResult.isPortal()) {
                         mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
@@ -1043,6 +1047,17 @@ public class NetworkMonitor extends StateMachine {
             }
         }
         return null;
+    }
+
+    private void maybeResolvePrivateDnsHostname() {
+        final String hostname = DnsManager.getPrivateDnsStrictModeHostname(
+                mContext.getContentResolver());
+        if (TextUtils.isEmpty(hostname)) {
+            mPrivateDns = null;
+            return;
+        }
+
+        mPrivateDns = DnsManager.tryBlockingResolveOf(mNetwork, hostname);
     }
 
     /**
