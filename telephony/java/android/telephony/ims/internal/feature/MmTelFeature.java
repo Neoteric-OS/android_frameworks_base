@@ -20,11 +20,9 @@ import android.annotation.IntDef;
 import android.os.Message;
 import android.os.RemoteException;
 import android.telecom.TelecomManager;
-import android.telephony.ims.internal.ImsCallSessionListener;
 import android.telephony.ims.internal.SmsImplBase;
 import android.telephony.ims.internal.SmsImplBase.DeliverStatusResult;
 import android.telephony.ims.internal.SmsImplBase.StatusReportResult;
-import android.telephony.ims.internal.aidl.IImsCallSessionListener;
 import android.telephony.ims.internal.aidl.IImsCapabilityCallback;
 import android.telephony.ims.internal.aidl.IImsMmTelFeature;
 import android.telephony.ims.internal.aidl.IImsMmTelListener;
@@ -89,11 +87,9 @@ public class MmTelFeature extends ImsFeature {
         }
 
         @Override
-        public IImsCallSession createCallSession(ImsCallProfile profile,
-                IImsCallSessionListener listener) throws RemoteException {
+        public IImsCallSession createCallSession(ImsCallProfile profile) throws RemoteException {
             synchronized (mLock) {
-                ImsCallSession s = MmTelFeature.this.createCallSession(profile,
-                        new ImsCallSessionListener(listener));
+                ImsCallSession s = MmTelFeature.this.createCallSession(profile);
                 return s != null ? s.getSession() : null;
             }
         }
@@ -411,10 +407,8 @@ public class MmTelFeature extends ImsFeature {
      * {@link ImsCallSession} directly.
      *
      * @param profile a call profile to make the call
-     * @param listener An implementation of IImsCallSessionListener.
      */
-    public ImsCallSession createCallSession(ImsCallProfile profile,
-            ImsCallSessionListener listener) {
+    public ImsCallSession createCallSession(ImsCallProfile profile) {
         // Base Implementation - Should be overridden
         return null;
     }

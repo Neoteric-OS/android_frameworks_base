@@ -22,7 +22,6 @@ import android.os.RemoteException;
 
 import com.android.ims.ImsCallProfile;
 import com.android.ims.internal.IImsCallSession;
-import com.android.ims.internal.IImsCallSessionListener;
 import com.android.ims.internal.IImsConfig;
 import com.android.ims.internal.IImsEcbm;
 import com.android.ims.internal.IImsMMTelFeature;
@@ -108,10 +107,10 @@ public class MMTelFeature extends ImsFeature {
         }
 
         @Override
-        public IImsCallSession createCallSession(int sessionId, ImsCallProfile profile,
-                IImsCallSessionListener listener) throws RemoteException {
+        public IImsCallSession createCallSession(int sessionId, ImsCallProfile profile)
+                throws RemoteException {
             synchronized (mLock) {
-                return MMTelFeature.this.createCallSession(sessionId, profile, listener);
+                return MMTelFeature.this.createCallSession(sessionId, profile);
             }
         }
 
@@ -281,10 +280,8 @@ public class MMTelFeature extends ImsFeature {
      *
      * @param sessionId a session id which is obtained from {@link #startSession}
      * @param profile a call profile to make the call
-     * @param listener An implementation of IImsCallSessionListener.
      */
-    public IImsCallSession createCallSession(int sessionId, ImsCallProfile profile,
-            IImsCallSessionListener listener) {
+    public IImsCallSession createCallSession(int sessionId, ImsCallProfile profile) {
         return null;
     }
 

@@ -18,12 +18,13 @@ package android.telephony.ims.stub;
 
 import android.os.Message;
 import android.os.RemoteException;
+import android.telephony.ims.ImsCallSessionListener;
+import android.telephony.ims.aidl.IImsCallSessionListener;
 
 import com.android.ims.ImsCallProfile;
 import com.android.ims.ImsStreamMediaProfile;
 import com.android.ims.internal.ImsCallSession;
 import com.android.ims.internal.IImsCallSession;
-import com.android.ims.internal.IImsCallSessionListener;
 import com.android.ims.internal.IImsVideoCallProvider;
 
 /**
@@ -37,6 +38,22 @@ import com.android.ims.internal.IImsVideoCallProvider;
  */
 
 public class ImsCallSessionImplBase extends IImsCallSession.Stub {
+
+    @Override
+    public final void setListener(IImsCallSessionListener listener) throws RemoteException {
+        setListener(new ImsCallSessionListener(listener));
+    }
+
+    /**
+     * Sets the listener to listen to the session events. An {@link ImsCallSession}
+     * can only hold one listener at a time. Subsequent calls to this method
+     * override the previous listener.
+     *
+     * @param listener to listen to the session events of this object
+     */
+    public void setListener(ImsCallSessionListener listener) throws RemoteException {
+
+    }
 
     /**
      * Closes the object. This object is not usable after being closed.
@@ -115,17 +132,6 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
     @Override
     public boolean isInCall() throws RemoteException {
         return false;
-    }
-
-    /**
-     * Sets the listener to listen to the session events. An {@link ImsCallSession}
-     * can only hold one listener at a time. Subsequent calls to this method
-     * override the previous listener.
-     *
-     * @param listener to listen to the session events of this object
-     */
-    @Override
-    public void setListener(IImsCallSessionListener listener) throws RemoteException {
     }
 
     /**
