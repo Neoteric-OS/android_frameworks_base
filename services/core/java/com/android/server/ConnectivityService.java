@@ -131,6 +131,7 @@ import com.android.internal.util.XmlUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.DnsManager;
+import com.android.server.connectivity.DnsManager.PrivateDnsConfig;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.LingerMonitor;
@@ -398,6 +399,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * used to trigger revalidation of a network.
      */
     private static final int EVENT_REVALIDATE_NETWORK = 36;
+
+    // Handle changes in Private DNS settings.
+    private static final int EVENT_PRIVATE_DNS_CHANGED = 37;
 
     private static String eventName(int what) {
         return sMagicDecoderRing.get(what, Integer.toString(what));
@@ -863,6 +867,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mMultinetworkPolicyTracker.start();
 
         mDnsManager = new DnsManager(mContext, mNetd, mSystemProperties);
+        registerPrivateDnsSettingsCallbacks();
     }
 
     private Tethering makeTethering() {
@@ -921,6 +926,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mSettingsObserver.observe(
                 Settings.Global.getUriFor(Settings.Global.MOBILE_DATA_ALWAYS_ON),
                 EVENT_CONFIGURE_MOBILE_DATA_ALWAYS_ON);
+    }
+
+    private void registerPrivateDnsSettingsCallbacks() {
+        for (Uri u : DnsManager.getPrivateDnsSettingsUris()) {
+            mSettingsObserver.observe(u, EVENT_PRIVATE_DNS_CHANGED);
+        }
     }
 
     private synchronized int nextNetworkRequestId() {
@@ -2091,8 +2102,36 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 (msg.arg1 == NetworkMonitor.NETWORK_TEST_RESULT_VALID);
                         final boolean wasValidated = nai.lastValidated;
                         final boolean wasDefault = isDefaultNetwork(nai);
-                        if (DBG) log(nai.name() + " validation " + (valid ? "passed" : "failed") +
-                                (msg.obj == null ? "" : " with redirect to " + (String)msg.obj));
+
+                        final PrivateDnsConfig privateDnsCfg = (msg.obj instanceof PrivateDnsConfig)
+                                ? (PrivateDnsConfig) msg.obj : null;
+                        final String redirectUrl = (msg.obj instanceof String)
+                                ? (String) msg.obj : "";
+
+                        final boolean reevaluationRequired;
+                        final String logMsg;
+                        if (valid) {
+                            reevaluationRequired = updatePrivateDns(nai, privateDnsCfg);
+                            logMsg = (DBG && (privateDnsCfg != null))
+                                     ? " with " + privateDnsCfg.toString()
+                                     : "";
+                        } else {
+                            reevaluationRequired = false;
+                            logMsg = (DBG && !TextUtils.isEmpty(redirectUrl))
+                                     ? " with redirect to " + redirectUrl
+                                     : "";
+                        }
+                        if (DBG) {
+                            log(nai.name() + " validation " + (valid ? "passed" : "failed")
+                                    + logMsg);
+                        }
+                        // If there is a change in Private DNS configuration,
+                        // trigger reevaluation of the network to test it.
+                        if (reevaluationRequired) {
+                            nai.networkMonitor.sendMessage(
+                                    NetworkMonitor.CMD_FORCE_REEVALUATION, Process.SYSTEM_UID);
+                            break;
+                        }
                         if (valid != nai.lastValidated) {
                             if (wasDefault) {
                                 metricsLogger().defaultNetworkMetrics().logDefaultNetworkValidity(
@@ -2108,7 +2147,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         updateInetCondition(nai);
                         // Let the NetworkAgent know the state of its network
                         Bundle redirectUrlBundle = new Bundle();
-                        redirectUrlBundle.putString(NetworkAgent.REDIRECT_URL_KEY, (String)msg.obj);
+                        redirectUrlBundle.putString(NetworkAgent.REDIRECT_URL_KEY, redirectUrl);
                         nai.asyncChannel.sendMessage(
                                 NetworkAgent.CMD_REPORT_NETWORK_STATUS,
                                 (valid ? NetworkAgent.VALID_NETWORK : NetworkAgent.INVALID_NETWORK),
@@ -2155,6 +2194,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                     break;
                 }
+                case NetworkMonitor.EVENT_PRIVATE_DNS_RESULT: {
+                    final NetworkAgentInfo nai;
+                    synchronized (mNetworkForNetId) {
+                        nai = mNetworkForNetId.get(msg.arg2);
+                    }
+                    if (nai == null) break;
+
+                    final PrivateDnsConfig cfg = (PrivateDnsConfig) msg.obj;
+                    final boolean reevaluationRequired = updatePrivateDns(nai, cfg);
+                    if (nai.lastValidated && reevaluationRequired) {
+                        nai.networkMonitor.sendMessage(
+                                NetworkMonitor.CMD_FORCE_REEVALUATION, Process.SYSTEM_UID);
+                    }
+                    break;
+                }
             }
             return true;
         }
@@ -2188,6 +2242,57 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 maybeHandleNetworkAgentMessage(msg);
             }
         }
+    }
+
+    private void handleEventPrivateDnsChanged() {
+        final PrivateDnsConfig cfg = mDnsManager.getPrivateDnsConfig();
+
+        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+            // Private DNS only ever applies to networks that might provide
+            // Internet access and therefore also require validation.
+            if (!NetworkMonitor.isValidationRequired(
+                    mDefaultRequest.networkCapabilities, nai.networkCapabilities)) {
+                continue;
+            }
+
+            // Notify the NetworkMonitor thread in case it needs to cancel or
+            // schedule DNS resolutions. If a DNS resolution is required the
+            // result will be sent back to us.
+            nai.networkMonitor.notifyPrivateDnsSettingsChanged(cfg);
+
+            if (!cfg.inStrictMode()) {
+                // No strict mode hostname DNS resolution needed, so just update
+                // DNS settings directly.
+                updatePrivateDns(nai, cfg);
+            }
+        }
+    }
+
+    private boolean updatePrivateDns(NetworkAgentInfo nai, PrivateDnsConfig newCfg) {
+        final boolean reevaluationRequired = true;
+        final boolean dontReevaluate = false;
+
+        final PrivateDnsConfig oldCfg = mDnsManager.updatePrivateDns(nai.network, newCfg);
+        updateDnses(nai.linkProperties, null, nai.network.netId);
+
+        if (newCfg == null) {
+            if (oldCfg == null) return dontReevaluate;
+            return oldCfg.useTls ? reevaluationRequired : dontReevaluate;
+        }
+
+        if (oldCfg == null) {
+            return newCfg.useTls ? reevaluationRequired : dontReevaluate;
+        }
+
+        if (oldCfg.useTls != newCfg.useTls) {
+            return reevaluationRequired;
+        }
+
+        if (newCfg.inStrictMode() && !Objects.equals(oldCfg.hostname, newCfg.hostname)) {
+            return reevaluationRequired;
+        }
+
+        return dontReevaluate;
     }
 
     private void updateLingerState(NetworkAgentInfo nai, long now) {
@@ -2324,6 +2429,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 } catch (Exception e) {
                     loge("Exception removing network: " + e);
                 }
+                mDnsManager.removeNetwork(nai.network);
             }
             synchronized (mNetworkForNetId) {
                 mNetIdInUse.delete(nai.network.netId);
@@ -2870,6 +2976,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     handleReportNetworkConnectivity((Network) msg.obj, msg.arg1, toBool(msg.arg2));
                     break;
                 }
+                case EVENT_PRIVATE_DNS_CHANGED:
+                    handleEventPrivateDnsChanged();
+                    break;
             }
         }
     }
@@ -4559,11 +4668,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo defaultNai = getDefaultNetwork();
         final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
 
-        Collection<InetAddress> dnses = newLp.getDnsServers();
-        if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
+        if (DBG) {
+            final Collection<InetAddress> dnses = newLp.getDnsServers();
+            log("Setting DNS servers for network " + netId + " to " + dnses);
+        }
         try {
-            mDnsManager.setDnsConfigurationForNetwork(
-                    netId, dnses, newLp.getDomains(), isDefaultNetwork);
+            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
