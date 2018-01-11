@@ -29,19 +29,31 @@ import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.INetworkManagementService;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.system.GaiException;
+import android.system.OsConstants;
+import android.system.StructAddrinfo;
 import android.text.TextUtils;
 import android.util.Slog;
 
 import com.android.server.connectivity.MockableSystemProperties;
 
+import libcore.io.Libcore;
+
 import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.StringJoiner;
 
 
 /**
@@ -61,10 +73,72 @@ public class DnsManager {
     private static final int DNS_RESOLVER_DEFAULT_MIN_SAMPLES = 8;
     private static final int DNS_RESOLVER_DEFAULT_MAX_SAMPLES = 64;
 
+    public static class PrivateDnsConfig {
+        public final boolean useTls;
+        public final String hostname;
+        public final InetAddress[] ips;
+
+        PrivateDnsConfig(boolean useTls) {
+            this.useTls = useTls;
+            this.hostname = null;
+            this.ips = null;
+        }
+
+        PrivateDnsConfig(String hostname, InetAddress[] ips) {
+            this.useTls = !TextUtils.isEmpty(hostname);
+            this.hostname = hostname;
+            this.ips = ips;
+        }
+
+        public boolean inStrictMode() {
+            return useTls && !TextUtils.isEmpty(hostname);
+        }
+
+        public String toString() {
+            final StringJoiner ipJoiner = new StringJoiner(",", "[", "]");
+            if (ips != null) for (InetAddress ip : ips) ipJoiner.add(ip.getHostAddress());
+            return useTls + ";" + hostname + "/" + ipJoiner.toString();
+        }
+    }
+
+    public static PrivateDnsConfig getPrivateDnsConfig(ContentResolver cr) {
+        final String mode = getPrivateDnsMode(cr);
+
+        final boolean useTls =
+                mode.equals(PRIVATE_DNS_MODE_OPPORTUNISTIC) ||
+                mode.startsWith(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME);
+
+        if (mode.startsWith(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME)) {
+            final String specifier = getStringSetting(cr, PRIVATE_DNS_SPECIFIER);
+            return new PrivateDnsConfig(specifier, null);
+        }
+
+        return new PrivateDnsConfig(useTls);
+    }
+
+    public static PrivateDnsConfig tryBlockingResolveOf(Network network, String name) {
+        final StructAddrinfo hints = new StructAddrinfo();
+        // Unnecessary, but expressly no AI_ADDRCONFIG.
+        hints.ai_flags = 0;
+        // Fetch all IP addresses at once to minimize re-resolution.
+        hints.ai_family = OsConstants.AF_UNSPEC;
+        hints.ai_socktype = OsConstants.SOCK_DGRAM;
+
+        try {
+            final InetAddress[] ips = Libcore.os.android_getaddrinfo(name, hints, network.netId);
+            if (ips != null && ips.length > 0) {
+                return new PrivateDnsConfig(name, ips);
+            }
+        } catch (GaiException ignored) {}
+
+        return null;
+    }
+
     private final Context mContext;
     private final ContentResolver mContentResolver;
     private final INetworkManagementService mNMS;
     private final MockableSystemProperties mSystemProperties;
+    private final Map<Integer, PrivateDnsConfig> mPrivateDnsMap;
 
     private int mNumDnsEntries;
     private int mSampleValidity;
@@ -79,44 +153,41 @@ public class DnsManager {
         mContentResolver = mContext.getContentResolver();
         mNMS = nms;
         mSystemProperties = sp;
+        mPrivateDnsMap = new HashMap<>();
 
         // TODO: Create and register ContentObservers to track every setting
         // used herein, posting messages to respond to changes.
     }
 
-    public boolean isPrivateDnsInStrictMode() {
-        return !TextUtils.isEmpty(mPrivateDnsMode) &&
-               mPrivateDnsMode.startsWith(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME) &&
-               !TextUtils.isEmpty(mPrivateDnsSpecifier);
+    public void removeNetwork(Network network) {
+        mPrivateDnsMap.remove(network.netId);
+    }
+
+    public void updatePrivateDns(Network network, PrivateDnsConfig cfg) {
+        Slog.w(TAG, "updatePrivateDns(" + network + ", " + cfg + ")");
+        if (cfg != null) {
+            mPrivateDnsMap.put(network.netId, cfg);
+        } else {
+            removeNetwork(network);
+        }
     }
 
     public void setDnsConfigurationForNetwork(
-            int netId, Collection<InetAddress> servers, String domains, boolean isDefaultNetwork) {
-        updateParametersSettings();
-        updatePrivateDnsSettings();
+            int netId, LinkProperties lp, boolean isDefaultNetwork) {
+        final PrivateDnsConfig privateDnsCfg = mPrivateDnsMap.get(netId);
 
-        final String[] serverStrs = NetworkUtils.makeStrings(servers);
-        final String[] domainStrs = (domains == null) ? new String[0] : domains.split(" ");
+        final boolean useTls = (privateDnsCfg != null) ? privateDnsCfg.useTls : false;
+        final String tlsHostname = (privateDnsCfg != null) ? privateDnsCfg.hostname : "";
+
+        final String[] serverStrs = NetworkUtils.makeStrings((privateDnsCfg != null)
+                ? Arrays.stream(privateDnsCfg.ips)
+                        .filter((ip) -> lp.isReachable(ip))
+                        .collect(Collectors.toList())
+                : lp.getDnsServers());
+        final String[] domainStrs = getDomainStrings(lp.getDomains());
+
+        updateParametersSettings();
         final int[] params = { mSampleValidity, mSuccessThreshold, mMinSamples, mMaxSamples };
-        final boolean useTls = shouldUseTls(mPrivateDnsMode);
-        // TODO: Populate tlsHostname once it's decided how the hostname's IP
-        // addresses will be resolved:
-        //
-        //     [1] network-provided DNS servers are included here with the
-        //         hostname and netd will use the network-provided servers to
-        //         resolve the hostname and fix up its internal structures, or
-        //
-        //     [2] network-provided DNS servers are included here without the
-        //         hostname, the ConnectivityService layer resolves the given
-        //         hostname, and then reconfigures netd with this information.
-        //
-        // In practice, there will always be a need for ConnectivityService or
-        // the captive portal app to use the network-provided services to make
-        // some queries. This argues in favor of [1], in concert with another
-        // mechanism, perhaps setting a high bit in the netid, to indicate
-        // via existing DNS APIs which set of servers (network-provided or
-        // non-network-provided private DNS) should be queried.
-        final String tlsHostname = "";
         try {
             mNMS.setDnsConfigurationForNetwork(
                     netId, serverStrs, domainStrs, params, useTls, tlsHostname);
@@ -129,7 +200,7 @@ public class DnsManager {
         // default network, and we should just set net.dns1 to ::1, not least
         // because applications attempting to use net.dns resolvers will bypass
         // the privacy protections of things like DNS-over-TLS.
-        if (isDefaultNetwork) setDefaultDnsSystemProperties(servers);
+        if (isDefaultNetwork) setDefaultDnsSystemProperties(lp.getDnsServers());
         flushVmDnsCache();
     }
 
@@ -163,11 +234,6 @@ public class DnsManager {
         }
     }
 
-    private void updatePrivateDnsSettings() {
-        mPrivateDnsMode = getStringSetting(PRIVATE_DNS_MODE);
-        mPrivateDnsSpecifier = getStringSetting(PRIVATE_DNS_SPECIFIER);
-    }
-
     private void updateParametersSettings() {
         mSampleValidity = getIntSetting(
                 DNS_RESOLVER_SAMPLE_VALIDITY_SECONDS,
@@ -199,7 +265,7 @@ public class DnsManager {
     }
 
     private String getStringSetting(String which) {
-        return Settings.Global.getString(mContentResolver, which);
+        return getStringSetting(mContentResolver, which);
     }
 
     private int getIntSetting(String which, int dflt) {
@@ -216,11 +282,24 @@ public class DnsManager {
         }
     }
 
+    private static String getPrivateDnsMode(ContentResolver cr) {
+        final String mode = getStringSetting(cr, PRIVATE_DNS_MODE);
+        return !TextUtils.isEmpty(mode) ? mode : PRIVATE_DNS_DEFAULT_MODE;
+    }
+
     private static boolean shouldUseTls(String mode) {
         if (TextUtils.isEmpty(mode)) {
             mode = PRIVATE_DNS_DEFAULT_MODE;
         }
         return mode.equals(PRIVATE_DNS_MODE_OPPORTUNISTIC) ||
                mode.startsWith(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME);
+    }
+
+    private static String getStringSetting(ContentResolver cr, String which) {
+        return Settings.Global.getString(cr, which);
+    }
+
+    private static String[] getDomainStrings(String domains) {
+        return (TextUtils.isEmpty(domains)) ? new String[0] : domains.split(" ");
     }
 }

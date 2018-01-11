@@ -2091,6 +2091,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 (msg.arg1 == NetworkMonitor.NETWORK_TEST_RESULT_VALID);
                         final boolean wasValidated = nai.lastValidated;
                         final boolean wasDefault = isDefaultNetwork(nai);
+                        if (valid) {
+                            mDnsManager.updatePrivateDns(
+                                    nai.network, (DnsManager.PrivateDnsConfig) msg.obj);
+                            updateDnses(nai.linkProperties, null, nai.network.netId);
+                            // TODO: if msg.obj != null and !wasValid re-trigger validation.
+                            msg.obj = null;  // to avoid confusion later on
+                        }
                         if (DBG) log(nai.name() + " validation " + (valid ? "passed" : "failed") +
                                 (msg.obj == null ? "" : " with redirect to " + (String)msg.obj));
                         if (valid != nai.lastValidated) {
@@ -2324,6 +2331,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 } catch (Exception e) {
                     loge("Exception removing network: " + e);
                 }
+                mDnsManager.removeNetwork(nai.network);
             }
             synchronized (mNetworkForNetId) {
                 mNetIdInUse.delete(nai.network.netId);
@@ -4559,11 +4567,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo defaultNai = getDefaultNetwork();
         final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
 
-        Collection<InetAddress> dnses = newLp.getDnsServers();
-        if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
+        if (DBG) {
+            final Collection<InetAddress> dnses = newLp.getDnsServers();
+            log("Setting DNS servers for network " + netId + " to " + dnses);
+        }
         try {
-            mDnsManager.setDnsConfigurationForNetwork(
-                    netId, dnses, newLp.getDomains(), isDefaultNetwork);
+            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
