@@ -89,11 +89,9 @@ public class MmTelFeature extends ImsFeature {
         }
 
         @Override
-        public IImsCallSession createCallSession(ImsCallProfile profile,
-                IImsCallSessionListener listener) throws RemoteException {
+        public IImsCallSession createCallSession(ImsCallProfile profile) throws RemoteException {
             synchronized (mLock) {
-                ImsCallSession s = MmTelFeature.this.createCallSession(profile,
-                        new ImsCallSessionListener(listener));
+                ImsCallSession s = MmTelFeature.this.createCallSession(profile);
                 return s != null ? s.getSession() : null;
             }
         }
@@ -154,23 +152,24 @@ public class MmTelFeature extends ImsFeature {
         }
 
         @Override
-        public void sendSms(int messageRef, String format, String smsc, boolean retry, byte[] pdu) {
+        public void sendSms(int token, int messageRef, String format, String smsc, boolean retry,
+                byte[] pdu) {
             synchronized (mLock) {
-                MmTelFeature.this.sendSms(messageRef, format, smsc, retry, pdu);
+                MmTelFeature.this.sendSms(token, messageRef, format, smsc, retry, pdu);
             }
         }
 
         @Override
-        public void acknowledgeSms(int messageRef, int result) {
+        public void acknowledgeSms(int token, int messageRef, int result) {
             synchronized (mLock) {
-                MmTelFeature.this.acknowledgeSms(messageRef, result);
+                MmTelFeature.this.acknowledgeSms(token, messageRef, result);
             }
         }
 
         @Override
-        public void acknowledgeSmsReport(int messageRef, int result) {
+        public void acknowledgeSmsReport(int token, int messageRef, int result) {
             synchronized (mLock) {
-                MmTelFeature.this.acknowledgeSmsReport(messageRef, result);
+                MmTelFeature.this.acknowledgeSmsReport(token, messageRef, result);
             }
         }
 
@@ -411,10 +410,8 @@ public class MmTelFeature extends ImsFeature {
      * {@link ImsCallSession} directly.
      *
      * @param profile a call profile to make the call
-     * @param listener An implementation of IImsCallSessionListener.
      */
-    public ImsCallSession createCallSession(ImsCallProfile profile,
-            ImsCallSessionListener listener) {
+    public ImsCallSession createCallSession(ImsCallProfile profile) {
         // Base Implementation - Should be overridden
         return null;
     }
@@ -456,32 +453,40 @@ public class MmTelFeature extends ImsFeature {
         // Base Implementation - Should be overridden
     }
 
-    private void sendSms(int messageRef, String format, String smsc, boolean isRetry, byte[] pdu) {
-        getSmsImplementation().sendSms(messageRef, format, smsc, isRetry, pdu);
+    public void setSmsListener(IImsSmsListener listener) {
+        getSmsImplementation().registerSmsListener(listener);
     }
 
-    private void acknowledgeSms(int messageRef, @DeliverStatusResult int result) {
-        getSmsImplementation().acknowledgeSms(messageRef, result);
+    public void sendSms(int token, int messageRef, String format, String smsc, boolean isRetry,
+            byte[] pdu) {
+        getSmsImplementation().sendSms(token, messageRef, format, smsc, isRetry, pdu);
     }
 
-    private void acknowledgeSmsReport(int messageRef, @StatusReportResult int result) {
-        getSmsImplementation().acknowledgeSmsReport(messageRef, result);
+    public void acknowledgeSms(int token, int messageRef,
+            @SmsImplBase.DeliverStatusResult int result) {
+        getSmsImplementation().acknowledgeSms(token, messageRef, result);
     }
 
-    private String getSmsFormat() {
-        return getSmsImplementation().getSmsFormat();
+    public void acknowledgeSmsReport(int token, int messageRef,
+            @SmsImplBase.StatusReportResult int result) {
+        getSmsImplementation().acknowledgeSmsReport(token, messageRef, result);
     }
 
     /**
      * Must be overridden by IMS Provider to be able to support SMS over IMS. Otherwise a default
      * non-functional implementation is returned.
      *
-     * @return an instance of {@link SmsImplBase} which should be implemented by the IMS Provider.
+     * @return an instance of {@link SmsImplBase} which should be implemented by the IMS
+     * Provider.
      */
-    protected SmsImplBase getSmsImplementation() {
+    public SmsImplBase getSmsImplementation() {
         return new SmsImplBase();
     }
 
+    private String getSmsFormat() {
+        return getSmsImplementation().getSmsFormat();
+    }
+    
     /**{@inheritDoc}*/
     @Override
     public void onFeatureRemoved() {

@@ -20,7 +20,6 @@ import android.os.Message;
 import android.telephony.ims.internal.aidl.IImsMmTelListener;
 import android.telephony.ims.internal.aidl.IImsSmsListener;
 import android.telephony.ims.internal.aidl.IImsCapabilityCallback;
-import android.telephony.ims.internal.aidl.IImsCallSessionListener;
 import android.telephony.ims.internal.feature.CapabilityChangeRequest;
 
 import com.android.ims.ImsCallProfile;
@@ -31,14 +30,14 @@ import com.android.ims.internal.IImsRegistrationListener;
 import com.android.ims.internal.IImsUt;
 
 /**
- * See SmsImplBase for more information.
+ * See MmTelFeature for more information.
  * {@hide}
  */
 interface IImsMmTelFeature {
     void setListener(IImsMmTelListener l);
     int getFeatureState();
     ImsCallProfile createCallProfile(int callSessionType, int callType);
-    IImsCallSession createCallSession(in ImsCallProfile profile, IImsCallSessionListener listener);
+    IImsCallSession createCallSession(in ImsCallProfile profile);
     IImsUt getUtInterface();
     IImsEcbm getEcbmInterface();
     void setUiTtyMode(int uiTtyMode, in Message onCompleteMessage);
@@ -52,8 +51,9 @@ interface IImsMmTelFeature {
             IImsCapabilityCallback c);
     // SMS APIs
     void setSmsListener(IImsSmsListener l);
-    oneway void sendSms(int messageRef, String format, String smsc, boolean retry, in byte[] pdu);
-    oneway void acknowledgeSms(int messageRef, int result);
-    oneway void acknowledgeSmsReport(int messageRef, int result);
+    oneway void sendSms(in int token, int messageRef, String format, String smsc, boolean retry,
+            in byte[] pdu);
+    oneway void acknowledgeSms(int token, int messageRef, int result);
+    oneway void acknowledgeSmsReport(int token, int messageRef, int result);
     String getSmsFormat();
 }
