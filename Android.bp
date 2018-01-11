@@ -454,7 +454,7 @@ java_library {
         "telecomm/java/com/android/internal/telecom/IInCallService.aidl",
         "telecomm/java/com/android/internal/telecom/ITelecomService.aidl",
         "telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl",
-        "telephony/java/android/telephony/ims/internal/aidl/IImsCallSessionListener.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsCallSessionListener.aidl",
         "telephony/java/android/telephony/ims/internal/aidl/IImsCapabilityCallback.aidl",
         "telephony/java/android/telephony/ims/internal/aidl/IImsConfig.aidl",
         "telephony/java/android/telephony/ims/internal/aidl/IImsConfigCallback.aidl",
