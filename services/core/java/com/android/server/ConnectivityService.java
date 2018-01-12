@@ -4086,6 +4086,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (type == NetworkRequest.Type.TRACK_DEFAULT) {
             networkCapabilities = new NetworkCapabilities(mDefaultRequest.networkCapabilities);
             enforceAccessPermission();
+            // For historical reasons NOT_VPN is a default capability in NetworkCapabilities.
+            // Changing this for all networks is likely to cause trouble to existing apps,
+            // and the documentation already says apps interested in VPNs must clear the
+            // capability explicitly. ConnectivityService keeps that behavior for regular
+            // network callbacks.
+            // However for default network callbacks this default behavior is problematic
+            // as an app that is simply interested in knowing what network its packets will
+            // go to would need to clear this explicitly which is very counter-intuitive.
+            // To alleviate this issue but still keep maximum backward compatibility,
+            // ConnectivityService clears the NOT_VPN capability only for default network
+            // callback requests. This will let apps that simply register a default network
+            // callback know about the network their packets will actually go to, without
+            // having to care about history or details of VPN : this is the behavior apps
+            // would find least surprising.
+            networkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
         } else {
             networkCapabilities = new NetworkCapabilities(networkCapabilities);
             enforceNetworkRequestPermissions(networkCapabilities);
