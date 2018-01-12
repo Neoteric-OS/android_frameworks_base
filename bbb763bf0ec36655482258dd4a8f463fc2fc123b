@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4255d5a_7616af88",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 25920,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-12T04:55:09Z",
+      "side": 1,
+      "message": "Why do we have both TYPE_UNSPECIFIED and TYPE_UNKNOWN?",
+      "range": {
+        "startLine": 25920,
+        "startChar": 34,
+        "endLine": 25920,
+        "endChar": 50
+      },
+      "revId": "bbb763bf0ec36655482258dd4a8f463fc2fc123b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
