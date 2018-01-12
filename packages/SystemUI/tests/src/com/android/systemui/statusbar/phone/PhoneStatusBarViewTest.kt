@@ -50,6 +50,7 @@ import org.mockito.Mockito.verify
 @RunWithLooper(setAsMainLooper = true)
 class PhoneStatusBarViewTest : SysuiTestCase() {
 
+    @Mock private lateinit var statusBarContents: View
     private lateinit var view: PhoneStatusBarView
     private val systemIconsContainer: View
         get() = view.requireViewById(R.id.system_icons)
@@ -67,6 +68,7 @@ class PhoneStatusBarViewTest : SysuiTestCase() {
         mDependency.injectTestDependency(StatusBarWindowController::class.java, windowController)
         context.ensureTestableResources()
         view = spy(createStatusBarView())
+        view.setStatusBarContentsForTest(statusBarContents)
         whenever(view.rootWindowInsets).thenReturn(emptyWindowInsets())
         whenever(contentInsetsProvider.getStatusBarContentInsetsForCurrentRotation())
             .thenReturn(Insets.NONE)
@@ -301,6 +303,16 @@ class PhoneStatusBarViewTest : SysuiTestCase() {
         assertThat(view.paddingTop).isEqualTo(insets.top)
         assertThat(view.paddingRight).isEqualTo(insets.right)
         assertThat(view.paddingBottom).isEqualTo(0)
+    }
+
+    @Test
+    fun moveStatusBar_translatesStatusBarContents() {
+        // Call the method
+        view.moveStatusBar()
+
+        // Assert that the translation has been applied to StatusBarContents
+        assertThat(statusBarContents.translationX).isNotEqualTo(0f)
+        assertThat(statusBarContents.translationY).isNotEqualTo(0f)
     }
 
     private class TestTouchEventHandler : Gefingerpoken {

@@ -55,6 +55,12 @@ public class PhoneStatusBarView extends FrameLayout {
     private final StatusBarContentInsetsProvider mContentInsetsProvider;
     private final StatusBarWindowController mStatusBarWindowController;
 
+    private final int mStatusBarPaddingX;
+    private final int mStatusBarPaddingY;
+    private View mStatusBarContents;
+    private int mStatusbarDefaultPaddingStart;
+    private int mStatusbarDefaultPaddingEnd;
+
     private DarkReceiver mBattery;
     private Clock mClock;
     private int mRotationOrientation = -1;
@@ -79,6 +85,11 @@ public class PhoneStatusBarView extends FrameLayout {
         super(context, attrs);
         mContentInsetsProvider = Dependency.get(StatusBarContentInsetsProvider.class);
         mStatusBarWindowController = Dependency.get(StatusBarWindowController.class);
+
+        mStatusBarPaddingX = context.getResources().getDimensionPixelSize(
+                R.dimen.statusbar_burn_in_prevention_padding_x_max);
+        mStatusBarPaddingY = context.getResources().getDimensionPixelSize(
+                R.dimen.statusbar_burn_in_prevention_padding_y_max);
     }
 
     void setTouchEventHandler(Gefingerpoken handler) {
@@ -96,6 +107,9 @@ public class PhoneStatusBarView extends FrameLayout {
         mBattery = findViewById(R.id.battery);
         mClock = findViewById(R.id.clock);
         mCutoutSpace = findViewById(R.id.cutout_space_view);
+        mStatusBarContents = findViewById(R.id.status_bar_contents);
+        mStatusbarDefaultPaddingStart = mStatusBarContents.getPaddingStart();
+        mStatusbarDefaultPaddingEnd = mStatusBarContents.getPaddingEnd();
 
         updateResources();
     }
@@ -317,5 +331,26 @@ public class PhoneStatusBarView extends FrameLayout {
 
     private void updateWindowHeight() {
         mStatusBarWindowController.refreshStatusBarHeight();
+    }
+
+    /**
+     *  Moves the Status bar to prevent burn in, called if
+     *  config_enableMoveSystemBars is enabled
+     */
+    public final void moveStatusBar() {
+        if (mStatusBarContents == null) {
+            return;
+        }
+
+        int statusBarTransX = (int) ((Math.random() - 0.5f) * mStatusBarPaddingX);
+        int statusBarTransY = (int) ((Math.random() - 0.5f) * mStatusBarPaddingY);
+
+        // Apply translation to StatusBar
+        mStatusBarContents.setTranslationX(statusBarTransX);
+        mStatusBarContents.setTranslationY(statusBarTransY);
+    }
+
+    void setStatusBarContentsForTest(View contents) {
+        mStatusBarContents = contents;
     }
 }

@@ -34,6 +34,8 @@ import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.FakeSceneContainerFlags
+import com.android.systemui.keyguard.WakefulnessLifecycle
+import com.android.systemui.navigationbar.NavigationBarController
 import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.shade.ShadeControllerImpl
 import com.android.systemui.shade.ShadeLogger
@@ -81,6 +83,8 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
     @Mock private lateinit var shadeLogger: ShadeLogger
     @Mock private lateinit var viewUtil: ViewUtil
     private lateinit var statusBarWindowStateController: StatusBarWindowStateController
+    @Mock private lateinit var wakefulnessLifecycle: WakefulnessLifecycle
+    @Mock private lateinit var navigationBarController: NavigationBarController
 
     private lateinit var view: PhoneStatusBarView
     private lateinit var controller: PhoneStatusBarViewController
@@ -304,7 +308,9 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
                 shadeLogger,
                 viewUtil,
                 configurationController,
-                mStatusOverlayHoverListenerFactory
+                mStatusOverlayHoverListenerFactory,
+                wakefulnessLifecycle,
+                navigationBarController
             )
             .create(view)
             .also { it.init() }

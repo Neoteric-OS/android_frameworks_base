@@ -1013,4 +1013,7 @@
 
     <!-- Whether volume panel should use the large screen layout or not -->
     <bool name="volume_panel_is_large_screen">false</bool>
+
+     <!-- Move status bar and navigation bar to prevent burn in when screen is powered on -->
+    <bool name="config_enableMoveSystemBars">false</bool>
 </resources>

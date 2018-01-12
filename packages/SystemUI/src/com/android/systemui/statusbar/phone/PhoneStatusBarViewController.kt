@@ -17,6 +17,7 @@ package com.android.systemui.statusbar.phone
 
 import android.app.StatusBarManager.WINDOW_STATUS_BAR
 import android.graphics.Point
+import android.os.SystemClock
 import android.util.Log
 import android.view.InputDevice
 import android.view.MotionEvent
@@ -28,6 +29,8 @@ import com.android.systemui.res.R
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags
 import com.android.systemui.scene.shared.flag.SceneContainerFlags
+import com.android.systemui.keyguard.WakefulnessLifecycle
+import com.android.systemui.navigationbar.NavigationBarController
 import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.shade.ShadeController
 import com.android.systemui.shade.ShadeLogger
@@ -49,6 +52,13 @@ import javax.inject.Provider
 
 private const val TAG = "PhoneStatusBarViewController"
 
+/**
+ * The threshold sleep time of moving system bars
+ * for avoiding burn in.
+ */
+private const val THRESHOLD_SLEEP_TIME_MILLIS = 10000
+private var mIsMoveSystemBarsEnabled = false
+
 /** Controller for [PhoneStatusBarView]. */
 class PhoneStatusBarViewController
 private constructor(
@@ -66,6 +76,8 @@ private constructor(
     private val sceneContainerFlags: SceneContainerFlags,
     private val configurationController: ConfigurationController,
     private val statusOverlayHoverListenerFactory: StatusOverlayHoverListenerFactory,
+    private val wakefulnessLifecycle: WakefulnessLifecycle,
+    private val navigationBarController: NavigationBarController
 ) : ViewController<PhoneStatusBarView>(view) {
 
     private lateinit var statusContainer: View
@@ -77,7 +89,28 @@ private constructor(
             }
         }
 
+    val mWakefulnessObserver = object : WakefulnessLifecycle.Observer {
+        private var mStartSleepTime: Long = 0
+
+        override fun onFinishedGoingToSleep() {
+            mStartSleepTime = SystemClock.uptimeMillis()
+        }
+
+        override fun onStartedWakingUp() {
+            if (mIsMoveSystemBarsEnabled) {
+                mView.moveStatusBar()
+                if (SystemClock.uptimeMillis() - mStartSleepTime >= THRESHOLD_SLEEP_TIME_MILLIS) {
+                    mView.moveStatusBar()
+                    navigationBarController.getDefaultNavigationBarView()?.let {
+                            navigationBarView -> navigationBarView.moveNavigationBar()
+                    }
+                }
+            }
+        }
+    }
+
     override fun onViewAttached() {
+        wakefulnessLifecycle.addObserver(mWakefulnessObserver)
         statusContainer = mView.requireViewById(R.id.system_icons)
         statusContainer.setOnHoverListener(
             statusOverlayHoverListenerFactory.createDarkAwareListener(statusContainer)
@@ -101,6 +134,8 @@ private constructor(
 
         progressProvider?.setReadyToHandleTransition(true)
         configurationController.addCallback(configurationListener)
+        mIsMoveSystemBarsEnabled =
+            mView.getContext().getResources().getBoolean(R.bool.config_enableMoveSystemBars)
 
         if (moveFromCenterAnimationController == null) return
 
@@ -129,6 +164,7 @@ private constructor(
     }
 
     override fun onViewDetached() {
+        wakefulnessLifecycle.removeObserver(mWakefulnessObserver)
         statusContainer.setOnHoverListener(null)
         progressProvider?.setReadyToHandleTransition(false)
         moveFromCenterAnimationController?.onViewDetached()
@@ -276,6 +312,8 @@ private constructor(
         private val viewUtil: ViewUtil,
         private val configurationController: ConfigurationController,
         private val statusOverlayHoverListenerFactory: StatusOverlayHoverListenerFactory,
+        private val wakefulnessLifecycle: WakefulnessLifecycle,
+        private val navigationBarController: NavigationBarController
     ) {
         fun create(view: PhoneStatusBarView): PhoneStatusBarViewController {
             val statusBarMoveFromCenterAnimationController =
@@ -300,6 +338,8 @@ private constructor(
                 sceneContainerFlags,
                 configurationController,
                 statusOverlayHoverListenerFactory,
+                wakefulnessLifecycle,
+                navigationBarController
             )
         }
     }
