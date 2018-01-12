@@ -221,6 +221,27 @@ public class ImsService extends Service {
         }
     }
 
+    protected ImsFeature getFeature(int slotId, int featureType) {
+        // get ImsFeature associated with the slot/feature
+        ImsFeature f;
+        synchronized (mFeaturesBySlot) {
+            SparseArray<ImsFeature> features = mFeaturesBySlot.get(slotId);
+            if (features == null) {
+                Log.w(LOG_TAG, "Can not get ImsFeature. No ImsFeatures exist on slot "
+                        + slotId);
+                return null;
+            }
+            f = features.get(featureType);
+        }
+
+        if (f == null) {
+            Log.w(LOG_TAG, "Can not get ImsFeature. No feature with type "
+                    + featureType + " exists on slot " + slotId);
+            return null;
+        }
+        return f;
+    }
+
     /**
      * @return An implementation of MMTelFeature that will be used by the system for MMTel
      * functionality. Must be able to handle emergency calls at any time as well.

@@ -36,7 +36,8 @@ public class RcsFeature extends ImsFeature {
     }
 
     @Override
-    public void changeEnabledCapabilities(CapabilityChangeRequest request,
+    public void changeEnabledCapabilities(
+            android.telephony.ims.feature.CapabilityChangeRequest request,
             CapabilityCallbackProxy c) {
         // Do nothing for base implementation.
     }

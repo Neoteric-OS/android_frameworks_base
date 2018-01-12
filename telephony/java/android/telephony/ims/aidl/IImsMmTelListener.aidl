@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (c) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,9 +11,18 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
  */
 
-package android.telephony.ims.internal.feature;
+package android.telephony.ims.aidl;
 
-parcelable CapabilityChangeRequest;
+import com.android.ims.internal.IImsCallSession;
+
+/**
+ * See MmTelFeature#Listener for more information.
+ * {@hide}
+ */
+oneway interface IImsMmTelListener {
+    void onIncomingCall(IImsCallSession c);
+    void onVoiceMessageCountUpdate(int count);
+}

@@ -17,6 +17,9 @@
 package com.android.ims.internal;
 
 import android.app.PendingIntent;
+import android.telephony.ims.aidl.IImsMmTelListener;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.feature.CapabilityChangeRequest;
 
 import com.android.ims.ImsCallProfile;
 import com.android.ims.internal.IImsCallSession;
@@ -33,14 +36,10 @@ import android.os.Message;
  * {@hide}
  */
 interface IImsMMTelFeature {
-    int startSession(in PendingIntent incomingCallIntent,
-            in IImsRegistrationListener listener);
-    void endSession(int sessionId);
+    void setListener(IImsMmTelListener l);
     boolean isConnected(int callSessionType, int callType);
     boolean isOpened();
     int getFeatureStatus();
-    void addRegistrationListener(in IImsRegistrationListener listener);
-    void removeRegistrationListener(in IImsRegistrationListener listener);
     ImsCallProfile createCallProfile(int sessionId, int callSessionType, int callType);
     IImsCallSession createCallSession(int sessionId, in ImsCallProfile profile);
     IImsCallSession getPendingCallSession(int sessionId, String callId);
@@ -51,4 +50,12 @@ interface IImsMMTelFeature {
     IImsEcbm getEcbmInterface();
     void setUiTTYMode(int uiTtyMode, in Message onComplete);
     IImsMultiEndpoint getMultiEndpointInterface();
+    // Capability APIs
+    int queryCapabilityStatus();
+    oneway void addCapabilityCallback(IImsCapabilityCallback c);
+    oneway void removeCapabilityCallback(IImsCapabilityCallback c);
+    oneway void changeCapabilitiesConfiguration(in CapabilityChangeRequest request,
+            IImsCapabilityCallback c);
+    oneway void queryCapabilityConfiguration(int capability, int radioTech,
+            IImsCapabilityCallback c);
 }

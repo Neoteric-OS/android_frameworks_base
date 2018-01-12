@@ -20,18 +20,19 @@ import android.annotation.IntDef;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IInterface;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.telephony.SubscriptionManager;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.util.Log;
 
 import com.android.ims.internal.IImsFeatureStatusCallback;
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -92,11 +93,179 @@ public abstract class ImsFeature {
     public static final int STATE_INITIALIZING = 1;
     public static final int STATE_READY = 2;
 
+    // Integer values defining the result codes that should be returned from
+    // {@link changeEnabledCapabilities} when the framework tries to set a feature's capability.
+    @IntDef(flag = true,
+            value = {
+                    CAPABILITY_ERROR_GENERIC,
+                    CAPABILITY_SUCCESS
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ImsCapabilityError {}
+
+    public static final int CAPABILITY_ERROR_GENERIC = -1;
+    public static final int CAPABILITY_SUCCESS = 0;
+
+    /**
+     * The framework implements this callback in order to register for Feature Capability status
+     * updates, via {@link #onCapabilitiesStatusChanged(Capabilities)}, query Capability
+     * configurations, via {@link #onQueryCapabilityConfiguration}, as well as to receive error
+     * callbacks when the ImsService can not change the capability as requested, via
+     * {@link #onChangeCapabilityConfigurationError}.
+     */
+    public static class CapabilityCallback extends IImsCapabilityCallback.Stub {
+
+        @Override
+        public final void onCapabilitiesStatusChanged(int config) throws RemoteException {
+            onCapabilitiesStatusChanged(new Capabilities(config));
+        }
+
+        /**
+         * Returns the result of a query for the capability configuration of a requested capability.
+         *
+         * @param capability The capability that was requested.
+         * @param radioTech The IMS radio technology associated with the capability.
+         * @param isEnabled true if the capability is enabled, false otherwise.
+         */
+        @Override
+        public void onQueryCapabilityConfiguration(int capability, int radioTech,
+                boolean isEnabled) {
+
+        }
+
+        /**
+         * Called when a change to the capability configuration has returned an error.
+         *
+         * @param capability The capability that was requested to be changed.
+         * @param radioTech The IMS radio technology associated with the capability.
+         * @param reason error associated with the failure to change configuration.
+         */
+        @Override
+        public void onChangeCapabilityConfigurationError(int capability, int radioTech,
+                int reason) {
+        }
+
+        /**
+         * The status of the feature's capabilities has changed to either available or unavailable.
+         * If unavailable, the feature is not able to support the unavailable capability at this
+         * time.
+         *
+         * @param config The new availability of the capabilities.
+         */
+        public void onCapabilitiesStatusChanged(Capabilities config) {
+        }
+    }
+
+    /**
+     * Used by the ImsFeature to call back to the CapabilityCallback that the framework has
+     * provided.
+     */
+    protected static class CapabilityCallbackProxy {
+        private final IImsCapabilityCallback mCallback;
+
+        public CapabilityCallbackProxy(IImsCapabilityCallback c) {
+            mCallback = c;
+        }
+
+        /**
+         * This method notifies the provided framework callback that the request to change the
+         * indicated capability has failed and has not changed.
+         *
+         * @param capability The Capability that will be notified to the framework.
+         * @param radioTech The radio tech that this capability failed for.
+         * @param reason The reason this capability was unable to be changed.
+         */
+        public void onChangeCapabilityConfigurationError(int capability, int radioTech,
+                @ImsCapabilityError int reason) {
+            try {
+                mCallback.onChangeCapabilityConfigurationError(capability, radioTech, reason);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "onChangeCapabilityConfigurationError called on dead binder.");
+            }
+        }
+
+        public void onQueryCapabilityConfiguration(int capability, int radioTech,
+                boolean isEnabled) {
+            try {
+                mCallback.onQueryCapabilityConfiguration(capability, radioTech, isEnabled);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "onQueryCapabilityConfiguration called on dead binder.");
+            }
+        }
+    }
+
+    /**
+     * Contains the capabilities defined and supported by an ImsFeature in the form of a bit mask.
+     */
+    public static class Capabilities {
+        protected int mCapabilities = 0;
+
+        public Capabilities() {
+        }
+
+        protected Capabilities(int capabilities) {
+            mCapabilities = capabilities;
+        }
+
+        /**
+         * @param capabilities Capabilities to be added to the configuration in the form of a
+         *     bit mask.
+         */
+        public void addCapabilities(int capabilities) {
+            mCapabilities |= capabilities;
+        }
+
+        /**
+         * @param capabilities Capabilities to be removed to the configuration in the form of a
+         *     bit mask.
+         */
+        public void removeCapabilities(int capabilities) {
+            mCapabilities &= ~capabilities;
+        }
+
+        /**
+         * @return true if all of the capabilities specified are capable.
+         */
+        public boolean isCapable(int capabilities) {
+            return (mCapabilities & capabilities) == capabilities;
+        }
+
+        public Capabilities copy() {
+            return new Capabilities(mCapabilities);
+        }
+
+        /**
+         * @return a bitmask containing the capability flags directly.
+         */
+        public int getMask() {
+            return mCapabilities;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Capabilities)) return false;
+
+            Capabilities that = (Capabilities) o;
+
+            return mCapabilities == that.mCapabilities;
+        }
+
+        @Override
+        public int hashCode() {
+            return mCapabilities;
+        }
+    }
+
     private final Set<IImsFeatureStatusCallback> mStatusCallbacks = Collections.newSetFromMap(
             new WeakHashMap<IImsFeatureStatusCallback, Boolean>());
     private @ImsState int mState = STATE_NOT_AVAILABLE;
     private int mSlotId = SubscriptionManager.INVALID_SIM_SLOT_INDEX;
     protected Context mContext;
+    private final Object mLock = new Object();
+    private final RemoteCallbackList<IImsCapabilityCallback> mCapabilityCallbacks
+            = new RemoteCallbackList<>();
+    private Capabilities mCapabilityStatus = new Capabilities();
 
     public void setContext(Context context) {
         mContext = context;
@@ -186,6 +355,78 @@ public abstract class ImsFeature {
         intent.putExtra(EXTRA_PHONE_ID, mSlotId);
         mContext.sendBroadcast(intent);
     }
+
+    public final void addCapabilityCallback(IImsCapabilityCallback c) {
+        mCapabilityCallbacks.register(c);
+    }
+
+    public final void removeCapabilityCallback(IImsCapabilityCallback c) {
+        mCapabilityCallbacks.unregister(c);
+    }
+
+    /**
+     * @return the cached capabilities status for this feature.
+     */
+    @VisibleForTesting
+    public Capabilities queryCapabilityStatus() {
+        synchronized (mLock) {
+            return mCapabilityStatus.copy();
+        }
+    }
+
+    // Called internally to request the change of enabled capabilities.
+    @VisibleForTesting
+    public final void requestChangeEnabledCapabilities(
+            android.telephony.ims.feature.CapabilityChangeRequest request,
+            IImsCapabilityCallback c) throws RemoteException {
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "ImsFeature#requestChangeEnabledCapabilities called with invalid params.");
+        }
+        changeEnabledCapabilities(request, new CapabilityCallbackProxy(c));
+    }
+
+    /**
+     * Called by the ImsFeature when the capabilities status has changed.
+     *
+     * @param c A {@link Capabilities} containing the new Capabilities status.
+     */
+    protected final void notifyCapabilitiesStatusChanged(Capabilities c) {
+        synchronized (mLock) {
+            mCapabilityStatus = c.copy();
+        }
+        int count = mCapabilityCallbacks.beginBroadcast();
+        try {
+            for (int i = 0; i < count; i++) {
+                try {
+                    mCapabilityCallbacks.getBroadcastItem(i).onCapabilitiesStatusChanged(
+                            c.mCapabilities);
+                } catch (RemoteException e) {
+                    Log.w(LOG_TAG, e + " " + "notifyCapabilitiesStatusChanged() - Skipping " +
+                            "callback.");
+                }
+            }
+        } finally {
+            mCapabilityCallbacks.finishBroadcast();
+        }
+    }
+
+    /**
+     * Features should override this method to receive Capability preference change requests from
+     * the framework using the provided {@link android.telephony.ims.feature.CapabilityChangeRequest}. If any of the capabilities
+     * in the {@link android.telephony.ims.feature.CapabilityChangeRequest} are not able to be completed due to an error,
+     * {@link CapabilityCallbackProxy#onChangeCapabilityConfigurationError} should be called for
+     * each failed capability.
+     *
+     * @param request A {@link android.telephony.ims.feature.CapabilityChangeRequest} containing requested capabilities to
+     *     enable/disable.
+     * @param c A {@link CapabilityCallbackProxy}, which will be used to call back to the framework
+     * setting a subset of these capabilities fail, using
+     * {@link CapabilityCallbackProxy#onChangeCapabilityConfigurationError}.
+     */
+    public abstract void changeEnabledCapabilities(
+            android.telephony.ims.feature.CapabilityChangeRequest request,
+            CapabilityCallbackProxy c);
 
     /**
      * Called when the feature is ready to use.

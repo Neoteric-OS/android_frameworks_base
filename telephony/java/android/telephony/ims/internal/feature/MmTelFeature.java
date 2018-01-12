@@ -20,12 +20,13 @@ import android.annotation.IntDef;
 import android.os.Message;
 import android.os.RemoteException;
 import android.telecom.TelecomManager;
+import android.telephony.ims.aidl.IImsMmTelListener;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.feature.CapabilityChangeRequest;
 import android.telephony.ims.internal.SmsImplBase;
 import android.telephony.ims.internal.SmsImplBase.DeliverStatusResult;
 import android.telephony.ims.internal.SmsImplBase.StatusReportResult;
-import android.telephony.ims.internal.aidl.IImsCapabilityCallback;
 import android.telephony.ims.internal.aidl.IImsMmTelFeature;
-import android.telephony.ims.internal.aidl.IImsMmTelListener;
 import android.telephony.ims.internal.aidl.IImsSmsListener;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.telephony.ims.stub.ImsEcbmImplBase;
@@ -335,7 +336,7 @@ public class MmTelFeature extends ImsFeature {
      * @param c The {@link ImsCallSession} of the new incoming call.
      *
      * @throws RemoteException if the connection to the framework is not available. If this happens,
-     *     the call should be no longer considered active and should be cleaned up.
+     *     the connection should be no longer considered active and should be cleaned up.
      * */
     protected final void notifyIncomingCall(ImsCallSession c) throws RemoteException {
         synchronized (mLock) {
@@ -343,6 +344,21 @@ public class MmTelFeature extends ImsFeature {
                 throw new IllegalStateException("Session is not available.");
             }
             mListener.onIncomingCall(c.getSession());
+        }
+    }
+
+    /**
+     * Updates the framework with the new Voice Message count.
+     *
+     * @throws RemoteException if the connection to the framework is not available. If this happens,
+     *     the connection should be no longer considered active and should be cleaned up.
+     * */
+    public final void notifyVoiceMessageCountUpdate(int newCount) throws RemoteException {
+        synchronized (mLock) {
+            if (mListener == null) {
+                throw new IllegalStateException("Session is not available.");
+            }
+            mListener.onVoiceMessageCountUpdate(newCount);
         }
     }
 

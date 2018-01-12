@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package android.telephony.ims.internal.aidl;
-
-import com.android.ims.internal.IImsCallSession;
+package android.telephony.ims.aidl;
 
 /**
- * See MmTelFeature#Listener for more information.
+ * See ImsFeature#CapabilityCallback for more information.
  * {@hide}
  */
-oneway interface IImsMmTelListener {
-    void onIncomingCall(IImsCallSession c);
-    void onVoiceMessageCountUpdate(int count);
+oneway interface IImsCapabilityCallback {
+    void onQueryCapabilityConfiguration(int capability, int radioTech, boolean enabled);
+    void onChangeCapabilityConfigurationError(int capability, int radioTech, int reason);
+    void onCapabilitiesStatusChanged(int config);
 }

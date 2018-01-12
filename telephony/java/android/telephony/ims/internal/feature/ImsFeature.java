@@ -24,7 +24,8 @@ import android.os.IInterface;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.telephony.SubscriptionManager;
-import android.telephony.ims.internal.aidl.IImsCapabilityCallback;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.feature.CapabilityChangeRequest;
 import android.util.Log;
 
 import com.android.ims.internal.IImsFeatureStatusCallback;

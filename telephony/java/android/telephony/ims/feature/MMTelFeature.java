@@ -16,9 +16,12 @@
 
 package android.telephony.ims.feature;
 
-import android.app.PendingIntent;
+import android.annotation.IntDef;
 import android.os.Message;
 import android.os.RemoteException;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.aidl.IImsMmTelListener;
+import android.util.Log;
 
 import com.android.ims.ImsCallProfile;
 import com.android.ims.internal.IImsCallSession;
@@ -26,9 +29,12 @@ import com.android.ims.internal.IImsConfig;
 import com.android.ims.internal.IImsEcbm;
 import com.android.ims.internal.IImsMMTelFeature;
 import com.android.ims.internal.IImsMultiEndpoint;
-import com.android.ims.internal.IImsRegistrationListener;
 import com.android.ims.internal.IImsUt;
 import com.android.ims.internal.ImsCallSession;
+import com.android.internal.annotations.VisibleForTesting;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Base implementation for MMTel.
@@ -41,22 +47,15 @@ import com.android.ims.internal.ImsCallSession;
 public class MMTelFeature extends ImsFeature {
 
     // Lock for feature synchronization
-    private final Object mLock = new Object();
+    protected final Object mLock = new Object();
+    protected IImsMmTelListener mListener;
 
     private final IImsMMTelFeature mImsMMTelBinder = new IImsMMTelFeature.Stub() {
 
         @Override
-        public int startSession(PendingIntent incomingCallIntent,
-                IImsRegistrationListener listener) throws RemoteException {
+        public void setListener(IImsMmTelListener l) throws RemoteException {
             synchronized (mLock) {
-                return MMTelFeature.this.startSession(incomingCallIntent, listener);
-            }
-        }
-
-        @Override
-        public void endSession(int sessionId) throws RemoteException {
-            synchronized (mLock) {
-                MMTelFeature.this.endSession(sessionId);
+                MMTelFeature.this.setListener(l);
             }
         }
 
@@ -79,22 +78,6 @@ public class MMTelFeature extends ImsFeature {
         public int getFeatureStatus() throws RemoteException {
             synchronized (mLock) {
                 return MMTelFeature.this.getFeatureState();
-            }
-        }
-
-        @Override
-        public void addRegistrationListener(IImsRegistrationListener listener)
-                throws RemoteException {
-            synchronized (mLock) {
-                MMTelFeature.this.addRegistrationListener(listener);
-            }
-        }
-
-        @Override
-        public void removeRegistrationListener(IImsRegistrationListener listener)
-                throws RemoteException {
-            synchronized (mLock) {
-                MMTelFeature.this.removeRegistrationListener(listener);
             }
         }
 
@@ -170,7 +153,129 @@ public class MMTelFeature extends ImsFeature {
                 return MMTelFeature.this.getMultiEndpointInterface();
             }
         }
+
+        @Override
+        public int queryCapabilityStatus() throws RemoteException {
+            return MMTelFeature.this.queryCapabilityStatus().mCapabilities;
+        }
+
+        @Override
+        public void addCapabilityCallback(IImsCapabilityCallback c) {
+            MMTelFeature.this.addCapabilityCallback(c);
+        }
+
+        @Override
+        public void removeCapabilityCallback(IImsCapabilityCallback c) {
+            MMTelFeature.this.removeCapabilityCallback(c);
+        }
+
+        @Override
+        public void changeCapabilitiesConfiguration(CapabilityChangeRequest request,
+                IImsCapabilityCallback c) throws RemoteException {
+            MMTelFeature.this.requestChangeEnabledCapabilities(request, c);
+        }
+
+        @Override
+        public void queryCapabilityConfiguration(int capability, int radioTech,
+                IImsCapabilityCallback c) {
+            queryCapabilityConfigurationInternal(capability, radioTech, c);
+        }
     };
+
+    /**
+     * Contains the capabilities defined and supported by a MmTelFeature in the form of a Bitmask.
+     * The capabilities that are used in MmTelFeature are defined by {@link MmTelCapability}.
+     *
+     * The capabilities of this MmTelFeature will be set by the framework and can be queried with
+     * {@link #queryCapabilityStatus()}.
+     *
+     * This MmTelFeature can then return the status of each of these capabilities (enabled or not)
+     * by sending a {@link #notifyCapabilitiesStatusChanged} callback to the framework. The current
+     * status can also be queried using {@link #queryCapabilityStatus()}.
+     */
+    public static class MmTelCapabilities extends Capabilities {
+
+        @VisibleForTesting
+        public MmTelCapabilities() {
+            super();
+        }
+
+        public MmTelCapabilities(Capabilities c) {
+            mCapabilities = c.mCapabilities;
+        }
+
+        @IntDef(flag = true,
+                value = {
+                        CAPABILITY_TYPE_VOICE,
+                        CAPABILITY_TYPE_VIDEO,
+                        CAPABILITY_TYPE_UT,
+                        CAPABILITY_TYPE_SMS
+                })
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface MmTelCapability {}
+
+        /**
+         * This MmTelFeature supports Voice calling (IR.92)
+         */
+        public static final int CAPABILITY_TYPE_VOICE = 1 << 0;
+
+        /**
+         * This MmTelFeature supports Video (IR.94)
+         */
+        public static final int CAPABILITY_TYPE_VIDEO = 1 << 1;
+
+        /**
+         * This MmTelFeature supports XCAP over Ut for supplementary services. (IR.92)
+         */
+        public static final int CAPABILITY_TYPE_UT = 1 << 2;
+
+        /**
+         * This MmTelFeature supports SMS (IR.92)
+         */
+        public static final int CAPABILITY_TYPE_SMS = 1 << 3;
+
+        @Override
+        public final void addCapabilities(@MmTelCapability int capabilities) {
+            super.addCapabilities(capabilities);
+        }
+
+        @Override
+        public final void removeCapabilities(@MmTelCapability int capability) {
+            super.removeCapabilities(capability);
+        }
+
+        @Override
+        public final boolean isCapable(@MmTelCapability int capabilities) {
+            return super.isCapable(capabilities);
+        }
+    }
+
+    /**
+     * Listener that the framework implements for communication from the MmTelFeature.
+     */
+    public static class Listener extends IImsMmTelListener.Stub {
+
+        @Override
+        public final void onIncomingCall(IImsCallSession c) {
+            onIncomingCall(new ImsCallSession(c));
+        }
+
+        /**
+         * Updates the Listener when the voice message count for IMS has changed.
+         * @param count an integer representing the new message count.
+         */
+        @Override
+        public void onVoiceMessageCountUpdate(int count) {
+
+        }
+
+        /**
+         * Called when the IMS provider receives an incoming call.
+         * @param c The {@link ImsCallSession} associated with the new call.
+         */
+        public void onIncomingCall(ImsCallSession c) {
+        }
+    }
 
     /**
      * @hide
@@ -181,32 +286,97 @@ public class MMTelFeature extends ImsFeature {
     }
 
     /**
-     * Notifies the MMTel feature that you would like to start a session. This should always be
-     * done before making/receiving IMS calls. The IMS service will register the device to the
-     * operator's network with the credentials (from ISIM) periodically in order to receive calls
-     * from the operator's network. When the IMS service receives a new call, it will send out an
-     * intent with the provided action string. The intent contains a call ID extra
-     * {@link IImsCallSession#getCallId} and it can be used to take a call.
-     *
-     * @param incomingCallIntent When an incoming call is received, the IMS service will call
-     * {@link PendingIntent#send} to send back the intent to the caller with
-     * ImsManager#INCOMING_CALL_RESULT_CODE as the result code and the intent to fill in the call
-     * ID; It cannot be null.
-     * @param listener To listen to IMS registration events; It cannot be null
-     * @return an integer (greater than 0) representing the session id associated with the session
-     * that has been started.
+     * @param listener A {@link MmTelFeature.Listener} used when the MmTelFeature receives an
+     *     incoming call and notifies the framework.
      */
-    public int startSession(PendingIntent incomingCallIntent, IImsRegistrationListener listener) {
-        return 0;
+    protected void setListener(IImsMmTelListener listener) {
+        synchronized (mLock) {
+            mListener = listener;
+        }
+    }
+
+    private void queryCapabilityConfigurationInternal(int capability, int radioTech,
+            IImsCapabilityCallback c) {
+        boolean enabled = queryCapabilityConfiguration(capability, radioTech);
+        try {
+            if (c != null) {
+                c.onQueryCapabilityConfiguration(capability, radioTech, enabled);
+            }
+        } catch (RemoteException e) {
+            Log.e(LOG_TAG, "queryCapabilityConfigurationInternal called on dead binder!");
+        }
     }
 
     /**
-     * End a previously started session using the associated sessionId.
-     * @param sessionId an integer (greater than 0) representing the ongoing session. See
-     * {@link #startSession}.
+     * The current capability status that this MmTelFeature has defined is available. This
+     * configuration will be used by the platform to figure out which capabilities are CURRENTLY
+     * available to be used.
+     *
+     * Should be a subset of the capabilities that are enabled by the framework in
+     * {@link #changeEnabledCapabilities}.
+     * @return A copy of the current MmTelFeature capability status.
      */
-    public void endSession(int sessionId) {
+    @Override
+    public final MmTelCapabilities queryCapabilityStatus() {
+        return new MmTelCapabilities(super.queryCapabilityStatus());
     }
+
+    /**
+     * Notify the framework that the status of the Capabilities has changed. Even though the
+     * MmTelFeature capability may be enabled by the framework, the status may be disabled due to
+     * the feature being unavailable from the network.
+     * @param c The current capability status of the MmTelFeature. If a capability is disabled, then
+     * the status of that capability is disabled. This can happen if the network does not currently
+     * support the capability that is enabled. A capability that is disabled by the framework (via
+     * {@link #changeEnabledCapabilities}) should also show the status as disabled.
+     */
+    protected final void notifyCapabilitiesStatusChanged(MmTelCapabilities c) {
+        super.notifyCapabilitiesStatusChanged(c);
+    }
+
+    /**
+     * Notify the framework of an incoming call.
+     * @param c The {@link ImsCallSession} of the new incoming call.
+     *
+     * @throws RemoteException if the connection to the framework is not available. If this happens,
+     *     the call should be no longer considered active and should be cleaned up.
+     * */
+    protected final void notifyIncomingCall(ImsCallSession c) throws RemoteException {
+        notifyIncomingCall(c.getSession());
+    }
+
+    /**
+     * Notify the framework of an incoming call.
+     * @param c The {@link ImsCallSession} of the new incoming call.
+     *
+     * @throws RemoteException if the connection to the framework is not available. If this happens,
+     *     the call should be no longer considered active and should be cleaned up.
+     * @hide
+     */
+    protected final void notifyIncomingCall(IImsCallSession c) throws RemoteException {
+        synchronized (mLock) {
+            if (mListener == null) {
+                throw new IllegalStateException("Session is not available.");
+            }
+            mListener.onIncomingCall(c);
+        }
+    }
+
+    /**
+     * Updates the framework with the new Voice Message count.
+     *
+     * @throws RemoteException if the connection to the framework is not available. If this happens,
+     *     the connection should be no longer considered active and should be cleaned up.
+     * */
+    public final void notifyVoiceMessageCountUpdate(int newCount) throws RemoteException {
+        synchronized (mLock) {
+            if (mListener == null) {
+                throw new IllegalStateException("Session is not available.");
+            }
+            mListener.onVoiceMessageCountUpdate(newCount);
+        }
+    }
+
 
     /**
      * Checks if the IMS service has successfully registered to the IMS network with the specified
@@ -236,18 +406,21 @@ public class MMTelFeature extends ImsFeature {
     }
 
     /**
-     * Add a new registration listener for the client associated with the session Id.
-     * @param listener An implementation of IImsRegistrationListener.
+     * The MmTelFeature should override this method to handle the enabling/disabling of
+     * MmTel Features, defined in {@link MmTelCapabilities.MmTelCapability}. The framework assumes
+     * the {@link android.telephony.ims.feature.CapabilityChangeRequest} was processed successfully.
+     * If a subset of capabilities could not be set to their new values,
+     * {@link CapabilityCallbackProxy#onChangeCapabilityConfigurationError} must be called
+     * individually for each capability whose processing resulted in an error.
+     *
+     * Enabling/Disabling a capability here indicates that the capability should be registered or
+     * deregistered (depending on the capability change) and become available or unavailable to
+     * the framework.
      */
-    public void addRegistrationListener(IImsRegistrationListener listener) {
-    }
-
-    /**
-     * Remove a previously registered listener using {@link #addRegistrationListener} for the client
-     * associated with the session Id.
-     * @param listener A previously registered IImsRegistrationListener
-     */
-    public void removeRegistrationListener(IImsRegistrationListener listener) {
+    @Override
+    public void changeEnabledCapabilities(CapabilityChangeRequest request,
+            CapabilityCallbackProxy c) {
+        // Base implementation, no-op
     }
 
     /**
