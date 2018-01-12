@@ -177,6 +177,11 @@ public class NavigationBarView extends FrameLayout {
     private boolean mShowSwipeUpUi;
     private UpdateActiveTouchRegionsCallback mUpdateActiveTouchRegionsCallback;
 
+    private final int mNavigationBarPaddingX;
+    private final int mNavigationBarPaddingY;
+    private View mCenterGroup;
+    private View mEndsGroup;
+
     private class NavTransitionListener implements TransitionListener {
         private boolean mBackTransitioning;
         private boolean mHomeAppearing;
@@ -324,6 +329,11 @@ public class NavigationBarView extends FrameLayout {
         mButtonDispatchers.put(R.id.accessibility_button, accessibilityButton);
         mButtonDispatchers.put(R.id.menu_container, mContextualButtonGroup);
         mDeadZone = new DeadZone(this);
+
+        mNavigationBarPaddingX = context.getResources().getDimensionPixelSize(
+                R.dimen.navigationbar_burn_in_prevention_padding_x_max);
+        mNavigationBarPaddingY = context.getResources().getDimensionPixelSize(
+                R.dimen.navigationbar_burn_in_prevention_padding_y_max);
     }
 
     public void setEdgeBackGestureHandler(EdgeBackGestureHandler edgeBackGestureHandler) {
@@ -849,6 +859,9 @@ public class NavigationBarView extends FrameLayout {
 
         updateOrientationViews();
         reloadNavIcons();
+
+        mCenterGroup = getCurrentView().findViewById(R.id.center_group);
+        mEndsGroup = getCurrentView().findViewById(R.id.ends_group);
     }
 
     @Override
@@ -862,6 +875,8 @@ public class NavigationBarView extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
 
         notifyActiveTouchRegions();
+        mCenterGroup = getCurrentView().findViewById(R.id.center_group);
+        mEndsGroup = getCurrentView().findViewById(R.id.ends_group);
     }
 
     /**
@@ -1208,6 +1223,23 @@ public class NavigationBarView extends FrameLayout {
         mEdgeBackGestureHandler.setPipStashExclusionBounds(bounds);
     });
 
+
+    /**
+     *  Moves the Navigation bar to prevent burn in, called if
+     *  config_enableMoveSystemBars is enabled
+     */
+    public final void moveNavigationBar() {
+        int navigationBarTransX = (int) ((Math.random() - 0.5f) * mNavigationBarPaddingX);
+        int navigationBarTransY = (int) ((Math.random() - 0.5f) * mNavigationBarPaddingY);
+
+        // Apply translation to CenterGroup
+        mCenterGroup.setTranslationX(navigationBarTransX);
+        mCenterGroup.setTranslationY(navigationBarTransY);
+
+        // Apply translation to EndsGroup
+        mEndsGroup.setTranslationX(navigationBarTransX);
+        mEndsGroup.setTranslationY(navigationBarTransY);
+    }
 
     interface UpdateActiveTouchRegionsCallback {
         void update();
