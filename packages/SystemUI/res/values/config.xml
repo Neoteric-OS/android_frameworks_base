@@ -818,4 +818,6 @@
     <!-- Alpha value of light NavigationBar Button after auto dim -->
     <item name="navbar_dim_light_button_alpha" format="float" type="integer">0.6</item>
 
+     <!-- Move status bar and navigation bar to prevent burn in when screen is powered on -->
+    <bool name="config_enableMoveSystemBars">false</bool>
 </resources>
