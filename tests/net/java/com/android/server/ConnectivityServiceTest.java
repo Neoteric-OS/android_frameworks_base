@@ -1381,24 +1381,39 @@ public class ConnectivityServiceTest {
             return null;
         }
 
-        void expectAvailableCallbacks(
-                MockNetworkAgent agent, boolean expectSuspended, int timeoutMs) {
+        void expectAvailableCallbacks(MockNetworkAgent agent, boolean expectSuspended,
+                boolean requireUnvalidated, int timeoutMs) {
             expectCallback(CallbackState.AVAILABLE, agent, timeoutMs);
             if (expectSuspended) {
                 expectCallback(CallbackState.SUSPENDED, agent, timeoutMs);
             }
-            expectCallback(CallbackState.NETWORK_CAPABILITIES, agent, timeoutMs);
+            if (requireUnvalidated) {
+                expectCapabilitiesWithout(NET_CAPABILITY_VALIDATED, agent);
+            } else {
+                expectCallback(CallbackState.NETWORK_CAPABILITIES, agent, timeoutMs);
+            }
             expectCallback(CallbackState.LINK_PROPERTIES, agent, timeoutMs);
         }
 
+        void expectAvailableCallbacks(
+                MockNetworkAgent agent, boolean expectSuspended, int timeoutMs) {
+            expectAvailableCallbacks(agent, expectSuspended, false, timeoutMs);
+        }
+
+        // Expects onAvailable and the onCapabilitiesChanged and onLinkPropertiesChanged that
+        // always follow it (the "availabile callbacks").
         void expectAvailableCallbacks(MockNetworkAgent agent) {
             expectAvailableCallbacks(agent, false, TIMEOUT_MS);
         }
 
+        // Expects the available callbacks, plus onSuspended.
         void expectAvailableAndSuspendedCallbacks(MockNetworkAgent agent) {
             expectAvailableCallbacks(agent, true, TIMEOUT_MS);
         }
 
+        // Expects the available callbacks where the onCapabilitiesChanged must not have validated,
+        // then expects another onCapabilitiesChanged that has the validated bit set. This is used
+        // when a network connects and satisfies a callback, and then immediately validates.
         void expectAvailableAndValidatedCallbacks(MockNetworkAgent agent) {
             expectAvailableCallbacks(agent, false, TIMEOUT_MS);
             expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, agent);
