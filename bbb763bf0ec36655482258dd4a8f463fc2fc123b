@@ -46,6 +46,30 @@
       "revId": "bbb763bf0ec36655482258dd4a8f463fc2fc123b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4043677b_620744af",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 25920,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-12T06:27:54Z",
+      "side": 1,
+      "message": "Ok, so basically as part of this change we\u0027re introducing into the API a new TYPE_UNSPECIFIED, which is only returned for 00:00:00:00:00:00. Is that intentional? Should UNSPECIFIED be returned for 02:00:00:00:00:00 instead of, or in addition to, 00:00:00:00:00:00?",
+      "parentUuid": "8c195713_516e37ec",
+      "range": {
+        "startLine": 25920,
+        "startChar": 34,
+        "endLine": 25920,
+        "endChar": 50
+      },
+      "revId": "bbb763bf0ec36655482258dd4a8f463fc2fc123b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
