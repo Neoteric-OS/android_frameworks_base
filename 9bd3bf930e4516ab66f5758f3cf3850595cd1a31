@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a95a5ee0_6540e5e8",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Perhaps we should (probably in a separate commit) add a method to remove a unidirectional transform.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 88
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814881de_8852baf2",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Probably some future commit: Perhaps for debug-ability, we could allow printing of everything except keys (algorithm, trunc len, etc). We could then put the check in IpSecAlgorithm.",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fba818_d8e413c3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Thought experiment - would it make sense to prevent this entirely? We actually have to tools to do this by enforcing refcounting whenever a transform is applied/removed",
+      "range": {
+        "startLine": 295,
+        "startChar": 68,
+        "endLine": 296,
+        "endChar": 87
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4173089a_f12e6e94",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281e39be_744ea35b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Does the @NonNull not do any checks?",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 45
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6a593f_307fb433",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is for finding the address of the current default network? It doesn\u0027t seem to be used anywhere.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 36
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5944c158_e2ac0f5f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Where do we set the local address?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 8,
+        "endLine": 1090,
+        "endChar": 9
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc238fa_c50581a1",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-12T19:09:31Z",
+      "side": 1,
+      "message": "Looks like one of these may no longer be useful",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 58
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
