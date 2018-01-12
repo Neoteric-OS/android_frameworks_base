@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.phone
 
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.test.filters.SmallTest
 import com.android.systemui.Gefingerpoken
@@ -35,6 +36,8 @@ class PhoneStatusBarViewTest : SysuiTestCase() {
     private lateinit var shadeViewController: ShadeViewController
     @Mock
     private lateinit var panelView: ViewGroup
+    @Mock
+    private lateinit var statusBarContents: View
 
     private lateinit var view: PhoneStatusBarView
 
@@ -43,6 +46,7 @@ class PhoneStatusBarViewTest : SysuiTestCase() {
         MockitoAnnotations.initMocks(this)
 
         view = PhoneStatusBarView(mContext, null)
+        view.setStatusBarContentsForTest(statusBarContents)
     }
 
     @Test
@@ -93,6 +97,16 @@ class PhoneStatusBarViewTest : SysuiTestCase() {
     fun onTouchEvent_noListener_noCrash() {
         view.onTouchEvent(MotionEvent.obtain(0L, 0L, MotionEvent.ACTION_DOWN, 0f, 0f, 0))
         // No assert needed, just testing no crash
+    }
+
+    @Test
+    fun moveStatusBar_translatesStatusBarContents() {
+        // Call the method
+        view.moveStatusBar()
+
+        // Assert that the translation has been applied to StatusBarContents
+        assertThat(statusBarContents.translationX).isNotEqualTo(0f)
+        assertThat(statusBarContents.translationY).isNotEqualTo(0f)
     }
 
     private class TestTouchEventHandler : Gefingerpoken {
