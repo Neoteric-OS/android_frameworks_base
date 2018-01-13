@@ -449,7 +449,12 @@ abstract class HdmiCecLocalDevice {
     protected boolean handleUserControlPressed(HdmiCecMessage message) {
         assertRunOnServiceThread();
         mHandler.removeMessages(MSG_USER_CONTROL_RELEASE_TIMEOUT);
-        if (mService.isPowerOnOrTransient() && isPowerOffOrToggleCommand(message)) {
+        if (isPowerCommand(message)) {
+            if (mService.isPowerStandbyOrTransient()) {
+                mService.wakeUp();
+            }
+            return true;
+        } else if (mService.isPowerOnOrTransient() && isPowerOffOrToggleCommand(message)) {
             mService.standby();
             return true;
         } else if (mService.isPowerStandbyOrTransient() && isPowerOnOrToggleCommand(message)) {
@@ -502,6 +507,12 @@ abstract class HdmiCecLocalDevice {
                 InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
         keyEvent.recycle();
    }
+
+    static boolean isPowerCommand(HdmiCecMessage message) {
+        byte[] params = message.getParams();
+        return message.getOpcode() == Constants.MESSAGE_USER_CONTROL_PRESSED
+                && params[0] == HdmiCecKeycode.CEC_KEYCODE_POWER;
+    }
 
     static boolean isPowerOnOrToggleCommand(HdmiCecMessage message) {
         byte[] params = message.getParams();
