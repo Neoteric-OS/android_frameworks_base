@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4ec6f9_2aaed8a3",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:59:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s a good idea to talk to netd from NetworkStatsFactory.\n\nThe setting is going to be in the settings database, right? If so, then netd is going to hear about it from the system server. If so, then we can just add a \"private boolean mUseBpfStats\" to this class, and have something in the system server (e.g., NetworkStatsService) update the boolean via a setter method at the same time as we update netd.",
+      "range": {
+        "startLine": 253,
+        "startChar": 18,
+        "endLine": 253,
+        "endChar": 32
+      },
+      "revId": "9947ecb31e4c3be1797d3d872facbfe7c04f274c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cd10a7_0ba35633",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:59:46Z",
+      "side": 1,
+      "message": "If this is not modified, it should be a const ref. \"const std::vector\u003cstd::string\u003e\u0026\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 72,
+        "endLine": 95,
+        "endChar": 97
+      },
+      "revId": "9947ecb31e4c3be1797d3d872facbfe7c04f274c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c9a4dd_4230ed99",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:59:46Z",
+      "side": 1,
+      "message": "Long line",
+      "range": {
+        "startLine": 95,
+        "startChar": 98,
+        "endLine": 95,
+        "endChar": 109
+      },
+      "revId": "9947ecb31e4c3be1797d3d872facbfe7c04f274c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "63a45c93_c96121b7",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:59:46Z",
+      "side": 1,
+      "message": "Thanks. I assume you\u0027ve checked that this results in no log messages. Do you know how that works? Does ALOGD construct the string at runtime every time you call it and not log it? Or is ALOGD a #define that is removed completely at compile time? If it\u0027s not removed at compile time, then this could still impact performance, even though it won\u0027t cause logspam.\n\nThat said: even if it does impact performance, that might be OK. Not sure how long this code takes.",
+      "parentUuid": "61aa65a5_d679d69a",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 102
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407b30e0_817164e0",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 9
