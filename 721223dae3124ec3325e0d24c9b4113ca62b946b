@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31cc551f_e95b7216",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T14:07:32Z",
+      "side": 1,
+      "message": "Hmm, I wonder... do we need to push the iptables rules and set PROP_QTAGUID_ENABLED if qtaguid is not enabled?",
+      "range": {
+        "startLine": 642,
+        "startChar": 12,
+        "endLine": 642,
+        "endChar": 36
+      },
+      "revId": "721223dae3124ec3325e0d24c9b4113ca62b946b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
