@@ -1015,6 +1015,7 @@
   <java-symbol type="string" name="wifi_p2p_from_message" />
   <java-symbol type="string" name="wifi_p2p_invitation_sent_title" />
   <java-symbol type="string" name="wifi_p2p_invitation_to_connect_title" />
+  <java-symbol type="string" name="wifi_p2p_invitation_disappear_messaege" />
   <java-symbol type="string" name="wifi_p2p_show_pin_message" />
   <java-symbol type="string" name="wifi_p2p_to_message" />
   <java-symbol type="string" name="wifi_p2p_turnon_message" />

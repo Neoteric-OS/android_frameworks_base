@@ -3043,6 +3043,7 @@
     <string name="decline">Decline</string>
     <string name="wifi_p2p_invitation_sent_title">Invitation sent</string>
     <string name="wifi_p2p_invitation_to_connect_title">Invitation to connect</string>
+    <string name="wifi_p2p_invitation_disappear_messaege">A dialog will disappear after 30 seconds has passed.</string>
 
     <string name="wifi_p2p_from_message">From: </string>
     <string name="wifi_p2p_to_message">To: </string>
