@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2249813_4bc0ac86",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "That would need kernel changes though. The fix we merged upstream only clears both policies.",
+      "parentUuid": "a95a5ee0_6540e5e8",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 88
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "814881de_8852baf2",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 4
@@ -48,6 +72,52 @@
     },
     {
       "key": {
+        "uuid": "6754fe26_0fb75a66",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "to the specified destination address",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 85
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd4a15b_ab62217b",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Suggest saying that for inbound traffic, the address will be an address assigned to the device. Otherwise developers might think that the destination is always remote. Also allocSpi method.",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fba818_d8e413c3",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -64,6 +134,75 @@
         "startChar": 68,
         "endLine": 296,
         "endChar": 87
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a991ce0_1ece54a9",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "This works now, right? Can we unhide it? (Not necessarily in this CL.)",
+      "range": {
+        "startLine": 310,
+        "startChar": 7,
+        "endLine": 310,
+        "endChar": 12
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca87b01_37b6e6e6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Ditto, can we unhide?",
+      "range": {
+        "startLine": 346,
+        "startChar": 7,
+        "endLine": 346,
+        "endChar": 12
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4970fdc_076ec9a1",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Ditto, unhide?",
+      "range": {
+        "startLine": 456,
+        "startChar": 7,
+        "endLine": 456,
+        "endChar": 12
       },
       "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -117,6 +256,144 @@
     },
     {
       "key": {
+        "uuid": "2f557d21_83fc1652",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Can this move to the previous line?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 47
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d191e6_97e8f785",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a parameter on the transform itself? That\u0027s where the destination address is specified.",
+      "range": {
+        "startLine": 389,
+        "startChar": 11,
+        "endLine": 389,
+        "endChar": 31
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df889b5b_9105741b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Does the service check that the IP addresses are valid?",
+      "range": {
+        "startLine": 406,
+        "startChar": 20,
+        "endLine": 406,
+        "endChar": 36
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3393165_4d3930c6",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "That\u0027s not public API, right? If so, we can\u0027t mention it here.",
+      "range": {
+        "startLine": 417,
+        "startChar": 14,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436aea30_57f88820",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "So inbound traffic will only work if new addresses don\u0027t appear between the time the transform is created and applied. If we do allow this (and I\u0027m not convinced that we should) then we must at least warn against this possibility and of its consequences. (Inbound traffic doesn\u0027t work at all?)",
+      "range": {
+        "startLine": 419,
+        "startChar": 22,
+        "endLine": 419,
+        "endChar": 67
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5f3448_c107800e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "No check needed for 0?",
+      "range": {
+        "startLine": 853,
+        "startChar": 31,
+        "endLine": 853,
+        "endChar": 56
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6a593f_307fb433",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -156,6 +433,52 @@
         "startChar": 8,
         "endLine": 1090,
         "endChar": 9
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cf0b99_c6743f73",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Doesn\u0027t match the comment, 2 !\u003d 3.",
+      "range": {
+        "startLine": 1119,
+        "startChar": 64,
+        "endLine": 1119,
+        "endChar": 65
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aea294a_4dd02e58",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 1,
+      "message": "Actually you probably want .netId instead of .getNetworkHandle().",
+      "range": {
+        "startLine": 1156,
+        "startChar": 69,
+        "endLine": 1156,
+        "endChar": 88
       },
       "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",

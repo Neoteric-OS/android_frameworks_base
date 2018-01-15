@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd833fe_2078739c",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 0,
+      "message": "Can we salvage some of this comment? It\u0027s still true that if the user provides encryption without an SPI, the transform will fail to build, right?",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 98
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a8ac49_e33fc84d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 295,
+        "startChar": 14,
+        "endLine": 295,
+        "endChar": 38
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf8b1c6_49f97d22",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 314,
+        "startChar": 14,
+        "endLine": 314,
+        "endChar": 61
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61e99e6_8b5bd3ef",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 0,
+      "message": "Where did these checks go? If they were unnecessary, say so in the commit description.",
+      "range": {
+        "startLine": 1065,
+        "startChar": 0,
+        "endLine": 1072,
+        "endChar": 0
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd27778_56f29676",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T17:02:34Z",
+      "side": 0,
+      "message": "Do we still need this check on destination address? We introduced this to avoid an unspecified address being used as destination, right?",
+      "range": {
+        "startLine": 1079,
+        "startChar": 16,
+        "endLine": 1079,
+        "endChar": 60
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
