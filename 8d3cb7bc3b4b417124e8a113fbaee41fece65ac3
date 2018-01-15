@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c988e109_0962132a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2511,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T10:28:28Z",
+      "side": 1,
+      "message": "While you\u0027re touching this method, consider making it check the NETWORK_STACK permission instead of CONNECTIVITY_INTERNAL. LGTM either way.",
+      "range": {
+        "startLine": 2511,
+        "startChar": 48,
+        "endLine": 2511,
+        "endChar": 69
+      },
+      "revId": "8d3cb7bc3b4b417124e8a113fbaee41fece65ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
