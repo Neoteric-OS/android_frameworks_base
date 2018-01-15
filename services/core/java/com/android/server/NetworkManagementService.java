@@ -2511,9 +2511,13 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
         try {
-            mConnector.execute("network", "destroy", netId);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.networkDestroy(netId);
+        } catch (ServiceSpecificException e) {
+            Log.w(TAG, "removeNetwork(" + netId + "): ", e);
+            throw e;
+        } catch (RemoteException e) {
+            Log.w(TAG, "removeNetwork(" + netId + "): ", e);
+            throw e.rethrowAsRuntimeException();
         }
     }
 
