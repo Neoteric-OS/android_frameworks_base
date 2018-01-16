@@ -18,7 +18,9 @@ package android.os;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityThread;
 import android.app.AppGlobals;
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -1136,7 +1138,7 @@ public final class Debug
             int intervalUs) {
         VMDebug.startMethodTracing(fixTracePath(tracePath), bufferSize, 0, true, intervalUs);
     }
-    
+
     /**
      * Formats name of trace log file for method tracing.
      */
@@ -2352,22 +2354,42 @@ public final class Debug
     }
 
     /**
-     * Attach a library as a jvmti agent to the current runtime.
+     * Attach a library as a jvmti agent to the current runtime, using the application's
+     * main classloader.
      *
-     * @param library library containing the agent
-     * @param options options passed to the agent
+     * @param library the library containing the agent.
+     * @param options the options passed to the agent.
      *
      * @throws IOException If the agent could not be attached
      */
     public static void attachJvmtiAgent(@NonNull String library, @Nullable String options)
             throws IOException {
+        Application app = ActivityThread.currentApplication();
+        ClassLoader classLoader = (app != null && app.mLoadedApk != null)
+                ? app.mLoadedApk.getClassLoader()
+                : null;
+        attachJvmtiAgent(library, options, classLoader);
+    }
+
+    /**
+     * Attach a library as a jvmti agent to the current runtime, with the given classloader
+     * determining the library search path.
+     *
+     * @param library the library containing the agent.
+     * @param options the options passed to the agent.
+     * @param classLoader the classloader determining the library search path.
+     *
+     * @throws IOException If the agent could not be attached
+     */
+    public static void attachJvmtiAgent(@NonNull String library, @Nullable String options,
+            @Nullable ClassLoader classLoader) throws IOException {
         Preconditions.checkNotNull(library);
         Preconditions.checkArgument(!library.contains("="));
 
         if (options == null) {
-            VMDebug.attachAgent(library);
+            VMDebug.attachAgent(library, classLoader);
         } else {
-            VMDebug.attachAgent(library + "=" + options);
+            VMDebug.attachAgent(library + "=" + options, classLoader);
         }
     }
 }
