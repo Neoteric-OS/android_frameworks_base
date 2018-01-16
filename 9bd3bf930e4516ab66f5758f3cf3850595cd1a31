@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1d65c879_e1bea167",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Looks like that\u0027s already being done. I\u0027ll just tidy up the check there and remove this. Done.",
+      "parentUuid": "814881de_8852baf2",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6754fe26_0fb75a66",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "to the specified destination address",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 85
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d54bf6_bd365ed5",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6754fe26_0fb75a66",
       "range": {
         "startLine": 239,
         "startChar": 46,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6de97105_f4926b13",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dd4a15b_ab62217b",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fba818_d8e413c3",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -129,6 +201,30 @@
       "writtenOn": "2018-01-12T19:09:31Z",
       "side": 1,
       "message": "Thought experiment - would it make sense to prevent this entirely? We actually have to tools to do this by enforcing refcounting whenever a transform is applied/removed",
+      "range": {
+        "startLine": 295,
+        "startChar": 68,
+        "endLine": 296,
+        "endChar": 87
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20108e4_14d51fb0",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "It would be very difficult to work around dupe-FDs and to support re-key, and there\u0027s really no reason to do it. I have a feeling it would end up being buggy if we tried it.",
+      "parentUuid": "c9fba818_d8e413c3",
       "range": {
         "startLine": 295,
         "startChar": 68,
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "084648b6_6574ec01",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "I thought we had already done this... did that CL never go in? Anyway, done!",
+      "parentUuid": "0a991ce0_1ece54a9",
+      "range": {
+        "startLine": 310,
+        "startChar": 7,
+        "endLine": 310,
+        "endChar": 12
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca87b01_37b6e6e6",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -175,6 +295,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "Ditto, can we unhide?",
+      "range": {
+        "startLine": 346,
+        "startChar": 7,
+        "endLine": 346,
+        "endChar": 12
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85034c48_455737c2",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca87b01_37b6e6e6",
       "range": {
         "startLine": 346,
         "startChar": 7,
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fc9e8274_aac21333",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4970fdc_076ec9a1",
+      "range": {
+        "startLine": 456,
+        "startChar": 7,
+        "endLine": 456,
+        "endChar": 12
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4173089a_f12e6e94",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 4
@@ -221,6 +389,30 @@
       "writtenOn": "2018-01-12T19:09:31Z",
       "side": 1,
       "message": "a",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a612f691_973ca1a9",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4173089a_f12e6e94",
       "range": {
         "startLine": 41,
         "startChar": 24,
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "efb2c350_a98e3386",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "AFAIK it\u0027s for documentation purposes. IDEs will see it and let people know when something is wrong.\nhttps://developer.android.com/studio/write/annotations.html",
+      "parentUuid": "281e39be_744ea35b",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 45
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f557d21_83fc1652",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 4
@@ -267,6 +483,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "Can this move to the previous line?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 47
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd5c5a3_80a986ba",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f557d21_83fc1652",
       "range": {
         "startLine": 297,
         "startChar": 0,
@@ -302,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "b5b4fe3f_695e7cfe",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Not sure I understand the question. Are you asking why we don\u0027t pass this in AllocateSecurityParameterIndex instead of here?",
+      "parentUuid": "91d191e6_97e8f785",
+      "range": {
+        "startLine": 389,
+        "startChar": 11,
+        "endLine": 389,
+        "endChar": 31
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df889b5b_9105741b",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 4
@@ -313,6 +577,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "Does the service check that the IP addresses are valid?",
+      "range": {
+        "startLine": 406,
+        "startChar": 20,
+        "endLine": 406,
+        "endChar": 36
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24481289_013eb2d5",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "It can be anything but empty/null. If it\u0027s not a valid address then it just won\u0027t work for anything. But, as you pointed out, addresses are inherently racy, so this is a caveat emptor option that will further tighten up the user\u0027s transform. For instance, if the outbound SA is created with source address A but the socket they open ultimately binds to address B, then traffic will fail, which will tell them to either re-bind the socket or re-negotiate the SA. But, from testing it seems that not specifying it is fine. I\u0027m worried that forcing it to be specified will have corner-case issues in IPv6. let\u0027s discuss when you have time?",
+      "parentUuid": "df889b5b_9105741b",
       "range": {
         "startLine": 406,
         "startChar": 20,
@@ -348,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "252ba286_6eba97ec",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Same... I missed this comment when I squashed patch sets. We\u0027re not doing this. Removed.",
+      "parentUuid": "b3393165_4d3930c6",
+      "range": {
+        "startLine": 417,
+        "startChar": 14,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "436aea30_57f88820",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 4
@@ -359,6 +671,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "So inbound traffic will only work if new addresses don\u0027t appear between the time the transform is created and applied. If we do allow this (and I\u0027m not convinced that we should) then we must at least warn against this possibility and of its consequences. (Inbound traffic doesn\u0027t work at all?)",
+      "range": {
+        "startLine": 419,
+        "startChar": 22,
+        "endLine": 419,
+        "endChar": 67
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ec655b_28bbed6f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Oops. You asked that we not do this so we\u0027re not. This comment is just out of date and I missed it when I made the second pass of changes. We aren\u0027t supporting the underlying network for transport mode as of now.",
+      "parentUuid": "436aea30_57f88820",
       "range": {
         "startLine": 419,
         "startChar": 22,
@@ -394,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "f140ee6a_d140e44d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "We actually pass 0 intentionally in the overloaded AllocateSPI method. If someone calls the binder directly with 0 they will be using the functionality to randomly allocate an SPI. Negative numbers will be reinterpreted as unsigned, but also work.",
+      "parentUuid": "ee5f3448_c107800e",
+      "range": {
+        "startLine": 853,
+        "startChar": 31,
+        "endLine": 853,
+        "endChar": 56
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6a593f_307fb433",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -405,6 +765,30 @@
       "writtenOn": "2018-01-12T19:09:31Z",
       "side": 1,
       "message": "I\u0027m assuming this is for finding the address of the current default network? It doesn\u0027t seem to be used anywhere.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 36
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff579fa4_518d5d0e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Nope. it\u0027s part of an older patch set that I squashed. I\u0027ll remove it.",
+      "parentUuid": "ea6a593f_307fb433",
       "range": {
         "startLine": 1042,
         "startChar": 0,
@@ -440,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "ad917c16_c0f3b002",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "We don\u0027t unless someone requested that it be set. It\u0027s optional.",
+      "parentUuid": "5944c158_e2ac0f5f",
+      "range": {
+        "startLine": 1090,
+        "startChar": 8,
+        "endLine": 1090,
+        "endChar": 9
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16cf0b99_c6743f73",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -451,6 +859,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 1,
       "message": "Doesn\u0027t match the comment, 2 !\u003d 3.",
+      "range": {
+        "startLine": 1119,
+        "startChar": 64,
+        "endLine": 1119,
+        "endChar": 65
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2b4db6_ecf311f0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "comment was wrong. Fixed.",
+      "parentUuid": "16cf0b99_c6743f73",
       "range": {
         "startLine": 1119,
         "startChar": 64,
@@ -486,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "e2c13e0b_d147a478",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aea294a_4dd02e58",
+      "range": {
+        "startLine": 1156,
+        "startChar": 69,
+        "endLine": 1156,
+        "endChar": 88
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc238fa_c50581a1",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 4
@@ -497,6 +953,30 @@
       "writtenOn": "2018-01-12T19:09:31Z",
       "side": 1,
       "message": "Looks like one of these may no longer be useful",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 58
+      },
+      "revId": "9bd3bf930e4516ab66f5758f3cf3850595cd1a31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade254d2_c750a3cf",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc238fa_c50581a1",
       "range": {
         "startLine": 241,
         "startChar": 8,

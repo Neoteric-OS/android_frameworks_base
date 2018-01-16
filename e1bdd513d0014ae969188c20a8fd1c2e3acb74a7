@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1f03820_8672bd42",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 0,
+      "message": "The spirit of the comment no longer holds because the entire thing is unidirectional. Without providing an SPI (of which there is only one) then the whole transform is not going to build.  There\u0027s no longer any dependency here. I\u0027ll add a note to setSpi saying that it\u0027s required.",
+      "parentUuid": "5fd833fe_2078739c",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 98
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a8ac49_e33fc84d",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 0,
       "message": "Ditto",
+      "range": {
+        "startLine": 295,
+        "startChar": 14,
+        "endLine": 295,
+        "endChar": 38
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e28502_8c284fc1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "53a8ac49_e33fc84d",
       "range": {
         "startLine": 295,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e8a4666b_20410f0a",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "caf8b1c6_49f97d22",
+      "range": {
+        "startLine": 314,
+        "startChar": 14,
+        "endLine": 314,
+        "endChar": 61
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a61e99e6_8b5bd3ef",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "edfb6be3_1b0d6958",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 0,
+      "message": "we don\u0027t check local because it\u0027s optional, and we don\u0027t check remote because it\u0027s optional here and ultimately gets overridden by the SPI\u0027s destination address.\n\nAlso, they are never null anymore. They are only \"empty\".",
+      "parentUuid": "a61e99e6_8b5bd3ef",
+      "range": {
+        "startLine": 1065,
+        "startChar": 0,
+        "endLine": 1072,
+        "endChar": 0
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cd27778_56f29676",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-15T17:02:34Z",
       "side": 0,
       "message": "Do we still need this check on destination address? We introduced this to avoid an unspecified address being used as destination, right?",
+      "range": {
+        "startLine": 1079,
+        "startChar": 16,
+        "endLine": 1079,
+        "endChar": 60
+      },
+      "revId": "e1bdd513d0014ae969188c20a8fd1c2e3acb74a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e5feb4_c9c4fa0b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T00:37:20Z",
+      "side": 0,
+      "message": "It turns out that we don\u0027t need to do it here because it\u0027s being done as part of ALLOCSPI, and we now migrate that remote address in to the transform; but, I can put it back to guard against it getting lost in the future. It doesn\u0027t hurt anything.",
+      "parentUuid": "9cd27778_56f29676",
       "range": {
         "startLine": 1079,
         "startChar": 16,
