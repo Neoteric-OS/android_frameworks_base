@@ -141,6 +141,9 @@ public class TelephonyManager {
     /** @hide */
     static public final int KEY_TYPE_WLAN = 2;
 
+    /** @hide */
+    static public final int TAC_LEN = 8;
+
     private final Context mContext;
     private final int mSubId;
     private SubscriptionManager mSubscriptionManager;
@@ -1069,6 +1072,22 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
             return null;
         }
+    }
+
+    /**
+     * Returns the 8 first characters at best from the IMEI data
+     * available.
+     *
+     */
+    public String getTac() {
+        String imei = getImei();
+        if (imei != null) {
+                if (imei.length() > TAC_LEN)
+                    return imei.substring(0, TAC_LEN);
+                return imei;
+        }
+
+        return null;
     }
 
     /**

@@ -40737,6 +40737,7 @@ package android.telephony {
     method public int getSimState();
     method public int getSimState(int);
     method public java.lang.String getSubscriberId();
+    method public java.lang.String getTac();
     method public java.lang.String getVisualVoicemailPackageName();
     method public java.lang.String getVoiceMailAlphaTag();
     method public java.lang.String getVoiceMailNumber();
