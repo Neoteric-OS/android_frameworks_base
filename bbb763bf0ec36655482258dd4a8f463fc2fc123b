@@ -70,6 +70,30 @@
       "revId": "bbb763bf0ec36655482258dd4a8f463fc2fc123b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc3f9a44_5f5d787f",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 25920,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2018-01-16T04:37:05Z",
+      "side": 1,
+      "message": "As discussed offline, for now we are going to remove both UNKNOWN and UNSPECIFIED, and keep mapping 00:00:00:00:00:00 to unicast.",
+      "parentUuid": "4043677b_620744af",
+      "range": {
+        "startLine": 25920,
+        "startChar": 34,
+        "endLine": 25920,
+        "endChar": 50
+      },
+      "revId": "bbb763bf0ec36655482258dd4a8f463fc2fc123b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
