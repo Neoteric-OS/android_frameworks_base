@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e69bce_9dd38bfb",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2018-01-16T13:58:15Z",
+      "side": 1,
+      "message": "fix spacing",
+      "revId": "663c426794986fd8c51f1dbb918035470eb01c40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597f3bd5_35a14e0e",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2018-01-16T13:58:15Z",
+      "side": 1,
+      "message": "can you make a new max constants that\u0027s smaller (say, 20?)",
+      "revId": "663c426794986fd8c51f1dbb918035470eb01c40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
