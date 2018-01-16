@@ -172,6 +172,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -2042,24 +2043,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
                     Integer score = (Integer) msg.obj;
                     if (score != null) updateNetworkScore(nai, score.intValue());
-                    break;
-                }
-                case NetworkAgent.EVENT_UID_RANGES_ADDED: {
-                    try {
-                        mNetd.addVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
-                    } catch (Exception e) {
-                        // Never crash!
-                        loge("Exception in addVpnUidRanges: " + e);
-                    }
-                    break;
-                }
-                case NetworkAgent.EVENT_UID_RANGES_REMOVED: {
-                    try {
-                        mNetd.removeVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
-                    } catch (Exception e) {
-                        // Never crash!
-                        loge("Exception in removeVpnUidRanges: " + e);
-                    }
                     break;
                 }
                 case NetworkAgent.EVENT_SET_EXPLICITLY_SELECTED: {
@@ -4409,6 +4392,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkInfo networkInfo = na.networkInfo;
         na.networkInfo = null;
         updateNetworkInfo(na, networkInfo);
+        updateUids(na, null, na.networkCapabilities);
     }
 
     private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties oldLp) {
@@ -4640,6 +4624,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.networkCapabilities = networkCapabilities;
         }
 
+        updateUids(nai, prevNc, networkCapabilities);
+
         if (nai.getCurrentScore() == oldScore &&
                 networkCapabilities.equalRequestableCapabilities(prevNc)) {
             // If the requestable capabilities haven't changed, and the score hasn't changed, then
@@ -4674,6 +4660,53 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     vpn.updateCapabilities();
                 }
             }
+        }
+    }
+
+    private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
+            NetworkCapabilities newNc) {
+        final Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
+        final Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
+        final ArrayList<UidRange> removedRanges;
+        final ArrayList<UidRange> addedRanges;
+        if (null == prevRanges) {
+            if (null == newRanges) {
+                return;
+            }
+            removedRanges = null;
+            addedRanges = new ArrayList<>(newRanges);
+        } else if (null == newNc) {
+            removedRanges = new ArrayList<>(prevRanges);
+            addedRanges = null;
+        } else {
+            removedRanges = new ArrayList<>();
+            addedRanges = new ArrayList<>();
+            for (final UidRange prevRange : prevRanges) {
+                if (!newRanges.contains(prevRange)) {
+                    removedRanges.add(prevRange);
+                }
+            }
+            for (final UidRange newRange : newRanges) {
+                if (!prevRanges.contains(newRange)) {
+                    addedRanges.add(newRange);
+                }
+            }
+        }
+
+        try {
+            if (null != removedRanges && !removedRanges.isEmpty()) {
+                final UidRange[] removedRangesArray = new UidRange[removedRanges.size()];
+                removedRanges.toArray(removedRangesArray);
+                mNetd.removeVpnUidRanges(nai.network.netId, removedRangesArray);
+            }
+            if (null != addedRanges && !addedRanges.isEmpty()) {
+                final UidRange[] addedRangesArray = new UidRange[addedRanges.size()];
+                addedRanges.toArray(addedRangesArray);
+                mNetd.addVpnUidRanges(nai.network.netId, addedRangesArray);
+            }
+        } catch (Exception e) {
+            // Never crash!
+            loge("Exception in updateUids: " + e);
         }
     }
 
