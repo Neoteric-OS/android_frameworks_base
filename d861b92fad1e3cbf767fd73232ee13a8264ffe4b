@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75430fa0_b3cc2b9e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "Yes. I removed the code that was using it.",
+      "parentUuid": "7438a066_9c6ea6c9",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "056a5512_d155932b",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T13:14:39Z",
       "side": 1,
       "message": "I thought we had decided to delete this and always take it from the SPI. Is there a reason we can\u0027t just remove it?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347846c8_bc5f434d",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "I would have to make some other (admittedly minor) changes in IpSecService to stop using it, and it will have a minor reduction in debuggability, so since it\u0027s helpful, I left it here and would prefer to leave it.",
+      "parentUuid": "056a5512_d155932b",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fbef7336_1ba5f0b1",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77986fdd_e5e3fd45",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b52be79_4aebfada",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-16T13:14:39Z",
       "side": 1,
       "message": "Unhide?",
+      "range": {
+        "startLine": 433,
+        "startChar": 7,
+        "endLine": 433,
+        "endChar": 12
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755f5065_ea6bfd2a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b52be79_4aebfada",
       "range": {
         "startLine": 433,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dbb6a20e_e4630aeb",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "Next patch did this. I\u0027ll squash them.",
+      "parentUuid": "f9dad947_d0df2f5b",
+      "range": {
+        "startLine": 402,
+        "startChar": 58,
+        "endLine": 402,
+        "endChar": 92
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ff7067_81d21c75",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-16T13:14:39Z",
       "side": 1,
       "message": "I thought we had decided to make the source address mandatory even in transport mode?",
+      "range": {
+        "startLine": 1087,
+        "startChar": 8,
+        "endLine": 1087,
+        "endChar": 62
+      },
+      "revId": "d861b92fad1e3cbf767fd73232ee13a8264ffe4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37daad2_f4a47f89",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-16T19:10:32Z",
+      "side": 1,
+      "message": "next patch. I\u0027ll squash them.",
+      "parentUuid": "63ff7067_81d21c75",
       "range": {
         "startLine": 1087,
         "startChar": 8,
