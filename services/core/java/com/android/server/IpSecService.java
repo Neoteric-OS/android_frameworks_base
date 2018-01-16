@@ -1084,10 +1084,8 @@ public class IpSecService extends IIpSecService.Stub {
         // the transform, this will prevent us from messing up.
         checkInetAddress(config.getDestinationAddress());
 
-        // If set, we ensure that the source address is valid.
-        if(!TextUtils.isEmpty(config.getSourceAddress())) {
-            checkInetAddress(config.getSourceAddress());
-        }
+        // We require a valid source address for all transforms
+        checkInetAddress(config.getSourceAddress());
 
         switch (config.getMode()) {
             case IpSecTransform.MODE_TRANSPORT:
