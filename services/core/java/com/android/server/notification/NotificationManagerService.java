@@ -1662,6 +1662,24 @@ public class NotificationManagerService extends SystemService {
                         record.update(duration);
                         record.update(callback);
                     } else {
+                        // Limit the number of toasts that any given package except the android
+                        // package can enqueue.  Prevents DOS attacks and deals with leaks.
+                        if (!isSystemToast) {
+                            int count = 0;
+                            final int N = mToastQueue.size();
+                            for (int i = 0; i < N; i++) {
+                                final ToastRecord r = mToastQueue.get(i);
+                                if (r.pkg.equals(pkg)) {
+                                    count++;
+                                    if (count >= MAX_PACKAGE_NOTIFICATIONS) {
+                                        Slog.e(TAG, "Package has already posted " + count
+                                               + " toasts. Not showing more. Package=" + pkg);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
                         Binder token = new Binder();
                         mWindowManagerInternal.addWindowToken(token, TYPE_TOAST, DEFAULT_DISPLAY);
                         record = new ToastRecord(callingPid, pkg, callback, duration, token);
