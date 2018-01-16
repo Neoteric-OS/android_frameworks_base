@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 The Android Open Source Project
+ * Copyright (c) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,23 @@
  * limitations under the License.
  */
 
-package android.telephony.ims.internal.aidl;
+
+package android.telephony.ims.aidl;
+
+import android.net.Uri;
+import android.telephony.ims.stub.ImsFeatureConfiguration;
+
+import com.android.ims.ImsReasonInfo;
 
 /**
- * See RcsFeature for more information.
+ * See ImsRegistrationImplBase.Callback for more information.
+ *
  * {@hide}
  */
-interface IImsRcsFeature {
-    //Empty Default Implementation
+oneway interface IImsRegistrationCallback {
+   void onRegistered(int imsRadioTech);
+   void onRegistering(int imsRadioTech);
+   void onDeregistered(in ImsReasonInfo info);
+   void onTechnologyChangeFailed(int imsRadioTech, in ImsReasonInfo info);
+   void onSubscriberAssociatedUriChanged(in Uri[] uris);
 }
