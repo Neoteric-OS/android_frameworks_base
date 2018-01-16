@@ -25818,12 +25818,11 @@ package android.net {
 
   public static class IpSecTransform.Builder {
     ctor public IpSecTransform.Builder(android.content.Context);
-    method public android.net.IpSecTransform buildTransportModeTransform(java.net.InetAddress) throws java.io.IOException, android.net.IpSecManager.ResourceUnavailableException, android.net.IpSecManager.SpiUnavailableException;
+    method public android.net.IpSecTransform buildTransportModeTransform(java.net.InetAddress, android.net.IpSecManager.SecurityParameterIndex) throws java.io.IOException, android.net.IpSecManager.ResourceUnavailableException, android.net.IpSecManager.SpiUnavailableException;
     method public android.net.IpSecTransform.Builder setAuthenticatedEncryption(android.net.IpSecAlgorithm);
     method public android.net.IpSecTransform.Builder setAuthentication(android.net.IpSecAlgorithm);
     method public android.net.IpSecTransform.Builder setEncryption(android.net.IpSecAlgorithm);
     method public android.net.IpSecTransform.Builder setIpv4Encapsulation(android.net.IpSecManager.UdpEncapsulationSocket, int);
-    method public android.net.IpSecTransform.Builder setSpi(android.net.IpSecManager.SecurityParameterIndex);
   }
 
   public class LinkAddress implements android.os.Parcelable {

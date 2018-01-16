@@ -300,27 +300,6 @@ public final class IpSecTransform implements AutoCloseable {
         }
 
         /**
-         * Set the SPI.
-         *
-         * <p>Because IPsec operates at the IP layer, this 32-bit identifier uniquely identifies
-         * packets to a given destination address. To prevent SPI collisions, values should be
-         * reserved by calling {@link IpSecManager#allocateSecurityParameterIndex}.
-         *
-         * <p>If the SPI is not set then the transform will fail to build.
-         *
-         * @param spi a unique {@link IpSecManager.SecurityParameterIndex} to identify transformed
-         *     traffic
-         */
-        public IpSecTransform.Builder setSpi(@NonNull IpSecManager.SecurityParameterIndex spi) {
-            Preconditions.checkNotNull(spi);
-            if (spi.getResourceId() == INVALID_RESOURCE_ID) {
-                throw new IllegalArgumentException("Invalid SecurityParameterIndex");
-            }
-            mConfig.setSpiResourceId(spi.getResourceId());
-            return this;
-        }
-
-        /**
          * Set the {@link Network} which will carry tunneled traffic.
          *
          * <p>Restricts the transformed traffic to a particular {@link Network}. This is required
@@ -391,47 +370,33 @@ public final class IpSecTransform implements AutoCloseable {
          *     this transform; this address must belong to the Network used by all sockets that
          *     utilize this transform; if provided, then only traffic originating from the
          *     specified source address will be processed.
+         * @param spi a unique {@link IpSecManager.SecurityParameterIndex} to identify transformed
+         *     traffic
          * @throws IllegalArgumentException indicating that a particular combination of transform
          *     properties is invalid
-         * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms are
-         *     active
+         * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms
+         *     are active
          * @throws IpSecManager.SpiUnavailableException indicating the rare case where an SPI
          *     collides with an existing transform
          * @throws IOException indicating other errors
          */
-        public IpSecTransform buildTransportModeTransform(@NonNull InetAddress sourceAddress)
+        public IpSecTransform buildTransportModeTransform(
+                @NonNull InetAddress sourceAddress,
+                @NonNull IpSecManager.SecurityParameterIndex spi)
                 throws IpSecManager.ResourceUnavailableException,
                         IpSecManager.SpiUnavailableException, IOException {
             Preconditions.checkNotNull(sourceAddress);
+            Preconditions.checkNotNull(spi);
+            if (spi.getResourceId() == INVALID_RESOURCE_ID) {
+                throw new IllegalArgumentException("Invalid SecurityParameterIndex");
+            }
             mConfig.setMode(MODE_TRANSPORT);
             mConfig.setSourceAddress(sourceAddress.getHostAddress());
+            mConfig.setSpiResourceId(spi.getResourceId());
             // FIXME: modifying a builder after calling build can change the built transform.
             return new IpSecTransform(mContext, mConfig).activate();
         }
 
-        /**
-         * Build a transport mode {@link IpSecTransform}.
-         *
-         * <p>This builds and activates a transport mode transform. Note that an active transform
-         * will not affect any network traffic until it has been applied to one or more sockets.
-         *
-         * @see IpSecManager#applyTransportModeTransform
-         * @throws IllegalArgumentException indicating that a particular combination of transform
-         *     properties is invalid
-         * @throws {@link IpSecManager#ResourceUnavailableException} indicating that too many
-         *     transforms are active
-         * @throws {@link IpSecManager#SpiUnavailableException} indicating the rare case where an
-         *     SPI collides with an existing transform
-         * @throws IOException indicating other errors
-         * @hide
-         */
-        public IpSecTransform buildTransportModeTransform()
-                throws IpSecManager.ResourceUnavailableException,
-                        IpSecManager.SpiUnavailableException, IOException {
-            mConfig.setMode(MODE_TRANSPORT);
-            // FIXME: modifying a builder after calling build can change the built transform.
-            return new IpSecTransform(mContext, mConfig).activate();
-        }
         /**
          * Build and return an {@link IpSecTransform} object as a Tunnel Mode Transform. Some
          * parameters have interdependencies that are checked at build time.
@@ -439,17 +404,30 @@ public final class IpSecTransform implements AutoCloseable {
          * @param sourceAddress the {@link InetAddress} that provides the source address for this
          *     IPsec tunnel. This is almost certainly an address belonging to the {@link Network}
          *     that will originate the traffic, which is set as the {@link #setUnderlyingNetwork}.
-         * @param remoteAddress the {@link InetAddress} representing the remote endpoint of this
-         *     IPsec tunnel.
+         * @param spi a unique {@link IpSecManager.SecurityParameterIndex} to identify transformed
+         *     traffic
          * @throws IllegalArgumentException indicating that a particular combination of transform
          *     properties is invalid.
+         * @throws IpSecManager.ResourceUnavailableException indicating that too many transforms
+         *     are active
+         * @throws IpSecManager.SpiUnavailableException indicating the rare case where an SPI
+         *     collides with an existing transform
+         * @throws IOException indicating other errors
          * @hide
          */
         public IpSecTransform buildTunnelModeTransform(
-                @NonNull InetAddress sourceAddress) {
+                @NonNull InetAddress sourceAddress,
+                @NonNull IpSecManager.SecurityParameterIndex spi)
+                throws IpSecManager.ResourceUnavailableException,
+                        IpSecManager.SpiUnavailableException, IOException {
             Preconditions.checkNotNull(sourceAddress);
-            mConfig.setSourceAddress(sourceAddress.getHostAddress());
+            Preconditions.checkNotNull(spi);
+            if (spi.getResourceId() == INVALID_RESOURCE_ID) {
+                throw new IllegalArgumentException("Invalid SecurityParameterIndex");
+            }
             mConfig.setMode(MODE_TUNNEL);
+            mConfig.setSourceAddress(sourceAddress.getHostAddress());
+            mConfig.setSpiResourceId(spi.getResourceId());
             return new IpSecTransform(mContext, mConfig);
         }
 
