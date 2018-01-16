@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83339e2_937e8613",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-01-16T06:30:19Z",
+      "side": 1,
+      "message": "is there a reason these aren\u0027t just calls to sysinfo(2) instead?",
+      "range": {
+        "startLine": 660,
+        "startChar": 0,
+        "endLine": 672,
+        "endChar": 1
+      },
+      "revId": "6cbdaab7955e62d7a5fdef114062f3b861ac7d8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
