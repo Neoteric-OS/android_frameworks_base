@@ -38,6 +38,8 @@ oneway interface INetdEventCallback {
     void onDnsEvent(String hostname, in String[] ipAddresses, int ipAddressesCount, long timestamp,
             int uid);
 
+    void onPrivateDnsValidationEvent(int netId);
+
     /**
      * Reports a single connect library call.
      * This method must not block or perform long-running operations.

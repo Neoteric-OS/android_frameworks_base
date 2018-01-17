@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.PRIVATE_DNS_DEFAULT_MODE;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
 import static android.provider.Settings.Global.DNS_RESOLVER_MIN_SAMPLES;
@@ -29,6 +30,8 @@ import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.INetd;
+import android.net.LinkProperties;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.INetworkManagementService;
@@ -42,6 +45,7 @@ import com.android.server.connectivity.MockableSystemProperties;
 
 import java.net.InetAddress;
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -160,6 +164,53 @@ public class DnsManager {
             mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
         } finally {
             Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    public void updateLinkPropertiesPrivateDns(int netId, LinkProperties lp) {
+        // Get the DNS-over-TLS validation statuses for the DNS servers
+        // on this link.
+        List<InetAddress> dnses = lp.getDnsServers();
+        String[] addresses = new String[dnses.size()];
+        boolean[] statuses = new boolean[dnses.size()];
+        for (int i=0; i<dnses.size(); i++) {
+            addresses[i] = dnses.get(i).getHostAddress();
+        }
+        try {
+            INetd netdService = mNMS.getNetdService();
+            statuses = mNMS.getNetdService().getPrivateDnsValidationStatuses(
+                    netId, addresses);
+        } catch (Exception e) {
+            Slog.e(TAG, "Exception getting private DNS validation statuses: "
+                    + e);
+        }
+
+        // Set the private DNS fields in LinkProperties based on the user's
+        // private DNS setting and the presence of a validated server.
+        boolean hasValidatedServer = false;
+        for (boolean validated : statuses) {
+            hasValidatedServer |= validated;
+        }
+        ContentResolver cr = mContext.getContentResolver();
+        String privateDnsMode = Settings.Global.getString(cr,
+                Settings.Global.PRIVATE_DNS_MODE);
+        if (TextUtils.isEmpty(privateDnsMode)) {
+            privateDnsMode = PRIVATE_DNS_DEFAULT_MODE;
+        }
+        switch (privateDnsMode) {
+            case PRIVATE_DNS_MODE_PROVIDER_HOSTNAME:
+                lp.setUsePrivateDns(true);
+                lp.setPrivateDnsServerName(Settings.Global.getString(cr,
+                        Settings.Global.PRIVATE_DNS_SPECIFIER));
+                break;
+            case PRIVATE_DNS_MODE_OPPORTUNISTIC:
+                lp.setUsePrivateDns(hasValidatedServer);
+                lp.setPrivateDnsServerName(null);
+                break;
+            case PRIVATE_DNS_MODE_OFF:
+                lp.setUsePrivateDns(false);
+                lp.setPrivateDnsServerName(null);
+                break;
         }
     }
 
