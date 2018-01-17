@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2764f0df_57522c9f",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T10:29:31Z",
+      "side": 1,
+      "message": "Should we also note that the transform still needs to be closed? Perhaps that\u0027s obvious.",
+      "range": {
+        "startLine": 409,
+        "startChar": 75,
+        "endLine": 409,
+        "endChar": 76
+      },
+      "revId": "f73d252c8f51936eec49313f4cc26f1da7727b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b1712d_a18cc2e5",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T10:29:31Z",
+      "side": 1,
+      "message": "Nit: this will fit on one line.",
+      "range": {
+        "startLine": 418,
+        "startChar": 59,
+        "endLine": 419,
+        "endChar": 32
+      },
+      "revId": "f73d252c8f51936eec49313f4cc26f1da7727b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2801ed0f_9fe86b9a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T10:29:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 436,
+        "startChar": 67,
+        "endLine": 437,
+        "endChar": 32
+      },
+      "revId": "f73d252c8f51936eec49313f4cc26f1da7727b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c710a52_9433550a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T10:29:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 454,
+        "startChar": 67,
+        "endLine": 455,
+        "endChar": 32
+      },
+      "revId": "f73d252c8f51936eec49313f4cc26f1da7727b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f99ce5_60b45e5e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T10:29:31Z",
+      "side": 1,
+      "message": "Yes, we should add IOException to the function signature. (Not in this CL.)",
+      "range": {
+        "startLine": 1245,
+        "startChar": 12,
+        "endLine": 1245,
+        "endChar": 92
+      },
+      "revId": "f73d252c8f51936eec49313f4cc26f1da7727b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
