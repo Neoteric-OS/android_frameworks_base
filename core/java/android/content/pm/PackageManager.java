@@ -506,6 +506,11 @@ public abstract class PackageManager {
     public static final int MATCH_DEBUG_TRIAGED_MISSING = 0x10000000;
 
     /**
+     * @hide
+     */
+    public static final int MATCH_KNOWN_PACKAGES_DEFINITELY = 0x20000000;
+
+    /**
      * Flag for {@link #addCrossProfileIntentFilter}: if this flag is set: when
      * resolving an intent that matches the {@code CrossProfileIntentFilter},
      * the current profile will be skipped. Only activities in the target user

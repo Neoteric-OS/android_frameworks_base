@@ -71,6 +71,7 @@ import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_UNAWARE;
 import static android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS;
 import static android.content.pm.PackageManager.MATCH_FACTORY_ONLY;
 import static android.content.pm.PackageManager.MATCH_KNOWN_PACKAGES;
+import static android.content.pm.PackageManager.MATCH_KNOWN_PACKAGES_DEFINITELY;
 import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
 import static android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES;
 import static android.content.pm.PackageManager.MOVE_FAILED_3RD_PARTY_NOT_ALLOWED_ON_INTERNAL;
@@ -3832,7 +3833,16 @@ public class PackageManagerService extends IPackageManager.Stub
         }
         PackageParser.Package p = ps.pkg;
         if (p == null) {
-            return null;
+            if ((flags & MATCH_KNOWN_PACKAGES_DEFINITELY) != 0) {
+                PackageInfo pi = new PackageInfo();
+                pi.packageName = ps.name;
+                pi.applicationInfo = new ApplicationInfo();
+                pi.applicationInfo.uid = UserHandle.getUid(userId, ps.appId);
+                Slog.w(TAG, "ps.pkg is n/a for [" + ps.name + "]. Provides a minimum info.");
+                return pi;
+            } else {
+                return null;
+            }
         }
         final int callingUid = Binder.getCallingUid();
         // Filter out ephemeral app metadata:
