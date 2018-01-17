@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319cc6f0_d72aaa9c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4710,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T08:48:49Z",
+      "side": 1,
+      "message": "Haven\u0027t looked at this in detail, but is there something simpler that we can do here? Perhaps create a copy and use removeAll/addAll instead of iterating ourselves? LinkProperties#compareResult does something similar IIRC.",
+      "range": {
+        "startLine": 4668,
+        "startChar": 0,
+        "endLine": 4710,
+        "endChar": 9
+      },
+      "revId": "21b4b4900704c9bd75c91e24b1374d61addbb8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
