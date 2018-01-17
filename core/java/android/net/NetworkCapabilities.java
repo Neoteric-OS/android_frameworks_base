@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -66,6 +67,7 @@ public final class NetworkCapabilities implements Parcelable {
             mNetworkSpecifier = nc.mNetworkSpecifier;
             mSignalStrength = nc.mSignalStrength;
             mUids = nc.mUids;
+            mEstablishingVpnAppUid = nc.mEstablishingVpnAppUid;
         }
     }
 
@@ -79,6 +81,8 @@ public final class NetworkCapabilities implements Parcelable {
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
         mNetworkSpecifier = null;
         mSignalStrength = SIGNAL_STRENGTH_UNSPECIFIED;
+        mUids = null;
+        mEstablishingVpnAppUid = Process.SYSTEM_UID;
     }
 
     /**
@@ -621,6 +625,29 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * UID of the app that manages this network, or Process.SYSTEM_UID if managed by the system.
+     *
+     * This field keeps track of the UID of the app that created this network and is in charge
+     * of managing it. In the practice, it is used to store the UID of VPN apps so it is named
+     * accordingly, but it may be renamed if other mechanisms are offered for third party apps
+     * to create networks.
+     *
+     * Because this field is only used in the services side (and to avoid apps being able to
+     * set this to whatever they want), this field is not parcelled and will not be conserved
+     * across the IPC boundary.
+     * @hide
+     */
+    private int mEstablishingVpnAppUid = Process.SYSTEM_UID;
+
+    /**
+     * Set the UID of the managing app.
+     * @hide
+     */
+    public void setEstablishingVpnAppUid(final int uid) {
+        mEstablishingVpnAppUid = uid;
+    }
+
+    /**
      * Value indicating that link bandwidth is unspecified.
      * @hide
      */
@@ -846,6 +873,10 @@ public final class NetworkCapabilities implements Parcelable {
      * bypass the VPN can do so iff the VPN app allows them to or if they are privileged. If this
      * member is null, then the network is not restricted by app UID. If it's an empty list, then
      * it means nobody can use it.
+     * As a special exception, the app managing this network (as identified by its UID stored in
+     * mEstablishingVpnAppUid) can always see and access this network. This is embodied by a
+     * special check in satisfiedByUids. That still does not mean the network necessarily
+     * <strong>applies</strong> to the app that manages it as determined by #appliesToUid.
      * <p>
      * Please note that in principle a single app can be associated with multiple UIDs because
      * each app will have a different UID when it's run as a different (macro-)user. A single
@@ -933,9 +964,17 @@ public final class NetworkCapabilities implements Parcelable {
     /**
      * Test whether the passed NetworkCapabilities satisfies the UIDs this capabilities require.
      *
-     * This is called on the NetworkCapabilities embedded in a request with the capabilities
-     * of an available network.
-     * nc is assumed nonnull.
+     * This method is called on the NetworkCapabilities embedded in a request with the
+     * capabilities of an available network. It checks whether all the UIDs from this listen
+     * (representing the UIDs that must have access to the network) are satisfied by the UIDs
+     * in the passed nc (representing the UIDs that this network is available to).
+     * <p>
+     * As a special exception, the UID that created the passed network (as represented by its
+     * mEstablishingVpnAppUid field) always satisfies a listen request requiring it, even if
+     * the network does not apply to it. That is so a VPN app can see its own network when
+     * it listens for it.
+     * <p>
+     * nc is assumed nonnull. Else, NPE.
      * @see #appliesToUid
      * @hide
      */
@@ -943,6 +982,7 @@ public final class NetworkCapabilities implements Parcelable {
         if (null == nc.mUids) return true; // The network satisfies everything.
         if (null == mUids) return false; // Not everything allowed but requires everything
         for (UidRange requiredRange : mUids) {
+            if (requiredRange.contains(nc.mEstablishingVpnAppUid)) return true;
             if (!nc.appliesToUidRange(requiredRange)) {
                 return false;
             }
@@ -1179,8 +1219,10 @@ public final class NetworkCapabilities implements Parcelable {
 
         String uids = (null != mUids ? " Uids: <" + mUids + ">" : "");
 
+        String establishingAppUid = " EstablishingAppUid: " + mEstablishingVpnAppUid;
+
         return "[" + transports + capabilities + upBand + dnBand + specifier + signalStrength
-            + uids + "]";
+            + uids + establishingAppUid + "]";
     }
 
     /**
