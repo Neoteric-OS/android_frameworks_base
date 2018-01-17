@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb27680_b51dc24b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T11:30:46Z",
+      "side": 1,
+      "message": "I think it will affect mDefaultRequest too. That could be pretty bad - as soon as a VPN comes up on cell or wifi that affects the system server, we\u0027ll tear down wifi.\n\nThis might work because VPNs always set UID ranges, but these requests have null UID ranges so they won\u0027t be satisfied by any network with UID ranges. However, I don\u0027t know if there\u0027s a brief period of time when VPN is connects when it\u0027s connected but doesn\u0027t have the UID ranges. If it does, then we\u0027ll have a problem.\n\nAnother problem is that the TRACK_DEFAULT callback is a hack: it\u0027s not really a callback at all, but it\u0027s more like a request, in the sense that it can only match one network at a time. The hack works today because all TRACK_DEFAULT callbacks have identical NetworkCapabilities to mDefaultRequest, and thus always does exactly what mDefaultRequest does. But in a world where TRACK_DEFAULT requests are per-app, this won\u0027t work.\n\nThis may have implications to network refcounting and teardown. Particularly, ConnectivityService#unneeded will be affected. It might be possible to fix all this by changing NetworkAgentInfo#updateRequestCounts so as not to count TRACK_DEFAULT requests, but I don\u0027t know for sure. Fortunately we have lots of testing around this.",
+      "range": {
+        "startLine": 899,
+        "startChar": 37,
+        "endLine": 900,
+        "endChar": 18
+      },
+      "revId": "b95bfb0f60d5fe79b5450cb59d860009feb4ad7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47aec6b_9b9114da",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T11:30:46Z",
+      "side": 1,
+      "message": "Suggest moving NetworkAgentInfo#MAXIMUM_NETWORK_SCORE to a common location (ConnectivityService.java? ConnectivityManager.java? or maybe a new NetworkConstants or NetworkScore class?) and putting this next to it. Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 139,
+        "startChar": 28,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "b95bfb0f60d5fe79b5450cb59d860009feb4ad7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
