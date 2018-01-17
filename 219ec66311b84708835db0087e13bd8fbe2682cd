@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1887c704_01fc556e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3608,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T11:31:15Z",
+      "side": 1,
+      "message": "Nit: this is not necessary, since as far as I can tell the network doesn\u0027t have NET_CAPABILITY_NOT_VPN. See comment below as well.",
+      "range": {
+        "startLine": 3608,
+        "startChar": 34,
+        "endLine": 3608,
+        "endChar": 56
+      },
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e581a5_fecf6a92",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3626,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T11:31:15Z",
+      "side": 1,
+      "message": "This comment is a bit confusing, since as far as I can tell the network doesn\u0027t have NET_CAPABILITY_NOT_VPN.",
+      "range": {
+        "startLine": 3626,
+        "startChar": 8,
+        "endLine": 3626,
+        "endChar": 54
+      },
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bbc600_c4bb5b81",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3633,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T11:31:15Z",
+      "side": 1,
+      "message": "Is it possible to do a bit more testing here, such as change the UID ranges so they no longer include |uid| and assert that the onLost fires on all the callbacks?\n\nAlso, might be good to check the return value of getActiveNetwork() both before and after changing the UID. Before the change, I\u0027d expect it to return the VPN, and after the change, I\u0027d expect it to return wifi.",
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
