@@ -107,6 +107,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_CAPTIVE_PORTAL,
             NET_CAPABILITY_NOT_ROAMING,
             NET_CAPABILITY_FOREGROUND,
+            NET_CAPABILITY_UNCONGESTED,
     })
     public @interface NetCapability { }
 
@@ -234,8 +235,15 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_FOREGROUND = 19;
 
+    /**
+     * Indicates that this network is currently uncongested. When this capability is missing, the
+     * network is congested and apps should defer network traffic that can be done at a later time.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_UNCONGESTED = 20;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_FOREGROUND;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_UNCONGESTED;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -248,7 +256,8 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_VALIDATED) |
             (1 << NET_CAPABILITY_CAPTIVE_PORTAL) |
             (1 << NET_CAPABILITY_NOT_ROAMING) |
-            (1 << NET_CAPABILITY_FOREGROUND);
+            (1 << NET_CAPABILITY_FOREGROUND) |
+            (1 << NET_CAPABILITY_UNCONGESTED);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -389,6 +398,7 @@ public final class NetworkCapabilities implements Parcelable {
         if (hasCapability(NET_CAPABILITY_VALIDATED)) return "NET_CAPABILITY_VALIDATED";
         if (hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL)) return "NET_CAPABILITY_CAPTIVE_PORTAL";
         if (hasCapability(NET_CAPABILITY_FOREGROUND)) return "NET_CAPABILITY_FOREGROUND";
+        if (hasCapability(NET_CAPABILITY_UNCONGESTED)) return "NET_CAPABILITY_UNCONGESTED";
         // This cannot happen unless the preceding checks are incomplete.
         if ((mNetworkCapabilities & NON_REQUESTABLE_CAPABILITIES) != 0) {
             return "unknown non-requestable capabilities " + Long.toHexString(mNetworkCapabilities);
@@ -1056,6 +1066,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_CAPTIVE_PORTAL: return "CAPTIVE_PORTAL";
             case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
             case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
+            case NET_CAPABILITY_UNCONGESTED:    return "UNCONGESTED";
             default:                            return Integer.toString(capability);
         }
     }
