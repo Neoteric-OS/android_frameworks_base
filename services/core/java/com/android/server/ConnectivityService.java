@@ -49,6 +49,7 @@ import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.IConnectivityManager;
+import android.net.INetdEventCallback;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
@@ -135,6 +136,7 @@ import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.LingerMonitor;
 import com.android.server.connectivity.MockableSystemProperties;
+import com.android.server.connectivity.NetdEventListenerService;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
@@ -407,6 +409,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
     private final DnsManager mDnsManager;
+    private final NetdEventListenerService mNetdListenerService;
 
     private boolean mSystemReady;
     private Intent mInitialBroadcast;
@@ -857,6 +860,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mMultinetworkPolicyTracker = createMultinetworkPolicyTracker(
                 mContext, mHandler, () -> rematchForAvoidBadWifiUpdate());
         mMultinetworkPolicyTracker.start();
+
+        mNetdListenerService = (NetdEventListenerService) mContext.getSystemService(
+                Context.NETD_LISTENER_SERVICE);
+        mNetdListenerService.addNetdEventCallback(0, mNetdEventCallback);
 
         mDnsManager = new DnsManager(mContext, mNetd, mSystemProperties);
     }
@@ -1459,6 +1466,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
         return true;
+    }
+
+    private final INetdEventCallback mNetdEventCallback = new INetdEventCallback.Stub() {
+        @Override
+        public void onDnsEvent(String hostname, String[] ipAddresses, int ipAddressesCount,
+                long timestamp, int uid) {
+        }
+        @Override
+        public void onConnectEvent(String ipAddr, int port, long timestamp, int uid) {
+        }
+        @Override
+        public void onPrivateDnsValidationEvent(int netId) {
+            Network network = new Network(netId);
+            NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
+            LinkProperties oldLp = new LinkProperties(nai.linkProperties);
+            dnsManager.updateLinkPropertiesPrivateDns(netId, oldLp);
+            updateLinkProperties(nai, oldLp);
+        }
     }
 
     private final INetworkPolicyListener mPolicyListener = new INetworkPolicyListener.Stub() {

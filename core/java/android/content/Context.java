@@ -4061,6 +4061,8 @@ public abstract class Context {
      */
     public static final String TIME_ZONE_RULES_MANAGER_SERVICE = "timezone";
 
+    public static final String NETD_LISTENER_SERVICE = "netd_listener";
+
     /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.

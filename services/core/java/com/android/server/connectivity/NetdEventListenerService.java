@@ -209,6 +209,15 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     @Override
+    public synchronized void onPrivateDnsValidationEvent(int netId) {
+        for (INetdEventCallback callback : mNetdEventCallbackList) {
+            if (callback != null) {
+                callback.onPrivateDnsValidationEvent(netId);
+            }
+        }
+    }
+
+    @Override
     // Called concurrently by multiple binder threads.
     // This method must not block or perform long-running operations.
     public synchronized void onConnectEvent(int netId, int error, int latencyMs, String ipAddr,
