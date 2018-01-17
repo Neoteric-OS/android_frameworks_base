@@ -36,6 +36,12 @@ public class NetworkMisc implements Parcelable {
     public boolean allowBypass;
 
     /**
+     * The UID of the app managing this network, or 0 if unavailable.
+     * This is used by the VPN code to track of the app establishing the VPN.
+     */
+    public int managerUid;
+
+    /**
      * Set if the network was manually/explicitly connected to by the user either from settings
      * or a 3rd party app.  For example, turning on cell data is not explicit but tapping on a wifi
      * ap in the wifi settings to trigger a connection is explicit.  A 3rd party app asking to
@@ -75,6 +81,7 @@ public class NetworkMisc implements Parcelable {
             acceptUnvalidated = nm.acceptUnvalidated;
             subscriberId = nm.subscriberId;
             provisioningNotificationDisabled = nm.provisioningNotificationDisabled;
+            managerUid = nm.managerUid;
         }
     }
 
@@ -90,6 +97,7 @@ public class NetworkMisc implements Parcelable {
         out.writeInt(acceptUnvalidated ? 1 : 0);
         out.writeString(subscriberId);
         out.writeInt(provisioningNotificationDisabled ? 1 : 0);
+        out.writeInt(managerUid);
     }
 
     public static final Creator<NetworkMisc> CREATOR = new Creator<NetworkMisc>() {
@@ -101,6 +109,7 @@ public class NetworkMisc implements Parcelable {
             networkMisc.acceptUnvalidated = in.readInt() != 0;
             networkMisc.subscriberId = in.readString();
             networkMisc.provisioningNotificationDisabled = in.readInt() != 0;
+            networkMisc.managerUid = in.readInt();
             return networkMisc;
         }
 

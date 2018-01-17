@@ -4930,7 +4930,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void rematchNetworkAndRequests(NetworkAgentInfo newNetwork,
             ReapUnvalidatedNetworks reapUnvalidatedNetworks, long now) {
         if (!newNetwork.everConnected) return;
-        boolean keep = newNetwork.isVPN();
+        final boolean isVpn = newNetwork.isVPN();
+        boolean keep = isVpn;
         boolean isNewDefault = false;
         NetworkAgentInfo oldDefaultNetwork = null;
 
@@ -4944,6 +4945,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ArrayList<NetworkAgentInfo> affectedNetworks = new ArrayList<NetworkAgentInfo>();
         ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<NetworkRequestInfo>();
         NetworkCapabilities nc = newNetwork.networkCapabilities;
+        if (isVpn) {
+            // If this network is a VPN, then it should be visible to the requests of the app that
+            // established it. Unfortunately for historical reasons the VPN is marked as not
+            // applying to this app by removing the UID of the establishing app from the UIDs that
+            // this VPN applies to. This was originally so that the VPN apps do not have to take
+            // extra care to avoid looping back the packets onto their own VPN.
+            final int establishingUid = newNetwork.networkMisc.managerUid;
+            final Set<UidRange> ranges = nc.getUids();
+            ranges.add(new UidRange(establishingUid, establishingUid));
+            nc.setUids(ranges);
+        }
         if (VDBG) log(" network has: " + nc);
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             // Process requests in the first pass and listens in the second pass. This allows us to
