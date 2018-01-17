@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "307a01ee_3d461c57",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-01-17T00:37:15Z",
+      "side": 1,
+      "message": "Maybe we should comment this out in the final version of this code just like other debug printing info above. The userdebug build I am running on hikey can see these log every time it happens. So I think it definitely have effect performance.",
+      "parentUuid": "63a45c93_c96121b7",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 102
+      },
+      "revId": "d73eaf19dc00c94de478ed34f2cb5a43512794b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407b30e0_817164e0",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 9
