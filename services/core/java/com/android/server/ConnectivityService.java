@@ -4927,7 +4927,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void rematchNetworkAndRequests(NetworkAgentInfo newNetwork,
             ReapUnvalidatedNetworks reapUnvalidatedNetworks, long now) {
         if (!newNetwork.everConnected) return;
-        boolean keep = newNetwork.isVPN();
+        final boolean isVpn = newNetwork.isVPN();
+        boolean keep = isVpn;
         boolean isNewDefault = false;
         NetworkAgentInfo oldDefaultNetwork = null;
 
@@ -4940,7 +4941,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // which this network is now the best.
         ArrayList<NetworkAgentInfo> affectedNetworks = new ArrayList<NetworkAgentInfo>();
         ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<NetworkRequestInfo>();
-        NetworkCapabilities nc = newNetwork.networkCapabilities;
+        NetworkCapabilities nc = new NetworkCapabilities(newNetwork.networkCapabilities);
+        if (isVpn) {
+            // If this network is a VPN, then it should be visible to the requests of the app that
+            // established it. Unfortunately for historical reasons the VPN is marked as not
+            // applying to this app by removing the UID of the establishing app from the UIDs that
+            // this VPN applies to. This was originally so that the VPN apps do not have to take
+            // extra care to avoid looping back the packets onto their own VPN.
+            final int vpnAppUid = newNetwork.networkMisc.establishingVpnAppUid;
+            final Set<UidRange> ranges = nc.getUids();
+            ranges.add(new UidRange(vpnAppUid, vpnAppUid));
+            nc.setUids(ranges);
+        }
         if (VDBG) log(" network has: " + nc);
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             // Process requests in the first pass and listens in the second pass. This allows us to
@@ -4950,7 +4962,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (nri.request.isListen()) continue;
 
             final NetworkAgentInfo currentNetwork = getNetworkForRequest(nri.request.requestId);
-            final boolean satisfies = newNetwork.satisfies(nri.request);
+            final boolean satisfies = newNetwork.created
+                    && nri.request.networkCapabilities.satisfiedByNetworkCapabilities(nc);
             if (newNetwork == currentNetwork && satisfies) {
                 if (VDBG) {
                     log("Network " + newNetwork.name() + " was already satisfying" +
