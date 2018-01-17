@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e1221ca_ac4fcc24",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T08:13:25Z",
+      "side": 1,
+      "message": "Nit: I think it would be clearer if both of these were called vpnAppUid.",
+      "range": {
+        "startLine": 4954,
+        "startChar": 22,
+        "endLine": 4954,
+        "endChar": 73
+      },
+      "revId": "7d400a11c815ca44e5cae5d031bd9c073a26b499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629f9602_6e1aa249",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4957,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T08:13:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s a good idea to modify the list of UIDs in this loop. It\u0027s an unexpected side effect of this function. Also, I think it would be easier to think about these UID ranges if they were the same as the UID ranges that are actually plumbed down into the network stack. If they\u0027re not, I think it will be confusing.\n\nIn my earlier read of this code I thought ranges was a defensive copy, but I missed the fact that we\u0027re basically modifying the networks\u0027 capabilities here in the rematch function.\n\nAlso, this could slow things down a bit.\n\nAn obvious alternative would be just to put the VPN app UID into NetworkCapabilities. Obviously, the VPN app\u0027s UID is not a capability, but if we think of NetworkCapabilities as something that\u0027s actually a network metadata class (which at this point it sort of is, given that it has UID ranges and so on), then it feels more natural.\n\nAnother option would be to have NetworkAgentInfo#satisfies look at the UID of the VPN app, since NetworkAgentInfo contains networkMisc.",
+      "range": {
+        "startLine": 4957,
+        "startChar": 12,
+        "endLine": 4957,
+        "endChar": 31
+      },
+      "revId": "7d400a11c815ca44e5cae5d031bd9c073a26b499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
