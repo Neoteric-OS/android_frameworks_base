@@ -1105,10 +1105,10 @@ public class IpSecService extends IIpSecService.Stub {
      * receive data.
      */
     @Override
-    public synchronized IpSecTransformResponse createTransportModeTransform(
-            IpSecConfig c, IBinder binder) throws RemoteException {
+    public synchronized IpSecTransformResponse createTransform(IpSecConfig c, IBinder binder)
+            throws RemoteException {
         checkIpSecConfig(c);
-        checkNotNull(binder, "Null Binder passed to createTransportModeTransform");
+        checkNotNull(binder, "Null Binder passed to createTransform");
         final int resourceId = mNextResourceId++;
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());

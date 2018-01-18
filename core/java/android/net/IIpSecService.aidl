@@ -39,7 +39,7 @@ interface IIpSecService
 
     void closeUdpEncapsulationSocket(int resourceId);
 
-    IpSecTransformResponse createTransportModeTransform(in IpSecConfig c, in IBinder binder);
+    IpSecTransformResponse createTransform(in IpSecConfig c, in IBinder binder);
 
     void deleteTransportModeTransform(int transformId);
 
