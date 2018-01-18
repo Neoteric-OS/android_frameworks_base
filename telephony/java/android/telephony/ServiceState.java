@@ -32,6 +32,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * <ul>
  *   <li>Service state: IN_SERVICE, OUT_OF_SERVICE, EMERGENCY_ONLY, POWER_OFF
+ *   <li>Duplex mode: UNKNOWN, FDD, TDD
  *   <li>Roaming indicator
  *   <li>Operator name, short name and numeric id
  *   <li>Network selection mode
@@ -66,6 +67,21 @@ public class ServiceState implements Parcelable {
      * Radio of telephony is explicitly powered off.
      */
     public static final int STATE_POWER_OFF = 3;
+
+    /**
+     * Duplex mode for the phone is unknown.
+     */
+    public static final int DUPLEX_MODE_UNKNOWN = 0;
+
+    /**
+     * Duplex mode for the phone is FDD.
+     */
+    public static final int DUPLEX_MODE_FDD = 1;
+
+    /**
+     * Duplex mode for the phone is TDD.
+     */
+    public static final int DUPLEX_MODE_TDD = 2;
 
     /**
      * RIL level registration state values from ril.h
@@ -473,6 +489,33 @@ public class ServiceState implements Parcelable {
      */
     public int getDataRegState() {
         return mDataRegState;
+    }
+
+    /**
+     * Get the current duplex mode
+     */
+    public int getDuplexMode() {
+        // TODO(b/72117602) determine duplex mode from channel number, using 3GPP 36.101 sections
+        // 5.7.3-1 and 5.5-1
+        return DUPLEX_MODE_UNKNOWN;
+    }
+
+    /**
+     * Get the channel number of the current primary serving cell
+     *
+     * <p>This is EARFCN for LTE, ARFCN for UMTS, and ARFCN for GSM.
+     */
+    public int getChannelNumber() {
+        // TODO(b/72117602) implement channel number
+        return 0;
+    }
+
+    /**
+     * Get an array of cell bandwidths (kHz) for the current serving cells
+     */
+    public int[] getCellBandwidths() {
+        // TODO(b/72117602) implement cell bandwidths
+        return new int[0];
     }
 
     /**
@@ -938,6 +981,16 @@ public class ServiceState implements Parcelable {
     public void setDataRegState(int state) {
         mDataRegState = state;
         if (VDBG) Rlog.d(LOG_TAG, "[ServiceState] setDataRegState=" + mDataRegState);
+    }
+
+    /** @hide */
+    public void setCellBandwidths(int[] bandwidths) {
+        // TODO(b/72117602) implement cell bandwidths
+    }
+
+    /** @hide */
+    public void setChannelNumber(int channelNumber) {
+        // TODO(b/72117602) implement channel number
     }
 
     public void setRoaming(boolean roaming) {
