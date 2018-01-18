@@ -36,13 +36,13 @@ import android.net.NetworkUtils;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.INetworkManagementService;
-import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.system.GaiException;
 import android.system.OsConstants;
 import android.system.StructAddrinfo;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.Slog;
 
 import com.android.server.connectivity.MockableSystemProperties;
@@ -53,8 +53,12 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.Set;
 import java.util.StringJoiner;
 
 
@@ -150,11 +154,88 @@ public class DnsManager {
         return uris;
     }
 
+    public static class PrivateDnsValidationUpdate {
+        final public int netId;
+        final public InetAddress ipAddress;
+        final public String hostname;
+        final public boolean validated;
+
+        public PrivateDnsValidationUpdate(int netId, InetAddress ipAddress,
+                String hostname, boolean validated) {
+            this.netId = netId;
+            this.ipAddress = ipAddress;
+            this.hostname = hostname;
+            this.validated = validated;
+        }
+    }
+
+    private static class PrivateDnsValidationStatuses {
+        enum ValidationStatus {
+            IN_PROGRESS,
+            FAILED,
+            SUCCEEDED
+        }
+
+        // Validation statuses of <hostname, ipAddress> pairs for a single netId
+        private Map<Pair<String, InetAddress>, ValidationStatus> mValidationMap;
+
+        private PrivateDnsValidationStatuses() {
+            mValidationMap = new HashMap<>();
+        }
+
+        private boolean hasValidatedServer() {
+            for (ValidationStatus status : mValidationMap.values()) {
+                if (status == ValidationStatus.SUCCEEDED) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void updateTrackedDnses(String[] ipAddresses, String hostname) {
+            Set<Pair<String, InetAddress>> latestDnses = new HashSet<>();
+            for (String ipAddress : ipAddresses) {
+                try {
+                    latestDnses.add(new Pair(hostname,
+                            InetAddress.parseNumericAddress(ipAddress)));
+                } catch (IllegalArgumentException e) {}
+            }
+            // Remove <hostname, ipAddress> pairs that should not be tracked.
+            for (Iterator<Map.Entry<Pair<String, InetAddress>, ValidationStatus>> it =
+                    mValidationMap.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<Pair<String, InetAddress>, ValidationStatus> entry = it.next();
+                if (!latestDnses.contains(entry.getKey())) {
+                    it.remove();
+                }
+            }
+            // Add new <hostname, ipAddress> pairs that should be tracked.
+            for (Pair<String, InetAddress> p : latestDnses) {
+                if (!mValidationMap.containsKey(p)) {
+                    mValidationMap.put(p, ValidationStatus.IN_PROGRESS);
+                }
+            }
+        }
+
+        private void updateStatus(InetAddress ipAddress, String hostname,
+                boolean validated) {
+            Pair<String, InetAddress> p = new Pair(hostname, ipAddress);
+            if (!mValidationMap.containsKey(p)) {
+                return;
+            }
+            if (validated) {
+                mValidationMap.put(p, ValidationStatus.SUCCEEDED);
+            } else {
+                mValidationMap.put(p, ValidationStatus.FAILED);
+            }
+        }
+    }
+
     private final Context mContext;
     private final ContentResolver mContentResolver;
     private final INetworkManagementService mNMS;
     private final MockableSystemProperties mSystemProperties;
     private final Map<Integer, PrivateDnsConfig> mPrivateDnsMap;
+    private final Map<Integer, PrivateDnsValidationStatuses> mPrivateDnsValidationMap;
 
     private int mNumDnsEntries;
     private int mSampleValidity;
@@ -170,6 +251,7 @@ public class DnsManager {
         mNMS = nms;
         mSystemProperties = sp;
         mPrivateDnsMap = new HashMap<>();
+        mPrivateDnsValidationMap = new HashMap<>();
 
         // TODO: Create and register ContentObservers to track every setting
         // used herein, posting messages to respond to changes.
@@ -181,6 +263,7 @@ public class DnsManager {
 
     public void removeNetwork(Network network) {
         mPrivateDnsMap.remove(network.netId);
+        mPrivateDnsValidationMap.remove(network.netId);
     }
 
     public PrivateDnsConfig updatePrivateDns(Network network, PrivateDnsConfig cfg) {
@@ -188,6 +271,46 @@ public class DnsManager {
         return (cfg != null)
                 ? mPrivateDnsMap.put(network.netId, cfg)
                 : mPrivateDnsMap.remove(network);
+    }
+
+    public boolean maybeFixLinkPropertiesPrivateDns(int netId, LinkProperties lp) {
+        final LinkProperties oldLp = new LinkProperties(lp);
+
+        // Use the PrivateDnsConfig data pushed to this class instance
+        // from ConnectivityService.
+        final PrivateDnsConfig privateDnsCfg = mPrivateDnsMap.get(netId);
+
+        final boolean useTls = (privateDnsCfg != null) && privateDnsCfg.useTls;
+        final boolean strictMode = (privateDnsCfg != null) && privateDnsCfg.inStrictMode();
+        final String tlsHostname = strictMode ? privateDnsCfg.hostname : "";
+
+        if (strictMode) {
+            lp.setUsePrivateDns(true);
+            lp.setPrivateDnsServerName(tlsHostname);
+        } else if (useTls) {
+            // We are in opportunistic mode. Private DNS should be used if there
+            // is a known DNS-over-TLS validated server.
+            boolean validated = mPrivateDnsValidationMap.containsKey(netId) &&
+                    mPrivateDnsValidationMap.get(netId).hasValidatedServer();
+            lp.setUsePrivateDns(validated);
+            lp.setPrivateDnsServerName(null);
+        } else {
+            // Private DNS is disabled.
+            lp.setUsePrivateDns(false);
+            lp.setPrivateDnsServerName(null);
+        }
+
+        // Return true if lp was modified.
+        return !Objects.equals(oldLp, lp);
+    }
+
+    public void updatePrivateDnsValidation(PrivateDnsValidationUpdate update) {
+        if (!mPrivateDnsValidationMap.containsKey(update.netId)) {
+            // Ignore validation updates for netIds that are not being tracked.
+            return;
+        }
+        mPrivateDnsValidationMap.get(update.netId).updateStatus(
+                update.ipAddress, update.hostname, update.validated);
     }
 
     public void setDnsConfigurationForNetwork(
@@ -210,6 +333,18 @@ public class DnsManager {
                                    .filter((ip) -> lp.isReachable(ip))
                                    .collect(Collectors.toList())
                            : lp.getDnsServers());
+
+        // Prepare to track the validation status of the DNS servers in the
+        // resolver config when private DNS is in opportunistic or strict mode.
+        if (useTls) {
+            if (!mPrivateDnsValidationMap.containsKey(netId)) {
+                mPrivateDnsValidationMap.put(netId, new PrivateDnsValidationStatuses());
+            }
+            mPrivateDnsValidationMap.get(netId).updateTrackedDnses(serverStrs, tlsHostname);
+        } else {
+            mPrivateDnsValidationMap.remove(netId);
+        }
+
         final String[] domainStrs = getDomainStrings(lp.getDomains());
 
         updateParametersSettings();

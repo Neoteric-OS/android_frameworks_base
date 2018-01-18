@@ -17,6 +17,9 @@
 package com.android.server;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -132,6 +135,7 @@ import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.ConnectivityConstants;
+import com.android.server.connectivity.DnsManager.PrivateDnsConfig;
 import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
@@ -155,6 +159,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -764,6 +769,19 @@ public class ConnectivityServiceTest {
             if (!mIsCaptivePortalCheckEnabled) { return new CaptivePortalProbeResult(204); }
             return new CaptivePortalProbeResult(gen204ProbeResult, gen204ProbeRedirectUrl, null);
         }
+
+        @Override
+        protected void resolvePrivateDnsConfig(PrivateDnsConfig cfg) {
+            mPrivateDnsCfg = cfg;
+            if (mPrivateDnsCfg.inStrictMode()) {
+                try {
+                    InetAddress[] ips = new InetAddress[]{
+                            InetAddress.getByName("3.3.3.3"),
+                            InetAddress.getByName("4.4.4.4")};
+                    mPrivateDnsCfg = new PrivateDnsConfig(mPrivateDnsCfg.hostname, ips);
+                } catch (Exception e) {};
+            }
+        }
     }
 
     private class WrappedMultinetworkPolicyTracker extends MultinetworkPolicyTracker {
@@ -865,6 +883,10 @@ public class ConnectivityServiceTest {
         @Override
         protected IpConnectivityMetrics.Logger metricsLogger() {
             return mMetricsService;
+        }
+
+        @Override
+        protected void registerNetdEventCallback() {
         }
 
         public WrappedNetworkMonitor getLastCreatedWrappedNetworkMonitor() {
@@ -3612,6 +3634,158 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testLinkPropertiesWithPrivateDnsSettingsEvents() {
+        ContentResolver cr = mServiceContext.getContentResolver();
+
+        final NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_WIFI).build();
+        final TestNetworkCallback networkCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(networkRequest, networkCallback);
+
+        LinkProperties lp = new LinkProperties();
+        MockNetworkAgent networkAgent = new MockNetworkAgent(TRANSPORT_WIFI, lp);
+        networkAgent.connect(true);
+        networkCallback.expectCallback(CallbackState.AVAILABLE, networkAgent);
+        networkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, networkAgent);
+        CallbackInfo cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
+                networkAgent);
+        networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, networkAgent);
+        networkCallback.assertNoCallback();
+        // The private dns fields in LinkProperties should reflect that we
+        // are in the default opportunistic mode and have no validated servers.
+        assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+
+        // Switch private dns to strict mode.
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_MODE,
+                PRIVATE_DNS_MODE_PROVIDER_HOSTNAME);
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_SPECIFIER,
+                "strictmode.com");
+        mService.handlePrivateDnsSettingsChanged();
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
+                networkAgent);
+        networkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, networkAgent);
+        networkCallback.assertNoCallback();
+        assertTrue(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertEquals("strictmode.com", ((LinkProperties)cbi.arg).getPrivateDnsServerName());
+
+        // Change the strict mode hostname.
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_SPECIFIER,
+                "strictmode2.com");
+        mService.handlePrivateDnsSettingsChanged();
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
+                networkAgent);
+        networkCallback.assertNoCallback();
+        assertTrue(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertEquals("strictmode2.com", ((LinkProperties)cbi.arg).getPrivateDnsServerName());
+
+        // Turn private dns off.
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_MODE,
+                PRIVATE_DNS_MODE_OFF);
+        mService.handlePrivateDnsSettingsChanged();
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
+                networkAgent);
+        networkCallback.assertNoCallback();
+        assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+
+        // Switch private dns to opportunistic mode, which shouldn't cause
+        // a callback event since the LinkProperties won't change.
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_MODE,
+                PRIVATE_DNS_MODE_OPPORTUNISTIC);
+        mService.handlePrivateDnsSettingsChanged();
+        networkCallback.assertNoCallback();
+    }
+
+    @Test
+    public void testLinkPropertiesWithPrivateDnsValidationEvents() throws Exception {
+        final NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_WIFI).build();
+        final TestNetworkCallback networkCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(networkRequest, networkCallback);
+
+        LinkProperties lp = new LinkProperties();
+        MockNetworkAgent networkAgent = new MockNetworkAgent(TRANSPORT_WIFI, lp);
+        networkAgent.connect(true);
+        networkCallback.expectCallback(CallbackState.AVAILABLE, networkAgent);
+        networkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, networkAgent);
+        CallbackInfo cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
+                networkAgent);
+        networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, networkAgent);
+        networkCallback.assertNoCallback();
+        // The private dns fields in LinkProperties should reflect that we
+        // are in the default opportunistic mode and have no validated servers.
+        assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+        Set<InetAddress> dnsServers = new HashSet<>();
+        checkDnsServers(cbi.arg, dnsServers);
+
+        // Send a validation event for a server that is not part of the current
+        // resolver config. The validation event should be ignored.
+        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
+                networkAgent.getNetwork().netId, "", "145.100.185.18", true);
+        networkCallback.assertNoCallback();
+
+        // Add a dns server to the LinkProperties.
+        LinkProperties lp2 = new LinkProperties(lp);
+        lp2.addDnsServer(InetAddress.getByName("145.100.185.16"));
+        networkAgent.sendLinkProperties(lp2);
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, networkAgent);
+        networkCallback.assertNoCallback();
+        assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+        dnsServers.add(InetAddress.getByName("145.100.185.16"));
+        checkDnsServers(cbi.arg, dnsServers);
+
+        // Send a validation event containing a hostname that is not part of
+        // the current resolver config. The validation event should be ignored.
+        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
+                networkAgent.getNetwork().netId, "145.100.185.16", "hostname", true);
+        networkCallback.assertNoCallback();
+
+        // Send a validation event where validation failed.
+        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
+                networkAgent.getNetwork().netId, "145.100.185.16", "", false);
+        networkCallback.assertNoCallback();
+
+        // Send a validation event where validation succeeded for a server in
+        // the current resolver config. A LinkProperties callback with updated
+        // private dns fields should be sent.
+        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
+                networkAgent.getNetwork().netId, "145.100.185.16", "", true);
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, networkAgent);
+        networkCallback.assertNoCallback();
+        assertTrue(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+        checkDnsServers(cbi.arg, dnsServers);
+
+        // The private dns fields in LinkProperties should be preserved when
+        // the network agent sends unrelated changes.
+        LinkProperties lp3 = new LinkProperties(lp2);
+        lp3.setMtu(1300);
+        networkAgent.sendLinkProperties(lp3);
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, networkAgent);
+        networkCallback.assertNoCallback();
+        assertTrue(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+        checkDnsServers(cbi.arg, dnsServers);
+        assertEquals(1300, ((LinkProperties)cbi.arg).getMtu());
+
+        // Removing the only validated server should affect the private dns
+        // fields in LinkProperties.
+        LinkProperties lp4 = new LinkProperties(lp3);
+        lp4.removeDnsServer(InetAddress.getByName("145.100.185.16"));
+        networkAgent.sendLinkProperties(lp4);
+        cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, networkAgent);
+        networkCallback.assertNoCallback();
+        assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
+        assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
+        dnsServers.remove(InetAddress.getByName("145.100.185.16"));
+        checkDnsServers(cbi.arg, dnsServers);
+        assertEquals(1300, ((LinkProperties)cbi.arg).getMtu());
+    }
+
+    @Test
     public void testStatsIfacesChanged() throws Exception {
         mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
@@ -3714,6 +3888,13 @@ public class ConnectivityServiceTest {
         List<RouteInfo> observedRoutes = lp.getRoutes();
         assertEquals(expectedRoutes.size(), observedRoutes.size());
         assertTrue(observedRoutes.containsAll(expectedRoutes));
+    }
+
+    private static void checkDnsServers(Object callbackObj, Set<InetAddress> dnsServers) {
+        assertTrue(callbackObj instanceof LinkProperties);
+        LinkProperties lp = (LinkProperties) callbackObj;
+        assertEquals(dnsServers.size(), lp.getDnsServers().size());
+        assertTrue(lp.getDnsServers().containsAll(dnsServers));
     }
 
     private static <T> void assertEmpty(T[] ts) {

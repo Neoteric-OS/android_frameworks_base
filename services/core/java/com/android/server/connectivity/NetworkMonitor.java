@@ -261,7 +261,8 @@ public class NetworkMonitor extends StateMachine {
 
     public boolean systemReady = false;
 
-    private DnsManager.PrivateDnsConfig mPrivateDnsCfg = null;
+    @VisibleForTesting
+    protected DnsManager.PrivateDnsConfig mPrivateDnsCfg = null;
 
     private final State mDefaultState = new DefaultState();
     private final State mValidatedState = new ValidatedState();
@@ -1076,7 +1077,8 @@ public class NetworkMonitor extends StateMachine {
         resolvePrivateDnsConfig(DnsManager.getPrivateDnsConfig(mContext.getContentResolver()));
     }
 
-    private void resolvePrivateDnsConfig(DnsManager.PrivateDnsConfig cfg) {
+    @VisibleForTesting
+    protected void resolvePrivateDnsConfig(DnsManager.PrivateDnsConfig cfg) {
         // Nothing to do.
         if (cfg == null) {
             mPrivateDnsCfg = null;
