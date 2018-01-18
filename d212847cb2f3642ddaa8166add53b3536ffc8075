@@ -22,6 +22,30 @@
       "revId": "d212847cb2f3642ddaa8166add53b3536ffc8075",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44130bc6_b3efb5d5",
+        "filename": "data/keyboards/Generic.kcm",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-01-18T22:15:26Z",
+      "side": 1,
+      "message": "At the very least, can we separate this change from the ESCAPE fallback change? The latter we can take with the existing topic, this we can discuss in a new CL.",
+      "parentUuid": "cf964350_6ca8f0fd",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 1
+      },
+      "revId": "d212847cb2f3642ddaa8166add53b3536ffc8075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
