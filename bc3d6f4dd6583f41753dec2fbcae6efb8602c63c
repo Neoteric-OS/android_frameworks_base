@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a85cd2b4_d39d0039",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-18T01:49:51Z",
+      "side": 1,
+      "message": "This should be READ_PRIVILEGED_PHONE_STATE.",
+      "range": {
+        "startLine": 2339,
+        "startChar": 52,
+        "endLine": 2339,
+        "endChar": 68
+      },
+      "revId": "bc3d6f4dd6583f41753dec2fbcae6efb8602c63c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300efb41_983961c8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-18T01:49:51Z",
+      "side": 1,
+      "message": "We discussed this further and decided to change it to an int[] physicalSlots, with index i in the array representing physical slot for phone i. And the array size should be same as getPhoneCount().",
+      "range": {
+        "startLine": 2362,
+        "startChar": 28,
+        "endLine": 2362,
+        "endChar": 71
+      },
+      "revId": "bc3d6f4dd6583f41753dec2fbcae6efb8602c63c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
