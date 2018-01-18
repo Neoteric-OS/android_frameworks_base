@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf964350_6ca8f0fd",
+        "filename": "data/keyboards/Generic.kcm",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-01-18T22:12:14Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure we don\u0027t want this.",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 1
+      },
+      "revId": "d212847cb2f3642ddaa8166add53b3536ffc8075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
