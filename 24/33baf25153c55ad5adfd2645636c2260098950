@@ -1,0 +1,10 @@
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Arthur Hsu <arthurhsu@google.com>
+Code-Review+1: Miao-chen Chou <mcchou@google.com>
+Code-Review+2: Andre Eisenbach <eisenbach@google.com>
+Autosubmit+1: Arthur Hsu <arthurhsu@google.com>
+Submitted-by: Arthur Hsu <arthurhsu@google.com>
+Submitted-at: Thu, 18 Jan 2018 19:38:32 +0000
+Reviewed-on: https://android-review.googlesource.com/586438
+Project: platform/frameworks/base
+Branch: refs/heads/master
