@@ -38494,6 +38494,7 @@ package android.system {
     method public static void shutdown(java.io.FileDescriptor, int) throws android.system.ErrnoException;
     method public static java.io.FileDescriptor socket(int, int, int) throws android.system.ErrnoException;
     method public static void socketpair(int, int, int, java.io.FileDescriptor, java.io.FileDescriptor) throws android.system.ErrnoException;
+    method public static long splice(java.io.FileDescriptor, android.system.Int64Ref, java.io.FileDescriptor, android.system.Int64Ref, long, int) throws android.system.ErrnoException;
     method public static android.system.StructStat stat(java.lang.String) throws android.system.ErrnoException;
     method public static android.system.StructStatVfs statvfs(java.lang.String) throws android.system.ErrnoException;
     method public static java.lang.String strerror(int);
@@ -38867,6 +38868,9 @@ package android.system {
     field public static final int SO_SNDLOWAT;
     field public static final int SO_SNDTIMEO;
     field public static final int SO_TYPE;
+    field public static final int SPLICE_F_MORE;
+    field public static final int SPLICE_F_MOVE;
+    field public static final int SPLICE_F_NONBLOCK;
     field public static final int STDERR_FILENO;
     field public static final int STDIN_FILENO;
     field public static final int STDOUT_FILENO;
