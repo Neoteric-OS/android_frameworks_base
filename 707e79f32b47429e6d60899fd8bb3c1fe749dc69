@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "979b299c_15194ae6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-18T10:07:21Z",
+      "side": 1,
+      "message": "Is this a logical part of this change?\n\nThe comment in ITelephony.aidl says \"TODO: remove and use isUserDataEnabled\".",
+      "range": {
+        "startLine": 1797,
+        "startChar": 57,
+        "endLine": 1797,
+        "endChar": 58
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d59f21_1c83343b",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-18T10:07:21Z",
+      "side": 1,
+      "message": "In order to avoid race conditions, I think we need to include the String hostname, which may be empty.\n\nFor logging purposes I think we should include the IP address of the nameserver that validated.  This won\u0027t be put into LinkProperties but we can debug-log it for good measure. Lorenzo suggests that we will probably want a boolean for validation status.  Initially we would only send up events when servers go from not validated to validated, but we might in future be able to detect SSL validation failures and bubble them up to ConnectivityService so that we can re-do captive portal detection.\n\nSo I proposed:\n\n    ...(int netId, String nameserver, String hostname, boolean isValidated)",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bbe5ad_40b37a97",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-18T10:07:21Z",
+      "side": 1,
+      "message": "A less verbose alternative might be to create an @hide BaseNetdEventCallback that provides no-op methods.  See BaseNetworkObserver for an example.\n\nThen we can inherit from that and only override the one function we care about.  This will help the other users of INetdEventCallback (which would otherwise also need to be extended I think).",
+      "range": {
+        "startLine": 1480,
+        "startChar": 41,
+        "endLine": 1480,
+        "endChar": 42
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59e49cd_99416042",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-18T10:07:21Z",
+      "side": 1,
+      "message": "This is probably going to be run on the wrong thread, I fear.  I think for starters we can just collect this into a private static inner class and post that in a message to the main handler thread.",
+      "range": {
+        "startLine": 1492,
+        "startChar": 8,
+        "endLine": 1492,
+        "endChar": 9
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
