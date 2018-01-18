@@ -40523,6 +40523,9 @@ package android.telephony {
     ctor public ServiceState(android.os.Parcel);
     method protected void copyFrom(android.telephony.ServiceState);
     method public int describeContents();
+    method public int[] getCellBandwidths();
+    method public int getChannelNumber();
+    method public int getDuplexMode();
     method public boolean getIsManualSelection();
     method public int getNetworkId();
     method public java.lang.String getOperatorAlphaLong();
@@ -40539,11 +40542,17 @@ package android.telephony {
     method public void setStateOutOfService();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.telephony.ServiceState> CREATOR;
+    field public static final int DUPLEX_MODE_FDD = 1; // 0x1
+    field public static final int DUPLEX_MODE_TDD = 2; // 0x2
+    field public static final int DUPLEX_MODE_UNKNOWN = 0; // 0x0
     field public static final int STATE_EMERGENCY_ONLY = 2; // 0x2
     field public static final int STATE_IN_SERVICE = 0; // 0x0
     field public static final int STATE_OUT_OF_SERVICE = 1; // 0x1
     field public static final int STATE_POWER_OFF = 3; // 0x3
     field public static final int UNKNOWN_ID = -1; // 0xffffffff
+  }
+
+  public static abstract class ServiceState.DuplexMode implements java.lang.annotation.Annotation {
   }
 
   public class SignalStrength implements android.os.Parcelable {
