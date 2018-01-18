@@ -150,11 +150,56 @@ public class DnsManager {
         return uris;
     }
 
+    enum ValidationStatus {
+        IN_PROGRESS,
+        FAILED,
+        SUCCEEDED
+    }
+
+    public static class PrivateDnsValidationStatuses {
+        // map of server address and validation state
+        private Map<String, ValidationStatus> mValidationMap;
+
+        public PrivateDnsValidationStatuses() {
+            mValidationMap = new HashMap<>();
+        }
+
+        public void updateTrackedDnses(String[] servers) {
+            // Remove servers from the map that don't appear in the provided array
+            Set<String> tempSet = new HashSet<String>(Arrays.asList(servers));
+            for (Iterator<Map.Entry<String, Boolean>> it = mValidationMap.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, String> entry = it.next();
+                if (!tempSet.contains(entry.getKey())) {
+                    it.remove();
+                }
+            }
+
+            // Add servers to the map that have newly appeared in the provided array
+            for (String server : servers) {
+                if (!mValidationMap.containsKey(server)) {
+                    mValidationMap.put(server, IN_PROGRESS);
+                }
+            }
+        }
+
+        public void updateStatus(String server, boolean validated) {
+            if (!mValidationMap.containsKey(server)) {
+                return;
+            }
+            if (validated) {
+                mValidationMap.put(server, SUCCEEDED);
+            } else {
+                mValidationMap.put(server, FAILED);
+            }
+        }
+    }
+
     private final Context mContext;
     private final ContentResolver mContentResolver;
     private final INetworkManagementService mNMS;
     private final MockableSystemProperties mSystemProperties;
     private final Map<Integer, PrivateDnsConfig> mPrivateDnsMap;
+    private final Map<Integer, PrivateDnsValidationStatuses> mPrivateDnsValidationMap;
 
     private int mNumDnsEntries;
     private int mSampleValidity;
@@ -164,12 +209,14 @@ public class DnsManager {
     private String mPrivateDnsMode;
     private String mPrivateDnsSpecifier;
 
-    public DnsManager(Context ctx, INetworkManagementService nms, MockableSystemProperties sp) {
+    public DnsManager(Context ctx, INetworkManagementService nms,
+            MockableSystemProperties sp, Handler handler) {
         mContext = ctx;
         mContentResolver = mContext.getContentResolver();
         mNMS = nms;
         mSystemProperties = sp;
         mPrivateDnsMap = new HashMap<>();
+        mPrivateDnsValidationMap = new HashMap<>();
 
         // TODO: Create and register ContentObservers to track every setting
         // used herein, posting messages to respond to changes.
@@ -181,6 +228,7 @@ public class DnsManager {
 
     public void removeNetwork(Network network) {
         mPrivateDnsMap.remove(network.netId);
+        mPrivateDnsValidationMap.remove(network.netId);
     }
 
     public PrivateDnsConfig updatePrivateDns(Network network, PrivateDnsConfig cfg) {
@@ -188,6 +236,40 @@ public class DnsManager {
         return (cfg != null)
                 ? mPrivateDnsMap.put(network.netId, cfg)
                 : mPrivateDnsMap.remove(network);
+    }
+
+    public void fixLinkPropertiesPrivateDns(int netId, LinkProperties lp) {
+        final PrivateDnsConfig privateDnsCfg = mPrivateDnsMap.get(netId);
+        final boolean useTls = (privateDnsCfg != null) && privateDnsCfg.useTls;
+        final boolean strictMode = (privateDnsCfg != null) && privateDnsCfg.inStrictMode();
+        final String tlsHostname = strictMode ? privateDnsCfg.hostname : "";
+
+        if (strictMode) {
+            lp.setUsePrivateDns(true);
+            lp.setPrivateDnsServerName(tlsHostname);
+        } else if (useTls) {        // opportunistic mode
+            // determine if there is a known DNS-over-TLS validated server
+            boolean hasValidatedServer = false;
+            if (mPrivateDnsValidationMap.containsKey(netId)) {
+                for (ValidationStatus status : mPrivateDnsValidationMap.get(netId).values()) {
+                    if (status == SUCCEEDED) {
+                        hasValidatedServer = true;
+                    }
+                }
+            }
+            lp.setUsePrivateDns(hasValidatedServer);
+            lp.setPrivateDnsServerName(null);
+        } else {                    // private dns off
+            lp.setUsePrivateDns(false);
+            lp.setPrivateDnsServerName(false);
+        }
+    }
+
+    public void updatePrivateDnsValidation(int netId, String server, boolean validated) {
+        if (!mPrivateDnsValidationMap.containsKey(netId)) {
+            return;
+        }
+        mPrivateDnsValidationMap.get(netId).updateStatus(server, validated);
     }
 
     public void setDnsConfigurationForNetwork(
@@ -214,6 +296,17 @@ public class DnsManager {
 
         updateParametersSettings();
         final int[] params = { mSampleValidity, mSuccessThreshold, mMinSamples, mMaxSamples };
+
+        if (useTls) {
+            if (!mPrivateDnsValidationMap.containsKey(netId)) {
+                mPrivateDnsValidationMap.put(netId, new PrivateDnsValidationStatuses());
+            }
+            mPrivateDnsValidationMap.get(netId).updateTrackedDnses(serverStrs);
+        } else {
+            mPrivateDnsValidationMap.remove(netId);
+        }
+
+        fixLinkPropertiesPrivateDns(netId, lp);
 
         Slog.d(TAG, String.format("setDnsConfigurationForNetwork(%d, %s, %s, %s, %s, %s)",
                 netId, Arrays.toString(serverStrs), Arrays.toString(domainStrs),
