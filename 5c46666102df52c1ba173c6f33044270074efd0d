@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f27ba8_04560489",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-18T04:50:31Z",
+      "side": 1,
+      "message": "I think this should return only after the switch is complete. If you agree, we need to make it synchronous on the PhoneInterfaceManager side.\n\nAnd it should probably also have a response, at least a boolean, to indicate if there was any failure.",
+      "revId": "5c46666102df52c1ba173c6f33044270074efd0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
