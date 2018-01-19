@@ -803,9 +803,24 @@ public class IpSecService extends IIpSecService.Stub {
         /** always guarded by IpSecService#this */
         @Override
         public void freeUnderlyingResources() {
+<<<<<<< HEAD
             // TODO: Add calls to netd
             //       Teardown VTI
             //       Delete global policies
+=======
+            try {
+                mSrvConfig.getNetdInstance().teardownVirtualTunnelInterface(mInterfaceName);
+            } catch (ServiceSpecificException e) {
+                // FIXME: get the error code and throw is at an IOException from Errno Exception
+            } catch (RemoteException e) {
+                Log.e(
+                        TAG,
+                        "Failed to delete VTI with interface name: "
+                                + mInterfaceName
+                                + " and id: "
+                                + mResourceId);
+            }
+>>>>>>> a36268df4c9... Add tunnel-mode calls to netd in IpSecService
 
             getResourceTracker().give();
             mReserveKeyTracker.release(mKeys);
@@ -1216,10 +1231,16 @@ public class IpSecService extends IIpSecService.Stub {
 
             String intfName = String.format("%s%d", TUNNEL_INTERFACE_PREFIX, resourceId);
 
+<<<<<<< HEAD
             // TODO: Add calls to netd:
             //       Create VTI
             //       Add inbound/outbound global policies
             //              (use reqid = 0)
+=======
+            mSrvConfig
+                    .getNetdInstance()
+                    .createVirtualTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey);
+>>>>>>> a36268df4c9... Add tunnel-mode calls to netd in IpSecService
 
             userRecord.mTunnelInterfaceRecords.put(
                     resourceId,
@@ -1524,9 +1545,28 @@ public class IpSecService extends IIpSecService.Stub {
 
         int[] keys = tunnelInterfaceInfo.getKeys();
 
+<<<<<<< HEAD
         // TODO: Add calls to netd:
         //       Update SA with tunnel mark (ikey or okey based on direction)
         //       If outbound, add SPI to policy
+=======
+        try {
+            mSrvConfig
+                    .getNetdInstance()
+                    .ipSecApplyTunnelModeTransform(
+                            direction,
+                            c.getSourceAddress(),
+                            c.getDestinationAddress(),
+                            transformInfo.getSpiRecord().getSpi(),
+                            keys[direction]);
+        } catch (ServiceSpecificException e) {
+            if (e.errorCode == EINVAL) {
+                throw new IllegalArgumentException(e.toString());
+            } else {
+                throw e;
+            }
+        }
+>>>>>>> a36268df4c9... Add tunnel-mode calls to netd in IpSecService
     }
 
     @Override
