@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b831bbd5_755c8053",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "please use the order from the API:\nlocalAddr, remoteAddr, underlyingNetwork (iirc).",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "3f7439fe1039c4544ade51a854756bf461c614ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73ee23c7_7a4d425a",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "delete, release?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "3f7439fe1039c4544ade51a854756bf461c614ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1c14d9b_a24ce34b",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "Please use the order from the api:\ntunnelResourceId, direction, transformResourceId.",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 94
+      },
+      "revId": "3f7439fe1039c4544ade51a854756bf461c614ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "395197b9_2e34e02f",
+        "filename": "core/java/android/net/IpSecTunnelInterfaceResponse.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "public final String interfaceName (the string name of the VTI)",
+      "revId": "3f7439fe1039c4544ade51a854756bf461c614ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

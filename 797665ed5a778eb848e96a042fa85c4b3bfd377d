@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a98fcc8a_28dfa9f4",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "order of parameters:\nlocal, remote, underlyingNet",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "729b4a3e_a1cf6153",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "deleteTunnelInterface would be consistent.",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94e86610_a16cb933",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "order of parameters:\ntunnel resource id, direction, transformResourceid",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 96
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10621de7_326f98af",
+        "filename": "core/java/android/net/IpSecTunnelInterfaceResponse.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "String getInterfaceName()",
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c64d4ceb_c763ebf1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "suggest: ipsec_",
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca0f9f9f_d6152070",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "TunnelKeyPool, TunnelKeyAllocator?",
+      "range": {
+        "startLine": 709,
+        "startChar": 24,
+        "endLine": 709,
+        "endChar": 41
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34dc2b4d_28969205",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 714,
+        "startChar": 20,
+        "endLine": 714,
+        "endChar": 30
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33732ec1_d9530d4b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "rangeSize",
+      "range": {
+        "startLine": 722,
+        "startChar": 46,
+        "endLine": 722,
+        "endChar": 53
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c770ecc4_629cce85",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "https://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html#nextClearBit(int)",
+      "range": {
+        "startLine": 740,
+        "startChar": 5,
+        "endLine": 746,
+        "endChar": 49
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc9f4ab5_62119b6c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "no available keys...",
+      "range": {
+        "startLine": 751,
+        "startChar": 45,
+        "endLine": 751,
+        "endChar": 66
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5ca45a9_c6baea03",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "You really only need to release one at a time. It doesn\u0027t need to be complicated.\n\ntry {\n    mBitSet.clear(key - mRangeStart);\n} catch (IndexOutOfBoundsException e) {\n    throw new IllegalArgumentException(\"Shenanigans!\");\n}",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 768,
+        "endChar": 13
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2301f07b_6e88cae1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "I suggest using hex.",
+      "range": {
+        "startLine": 773,
+        "startChar": 52,
+        "endLine": 773,
+        "endChar": 57
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efdfc253_348f6926",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "These will be LinkAddress if we need them. I don\u0027t think we actually need to track them for now since the call will pass directly though and the lower layer can tell us whether the operation succeeds or fails.",
+      "range": {
+        "startLine": 804,
+        "startChar": 0,
+        "endLine": 810,
+        "endChar": 9
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2603a1d8_3cfc07f5",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "List\u003cLinkAddress\u003e ... not sure if we need it.",
+      "range": {
+        "startLine": 832,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 9
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b343d9c4_c7a4b418",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-19T23:28:31Z",
+      "side": 1,
+      "message": "redundant.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 68
+      },
+      "revId": "797665ed5a778eb848e96a042fa85c4b3bfd377d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
