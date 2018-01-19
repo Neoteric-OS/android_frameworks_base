@@ -801,7 +801,18 @@ public class IpSecService extends IIpSecService.Stub {
         /** always guarded by IpSecService#this */
         @Override
         public void freeUnderlyingResources() {
-            // TODO: call netd.teardownVirtualTunnelInterface(mInterfaceName)
+            try {
+                mSrvConfig.getNetdInstance().teardownVirtualTunnelInterface(mInterfaceName);
+            } catch (ServiceSpecificException e) {
+                // FIXME: get the error code and throw is at an IOException from Errno Exception
+            } catch (RemoteException e) {
+                Log.e(
+                        TAG,
+                        "Failed to delete VTI with interface name: "
+                                + mInterfaceName
+                                + " and id: "
+                                + mResourceId);
+            }
 
             getResourceTracker().give();
             mReserveKeyTracker.release(mKeys);
@@ -1212,8 +1223,9 @@ public class IpSecService extends IIpSecService.Stub {
 
             String intfName = String.format("%s%d", TUNNEL_INTERFACE_PREFIX, resourceId);
 
-            // TODO: call net.createVirtualTunnelInterface.
-            //       in netd, use reqid = 0
+            mSrvConfig
+                    .getNetdInstance()
+                    .createVirtualTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey);
 
             userRecord.mTunnelInterfaceRecords.put(
                     resourceId,
@@ -1516,8 +1528,22 @@ public class IpSecService extends IIpSecService.Stub {
 
         int[] keys = tunnelInterfaceInfo.getKeys();
 
-        // TODO: call netd.ipSecApplyTunnelModeTransform
-        //       In netd, use reqid = 0, set policies and update SA with marks
+        try {
+            mSrvConfig
+                    .getNetdInstance()
+                    .ipSecApplyTunnelModeTransform(
+                            direction,
+                            c.getSourceAddress(),
+                            c.getDestinationAddress(),
+                            transformInfo.getSpiRecord().getSpi(),
+                            keys[direction]);
+        } catch (ServiceSpecificException e) {
+            if (e.errorCode == EINVAL) {
+                throw new IllegalArgumentException(e.toString());
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
