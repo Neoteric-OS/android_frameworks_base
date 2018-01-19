@@ -34,7 +34,9 @@ import android.net.IpSecManager;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
+import android.net.IpSecTunnelInterfaceResponse;
 import android.net.IpSecUdpEncapResponse;
+import android.net.Network;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.NetdService;
@@ -62,6 +64,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 import libcore.io.IoUtils;
@@ -99,6 +102,7 @@ public class IpSecService extends IIpSecService.Stub {
 
     static final int FREE_PORT_MIN = 1024; // ports 1-1023 are reserved
     static final int PORT_MAX = 0xFFFF; // ports are an unsigned 16-bit integer
+    static final String TUNNEL_INTERFACE_PREFIX = "ipsec";
 
     /* Binder context for this service */
     private final Context mContext;
@@ -347,6 +351,7 @@ public class IpSecService extends IIpSecService.Stub {
         public static final String TYPENAME_ENCAP_SOCKET = "UdpEncapSocket";
 
         /* Maximum number of each type of resource that a single UID may possess */
+        public static final int MAX_NUM_TUNNEL_INTERFACES = 2;
         public static final int MAX_NUM_ENCAP_SOCKETS = 2;
         public static final int MAX_NUM_TRANSFORMS = 4;
         public static final int MAX_NUM_SPIS = 8;
@@ -359,6 +364,10 @@ public class IpSecService extends IIpSecService.Stub {
                 new RefcountedResourceArray<>(TYPENAME_TRANSFORM);
         final ResourceTracker mTransformQuotaTracker = new ResourceTracker(MAX_NUM_TRANSFORMS);
 
+        final RefcountedResourceArray<TunnelInterfaceRecord> mTunnelInterfaceRecords =
+                new RefcountedResourceArray<>(TunnelInterfaceRecord.class.getSimpleName());
+        final ResourceTracker mTunnelQuotaTracker = new ResourceTracker(MAX_NUM_TUNNEL_INTERFACES);
+
         final RefcountedResourceArray<EncapSocketRecord> mEncapSocketRecords =
                 new RefcountedResourceArray<>(TYPENAME_ENCAP_SOCKET);
         final ResourceTracker mSocketQuotaTracker = new ResourceTracker(MAX_NUM_ENCAP_SOCKETS);
@@ -369,6 +378,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         void removeTransformRecord(int resourceId) {
             mTransformRecords.remove(resourceId);
+        }
+
+        void removeTunnelInterfaceRecord(int resourceId) {
+            mTunnelInterfaceRecords.remove(resourceId);
         }
 
         void removeEncapSocketRecord(int resourceId) {
@@ -689,6 +702,162 @@ public class IpSecService extends IIpSecService.Stub {
                     .append(mOwnedByTransform)
                     .append("}");
             return strBuilder.toString();
+        }
+    }
+
+    @VisibleForTesting
+    public static class TunnelKeyPool {
+        private final int mRangeStart;
+        private final BitSet mBitSet;
+        private final int mSize;
+
+        /**
+         * Creates a TunnelKeyPool
+         *
+         * @param rangeStart the start of the keying range to be reserved, inclusive
+         * @param rangeSize the size of the key space
+         */
+        TunnelKeyPool(int rangeStart, int rangeSize) {
+            mRangeStart = rangeStart;
+            mBitSet = new BitSet(rangeSize);
+
+            // Needs to be stored and checked independently to prevent bitset from growing
+            // indefinitely
+            mSize = rangeSize;
+        }
+
+        /**
+         * Reserves a key within this TunnelKeyPool's key space
+         *
+         * @return an integer key within the key space, if successful
+         * @throws IllegalStateException if unsuccessful (all keys are currently reserved)
+         */
+        synchronized int reserve() {
+            int current = mBitSet.nextClearBit(0);
+
+            if (current >= mSize){
+                // No unreserved bits; throw an error.
+                throw new IllegalStateException("No available keys.");
+            }
+
+            mBitSet.set(current);
+            return current;
+        }
+
+        /**
+         * Releases a key within the keying range of this tracker
+         *
+         * @throws IllegalArgumentException if key is not within the keying range of this tracker
+         */
+        synchronized void release(int... keys) {
+            for (int key : keys) {
+                // Convert to internal indicies
+                int index = key - mRangeStart;
+
+                if (index < 0 || index >= mSize) {
+                    throw new IllegalArgumentException();
+                }
+                mBitSet.clear(index);
+            }
+        }
+    }
+
+    // These values have been reserved in ConnectivityService
+    private static final int TUN_INTF_NETID_START = 0xFC00;
+    private static final int TUN_INTF_NETID_RANGE = 0x0400;
+    private TunnelKeyPool mTunnelKeyPool =
+            new TunnelKeyPool(TUN_INTF_NETID_START, TUN_INTF_NETID_RANGE);
+
+    private final class TunnelInterfaceRecord extends KernelResourceRecord {
+        private final String mInterfaceName;
+        private final Network mUnderlyingNetwork;
+
+        // outer addresses
+        private final String mLocalAddress;
+        private final String mRemoteAddress;
+
+        private final int[] mKeys = new int[2];
+
+        TunnelInterfaceRecord(
+                int resourceId,
+                String interfaceName,
+                Network underlyingNetwork,
+                String localAddr,
+                String remoteAddr,
+                int ikey,
+                int okey) {
+            super(resourceId);
+
+            mInterfaceName = interfaceName;
+            mUnderlyingNetwork = underlyingNetwork;
+            mLocalAddress = localAddr;
+            mRemoteAddress = remoteAddr;
+            mKeys[IpSecManager.DIRECTION_IN] = ikey;
+            mKeys[IpSecManager.DIRECTION_OUT] = okey;
+        }
+
+        /** always guarded by IpSecService#this */
+        @Override
+        public void freeUnderlyingResources() {
+            // TODO: Add calls to netd
+            //       Teardown VTI
+            //       Delete global policies
+
+            getResourceTracker().give();
+            mTunnelKeyPool.release(mKeys);
+        }
+
+        public String getInterfaceName() {
+            return mInterfaceName;
+        }
+
+        public Network getUnderlyingNetwork() {
+            return mUnderlyingNetwork;
+        }
+
+        /**
+         * Returns the local, outer address for the tunnelInterface
+         */
+        public String getLocalAddress() {
+            return mLocalAddress;
+        }
+
+        /**
+         * Returns the remote, outer address for the tunnelInterface
+         */
+        public String getRemoteAddress() {
+            return mRemoteAddress;
+        }
+
+        public int[] getKeys() {
+            return mKeys;
+        }
+
+        @Override
+        protected ResourceTracker getResourceTracker() {
+            return getUserRecord().mTunnelQuotaTracker;
+        }
+
+        @Override
+        public void invalidate() {
+            getUserRecord().removeTunnelInterfaceRecord(mResourceId);
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mInterfaceName=")
+                    .append(mInterfaceName)
+                    .append(", mUnderlyingNetwork=")
+                    .append(mUnderlyingNetwork)
+                    .append(", mLocalAddress=")
+                    .append(mLocalAddress)
+                    .append(", mRemoteAddress=")
+                    .append(mRemoteAddress)
+                    .append("}")
+                    .toString();
         }
     }
 
@@ -1015,6 +1184,96 @@ public class IpSecService extends IIpSecService.Stub {
         releaseResource(userRecord.mEncapSocketRecords, resourceId);
     }
 
+    /**
+     * Create a tunnel interface for use in IPSec tunnel mode. The system server will cache the
+     * tunnel interface and a record of its owner so that it can and must be freed when no longer
+     * needed.
+     */
+    @Override
+    public synchronized IpSecTunnelInterfaceResponse createTunnelInterface(
+            String localAddr, String remoteAddr, Network underlyingNetwork, IBinder binder) {
+        checkNotNull(binder, "Null Binder passed to createTunnelInterface");
+        checkNotNull(underlyingNetwork, "No underlying network was specified");
+        checkInetAddress(localAddr);
+        checkInetAddress(remoteAddr);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        if (!userRecord.mTunnelQuotaTracker.isAvailable()) {
+            return new IpSecTunnelInterfaceResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
+        }
+
+        final int resourceId = mNextResourceId++;
+        final int ikey = mTunnelKeyPool.reserve();
+        final int okey = mTunnelKeyPool.reserve();
+        String intfName = String.format("%s%d", TUNNEL_INTERFACE_PREFIX, resourceId);
+
+        // TODO: Add calls to netd:
+        //       Create VTI
+        //       Add inbound/outbound global policies
+        //              (use reqid = 0)
+
+        userRecord.mTunnelInterfaceRecords.put(
+                resourceId,
+                new RefcountedResource<TunnelInterfaceRecord>(
+                        new TunnelInterfaceRecord(
+                                resourceId,
+                                intfName,
+                                underlyingNetwork,
+                                localAddr,
+                                remoteAddr,
+                                ikey,
+                                okey),
+                        binder));
+        return new IpSecTunnelInterfaceResponse(IpSecManager.Status.OK, resourceId, intfName);
+    }
+
+    /**
+     * Adds a new local address to the tunnel interface. This allows packets to be sent and received
+     * from multiple local IP addresses over the same tunnel.
+     */
+    @Override
+    public synchronized void addAddressToTunnelInterface(
+            int tunnelResourceId, String localAddr) {
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
+
+        // TODO: Add calls to netd:
+        //       Add address to TunnelInterface
+    }
+
+    /**
+     * Remove a new local address from the tunnel interface. After removal, the address will no
+     * longer be available to send from, or receive on.
+     */
+    @Override
+    public synchronized void removeAddressFromTunnelInterface(
+            int tunnelResourceId, String localAddr) {
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
+
+        // TODO: Add calls to netd:
+        //       Remove inbound/outbound global policies for new address
+        //              (use reqid = 0)
+    }
+
+    /**
+     * Delete a TunnelInterface that has been been allocated by and registered with the system
+     * server
+     */
+    @Override
+    public synchronized void deleteTunnelInterface(int resourceId) throws RemoteException {
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        releaseResource(userRecord.mTunnelInterfaceRecords, resourceId);
+    }
+
     @VisibleForTesting
     void validateAlgorithms(IpSecConfig config) throws IllegalArgumentException {
         IpSecAlgorithm auth = config.getAuthentication();
@@ -1208,7 +1467,12 @@ public class IpSecService extends IIpSecService.Stub {
             throw new SecurityException("Only the owner of an IpSec Transform may apply it!");
         }
 
+        // Get config and check that to-be-applied transform has the correct mode
         IpSecConfig c = info.getConfig();
+        Preconditions.checkArgument(
+                c.getMode() == IpSecTransform.MODE_TRANSPORT,
+                "Transform mode was not Transport mode; cannot be applied to a socket");
+
         try {
             mSrvConfig
                     .getNetdInstance()
@@ -1244,6 +1508,39 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (ServiceSpecificException e) {
             // FIXME: get the error code and throw is at an IOException from Errno Exception
         }
+    }
+
+    /**
+     * Apply an active tunnel mode transform to a TunnelInterface, which will apply the IPsec
+     * security association as a correspondent policy to the provided interface
+     */
+    @Override
+    public synchronized void applyTunnelModeTransform(
+            int tunnelResourceId, int direction, int transformResourceId) throws RemoteException {
+        checkDirection(direction);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+
+        // Get transform record; if no transform is found, will throw IllegalArgumentException
+        TransformRecord transformInfo =
+                userRecord.mTransformRecords.getResourceOrThrow(transformResourceId);
+
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
+
+        // Get config and check that to-be-applied transform has the correct mode
+        IpSecConfig c = transformInfo.getConfig();
+        Preconditions.checkArgument(
+                c.getMode() == IpSecTransform.MODE_TUNNEL,
+                "Transform mode was not Tunnel mode; cannot be applied to a tunnel interface");
+
+        int[] keys = tunnelInterfaceInfo.getKeys();
+
+        // TODO: Add calls to netd:
+        //       Update SA with tunnel mark (ikey or okey based on direction)
+        //       If outbound, add SPI to policy
     }
 
     @Override
