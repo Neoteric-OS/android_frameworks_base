@@ -719,6 +719,9 @@ public final class IpSecManager {
     /**
      * Create a new IpSecTunnelInterface as a local endpoint for tunneled IPsec traffic.
      *
+     * <p>An application that creates tunnels is responsible for cleaning up the tunnel when
+     * the underlying network goes away, and the onLost() callback is received.
+     *
      * @param localAddress The local addres of the tunnel
      * @param remoteAddress The local addres of the tunnel
      * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
