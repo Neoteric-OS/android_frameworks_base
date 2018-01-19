@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76f15fe2_cc9a2311",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-19T08:29:34Z",
+      "side": 1,
+      "message": "Done. The idea behind \u0027managerUid\u0027 was this field would be generalized to whatever UID was managing this network, where for example telephony or wifi or some proprietary device with its own driver could live in a separate process and store its UID here in the future. But probably YAGNI.",
+      "parentUuid": "5e1221ca_ac4fcc24",
+      "range": {
+        "startLine": 4954,
+        "startChar": 22,
+        "endLine": 4954,
+        "endChar": 73
+      },
+      "revId": "7d400a11c815ca44e5cae5d031bd9c073a26b499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "629f9602_6e1aa249",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7d400a11c815ca44e5cae5d031bd9c073a26b499",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba5c8c7_60ccd05f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4957,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-19T08:29:34Z",
+      "side": 1,
+      "message": "Done ; we should absolutely not modify the capabilities of the nai in place here and that was an overlook. I fixed that, but unfortunately there is no nice way to express the new logic, so I had to write created \u0026\u0026 nc.satisfies(nc). Let me know if you think this in intolerable and we can discuss options.\n\nI\u0027m not sure we want to put the VPN app UID into NetworkCapabilities to avoid having to either marshall this field that\u0027s only useful internally or have it not cross process boundaries which would be equally surprising. NetworkAgentInfo#satisfies is also not in a great position to do this check as it just delegates to NetworkCapabilities and the check is only part of that method. I do think having a copy of the capabilities and check against that is the superior option, but the drawback of this if the slight code duplication. Maybe we could have a helper static method somewhere that would be called by both places, but even that is not very satisfying as it would work with what is obviously ad-hoc internals of some of our data classes.",
+      "parentUuid": "629f9602_6e1aa249",
+      "range": {
+        "startLine": 4957,
+        "startChar": 12,
+        "endLine": 4957,
+        "endChar": 31
+      },
+      "revId": "7d400a11c815ca44e5cae5d031bd9c073a26b499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
