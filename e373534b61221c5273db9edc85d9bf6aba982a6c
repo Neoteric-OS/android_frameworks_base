@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4af40b7_521ebf6b",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-19T21:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "507d907d_e79de406",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "e373534b61221c5273db9edc85d9bf6aba982a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61348cdb_d4a6d769",
         "filename": "telephony/java/android/telephony/CellInfo.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T18:13:41Z",
       "side": 1,
       "message": "unknown; radio support is an implementation detail at this API surface.",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "e373534b61221c5273db9edc85d9bf6aba982a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15aae4fb_72945083",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-19T21:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61348cdb_d4a6d769",
       "range": {
         "startLine": 62,
         "startChar": 39,
