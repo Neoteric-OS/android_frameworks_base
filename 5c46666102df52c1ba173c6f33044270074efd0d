@@ -16,6 +16,24 @@
       "revId": "5c46666102df52c1ba173c6f33044270074efd0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87b7913_3ae18c35",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T21:38:11Z",
+      "side": 1,
+      "message": "Done.\nPTAL at PhoneInterfaceManager. I think whether the result is an AsyncResult depends on how UiccController implements it.",
+      "parentUuid": "67f27ba8_04560489",
+      "revId": "5c46666102df52c1ba173c6f33044270074efd0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
