@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bec82d49_03254f23",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3608,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-19T08:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1887c704_01fc556e",
+      "range": {
+        "startLine": 3608,
+        "startChar": 34,
+        "endLine": 3608,
+        "endChar": 56
+      },
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e581a5_fecf6a92",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7d1f61b7_33bdbbaf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3626,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-19T08:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e581a5_fecf6a92",
+      "range": {
+        "startLine": 3626,
+        "startChar": 8,
+        "endLine": 3626,
+        "endChar": 54
+      },
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7bbc600_c4bb5b81",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d359f2_75176638",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3633,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-19T08:29:26Z",
+      "side": 1,
+      "message": "Done, although one does not just walk i^H^H^H^H^H^H change the UID ranges ; they have to create a new VpnService.Builder and call #prepare() on it, which will close the old one right ? The code here only can do that because it has access to the network agent directly.\n\nAs for getActiveNetwork, I left a TODO. It needs a new boatload of instrumentation because getActiveNetwork is accomplishing this by searching through its mVpns member which is populated when apps call establish() which is not instrumented at all.",
+      "parentUuid": "d7bbc600_c4bb5b81",
+      "revId": "219ec66311b84708835db0087e13bd8fbe2682cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
