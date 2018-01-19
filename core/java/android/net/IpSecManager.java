@@ -719,10 +719,9 @@ public final class IpSecManager {
     /**
      * Create a new IpSecTunnelInterface as a local endpoint for tunneled IPsec traffic.
      *
-     * @param localAddress The local addres of the tunnel
-     * @param remoteAddress The local addres of the tunnel
+     * @param localAddress The local address of the tunnel
+     * @param remoteAddress The local address of the tunnel
      * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
-     *        This network should almost certainly be a network such as WiFi with an L2 address.
      * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties
      * @throws IOException indicating that the socket could not be opened or bound
      * @throws ResourceUnavailableException indicating that too many encapsulation sockets are open
