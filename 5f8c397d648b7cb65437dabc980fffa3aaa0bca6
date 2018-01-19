@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc51d94c_557bcf84",
+        "filename": "telephony/java/com/android/ims/internal/IImsUt.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2018-01-19T19:52:59Z",
+      "side": 1,
+      "message": "What id serviceClass is invalid? Or if number is empty string? Will this API return -1?",
+      "range": {
+        "startLine": 129,
+        "startChar": 29,
+        "endLine": 129,
+        "endChar": 51
+      },
+      "revId": "5f8c397d648b7cb65437dabc980fffa3aaa0bca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
