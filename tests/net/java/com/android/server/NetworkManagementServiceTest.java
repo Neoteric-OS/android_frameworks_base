@@ -52,7 +52,6 @@ import org.mockito.MockitoAnnotations;
  * Tests for {@link NetworkManagementService}.
  */
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class NetworkManagementServiceTest {
 
     private static final String SOCKET_NAME = "__test__NetworkManagementServiceTest";

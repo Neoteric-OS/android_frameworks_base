@@ -173,7 +173,6 @@ public class IpConnectivityMetricsTest {
         assertEquals("", output2);
     }
 
-    @Test
     public void testDefaultNetworkEvents() throws Exception {
         final long cell = BitUtils.packBits(new int[]{NetworkCapabilities.TRANSPORT_CELLULAR});
         final long wifi = BitUtils.packBits(new int[]{NetworkCapabilities.TRANSPORT_WIFI});
@@ -291,7 +290,6 @@ public class IpConnectivityMetricsTest {
         verifySerialization(want, getdump("flush"));
     }
 
-    @Test
     public void testEndToEndLogging() throws Exception {
         // TODO: instead of comparing textpb to textpb, parse textpb and compare proto to proto.
         IpConnectivityLog logger = new IpConnectivityLog(mService.impl);
