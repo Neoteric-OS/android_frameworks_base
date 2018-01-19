@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df59f2c4_625c1d17",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-19T03:31:32Z",
+      "side": 1,
+      "message": "Reverted - wasn\u0027t an intentional change.",
+      "parentUuid": "979b299c_15194ae6",
+      "range": {
+        "startLine": 1797,
+        "startChar": 57,
+        "endLine": 1797,
+        "endChar": 58
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21d59f21_1c83343b",
         "filename": "core/java/android/net/INetdEventCallback.aidl",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T10:07:21Z",
       "side": 1,
       "message": "In order to avoid race conditions, I think we need to include the String hostname, which may be empty.\n\nFor logging purposes I think we should include the IP address of the nameserver that validated.  This won\u0027t be put into LinkProperties but we can debug-log it for good measure. Lorenzo suggests that we will probably want a boolean for validation status.  Initially we would only send up events when servers go from not validated to validated, but we might in future be able to detect SSL validation failures and bubble them up to ConnectivityService so that we can re-do captive portal detection.\n\nSo I proposed:\n\n    ...(int netId, String nameserver, String hostname, boolean isValidated)",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0185e0df_42875512",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-19T03:31:32Z",
+      "side": 1,
+      "message": "Ben thought of this race conditions case:\nSuppose a DNS server is added, removed, and then added again, all in quick succession. Suppose the first DNS-over-TLS validation succeeds and the second validation fails. We could end up in the wrong state if we don\u0027t send the validation failures to ConnectivityService as well.\n\nWhat is an example where we would need the hostname?",
+      "parentUuid": "21d59f21_1c83343b",
       "range": {
         "startLine": 41,
         "startChar": 47,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41c7d732_cb00490b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-19T03:31:32Z",
+      "side": 1,
+      "message": "Sounds like a good idea.",
+      "parentUuid": "c8bbe5ad_40b37a97",
+      "range": {
+        "startLine": 1480,
+        "startChar": 41,
+        "endLine": 1480,
+        "endChar": 42
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b59e49cd_99416042",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3955838d_f1c2604c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-19T03:31:32Z",
+      "side": 1,
+      "message": "Attempted to do this.",
+      "parentUuid": "b59e49cd_99416042",
+      "range": {
+        "startLine": 1492,
+        "startChar": 8,
+        "endLine": 1492,
+        "endChar": 9
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
