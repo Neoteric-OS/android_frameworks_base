@@ -57,9 +57,6 @@ public class KeepalivePacketData {
     /** Packet data. A raw byte string of packet data, not including the link-layer header. */
     public final byte[] data;
 
-    private static final int IPV4_HEADER_LENGTH = 20;
-    private static final int UDP_HEADER_LENGTH = 8;
-
     protected KeepalivePacketData(InetAddress srcAddress, int srcPort,
             InetAddress dstAddress, int dstPort, byte[] data) throws InvalidPacketException {
         this.srcAddress = srcAddress;
@@ -111,7 +108,8 @@ public class KeepalivePacketData {
             throw new InvalidPacketException(ERROR_INVALID_PORT);
         }
 
-        int length = IPV4_HEADER_LENGTH + UDP_HEADER_LENGTH + 1;
+        int length = ConnectivityConstants.IPV4_HEADER_LENGTH
+                + ConnectivityConstants.UDP_HEADER_LENGTH + 1;
         ByteBuffer buf = ByteBuffer.allocate(length);
         buf.order(ByteOrder.BIG_ENDIAN);
         buf.putShort((short) 0x4500);             // IP version and TOS
@@ -130,7 +128,8 @@ public class KeepalivePacketData {
         buf.putShort((short) 0);                  // UDP checksum
         buf.put((byte) 0xff);                     // NAT-T keepalive
         buf.putShort(ipChecksumOffset, IpUtils.ipChecksum(buf, 0));
-        buf.putShort(udpChecksumOffset, IpUtils.udpChecksum(buf, 0, IPV4_HEADER_LENGTH));
+        buf.putShort(udpChecksumOffset, IpUtils.udpChecksum(buf, 0,
+                ConnectivityConstants.IPV4_HEADER_LENGTH));
 
         return new KeepalivePacketData(srcAddress, srcPort, dstAddress, dstPort, buf.array());
     }
