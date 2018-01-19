@@ -719,18 +719,23 @@ public final class IpSecManager {
     /**
      * Create a new IpSecTunnelInterface as a local endpoint for tunneled IPsec traffic.
      *
+     * <p>An application that creates tunnels is responsible for cleaning up the tunnel when the
+     * underlying network goes away, and the onLost() callback is received.
+     *
      * @param localAddress The local addres of the tunnel
      * @param remoteAddress The local addres of the tunnel
-     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
-     *        This network should almost certainly be a network such as WiFi with an L2 address.
+     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel. This
+     *     network should almost certainly be a network such as WiFi with an L2 address.
      * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties
      * @throws IOException indicating that the socket could not be opened or bound
      * @throws ResourceUnavailableException indicating that too many encapsulation sockets are open
      * @hide
      */
     @SystemApi
-    public IpSecTunnelInterface createIpSecTunnelInterface(@NonNull InetAddress localAddress,
-            @NonNull InetAddress remoteAddress, @NonNull Network underlyingNetwork)
+    public IpSecTunnelInterface createIpSecTunnelInterface(
+            @NonNull InetAddress localAddress,
+            @NonNull InetAddress remoteAddress,
+            @NonNull Network underlyingNetwork)
             throws ResourceUnavailableException, IOException {
         return new IpSecTunnelInterface(mService, localAddress, remoteAddress, underlyingNetwork);
     }
