@@ -421,8 +421,6 @@ public class NetworkDiagnostics {
     private class IcmpCheck extends SimpleSocketCheck implements Runnable {
         private static final int TIMEOUT_SEND = 100;
         private static final int TIMEOUT_RECV = 300;
-        private static final int ICMPV4_ECHO_REQUEST = 8;
-        private static final int ICMPV6_ECHO_REQUEST = 128;
         private static final int PACKET_BUFSIZE = 512;
         private final int mProtocol;
         private final int mIcmpType;
@@ -432,11 +430,11 @@ public class NetworkDiagnostics {
 
             if (mAddressFamily == AF_INET6) {
                 mProtocol = IPPROTO_ICMPV6;
-                mIcmpType = ICMPV6_ECHO_REQUEST;
+                mIcmpType = ConnectivityConstants.ICMPV6_ECHO_REQUEST;
                 mMeasurement.description = "ICMPv6";
             } else {
                 mProtocol = IPPROTO_ICMP;
-                mIcmpType = ICMPV4_ECHO_REQUEST;
+                mIcmpType = ConnectivityConstants.ICMPV4_ECHO_REQUEST;
                 mMeasurement.description = "ICMPv4";
             }
 
@@ -504,7 +502,6 @@ public class NetworkDiagnostics {
     private class DnsUdpCheck extends SimpleSocketCheck implements Runnable {
         private static final int TIMEOUT_SEND = 100;
         private static final int TIMEOUT_RECV = 500;
-        private static final int DNS_SERVER_PORT = 53;
         private static final int RR_TYPE_A = 1;
         private static final int RR_TYPE_AAAA = 28;
         private static final int PACKET_BUFSIZE = 512;
@@ -546,7 +543,8 @@ public class NetworkDiagnostics {
             }
 
             try {
-                setupSocket(SOCK_DGRAM, IPPROTO_UDP, TIMEOUT_SEND, TIMEOUT_RECV, DNS_SERVER_PORT);
+                setupSocket(SOCK_DGRAM, IPPROTO_UDP, TIMEOUT_SEND, TIMEOUT_RECV,
+                        ConnectivityConstants.DNS_SERVER_PORT);
             } catch (ErrnoException | IOException e) {
                 mMeasurement.recordFailure(e.toString());
                 return;
