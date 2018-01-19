@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e8fc5f96_aae626e4",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "Sounds good: let\u0027s have failures reported too.\n\nThe hostname is needed to say what name validated. We don\u0027t want to have a validation event arrive for an old hostname setting and treat that as applicable to an update that hasn\u0027t actually completed validation yet (e.g. because these notifications get backed up or something).",
+      "parentUuid": "0185e0df_42875512",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8bbe5ad_40b37a97",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4

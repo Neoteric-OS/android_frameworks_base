@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaab47c7_a8834949",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "[nit] line length.",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1c51c3_83886f79",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "only non-public members need the \"m\" prefix.  You can remove them all here.",
+      "range": {
+        "startLine": 1496,
+        "startChar": 25,
+        "endLine": 1496,
+        "endChar": 26
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb30c9e7_52cdbb0d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "stray blank lines",
+      "range": {
+        "startLine": 1508,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 0
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7648348b_763d6e86",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2321,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "Yeah, I think we can probably find a way to make do without this message. It should be possible to organize things so what we can call things directly.",
+      "range": {
+        "startLine": 2321,
+        "startChar": 52,
+        "endLine": 2321,
+        "endChar": 83
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4116c4_9f87ffbe",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "This import should be unused and can be deleted.",
+      "range": {
+        "startLine": 39,
+        "startChar": 25,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda444e7_c816ff0d",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "[nit] line length",
+      "range": {
+        "startLine": 170,
+        "startChar": 96,
+        "endLine": 170,
+        "endChar": 97
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f77ddd0_8b09b5a4",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "This looks to be unused.",
+      "range": {
+        "startLine": 213,
+        "startChar": 41,
+        "endLine": 213,
+        "endChar": 48
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670a9d29_4fe7d491",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "break;",
+      "range": {
+        "startLine": 257,
+        "startChar": 20,
+        "endLine": 257,
+        "endChar": 21
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4fffff_9c2acd74",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "null or \"\"?",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 44
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea5594d_3165f2c8",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "If this works it\u0027s only because we\u0027re modifying the LinkProperties object given to us by ConnectivityService.  It\u0027s probably cleaner to call this from CS before it calls setDnsConfig...",
+      "range": {
+        "startLine": 309,
+        "startChar": 43,
+        "endLine": 309,
+        "endChar": 45
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732ea261_fa667366",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-19T09:14:36Z",
+      "side": 1,
+      "message": "[nit] line length",
+      "range": {
+        "startLine": 212,
+        "startChar": 56,
+        "endLine": 212,
+        "endChar": 57
+      },
+      "revId": "8dc214d7a316c0712a46a83f93bb02ffb456e6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
