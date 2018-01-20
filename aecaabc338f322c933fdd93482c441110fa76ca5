@@ -16,6 +16,24 @@
       "revId": "aecaabc338f322c933fdd93482c441110fa76ca5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d6e051_c236ba78",
+        "filename": "telephony/java/android/telephony/UiccSlotInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-20T03:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc273c1_78b79702",
+      "revId": "aecaabc338f322c933fdd93482c441110fa76ca5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
