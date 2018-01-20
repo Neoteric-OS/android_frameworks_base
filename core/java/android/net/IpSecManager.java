@@ -780,7 +780,7 @@ public final class IpSecManager {
      * @hide
      */
     @SystemApi
-    void applyTunnelModeTransform(IpSecTunnelInterface tunnel, int direction,
+    public void applyTunnelModeTransform(IpSecTunnelInterface tunnel, int direction,
             IpSecTransform transform) throws IOException {
         try {
             mService.applyTunnelModeTransform(
