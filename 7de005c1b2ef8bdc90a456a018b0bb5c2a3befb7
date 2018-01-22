@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d287b2ba_60615cce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-01-22T13:29:57Z",
+      "side": 1,
+      "message": "This isn\u0027t a sufficient test. How did you make sure that the fix functions as intended ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "7de005c1b2ef8bdc90a456a018b0bb5c2a3befb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
