@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6fde1107_0336ced0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-22T19:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd3cd82e_dddfc2f3",
+      "range": {
+        "startLine": 802,
+        "startChar": 15,
+        "endLine": 802,
+        "endChar": 38
+      },
+      "revId": "40b4bf1534b39f3811b88fa23b68db66e445077a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb975bdf_57cb3822",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 12
@@ -283,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f098ee2c_66da458c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-22T19:14:46Z",
+      "side": 1,
+      "message": "Created a bug tracking this: b/72316676. I\u0027ll make sure to address this with a CL addressing the netd-call todos.",
+      "parentUuid": "1c186f49_66d7dec0",
+      "range": {
+        "startLine": 1196,
+        "startChar": 8,
+        "endLine": 1196,
+        "endChar": 38
+      },
+      "revId": "40b4bf1534b39f3811b88fa23b68db66e445077a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58009faa_6ab66543",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 12
@@ -303,6 +351,30 @@
       "revId": "40b4bf1534b39f3811b88fa23b68db66e445077a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17097fd6_cad8b8fa",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-22T19:14:46Z",
+      "side": 1,
+      "message": "After discussion with nharold, it seems like IP addresses are inherently racy, and there is no real way to test IP addresses. It appears that there is no failure notification. \n\nThis is also tracked in bug b/72316676.",
+      "parentUuid": "58009faa_6ab66543",
+      "range": {
+        "startLine": 1197,
+        "startChar": 8,
+        "endLine": 1197,
+        "endChar": 36
+      },
+      "revId": "40b4bf1534b39f3811b88fa23b68db66e445077a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
