@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f2126093_822a229f",
+        "filename": "core/tests/coretests/src/android/view/menu/ContextMenuTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119693
+      },
+      "writtenOn": "2018-01-22T22:51:21Z",
+      "side": 1,
+      "message": "Works fine with a PollingCheck implementation copied from under cts/common",
+      "parentUuid": "0a316b40_2fefe7dc",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "ba06cfa8cb5ae74eee2a26ad8e4592818951aa1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6af85589_32d12393",
         "filename": "core/tests/coretests/src/android/view/menu/ContextMenuTest.java",
         "patchSetId": 1
