@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb8d9ee_31d60b61",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5248,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T11:31:09Z",
+      "side": 0,
+      "message": "It\u0027s good to see this code go away. Have you tested that it is in fact unnecessary? It should suffice to check that when a VPN connects / disconnects we send a CONNECTIVITY_ACTION broadcast where the NetworkInfo extra has type TYPE_VPN.",
+      "range": {
+        "startLine": 5242,
+        "startChar": 0,
+        "endLine": 5248,
+        "endChar": 13
+      },
+      "revId": "544315b129ace63e909ac226e0caaf01cdd8f7c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
