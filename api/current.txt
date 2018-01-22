@@ -6,6 +6,7 @@ package android {
 
   public static final class Manifest.permission {
     ctor public Manifest.permission();
+    field public static final java.lang.String ACCEPT_HANDOVER = "android.permission.ACCEPT_HANDOVER";
     field public static final java.lang.String ACCESS_CHECKIN_PROPERTIES = "android.permission.ACCESS_CHECKIN_PROPERTIES";
     field public static final java.lang.String ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION";
     field public static final java.lang.String ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION";
@@ -4174,6 +4175,7 @@ package android.app {
     field public static final int MODE_DEFAULT = 3; // 0x3
     field public static final int MODE_ERRORED = 2; // 0x2
     field public static final int MODE_IGNORED = 1; // 0x1
+    field public static final java.lang.String OPSTR_ACCEPT_HANDOVER = "android:accept_handover";
     field public static final java.lang.String OPSTR_ADD_VOICEMAIL = "android:add_voicemail";
     field public static final java.lang.String OPSTR_ANSWER_PHONE_CALLS = "android:answer_phone_calls";
     field public static final java.lang.String OPSTR_BODY_SENSORS = "android:body_sensors";
@@ -39328,6 +39330,7 @@ package android.telecom {
     method public void onCallEvent(java.lang.String, android.os.Bundle);
     method public void onDisconnect();
     method public void onExtrasChanged(android.os.Bundle);
+    method public void onHandoverComplete();
     method public void onHold();
     method public void onPlayDtmfTone(char);
     method public void onPostDialContinue(boolean);
