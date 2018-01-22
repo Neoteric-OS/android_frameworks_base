@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c3776b_5ff5e338",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T10:55:56Z",
+      "side": 1,
+      "message": "Does this deal correctly with both empty UID ranges and null UID ranges? Seems like we can never exist this method with nai.networkCapabilities having a null UID range.\n\nThat said, I\u0027m not sure what codepaths we need to support here. I think we need to support null-\u003enon-empty (when the VPN connects), but I can a VPN ever specify a null UID range? If it can\u0027tm then we can just add a comment here that we don\u0027t support that.\n\nThis may be tricky because from an actual routing perspective, I don\u0027t think null makes much sense.",
+      "range": {
+        "startLine": 4792,
+        "startChar": 8,
+        "endLine": 4792,
+        "endChar": 62
+      },
+      "revId": "beddfd71c8044a89faa3339a2091afe10f68b037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef21cf9_3d2e4e30",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4803,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T10:55:56Z",
+      "side": 1,
+      "message": "Here we\u0027re removing the old UID ranges before adding the new ones. Will this cause a blip in connectivity? Is it safer to add the new ones before removing the old ones?",
+      "range": {
+        "startLine": 4803,
+        "startChar": 22,
+        "endLine": 4803,
+        "endChar": 40
+      },
+      "revId": "beddfd71c8044a89faa3339a2091afe10f68b037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
