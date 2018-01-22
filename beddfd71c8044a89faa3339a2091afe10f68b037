@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f3b4e02_51b96bf2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4792,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-22T12:39:41Z",
+      "side": 1,
+      "message": "No it can\u0027t AFAIK, but we do come here with null \u003d\u003d prevNc. And there should be a code path where we come with null \u003d\u003d newNc I guess ? Fixed ^^;;;;\n\nAs for empty, I don\u0027t think it ever happens, but if it does this method does the right thing, so better safe than sorry.",
+      "parentUuid": "d7c3776b_5ff5e338",
+      "range": {
+        "startLine": 4792,
+        "startChar": 8,
+        "endLine": 4792,
+        "endChar": 62
+      },
+      "revId": "beddfd71c8044a89faa3339a2091afe10f68b037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef21cf9_3d2e4e30",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "beddfd71c8044a89faa3339a2091afe10f68b037",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962b3e77_c2ffe7e3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4803,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-22T12:39:41Z",
+      "side": 1,
+      "message": "Done, although I don\u0027t think it can ever happen that there are both added and removed UIDs because the old code simply does not handle it. The use cases for this method are actually only when a user account is added or removed, which respectively only add or remove stuff ; when a VPN app wants to update the list of UIDs it has to tear down the VPN and bring it back up anyway.\n\nThis method on the other hand is designed to handle all cases and remove this limitation, as I can\u0027t think of a good reason to enforce this invariant, and it\u0027s easier to think about. If it works in all cases it will work also in a restricted set.",
+      "parentUuid": "9ef21cf9_3d2e4e30",
+      "range": {
+        "startLine": 4803,
+        "startChar": 22,
+        "endLine": 4803,
+        "endChar": 40
+      },
+      "revId": "beddfd71c8044a89faa3339a2091afe10f68b037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
