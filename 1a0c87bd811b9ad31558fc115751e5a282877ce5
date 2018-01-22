@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af68a375_1c086bde",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-22T23:42:23Z",
+      "side": 1,
+      "message": "\"Result code of an unknown error.\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "1a0c87bd811b9ad31558fc115751e5a282877ce5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
