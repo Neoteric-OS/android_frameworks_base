@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3c24bcc_ac5ae20e",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-22T18:46:14Z",
+      "side": 1,
+      "message": "The caller of these methods would be the proprietary \"IWLAN service\", which is \"vendor\" code (imagine, QC). In the handover case, the setupDataCall() TO the IWLAN servicew will contain those addresses, and then the vendor service will need to add them to the interface it creates. So in a sense, yes telephony manages the addresses, but each interface will continue to be \"operated\" by its owner. In the case of IWLAN, the owner of the interface will be the IWLAN Service, which will need to call *some* method to add addresses to the interface it gets. So yes, telephony manages the addresses between two interface owners, but each owner will have to have a means of adding addresses on its own, just like QC today handles the addresses on the rmnets.\n\nWe could make some more generic methods to do this, but then I can\u0027t imagine we\u0027d want those as @SystemApi.",
+      "parentUuid": "ac0e15fd_6ae22d4b",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "40b4bf1534b39f3811b88fa23b68db66e445077a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf8a5c57_18248b98",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 12
