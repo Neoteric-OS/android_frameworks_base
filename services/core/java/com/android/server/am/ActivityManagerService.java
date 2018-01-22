@@ -7011,25 +7011,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             }
 
-            ProfilerInfo profilerInfo = null;
-            String preBindAgent = null;
-            if (mProfileApp != null && mProfileApp.equals(processName)) {
-                mProfileProc = app;
-                if (mProfilerInfo != null) {
-                    // Send a profiler info object to the app if either a file is given, or
-                    // an agent should be loaded at bind-time.
-                    boolean needsInfo = mProfilerInfo.profileFile != null
-                            || mProfilerInfo.attachAgentDuringBind;
-                    profilerInfo = needsInfo ? new ProfilerInfo(mProfilerInfo) : null;
-                    if (!mProfilerInfo.attachAgentDuringBind) {
-                        preBindAgent = mProfilerInfo.agent;
-                    }
-                }
-            } else if (app.instr != null && app.instr.mProfileFile != null) {
-                profilerInfo = new ProfilerInfo(app.instr.mProfileFile, null, 0, false, false,
-                        null, false);
-            }
-
             boolean enableTrackAllocation = false;
             if (mTrackAllocationApp != null && mTrackAllocationApp.equals(processName)) {
                 enableTrackAllocation = true;
@@ -7053,6 +7034,33 @@ public class ActivityManagerService extends IActivityManager.Stub
                     + processName + " with config " + getGlobalConfiguration());
             ApplicationInfo appInfo = app.instr != null ? app.instr.mTargetInfo : app.info;
             app.compat = compatibilityInfoForPackageLocked(appInfo);
+
+            ProfilerInfo profilerInfo = null;
+            String preBindAgent = null;
+            if (mProfileApp != null && mProfileApp.equals(processName)) {
+                mProfileProc = app;
+                if (mProfilerInfo != null) {
+                    // Send a profiler info object to the app if either a file is given, or
+                    // an agent should be loaded at bind-time.
+                    boolean needsInfo = mProfilerInfo.profileFile != null
+                            || mProfilerInfo.attachAgentDuringBind;
+                    profilerInfo = needsInfo ? new ProfilerInfo(mProfilerInfo) : null;
+                    if (mProfilerInfo.agent != null) {
+                        // We need to do a debuggable check here.
+                        if ((app.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                            if (!mProfilerInfo.attachAgentDuringBind) {
+                                preBindAgent = mProfilerInfo.agent;
+                            }
+                        } else {
+                            // Suppress the profiling request.
+                            profilerInfo = null;
+                        }
+                    }
+                }
+            } else if (app.instr != null && app.instr.mProfileFile != null) {
+                profilerInfo = new ProfilerInfo(app.instr.mProfileFile, null, 0, false, false,
+                        null, false);
+            }
 
             if (profilerInfo != null && profilerInfo.profileFd != null) {
                 profilerInfo.profileFd = profilerInfo.profileFd.dup();
@@ -12787,6 +12795,30 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    @Override
+    public void setAgentApp(String packageName, String agent) {
+        synchronized (this) {
+            // note: hijacking SET_ACTIVITY_WATCHER, but should be changed to
+            // its own permission.
+            if (checkCallingPermission(
+                    android.Manifest.permission.SET_ACTIVITY_WATCHER) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                throw new SecurityException(
+                        "Requires permission " + android.Manifest.permission.SET_ACTIVITY_WATCHER);
+            }
+
+            // Stop any active profiling, as we have to replace the profilerInfo.
+            stopProfilerLocked(null, 0);
+
+            // We cannot check the debuggability, yet. This will be done in bindApplication
+            // once the process is known.
+            setProfileAppUnchecked(packageName, new ProfilerInfo(null /* filename */, null /* fd */,
+                    0 /* interval */, false /* autostop */, false /* streaming */, agent,
+                    true /* bind-time */));
+            mProfileProc = null;
+        }
+    }
+
     void setTrackAllocationApp(ApplicationInfo app, String processName) {
         synchronized (this) {
             boolean isDebuggable = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
@@ -12808,19 +12840,24 @@ public class ActivityManagerService extends IActivityManager.Stub
                     throw new SecurityException("Process not debuggable: " + app.packageName);
                 }
             }
-            mProfileApp = processName;
+            setProfileAppUnchecked(processName, profilerInfo);
+        }
+    }
 
-            if (mProfilerInfo != null) {
-                if (mProfilerInfo.profileFd != null) {
-                    try {
-                        mProfilerInfo.profileFd.close();
-                    } catch (IOException e) {
-                    }
+    @GuardedBy("this")
+    private void setProfileAppUnchecked(String processName, ProfilerInfo profilerInfo) {
+        mProfileApp = processName;
+
+        if (mProfilerInfo != null) {
+            if (mProfilerInfo.profileFd != null) {
+                try {
+                    mProfilerInfo.profileFd.close();
+                } catch (IOException e) {
                 }
             }
-            mProfilerInfo = new ProfilerInfo(profilerInfo);
-            mProfileType = 0;
         }
+        mProfilerInfo = new ProfilerInfo(profilerInfo);
+        mProfileType = 0;
     }
 
     void setNativeDebuggingAppLocked(ApplicationInfo app, String processName) {
