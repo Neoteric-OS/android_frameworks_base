@@ -33,6 +33,24 @@
       "revId": "663c426794986fd8c51f1dbb918035470eb01c40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc26f04_f794837e",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1273885
+      },
+      "writtenOn": "2018-01-22T09:03:27Z",
+      "side": 1,
+      "message": "Actually the MAX_PACKAGE_NOTIFICATIONS definition is come from google.\nYou can refer to the commit:\nhttps://android.googlesource.com/platform/frameworks/base/+/4ee785b698211b5ccce104e226b073ffbb12df55%5E%21/#F0\nGoogle has removed the limitation for toasts number from android O1, but it caused many fd leak issues, so we suggest rollback this. Do you really want smaller constants?",
+      "parentUuid": "597f3bd5_35a14e0e",
+      "revId": "663c426794986fd8c51f1dbb918035470eb01c40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
