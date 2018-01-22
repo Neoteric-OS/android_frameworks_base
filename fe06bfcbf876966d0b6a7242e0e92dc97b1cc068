@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4516fa46_42de47ee",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T11:18:54Z",
+      "side": 1,
+      "message": "I\u0027m wondering if code somewhere will look at the creating UID and then assume that this network is somehow privileged because it was created by the system.\n\nDo we use this value somewhere? If not, is it better to use a different guard value here, like -1? (Other places in the code call that INVALID_UID).",
+      "revId": "fe06bfcbf876966d0b6a7242e0e92dc97b1cc068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44864aa9_d39fdc84",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T11:18:54Z",
+      "side": 1,
+      "message": "Nit: is it actually allowed to access it? I think that\u0027s up to netd (see checkUserNetworkAccessLocked), and I think the answer, today, is that it can\u0027t. Now that we have the VPN app UID in the capabilities, that\u0027s something we could consider changing. It does seem to make sense.\n\nI\u0027m a bit torn on this one. It\u0027s surprising that the VPN app will see onAvailable for its network, but then if it tries to use it, it will get EPERM. On the one hand, if it doesn\u0027t get onAvailable at all, that would be worse, because it wouldn\u0027t know that its network is up. That could cause app breakage.\n\nI wonder if we should just send all the callbacks all the time and only take into account the UID ranges for the default network? But that would also be inconsistent.\n\nPerhaps the best solution would be to send onAvailable, and allow the app to access its network if it wants, but only force it to use the network if it includes its own UID in the UID ranges. That way we wouldn\u0027t break backwards compatibility.\n\nAll that said - for this CL, i\u0027d just amend the comment to remove the words \"and access\" and leave the behaviour as you have it here.",
+      "range": {
+        "startLine": 877,
+        "startChar": 46,
+        "endLine": 877,
+        "endChar": 56
+      },
+      "revId": "fe06bfcbf876966d0b6a7242e0e92dc97b1cc068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca14f307_7a24b284",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T11:18:54Z",
+      "side": 1,
+      "message": "Nit: is this only true for listens, or is it true for requests as well?",
+      "range": {
+        "startLine": 973,
+        "startChar": 54,
+        "endLine": 973,
+        "endChar": 62
+      },
+      "revId": "fe06bfcbf876966d0b6a7242e0e92dc97b1cc068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
