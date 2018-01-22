@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e4d628_2152d90e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-22T11:01:34Z",
+      "side": 1,
+      "message": "In order to test default network callbacks at some point we\u0027ll need to set the score to a high number. Is that done in a future CL?",
+      "range": {
+        "startLine": 383,
+        "startChar": 29,
+        "endLine": 383,
+        "endChar": 30
+      },
+      "revId": "ff36d379a9fef8d23eed5e90389ef6b8df733207",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
