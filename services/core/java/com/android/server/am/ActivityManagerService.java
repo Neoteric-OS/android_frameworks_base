@@ -3873,7 +3873,6 @@ public class ActivityManagerService extends IActivityManager.Stub
 
             if (app.info.isPrivilegedApp() &&
                     !SystemProperties.getBoolean("pm.dexopt.priv-apps", true)) {
-                runtimeFlags |= Zygote.DISABLE_VERIFIER;
                 runtimeFlags |= Zygote.ONLY_USE_SYSTEM_OAT_FILES;
             }
 
