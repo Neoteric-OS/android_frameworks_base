@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a16bd4b_4d8d4d68",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-23T05:45:47Z",
+      "side": 1,
+      "message": "Done, but this copy here is actually completely useless. This is only used through IPC from ConnectivityManager, so the object passed as an argument here is a freshly unparceled one that will get GC\u0027d when we exit this method anyway.\n\nThe original networkCapabilities is also used in l.4366 just below. For what it\u0027s used it does not change anything.\n\nI suggest having a separate change to clean this up (as it has nothing at all to do with this change). Added a TODO.",
+      "parentUuid": "77163150_c80d47c3",
+      "range": {
+        "startLine": 4356,
+        "startChar": 8,
+        "endLine": 4356,
+        "endChar": 65
+      },
+      "revId": "9b3566d41dbf3454da1dc0cdbc62b591ec0a3907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2512690e_b978f1f8",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c0944c23_59cff81f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4385,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-23T05:45:47Z",
+      "side": 1,
+      "message": "Same as above : done, should be useless, added a TODO.",
+      "parentUuid": "2512690e_b978f1f8",
+      "range": {
+        "startLine": 4385,
+        "startChar": 8,
+        "endLine": 4385,
+        "endChar": 65
+      },
+      "revId": "9b3566d41dbf3454da1dc0cdbc62b591ec0a3907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c394b455_7f075c08",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-22T11:31:09Z",
       "side": 1,
       "message": "Eventually I think we\u0027ll want to let privileged processes (say, status bar or settings - those holding the NETWORK_SETTINGS permission) see the real UID ranges. Not necessary in this CL though - a TODO would be fine too.",
+      "range": {
+        "startLine": 4939,
+        "startChar": 16,
+        "endLine": 4939,
+        "endChar": 42
+      },
+      "revId": "9b3566d41dbf3454da1dc0cdbc62b591ec0a3907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13edc379_e82c686e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4939,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-23T05:45:47Z",
+      "side": 1,
+      "message": "Yes, we\u0027ve talked about that. Is NETWORK_SETTINGS the right permission ? It sounds so. Added a TODO for now.",
+      "parentUuid": "c394b455_7f075c08",
       "range": {
         "startLine": 4939,
         "startChar": 16,

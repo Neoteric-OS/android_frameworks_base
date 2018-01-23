@@ -22,6 +22,30 @@
       "revId": "544315b129ace63e909ac226e0caaf01cdd8f7c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48747332_cb072f48",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5248,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-23T05:45:47Z",
+      "side": 0,
+      "message": "Unfortunately this can\u0027t go. This removal is a leftover from the time when I had removed the NOT_VPN capability from the default request, but now that it\u0027s not removed any more this code has to stay :/",
+      "parentUuid": "dcb8d9ee_31d60b61",
+      "range": {
+        "startLine": 5242,
+        "startChar": 0,
+        "endLine": 5248,
+        "endChar": 13
+      },
+      "revId": "544315b129ace63e909ac226e0caaf01cdd8f7c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
