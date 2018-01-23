@@ -22,6 +22,30 @@
       "revId": "284b496cf4ef7e46c959f82b1c6bfa49e5a34971",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1de067_fb9ac9b4",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-01-23T21:39:51Z",
+      "side": 1,
+      "message": "Ah, right it changed on internal master. I\u0027ll submit an internal CL, and cherry-pick on AOSP then.",
+      "parentUuid": "af7213d1_3810ea7c",
+      "range": {
+        "startLine": 477,
+        "startChar": 68,
+        "endLine": 477,
+        "endChar": 87
+      },
+      "revId": "284b496cf4ef7e46c959f82b1c6bfa49e5a34971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
