@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "00dc833c_ab36f928",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T01:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5cf2caf_63195fdc",
+      "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431b4413_55d226d2",
         "filename": "telephony/java/android/telephony/CellIdentityLte.java",
         "patchSetId": 4
@@ -76,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "72343163_fe821a4f",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T01:01:14Z",
+      "side": 1,
+      "message": "I think these @params are all correct. The only constructor whose signature changed is the one at line 105, which has the updated bandwidth @param. This and the below constructor just default the bandwidth to integer.MAX_VALUE.",
+      "parentUuid": "431b4413_55d226d2",
+      "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d003ceef_cdb9d500",
         "filename": "telephony/java/android/telephony/CellIdentityLte.java",
         "patchSetId": 4
@@ -87,6 +123,24 @@
       "writtenOn": "2018-01-22T23:35:18Z",
       "side": 1,
       "message": "please fix.",
+      "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdb07a4a_35908be3",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T01:01:14Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "d003ceef_cdb9d500",
       "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -116,6 +170,30 @@
     },
     {
       "key": {
+        "uuid": "93a275cf_2654c808",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T01:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bd89f7_11fc6ba3",
+      "range": {
+        "startLine": 72,
+        "startChar": 36,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4ed8f7_ff3181b0",
         "filename": "telephony/java/android/telephony/CellInfo.java",
         "patchSetId": 4
@@ -127,6 +205,24 @@
       "writtenOn": "2018-01-22T23:35:18Z",
       "side": 1,
       "message": "Suggest adding spec references that explain camped and serving cell (I think we have them in our doc).\n\nI also think this comment needs to be the full robust thing:\n\n/**\n* Get the connection status of the cell.... For a device in idle mode, blah \n* blah blah or in connected mode yada yada yada. spec reference.\n* @return the status, etc etc.\n*/",
+      "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fff619e_348aa68e",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T01:01:14Z",
+      "side": 1,
+      "message": "Added @see annotations and updated the constants to have spec numbers.",
+      "parentUuid": "bf4ed8f7_ff3181b0",
       "revId": "f6b2cd0bb445e7bc2007a474ca3cb7687527f4ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
