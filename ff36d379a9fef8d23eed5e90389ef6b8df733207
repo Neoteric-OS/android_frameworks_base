@@ -22,6 +22,30 @@
       "revId": "ff36d379a9fef8d23eed5e90389ef6b8df733207",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3e3839_a04cea6a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-23T07:58:00Z",
+      "side": 1,
+      "message": "Yes it is, and in that patch this code is also updated.",
+      "parentUuid": "48e4d628_2152d90e",
+      "range": {
+        "startLine": 383,
+        "startChar": 29,
+        "endLine": 383,
+        "endChar": 30
+      },
+      "revId": "ff36d379a9fef8d23eed5e90389ef6b8df733207",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
