@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f073db68_e8faf053",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2504,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-23T21:41:05Z",
+      "side": 1,
+      "message": "Is this a fast enough process that it can be synchronous like this?\n\nWhen referring to getPhoneAcount(), @link in the docs.\n\nCan you make the docs a bit clearer?  I\u0027m not sure what it means to \"map logicalslot to physicalslot\".",
+      "range": {
+        "startLine": 2500,
+        "startChar": 6,
+        "endLine": 2504,
+        "endChar": 85
+      },
+      "revId": "1c6426b9588e9901f48f6767d907c123dce8ceeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69d74069_a70592d3",
+        "filename": "telephony/java/android/telephony/UiccSlotInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-23T21:41:05Z",
+      "side": 1,
+      "message": "@hide the interface; they\u0027re not intended for inclusion in the actual API.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "1c6426b9588e9901f48f6767d907c123dce8ceeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bd03c32_77f639ae",
+        "filename": "telephony/java/android/telephony/UiccSlotInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-23T21:41:05Z",
+      "side": 1,
+      "message": "Should be private and use android naming conventions (e.g. mIsActive)",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "1c6426b9588e9901f48f6767d907c123dce8ceeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0b72ce3_a6a292bc",
+        "filename": "telephony/java/android/telephony/UiccSlotInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-23T21:41:05Z",
+      "side": 1,
+      "message": "So all these parameters are optional?  Is the system the only one making instances of this?  IF so, then @hide this builder.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 27
+      },
+      "revId": "1c6426b9588e9901f48f6767d907c123dce8ceeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
