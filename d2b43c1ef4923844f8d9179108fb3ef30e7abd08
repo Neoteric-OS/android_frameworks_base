@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab35365_d0ae07d9",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-23T01:25:55Z",
+      "side": 1,
+      "message": "can we put this in CellIdentity (and accessors too) - it may only be used in Lte variant, but it\u0027s not implicitly an LTE concept.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "d2b43c1ef4923844f8d9179108fb3ef30e7abd08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e53067f_7e2affcf",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-23T01:25:55Z",
+      "side": 1,
+      "message": "shouldn\u0027t you check the connection type?  Otherwise a cellinfo just seeing a tower will be equals to one using the tower as primary connection.\n\nAlso add to hashCode if you modify equals",
+      "range": {
+        "startLine": 173,
+        "startChar": 19,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "d2b43c1ef4923844f8d9179108fb3ef30e7abd08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
