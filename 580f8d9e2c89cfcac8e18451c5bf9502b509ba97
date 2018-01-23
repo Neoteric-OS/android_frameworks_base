@@ -16,6 +16,41 @@
       "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "486dd4d1_c309b123",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T23:41:38Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "69c25e43_986dd462",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4cb60b3_c05d67b9",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T23:41:38Z",
+      "side": 1,
+      "message": "TODO, override hashCode() and equals()",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
