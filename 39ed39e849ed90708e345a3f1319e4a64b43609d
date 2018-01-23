@@ -45,6 +45,144 @@
       "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca37eab3_02716d4e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4212,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "Is this comment appropriate here? Seems like it would only be applicable to callCallbackForRequest.",
+      "range": {
+        "startLine": 4211,
+        "startChar": 0,
+        "endLine": 4212,
+        "endChar": 53
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14599574_f3a63536",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4288,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "Ditto, remove this comment?",
+      "range": {
+        "startLine": 4287,
+        "startChar": 0,
+        "endLine": 4288,
+        "endChar": 53
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148e8e12_f3f2e12b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4344,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "That doesn\u0027t help if the caller is in the same process as us. If something in the system server calls this method, the object we get here will be the actual object owned by the caller. Maybe remove this comment?",
+      "range": {
+        "startLine": 4342,
+        "startChar": 0,
+        "endLine": 4344,
+        "endChar": 81
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d977dd4e_91b1cb3f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4347,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 4346,
+        "startChar": 0,
+        "endLine": 4347,
+        "endChar": 53
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c018d8_91cbbec3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "See comment above.",
+      "range": {
+        "startLine": 4377,
+        "startChar": 8,
+        "endLine": 4377,
+        "endChar": 92
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df00f9aa_0f698161",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4380,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:48:48Z",
+      "side": 1,
+      "message": "Ditto, remove?",
+      "range": {
+        "startLine": 4379,
+        "startChar": 0,
+        "endLine": 4380,
+        "endChar": 53
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
