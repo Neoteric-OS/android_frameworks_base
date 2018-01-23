@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb57d737_9efb3043",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:42:34Z",
+      "side": 1,
+      "message": "If network is non-existent or disconnected, then this will crash with an NPE.",
+      "range": {
+        "startLine": 1265,
+        "startChar": 30,
+        "endLine": 1265,
+        "endChar": 31
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5f112d5_0d1daf4f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 12
