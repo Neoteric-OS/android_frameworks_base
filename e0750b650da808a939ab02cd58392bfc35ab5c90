@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c0b14b7_e170013b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-23T01:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed8b1fa_0c4306f1",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 1
+      },
+      "revId": "e0750b650da808a939ab02cd58392bfc35ab5c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5b2c6fc_fadcb98f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T01:11:47Z",
       "side": 1,
       "message": "switch these as well? This order is killing me.",
+      "range": {
+        "startLine": 451,
+        "startChar": 12,
+        "endLine": 451,
+        "endChar": 24
+      },
+      "revId": "e0750b650da808a939ab02cd58392bfc35ab5c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "274af8d5_54125535",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-23T01:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b2c6fc_fadcb98f",
       "range": {
         "startLine": 451,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "744e67c1_a6d20999",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-23T01:37:57Z",
+      "side": 1,
+      "message": "Only called from createTunnelInterface, which will be running in a binder thread; \n\nAdded note to javadoc",
+      "parentUuid": "b7fef82a_f2a690d0",
+      "range": {
+        "startLine": 788,
+        "startChar": 30,
+        "endLine": 788,
+        "endChar": 54
+      },
+      "revId": "e0750b650da808a939ab02cd58392bfc35ab5c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65a3e492_53ee5224",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 18
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a1faf15b_c552575b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-23T01:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65a3e492_53ee5224",
+      "revId": "e0750b650da808a939ab02cd58392bfc35ab5c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c8ba35_a032d86a",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 18
@@ -99,6 +189,30 @@
       "writtenOn": "2018-01-23T01:11:47Z",
       "side": 1,
       "message": "iKey and oKey?",
+      "range": {
+        "startLine": 825,
+        "startChar": 12,
+        "endLine": 826,
+        "endChar": 53
+      },
+      "revId": "e0750b650da808a939ab02cd58392bfc35ab5c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a33ec049_14874f3a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-01-23T01:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c8ba35_a032d86a",
       "range": {
         "startLine": 825,
         "startChar": 12,
