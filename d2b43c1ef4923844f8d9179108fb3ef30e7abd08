@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e65ba2a_226588bb",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T02:15:44Z",
+      "side": 1,
+      "message": "leaving it here per offline discussion.",
+      "parentUuid": "0ab35365_d0ae07d9",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "d2b43c1ef4923844f8d9179108fb3ef30e7abd08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e53067f_7e2affcf",
         "filename": "telephony/java/android/telephony/CellInfo.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d2b43c1ef4923844f8d9179108fb3ef30e7abd08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0a1d4d_a0de39d3",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-23T02:15:44Z",
+      "side": 1,
+      "message": "good catch. done.",
+      "parentUuid": "6e53067f_7e2affcf",
+      "range": {
+        "startLine": 173,
+        "startChar": 19,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "d2b43c1ef4923844f8d9179108fb3ef30e7abd08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
