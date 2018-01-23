@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f112d5_0d1daf4f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-23T07:30:49Z",
+      "side": 1,
+      "message": "Don\u0027t you also need to remove NOT_VPN here?",
+      "range": {
+        "startLine": 4196,
+        "startChar": 58,
+        "endLine": 4196,
+        "endChar": 93
+      },
+      "revId": "39ed39e849ed90708e345a3f1319e4a64b43609d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
