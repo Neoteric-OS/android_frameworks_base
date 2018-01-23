@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c25e43_986dd462",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-01-23T23:38:27Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
