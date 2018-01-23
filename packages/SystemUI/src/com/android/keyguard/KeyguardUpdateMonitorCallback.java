@@ -256,6 +256,45 @@ public class KeyguardUpdateMonitorCallback {
     public void onFingerprintRunningStateChanged(boolean running) { }
 
     /**
+     * Called when a iris has been acquired.
+     * <p>
+     * It is guaranteed that either {@link #onIrisAuthenticated} or
+     * {@link #onIrisAuthFailed()} is called after this method eventually.
+     */
+    public void onIrisAcquired() { }
+
+    /**
+     * Called when a iris couldn't be authenticated.
+     */
+    public void onIrisAuthFailed() { }
+
+    /**
+     * Called when a iris is recognized.
+     * @param userId the user id for which the iris was authenticated
+     */
+    public void onIrisAuthenticated(int userId) { }
+
+    /**
+     * Called when iris provides help string (e.g. "Try again")
+     * @param msgId
+     * @param helpString
+     */
+    public void onIrisHelp(int msgId, String helpString) { }
+
+    /**
+     * Called when iris provides an semi-permanent error message
+     * (e.g. "Hardware not available").
+     * @param msgId one of the error messages listed in {@link IrisManager}
+     * @param errString
+     */
+    public void onIrisError(int msgId, String errString) { }
+
+    /**
+     * Called when the iris running state changed.
+     */
+    public void onIrisRunningStateChanged(boolean running) { }
+
+    /**
      * Called when the state that the user hasn't used strong authentication since quite some time
      * has changed.
      */

@@ -1463,6 +1463,13 @@ public class LockPatternUtils {
         return (getStrongAuthForUser(userId) & ~StrongAuthTracker.ALLOWING_FINGERPRINT) == 0;
     }
 
+    /**
+     * @see StrongAuthTracker#isIrisAllowedForUser
+     */
+    public boolean isIrisAllowedForUser(int userId) {
+        return (getStrongAuthForUser(userId) & ~StrongAuthTracker.ALLOWING_IRIS) == 0;
+    }
+
     private ICheckCredentialProgressCallback wrapCallback(
             final CheckCredentialProgressCallback callback) {
         if (callback == null) {
@@ -1658,6 +1665,14 @@ public class LockPatternUtils {
         private static final int ALLOWING_FINGERPRINT = STRONG_AUTH_NOT_REQUIRED
                 | SOME_AUTH_REQUIRED_AFTER_USER_REQUEST;
 
+        /**
+         * Strong auth flags that do not prevent iris from being accepted as auth.
+         *
+         * If any other flags are set, iris is disabled.
+         */
+        private static final int ALLOWING_IRIS = STRONG_AUTH_NOT_REQUIRED
+                | SOME_AUTH_REQUIRED_AFTER_USER_REQUEST;
+
         private final SparseIntArray mStrongAuthRequiredForUser = new SparseIntArray();
         private final H mHandler;
         private final int mDefaultStrongAuthFlags;
@@ -1707,6 +1722,14 @@ public class LockPatternUtils {
          */
         public boolean isFingerprintAllowedForUser(int userId) {
             return (getStrongAuthForUser(userId) & ~ALLOWING_FINGERPRINT) == 0;
+        }
+
+        /**
+         * @return true if unlocking with iris alone is allowed for {@param userId} by the
+         * current strong authentication requirements.
+         */
+        public boolean isIrisAllowedForUser(int userId) {
+            return (getStrongAuthForUser(userId) & ~ALLOWING_IRIS) == 0;
         }
 
         /**

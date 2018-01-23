@@ -186,26 +186,27 @@ public class TrustManager {
     }
 
     /**
-     * Updates the trust state for the user due to the user unlocking via fingerprint.
-     * Should only be called if user authenticated via fingerprint and bouncer can be skipped.
+     * Updates the trust state for the user due to the user unlocking via biometric interface.
+     * Should only be called if user authenticated via a biometric authetication and
+     * bouncer can be skipped.
      * @param userId
      */
     @RequiresPermission(Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE)
-    public void unlockedByFingerprintForUser(int userId) {
+    public void unlockedByBiometricsForUser(int userId) {
         try {
-            mService.unlockedByFingerprintForUser(userId);
+            mService.unlockedByBiometricsForUser(userId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
     }
 
     /**
-     * Clears authenticated fingerprints for all users.
+     * Clears authenticated biometrics for all users.
      */
     @RequiresPermission(Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE)
-    public void clearAllFingerprints() {
+    public void clearAllBiometrics() {
         try {
-            mService.clearAllFingerprints();
+            mService.clearAllBiometrics();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

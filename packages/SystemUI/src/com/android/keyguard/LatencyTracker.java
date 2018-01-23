@@ -76,6 +76,12 @@ public class LatencyTracker {
      */
     public static final int ACTION_TURN_ON_SCREEN = 5;
 
+    /**
+     * Time between we get a iris acquired signal until we start with the unlock animation
+     */
+    public static final int ACTION_IRIS_WAKE_AND_UNLOCK = 6;
+
+
     private static final String[] NAMES = new String[] {
             "expand panel",
             "toggle recents",

@@ -19,6 +19,7 @@ package com.android.settingslib;
 import static android.app.admin.DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE;
 import static android.app.admin.DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
 import static android.app.admin.DevicePolicyManager.KEYGUARD_DISABLE_REMOTE_INPUT;
+import static android.app.admin.DevicePolicyManager.KEYGUARD_DISABLE_IRIS;
 import static android.app.admin.DevicePolicyManager.KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS;
 import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 import static com.google.common.truth.Truth.assertThat;
