@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2353ef7b_ffb03913",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T01:11:47Z",
+      "side": 0,
+      "message": "it didn\u0027t complain about this?",
+      "revId": "222529d95ca6f0ea89bff5532dd9440909258540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc35e64a_70bd3127",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T01:11:47Z",
+      "side": 0,
+      "message": "it didn\u0027t complain about this?",
+      "revId": "222529d95ca6f0ea89bff5532dd9440909258540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a653ab4_848ff574",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T01:11:47Z",
+      "side": 0,
+      "message": "it didn\u0027t complain about this?",
+      "revId": "222529d95ca6f0ea89bff5532dd9440909258540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
