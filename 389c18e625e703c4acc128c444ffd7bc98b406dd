@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6737351a_bf446814",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-23T21:46:26Z",
+      "side": 1,
+      "message": "Please add the getters for these values. :-)\n\ngetConnectionStatus() and getDownlinkBandwidth()... or whatever the doc says.",
+      "revId": "389c18e625e703c4acc128c444ffd7bc98b406dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
