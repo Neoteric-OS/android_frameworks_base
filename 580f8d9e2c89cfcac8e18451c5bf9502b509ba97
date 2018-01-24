@@ -60,6 +60,66 @@
     },
     {
       "key": {
+        "uuid": "17b8d40d_c3589bc0",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T00:29:00Z",
+      "side": 1,
+      "message": "Currently, no.",
+      "parentUuid": "6beb514b_464b71b8",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "153f9f08_928e2c96",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T00:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c25e43_986dd462",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6f1750f_da0b53b4",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T00:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "486dd4d1_c309b123",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4cb60b3_c05d67b9",
         "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
         "patchSetId": 5
@@ -89,6 +149,24 @@
       "side": 1,
       "message": "You don\u0027t have to if you don\u0027t touch either.  It\u0027s only an issue if equals has been overridden and you add members without updating equals.",
       "parentUuid": "e4cb60b3_c05d67b9",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1374f543_15a61a16",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T00:29:00Z",
+      "side": 1,
+      "message": "err, I added them anyway.",
+      "parentUuid": "81021d5f_27e22d38",
       "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
