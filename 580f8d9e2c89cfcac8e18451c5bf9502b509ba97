@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "6beb514b_464b71b8",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-24T00:05:09Z",
+      "side": 1,
+      "message": "There\u0027s no intent to give out cell tower identifiers in this ever, correct?  If so we have to apply location checks..",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cb60b3_c05d67b9",
         "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
         "patchSetId": 5
@@ -48,6 +71,24 @@
       "writtenOn": "2018-01-23T23:41:38Z",
       "side": 1,
       "message": "TODO, override hashCode() and equals()",
+      "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81021d5f_27e22d38",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-24T00:05:09Z",
+      "side": 1,
+      "message": "You don\u0027t have to if you don\u0027t touch either.  It\u0027s only an issue if equals has been overridden and you add members without updating equals.",
+      "parentUuid": "e4cb60b3_c05d67b9",
       "revId": "580f8d9e2c89cfcac8e18451c5bf9502b509ba97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
