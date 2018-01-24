@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "444b7bfe_c3c37946",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T07:10:31Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "207afb53_474cd55b",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "fe0128ec7add153d03d389f75a2f788708b3204d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5c4b8e_b170a2b3",
         "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-24T05:38:18Z",
       "side": 1,
       "message": "normally we\u0027d pick different numbers. How about a sweet sweet prime?",
+      "range": {
+        "startLine": 124,
+        "startChar": 44,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "fe0128ec7add153d03d389f75a2f788708b3204d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3255668_86cf1b25",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-01-24T07:10:31Z",
+      "side": 1,
+      "message": "let\u0027s all pretend this never happened",
+      "parentUuid": "aa5c4b8e_b170a2b3",
       "range": {
         "startLine": 124,
         "startChar": 44,
