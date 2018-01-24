@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd98d5f0_f67350e0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-24T23:28:13Z",
+      "side": 1,
+      "message": "from go/android-api-rules-engagement under Public API\n\nRemoving: may be deprecated over time, but they must continue to exist and function in a reasonable fashion for existing apps.\nMay change functionality for API surfaces that are found to have significant security or privacy implications.\n\n\nThis is not continuing to function..",
+      "range": {
+        "startLine": 1299,
+        "startChar": 0,
+        "endLine": 1299,
+        "endChar": 20
+      },
+      "revId": "69ae5a4c61c89c7c784b62ad7b4972c85eb41b78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
