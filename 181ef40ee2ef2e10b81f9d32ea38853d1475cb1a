@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b5abdfd_e2d681a2",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7065,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-01-24T23:50:45Z",
+      "side": 1,
+      "message": "explain why this is needed here (and not in the other cases) ?",
+      "range": {
+        "startLine": 7065,
+        "startChar": 19,
+        "endLine": 7065,
+        "endChar": 57
+      },
+      "revId": "181ef40ee2ef2e10b81f9d32ea38853d1475cb1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
