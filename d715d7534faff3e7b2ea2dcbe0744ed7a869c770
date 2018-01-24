@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be1437a6_dcfbdee4",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12815,
+      "author": {
+        "id": 1094349
+      },
+      "writtenOn": "2018-01-24T18:27:20Z",
+      "side": 1,
+      "message": "Is the profile app equivalent to the debug app? If so, are we losing the debug app config every time we install an agent (and vice versa)?\n\nNot sure how important that but is it possible to have both? I imagine it would be pretty confusing if the developer sets the debug app and the profiler keeps unsetting it for them..",
+      "range": {
+        "startLine": 12815,
+        "startChar": 48,
+        "endLine": 12815,
+        "endChar": 64
+      },
+      "revId": "d715d7534faff3e7b2ea2dcbe0744ed7a869c770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
