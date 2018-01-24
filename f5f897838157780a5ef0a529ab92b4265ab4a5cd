@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea20cee_b27bda59",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T07:22:39Z",
+      "side": 1,
+      "message": "If these are used for any sort of production purpose, they should be in a common class, where you\u0027ll want this to be MAX_NETID + 1. ConnectivityConstants.java seems like the best place for this, but it\u0027s only in AOSP and will at best reach master in a couple of hours. Failing that, ConnectivityManager would work.",
+      "range": {
+        "startLine": 738,
+        "startChar": 40,
+        "endLine": 738,
+        "endChar": 60
+      },
+      "revId": "f5f897838157780a5ef0a529ab92b4265ab4a5cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c950bb3_8f2d84b2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T07:22:39Z",
+      "side": 1,
+      "message": "Can/should this be synchronized(this) like everything else in this class?",
+      "range": {
+        "startLine": 756,
+        "startChar": 22,
+        "endLine": 756,
+        "endChar": 35
+      },
+      "revId": "f5f897838157780a5ef0a529ab92b4265ab4a5cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72082053_d3d468aa",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T07:22:39Z",
+      "side": 1,
+      "message": "Nit: this means the numbers will get very large, right? Remember that in Java 0x7fffffff + 1 \u003d -1, at which point we\u0027ll be creating ipsec-1.",
+      "range": {
+        "startLine": 1230,
+        "startChar": 41,
+        "endLine": 1230,
+        "endChar": 45
+      },
+      "revId": "f5f897838157780a5ef0a529ab92b4265ab4a5cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
