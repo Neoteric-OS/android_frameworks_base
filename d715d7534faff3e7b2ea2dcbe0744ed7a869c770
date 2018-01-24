@@ -22,6 +22,30 @@
       "revId": "d715d7534faff3e7b2ea2dcbe0744ed7a869c770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec9c475_9009a50d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12815,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-24T23:36:33Z",
+      "side": 1,
+      "message": "Profile app and debug app were orthogonal concepts before.\n\nI\u0027ve refactored this some more to keep the \"agent-app\" fully separate (otherwise there are some intricate dependencies and shutdown issues).",
+      "parentUuid": "be1437a6_dcfbdee4",
+      "range": {
+        "startLine": 12815,
+        "startChar": 48,
+        "endLine": 12815,
+        "endChar": 64
+      },
+      "revId": "d715d7534faff3e7b2ea2dcbe0744ed7a869c770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
