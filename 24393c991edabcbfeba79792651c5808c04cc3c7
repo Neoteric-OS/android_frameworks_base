@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa1a7e3_0f5bcebe",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "unnecessary",
+      "range": {
+        "startLine": 959,
+        "startChar": 44,
+        "endLine": 959,
+        "endChar": 47
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea4d9c4_a14e45e3",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "add comma",
+      "range": {
+        "startLine": 960,
+        "startChar": 92,
+        "endLine": 960,
+        "endChar": 93
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5387b10d_14dd31ca",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "specify that it\u0027s granted to the third party app?",
+      "range": {
+        "startLine": 1079,
+        "startChar": 51,
+        "endLine": 1079,
+        "endChar": 58
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4fa0f5_e9263add",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "handovers, to match below?",
+      "range": {
+        "startLine": 1083,
+        "startChar": 18,
+        "endLine": 1083,
+        "endChar": 40
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf588fb_9f9e38d6",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "and?",
+      "range": {
+        "startLine": 2806,
+        "startChar": 56,
+        "endLine": 2806,
+        "endChar": 59
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc691e8_547ed090",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-24T22:03:17Z",
+      "side": 1,
+      "message": "where\u0027s this used?",
+      "range": {
+        "startLine": 1476,
+        "startChar": 16,
+        "endLine": 1476,
+        "endChar": 32
+      },
+      "revId": "24393c991edabcbfeba79792651c5808c04cc3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
