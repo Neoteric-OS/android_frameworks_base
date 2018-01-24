@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8acd5d1_d09a4465",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3690,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T08:25:36Z",
+      "side": 1,
+      "message": "Suggest checking whether these are spurious (we think they are), and if so, add a TODO to fix them.",
+      "range": {
+        "startLine": 3687,
+        "startChar": 0,
+        "endLine": 3690,
+        "endChar": 99
+      },
+      "revId": "252f1f44692fabcab2d46b5645179d682f06cb05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb312811_5fdeac81",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3698,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T08:25:36Z",
+      "side": 1,
+      "message": "Add a TODO for this one? Do we know why it happens?",
+      "range": {
+        "startLine": 3698,
+        "startChar": 8,
+        "endLine": 3698,
+        "endChar": 30
+      },
+      "revId": "252f1f44692fabcab2d46b5645179d682f06cb05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e8f13b_aeb0b881",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3714,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-24T08:25:36Z",
+      "side": 1,
+      "message": "In a future change, suggest making wifi be the underlying network of the VPN, and checking here that if the underlying network is changed, we get a capability update. I suspect we do not do this, and it\u0027s a bug.",
+      "revId": "252f1f44692fabcab2d46b5645179d682f06cb05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
