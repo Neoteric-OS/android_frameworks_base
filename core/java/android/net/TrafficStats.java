@@ -445,7 +445,11 @@ public class TrafficStats {
     public static long getMobileTxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            total += getTxPackets(iface);
+            long stat = UNSUPPORTED;
+            stat = getTxPackets(iface);
+            if (stat != UNSUPPORTED) {
+                total += stat;
+            }
         }
         return total;
     }
@@ -462,7 +466,11 @@ public class TrafficStats {
     public static long getMobileRxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            total += getRxPackets(iface);
+            long stat = UNSUPPORTED;
+            stat = getRxPackets(iface);
+            if (stat != UNSUPPORTED) {
+                total += stat;
+            }
         }
         return total;
     }
@@ -479,7 +487,11 @@ public class TrafficStats {
     public static long getMobileTxBytes() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            total += getTxBytes(iface);
+            long stat = UNSUPPORTED;
+            stat = getTxBytes(iface);
+            if (stat != UNSUPPORTED) {
+                total += stat;
+            }
         }
         return total;
     }
@@ -496,7 +508,11 @@ public class TrafficStats {
     public static long getMobileRxBytes() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            total += getRxBytes(iface);
+            long stat = UNSUPPORTED;
+            stat = getRxBytes(iface);
+            if (stat != UNSUPPORTED) {
+                total += stat;
+            }
         }
         return total;
     }
