@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5be733f7_2c8a5d5b",
+        "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a87c0c_478e2617",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b49da8a1_8d76dc5e",
         "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8464861_22af6f9d",
+        "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b49da8a1_8d76dc5e",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064222de_9d8ca8b7",
         "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-25T03:56:44Z",
       "side": 1,
       "message": "need to implement hashcode if you implement equals",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22d3cea_3dcb8472",
+        "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "I thought there\u0027s only one member variable hashCode is not necessary.\nAnyway, done.",
+      "parentUuid": "064222de_9d8ca8b7",
       "range": {
         "startLine": 40,
         "startChar": 19,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "54fe6668_52479da5",
+        "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8775b5cf_39070002",
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "799d9a4c_c2d9bf51",
         "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51458eb8_0a777020",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "799d9a4c_c2d9bf51",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 13
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "62bfc95e_73affc5a",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c20994dd_878cdba8",
+      "range": {
+        "startLine": 265,
+        "startChar": 16,
+        "endLine": 265,
+        "endChar": 36
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c349de58_3a4603c3",
         "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
         "patchSetId": 6
@@ -154,6 +292,30 @@
       "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbdc2b0_461b6986",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c349de58_3a4603c3",
+      "range": {
+        "startLine": 301,
+        "startChar": 29,
+        "endLine": 301,
+        "endChar": 49
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "14afc46f_5b20b8cd",
+        "filename": "telephony/java/android/telephony/VoiceSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32770d95_a45c09c0",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d78891_09b2219b",
         "filename": "telephony/java/android/telephony/VoiceSpecificRegistrationStates.java",
         "patchSetId": 6
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "335b77fe_6f39830c",
+        "filename": "telephony/java/android/telephony/VoiceSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d78891_09b2219b",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ca40630_96e90a88",
         "filename": "telephony/java/android/telephony/VoiceSpecificRegistrationStates.java",
         "patchSetId": 6
@@ -223,6 +433,30 @@
       "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159ef917_d4a7e72f",
+        "filename": "telephony/java/android/telephony/VoiceSpecificRegistrationStates.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-25T04:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca40630_96e90a88",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "2d40d20d8019f32b6fb418a6c37ce4fd7ba252e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
