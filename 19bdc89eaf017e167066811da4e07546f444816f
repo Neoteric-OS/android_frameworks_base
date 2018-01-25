@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd61d813_c3f97b2c",
+        "filename": "telephony/java/android/telephony/DataSpecificRegistrationStates.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-25T06:41:38Z",
+      "side": 1,
+      "message": "javadoc",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "19bdc89eaf017e167066811da4e07546f444816f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1764a245_bd6ee0a0",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-25T06:41:38Z",
+      "side": 1,
+      "message": "need to make update-api again?",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "19bdc89eaf017e167066811da4e07546f444816f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
