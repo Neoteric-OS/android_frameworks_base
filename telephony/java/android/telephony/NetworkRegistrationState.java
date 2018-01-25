@@ -105,6 +105,8 @@ public class NetworkRegistrationState implements Parcelable {
     @Nullable
     private final CellIdentity mCellIdentity;
 
+    private VoiceSpecificStates mVoiceSpecificStates;
+    private DataSpecificStates mDataSpecificStates;
 
     /**
      * @param transportType Transport type. Must be {@link AccessNetworkConstants.TransportType}
@@ -128,6 +130,44 @@ public class NetworkRegistrationState implements Parcelable {
         mEmergencyOnly = emergencyOnly;
     }
 
+    /**
+     * Constructor for voice network registration states.
+     * @hide
+     */
+    public NetworkRegistrationState(int transportType, int domain, int regState,
+            int accessNetworkTechnology, int reasonForDenial, boolean emergencyOnly,
+            int[] availableServices, @Nullable CellIdentity cellIdentity, boolean cssSupported,
+            int roamingIndicator, int systemIsInPrl, int defaultRoamingIndicator) {
+        mTransportType = transportType;
+        mDomain = domain;
+        mRegState = regState;
+        mAccessNetworkTechnology = accessNetworkTechnology;
+        mReasonForDenial = reasonForDenial;
+        mAvailableServices = availableServices;
+        mCellIdentity = cellIdentity;
+        mEmergencyOnly = emergencyOnly;
+        mVoiceSpecificStates = new VoiceSpecificStates(cssSupported, roamingIndicator,
+                systemIsInPrl, defaultRoamingIndicator);
+    }
+
+    /**
+     * Constructor for data network registration states.
+     * @hide
+     */
+    public NetworkRegistrationState(int transportType, int domain, int regState,
+            int accessNetworkTechnology, int reasonForDenial, boolean emergencyOnly,
+            int[] availableServices, @Nullable CellIdentity cellIdentity, int maxDataCalls) {
+        mTransportType = transportType;
+        mDomain = domain;
+        mRegState = regState;
+        mAccessNetworkTechnology = accessNetworkTechnology;
+        mReasonForDenial = reasonForDenial;
+        mAvailableServices = availableServices;
+        mCellIdentity = cellIdentity;
+        mEmergencyOnly = emergencyOnly;
+        mDataSpecificStates = new DataSpecificStates(maxDataCalls);
+    }
+
     protected NetworkRegistrationState(Parcel source) {
         mTransportType = source.readInt();
         mDomain = source.readInt();
@@ -137,6 +177,14 @@ public class NetworkRegistrationState implements Parcelable {
         mEmergencyOnly = source.readBoolean();
         mAvailableServices = source.createIntArray();
         mCellIdentity = source.readParcelable(CellIdentity.class.getClassLoader());
+
+        if (source.readBoolean()) {
+            mVoiceSpecificStates = new VoiceSpecificStates(source);
+        }
+
+        if (source.readBoolean()) {
+            mDataSpecificStates = new DataSpecificStates(source);
+        }
     }
 
     /**
@@ -171,6 +219,89 @@ public class NetworkRegistrationState implements Parcelable {
      */
     public int getAccessNetworkTechnology() {
         return mAccessNetworkTechnology;
+    }
+
+    /**
+     * @hide
+     */
+    public class VoiceSpecificStates {
+        // concurrent services support indicator. if
+        // registered on a CDMA system.
+        // false - Concurrent services not supported,
+        // true - Concurrent services supported
+        public final boolean mCssSupported;
+
+        // TSB-58 Roaming Indicator if registered
+        // on a CDMA or EVDO system or -1 if not.
+        // Valid values are 0-255.
+        public final int mRoamingIndicator;
+
+        // indicates whether the current system is in the
+        // PRL if registered on a CDMA or EVDO system or -1 if
+        // not. 0=not in the PRL, 1=in the PRL
+        public final int mSystemIsInPrl;
+
+        // default Roaming Indicator from the PRL,
+        // if registered on a CDMA or EVDO system or -1 if not.
+        // Valid values are 0-255.
+        public final int mDefaultRoamingIndicator;
+
+        VoiceSpecificStates(boolean cssSupported, int roamingIndicator, int systemIsInPrl,
+                int defaultRoamingIndicator) {
+            mCssSupported = cssSupported;
+            mRoamingIndicator = roamingIndicator;
+            mSystemIsInPrl = systemIsInPrl;
+            mDefaultRoamingIndicator = defaultRoamingIndicator;
+        }
+
+        VoiceSpecificStates(Parcel source) {
+            mCssSupported = source.readBoolean();
+            mRoamingIndicator = source.readInt();
+            mSystemIsInPrl = source.readInt();
+            mDefaultRoamingIndicator = source.readInt();
+        }
+
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeBoolean(mCssSupported);
+            dest.writeInt(mRoamingIndicator);
+            dest.writeInt(mSystemIsInPrl);
+            dest.writeInt(mDefaultRoamingIndicator);
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public class DataSpecificStates {
+
+        // The maximum number of simultaneous Data Calls that
+        // must be established using setupDataCall().
+        public final int mMaxDataCalls;
+
+        DataSpecificStates(int maxDataCalls) {
+            mMaxDataCalls = maxDataCalls;
+        }
+
+        DataSpecificStates(Parcel source) {
+            mMaxDataCalls = source.readInt();
+        }
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(mMaxDataCalls);
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public VoiceSpecificStates getVoiceSpecificStates() {
+        return mVoiceSpecificStates;
+    }
+
+    /**
+     * @hide
+     */
+    public DataSpecificStates getDataSpecificStates() {
+        return mDataSpecificStates;
     }
 
     @Override
@@ -241,6 +372,18 @@ public class NetworkRegistrationState implements Parcelable {
         dest.writeBoolean(mEmergencyOnly);
         dest.writeIntArray(mAvailableServices);
         dest.writeParcelable(mCellIdentity, 0);
+        if (mVoiceSpecificStates != null) {
+            dest.writeBoolean(true);
+            mVoiceSpecificStates.writeToParcel(dest, flags);
+        } else {
+            dest.writeBoolean(false);
+        }
+        if (mDataSpecificStates != null) {
+            dest.writeBoolean(true);
+            mDataSpecificStates.writeToParcel(dest, flags);
+        } else {
+            dest.writeBoolean(false);
+        }
     }
 
     public static final Parcelable.Creator<NetworkRegistrationState> CREATOR =
