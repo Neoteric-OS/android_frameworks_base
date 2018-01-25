@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d120920d_d30d9d5f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-25T03:29:25Z",
+      "side": 1,
+      "message": "Nit: should we only send the callback if mKeepalive is not null?",
+      "range": {
+        "startLine": 199,
+        "startChar": 40,
+        "endLine": 199,
+        "endChar": 41
+      },
+      "revId": "ead2fcdab6a54c5b29f79562b245844d13c8fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e753d32d_e4290133",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 7
