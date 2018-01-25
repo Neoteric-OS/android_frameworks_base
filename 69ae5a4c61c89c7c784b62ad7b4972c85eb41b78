@@ -22,6 +22,30 @@
       "revId": "69ae5a4c61c89c7c784b62ad7b4972c85eb41b78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5c38ed_da152b1d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-25T06:21:16Z",
+      "side": 1,
+      "message": "I have requested feedback on that from the API council on the linked doc, which uses a lot of vague language and weasel words. I can\u0027t believe that we are stuck keeping these APIs on life support in perpetuity. It\u0027s not only impractical and undesirable, in some cases it may simply become impossible. Let\u0027s see what comes back.",
+      "parentUuid": "dd98d5f0_f67350e0",
+      "range": {
+        "startLine": 1299,
+        "startChar": 0,
+        "endLine": 1299,
+        "endChar": 20
+      },
+      "revId": "69ae5a4c61c89c7c784b62ad7b4972c85eb41b78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
