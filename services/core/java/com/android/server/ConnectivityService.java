@@ -2049,7 +2049,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
                     NetworkInfo info = (NetworkInfo) msg.obj;
-                    updateNetworkInfo(nai, info);
+                    updateNetworkInfo(nai, nai.networkInfo, info);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
@@ -4519,8 +4519,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         na.asyncChannel.connect(mContext, mTrackerHandler, na.messenger);
         NetworkInfo networkInfo = na.networkInfo;
-        na.networkInfo = null;
-        updateNetworkInfo(na, networkInfo);
+        updateNetworkInfo(na, null, networkInfo);
         updateUids(na, null, na.networkCapabilities);
     }
 
@@ -5366,12 +5365,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo) {
+    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo oldInfo, NetworkInfo newInfo) {
         final NetworkInfo.State state = newInfo.getState();
-        NetworkInfo oldInfo = null;
         final int oldScore = networkAgent.getCurrentScore();
         synchronized (networkAgent) {
-            oldInfo = networkAgent.networkInfo;
             networkAgent.networkInfo = newInfo;
         }
         notifyLockdownVpn(networkAgent);
