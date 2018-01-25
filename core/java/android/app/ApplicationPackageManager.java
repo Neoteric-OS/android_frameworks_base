@@ -100,6 +100,7 @@ import libcore.util.EmptyArray;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -1126,9 +1127,20 @@ public class ApplicationPackageManager extends PackageManager {
             @Nullable ApplicationInfo appInfo) {
         final ResourceName name = new ResourceName(packageName, resId);
         final Drawable cachedIcon = getCachedIcon(name);
-        if (cachedIcon != null) {
-            return cachedIcon;
+
+        String resDir = getCachedResDirForIcon(name);
+        String appInfoResDir = null;
+
+        if (appInfo != null) {
+            appInfoResDir = Arrays.toString(appInfo.resourceDirs);
         }
+
+        if (cachedIcon != null) {
+            if (appInfoResDir != null && appInfoResDir.equals(resDir)) {
+                return cachedIcon;
+            }
+        }
+        putCachedResDirForIcon(name, appInfoResDir);
 
         if (appInfo == null) {
             try {
@@ -1466,6 +1478,8 @@ public class ApplicationPackageManager extends PackageManager {
         synchronized (sSync) {
             sIconCache.clear();
             sStringCache.clear();
+            sResDirCacheForText.clear();
+            sResDirCacheForIcon.clear();
         }
     }
 
@@ -1531,6 +1545,22 @@ public class ApplicationPackageManager extends PackageManager {
                         if (nm.packageName.equals(ssp)) {
                             //Log.i(TAG, "Removing cached string for " + nm);
                             sStringCache.removeAt(i);
+                            needCleanup = true;
+                        }
+                    }
+                    for (int i = sResDirCacheForText.size() - 1; i >= 0; i--) {
+                        ResourceName nm = sResDirCacheForText.keyAt(i);
+                        if (nm.packageName.equals(ssp)) {
+                            //Log.i(TAG, "Removing cached string resdir for " + nm);
+                            sResDirCacheForText.removeAt(i);
+                            needCleanup = true;
+                        }
+                    }
+                    for (int i = sResDirCacheForIcon.size() - 1; i >= 0; i--) {
+                        ResourceName nm = sResDirCacheForIcon.keyAt(i);
+                        if (nm.packageName.equals(ssp)) {
+                            //Log.i(TAG, "Removing cached drawable resdir for " + nm);
+                            sResDirCacheForIcon.removeAt(i);
                             needCleanup = true;
                         }
                     }
@@ -1616,14 +1646,67 @@ public class ApplicationPackageManager extends PackageManager {
         }
     }
 
+    private String getCachedResDirForText(ResourceName name) {
+        synchronized (sSync) {
+            WeakReference<String> wr = sResDirCacheForText.get(name);
+            if (wr != null) {   // we have the activity
+                String resDir = wr.get();
+                if (resDir != null) {
+                    return resDir;
+                }
+                // our entry has been purged
+                sResDirCacheForText.remove(name);
+            }
+        }
+        return null;
+    }
+
+    private void putCachedResDirForText(ResourceName name, String resDir) {
+        synchronized (sSync) {
+            sResDirCacheForText.put(name, new WeakReference<String>(resDir));
+        }
+    }
+
+    private String getCachedResDirForIcon(ResourceName name) {
+        synchronized (sSync) {
+            WeakReference<String> wr = sResDirCacheForIcon.get(name);
+            if (wr != null) {   // we have the activity
+                String resDir = wr.get();
+                if (resDir != null) {
+                    return resDir;
+                }
+                // our entry has been purged
+                sResDirCacheForIcon.remove(name);
+            }
+        }
+        return null;
+    }
+
+    private void putCachedResDirForIcon(ResourceName name, String resDir) {
+        synchronized (sSync) {
+            sResDirCacheForIcon.put(name, new WeakReference<String>(resDir));
+        }
+    }
+
     @Override
     public CharSequence getText(String packageName, @StringRes int resid,
                                 ApplicationInfo appInfo) {
         ResourceName name = new ResourceName(packageName, resid);
         CharSequence text = getCachedString(name);
-        if (text != null) {
-            return text;
+
+        String resDir = getCachedResDirForText(name);
+        String appInfoResDir = null;
+
+        if (appInfo != null) {
+            appInfoResDir = Arrays.toString(appInfo.resourceDirs);
         }
+
+        if (text != null) {
+            if (appInfoResDir != null && appInfoResDir.equals(resDir)) {
+                return text;
+            }
+        }
+        putCachedResDirForText(name, appInfoResDir);
         if (appInfo == null) {
             try {
                 appInfo = getApplicationInfo(packageName, sDefaultFlags);
@@ -2618,6 +2701,10 @@ public class ApplicationPackageManager extends PackageManager {
             = new ArrayMap<ResourceName, WeakReference<Drawable.ConstantState>>();
     private static ArrayMap<ResourceName, WeakReference<CharSequence>> sStringCache
             = new ArrayMap<ResourceName, WeakReference<CharSequence>>();
+    private static ArrayMap<ResourceName, WeakReference<String>> sResDirCacheForIcon =
+            new ArrayMap<ResourceName, WeakReference<String>>();
+    private static ArrayMap<ResourceName, WeakReference<String>> sResDirCacheForText =
+            new ArrayMap<ResourceName, WeakReference<String>>();
 
     private final Map<OnPermissionsChangedListener, IOnPermissionsChangeListener>
             mPermissionListeners = new ArrayMap<>();
