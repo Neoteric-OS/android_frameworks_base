@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80f4be1_170e044c",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-25T02:40:18Z",
+      "side": 1,
+      "message": "If you run this outside the lock, then you could end up delivering the callbacks out of order. Make the callback registration method take a handler instead, so you can call the callbacks within the synchronized block. Something like:\n\n    mUserHandler.post(() -\u003emUserKeepaliveCallback.onError(error));",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 91
+      },
+      "revId": "7d562890e34690d33357e310878c46a28e907307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9537d3_aeeaaa89",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-25T02:40:18Z",
+      "side": 1,
+      "message": "Throw IllegalArgumentException if the passed-in interval is outside this range.",
+      "range": {
+        "startLine": 256,
+        "startChar": 80,
+        "endLine": 257,
+        "endChar": 61
+      },
+      "revId": "7d562890e34690d33357e310878c46a28e907307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
