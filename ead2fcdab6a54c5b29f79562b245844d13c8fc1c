@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "70a98563_a874032a",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-25T03:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e753d32d_e4290133",
+      "range": {
+        "startLine": 200,
+        "startChar": 48,
+        "endLine": 200,
+        "endChar": 50
+      },
+      "revId": "ead2fcdab6a54c5b29f79562b245844d13c8fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eefbadc_6317ba9f",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 7
@@ -82,6 +106,30 @@
       "writtenOn": "2018-01-25T03:36:07Z",
       "side": 1,
       "message": "Actually, no. If stopNattKeepalive() sets it to null, there could still be a callback in flight. At that point, if the app restarts the keepalive, app wouldn\u0027t know if the callback came from the current keepalive or the previous one.",
+      "parentUuid": "5eefbadc_6317ba9f",
+      "range": {
+        "startLine": 315,
+        "startChar": 29,
+        "endLine": 315,
+        "endChar": 30
+      },
+      "revId": "ead2fcdab6a54c5b29f79562b245844d13c8fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3314b2_805618a3",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-25T03:37:31Z",
+      "side": 1,
+      "message": "Since we haven\u0027t gotten the stopped() callback yet, it\u0027s possible that they could have a transient with 2 in flight at that point, but ok I think it\u0027s harmless.",
       "parentUuid": "5eefbadc_6317ba9f",
       "range": {
         "startLine": 315,
