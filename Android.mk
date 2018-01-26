@@ -699,6 +699,12 @@ include $(BUILD_HOST_JAVA_LIBRARY)
 
 # ==== hiddenapi lists =======================================
 
+# Copy blacklist and dark greylist over into the build folder.
+$(eval $(call copy-one-file,$(INTERNAL_PLATFORM_HIDDENAPI_BLACKLIST_SOURCE),\
+                            $(INTERNAL_PLATFORM_HIDDENAPI_BLACKLIST)))
+$(eval $(call copy-one-file,$(INTERNAL_PLATFORM_HIDDENAPI_DARK_GREYLIST_SOURCE),\
+                            $(INTERNAL_PLATFORM_HIDDENAPI_DARK_GREYLIST)))
+
 # Generate light greylist as private API minus (blacklist plus dark greylist).
 
 $(INTERNAL_PLATFORM_HIDDENAPI_LIGHT_GREYLIST): PRIVATE_API := $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
