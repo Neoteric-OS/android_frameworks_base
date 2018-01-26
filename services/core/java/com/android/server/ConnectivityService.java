@@ -1260,11 +1260,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         for (Network network : networks) {
                             nai = getNetworkAgentInfoForNetwork(network);
                             nc = getNetworkCapabilitiesInternal(nai);
-                            // nc is a copy of the capabilities in nai, so it's fine to mutate it
-                            // TODO : don't remove the UIDs when communicating with processes
-                            // that have the NETWORK_SETTINGS permission.
                             if (nc != null) {
-                                nc.setSingleUid(userId);
                                 result.put(network, nc);
                             }
                         }
@@ -1332,7 +1328,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai != null) {
             synchronized (nai) {
                 if (nai.networkCapabilities != null) {
-                    return new NetworkCapabilities(nai.networkCapabilities);
+                    final NetworkCapabilities nc = new NetworkCapabilities(nai.networkCapabilities);
+                    // TODO : don't remove the UIDs when communicating with processes
+                    // that have the NETWORK_SETTINGS permission.
+                    nc.setUids(null);
+                    return nc;
                 }
             }
         }
@@ -4909,7 +4909,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         releasePendingNetworkRequestWithDelay(pendingIntent);
     }
 
-    private static void callCallbackForRequest(NetworkRequestInfo nri,
+    private void callCallbackForRequest(NetworkRequestInfo nri,
             NetworkAgentInfo networkAgent, int notificationType, int arg1) {
         if (nri.messenger == null) {
             return;  // Default request has no msgr
@@ -4927,11 +4927,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 break;
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
-                final NetworkCapabilities nc =
-                        new NetworkCapabilities(networkAgent.networkCapabilities);
-                // TODO : don't remove the UIDs when communicating with processes
-                // that have the NETWORK_SETTINGS permission.
-                nc.setSingleUid(nri.mUid);
+                final NetworkCapabilities nc = getNetworkCapabilitiesInternal(networkAgent);
                 putParcelable(bundle, nc);
                 break;
             }
