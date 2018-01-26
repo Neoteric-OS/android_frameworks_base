@@ -1264,7 +1264,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             // TODO : don't remove the UIDs when communicating with processes
                             // that have the NETWORK_SETTINGS permission.
                             if (nc != null) {
-                                nc.setSingleUid(userId);
+                                nc.setUids(null);
                                 result.put(network, nc);
                             }
                         }
@@ -4931,7 +4931,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         new NetworkCapabilities(networkAgent.networkCapabilities);
                 // TODO : don't remove the UIDs when communicating with processes
                 // that have the NETWORK_SETTINGS permission.
-                nc.setSingleUid(nri.mUid);
+                nc.setUids(null);
                 putParcelable(bundle, nc);
                 break;
             }
