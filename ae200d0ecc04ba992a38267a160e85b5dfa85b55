@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "009e9dc9_4b525e93",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3836,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-01-29T15:07:55Z",
+      "side": 1,
+      "message": "test against \u00270\u0027 and return\n\nleave the rest of this method un-indented",
+      "range": {
+        "startLine": 3836,
+        "startChar": 57,
+        "endLine": 3836,
+        "endChar": 64
+      },
+      "revId": "ae200d0ecc04ba992a38267a160e85b5dfa85b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de4c85bd_e238a3b0",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3841,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-01-29T15:07:55Z",
+      "side": 1,
+      "message": "remove log spam",
+      "range": {
+        "startLine": 3841,
+        "startChar": 0,
+        "endLine": 3841,
+        "endChar": 93
+      },
+      "revId": "ae200d0ecc04ba992a38267a160e85b5dfa85b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
