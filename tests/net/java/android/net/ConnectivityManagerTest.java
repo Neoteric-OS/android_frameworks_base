@@ -38,6 +38,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
@@ -335,6 +336,10 @@ public class ConnectivityManagerTest {
     static Message makeMessage(NetworkRequest req, int messageType) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(NetworkRequest.class.getSimpleName(), req);
+        // Pass default objects as we don't care which get passed here
+        bundle.putParcelable(Network.class.getSimpleName(), new Network(1));
+        bundle.putParcelable(NetworkCapabilities.class.getSimpleName(), new NetworkCapabilities());
+        bundle.putParcelable(LinkProperties.class.getSimpleName(), new LinkProperties());
         Message msg = Message.obtain();
         msg.what = messageType;
         msg.setData(bundle);
