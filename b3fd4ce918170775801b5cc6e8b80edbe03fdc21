@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "43c58051_32aa99c1",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-30T02:04:51Z",
+      "side": 1,
+      "message": "copyright header",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "631a34fc_b664a67a",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 1
@@ -19,6 +42,75 @@
     },
     {
       "key": {
+        "uuid": "c55093a7_687017c1",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-30T02:04:51Z",
+      "side": 1,
+      "message": "New code should better follow Google3 style for line/block break and indentation.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bb87f3_ec36200b",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-30T02:04:51Z",
+      "side": 1,
+      "message": "Better name would be patchoat_verify.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2849e1_010ea9cc",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-30T02:04:51Z",
+      "side": 1,
+      "message": "PLOG prints strerror automatically. Use LOG here.",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0b3bf16_3da46553",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 1
@@ -30,6 +122,24 @@
       "writtenOn": "2018-01-30T01:30:12Z",
       "side": 1,
       "message": "I\u0027m not sure how acceptable this is. I only put it in because it\u0027s something we\u0027ll be able to easily get rid of when C++17 support comes around. Deleting a populated tree in C++ is no fun and would involve walking the tree using file tree walk (ftw).",
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c814e3_6e1ae4a4",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-30T02:04:51Z",
+      "side": 1,
+      "message": "Did you check that this works? Executing a toolbox command usually requires selinux permissions. (That\u0027s the main reason to do it internally, besides things like string attacks.)",
+      "parentUuid": "c0b3bf16_3da46553",
       "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
