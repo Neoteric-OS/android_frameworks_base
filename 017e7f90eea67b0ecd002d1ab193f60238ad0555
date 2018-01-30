@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3618dbcb_9d7b709e",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthGsm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-30T02:07:42Z",
+      "side": 1,
+      "message": "note, this was previously missing -__-",
+      "range": {
+        "startLine": 190,
+        "startChar": 60,
+        "endLine": 190,
+        "endChar": 74
+      },
+      "revId": "017e7f90eea67b0ecd002d1ab193f60238ad0555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
