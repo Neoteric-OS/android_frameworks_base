@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "631a34fc_b664a67a",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T01:30:12Z",
+      "side": 1,
+      "message": "I\u0027m not very happy with this map here. This \"pattern\" is duplicated several times throughout the codebase. It\u0027s in app_process too. Maybe we should pull it out into a common header?\nI used macros instead of constexprs so that I could compute the strings at buildtime instead of needing to run snprintf.",
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b3bf16_3da46553",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T01:30:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure how acceptable this is. I only put it in because it\u0027s something we\u0027ll be able to easily get rid of when C++17 support comes around. Deleting a populated tree in C++ is no fun and would involve walking the tree using file tree walk (ftw).",
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
