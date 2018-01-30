@@ -2663,6 +2663,17 @@ public class ConnectivityManager {
      */
     public static class NetworkCallback {
         /**
+         * An argument to onDefaultStatusChanged, means that the network is now the default
+         * network.
+         */
+        public static final int IS_DEFAULT = 1;
+        /**
+         * An argument to onDefaultStatusChanged, means that the network is not the default
+         * network.
+         */
+        public static final int IS_NOT_DEFAULT = 2;
+
+        /**
          * Called when the framework connects to a new network to evaluate whether it satisfies this
          * request. If evaluation succeeds, this callback may be followed by an {@link #onAvailable}
          * callback. There is no guarantee that this new network will satisfy any requests, or that
@@ -2761,6 +2772,17 @@ public class ConnectivityManager {
          */
         public void onNetworkResumed(Network network) {}
 
+        /**
+         * Called when a network became the new default network or stopped being the default
+         * network. Is also called after onAvailable so that clients know immediately for any
+         * newly available network whether it is the default or not.
+         * @param network The {@link Network} about which the update is about.
+         * @param statusChange Either {@link NetworkCallback#IS_DEFAULT} if network is the default
+         *         network or {@link NetworkCallback#IS_NOT_DEFAULT} if network is not the default
+         *         network.
+         */
+        public void onDefaultStatusChanged(Network network, int statusChange) {}
+
         private NetworkRequest networkRequest;
     }
 
@@ -2788,39 +2810,42 @@ public class ConnectivityManager {
 
     private static final int BASE = Protocol.BASE_CONNECTIVITY_MANAGER;
     /** @hide */
-    public static final int CALLBACK_PRECHECK            = BASE + 1;
+    public static final int CALLBACK_PRECHECK               = BASE + 1;
     /** @hide */
-    public static final int CALLBACK_AVAILABLE           = BASE + 2;
+    public static final int CALLBACK_AVAILABLE              = BASE + 2;
     /** @hide arg1 = TTL */
-    public static final int CALLBACK_LOSING              = BASE + 3;
+    public static final int CALLBACK_LOSING                 = BASE + 3;
     /** @hide */
-    public static final int CALLBACK_LOST                = BASE + 4;
+    public static final int CALLBACK_LOST                   = BASE + 4;
     /** @hide */
-    public static final int CALLBACK_UNAVAIL             = BASE + 5;
+    public static final int CALLBACK_UNAVAIL                = BASE + 5;
     /** @hide */
-    public static final int CALLBACK_CAP_CHANGED         = BASE + 6;
+    public static final int CALLBACK_CAP_CHANGED            = BASE + 6;
     /** @hide */
-    public static final int CALLBACK_IP_CHANGED          = BASE + 7;
+    public static final int CALLBACK_IP_CHANGED             = BASE + 7;
     /** @hide obj = NetworkCapabilities, arg1 = seq number */
-    private static final int EXPIRE_LEGACY_REQUEST       = BASE + 8;
+    private static final int EXPIRE_LEGACY_REQUEST          = BASE + 8;
     /** @hide */
-    public static final int CALLBACK_SUSPENDED           = BASE + 9;
+    public static final int CALLBACK_SUSPENDED              = BASE + 9;
     /** @hide */
-    public static final int CALLBACK_RESUMED             = BASE + 10;
+    public static final int CALLBACK_RESUMED                = BASE + 10;
+    /** @hide */
+    public static final int CALLBACK_DEFAULT_STATUS_CHANGED = BASE + 11;
 
     /** @hide */
     public static String getCallbackName(int whichCallback) {
         switch (whichCallback) {
-            case CALLBACK_PRECHECK:     return "CALLBACK_PRECHECK";
-            case CALLBACK_AVAILABLE:    return "CALLBACK_AVAILABLE";
-            case CALLBACK_LOSING:       return "CALLBACK_LOSING";
-            case CALLBACK_LOST:         return "CALLBACK_LOST";
-            case CALLBACK_UNAVAIL:      return "CALLBACK_UNAVAIL";
-            case CALLBACK_CAP_CHANGED:  return "CALLBACK_CAP_CHANGED";
-            case CALLBACK_IP_CHANGED:   return "CALLBACK_IP_CHANGED";
-            case EXPIRE_LEGACY_REQUEST: return "EXPIRE_LEGACY_REQUEST";
-            case CALLBACK_SUSPENDED:    return "CALLBACK_SUSPENDED";
-            case CALLBACK_RESUMED:      return "CALLBACK_RESUMED";
+            case CALLBACK_PRECHECK:                    return "CALLBACK_PRECHECK";
+            case CALLBACK_AVAILABLE:                   return "CALLBACK_AVAILABLE";
+            case CALLBACK_LOSING:                      return "CALLBACK_LOSING";
+            case CALLBACK_LOST:                        return "CALLBACK_LOST";
+            case CALLBACK_UNAVAIL:                     return "CALLBACK_UNAVAIL";
+            case CALLBACK_CAP_CHANGED:                 return "CALLBACK_CAP_CHANGED";
+            case CALLBACK_IP_CHANGED:                  return "CALLBACK_IP_CHANGED";
+            case EXPIRE_LEGACY_REQUEST:                return "EXPIRE_LEGACY_REQUEST";
+            case CALLBACK_SUSPENDED:                   return "CALLBACK_SUSPENDED";
+            case CALLBACK_RESUMED:                     return "CALLBACK_RESUMED";
+            case CALLBACK_DEFAULT_STATUS_CHANGED:      return "CALLBACK_DEFAULT_STATUS_CHANGED";
             default:
                 return Integer.toString(whichCallback);
         }
@@ -2896,6 +2921,10 @@ public class ConnectivityManager {
                 }
                 case CALLBACK_RESUMED: {
                     callback.onNetworkResumed(network);
+                    break;
+                }
+                case CALLBACK_DEFAULT_STATUS_CHANGED: {
+                    callback.onDefaultStatusChanged(network, message.arg1);
                     break;
                 }
             }

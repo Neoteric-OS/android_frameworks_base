@@ -4922,7 +4922,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             putParcelable(bundle, networkAgent.network);
         }
         switch (notificationType) {
-            case ConnectivityManager.CALLBACK_LOSING: {
+            case ConnectivityManager.CALLBACK_LOSING:
+            case ConnectivityManager.CALLBACK_DEFAULT_STATUS_CHANGED: {
                 msg.arg1 = arg1;
                 break;
             }
@@ -4992,7 +4993,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void makeDefault(NetworkAgentInfo newNetwork) {
+    private void makeDefault(NetworkAgentInfo newNetwork, NetworkAgentInfo oldNetwork) {
         if (DBG) log("Switching to new default network: " + newNetwork);
         setupDataActivityTracking(newNetwork);
         try {
@@ -5006,6 +5007,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateTcpBufferSizes(newNetwork);
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
+    }
+
+    private void notifyListensOfNewDefault(NetworkAgentInfo newNetwork,
+            NetworkAgentInfo oldNetwork) {
+        if (DBG) {
+            log("Notifying new default network: " + newNetwork + " ; old default network: "
+                    + oldNetwork);
+        }
+        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
+            NetworkRequest nr = nri.request;
+            if (!nr.isListen()) continue;
+            if (null != oldNetwork && oldNetwork.isSatisfyingRequest(nr.requestId)) {
+                if (DBG) log("Notifying " + oldNetwork.name() + " lost default for " + nr);
+                callCallbackForRequest(nri, oldNetwork,
+                        ConnectivityManager.CALLBACK_DEFAULT_STATUS_CHANGED,
+                        ConnectivityManager.NetworkCallback.IS_NOT_DEFAULT);
+            }
+            if (newNetwork.isSatisfyingRequest(nr.requestId)) {
+                if (DBG) log("Notifying " + newNetwork.name() + " became default for " + nr);
+                callCallbackForRequest(nri, newNetwork,
+                        ConnectivityManager.CALLBACK_DEFAULT_STATUS_CHANGED,
+                        ConnectivityManager.NetworkCallback.IS_DEFAULT);
+            }
+        }
     }
 
     private void processListenRequests(NetworkAgentInfo nai, boolean capabilitiesChanged) {
@@ -5169,8 +5194,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
         if (isNewDefault) {
+            notifyListensOfNewDefault(newNetwork, oldDefaultNetwork);
             // Notify system services that this network is up.
-            makeDefault(newNetwork);
+            makeDefault(newNetwork, oldDefaultNetwork);
             // Log 0 -> X and Y -> X default network transitions, where X is the new default.
             metricsLogger().defaultNetworkMetrics().logDefaultNetworkEvent(
                     now, newNetwork, oldDefaultNetwork);
@@ -5500,6 +5526,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE, 0);
+        callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_DEFAULT_STATUS_CHANGED,
+                nai.isSatisfyingRequest(nri.request.requestId)
+                        ? ConnectivityManager.NetworkCallback.IS_DEFAULT
+                               : ConnectivityManager.NetworkCallback.IS_NOT_DEFAULT);
         // Whether a network is currently suspended is also an important
         // element of state to be transferred (it would not otherwise be
         // delivered by any currently available mechanism).

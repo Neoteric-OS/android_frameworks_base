@@ -25760,10 +25760,13 @@ package android.net {
     ctor public ConnectivityManager.NetworkCallback();
     method public void onAvailable(android.net.Network);
     method public void onCapabilitiesChanged(android.net.Network, android.net.NetworkCapabilities);
+    method public void onDefaultStatusChanged(android.net.Network, int);
     method public void onLinkPropertiesChanged(android.net.Network, android.net.LinkProperties);
     method public void onLosing(android.net.Network, int);
     method public void onLost(android.net.Network);
     method public void onUnavailable();
+    field public static final int IS_DEFAULT = 1; // 0x1
+    field public static final int IS_NOT_DEFAULT = 2; // 0x2
   }
 
   public static abstract interface ConnectivityManager.OnNetworkActiveListener {
