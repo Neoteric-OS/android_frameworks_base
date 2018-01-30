@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8732858b_acfb86fd",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T20:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f356246c_42876705",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf676c6_b4db2c77",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "writtenOn": "2018-01-30T17:45:00Z",
       "side": 1,
       "message": "Since the goal is to remove everything, how about return 0 to keep it going?\n\nSecurity wise, an error case I can think of is when the attacker managed to change parent directory\u0027s  mode to non-writable, then unlink/rmdir would probably fail.  Or set some extended attributes.  We could have another pass of nftw if necessary, in order to recover from the error case.  WDYT?",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b540080_ea13b48c",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T20:25:12Z",
+      "side": 1,
+      "message": "I was thinking of that attack too. I\u0027m not sure how running it nftw again would change anything, we still wouldn\u0027t have permissions to remove it if we didn\u0027t the first time.\nLooking at all the the potential ways remove can fail: https://www.gnu.org/software/libc/manual/html_node/Deleting-Files.html, I don\u0027t see how any of them would be fixed by a second pass. The issue with returning 0 is that we aren\u0027t notified of any errors, which we would need if we wanted to prevent the user from booting a tampered image (if that\u0027s what we want to do).",
+      "parentUuid": "dcf676c6_b4db2c77",
       "range": {
         "startLine": 57,
         "startChar": 11,
@@ -141,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "370fd255_3fca3b1d",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T20:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3a44b0_46a14b14",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 37
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ef094f1_b644cfd5",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T20:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f808bd10_9b0765ba",
+      "range": {
+        "startLine": 110,
+        "startChar": 48,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0a1541_0c053e8e",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 4
@@ -170,6 +266,24 @@
       "side": 1,
       "message": "I wonder if it\u0027s even possible (or \"should\" in the first place) to show one of the verified boot failure screen (https://source.android.com/security/verifiedboot/verified-boot#user_experience).  That\u0027s probably before init, but might be an OK UX.  Feel free to leave a TODO at this point for error recovery UX.  For now, perhaps let\u0027s try to make nftw as robust as we can.",
       "parentUuid": "fa0a1541_0c053e8e",
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2e1127_1d5e9174",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T20:25:12Z",
+      "side": 1,
+      "message": "I think that kind of screen would be good, though this is really a decision for the android UX and security teams so I\u0027ll delegate to them. I don\u0027t think that nftw can be made more robust than it already is because of what I mentioned in reply to your previous comment.\n\nRegardless of whether we can make nftw more robust, what do we want to do for now if it ultimately fails for now? I can put a TODO to see if we can get a screen like that, but are we okay just hanging the boot for now?",
+      "parentUuid": "33456607_8abece7f",
       "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
