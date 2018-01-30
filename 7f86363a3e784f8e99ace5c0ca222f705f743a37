@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "28920f56_eeca2325",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T21:10:43Z",
+      "side": 1,
+      "message": "Sorry, by the second pass, I meant the first pass to reset the mode/attributes to expected value.  Then we run this part.  I\u0027m not worried about the errors like EBUSY, since we are still in verified state (so we control every running things, thanks for dm-verity) and we just need to clean up data on disk before even using them (in theory we can reset everything).\n\nBut actually, since this process runs as root, unlink/rmdir would probably always success?  It\u0027d be nice to test with 1) some non-writable directory and file, and 2) immutable file (chattr +i filename).  I\u0027d feel comfortable with these two cases covered.",
+      "parentUuid": "9b540080_ea13b48c",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f3a44b0_46a14b14",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 4
@@ -284,6 +308,24 @@
       "side": 1,
       "message": "I think that kind of screen would be good, though this is really a decision for the android UX and security teams so I\u0027ll delegate to them. I don\u0027t think that nftw can be made more robust than it already is because of what I mentioned in reply to your previous comment.\n\nRegardless of whether we can make nftw more robust, what do we want to do for now if it ultimately fails for now? I can put a TODO to see if we can get a screen like that, but are we okay just hanging the boot for now?",
       "parentUuid": "33456607_8abece7f",
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010c792a_1cd0efe6",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T21:10:43Z",
+      "side": 1,
+      "message": "Right, I didn\u0027t mean we need extra UX work right now, though a TODO would be nice.",
+      "parentUuid": "fa2e1127_1d5e9174",
       "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
