@@ -49,6 +49,98 @@
     },
     {
       "key": {
+        "uuid": "f356246c_42876705",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T17:45:00Z",
+      "side": 1,
+      "message": "remove since you don\u0027t use system() now",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf676c6_b4db2c77",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T17:45:00Z",
+      "side": 1,
+      "message": "Since the goal is to remove everything, how about return 0 to keep it going?\n\nSecurity wise, an error case I can think of is when the attacker managed to change parent directory\u0027s  mode to non-writable, then unlink/rmdir would probably fail.  Or set some extended attributes.  We could have another pass of nftw if necessary, in order to recover from the error case.  WDYT?",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3a44b0_46a14b14",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T17:45:00Z",
+      "side": 1,
+      "message": "change this to flag names",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 37
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f808bd10_9b0765ba",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T17:45:00Z",
+      "side": 1,
+      "message": "nit: space before and after |",
+      "range": {
+        "startLine": 110,
+        "startChar": 48,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0a1541_0c053e8e",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 4
@@ -60,6 +152,24 @@
       "writtenOn": "2018-01-30T05:57:07Z",
       "side": 1,
       "message": "Is this what we want to do here? This will cause the boot to hang, but I\u0027m not sure what else we should do short or rebooting the box. If the just continue, we\u0027ll be running untrusted code.",
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33456607_8abece7f",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2018-01-30T17:45:00Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s even possible (or \"should\" in the first place) to show one of the verified boot failure screen (https://source.android.com/security/verifiedboot/verified-boot#user_experience).  That\u0027s probably before init, but might be an OK UX.  Feel free to leave a TODO at this point for error recovery UX.  For now, perhaps let\u0027s try to make nftw as robust as we can.",
+      "parentUuid": "fa0a1541_0c053e8e",
       "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
