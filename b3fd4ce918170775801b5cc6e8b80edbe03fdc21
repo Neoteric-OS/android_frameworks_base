@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "cf48cb8b_0eec2810",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T04:19:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55093a7_687017c1",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70bb87f3_ec36200b",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 1
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "f06a2b52_0fe01ecc",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T04:19:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bb87f3_ec36200b",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2849e1_010ea9cc",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 1
@@ -108,6 +156,30 @@
       "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c005f184_db4a9308",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T04:19:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2849e1_010ea9cc",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,24 @@
       "side": 1,
       "message": "Did you check that this works? Executing a toolbox command usually requires selinux permissions. (That\u0027s the main reason to do it internally, besides things like string attacks.)",
       "parentUuid": "c0b3bf16_3da46553",
+      "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743e429c_6f159ced",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T04:19:41Z",
+      "side": 1,
+      "message": "I hadn\u0027t yet done a test where one of the art files has been tampered with before boot. I must\u0027ve done the failure from cmdline test when selinux was disabled. I just tried it and you\u0027re right, I got an selinux permission violation:\n\n01-29 20:10:15.213   916   916 W prezygote64: type\u003d1400 audit(0.0:9): avc: denied { execute } for name\u003d\"sh\" dev\u003d\"dm-0\" ino\u003d688 scontext\u003du:r:zygote:s0 tcontext\u003du:object_r:shell_exec:s0 tclass\u003dfile permissive\u003d0\n\nI\u0027m not worried about string attacks because the strings are build time constants. Should I write my own directory deletion code? Is there common code accessible to framework/base somewhere to do this?",
+      "parentUuid": "f0c814e3_6e1ae4a4",
       "revId": "b3fd4ce918170775801b5cc6e8b80edbe03fdc21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
