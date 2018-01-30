@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0a1541_0c053e8e",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-01-30T05:57:07Z",
+      "side": 1,
+      "message": "Is this what we want to do here? This will cause the boot to hang, but I\u0027m not sure what else we should do short or rebooting the box. If the just continue, we\u0027ll be running untrusted code.",
+      "revId": "7f86363a3e784f8e99ace5c0ca222f705f743a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
