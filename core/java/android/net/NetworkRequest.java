@@ -157,6 +157,12 @@ public class NetworkRequest implements Parcelable {
          * the requested network's required capabilities.  Note that when searching
          * for a network to satisfy a request, all capabilities requested must be
          * satisfied.
+         * <p>
+         * If the given capability was previously added to the list of unwanted capabilities
+         * (for example, by default or using {@link #addUnwantedCapability(int)}) then the
+         * capability will also be removed from the list of unwanted capabilities.
+         *
+         * @see #addUnwantedCapability(int)
          *
          * @param capability The capability to add.
          * @return The builder to facilitate chaining
@@ -168,7 +174,8 @@ public class NetworkRequest implements Parcelable {
         }
 
         /**
-         * Removes (if found) the given capability from this builder instance.
+         * Removes (if found) the given capability from this builder instance from both required
+         * and unwanted capabilities lists.
          *
          * @param capability The capability to remove.
          * @return The builder to facilitate chaining.
@@ -189,6 +196,24 @@ public class NetworkRequest implements Parcelable {
         public Builder setCapabilities(NetworkCapabilities nc) {
             mNetworkCapabilities.clearAll();
             mNetworkCapabilities.combineCapabilities(nc);
+            return this;
+        }
+
+        /**
+         * Add the capability that must not exist in the requested network.
+         * <p>
+         * If the capability was previously added to the list of required capabilities (for
+         * example, it was there by default or added using {@link #addCapability(int)} method), then
+         * it will be removed from the list of required capabilities as well.s
+         *
+         * @see #addCapability(int)
+         *
+         * @param capability The capability to add to unwanted capability list.
+         * @return The builder to facilitate chaining.
+         * @hide
+         */
+        public Builder addUnwantedCapability(@NetworkCapabilities.NetCapability int capability) {
+            mNetworkCapabilities.addUnwantedCapability(capability);
             return this;
         }
 
