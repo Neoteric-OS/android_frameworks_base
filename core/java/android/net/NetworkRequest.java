@@ -193,6 +193,31 @@ public class NetworkRequest implements Parcelable {
         }
 
         /**
+         * Add capability that must not exist in the requested network.
+         *
+         * @param capability The capability to add to unwanted capability list.
+         * @return The builder to facilitate chaining.
+         * @hide
+         */
+        public Builder addUnwantedCapability(@NetworkCapabilities.NetCapability int capability) {
+            mNetworkCapabilities.addUnwantedCapability(capability);
+            return this;
+        }
+
+        /**
+         * Remove capability from the list of capabilities which must not exist in the requested
+         * network.
+         *
+         * @param capability The capability to be removed from unwanted capability list.
+         * @return The builder to facilitate chaining.
+         * @hide
+         */
+        public Builder removeUnwantedCapability(@NetworkCapabilities.NetCapability int capability) {
+            mNetworkCapabilities.removeUnwantedCapability(capability);
+            return this;
+        }
+
+        /**
          * Completely clears all the {@code NetworkCapabilities} from this builder instance,
          * removing even the capabilities that are set by default when the object is constructed.
          *
