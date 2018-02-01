@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1cbe44a5_8e29de6d",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-02-01T00:20:45Z",
+      "side": 1,
+      "message": "this is ABI_STRING from \u003candroid-base/macros.h\u003e.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0037adc_617871ef",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 6
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2bfe1a3f_32f32445",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-02-01T00:20:45Z",
+      "side": 1,
+      "message": "(or just /*sb*/, since this is C++.)",
+      "parentUuid": "a0037adc_617871ef",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91c11a49_6b6784f0",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 6
@@ -36,6 +83,30 @@
       "writtenOn": "2018-01-31T23:45:25Z",
       "side": 1,
       "message": "No check that it succeeded?",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238ec6e4_8dc66fcc",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-02-01T00:20:45Z",
+      "side": 1,
+      "message": "StringPrintf might be a better choice.",
+      "parentUuid": "91c11a49_6b6784f0",
       "range": {
         "startLine": 72,
         "startChar": 4,
