@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "03899b8e_13e0d578",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-02-01T02:21:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f3c452_d58c34a2",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c11a49_6b6784f0",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 6
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "c1784cb3_289e292d",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-02-01T02:21:55Z",
+      "side": 1,
+      "message": "I\u0027ll check for success of asprintf.\nI initially wanted to use strings, but since the operations were simple and the functions I needed to call needed c style strings (execl, nftw), I opted for regular strings. They also allow me to define them as constexpr.",
+      "parentUuid": "446ffc00_715b4e1b",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51fb3cb_69ce58bf",
         "filename": "cmds/prezygote/prezygote.cpp",
         "patchSetId": 6
@@ -187,6 +235,30 @@
       "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec73788_1b4952d5",
+        "filename": "cmds/prezygote/prezygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1249526
+      },
+      "writtenOn": "2018-02-01T02:21:55Z",
+      "side": 1,
+      "message": "Yep, I\u0027m already planning to do that once this is done.",
+      "parentUuid": "c51fb3cb_69ce58bf",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 75
+      },
+      "revId": "e2125b3a828d541900d8d77d9a36239be8955a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
