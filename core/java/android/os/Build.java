@@ -790,7 +790,7 @@ public class Build {
     }
 
     /**
-     * Ensure that raw fingerprint system property is defined. If it was derived
+     * Ensure that raw fingerprint {system, vendor} property is defined. If it was derived
      * dynamically by {@link #deriveFingerprint()} this is where we push the
      * derived value into the property service.
      *
@@ -802,6 +802,14 @@ public class Build {
                 SystemProperties.set("ro.build.fingerprint", FINGERPRINT);
             } catch (IllegalArgumentException e) {
                 Slog.e(TAG, "Failed to set fingerprint property", e);
+            }
+        }
+        if (!TextUtils.isEmpty(SystemProperties.get("ro.vendor.build.date")) &&
+            TextUtils.isEmpty(SystemProperties.get("ro.vendor.build.fingerprint"))) {
+            try {
+                SystemProperties.set("ro.vendor.build.fingerprint", FINGERPRINT);
+            } catch (IllegalArgumentException e) {
+                Slog.e(TAG, "Failed to set fingerprint vendor property", e);
             }
         }
     }
