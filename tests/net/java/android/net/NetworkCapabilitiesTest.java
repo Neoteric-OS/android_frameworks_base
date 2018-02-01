@@ -24,6 +24,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_WIFI_P2P;
 import static android.net.NetworkCapabilities.RESTRICTED_CAPABILITIES;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
@@ -259,6 +260,41 @@ public class NetworkCapabilitiesTest {
             .addCapability(NET_CAPABILITY_EIMS)
             .addCapability(NET_CAPABILITY_NOT_METERED);
         assertEqualsThroughMarshalling(netCap);
+    }
+
+    @Test
+    public void testUnwantedCapabilities() {
+        NetworkCapabilities network = new NetworkCapabilities();
+
+        NetworkCapabilities request = new NetworkCapabilities();
+        assertTrue("Request: " + request + ", Network:" + network,
+                request.satisfiedByNetworkCapabilities(network));
+
+        // Adding capabilities that doesn't exist in the network anyway
+        request.addUnwantedCapability(NET_CAPABILITY_WIFI_P2P);
+        request.addUnwantedCapability(NET_CAPABILITY_NOT_METERED);
+        assertTrue(request.satisfiedByNetworkCapabilities(network));
+
+        // This is a default capability, just want to make sure its there because we use it below.
+        assertTrue(network.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
+
+        // Verify that adding unwanted capability will effectively remove it from capability list.
+        request.addUnwantedCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        assertFalse(request.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
+
+
+        // Now this request won't be satisfied because network contains NOT_RESTRICTED.
+        assertFalse(request.satisfiedByNetworkCapabilities(network));
+        network.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        assertTrue(request.satisfiedByNetworkCapabilities(network));
+
+        // Verify that adding capability will effectively remove it from unwanted list
+        request.addCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        assertFalse(request.hasUnwantedCapability(NET_CAPABILITY_NOT_RESTRICTED));
+
+        assertFalse(request.satisfiedByNetworkCapabilities(network));
+        network.addCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        assertTrue(request.satisfiedByNetworkCapabilities(network));
     }
 
     private void assertEqualsThroughMarshalling(NetworkCapabilities netCap) {
