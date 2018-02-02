@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "100ccc43_3ace0a08",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2018-02-02T17:26:43Z",
+      "side": 1,
+      "message": "From a quick inspection of the method, loadProvidersLocked is not safe to call more than once at initialization time. If you want to reload the providers you will have to make the method idempotent. Has this change been tested?\n\nI would also include a quick comment here on why you are reloading the providers as it\u0027s not obvious.",
+      "range": {
+        "startLine": 412,
+        "startChar": 24,
+        "endLine": 412,
+        "endChar": 43
+      },
+      "revId": "188dec29442bcfa5bbfae25bbbb3e61507527bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
