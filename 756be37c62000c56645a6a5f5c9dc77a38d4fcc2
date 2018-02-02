@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b673c11_1e0b8fb6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-02-02T21:45:39Z",
+      "side": 1,
+      "message": "As a rule I\u0027ve tried to put the events which are generic to Telecom in the Connection class. \n\nFor events like these which are very much specific to Telephony, I\u0027ve been defining them here in Telephony Manager.",
+      "parentUuid": "f485305b_ab7c3b3b",
+      "range": {
+        "startLine": 895,
+        "startChar": 7,
+        "endLine": 895,
+        "endChar": 47
+      },
+      "revId": "756be37c62000c56645a6a5f5c9dc77a38d4fcc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d79eb13_dbd05d7a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-02T19:36:59Z",
       "side": 1,
       "message": "I remember API council objecting to strings for user-readable messages... Is this ever gonna be unhidden?",
+      "range": {
+        "startLine": 934,
+        "startChar": 7,
+        "endLine": 934,
+        "endChar": 23
+      },
+      "revId": "756be37c62000c56645a6a5f5c9dc77a38d4fcc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455dd93c_1186c80b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-02-02T21:45:39Z",
+      "side": 1,
+      "message": "You are very right, this is implemented as CharSequence, I wrote the wrong type here.",
+      "parentUuid": "7d79eb13_dbd05d7a",
       "range": {
         "startLine": 934,
         "startChar": 7,
