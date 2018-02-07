@@ -23,6 +23,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Public API for the Bluetooth GATT Profile server role.
@@ -49,6 +50,7 @@ public final class BluetoothGattServer implements BluetoothProfile {
     private int mTransport;
     private BluetoothGattService mPendingService;
     private List<BluetoothGattService> mServices;
+    private CountDownLatch mPendingServiceSignal;
 
     private static final int CALLBACK_REG_TIMEOUT = 10000;
 
@@ -115,6 +117,11 @@ public final class BluetoothGattServer implements BluetoothProfile {
 
                     BluetoothGattService tmp = mPendingService;
                     mPendingService = null;
+                    if (mPendingServiceSignal != null) {
+                        if (DBG) Log.d(TAG, "onServiceAdded() -countDown for pendingService: "
+                            + tmp);
+                        mPendingServiceSignal.countDown();
+                    }
 
                     // Rewrite newly assigned handles to existing service.
                     tmp.setInstanceId(service.getInstanceId());
@@ -709,6 +716,22 @@ public final class BluetoothGattServer implements BluetoothProfile {
     public boolean addService(BluetoothGattService service) {
         if (DBG) Log.d(TAG, "addService() - service: " + service.getUuid());
         if (mService == null || mServerIf == 0) return false;
+
+        // APP should always wait for serviceAdded callback for Pending service
+        // before registering for next service. Otherwise app service context would be blocked
+        // till pending service is registered.
+        if (mPendingService != null) {
+            mPendingServiceSignal = new CountDownLatch(1);
+            if (DBG) Log.i(TAG, "addService() Waiting to finish registration of Pending service"
+                    + mPendingService);
+
+            try {
+                mPendingServiceSignal.await();
+            } catch (InterruptedException e) {
+                Log.e(TAG, "addService() Interrupt received while Waiting to finish registration"
+                    + "of previous service", e);
+            }
+        }
 
         mPendingService = service;
 
