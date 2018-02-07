@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "053c5844_cc4bc72d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-07T22:04:50Z",
+      "side": 1,
+      "message": "Doing this is harmless but not useful as l.443/444 will \u0026 it with values that have these bits reset anyway. (alternatively l.439 and 440 could both be removed instead).",
+      "range": {
+        "startLine": 441,
+        "startChar": 12,
+        "endLine": 441,
+        "endChar": 58
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b0a0af9_d1851a55",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-07T22:04:50Z",
+      "side": 1,
+      "message": "Suggest adding an @see #addUnwantedCapability here, and describing that setting a capability removes it from the unwanted capabilities if it\u0027s present there.",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8645da_d55eff72",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-07T22:04:50Z",
+      "side": 1,
+      "message": "Let\u0027s add that if the capability is set in the requested list, it\u0027s cleared",
+      "range": {
+        "startLine": 196,
+        "startChar": 63,
+        "endLine": 196,
+        "endChar": 70
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
