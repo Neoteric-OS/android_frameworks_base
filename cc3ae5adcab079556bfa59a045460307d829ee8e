@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9108ea66_00f8117b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-02-08T00:20:28Z",
+      "side": 1,
+      "message": "Ack. I did this mostly for readability and be a bit less error-prone here.  If we do not want to match mutable capabilities, just remove them from everywhere. Happy to change it if you think it would be better.",
+      "parentUuid": "053c5844_cc4bc72d",
+      "range": {
+        "startLine": 441,
+        "startChar": 12,
+        "endLine": 441,
+        "endChar": 58
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b0a0af9_d1851a55",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "de024ef8_b7383431",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-02-08T00:20:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0a0af9_d1851a55",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8645da_d55eff72",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b69174_dd5cdefc",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-02-08T00:20:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8645da_d55eff72",
+      "range": {
+        "startLine": 196,
+        "startChar": 63,
+        "endLine": 196,
+        "endChar": 70
+      },
+      "revId": "cc3ae5adcab079556bfa59a045460307d829ee8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
