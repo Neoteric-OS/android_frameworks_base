@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "956d8e7c_d61a2adc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-09T05:08:40Z",
+      "side": 1,
+      "message": "Let\u0027s add that it also removes all the capabilities in the set from the unwanted capabilities",
+      "range": {
+        "startLine": 384,
+        "startChar": 36,
+        "endLine": 384,
+        "endChar": 48
+      },
+      "revId": "b605f29c9afaac4bad910da91c35bfbbf6fa2e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4b99fd_b0d8709c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-09T05:08:40Z",
+      "side": 1,
+      "message": "Why the double \u0026 ? Don\u0027t you just want mUnwantedNetworkCapabilities \u0026\u003d ~mNetworkCapabilities ?\n\nI mean, A \u0026 ~(B \u0026 A)\n\u003d A \u0026 (~B | ~A)\n\u003d (A \u0026 ~B) | (A \u0026 ~A)\n\u003d A \u0026 ~B\n\n...or am I missing something ?",
+      "revId": "b605f29c9afaac4bad910da91c35bfbbf6fa2e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
