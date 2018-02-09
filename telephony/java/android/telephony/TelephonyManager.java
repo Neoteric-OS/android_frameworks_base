@@ -52,6 +52,7 @@ import android.telephony.ims.aidl.IImsMmTelFeature;
 import android.telephony.ims.aidl.IImsRcsFeature;
 import android.telephony.ims.aidl.IImsRegistration;
 import android.telephony.ims.feature.ImsFeature;
+import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.util.Log;
 
 import com.android.ims.internal.IImsServiceFeatureCallback;
@@ -6146,62 +6147,74 @@ public class TelephonyManager {
     }
 
    /**
-    * Returns the IMS Registration Status
+    * Returns the IMS Registration Status of the default Voice Subscription.
+    *
+    * @return true if IMS status is registered, false if the IMS status is not registered or a
+    * RemoteException occurred.
     * @hide
     */
    public boolean isImsRegistered() {
-       try {
-           ITelephony telephony = getITelephony();
-           if (telephony == null)
-               return false;
-           return telephony.isImsRegistered();
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
-           return false;
-       }
+       return isImsRegistered(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
    }
 
     /**
-     * Returns the IMS Registration Status for a particular Subscription ID
+     * Returns the IMS Registration Status for a particular Subscription ID.
      *
      * @param subId Subscription ID
      * @return true if IMS status is registered, false if the IMS status is not registered or a
      * RemoteException occurred.
-     *
      * @hide
      */
     public boolean isImsRegistered(int subId) {
        try {
-           return getITelephony().isImsRegisteredForSubscriber(subId);
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
+           return getITelephony().isImsRegistered(subId);
+       } catch (RemoteException | NullPointerException ex) {
            return false;
        }
     }
 
     /**
-     * Returns the Status of Volte
+     * The current status of Voice over LTE for the default Voice Subscription.
+     * @return true if Voice over LTE is available or false if it is unavailable or unknown.
      * @hide
      */
     public boolean isVolteAvailable() {
-       try {
-           return getITelephony().isVolteAvailable();
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
-           return false;
-       }
+       return isVolteAvailable(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
    }
 
     /**
-     * Returns the Status of video telephony (VT)
+     * The current status of Voice over LTE for the default Voice Subscription.
+     * @param subId the Subscription ID that Voice over LTE status will be checked for.
+     * @return true if Voice over LTE is available or false if it is unavailable or unknown.
+     * @hide
+     */
+    public boolean isVolteAvailable(int subId) {
+        try {
+            return getITelephony().isVolteAvailable(subId);
+        } catch (RemoteException | NullPointerException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * The availability of Video Telephony (VT) for the default voice Subscription.
+     * @return true if VT is available, or false if it is unavailable or unknown.
      * @hide
      */
     public boolean isVideoTelephonyAvailable() {
+        return isVideoTelephonyAvailable(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+    }
+
+    /**
+     * The availability of Video Telephony (VT) for the subscription ID specified. To query the
+     * underlying technology that VT is available on, use {@link #getImsRegTechnologyForMmTel(int)}.
+     * @param subId the subscription ID that VT status will be checked for.
+     * @return true if VT is available, or false if it is unavailable or unknown.
+     * @hide
+     */
+    public boolean isVideoTelephonyAvailable(int subId) {
         try {
-            return getITelephony().isVideoTelephonyAvailable();
+            return getITelephony().isVideoTelephonyAvailable(subId);
         } catch (RemoteException ex) {
             return false;
         } catch (NullPointerException ex) {
@@ -6210,18 +6223,48 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the Status of Wi-Fi Calling
+     * Returns the Status of Wi-Fi calling (Voice over WiFi) for default Voice subscription.
+     * @return true if VoWiFi is available, or false if it is unavailable or unknown.
      * @hide
      */
     public boolean isWifiCallingAvailable() {
+        return isWifiCallingAvailable(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+    }
+
+    /**
+     * Returns the Status of Wi-Fi calling (Voice over WiFi) for the subscription ID specified.
+     * @param subId the subscription ID.
+     * @return true if VoWiFi is available, or false if it is unavailable or unknown.
+     * @hide
+     */
+    public boolean isWifiCallingAvailable(int subId) {
        try {
-           return getITelephony().isWifiCallingAvailable();
+           return getITelephony().isWifiCallingAvailable(subId);
        } catch (RemoteException ex) {
            return false;
        } catch (NullPointerException ex) {
            return false;
        }
    }
+
+    /**
+     * The technology that IMS is registered for for the MMTEL feature.
+     * @param subId subscription ID to get IMS registration technology for.
+     * @return The IMS registration technology that IMS is registered to for the MMTEL feature.
+     * Valid return results are:
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_LTE} for LTE registration,
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_IWLAN} for IWLAN registration, or
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_NONE} if we are not registered or the
+     *  result is unavailable.
+     *  @hide
+     */
+    public @ImsRegistrationImplBase.ImsRegistrationTech int getImsRegTechnologyForMmTel(int subId) {
+        try {
+            return getITelephony().getImsRegTechnologyForMmTel(subId);
+        } catch (RemoteException ex) {
+            return ImsRegistrationImplBase.REGISTRATION_TECH_NONE;
+        }
+    }
 
    /**
     * Set TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC for the default phone.
