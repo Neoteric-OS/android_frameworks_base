@@ -44,7 +44,17 @@ class ZygoteServer {
 
     private static final String ANDROID_SOCKET_PREFIX = "ANDROID_SOCKET_";
 
+    /**
+     * Listening socket that accepts new server connections.
+     */
     private LocalServerSocket mServerSocket;
+
+    /**
+     * Whether or not mServerSocket's underlying FD should be closed directly.
+     * If mServerSocket is created with an existing FD, closing the socket does
+     * not close the FD.
+     */
+    private boolean mCloseSocketFd;
 
     /**
      * Set by the child process, immediately after a call to {@code Zygote.forkAndSpecialize}.
@@ -59,7 +69,8 @@ class ZygoteServer {
     }
 
     /**
-     * Registers a server socket for zygote command connections
+     * Registers a server socket for zygote command connections. This locates the server socket
+     * file descriptor through an ANDROID_SOCKET_ environment variable.
      *
      * @throws RuntimeException when open fails
      */
@@ -78,11 +89,24 @@ class ZygoteServer {
                 FileDescriptor fd = new FileDescriptor();
                 fd.setInt$(fileDesc);
                 mServerSocket = new LocalServerSocket(fd);
+                mCloseSocketFd = true;
             } catch (IOException ex) {
                 throw new RuntimeException(
                         "Error binding to local socket '" + fileDesc + "'", ex);
             }
         }
+    }
+
+    /**
+     * Sets the server socket on which the zygote should listen for new
+     * connections.
+     */
+    void setServerSocket(LocalServerSocket socket) {
+        if (mServerSocket != null) {
+            throw new IllegalStateException("Server socket already specified");
+        }
+        mServerSocket = socket;
+        mCloseSocketFd = false;
     }
 
     /**
@@ -112,7 +136,7 @@ class ZygoteServer {
             if (mServerSocket != null) {
                 FileDescriptor fd = mServerSocket.getFileDescriptor();
                 mServerSocket.close();
-                if (fd != null) {
+                if (fd != null && mCloseSocketFd) {
                     Os.close(fd);
                 }
             }

@@ -877,5 +877,16 @@ public class ZygoteInit {
         return RuntimeInit.applicationInit(targetSdkVersion, argv, classLoader);
     }
 
+    /**
+     * The main function called when starting a child zygote process. This is used as an
+     * alternative to zygoteInit(), which skips calling into initialization routines that
+     * start the Binder threadpool.
+     */
+    public static final Runnable childZygoteInit(
+            int targetSdkVersion, String[] argv, ClassLoader classLoader) {
+        final RuntimeInit.Arguments args = new RuntimeInit.Arguments(argv);
+        return RuntimeInit.findStaticMain(args.startClass, args.startArgs, classLoader);
+    }
+
     private static final native void nativeZygoteInit();
 }

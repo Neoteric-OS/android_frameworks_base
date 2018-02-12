@@ -315,8 +315,9 @@ bool FileDescriptorInfo::GetSocketName(const int fd, std::string* result) {
 
   // This is a local socket with an abstract address, we do not accept it.
   if (unix_addr->sun_path[0] == '\0') {
-    LOG(ERROR) << "Unsupported AF_UNIX socket (fd=" << fd << ") with abstract address.";
-    return false;
+    *result = "ABSTRACT/";
+    result->append(&unix_addr->sun_path[1], path_len - 1);
+    return true;
   }
 
   // If we're here, sun_path must refer to a null terminated filesystem
@@ -367,7 +368,6 @@ FileDescriptorTable* FileDescriptorTable::Create(const std::vector<int>& fds_to_
       continue;
     }
     if (std::find(fds_to_ignore.begin(), fds_to_ignore.end(), fd) != fds_to_ignore.end()) {
-      LOG(INFO) << "Ignoring open file descriptor " << fd;
       continue;
     }
 
@@ -406,7 +406,6 @@ bool FileDescriptorTable::Restat(const std::vector<int>& fds_to_ignore) {
       continue;
     }
     if (std::find(fds_to_ignore.begin(), fds_to_ignore.end(), fd) != fds_to_ignore.end()) {
-      LOG(INFO) << "Ignoring open file descriptor " << fd;
       continue;
     }
 
