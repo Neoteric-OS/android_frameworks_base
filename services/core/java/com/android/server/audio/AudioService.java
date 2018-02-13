@@ -2344,9 +2344,13 @@ public class AudioService extends IAudioService.Stub
         int numStreamTypes = AudioSystem.getNumStreamTypes();
         final boolean ringerModeMute = mRingerMode == AudioManager.RINGER_MODE_VIBRATE
                 || mRingerMode == AudioManager.RINGER_MODE_SILENT;
+        android.util.Log.i("JHJH", getClass().getSimpleName() + ": muteRingerModeStreams(), mRingerMode=" + mRingerMode + ", ringerModeMute=" + ringerModeMute);
         for (int streamType = numStreamTypes - 1; streamType >= 0; streamType--) {
             final boolean isMuted = isStreamMutedByRingerMode(streamType);
             final boolean shouldMute = ringerModeMute && isStreamAffectedByRingerMode(streamType);
+            String streamName = streamType < AudioSystem.STREAM_NAMES.length ? AudioSystem.STREAM_NAMES[streamType] : "Unknown";
+            streamName += "[" + streamType + "]";
+            android.util.Log.i("JHJH", getClass().getSimpleName() + ": muteRingerModeStreams(), streamType=" + streamName + ", shouldMute=" + shouldMute);
             if (isMuted == shouldMute) continue;
             if (!shouldMute) {
                 // unmute
@@ -2962,6 +2966,18 @@ public class AudioService extends IAudioService.Stub
                 AudioSystem.FOR_COMMUNICATION, mForcedUseForComm, eventSource, 0);
         sendMsg(mAudioHandler, MSG_SET_FORCE_USE, SENDMSG_QUEUE,
                 AudioSystem.FOR_RECORD, mForcedUseForComm, eventSource, 0);
+        if (mRingerMode == AudioManager.RINGER_MODE_VIBRATE) {
+            sendMsg(mAudioHandler, MSG_SET_FORCE_USE, SENDMSG_QUEUE,
+                    AudioSystem.FOR_VIBRATE_RINGING, mForcedUseForComm, eventSource, 0);
+        } else {
+            sendMsg(mAudioHandler, MSG_SET_FORCE_USE, SENDMSG_QUEUE,
+                    AudioSystem.FOR_VIBRATE_RINGING, AudioSystem.FORCE_NONE, eventSource, 0);
+        }
+        synchronized (mSettingsLock) {
+            if (updateRingerModeAffectedStreams()) {
+                setRingerModeInt(getRingerModeInternal(), false);
+            }
+        }
     }
 
     /** @see AudioManager#isBluetoothScoOn() */
@@ -3801,6 +3817,7 @@ public class AudioService extends IAudioService.Stub
     }
 
     private boolean updateRingerModeAffectedStreams() {
+        android.util.Log.i("JHJH", getClass().getSimpleName() + ": updateRingerModeAffectedStreams()");
         int ringerModeAffectedStreams = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.MODE_RINGER_STREAMS_AFFECTED,
                 ((1 << AudioSystem.STREAM_RING)|(1 << AudioSystem.STREAM_NOTIFICATION)|
@@ -3826,11 +3843,22 @@ public class AudioService extends IAudioService.Stub
             ringerModeAffectedStreams &= ~(1 << AudioSystem.STREAM_DTMF);
         }
 
+        if (isBluetoothScoOn()) {
+            android.util.Log.i("JHJH", getClass().getSimpleName() + ": updateRingerModeAffectedStreams(), enable ringtone with Bluetooth");
+            ringerModeAffectedStreams &= ~(1 << AudioSystem.STREAM_RING);
+        } else {
+            android.util.Log.i("JHJH", getClass().getSimpleName() + ": updateRingerModeAffectedStreams(), no ringtone without Bluetooth");
+            ringerModeAffectedStreams |= (1 << AudioSystem.STREAM_RING);
+        }
+
         if (ringerModeAffectedStreams != mRingerModeAffectedStreams) {
+            final long ident = Binder.clearCallingIdentity();
             Settings.System.putIntForUser(mContentResolver,
                     Settings.System.MODE_RINGER_STREAMS_AFFECTED,
                     ringerModeAffectedStreams,
                     UserHandle.USER_CURRENT);
+            Binder.restoreCallingIdentity(ident);
+            android.util.Log.i("JHJH", getClass().getSimpleName() + ": updateRingerModeAffectedStreams() ringerModeAffectedStreams=" + ringerModeAffectedStreams);
             mRingerModeAffectedStreams = ringerModeAffectedStreams;
             return true;
         }

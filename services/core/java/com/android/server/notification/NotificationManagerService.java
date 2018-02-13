@@ -4150,6 +4150,7 @@ public class NotificationManagerService extends SystemService {
         boolean looping = (record.getNotification().flags & Notification.FLAG_INSISTENT) != 0;
         // do not play notifications if there is a user of exclusive audio focus
         // or the device is in vibrate mode
+        Log.i("JHJH", getClass().getSimpleName() + ": playSound()");
         if (!mAudioManager.isAudioFocusExclusive() && (mAudioManager.getRingerModeInternal()
                 != AudioManager.RINGER_MODE_VIBRATE || mAudioManager.getStreamVolume(
                 AudioAttributes.toLegacyStreamType(record.getAudioAttributes())) != 0)) {
@@ -4159,6 +4160,7 @@ public class NotificationManagerService extends SystemService {
                 if (player != null) {
                     if (DBG) Slog.v(TAG, "Playing sound " + soundUri
                             + " with attributes " + record.getAudioAttributes());
+                    Log.i("JHJH", getClass().getSimpleName() + ": playSound() start");
                     player.playAsync(soundUri, record.sbn.getUser(), looping,
                             record.getAudioAttributes());
                     return true;
@@ -4168,6 +4170,7 @@ public class NotificationManagerService extends SystemService {
                 Binder.restoreCallingIdentity(identity);
             }
         }
+        Log.i("JHJH", getClass().getSimpleName() + ": playSound() skip");
         return false;
     }
 
@@ -4176,6 +4179,7 @@ public class NotificationManagerService extends SystemService {
         // Escalate privileges so we can use the vibrator even if the
         // notifying app does not have the VIBRATE permission.
         long identity = Binder.clearCallingIdentity();
+        Log.i("JHJH", getClass().getSimpleName() + ": playVibration()");
         try {
             final VibrationEffect effect;
             try {
@@ -4225,6 +4229,7 @@ public class NotificationManagerService extends SystemService {
     }
 
     protected void playInCallNotification() {
+        Log.i("JHJH", getClass().getSimpleName() + ": playInCallNotification()");
         new Thread() {
             @Override
             public void run() {

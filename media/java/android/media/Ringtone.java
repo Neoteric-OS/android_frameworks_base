@@ -326,12 +326,16 @@ public class Ringtone {
      * Plays the ringtone.
      */
     public void play() {
+        Log.i("JHJH", getClass().getSimpleName() + ": Ringtone play");
         if (mLocalPlayer != null) {
             // do not play ringtones if stream volume is 0
             // (typically because ringer mode is silent).
             if (mAudioManager.getStreamVolume(
                     AudioAttributes.toLegacyStreamType(mAudioAttributes)) != 0) {
+                Log.i("JHJH", getClass().getSimpleName() + ": Ringtone play, local player play");
                 startLocalPlayer();
+            } else {
+                Log.i("JHJH", getClass().getSimpleName() + ": Ringtone play, volume is zero");
             }
         } else if (mAllowRemote && (mRemotePlayer != null)) {
             final Uri canonicalUri = mUri.getCanonicalUri();
@@ -342,6 +346,7 @@ public class Ringtone {
                 volume = mVolume;
             }
             try {
+                Log.i("JHJH", getClass().getSimpleName() + ": Ringtone play, remote player play");
                 mRemotePlayer.play(mRemoteToken, canonicalUri, mAudioAttributes, volume, looping);
             } catch (RemoteException e) {
                 if (!playFallbackRingtone()) {
