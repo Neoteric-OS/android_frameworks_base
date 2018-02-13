@@ -134,6 +134,7 @@ public abstract class PlayerBase {
     }
 
     void baseStart() {
+        Log.i("JHJH", getClass().getSimpleName() + ": baseStart()");
         if (DEBUG) { Log.v(TAG, "baseStart() piid=" + mPlayerIId); }
         try {
             synchronized (mLock) {
