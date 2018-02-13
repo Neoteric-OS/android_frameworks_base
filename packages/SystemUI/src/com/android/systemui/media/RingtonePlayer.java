@@ -101,6 +101,7 @@ public class RingtonePlayer extends SystemUI {
         @Override
         public void play(IBinder token, Uri uri, AudioAttributes aa, float volume, boolean looping)
                 throws RemoteException {
+            Log.i("JHJH", "Ringtone play, RingtonePlayer play, volume=" + volume);
             if (LOGD) {
                 Log.d(TAG, "play(token=" + token + ", uri=" + uri + ", uid="
                         + Binder.getCallingUid() + ")");
