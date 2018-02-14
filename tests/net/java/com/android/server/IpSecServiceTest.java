@@ -449,6 +449,13 @@ public class IpSecServiceTest {
         }
     }
 
+    @Test
+    public void testSpiOwnedByTransform() {
+    //    IpSecSpiResponse spiResp =
+    //            mIpSecService.allocateSecurityParameterIndex(
+    //                    address, DROID_SPI, new Binder());
+    }
+
     /**
      * This function checks if the number of encap UDP socket that one UID can reserve has a
      * reasonable limit.
