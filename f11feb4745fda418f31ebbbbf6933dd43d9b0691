@@ -70,6 +70,30 @@
       "revId": "f11feb4745fda418f31ebbbbf6933dd43d9b0691",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78e9b4be_89fc3e4f",
+        "filename": "core/tests/hosttests/test-apps/SharedUid/32/jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-02-14T13:00:42Z",
+      "side": 1,
+      "message": "Ah yes, looks like this is required for the NDK. sorry i misremembered,",
+      "parentUuid": "c00b6dfa_a175f13e",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "f11feb4745fda418f31ebbbbf6933dd43d9b0691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
