@@ -22,6 +22,30 @@
       "revId": "f11feb4745fda418f31ebbbbf6933dd43d9b0691",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9682b625_3bf5a4e2",
+        "filename": "core/tests/hosttests/test-apps/SharedUid/32/jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-02-14T12:53:22Z",
+      "side": 1,
+      "message": "Yes, this was needed. When I omitted this, I encountered missing references for the logging functions.",
+      "parentUuid": "b8bdde7c_c3a8f9b0",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "f11feb4745fda418f31ebbbbf6933dd43d9b0691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
