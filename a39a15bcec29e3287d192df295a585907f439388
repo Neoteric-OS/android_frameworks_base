@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fa86e0f_dd1a2531",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "I think this is going to be error-prone. This method was intended to set all the capabilities in one go. So it should at least clear all the unwanted capabilities. Better yet, it should take two arrays instead of one, one for the wanted list and one for the unwanted list.\n\nI don\u0027t think this method has many (or even any?) callers, so it shouldn\u0027t be hard to fix.",
+      "range": {
+        "startLine": 386,
+        "startChar": 49,
+        "endLine": 387,
+        "endChar": 26
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bd370b_10503408",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Nit: I think things would be clearer if these two functions were merged into one. The way I think of things is that the \"capabilities\" are composed of both the requested capabilities and the unwanted capabilities.\n\nThis is what you have, for example, in satisfiedByNetCapabilities - it checks both the requested ones and the unwanted ones.",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7872b8_9671cff0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "You need to check the unwanted list here as well. Something like:\n\n    final long nonRequestable \u003d (mNetworkCapabilities | mUnwantedNetworkCapabilities) \u0026\n            NON_REQUESTABLE_CAPABILITIES;",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 427,
+        "endChar": 90
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bda0cb2_8c47bafe",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "I don\u0027t think this line does anything.\n\nRationale: you only use providedCapabilities by ANDing it to requestedCapabilities and requestedUnwantedCapabilities. These both have MUTABLE_CAPABILITIES masked out. So the result of the ANDs will be guaranteed to have MUTABLE_CAPABILITIES masked out even if this line is not present.\n\nRemove?",
+      "range": {
+        "startLine": 444,
+        "startChar": 12,
+        "endLine": 444,
+        "endChar": 58
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02bdc62_93e6b64c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Again, I think this should be folded in to the previous method. This one is important because equalsNetCapabilities is public and has callers outside this class.",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098d3f9f_43becc4f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Looks like this method should check the unwanted capabilities as well. (Or we should have another method called equalsUnwantedNetCapabilitiesRequestable.)",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313a1028_c93c0390",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Put this next to the addCapability and removeCapability methods.",
+      "range": {
+        "startLine": 1164,
+        "startChar": 0,
+        "endLine": 1169,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e84964_77a59f73",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Put this next to hasCapability().",
+      "range": {
+        "startLine": 1171,
+        "startChar": 0,
+        "endLine": 1177,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656107c4_6773e002",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "Suggest saying that the capability is removed both to the list of required capabilities and the list of unwanted capabilities.",
+      "range": {
+        "startLine": 177,
+        "startChar": 77,
+        "endLine": 177,
+        "endChar": 78
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312a5bc3_07c41493",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-14T16:22:01Z",
+      "side": 1,
+      "message": "What about other methods such as equals() and combineCapabilities()? Can you add some test coverage for unwanted capabilities in those as well?",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 5
+      },
+      "revId": "a39a15bcec29e3287d192df295a585907f439388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
