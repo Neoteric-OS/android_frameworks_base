@@ -33,6 +33,65 @@ public final class AccessNetworkConstants {
     }
 
     /**
+     * dBm thresholds that correspond to changes in signal strength indications.
+     * @hide
+     */
+    public static final class AccessNetworkThresholds {
+
+        /**
+         * List of thresholds for GERAN AccessNetworkType.
+         *
+         * Calculated from GSM asu level thresholds - TS 27.007 Sec 8.5
+         */
+        public static final int[] GERAN = new int[] {
+            -109,
+            -103,
+            -97,
+            -89,
+        };
+
+        /**
+         * List of thresholds for UTRAN AccessNetworkType.
+         *
+         * These correspond to TDSCDMA level thresholds.
+         */
+        public static final int[] UTRAN = new int[] {
+            -110,
+            -97,
+            -73,
+            -49,
+            -25
+        };
+
+        /**
+         * List of default thresholds for EUTRAN AccessNetworkType.
+         *
+         * These thresholds are taken from the {@link CarrierConfigManager} defaults.
+         */
+        // TODO: update these values on carrier config changed.
+        public static final int[] EUTRAN = new int[] {
+            -140, /* SIGNAL_STRENGTH_NONE_OR_UNKNOWN */
+            -128, /* SIGNAL_STRENGTH_POOR */
+            -118, /* SIGNAL_STRENGTH_MODERATE */
+            -108, /* SIGNAL_STRENGTH_GOOD */
+            -98,  /* SIGNAL_STRENGTH_GREAT */
+            -44   /* SIGNAL_STRENGTH_NONE_OR_UNKNOWN */
+        };
+
+        /**
+         * List of thresholds for CDMA2000 AccessNetworkType.
+         *
+         * These correspond to EVDO level thresholds.
+         */
+        public static final int[] CDMA2000 = new int[] {
+            -105,
+            -90,
+            -75,
+            -65
+        };
+    }
+
+    /**
      * Wireless transportation type
      * @hide
      */
