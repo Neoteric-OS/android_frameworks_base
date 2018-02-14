@@ -7714,6 +7714,18 @@ public class TelephonyManager {
      */
     public static final int INDICATION_FILTER_DATA_CALL_DORMANCY_CHANGED    = 0x4;
 
+    /**
+     * The indication for link capacity estimate update.
+     * @hide
+     */
+    public static final int INDICATION_FILTER_LINK_CAPACITY_ESTIMATE    = 0x8;
+
+    /**
+     * The indication for physical channel config update.
+     * @hide
+     */
+    public static final int INDICATION_FILTER_PHYSICAL_CHANNEL_CONFIG = 0x10;
+
     /** @hide */
     @IntDef(flag = true, prefix = { "INDICATION_FILTER_" }, value = {
             INDICATION_FILTER_SIGNAL_STRENGTH,
