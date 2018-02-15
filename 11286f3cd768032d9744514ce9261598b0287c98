@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6debeff0_8873a3fd",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2018-02-15T22:40:29Z",
+      "side": 1,
+      "message": "This needs to handle the case of the bind failing.  As written here, the system can be left without any active wallpaper if mWallpaper.connection is null following the call to bindWallpaperComponentLocked().\n\nThe same fallback logic a few lines above in the repeated-crash case should be used here:  if we\u0027re unable to rebind to the expected wallpaper, fall back to the default by calling clearWallpaperLocked(...).",
+      "range": {
+        "startLine": 887,
+        "startChar": 0,
+        "endLine": 890,
+        "endChar": 0
+      },
+      "revId": "11286f3cd768032d9744514ce9261598b0287c98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
