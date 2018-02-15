@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f531d44d_1b190caa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-15T18:31:44Z",
+      "side": 1,
+      "message": "Are you suggesting that tests should use magic numbers when possible? Precompute all test vectors? That\u0027s an interesting idea, and it has the side effect that the cost of making changes scales linearly with test coverage. Btw, this does smack of a \"change detector test\" philosophy, \ngo/tott-504, which is considered harmful.\n\nYour code. Done.",
+      "parentUuid": "fa2fc32c_8e2bfe6f",
+      "range": {
+        "startLine": 3112,
+        "startChar": 26,
+        "endLine": 3112,
+        "endChar": 58
+      },
+      "revId": "3b67205db542de6531a26ed09ddc59e74f8d4ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b123a4_cba47b0b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-15T07:08:22Z",
       "side": 1,
       "message": "Actually I think this is a bug. This should throw IllegalArgumentException instead.",
+      "range": {
+        "startLine": 3130,
+        "startChar": 67,
+        "endLine": 3130,
+        "endChar": 73
+      },
+      "revId": "3b67205db542de6531a26ed09ddc59e74f8d4ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4125c8_2a9e2f2b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-15T18:31:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand. IPv6 is supported on cell. Today none of the calls throw due to range checking; it\u0027s all done through the callbacks, so there\u0027s no Exception throwing in the pattern.\n\nPreviously this line had 2 invalid arguments:\n1) the address\n2) the keepalive interval\n\nThus, it was testing the keepalive interval check (intentionally) and the order of the range checking (unintentionally). My intent here was to make this only test one thing because we don\u0027t want to care about the order of the range checks (do we?)?",
+      "parentUuid": "33b123a4_cba47b0b",
       "range": {
         "startLine": 3130,
         "startChar": 67,
