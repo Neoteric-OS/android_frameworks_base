@@ -22,6 +22,30 @@
       "revId": "619f5565b31c411a1d3132e0f5ee6eef985ce96c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bed6929_53140407",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7081,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-02-15T09:10:51Z",
+      "side": 1,
+      "message": "That does sound a lot better, thanks",
+      "parentUuid": "acf1e4ea_95a884bc",
+      "range": {
+        "startLine": 7081,
+        "startChar": 37,
+        "endLine": 7081,
+        "endChar": 42
+      },
+      "revId": "619f5565b31c411a1d3132e0f5ee6eef985ce96c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
