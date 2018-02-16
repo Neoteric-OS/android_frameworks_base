@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4116be73_95983840",
+        "filename": "telephony/java/com/android/ims/internal/uce/uceservice/IUceService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-02-16T21:28:29Z",
+      "side": 1,
+      "message": "Do we need a iccid for destroy, or does it destroy the one associated with the handle?",
+      "range": {
+        "startLine": 144,
+        "startChar": 9,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "6afaccf189a6cd3bde9938ccf1983ae61646e9cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
