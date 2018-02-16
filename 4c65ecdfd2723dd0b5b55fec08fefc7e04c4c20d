@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a72159f1_ee4bc79c",
+        "filename": "data/etc/hiddenapi-whitelist.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-16T14:25:06Z",
+      "side": 1,
+      "message": "Probably not.\n\nI\u0027ll re-run the analysis to exclude those that depend on android.test.runner, which will hopefully weed all of these out.",
+      "parentUuid": "85df22be_e839434f",
+      "range": {
+        "startLine": 77,
+        "startChar": 57,
+        "endLine": 77,
+        "endChar": 65
+      },
+      "revId": "4c65ecdfd2723dd0b5b55fec08fefc7e04c4c20d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "462ec349_7f6d90e9",
         "filename": "data/etc/hiddenapi-whitelist.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-16T14:11:52Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "4c65ecdfd2723dd0b5b55fec08fefc7e04c4c20d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d6f60e_71fe618a",
+        "filename": "data/etc/hiddenapi-whitelist.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-16T14:25:06Z",
+      "side": 1,
+      "message": "ditto :-)",
+      "parentUuid": "462ec349_7f6d90e9",
       "range": {
         "startLine": 102,
         "startChar": 51,
