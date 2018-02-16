@@ -389,7 +389,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
      * it might satisfy a request if it validated).
      */
     public boolean isBackgroundNetwork() {
-        return !isVPN() && numForegroundNetworkRequests() == 0 && mNumBackgroundNetworkRequests > 0;
+        return !isVPN() && numForegroundNetworkRequests() == 0 && mNumBackgroundNetworkRequests > 0
+                && !isLingering();
     }
 
     /**

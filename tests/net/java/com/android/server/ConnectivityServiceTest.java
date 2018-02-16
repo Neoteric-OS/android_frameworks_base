@@ -1875,8 +1875,7 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
 
         // Let linger run its course.
-        // TODO : the callback should be delayed by the linger delay. Fix this.
-        //        callback.assertNoCallback();
+        callback.assertNoCallback();
         final int lingerTimeoutMs = TEST_LINGER_DELAY_MS + TEST_LINGER_DELAY_MS / 4;
         callback.expectCapabilitiesWithout(NET_CAPABILITY_FOREGROUND, mCellNetworkAgent,
                 lingerTimeoutMs);
