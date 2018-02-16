@@ -22,6 +22,30 @@
       "revId": "74868e46f18a3bc3d5cd1efb6f174501ca485ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62e71a2_3081946e",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "The phone state listener has both hidden and public callbacks. This one will be a hidden callback, usable by System UI, debug menus, etc but not by public callers.\n\nHere is the callback:\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/PhoneStateListener.java?q\u003dPhoneStateListener\u0026sq\u003dpackage:android\u0026l\u003d580\n\nThere are numerous other hidden callbacks such as:\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/PhoneStateListener.java?q\u003dPhoneStateListener\u0026sq\u003dpackage:android\u0026l\u003d524\n\nBecause the LISTEN_PHY_CHAN_CONFIG is hidden, callers can\u0027t register for it, so they don\u0027t get callbacks for it, and accordingly they can\u0027t override the listener method or see this class.",
+      "parentUuid": "e09ccff9_62a6036b",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "74868e46f18a3bc3d5cd1efb6f174501ca485ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

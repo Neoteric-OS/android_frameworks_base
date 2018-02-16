@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb80473_0233ecf5",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "Actually, nit on this indent... it should be 8 spaces, and perhaps just move both of the arguments to the next line.",
+      "range": {
+        "startLine": 1012,
+        "startChar": 56,
+        "endLine": 1013,
+        "endChar": 21
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7641511_2a4b011a",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "I think this also needs the 8-space indent?",
+      "range": {
+        "startLine": 1024,
+        "startChar": 16,
+        "endLine": 1024,
+        "endChar": 41
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd846a90_237bbf55",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "Nit, something doesn\u0027t line up here.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 8,
+        "endLine": 1026,
+        "endChar": 9
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "537490df_c08d4bbe",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "ration? s/u//?",
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41d84d4b_06d1def7",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-16T01:11:51Z",
+      "side": 1,
+      "message": "I have no idea why the format checker isn\u0027t complaining about the indents.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 36,
+        "endLine": 1037,
+        "endChar": 59
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
