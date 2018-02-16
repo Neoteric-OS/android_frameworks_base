@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88117036_bcf8c255",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-02-16T13:16:22Z",
+      "side": 1,
+      "message": "IMO, this should be : \"(isSystemApp() || isUpdatedSystemApp()) \u0026\u0026 [whitelist]\".\n\nThis would prevent us from accidentally whitelisting an app that comes through via the playstore but wasn\u0027t originally installed on the system image. does that make sense ?",
+      "range": {
+        "startLine": 1463,
+        "startChar": 0,
+        "endLine": 1464,
+        "endChar": 95
+      },
+      "revId": "aacf45e2341ac7f325cb9ff76bbfda18f40a5f0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
