@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "329d486f_e74fa277",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bb80473_0233ecf5",
+      "range": {
+        "startLine": 1012,
+        "startChar": 56,
+        "endLine": 1013,
+        "endChar": 21
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7641511_2a4b011a",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-16T01:11:51Z",
       "side": 1,
       "message": "I think this also needs the 8-space indent?",
+      "range": {
+        "startLine": 1024,
+        "startChar": 16,
+        "endLine": 1024,
+        "endChar": 41
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe7b9545_ff7cf2be",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7641511_2a4b011a",
       "range": {
         "startLine": 1024,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98845ec4_f36f791b",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd846a90_237bbf55",
+      "range": {
+        "startLine": 1026,
+        "startChar": 8,
+        "endLine": 1026,
+        "endChar": 9
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537490df_c08d4bbe",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "5ec20d72_67db4a7b",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537490df_c08d4bbe",
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d84d4b_06d1def7",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2018-02-16T01:11:51Z",
       "side": 1,
       "message": "I have no idea why the format checker isn\u0027t complaining about the indents.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 36,
+        "endLine": 1037,
+        "endChar": 59
+      },
+      "revId": "b8da3699dff8182de460f41bc4556f57d6a4ef4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce74aebd_979e836f",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Fixed. I\u0027ve noticed on AOSP that it\u0027s been very lax about indenting.",
+      "parentUuid": "41d84d4b_06d1def7",
       "range": {
         "startLine": 1037,
         "startChar": 36,

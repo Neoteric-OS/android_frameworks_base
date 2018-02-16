@@ -46,6 +46,30 @@
       "revId": "74868e46f18a3bc3d5cd1efb6f174501ca485ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5631f3b_7329e6e1",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-02-16T18:29:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e62e71a2_3081946e",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "74868e46f18a3bc3d5cd1efb6f174501ca485ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
