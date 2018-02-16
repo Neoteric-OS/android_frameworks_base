@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "587eface_6d556ce0",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-16T09:27:55Z",
+      "side": 1,
+      "message": "Reworded this comment completely in the light of our discussions today. PTAL.",
+      "parentUuid": "49338a74_89a50d58",
+      "range": {
+        "startLine": 389,
+        "startChar": 50,
+        "endLine": 389,
+        "endChar": 51
+      },
+      "revId": "f447342bd9b623da12bc91c165e25dd0ff984c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20961614_5a0b39eb",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f447342bd9b623da12bc91c165e25dd0ff984c58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfd0a38_220cea6b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-16T09:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20961614_5a0b39eb",
+      "range": {
+        "startLine": 1878,
+        "startChar": 17,
+        "endLine": 1878,
+        "endChar": 33
+      },
+      "revId": "f447342bd9b623da12bc91c165e25dd0ff984c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
