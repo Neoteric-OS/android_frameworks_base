@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f6562b_5cee9a4e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-16T12:56:52Z",
+      "side": 1,
+      "message": "Long line.",
+      "range": {
+        "startLine": 389,
+        "startChar": 100,
+        "endLine": 389,
+        "endChar": 101
+      },
+      "revId": "9dd8061916811ce70aa450a76d6167b6d5b95faa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a57a9e_7e2c7d92",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-16T12:56:52Z",
+      "side": 1,
+      "message": "is being kept",
+      "range": {
+        "startLine": 390,
+        "startChar": 52,
+        "endLine": 390,
+        "endChar": 59
+      },
+      "revId": "9dd8061916811ce70aa450a76d6167b6d5b95faa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

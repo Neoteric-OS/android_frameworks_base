@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "424d34fd_9c0e2c64",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-16T12:56:52Z",
+      "side": 1,
+      "message": "LGTM, thanks!",
+      "parentUuid": "587eface_6d556ce0",
+      "range": {
+        "startLine": 389,
+        "startChar": 50,
+        "endLine": 389,
+        "endChar": 51
+      },
+      "revId": "f447342bd9b623da12bc91c165e25dd0ff984c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20961614_5a0b39eb",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
