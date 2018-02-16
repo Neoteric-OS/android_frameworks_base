@@ -46,6 +46,30 @@
       "revId": "aacf45e2341ac7f325cb9ff76bbfda18f40a5f0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf03bcf_3974969f",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-16T13:38:56Z",
+      "side": 1,
+      "message": "Yep, that makes a lot of sense. I\u0027ll update.",
+      "parentUuid": "0d9f72a3_8d2270d1",
+      "range": {
+        "startLine": 1463,
+        "startChar": 0,
+        "endLine": 1464,
+        "endChar": 95
+      },
+      "revId": "aacf45e2341ac7f325cb9ff76bbfda18f40a5f0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
