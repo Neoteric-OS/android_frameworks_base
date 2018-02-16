@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09ccff9_62a6036b",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-02-16T01:06:47Z",
+      "side": 1,
+      "message": "does this need to be public if PhoneStateListener gets it?",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "74868e46f18a3bc3d5cd1efb6f174501ca485ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
