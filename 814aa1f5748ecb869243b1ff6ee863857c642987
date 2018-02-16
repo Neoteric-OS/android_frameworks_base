@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ecd60f1_dee81979",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/WifiTile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2018-02-16T23:19:21Z",
+      "side": 1,
+      "message": "Replace with spaces.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 1
+      },
+      "revId": "814aa1f5748ecb869243b1ff6ee863857c642987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
