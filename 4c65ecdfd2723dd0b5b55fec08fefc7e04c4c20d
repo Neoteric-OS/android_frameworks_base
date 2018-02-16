@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "19fdefe7_ce74a1a6",
+        "filename": "data/etc/hiddenapi-whitelist.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-16T15:03:06Z",
+      "side": 1,
+      "message": "Done; also removed a few other packages.\n\nSee criteria used here:\nhttps://colab.corp.google.com/drive/1yTZDHKha2sfNioAG8LTV7WvHEBGkOUL9#view\u003dNew%20View\u0026editView\u003dtrue",
+      "parentUuid": "a72159f1_ee4bc79c",
+      "range": {
+        "startLine": 77,
+        "startChar": 57,
+        "endLine": 77,
+        "endChar": 65
+      },
+      "revId": "4c65ecdfd2723dd0b5b55fec08fefc7e04c4c20d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "462ec349_7f6d90e9",
         "filename": "data/etc/hiddenapi-whitelist.xml",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "4c65ecdfd2723dd0b5b55fec08fefc7e04c4c20d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3763a5a5_9346e2a1",
+        "filename": "data/etc/hiddenapi-whitelist.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-16T15:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d6f60e_71fe618a",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "4c65ecdfd2723dd0b5b55fec08fefc7e04c4c20d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
