@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0c9d800f_48bc827c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-16T07:58:44Z",
+      "side": 1,
+      "message": "This looks much better, thanks.",
+      "parentUuid": "f531d44d_1b190caa",
+      "range": {
+        "startLine": 3112,
+        "startChar": 26,
+        "endLine": 3112,
+        "endChar": 58
+      },
+      "revId": "3b67205db542de6531a26ed09ddc59e74f8d4ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b123a4_cba47b0b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I\u0027m not sure I understand. IPv6 is supported on cell. Today none of the calls throw due to range checking; it\u0027s all done through the callbacks, so there\u0027s no Exception throwing in the pattern.\n\nPreviously this line had 2 invalid arguments:\n1) the address\n2) the keepalive interval\n\nThus, it was testing the keepalive interval check (intentionally) and the order of the range checking (unintentionally). My intent here was to make this only test one thing because we don\u0027t want to care about the order of the range checks (do we?)?",
       "parentUuid": "33b123a4_cba47b0b",
+      "range": {
+        "startLine": 3130,
+        "startChar": 67,
+        "endLine": 3130,
+        "endChar": 73
+      },
+      "revId": "3b67205db542de6531a26ed09ddc59e74f8d4ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d1d461_390f34ec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-16T07:58:44Z",
+      "side": 1,
+      "message": "Sorry, I shouldn\u0027t have said \"throw\", I should have said \"send a callback with ERROR_INVALID_IP_ADDRESS\".\n\nThere is no point providing a startNattKeepalive method on cell that does IPv6 because there is no code (all the way down to the kernel) that can do IPv6 UDP encap. Thus, the correct behaviour of the startNattKeepalive call when called with an IPv6 source and destination should be to send back ERROR_INVALID_IP_ADDRESS. That was what the test in line 3123 was testing.\n\nWe should fix that test by ensuring that KeepalivePacketData throws an error when asked to create an IPv6 keepalive. There\u0027s no point in keeping alive something that doesn\u0027t work. I missed this when reviewing ag/3487008 because of time pressure, but I don\u0027t think that part of the change is correct and I think we should delete that code.",
+      "parentUuid": "cd4125c8_2a9e2f2b",
       "range": {
         "startLine": 3130,
         "startChar": 67,
