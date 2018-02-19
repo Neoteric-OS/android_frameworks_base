@@ -56,6 +56,7 @@ import android.util.ArrayMap;
 import android.util.DebugUtils;
 import android.util.DisplayMetrics;
 
+import com.android.internal.os.Zygote;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.Preconditions;
 
@@ -254,6 +255,8 @@ final class ActivityManagerShellCommand extends ShellCommand {
                     return runNoHomeScreen(pw);
                 case "wait-for-broadcast-idle":
                     return runWaitForBroadcastIdle(pw);
+                case "set-api-enforcement":
+                    return setApiEnforcement(pw);
                 default:
                     return handleDefaultCommands(cmd);
             }
@@ -2634,6 +2637,33 @@ final class ActivityManagerShellCommand extends ShellCommand {
         return 0;
     }
 
+    int setApiEnforcement(PrintWriter pw) throws RemoteException {
+        String pName = getNextArgRequired();
+        String policy = getNextArgRequired();
+        int policyInt;
+        switch (policy) {
+            case "default":
+                policyInt = Zygote.API_LIST_ENFORCEMENT_BLACK;
+                break;
+            case "none":
+                policyInt = Zygote.API_LIST_ENFORCEMENT_NONE;
+                break;
+            case "warn":
+                policyInt = Zygote.API_LIST_ENFORCEMENT_WARN;
+                break;
+            // TODO implement "strict" to crash on dark greylist? Needs runtime support.
+            default:
+                pw.println("Error: Not a valid enforcement policy: " + policy);
+                return -1;
+        }
+        mInternal.setApiEnforcementPolicy(pName, policyInt);
+        pw.println(String.format(
+                "Policy for '%s' set to %s. It will take effect after process (re)start.",
+                pName,
+                policy));
+        return 0;
+    }
+
     private Resources getResources(PrintWriter pw) throws RemoteException {
         // system resources does not contain all the device configuration, construct it manually.
         Configuration config = mInterface.getConfiguration();
@@ -2922,6 +2952,11 @@ final class ActivityManagerShellCommand extends ShellCommand {
             pw.println("      without restarting any processes.");
             pw.println("  write");
             pw.println("      Write all pending state to storage.");
+            pw.println("  set-api-enforcement <PACKAGE_NAME> <POLICY>");
+            pw.println("      Set the hidden API enforcement policy for the given package. Possible policies are:");
+            pw.println("      default: standard behaviour for the package");
+            pw.println("      none: disable all API enforcement; no warnings");
+            pw.println("      warn: only warn, even for blacklist violations. ");
             pw.println();
             Intent.printIntentArgsHelp(pw, "");
         }
