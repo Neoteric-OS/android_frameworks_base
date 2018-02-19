@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a691b528_74f78ff7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Please add a docstring similar to the one for addCapability.",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 16
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d00b1f_1c510b91",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Say that this method removes both capabilities added via {@link #addCapability} and unwanted capabilities added via {@link addUnwantedCapability).",
+      "range": {
+        "startLine": 346,
+        "startChar": 91,
+        "endLine": 346,
+        "endChar": 92
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31818ff_5880fe8d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Update comment - it\u0027s out of date now, right?",
+      "range": {
+        "startLine": 387,
+        "startChar": 53,
+        "endLine": 388,
+        "endChar": 26
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173d4bb3_15c15a75",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Suggest shortening this to \"Unwanted\". The string representation of this object is already very long.",
+      "range": {
+        "startLine": 1257,
+        "startChar": 60,
+        "endLine": 1257,
+        "endChar": 80
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea19ae6_0d4f1910",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Can you put this between |capabilities| and |upBand| instead of at the end?",
+      "range": {
+        "startLine": 1275,
+        "startChar": 42,
+        "endLine": 1275,
+        "endChar": 64
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75afef12_5bf8f51f",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Suggest \"was previously added\".",
+      "range": {
+        "startLine": 160,
+        "startChar": 38,
+        "endLine": 160,
+        "endChar": 47
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77d204d_ba409f0d",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "Suggest shortening to \"will also be removed from the list of unwanted capabilities.\"",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 163,
+        "endChar": 40
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf29ac5e_fb761366",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "a capability",
+      "range": {
+        "startLine": 202,
+        "startChar": 15,
+        "endLine": 202,
+        "endChar": 25
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfac27b_8936772c",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:17:33Z",
+      "side": 1,
+      "message": "as well",
+      "range": {
+        "startLine": 205,
+        "startChar": 68,
+        "endLine": 206,
+        "endChar": 32
+      },
+      "revId": "5fe3eba9458304db8a6b81e9d01bf9f95e38a67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
