@@ -22,6 +22,30 @@
       "revId": "11286f3cd768032d9744514ce9261598b0287c98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4614bade_e81cd3f9",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-02-19T11:19:06Z",
+      "side": 1,
+      "message": "Thank you for your feedback.\nI uploaded new patch set to apply your comment.\nCould you review it again?",
+      "parentUuid": "6debeff0_8873a3fd",
+      "range": {
+        "startLine": 887,
+        "startChar": 0,
+        "endLine": 890,
+        "endChar": 0
+      },
+      "revId": "11286f3cd768032d9744514ce9261598b0287c98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
