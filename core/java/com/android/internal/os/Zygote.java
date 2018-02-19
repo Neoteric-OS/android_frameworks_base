@@ -55,10 +55,17 @@ public final class Zygote {
     public static final int DISABLE_VERIFIER = 1 << 9;
     /** Only use oat files located in /system. Otherwise use dex/jar/apk . */
     public static final int ONLY_USE_SYSTEM_OAT_FILES = 1 << 10;
-    /** Do enfore hidden API access restrictions. */
-    public static final int ENABLE_HIDDEN_API_CHECKS = 1 << 11;
     /** Force generation of native debugging information for backtraces. */
-    public static final int DEBUG_GENERATE_MINI_DEBUG_INFO = 1 << 12;
+    public static final int DEBUG_GENERATE_MINI_DEBUG_INFO = 1 << 11;
+    /**
+     * Hidden API access restrictions. This is a mask for the values defined by
+     * {@code API_LIST_ENFORCEMENT_XXX}.
+     */
+    public static final int ENABLE_HIDDEN_API_CHECKS = (1 << 12) | (1 << 13);
+
+    public static final int API_LIST_ENFORCEMENT_NONE = 0 << 12;
+    public static final int API_LIST_ENFORCEMENT_BLACK = 1 << 12;
+    public static final int API_LIST_ENFORCEMENT_WARN = 2 << 12;
 
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = 0;

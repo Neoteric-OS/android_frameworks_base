@@ -1744,6 +1744,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     // Encapsulates the global setting "hidden_api_blacklist_exemptions"
     final HiddenApiBlacklist mHiddenApiBlacklist;
+    final Map<String, Integer> mApiEnforcementOverrides;
 
     PackageManagerInternal mPackageManagerInt;
 
@@ -2760,6 +2761,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         mUserController = null;
         mVrController = null;
         mHiddenApiBlacklist = null;
+        mApiEnforcementOverrides = null;
     }
 
     // Note: This method is invoked on the main thread but may need to attach various
@@ -2893,6 +2895,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         };
 
         mHiddenApiBlacklist = new HiddenApiBlacklist(mHandler, mContext);
+        mApiEnforcementOverrides = new HashMap<>();
 
         Watchdog.getInstance().addMonitor(this);
         Watchdog.getInstance().addThread(mHandler);
@@ -3815,6 +3818,16 @@ public class ActivityManagerService extends IActivityManager.Stub
                 null /* entryPoint */, null /* entryPointArgs */);
     }
 
+    void setApiEnforcementPolicy(String pName, int policy) {
+        //TODO Permission check!
+        if (policy == Zygote.API_LIST_ENFORCEMENT_BLACK) {
+            // default
+            mApiEnforcementOverrides.remove(pName);
+        } else {
+            mApiEnforcementOverrides.put(pName, policy);
+        }
+    }
+
     private final void startProcessLocked(ProcessRecord app, String hostingType,
             String hostingNameStr, String abiOverride, String entryPoint, String[] entryPointArgs) {
         startProcessLocked(app, hostingType, hostingNameStr, false /* disableHiddenApiChecks */,
@@ -3949,7 +3962,13 @@ public class ActivityManagerService extends IActivityManager.Stub
                     !mHiddenApiBlacklist.isDisabled()) {
                 // This app is not allowed to use undocumented and private APIs, or blacklisting is
                 // enabled. Set up its runtime with the appropriate flag.
-                runtimeFlags |= Zygote.ENABLE_HIDDEN_API_CHECKS;
+                runtimeFlags |= Zygote.API_LIST_ENFORCEMENT_BLACK;
+            }
+            // do this after, to allow overriding of the default behaviour above.
+            if (mApiEnforcementOverrides.containsKey(app.info.packageName)) {
+                runtimeFlags &= ~Zygote.ENABLE_HIDDEN_API_CHECKS;
+                runtimeFlags |= (Zygote.ENABLE_HIDDEN_API_CHECKS
+                        & mApiEnforcementOverrides.get(app.info.packageName));
             }
 
             String invokeWith = null;
