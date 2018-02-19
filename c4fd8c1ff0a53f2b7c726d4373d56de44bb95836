@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac1f3fb_2ab42fde",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-02-19T15:06:21Z",
+      "side": 1,
+      "message": "who passes in ALLOW_HIDDENAPI_WHITELISTING to this method ?",
+      "range": {
+        "startLine": 338,
+        "startChar": 43,
+        "endLine": 338,
+        "endChar": 90
+      },
+      "revId": "c4fd8c1ff0a53f2b7c726d4373d56de44bb95836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
