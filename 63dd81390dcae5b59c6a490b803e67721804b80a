@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e034d56_d820eae8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:26:25Z",
+      "side": 1,
+      "message": "Pre-existing, so no need to fix in this CL: looks like there\u0027s no test coverage that using notMyIPv4 in conjunction with otherwise valid parameters returns ERROR_INVALID_IP_ADDRESS?",
+      "range": {
+        "startLine": 3148,
+        "startChar": 72,
+        "endLine": 3148,
+        "endChar": 78
+      },
+      "revId": "63dd81390dcae5b59c6a490b803e67721804b80a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c80469_708e90ce",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3166,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-19T14:26:25Z",
+      "side": 1,
+      "message": "Pre-existing, so no need to fix in this CL: looks like this is identical to the previous one.",
+      "range": {
+        "startLine": 3164,
+        "startChar": 0,
+        "endLine": 3166,
+        "endChar": 0
+      },
+      "revId": "63dd81390dcae5b59c6a490b803e67721804b80a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
