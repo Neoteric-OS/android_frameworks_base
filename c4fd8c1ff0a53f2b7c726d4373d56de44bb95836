@@ -22,6 +22,30 @@
       "revId": "c4fd8c1ff0a53f2b7c726d4373d56de44bb95836",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18402415_afe2dee1",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-02-19T15:33:03Z",
+      "side": 1,
+      "message": "It comes from ALLOW_ALL (line 64), passed in from the constructor",
+      "parentUuid": "eac1f3fb_2ab42fde",
+      "range": {
+        "startLine": 338,
+        "startChar": 43,
+        "endLine": 338,
+        "endChar": 90
+      },
+      "revId": "c4fd8c1ff0a53f2b7c726d4373d56de44bb95836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
