@@ -22,6 +22,30 @@
       "revId": "51b2865c95110aa4d58bc44d9ec07ecc145cb512",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79f03923_e53a88cd",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-21T06:00:37Z",
+      "side": 1,
+      "message": "Thank you for your comments. I replaced UMTS with WCDMA.",
+      "parentUuid": "bdb67939_70c2ff76",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "51b2865c95110aa4d58bc44d9ec07ecc145cb512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
