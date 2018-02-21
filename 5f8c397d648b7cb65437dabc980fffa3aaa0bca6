@@ -22,6 +22,30 @@
       "revId": "5f8c397d648b7cb65437dabc980fffa3aaa0bca6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1197a5_6770aaf8",
+        "filename": "telephony/java/com/android/ims/internal/IImsUt.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1236087
+      },
+      "writtenOn": "2018-02-21T08:02:01Z",
+      "side": 1,
+      "message": "No, this API will return -1 only if condition is invalid.\nIn case of empty number string, or invalid service class, the request will still go to lower layers, and this API will return the requestId",
+      "parentUuid": "dc51d94c_557bcf84",
+      "range": {
+        "startLine": 129,
+        "startChar": 29,
+        "endLine": 129,
+        "endChar": 51
+      },
+      "revId": "5f8c397d648b7cb65437dabc980fffa3aaa0bca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
