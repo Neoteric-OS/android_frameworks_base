@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cae34e5_33f9c890",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-21T23:45:56Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of this. It does 2 things that I\u0027d like to avoid:\n1) the implementation details of SignalStrength are on display here with the \"if (thresholds[0] \u003d\u003d 255) {use alternate behavior}\" thing.\n2) by not specifying meaningful defaults anywhere, any manufacturer that wishes to use RSCP must supply their own values. We should come up with reasonable defaults and have a way to use them so that by default they are consistent across the ecosystem.\n\nThings we could do:\n1) specify meaningful defaults in CC and use RSCP by default if it\u0027s available; or\n2) put meaningful defaults in SignalStrength.java and allow this key to be optional.\n\nWe could also:\n\n3) add an additional CC to say what reported quantity should be used such as (KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT \u003d \"rscp\")\n\nJordan, how do you think we should proceed here? Whatever we do should scale nicely, have reasonable AOSP defaults, and avoid leaking implementation details in CC.",
+      "range": {
+        "startLine": 1827,
+        "startChar": 7,
+        "endLine": 1827,
+        "endChar": 100
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ca9974_c52bea63",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-21T23:45:56Z",
+      "side": 1,
+      "message": "To me, this looks the correct number of thresholds (4 thresholds for 5 \"buckets\" of signal strength). It raises the question though... why are there 6 thresholds for LTE? Since both patches are from Sony, can we get some explanation of how these should work and why they are different?",
+      "range": {
+        "startLine": 63,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b7df9ad_1c49b0a8",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-21T23:45:56Z",
+      "side": 1,
+      "message": "spelling mistake: getDefault....",
+      "range": {
+        "startLine": 1235,
+        "startChar": 18,
+        "endLine": 1235,
+        "endChar": 45
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
