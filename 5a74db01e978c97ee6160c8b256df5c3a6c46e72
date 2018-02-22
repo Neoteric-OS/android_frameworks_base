@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccaf5b10_4a57429a",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-22T03:48:02Z",
+      "side": 1,
+      "message": "Can you document what guarantees are needed to ensure that this wait completes without deadlocking?\n\nClearly it\u0027s a requirement that nothing on our Handler thread (which means... \"nothing in IpManager plus friends, such as DhcpClient, ConnectivityPacketTracker, etc.\"?) must block on acquiring a lock that could be held by the thread that is calling awaitShutdown(). Is that sufficient to ensure safety? Are there other requirements?",
+      "range": {
+        "startLine": 721,
+        "startChar": 27,
+        "endLine": 721,
+        "endChar": 32
+      },
+      "revId": "5a74db01e978c97ee6160c8b256df5c3a6c46e72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
