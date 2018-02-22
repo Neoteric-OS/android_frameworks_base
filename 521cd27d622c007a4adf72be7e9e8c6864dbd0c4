@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "312b1c74_9a2d442d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-02-22T19:13:32Z",
+      "side": 1,
+      "message": "Is there anything stopping us from using defaults similar to the way we do for KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY?\n\nI also agree that instead of overloading the value 255 we should have a second key.",
+      "parentUuid": "8cae34e5_33f9c890",
+      "range": {
+        "startLine": 1827,
+        "startChar": 7,
+        "endLine": 1827,
+        "endChar": 100
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ca9974_c52bea63",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 3
