@@ -248,6 +248,11 @@ package android.app {
   public class AppOpsManager {
     method public void setUidMode(java.lang.String, int, int);
     field public static final java.lang.String OPSTR_ACTIVATE_VPN = "android:activate_vpn";
+    field public static final java.lang.String OPSTR_BIND_ACCESSIBILITY_SERVICE = "bind_accessibility_service";
+    field public static final java.lang.String OPSTR_CHANGE_WIFI_STATE = "change_wifi_state";
+    field public static final java.lang.String OPSTR_REQUEST_DELETE_PACKAGES = "request_delete_packages";
+    field public static final java.lang.String OPSTR_REQUEST_INSTALL_PACKAGES = "android:request_install_packages";
+    field public static final java.lang.String OPSTR_RUN_ANY_IN_BACKGROUND = "android:run_any_in_background";
   }
 
   public class BroadcastOptions {
@@ -4111,7 +4116,6 @@ package android.telecom {
 package android.telephony {
 
   public static final class AccessNetworkConstants.TransportType {
-    ctor public AccessNetworkConstants.TransportType();
     field public static final int WLAN = 2; // 0x2
     field public static final int WWAN = 1; // 0x1
   }
@@ -4294,6 +4298,7 @@ package android.telephony {
     method public java.lang.String getCdmaMin(int);
     method public int getCurrentPhoneType();
     method public int getCurrentPhoneType(int);
+    method public int getDataActivationState();
     method public deprecated boolean getDataEnabled();
     method public deprecated boolean getDataEnabled(int);
     method public int getSimApplicationState();
@@ -4301,6 +4306,7 @@ package android.telephony {
     method public java.util.List<android.telephony.TelephonyHistogram> getTelephonyHistograms();
     method public android.telephony.UiccSlotInfo[] getUiccSlotsInfo();
     method public android.os.Bundle getVisualVoicemailSettings();
+    method public int getVoiceActivationState();
     method public boolean handlePinMmi(java.lang.String);
     method public boolean handlePinMmiForSubscriber(int, java.lang.String);
     method public boolean isDataConnectivityPossible();
@@ -4312,10 +4318,12 @@ package android.telephony {
     method public deprecated boolean isVisualVoicemailEnabled(android.telecom.PhoneAccountHandle);
     method public boolean needsOtaServiceProvisioning();
     method public int setAllowedCarriers(int, java.util.List<android.service.carrier.CarrierIdentifier>);
+    method public void setDataActivationState(int);
     method public deprecated void setDataEnabled(int, boolean);
     method public boolean setRadio(boolean);
     method public boolean setRadioPower(boolean);
     method public deprecated void setVisualVoicemailEnabled(android.telecom.PhoneAccountHandle, boolean);
+    method public void setVoiceActivationState(int);
     method public deprecated void silenceRinger();
     method public boolean supplyPin(java.lang.String);
     method public int[] supplyPinReportResult(java.lang.String);
@@ -4334,6 +4342,11 @@ package android.telephony {
     field public static final java.lang.String EXTRA_SIM_STATE = "android.telephony.extra.SIM_STATE";
     field public static final java.lang.String EXTRA_VISUAL_VOICEMAIL_ENABLED_BY_USER_BOOL = "android.telephony.extra.VISUAL_VOICEMAIL_ENABLED_BY_USER_BOOL";
     field public static final java.lang.String EXTRA_VOICEMAIL_SCRAMBLED_PIN_STRING = "android.telephony.extra.VOICEMAIL_SCRAMBLED_PIN_STRING";
+    field public static final int SIM_ACTIVATION_STATE_ACTIVATED = 2; // 0x2
+    field public static final int SIM_ACTIVATION_STATE_ACTIVATING = 1; // 0x1
+    field public static final int SIM_ACTIVATION_STATE_DEACTIVATED = 3; // 0x3
+    field public static final int SIM_ACTIVATION_STATE_RESTRICTED = 4; // 0x4
+    field public static final int SIM_ACTIVATION_STATE_UNKNOWN = 0; // 0x0
     field public static final int SIM_STATE_LOADED = 10; // 0xa
     field public static final int SIM_STATE_PRESENT = 11; // 0xb
   }
@@ -4349,12 +4362,13 @@ package android.telephony {
   }
 
   public class UiccSlotInfo implements android.os.Parcelable {
-    ctor public UiccSlotInfo(boolean, boolean, java.lang.String, int, int);
+    ctor public UiccSlotInfo(boolean, boolean, java.lang.String, int, int, boolean);
     method public int describeContents();
     method public java.lang.String getCardId();
     method public int getCardStateInfo();
     method public boolean getIsActive();
     method public boolean getIsEuicc();
+    method public boolean getIsExtendedApduSupported();
     method public int getLogicalSlotIdx();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final int CARD_STATE_INFO_ABSENT = 1; // 0x1
@@ -4505,6 +4519,7 @@ package android.telephony.euicc {
     field public static final int RESET_OPTION_DELETE_FIELD_LOADED_TEST_PROFILES = 2; // 0x2
     field public static final int RESET_OPTION_DELETE_OPERATIONAL_PROFILES = 1; // 0x1
     field public static final int RESET_OPTION_RESET_DEFAULT_SMDP_ADDRESS = 4; // 0x4
+    field public static final int RESULT_EUICC_NOT_FOUND = -2; // 0xfffffffe
     field public static final int RESULT_OK = 0; // 0x0
     field public static final int RESULT_UNKNOWN_ERROR = -1; // 0xffffffff
   }
@@ -5209,17 +5224,22 @@ package android.telephony.ims.stub {
   }
 
   public final class ImsFeatureConfiguration implements android.os.Parcelable {
-    ctor public ImsFeatureConfiguration();
     method public int describeContents();
-    method public int[] getServiceFeatures();
+    method public java.util.Set<android.telephony.ims.stub.ImsFeatureConfiguration.FeatureSlotPair> getServiceFeatures();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.telephony.ims.stub.ImsFeatureConfiguration> CREATOR;
   }
 
   public static class ImsFeatureConfiguration.Builder {
     ctor public ImsFeatureConfiguration.Builder();
-    method public android.telephony.ims.stub.ImsFeatureConfiguration.Builder addFeature(int);
+    method public android.telephony.ims.stub.ImsFeatureConfiguration.Builder addFeature(int, int);
     method public android.telephony.ims.stub.ImsFeatureConfiguration build();
+  }
+
+  public static final class ImsFeatureConfiguration.FeatureSlotPair {
+    ctor public ImsFeatureConfiguration.FeatureSlotPair(int, int);
+    field public final int featureType;
+    field public final int slotId;
   }
 
   public class ImsMultiEndpointImplBase {

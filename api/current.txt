@@ -21435,6 +21435,7 @@ package android.media {
     field public static final java.lang.String ACTION_AUDIO_BECOMING_NOISY = "android.media.AUDIO_BECOMING_NOISY";
     field public static final java.lang.String ACTION_HDMI_AUDIO_PLUG = "android.media.action.HDMI_AUDIO_PLUG";
     field public static final java.lang.String ACTION_HEADSET_PLUG = "android.intent.action.HEADSET_PLUG";
+    field public static final java.lang.String ACTION_MICROPHONE_MUTE_CHANGED = "android.media.action.MICROPHONE_MUTE_CHANGED";
     field public static final deprecated java.lang.String ACTION_SCO_AUDIO_STATE_CHANGED = "android.media.SCO_AUDIO_STATE_CHANGED";
     field public static final java.lang.String ACTION_SCO_AUDIO_STATE_UPDATED = "android.media.ACTION_SCO_AUDIO_STATE_UPDATED";
     field public static final int ADJUST_LOWER = -1; // 0xffffffff
@@ -25735,17 +25736,17 @@ package android.net {
     field public static final int RESTRICT_BACKGROUND_STATUS_DISABLED = 1; // 0x1
     field public static final int RESTRICT_BACKGROUND_STATUS_ENABLED = 3; // 0x3
     field public static final int RESTRICT_BACKGROUND_STATUS_WHITELISTED = 2; // 0x2
-    field public static final int TYPE_BLUETOOTH = 7; // 0x7
-    field public static final int TYPE_DUMMY = 8; // 0x8
-    field public static final int TYPE_ETHERNET = 9; // 0x9
-    field public static final int TYPE_MOBILE = 0; // 0x0
-    field public static final int TYPE_MOBILE_DUN = 4; // 0x4
+    field public static final deprecated int TYPE_BLUETOOTH = 7; // 0x7
+    field public static final deprecated int TYPE_DUMMY = 8; // 0x8
+    field public static final deprecated int TYPE_ETHERNET = 9; // 0x9
+    field public static final deprecated int TYPE_MOBILE = 0; // 0x0
+    field public static final deprecated int TYPE_MOBILE_DUN = 4; // 0x4
     field public static final deprecated int TYPE_MOBILE_HIPRI = 5; // 0x5
     field public static final deprecated int TYPE_MOBILE_MMS = 2; // 0x2
     field public static final deprecated int TYPE_MOBILE_SUPL = 3; // 0x3
-    field public static final int TYPE_VPN = 17; // 0x11
-    field public static final int TYPE_WIFI = 1; // 0x1
-    field public static final int TYPE_WIMAX = 6; // 0x6
+    field public static final deprecated int TYPE_VPN = 17; // 0x11
+    field public static final deprecated int TYPE_WIFI = 1; // 0x1
+    field public static final deprecated int TYPE_WIMAX = 6; // 0x6
   }
 
   public static class ConnectivityManager.NetworkCallback {
@@ -26022,16 +26023,16 @@ package android.net {
     method public int describeContents();
     method public android.net.NetworkInfo.DetailedState getDetailedState();
     method public java.lang.String getExtraInfo();
-    method public java.lang.String getReason();
-    method public android.net.NetworkInfo.State getState();
+    method public deprecated java.lang.String getReason();
+    method public deprecated android.net.NetworkInfo.State getState();
     method public int getSubtype();
     method public java.lang.String getSubtypeName();
-    method public int getType();
-    method public java.lang.String getTypeName();
-    method public boolean isAvailable();
+    method public deprecated int getType();
+    method public deprecated java.lang.String getTypeName();
+    method public deprecated boolean isAvailable();
     method public boolean isConnected();
-    method public boolean isConnectedOrConnecting();
-    method public boolean isFailover();
+    method public deprecated boolean isConnectedOrConnecting();
+    method public deprecated boolean isFailover();
     method public deprecated boolean isRoaming();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.net.NetworkInfo> CREATOR;
@@ -33430,7 +33431,7 @@ package android.provider {
     field public static final java.lang.String FEATURES = "features";
     field public static final int FEATURES_HD_CALL = 4; // 0x4
     field public static final int FEATURES_PULLED_EXTERNALLY = 2; // 0x2
-    field public static final int FEATURES_RTT = 16; // 0x10
+    field public static final int FEATURES_RTT = 32; // 0x20
     field public static final int FEATURES_VIDEO = 1; // 0x1
     field public static final int FEATURES_WIFI = 8; // 0x8
     field public static final java.lang.String GEOCODED_LOCATION = "geocoded_location";
@@ -35554,11 +35555,11 @@ package android.provider {
     field public static final java.lang.String ADDRESS = "address";
   }
 
-  public static final class Telephony.CarrierIdentification implements android.provider.BaseColumns {
+  public static final class Telephony.CarrierId implements android.provider.BaseColumns {
     method public static android.net.Uri getUriForSubscriptionId(int);
-    field public static final java.lang.String CID = "carrier_id";
+    field public static final java.lang.String CARRIER_ID = "carrier_id";
+    field public static final java.lang.String CARRIER_NAME = "carrier_name";
     field public static final android.net.Uri CONTENT_URI;
-    field public static final java.lang.String NAME = "carrier_name";
   }
 
   public static final class Telephony.Carriers implements android.provider.BaseColumns {
@@ -39192,10 +39193,10 @@ package android.telecom {
     method public void onStateChanged(android.telecom.Call, int);
     method public void onVideoCallChanged(android.telecom.Call, android.telecom.InCallService.VideoCall);
     field public static final int HANDOVER_FAILURE_DEST_APP_REJECTED = 1; // 0x1
-    field public static final int HANDOVER_FAILURE_DEST_INVALID_PERM = 3; // 0x3
-    field public static final int HANDOVER_FAILURE_DEST_NOT_SUPPORTED = 2; // 0x2
-    field public static final int HANDOVER_FAILURE_DEST_USER_REJECTED = 4; // 0x4
-    field public static final int HANDOVER_FAILURE_ONGOING_EMERG_CALL = 5; // 0x5
+    field public static final int HANDOVER_FAILURE_NOT_SUPPORTED = 2; // 0x2
+    field public static final int HANDOVER_FAILURE_ONGOING_EMERG_CALL = 4; // 0x4
+    field public static final int HANDOVER_FAILURE_UNKNOWN = 5; // 0x5
+    field public static final int HANDOVER_FAILURE_USER_REJECTED = 3; // 0x3
   }
 
   public static class Call.Details {
@@ -39952,11 +39953,9 @@ package android.telecom {
 package android.telephony {
 
   public final class AccessNetworkConstants {
-    ctor public AccessNetworkConstants();
   }
 
   public static final class AccessNetworkConstants.AccessNetworkType {
-    ctor public AccessNetworkConstants.AccessNetworkType();
     field public static final int CDMA2000 = 4; // 0x4
     field public static final int EUTRAN = 3; // 0x3
     field public static final int GERAN = 1; // 0x1
@@ -39966,7 +39965,6 @@ package android.telephony {
   }
 
   public static final class AccessNetworkConstants.EutranBand {
-    ctor public AccessNetworkConstants.EutranBand();
     field public static final int BAND_1 = 1; // 0x1
     field public static final int BAND_10 = 10; // 0xa
     field public static final int BAND_11 = 11; // 0xb
@@ -40018,7 +40016,6 @@ package android.telephony {
   }
 
   public static final class AccessNetworkConstants.GeranBand {
-    ctor public AccessNetworkConstants.GeranBand();
     field public static final int BAND_450 = 3; // 0x3
     field public static final int BAND_480 = 4; // 0x4
     field public static final int BAND_710 = 5; // 0x5
@@ -40036,7 +40033,6 @@ package android.telephony {
   }
 
   public static final class AccessNetworkConstants.UtranBand {
-    ctor public AccessNetworkConstants.UtranBand();
     field public static final int BAND_1 = 1; // 0x1
     field public static final int BAND_10 = 10; // 0xa
     field public static final int BAND_11 = 11; // 0xb
@@ -40089,6 +40085,8 @@ package android.telephony {
     field public static final java.lang.String KEY_CARRIER_INSTANT_LETTERING_ESCAPED_CHARS_STRING = "carrier_instant_lettering_escaped_chars_string";
     field public static final java.lang.String KEY_CARRIER_INSTANT_LETTERING_INVALID_CHARS_STRING = "carrier_instant_lettering_invalid_chars_string";
     field public static final java.lang.String KEY_CARRIER_INSTANT_LETTERING_LENGTH_LIMIT_INT = "carrier_instant_lettering_length_limit_int";
+    field public static final java.lang.String KEY_CARRIER_NAME_OVERRIDE_BOOL = "carrier_name_override_bool";
+    field public static final java.lang.String KEY_CARRIER_NAME_STRING = "carrier_name_string";
     field public static final java.lang.String KEY_CARRIER_SETTINGS_ENABLE_BOOL = "carrier_settings_enable_bool";
     field public static final java.lang.String KEY_CARRIER_USE_IMS_FIRST_FOR_EMERGENCY_BOOL = "carrier_use_ims_first_for_emergency_bool";
     field public static final java.lang.String KEY_CARRIER_VOLTE_AVAILABLE_BOOL = "carrier_volte_available_bool";
@@ -40233,9 +40231,9 @@ package android.telephony {
     method public int getCid();
     method public int getLac();
     method public deprecated int getMcc();
-    method public java.lang.String getMccStr();
+    method public java.lang.String getMccString();
     method public deprecated int getMnc();
-    method public java.lang.String getMncStr();
+    method public java.lang.String getMncString();
     method public java.lang.String getMobileNetworkOperator();
     method public java.lang.CharSequence getOperatorAlphaLong();
     method public java.lang.CharSequence getOperatorAlphaShort();
@@ -40249,9 +40247,9 @@ package android.telephony {
     method public int getCi();
     method public int getEarfcn();
     method public deprecated int getMcc();
-    method public java.lang.String getMccStr();
+    method public java.lang.String getMccString();
     method public deprecated int getMnc();
-    method public java.lang.String getMncStr();
+    method public java.lang.String getMncString();
     method public java.lang.String getMobileNetworkOperator();
     method public java.lang.CharSequence getOperatorAlphaLong();
     method public java.lang.CharSequence getOperatorAlphaShort();
@@ -40265,8 +40263,8 @@ package android.telephony {
     method public int getCid();
     method public int getCpid();
     method public int getLac();
-    method public java.lang.String getMccStr();
-    method public java.lang.String getMncStr();
+    method public java.lang.String getMccString();
+    method public java.lang.String getMncString();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.telephony.CellIdentityTdscdma> CREATOR;
   }
@@ -40275,9 +40273,9 @@ package android.telephony {
     method public int getCid();
     method public int getLac();
     method public deprecated int getMcc();
-    method public java.lang.String getMccStr();
+    method public java.lang.String getMccString();
     method public deprecated int getMnc();
-    method public java.lang.String getMncStr();
+    method public java.lang.String getMncString();
     method public java.lang.String getMobileNetworkOperator();
     method public java.lang.CharSequence getOperatorAlphaLong();
     method public java.lang.CharSequence getOperatorAlphaShort();
@@ -40471,7 +40469,8 @@ package android.telephony {
   }
 
   public class NetworkScan {
-    method public void stop() throws android.os.RemoteException;
+    method public deprecated void stop() throws android.os.RemoteException;
+    method public void stopScan();
     field public static final int ERROR_INTERRUPTED = 10002; // 0x2712
     field public static final int ERROR_INVALID_SCAN = 2; // 0x2
     field public static final int ERROR_INVALID_SCANID = 10001; // 0x2711
@@ -40832,8 +40831,6 @@ package android.telephony {
     method public android.telephony.TelephonyManager createForPhoneAccountHandle(android.telecom.PhoneAccountHandle);
     method public android.telephony.TelephonyManager createForSubscriptionId(int);
     method public java.util.List<android.telephony.CellInfo> getAllCellInfo();
-    method public int getAndroidCarrierIdForSubscription();
-    method public java.lang.CharSequence getAndroidCarrierNameForSubscription();
     method public int getCallState();
     method public android.os.PersistableBundle getCarrierConfig();
     method public deprecated android.telephony.CellLocation getCellLocation();
@@ -40864,6 +40861,8 @@ package android.telephony {
     method public int getPhoneType();
     method public android.telephony.ServiceState getServiceState();
     method public android.telephony.SignalStrength getSignalStrength();
+    method public int getSimCarrierId();
+    method public java.lang.CharSequence getSimCarrierIdName();
     method public java.lang.String getSimCountryIso();
     method public java.lang.String getSimOperator();
     method public java.lang.String getSimOperatorName();
@@ -40895,7 +40894,8 @@ package android.telephony {
     method public boolean isVoicemailVibrationEnabled(android.telecom.PhoneAccountHandle);
     method public boolean isWorldPhone();
     method public void listen(android.telephony.PhoneStateListener, int);
-    method public android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, android.telephony.TelephonyScanManager.NetworkScanCallback);
+    method public android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, java.util.concurrent.Executor, android.telephony.TelephonyScanManager.NetworkScanCallback);
+    method public deprecated android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, android.telephony.TelephonyScanManager.NetworkScanCallback);
     method public void sendDialerSpecialCode(java.lang.String);
     method public java.lang.String sendEnvelopeWithStatus(java.lang.String);
     method public void sendUssdRequest(java.lang.String, android.telephony.TelephonyManager.UssdResponseCallback, android.os.Handler);

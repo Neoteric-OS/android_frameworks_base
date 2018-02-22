@@ -1579,7 +1579,7 @@
     <integer translatable="false" name="config_bluetooth_operating_voltage_mv">0</integer>
 
     <!-- Max number of connected audio devices supported by Bluetooth stack -->
-    <integer name="config_bluetooth_max_connected_audio_devices">1</integer>
+    <integer name="config_bluetooth_max_connected_audio_devices">5</integer>
 
     <!-- Whether supported profiles should be reloaded upon enabling bluetooth -->
     <bool name="config_bluetooth_reload_supported_profiles_when_enabled">false</bool>
@@ -2092,6 +2092,9 @@
 
     <!-- Whether UI for multi user should be shown -->
     <bool name="config_enableMultiUserUI">false</bool>
+
+    <!-- Whether the new Auto Selection Network UI should be shown -->
+    <bool name="config_enableNewAutoSelectNetworkUI">false</bool>
 
     <!-- If true, then we do not ask user for permission for apps to connect to USB devices.
          Do not set this to true for production devices. Doing so will cause you to fail CTS. -->

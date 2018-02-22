@@ -991,8 +991,13 @@ public class CarrierConfigManager {
             "wfc_emergency_address_carrier_app_string";
 
     /**
-     * Boolean to decide whether to use #KEY_CARRIER_NAME_STRING from CarrierConfig app.
-     * @hide
+     * Unconditionally override the carrier name string using #KEY_CARRIER_NAME_STRING.
+     *
+     * If true, then the carrier display name will be #KEY_CARRIER_NAME_STRING, unconditionally.
+     *
+     * <p>If false, then the override will be performed conditionally and the
+     * #KEY_CARRIER_NAME_STRING will have the lowest-precedence; it will only be used in the event
+     * that the name string would otherwise be empty, allowing it to serve as a last-resort.
      */
     public static final String KEY_CARRIER_NAME_OVERRIDE_BOOL = "carrier_name_override_bool";
 
@@ -1000,7 +1005,6 @@ public class CarrierConfigManager {
      * String to identify carrier name in CarrierConfig app. This string overrides SPN if
      * #KEY_CARRIER_NAME_OVERRIDE_BOOL is true; otherwise, it will be used if its value is provided
      * and SPN is unavailable
-     * @hide
      */
     public static final String KEY_CARRIER_NAME_STRING = "carrier_name_string";
 
@@ -1272,11 +1276,36 @@ public class CarrierConfigManager {
 
     /**
      * The duration in seconds that platform call and message blocking is disabled after the user
-     * contacts emergency services. Platform considers values in the range 0 to 604800 (one week) as
-     * valid. See {@link android.provider.BlockedNumberContract#isBlocked(Context, String)}).
+     * contacts emergency services. Platform considers values for below cases:
+     *  1) 0 <= VALUE <= 604800(one week): the value will be used as the duration directly.
+     *  2) VALUE > 604800(one week): will use the default value as duration instead.
+     *  3) VALUE < 0: block will be disabled forever until user re-eanble block manually,
+     *     the suggested value to disable forever is -1.
+     * See {@code android.provider.BlockedNumberContract#notifyEmergencyContact(Context)}
+     * See {@code android.provider.BlockedNumberContract#isBlocked(Context, String)}.
      */
     public static final String KEY_DURATION_BLOCKING_DISABLED_AFTER_EMERGENCY_INT =
             "duration_blocking_disabled_after_emergency_int";
+
+    /**
+     * Determines whether to enable enhanced call blocking feature on the device.
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_UNREGISTERED
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_PRIVATE
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_PAYPHONE
+     * @see SystemContract#ENHANCED_SETTING_KEY_BLOCK_UNKNOWN
+     *
+     * <p>
+     * 1. For Single SIM(SS) device, it can be customized in both carrier_config_mccmnc.xml
+     *    and vendor.xml.
+     * <p>
+     * 2. For Dual SIM(DS) device, it should be customized in vendor.xml, since call blocking
+     *    function is used regardless of SIM.
+     * <p>
+     * If {@code true} enable enhanced call blocking feature on the device, {@code false} otherwise.
+     * @hide
+     */
+    public static final String KEY_SUPPORT_ENHANCED_CALL_BLOCKING_BOOL =
+            "support_enhanced_call_blocking_bool";
 
     /**
      * For carriers which require an empty flash to be sent before sending the normal 3-way calling
@@ -1569,6 +1598,14 @@ public class CarrierConfigManager {
             "notify_international_call_on_wfc_bool";
 
     /**
+     * Flag specifying whether to show an alert dialog for video call charges.
+     * By default this value is {@code false}.
+     * @hide
+     */
+    public static final String KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL =
+            "show_video_call_charges_alert_dialog_bool";
+
+    /**
      * An array containing custom call forwarding number prefixes that will be blocked while the
      * device is reporting that it is roaming. By default, there are no custom call
      * forwarding prefixes and none of these numbers will be filtered. If one or more entries are
@@ -1829,6 +1866,33 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING
             = "carrier_network_service_wwan_package_override_string";
 
+    /**
+     * A list of 4 LTE RSCP thresholds above which a signal level is considered POOR,
+     * MODERATE, GOOD, or EXCELLENT, to be used in SignalStrength reporting.
+     *
+     * Note that the min and max thresholds are fixed at -120 and -24, as set in 3GPP TS 27.007
+     * section 8.69.
+     * <p>
+     * See SignalStrength#MAX_WCDMA_RSCP and SignalStrength#MIN_WDCMA_RSCP. Any signal level outside
+     * these boundaries is considered invalid.
+     * @hide
+     */
+    public static final String KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY =
+            "wcdma_rscp_thresholds_int_array";
+
+    /**
+     * The default measurement to use for signal strength reporting. If this is not specified, the
+     * RSSI is used.
+     * <p>
+     * e.g.) To use RSCP by default, set the value to "rscp". The signal strength level will
+     * then be determined by #KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY
+     * <p>
+     * Currently this only supports the value "rscp"
+     * @hide
+     */
+    public static final String KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING =
+            "wcdma_default_signal_strength_measurement_string";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1997,6 +2061,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SUPPORT_DIRECT_FDN_DIALING_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORT_ENHANCED_CALL_BLOCKING_BOOL, false);
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);
@@ -2102,6 +2167,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_DISPLAY_VOICEMAIL_NUMBER_AS_DEFAULT_CALL_FORWARDING_NUMBER_BOOL,
                 false);
         sDefaults.putBoolean(KEY_NOTIFY_INTERNATIONAL_CALL_ON_WFC_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL, false);
         sDefaults.putStringArray(KEY_CALL_FORWARDING_BLOCKS_WHILE_ROAMING_STRING_ARRAY,
                 null);
         sDefaults.putInt(KEY_LTE_EARFCNS_RSRP_BOOST_INT, 0);
@@ -2130,6 +2196,14 @@ public class CarrierConfigManager {
                         -108, /* SIGNAL_STRENGTH_GOOD */
                         -98,  /* SIGNAL_STRENGTH_GREAT */
                 });
+        sDefaults.putIntArray(KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY,
+                new int[] {
+                        -115,  /* SIGNAL_STRENGTH_POOR */
+                        -105, /* SIGNAL_STRENGTH_MODERATE */
+                        -95, /* SIGNAL_STRENGTH_GOOD */
+                        -85  /* SIGNAL_STRENGTH_GREAT */
+                });
+        sDefaults.putString(KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING, "");
     }
 
     /**
