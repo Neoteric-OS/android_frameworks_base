@@ -22,6 +22,30 @@
       "revId": "5a74db01e978c97ee6160c8b256df5c3a6c46e72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bd70fd_4d6ff064",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-22T19:15:41Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment about calling threads.\n\nAs for holding locks, that would seem to apply to any and all code in the IpClient.Callback instance.  For that, I\u0027ve also added a comment at the start of the Callback class definition.",
+      "parentUuid": "ccaf5b10_4a57429a",
+      "range": {
+        "startLine": 721,
+        "startChar": 27,
+        "endLine": 721,
+        "endChar": 32
+      },
+      "revId": "5a74db01e978c97ee6160c8b256df5c3a6c46e72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
