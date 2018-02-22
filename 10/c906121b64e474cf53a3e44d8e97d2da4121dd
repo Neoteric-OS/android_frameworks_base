@@ -1,0 +1,10 @@
+Presubmit-Ready+1: Jakub Pawlowski <jpawlowski@google.com>
+Build-Cop-Override+1: Makoto Onuki <omakoto@google.com>
+Verified+1: Jakub Pawlowski <jpawlowski@google.com>
+Code-Review+1: Stanley Tng <stng@google.com>
+Code-Review+2: Eric Laurent <elaurent@google.com>
+Submitted-by: Andre Eisenbach <eisenbach@google.com>
+Submitted-at: Thu, 22 Feb 2018 20:49:03 +0000
+Reviewed-on: https://android-review.googlesource.com/623612
+Project: platform/frameworks/base
+Branch: refs/heads/master
