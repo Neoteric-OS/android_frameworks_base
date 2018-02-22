@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "25bbeb2b_daf3b323",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-22T16:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d34e7b0_ab85464e",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 12
+      },
+      "revId": "d53df964260339ed00ea19fa6615d33bebcd6088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5461df41_9a1bb71a",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-22T16:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2882fb63_c95327d2",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 12
+      },
+      "revId": "d53df964260339ed00ea19fa6615d33bebcd6088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8183dff2_5628b32c",
         "filename": "telephony/java/android/telephony/Telephony.java",
         "patchSetId": 9
@@ -83,6 +131,54 @@
       "writtenOn": "2018-01-04T23:24:46Z",
       "side": 1,
       "message": "Oh I see, if this is referring to the NETWORK_TYPE_ constants, could you add some extra documentation either here or there to make that more clear?",
+      "parentUuid": "8183dff2_5628b32c",
+      "range": {
+        "startLine": 2714,
+        "startChar": 11,
+        "endLine": 2714,
+        "endChar": 52
+      },
+      "revId": "d53df964260339ed00ea19fa6615d33bebcd6088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "153b4132_5ba44061",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-22T16:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3cd90b_9169f273",
+      "range": {
+        "startLine": 2714,
+        "startChar": 11,
+        "endLine": 2714,
+        "endChar": 52
+      },
+      "revId": "d53df964260339ed00ea19fa6615d33bebcd6088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f36625f_41a475b5",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-22T16:54:21Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "8183dff2_5628b32c",
       "range": {
         "startLine": 2714,
