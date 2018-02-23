@@ -1,0 +1,5 @@
+<?xml version="1.0" ?><resources>
+    <string name="app_name">%(app_name)s</string>
+    <integer name="versionCode">%(versioncode)d</integer>
+    <string name="versionName">%(versionname)s</string>
+</resources>

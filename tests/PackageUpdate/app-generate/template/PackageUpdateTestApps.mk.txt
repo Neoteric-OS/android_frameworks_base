@@ -1,0 +1,25 @@
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+pkgup_testapps := %(testapps)s
+pkgup_testapp_versions := %(versions)s
+pkgup_testapp_targets := $(subst $(LOCAL_PATH)/,,\
+	$(shell find $(LOCAL_PATH) -mindepth 1 -maxdepth 1 -type d))
+
+$(pkgup_testapps_zip) : $(pkgup_testapp_targets)
+	rm -rf $(dir $@)
+	$(foreach t,$(pkgup_testapps),$(foreach v,$(pkgup_testapp_versions),\
+		$(eval apk_dir := $(dir $@)/%(packagename)s$(subst TestApp,,$(t))/ver$(v))\
+		mkdir -p $(apk_dir);\
+		cp $(TARGET_OUT_DATA_APPS)/$(t)ver$(v)/$(t)ver$(v).apk $(apk_dir)/$(t).apk$(newline)\
+		$(eval libs_dir := $(apk_dir)/libs/$(TARGET_CPU_ABI))\
+		mkdir -p $(libs_dir);\
+		cp $(TARGET_OUT_INTERMEDIATE_LIBRARIES)/lib$(t)ver$(v).so $(libs_dir)$(newline)))
+	cd $(dir $@); zip -qr $(notdir $@) .
+	rm -rf $(dir $@)/%(packagename)s*
+	echo "Output: $@"
+
+PHONY : package_update-testapps
+package_update-testapps : $(pkgup_testapps_zip)
+
+include $(call all-makefiles-under,$(LOCAL_PATH))
