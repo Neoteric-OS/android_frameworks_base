@@ -1,0 +1,2243 @@
+com.android.tests.pkgup001.Host : action: Install-Up version: 6
+com.android.tests.pkgup002.Host : action: Install-Up version: 6
+com.android.tests.pkgup003.Host : action: NA version: 5
+com.android.tests.pkgup004.Host : action: NA version: 5
+com.android.tests.pkgup005.Host : action: Install-Keep version: 5
+com.android.tests.pkgup006.Host : action: NA version: 5
+com.android.tests.pkgup007.Host : action: Install-Up version: 6
+com.android.tests.pkgup008.Host : action: Install-Up version: 6
+com.android.tests.pkgup009.Host : action: Install-Down version: 4
+com.android.tests.pkgup010.Host : action: Install-Up version: 6
+com.android.tests.pkgup011.Host : action: Install-Up version: 6
+com.android.tests.pkgup012.Host : action: Install-Up version: 6
+com.android.tests.pkgup013.Host : action: Install-Up version: 6
+com.android.tests.pkgup014.Host : action: Install-Up version: 6
+com.android.tests.pkgup015.Host : action: NA version: 5
+com.android.tests.pkgup016.Host : action: Install-Up version: 6
+com.android.tests.pkgup017.Host : action: Install-Up version: 6
+com.android.tests.pkgup018.Host : action: NA version: 5
+com.android.tests.pkgup019.Host : action: Install-Up version: 6
+com.android.tests.pkgup020.Host : action: NA version: 5
+com.android.tests.pkgup021.Host : action: Install-Up version: 6
+com.android.tests.pkgup022.Host : action: Install-Up version: 6
+com.android.tests.pkgup023.Host : action: Install-Up version: 6
+com.android.tests.pkgup024.Host : action: Install-Up version: 6
+com.android.tests.pkgup025.Host : action: Install-Down version: 4
+com.android.tests.pkgup026.Host : action: NA version: 5
+com.android.tests.pkgup027.Host : action: NA version: 5
+com.android.tests.pkgup028.Host : action: NA version: 5
+com.android.tests.pkgup029.Host : action: Install-Up version: 6
+com.android.tests.pkgup030.Host : action: NA version: 5
+com.android.tests.pkgup031.Host : action: Install-Up version: 6
+com.android.tests.pkgup032.Host : action: Install-Up version: 6
+com.android.tests.pkgup033.Host : action: NA version: 5
+com.android.tests.pkgup034.Host : action: Install-Up version: 6
+com.android.tests.pkgup035.Host : action: Install-Up version: 6
+com.android.tests.pkgup036.Host : action: Install-Up version: 6
+com.android.tests.pkgup037.Host : action: Install-Up version: 6
+com.android.tests.pkgup038.Host : action: Install-Up version: 6
+com.android.tests.pkgup039.Host : action: Install-Up version: 6
+com.android.tests.pkgup040.Host : action: Install-Up version: 6
+com.android.tests.pkgup001.Host : #[START]---------------------------------#
+com.android.tests.pkgup001.TestApp : Package :com.android.tests.pkgup001
+com.android.tests.pkgup001.TestApp : VersionName :6
+com.android.tests.pkgup001.TestApp : VersionCode :6
+com.android.tests.pkgup001.TestApp : ResourceVersion:1
+com.android.tests.pkgup001.TestApp : SourceDir   :/data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==/base.apk
+com.android.tests.pkgup001.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==/base.apk
+com.android.tests.pkgup001.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup001
+com.android.tests.pkgup001.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==/lib/arm64
+com.android.tests.pkgup001.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup001.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup001.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup001.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup001.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup001.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup001.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup001.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup001.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup001.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup001.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup001.TestApp : splitSourceDirs :null
+com.android.tests.pkgup001.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup001.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup001.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==
+com.android.tests.pkgup001.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==
+com.android.tests.pkgup001.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup001.TestApp : NativeLibVersion:6
+com.android.tests.pkgup001.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup001.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup001.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup001.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp001/TestApp001.apk
+com.android.tests.pkgup001.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp001/lib/arm64/libTestApp001ver5.so
+com.android.tests.pkgup001.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==/base.apk
+com.android.tests.pkgup001.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup001-WOqD4NAyCMpPXgnXU869LQ==/lib/arm64/libTestApp001ver6.so
+com.android.tests.pkgup001.Host : Exist: -rw-rw---- 1 u0_a89 u0_a89 143 2009-01-01 00:05 /data/data/com.android.tests.pkgup001/shared_prefs/data_history.xml
+com.android.tests.pkgup001.Host : #[END]-----------------------------------#
+com.android.tests.pkgup002.Host : #[START]---------------------------------#
+com.android.tests.pkgup002.TestApp : Package :com.android.tests.pkgup002
+com.android.tests.pkgup002.TestApp : VersionName :6
+com.android.tests.pkgup002.TestApp : VersionCode :6
+com.android.tests.pkgup002.TestApp : ResourceVersion:1
+com.android.tests.pkgup002.TestApp : SourceDir   :/data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==/base.apk
+com.android.tests.pkgup002.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==/base.apk
+com.android.tests.pkgup002.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup002
+com.android.tests.pkgup002.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==/lib/arm64
+com.android.tests.pkgup002.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup002.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup002.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup002.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup002.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup002.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup002.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup002.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup002.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup002.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup002.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup002.TestApp : splitSourceDirs :null
+com.android.tests.pkgup002.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup002.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup002.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==
+com.android.tests.pkgup002.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==
+com.android.tests.pkgup002.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup002.TestApp : NativeLibVersion:6
+com.android.tests.pkgup002.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup002.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup002.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup002.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp002/TestApp002.apk
+com.android.tests.pkgup002.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp002/lib/arm64/libTestApp002ver5.so
+com.android.tests.pkgup002.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==/base.apk
+com.android.tests.pkgup002.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup002-v46Uuljk_GpcX8FgharRkw==/lib/arm64/libTestApp002ver6.so
+com.android.tests.pkgup002.Host : Exist: -rw-rw---- 1 u0_a48 u0_a48 143 2009-01-01 00:05 /data/data/com.android.tests.pkgup002/shared_prefs/data_history.xml
+com.android.tests.pkgup002.Host : #[END]-----------------------------------#
+com.android.tests.pkgup003.Host : #[START]---------------------------------#
+com.android.tests.pkgup003.TestApp : Package :com.android.tests.pkgup003
+com.android.tests.pkgup003.TestApp : VersionName :5
+com.android.tests.pkgup003.TestApp : VersionCode :5
+com.android.tests.pkgup003.TestApp : ResourceVersion:1
+com.android.tests.pkgup003.TestApp : SourceDir   :/system/app/TestApp003/TestApp003.apk
+com.android.tests.pkgup003.TestApp : publicSourceDir   :/system/app/TestApp003/TestApp003.apk
+com.android.tests.pkgup003.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup003
+com.android.tests.pkgup003.TestApp : NativeLibDir:/system/app/TestApp003/lib/arm64
+com.android.tests.pkgup003.TestApp : flags:0x3888BE45
+com.android.tests.pkgup003.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup003.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup003.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup003.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup003.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup003.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup003.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup003.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup003.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup003.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup003.TestApp : splitSourceDirs :null
+com.android.tests.pkgup003.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup003.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup003.TestApp : scanSourceDir   :/system/app/TestApp003
+com.android.tests.pkgup003.TestApp : scanPublicSourceDir   :/system/app/TestApp003
+com.android.tests.pkgup003.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup003.TestApp : NativeLibVersion:5
+com.android.tests.pkgup003.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup003.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup003.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup003.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp003/TestApp003.apk
+com.android.tests.pkgup003.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp003/lib/arm64/libTestApp003ver5.so
+com.android.tests.pkgup003.Host : Exist: -rw-rw---- 1 u0_a70 u0_a70 143 2009-01-01 00:06 /data/data/com.android.tests.pkgup003/shared_prefs/data_history.xml
+com.android.tests.pkgup003.Host : #[END]-----------------------------------#
+com.android.tests.pkgup004.Host : #[START]---------------------------------#
+com.android.tests.pkgup004.TestApp : Package :com.android.tests.pkgup004
+com.android.tests.pkgup004.TestApp : VersionName :5
+com.android.tests.pkgup004.TestApp : VersionCode :5
+com.android.tests.pkgup004.TestApp : ResourceVersion:1
+com.android.tests.pkgup004.TestApp : SourceDir   :/system/app/TestApp004/TestApp004.apk
+com.android.tests.pkgup004.TestApp : publicSourceDir   :/system/app/TestApp004/TestApp004.apk
+com.android.tests.pkgup004.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup004
+com.android.tests.pkgup004.TestApp : NativeLibDir:/system/app/TestApp004/lib/arm64
+com.android.tests.pkgup004.TestApp : flags:0x3888BE45
+com.android.tests.pkgup004.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup004.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup004.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup004.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup004.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup004.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup004.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup004.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup004.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup004.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup004.TestApp : splitSourceDirs :null
+com.android.tests.pkgup004.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup004.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup004.TestApp : scanSourceDir   :/system/app/TestApp004
+com.android.tests.pkgup004.TestApp : scanPublicSourceDir   :/system/app/TestApp004
+com.android.tests.pkgup004.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup004.TestApp : NativeLibVersion:5
+com.android.tests.pkgup004.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup004.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup004.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup004.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp004/TestApp004.apk
+com.android.tests.pkgup004.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp004/lib/arm64/libTestApp004ver5.so
+com.android.tests.pkgup004.Host : Exist: -rw-rw---- 1 u0_a66 u0_a66 143 2009-01-01 00:06 /data/data/com.android.tests.pkgup004/shared_prefs/data_history.xml
+com.android.tests.pkgup004.Host : #[END]-----------------------------------#
+com.android.tests.pkgup005.Host : #[START]---------------------------------#
+com.android.tests.pkgup005.TestApp : Package :com.android.tests.pkgup005
+com.android.tests.pkgup005.TestApp : VersionName :5
+com.android.tests.pkgup005.TestApp : VersionCode :5
+com.android.tests.pkgup005.TestApp : ResourceVersion:1
+com.android.tests.pkgup005.TestApp : SourceDir   :/data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==/base.apk
+com.android.tests.pkgup005.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==/base.apk
+com.android.tests.pkgup005.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup005
+com.android.tests.pkgup005.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==/lib/arm64
+com.android.tests.pkgup005.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup005.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup005.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup005.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup005.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup005.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup005.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup005.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup005.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup005.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup005.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup005.TestApp : splitSourceDirs :null
+com.android.tests.pkgup005.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup005.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup005.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==
+com.android.tests.pkgup005.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==
+com.android.tests.pkgup005.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup005.TestApp : NativeLibVersion:5
+com.android.tests.pkgup005.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup005.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup005.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup005.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp005/TestApp005.apk
+com.android.tests.pkgup005.Host : Exist: -rw-r--r-- 1 root root 68248 2018-04-25 11:41 /system/app/TestApp005/lib/arm64/libTestApp005ver5.so
+com.android.tests.pkgup005.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==/base.apk
+com.android.tests.pkgup005.Host : Exist: -rwxr-xr-x 1 system system 68248 2009-01-01 00:00 /data/app/com.android.tests.pkgup005-HXhj9UOw-csHqDWFO1Ydww==/lib/arm64/libTestApp005ver5.so
+com.android.tests.pkgup005.Host : Exist: -rw-rw---- 1 u0_a63 u0_a63 143 2009-01-01 00:06 /data/data/com.android.tests.pkgup005/shared_prefs/data_history.xml
+com.android.tests.pkgup005.Host : #[END]-----------------------------------#
+com.android.tests.pkgup006.Host : #[START]---------------------------------#
+com.android.tests.pkgup006.TestApp : Package :com.android.tests.pkgup006
+com.android.tests.pkgup006.TestApp : VersionName :5
+com.android.tests.pkgup006.TestApp : VersionCode :5
+com.android.tests.pkgup006.TestApp : ResourceVersion:1
+com.android.tests.pkgup006.TestApp : SourceDir   :/system/app/TestApp006/TestApp006.apk
+com.android.tests.pkgup006.TestApp : publicSourceDir   :/system/app/TestApp006/TestApp006.apk
+com.android.tests.pkgup006.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup006
+com.android.tests.pkgup006.TestApp : NativeLibDir:/system/app/TestApp006/lib/arm64
+com.android.tests.pkgup006.TestApp : flags:0x3888BE45
+com.android.tests.pkgup006.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup006.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup006.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup006.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup006.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup006.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup006.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup006.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup006.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup006.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup006.TestApp : splitSourceDirs :null
+com.android.tests.pkgup006.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup006.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup006.TestApp : scanSourceDir   :/system/app/TestApp006
+com.android.tests.pkgup006.TestApp : scanPublicSourceDir   :/system/app/TestApp006
+com.android.tests.pkgup006.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup006.TestApp : NativeLibVersion:5
+com.android.tests.pkgup006.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup006.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup006.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup006.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp006/TestApp006.apk
+com.android.tests.pkgup006.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp006/lib/arm64/libTestApp006ver5.so
+com.android.tests.pkgup006.Host : Exist: -rw-rw---- 1 u0_a61 u0_a61 143 2009-01-01 00:06 /data/data/com.android.tests.pkgup006/shared_prefs/data_history.xml
+com.android.tests.pkgup006.Host : #[END]-----------------------------------#
+com.android.tests.pkgup007.Host : #[START]---------------------------------#
+com.android.tests.pkgup007.TestApp : Package :com.android.tests.pkgup007
+com.android.tests.pkgup007.TestApp : VersionName :6
+com.android.tests.pkgup007.TestApp : VersionCode :6
+com.android.tests.pkgup007.TestApp : ResourceVersion:1
+com.android.tests.pkgup007.TestApp : SourceDir   :/data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==/base.apk
+com.android.tests.pkgup007.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==/base.apk
+com.android.tests.pkgup007.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup007
+com.android.tests.pkgup007.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==/lib/arm64
+com.android.tests.pkgup007.TestApp : flags:0x3888BE44
+com.android.tests.pkgup007.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup007.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup007.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup007.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup007.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup007.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup007.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup007.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup007.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup007.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup007.TestApp : splitSourceDirs :null
+com.android.tests.pkgup007.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup007.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup007.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==
+com.android.tests.pkgup007.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==
+com.android.tests.pkgup007.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup007.TestApp : NativeLibVersion:6
+com.android.tests.pkgup007.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup007.TestApp : UserDataHistory :6
+com.android.tests.pkgup007.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup007.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup007.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==/base.apk
+com.android.tests.pkgup007.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup007-jCSNET8BjYcs9RvdJmvRWg==/lib/arm64/libTestApp007ver6.so
+com.android.tests.pkgup007.Host : Exist: -rw-rw---- 1 u0_a95 u0_a95 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup007/shared_prefs/data_history.xml
+com.android.tests.pkgup007.Host : #[END]-----------------------------------#
+com.android.tests.pkgup008.Host : #[START]---------------------------------#
+com.android.tests.pkgup008.TestApp : Package :com.android.tests.pkgup008
+com.android.tests.pkgup008.TestApp : VersionName :6
+com.android.tests.pkgup008.TestApp : VersionCode :6
+com.android.tests.pkgup008.TestApp : ResourceVersion:1
+com.android.tests.pkgup008.TestApp : SourceDir   :/data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==/base.apk
+com.android.tests.pkgup008.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==/base.apk
+com.android.tests.pkgup008.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup008
+com.android.tests.pkgup008.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==/lib/arm64
+com.android.tests.pkgup008.TestApp : flags:0x3888BE44
+com.android.tests.pkgup008.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup008.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup008.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup008.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup008.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup008.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup008.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup008.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup008.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup008.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup008.TestApp : splitSourceDirs :null
+com.android.tests.pkgup008.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup008.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup008.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==
+com.android.tests.pkgup008.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==
+com.android.tests.pkgup008.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup008.TestApp : NativeLibVersion:6
+com.android.tests.pkgup008.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup008.TestApp : UserDataHistory :6
+com.android.tests.pkgup008.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup008.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup008.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==/base.apk
+com.android.tests.pkgup008.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup008-MrTMFCTDYVGlCGACdI39Rg==/lib/arm64/libTestApp008ver6.so
+com.android.tests.pkgup008.Host : Exist: -rw-rw---- 1 u0_a96 u0_a96 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup008/shared_prefs/data_history.xml
+com.android.tests.pkgup008.Host : #[END]-----------------------------------#
+com.android.tests.pkgup009.Host : #[START]---------------------------------#
+com.android.tests.pkgup009.TestApp : Package :com.android.tests.pkgup009
+com.android.tests.pkgup009.TestApp : VersionName :5
+com.android.tests.pkgup009.TestApp : VersionCode :5
+com.android.tests.pkgup009.TestApp : ResourceVersion:1
+com.android.tests.pkgup009.TestApp : SourceDir   :/system/app/TestApp009/TestApp009.apk
+com.android.tests.pkgup009.TestApp : publicSourceDir   :/system/app/TestApp009/TestApp009.apk
+com.android.tests.pkgup009.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup009
+com.android.tests.pkgup009.TestApp : NativeLibDir:/system/app/TestApp009/lib/arm64
+com.android.tests.pkgup009.TestApp : flags:0x3888BE45
+com.android.tests.pkgup009.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup009.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup009.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup009.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup009.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup009.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup009.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup009.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup009.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup009.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup009.TestApp : splitSourceDirs :null
+com.android.tests.pkgup009.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup009.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup009.TestApp : scanSourceDir   :/system/app/TestApp009
+com.android.tests.pkgup009.TestApp : scanPublicSourceDir   :/system/app/TestApp009
+com.android.tests.pkgup009.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup009.TestApp : NativeLibVersion:5
+com.android.tests.pkgup009.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup009.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup009.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup009.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp009/TestApp009.apk
+com.android.tests.pkgup009.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp009/lib/arm64/libTestApp009ver5.so
+com.android.tests.pkgup009.Host : Exist: -rw-rw---- 1 u0_a88 u0_a88 143 2009-01-01 00:06 /data/data/com.android.tests.pkgup009/shared_prefs/data_history.xml
+com.android.tests.pkgup009.Host : #[END]-----------------------------------#
+com.android.tests.pkgup010.Host : #[START]---------------------------------#
+com.android.tests.pkgup010.TestApp : Package :com.android.tests.pkgup010
+com.android.tests.pkgup010.TestApp : VersionName :6
+com.android.tests.pkgup010.TestApp : VersionCode :6
+com.android.tests.pkgup010.TestApp : ResourceVersion:1
+com.android.tests.pkgup010.TestApp : SourceDir   :/data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==/base.apk
+com.android.tests.pkgup010.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==/base.apk
+com.android.tests.pkgup010.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup010
+com.android.tests.pkgup010.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==/lib/arm64
+com.android.tests.pkgup010.TestApp : flags:0x3888BE44
+com.android.tests.pkgup010.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup010.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup010.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup010.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup010.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup010.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup010.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup010.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup010.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup010.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup010.TestApp : splitSourceDirs :null
+com.android.tests.pkgup010.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup010.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup010.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==
+com.android.tests.pkgup010.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==
+com.android.tests.pkgup010.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup010.TestApp : NativeLibVersion:6
+com.android.tests.pkgup010.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup010.TestApp : UserDataHistory :6
+com.android.tests.pkgup010.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup010.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup010.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==/base.apk
+com.android.tests.pkgup010.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup010-ndahMxsuyv9scJOAimYYzg==/lib/arm64/libTestApp010ver6.so
+com.android.tests.pkgup010.Host : Exist: -rw-rw---- 1 u0_a97 u0_a97 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup010/shared_prefs/data_history.xml
+com.android.tests.pkgup010.Host : #[END]-----------------------------------#
+com.android.tests.pkgup011.Host : #[START]---------------------------------#
+com.android.tests.pkgup011.TestApp : Package :com.android.tests.pkgup011
+com.android.tests.pkgup011.TestApp : VersionName :6
+com.android.tests.pkgup011.TestApp : VersionCode :6
+com.android.tests.pkgup011.TestApp : ResourceVersion:1
+com.android.tests.pkgup011.TestApp : SourceDir   :/data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==/base.apk
+com.android.tests.pkgup011.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==/base.apk
+com.android.tests.pkgup011.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup011
+com.android.tests.pkgup011.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==/lib/arm64
+com.android.tests.pkgup011.TestApp : flags:0x3888BE44
+com.android.tests.pkgup011.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup011.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup011.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup011.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup011.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup011.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup011.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup011.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup011.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup011.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup011.TestApp : splitSourceDirs :null
+com.android.tests.pkgup011.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup011.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup011.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==
+com.android.tests.pkgup011.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==
+com.android.tests.pkgup011.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup011.TestApp : NativeLibVersion:6
+com.android.tests.pkgup011.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup011.TestApp : UserDataHistory :6
+com.android.tests.pkgup011.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup011.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup011.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==/base.apk
+com.android.tests.pkgup011.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup011-GBpk-WeMoigJhntpiDL6vA==/lib/arm64/libTestApp011ver6.so
+com.android.tests.pkgup011.Host : Exist: -rw-rw---- 1 u0_a98 u0_a98 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup011/shared_prefs/data_history.xml
+com.android.tests.pkgup011.Host : #[END]-----------------------------------#
+com.android.tests.pkgup012.Host : #[START]---------------------------------#
+com.android.tests.pkgup012.TestApp : Package :com.android.tests.pkgup012
+com.android.tests.pkgup012.TestApp : VersionName :6
+com.android.tests.pkgup012.TestApp : VersionCode :6
+com.android.tests.pkgup012.TestApp : ResourceVersion:1
+com.android.tests.pkgup012.TestApp : SourceDir   :/data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==/base.apk
+com.android.tests.pkgup012.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==/base.apk
+com.android.tests.pkgup012.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup012
+com.android.tests.pkgup012.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==/lib/arm64
+com.android.tests.pkgup012.TestApp : flags:0x3888BE44
+com.android.tests.pkgup012.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup012.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup012.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup012.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup012.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup012.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup012.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup012.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup012.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup012.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup012.TestApp : splitSourceDirs :null
+com.android.tests.pkgup012.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup012.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup012.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==
+com.android.tests.pkgup012.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==
+com.android.tests.pkgup012.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup012.TestApp : NativeLibVersion:6
+com.android.tests.pkgup012.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup012.TestApp : UserDataHistory :6
+com.android.tests.pkgup012.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup012.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup012.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==/base.apk
+com.android.tests.pkgup012.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup012-TPLm5P3alKHML6qygK7l1g==/lib/arm64/libTestApp012ver6.so
+com.android.tests.pkgup012.Host : Exist: -rw-rw---- 1 u0_a99 u0_a99 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup012/shared_prefs/data_history.xml
+com.android.tests.pkgup012.Host : #[END]-----------------------------------#
+com.android.tests.pkgup013.Host : #[START]---------------------------------#
+com.android.tests.pkgup013.TestApp : Package :com.android.tests.pkgup013
+com.android.tests.pkgup013.TestApp : VersionName :6
+com.android.tests.pkgup013.TestApp : VersionCode :6
+com.android.tests.pkgup013.TestApp : ResourceVersion:1
+com.android.tests.pkgup013.TestApp : SourceDir   :/data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==/base.apk
+com.android.tests.pkgup013.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==/base.apk
+com.android.tests.pkgup013.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup013
+com.android.tests.pkgup013.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==/lib/arm64
+com.android.tests.pkgup013.TestApp : flags:0x3888BE44
+com.android.tests.pkgup013.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup013.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup013.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup013.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup013.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup013.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup013.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup013.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup013.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup013.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup013.TestApp : splitSourceDirs :null
+com.android.tests.pkgup013.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup013.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup013.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==
+com.android.tests.pkgup013.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==
+com.android.tests.pkgup013.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup013.TestApp : NativeLibVersion:6
+com.android.tests.pkgup013.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup013.TestApp : UserDataHistory :6
+com.android.tests.pkgup013.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup013.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup013.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==/base.apk
+com.android.tests.pkgup013.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup013-ypqTiZCMsAztzBiSsY6dfw==/lib/arm64/libTestApp013ver6.so
+com.android.tests.pkgup013.Host : Exist: -rw-rw---- 1 u0_a100 u0_a100 141 2009-01-01 00:06 /data/data/com.android.tests.pkgup013/shared_prefs/data_history.xml
+com.android.tests.pkgup013.Host : #[END]-----------------------------------#
+com.android.tests.pkgup014.Host : #[START]---------------------------------#
+com.android.tests.pkgup014.TestApp : Package :com.android.tests.pkgup014
+com.android.tests.pkgup014.TestApp : VersionName :6
+com.android.tests.pkgup014.TestApp : VersionCode :6
+com.android.tests.pkgup014.TestApp : ResourceVersion:1
+com.android.tests.pkgup014.TestApp : SourceDir   :/data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==/base.apk
+com.android.tests.pkgup014.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==/base.apk
+com.android.tests.pkgup014.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup014
+com.android.tests.pkgup014.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==/lib/arm64
+com.android.tests.pkgup014.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup014.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup014.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup014.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup014.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup014.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup014.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup014.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup014.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup014.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup014.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup014.TestApp : splitSourceDirs :null
+com.android.tests.pkgup014.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup014.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup014.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==
+com.android.tests.pkgup014.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==
+com.android.tests.pkgup014.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup014.TestApp : NativeLibVersion:6
+com.android.tests.pkgup014.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup014.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup014.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup014.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp014/TestApp014.apk
+com.android.tests.pkgup014.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp014/lib/arm64/libTestApp014ver5.so
+com.android.tests.pkgup014.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==/base.apk
+com.android.tests.pkgup014.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup014-4h5WuYcuXpCkPiDqf2GDww==/lib/arm64/libTestApp014ver6.so
+com.android.tests.pkgup014.Host : Exist: -rw-rw---- 1 u0_a34 u0_a34 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup014/shared_prefs/data_history.xml
+com.android.tests.pkgup014.Host : #[END]-----------------------------------#
+com.android.tests.pkgup015.Host : #[START]---------------------------------#
+com.android.tests.pkgup015.TestApp : Package :com.android.tests.pkgup015
+com.android.tests.pkgup015.TestApp : VersionName :5
+com.android.tests.pkgup015.TestApp : VersionCode :5
+com.android.tests.pkgup015.TestApp : ResourceVersion:1
+com.android.tests.pkgup015.TestApp : SourceDir   :/system/priv-app/TestApp015/TestApp015.apk
+com.android.tests.pkgup015.TestApp : publicSourceDir   :/system/priv-app/TestApp015/TestApp015.apk
+com.android.tests.pkgup015.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup015
+com.android.tests.pkgup015.TestApp : NativeLibDir:/system/priv-app/TestApp015/lib/arm64
+com.android.tests.pkgup015.TestApp : flags:0x3888BE45
+com.android.tests.pkgup015.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup015.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup015.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup015.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup015.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup015.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup015.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup015.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup015.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup015.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup015.TestApp : splitSourceDirs :null
+com.android.tests.pkgup015.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup015.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup015.TestApp : scanSourceDir   :/system/priv-app/TestApp015
+com.android.tests.pkgup015.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp015
+com.android.tests.pkgup015.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup015.TestApp : NativeLibVersion:5
+com.android.tests.pkgup015.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup015.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup015.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup015.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp015/TestApp015.apk
+com.android.tests.pkgup015.Host : Exist: -rw-r--r-- 1 root root 68248 2018-04-25 11:41 /system/priv-app/TestApp015/lib/arm64/libTestApp015ver5.so
+com.android.tests.pkgup015.Host : Exist: -rw-rw---- 1 u0_a38 u0_a38 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup015/shared_prefs/data_history.xml
+com.android.tests.pkgup015.Host : #[END]-----------------------------------#
+com.android.tests.pkgup016.Host : #[START]---------------------------------#
+com.android.tests.pkgup016.TestApp : Package :com.android.tests.pkgup016
+com.android.tests.pkgup016.TestApp : VersionName :6
+com.android.tests.pkgup016.TestApp : VersionCode :6
+com.android.tests.pkgup016.TestApp : ResourceVersion:1
+com.android.tests.pkgup016.TestApp : SourceDir   :/data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==/base.apk
+com.android.tests.pkgup016.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==/base.apk
+com.android.tests.pkgup016.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup016
+com.android.tests.pkgup016.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==/lib/arm64
+com.android.tests.pkgup016.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup016.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup016.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup016.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup016.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup016.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup016.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup016.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup016.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup016.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup016.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup016.TestApp : splitSourceDirs :null
+com.android.tests.pkgup016.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup016.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup016.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==
+com.android.tests.pkgup016.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==
+com.android.tests.pkgup016.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup016.TestApp : NativeLibVersion:6
+com.android.tests.pkgup016.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup016.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup016.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup016.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp016/TestApp016.apk
+com.android.tests.pkgup016.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp016/lib/arm64/libTestApp016ver5.so
+com.android.tests.pkgup016.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:04 /data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==/base.apk
+com.android.tests.pkgup016.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup016-by47hJksTP_igugB6HfJXQ==/lib/arm64/libTestApp016ver6.so
+com.android.tests.pkgup016.Host : Exist: -rw-rw---- 1 u0_a40 u0_a40 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup016/shared_prefs/data_history.xml
+com.android.tests.pkgup016.Host : #[END]-----------------------------------#
+com.android.tests.pkgup017.Host : #[START]---------------------------------#
+com.android.tests.pkgup017.TestApp : Package :com.android.tests.pkgup017
+com.android.tests.pkgup017.TestApp : VersionName :6
+com.android.tests.pkgup017.TestApp : VersionCode :6
+com.android.tests.pkgup017.TestApp : ResourceVersion:1
+com.android.tests.pkgup017.TestApp : SourceDir   :/data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==/base.apk
+com.android.tests.pkgup017.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==/base.apk
+com.android.tests.pkgup017.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup017
+com.android.tests.pkgup017.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==/lib/arm64
+com.android.tests.pkgup017.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup017.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup017.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup017.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup017.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup017.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup017.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup017.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup017.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup017.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup017.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup017.TestApp : splitSourceDirs :null
+com.android.tests.pkgup017.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup017.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup017.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==
+com.android.tests.pkgup017.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==
+com.android.tests.pkgup017.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup017.TestApp : NativeLibVersion:6
+com.android.tests.pkgup017.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup017.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup017.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup017.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp017/TestApp017.apk
+com.android.tests.pkgup017.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp017/lib/arm64/libTestApp017ver5.so
+com.android.tests.pkgup017.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==/base.apk
+com.android.tests.pkgup017.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup017-bGXPeKNc8HHdEwB3v-iE8A==/lib/arm64/libTestApp017ver6.so
+com.android.tests.pkgup017.Host : Exist: -rw-rw---- 1 u0_a12 u0_a12 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup017/shared_prefs/data_history.xml
+com.android.tests.pkgup017.Host : #[END]-----------------------------------#
+com.android.tests.pkgup018.Host : #[START]---------------------------------#
+com.android.tests.pkgup018.TestApp : Package :com.android.tests.pkgup018
+com.android.tests.pkgup018.TestApp : VersionName :5
+com.android.tests.pkgup018.TestApp : VersionCode :5
+com.android.tests.pkgup018.TestApp : ResourceVersion:1
+com.android.tests.pkgup018.TestApp : SourceDir   :/system/priv-app/TestApp018/TestApp018.apk
+com.android.tests.pkgup018.TestApp : publicSourceDir   :/system/priv-app/TestApp018/TestApp018.apk
+com.android.tests.pkgup018.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup018
+com.android.tests.pkgup018.TestApp : NativeLibDir:/system/priv-app/TestApp018/lib/arm64
+com.android.tests.pkgup018.TestApp : flags:0x3888BE45
+com.android.tests.pkgup018.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup018.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup018.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup018.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup018.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup018.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup018.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup018.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup018.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup018.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup018.TestApp : splitSourceDirs :null
+com.android.tests.pkgup018.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup018.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup018.TestApp : scanSourceDir   :/system/priv-app/TestApp018
+com.android.tests.pkgup018.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp018
+com.android.tests.pkgup018.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup018.TestApp : NativeLibVersion:5
+com.android.tests.pkgup018.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup018.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup018.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup018.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp018/TestApp018.apk
+com.android.tests.pkgup018.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp018/lib/arm64/libTestApp018ver5.so
+com.android.tests.pkgup018.Host : Exist: -rw-rw---- 1 u0_a31 u0_a31 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup018/shared_prefs/data_history.xml
+com.android.tests.pkgup018.Host : #[END]-----------------------------------#
+com.android.tests.pkgup019.Host : #[START]---------------------------------#
+com.android.tests.pkgup019.TestApp : Package :com.android.tests.pkgup019
+com.android.tests.pkgup019.TestApp : VersionName :6
+com.android.tests.pkgup019.TestApp : VersionCode :6
+com.android.tests.pkgup019.TestApp : ResourceVersion:1
+com.android.tests.pkgup019.TestApp : SourceDir   :/data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==/base.apk
+com.android.tests.pkgup019.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==/base.apk
+com.android.tests.pkgup019.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup019
+com.android.tests.pkgup019.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==/lib/arm64
+com.android.tests.pkgup019.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup019.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup019.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup019.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup019.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup019.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup019.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup019.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup019.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup019.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup019.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup019.TestApp : splitSourceDirs :null
+com.android.tests.pkgup019.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup019.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup019.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==
+com.android.tests.pkgup019.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==
+com.android.tests.pkgup019.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup019.TestApp : NativeLibVersion:6
+com.android.tests.pkgup019.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup019.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup019.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup019.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp019/TestApp019.apk
+com.android.tests.pkgup019.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp019/lib/arm64/libTestApp019ver5.so
+com.android.tests.pkgup019.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==/base.apk
+com.android.tests.pkgup019.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup019-WAkS0HkvQ3JMGETbdvablg==/lib/arm64/libTestApp019ver6.so
+com.android.tests.pkgup019.Host : Exist: -rw-rw---- 1 u0_a7 u0_a7 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup019/shared_prefs/data_history.xml
+com.android.tests.pkgup019.Host : #[END]-----------------------------------#
+com.android.tests.pkgup020.Host : #[START]---------------------------------#
+com.android.tests.pkgup020.TestApp : Package :com.android.tests.pkgup020
+com.android.tests.pkgup020.TestApp : VersionName :5
+com.android.tests.pkgup020.TestApp : VersionCode :5
+com.android.tests.pkgup020.TestApp : ResourceVersion:1
+com.android.tests.pkgup020.TestApp : SourceDir   :/system/app/TestApp020/TestApp020.apk
+com.android.tests.pkgup020.TestApp : publicSourceDir   :/system/app/TestApp020/TestApp020.apk
+com.android.tests.pkgup020.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup020
+com.android.tests.pkgup020.TestApp : NativeLibDir:/system/app/TestApp020/lib/arm64
+com.android.tests.pkgup020.TestApp : flags:0x3888BE45
+com.android.tests.pkgup020.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup020.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup020.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup020.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup020.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup020.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup020.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup020.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup020.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup020.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup020.TestApp : splitSourceDirs :null
+com.android.tests.pkgup020.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup020.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup020.TestApp : scanSourceDir   :/system/app/TestApp020
+com.android.tests.pkgup020.TestApp : scanPublicSourceDir   :/system/app/TestApp020
+com.android.tests.pkgup020.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup020.TestApp : NativeLibVersion:5
+com.android.tests.pkgup020.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup020.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup020.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup020.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp020/TestApp020.apk
+com.android.tests.pkgup020.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp020/lib/arm64/libTestApp020ver5.so
+com.android.tests.pkgup020.Host : Exist: -rw-rw---- 1 u0_a60 u0_a60 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup020/shared_prefs/data_history.xml
+com.android.tests.pkgup020.Host : #[END]-----------------------------------#
+com.android.tests.pkgup021.Host : #[START]---------------------------------#
+com.android.tests.pkgup021.TestApp : Package :com.android.tests.pkgup021
+com.android.tests.pkgup021.TestApp : VersionName :6
+com.android.tests.pkgup021.TestApp : VersionCode :6
+com.android.tests.pkgup021.TestApp : ResourceVersion:1
+com.android.tests.pkgup021.TestApp : SourceDir   :/data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==/base.apk
+com.android.tests.pkgup021.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==/base.apk
+com.android.tests.pkgup021.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup021
+com.android.tests.pkgup021.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==/lib/arm64
+com.android.tests.pkgup021.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup021.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup021.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup021.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup021.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup021.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup021.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup021.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup021.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup021.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup021.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup021.TestApp : splitSourceDirs :null
+com.android.tests.pkgup021.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup021.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup021.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==
+com.android.tests.pkgup021.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==
+com.android.tests.pkgup021.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup021.TestApp : NativeLibVersion:6
+com.android.tests.pkgup021.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup021.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup021.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup021.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp021/TestApp021.apk
+com.android.tests.pkgup021.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp021/lib/arm64/libTestApp021ver5.so
+com.android.tests.pkgup021.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==/base.apk
+com.android.tests.pkgup021.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup021-4j1zBFzL_CBh4CJD4kYk0w==/lib/arm64/libTestApp021ver6.so
+com.android.tests.pkgup021.Host : Exist: -rw-rw---- 1 u0_a87 u0_a87 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup021/shared_prefs/data_history.xml
+com.android.tests.pkgup021.Host : #[END]-----------------------------------#
+com.android.tests.pkgup022.Host : #[START]---------------------------------#
+com.android.tests.pkgup022.TestApp : Package :com.android.tests.pkgup022
+com.android.tests.pkgup022.TestApp : VersionName :6
+com.android.tests.pkgup022.TestApp : VersionCode :6
+com.android.tests.pkgup022.TestApp : ResourceVersion:1
+com.android.tests.pkgup022.TestApp : SourceDir   :/data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==/base.apk
+com.android.tests.pkgup022.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==/base.apk
+com.android.tests.pkgup022.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup022
+com.android.tests.pkgup022.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==/lib/arm64
+com.android.tests.pkgup022.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup022.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup022.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup022.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup022.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup022.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup022.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup022.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup022.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup022.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup022.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup022.TestApp : splitSourceDirs :null
+com.android.tests.pkgup022.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup022.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup022.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==
+com.android.tests.pkgup022.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==
+com.android.tests.pkgup022.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup022.TestApp : NativeLibVersion:6
+com.android.tests.pkgup022.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup022.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup022.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup022.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp022/TestApp022.apk
+com.android.tests.pkgup022.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp022/lib/arm64/libTestApp022ver5.so
+com.android.tests.pkgup022.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==/base.apk
+com.android.tests.pkgup022.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup022-xsaGkNbL2hqmW-I0Dqiaow==/lib/arm64/libTestApp022ver6.so
+com.android.tests.pkgup022.Host : Exist: -rw-rw---- 1 u0_a46 u0_a46 143 2009-01-01 00:07 /data/data/com.android.tests.pkgup022/shared_prefs/data_history.xml
+com.android.tests.pkgup022.Host : #[END]-----------------------------------#
+com.android.tests.pkgup023.Host : #[START]---------------------------------#
+com.android.tests.pkgup023.TestApp : Package :com.android.tests.pkgup023
+com.android.tests.pkgup023.TestApp : VersionName :6
+com.android.tests.pkgup023.TestApp : VersionCode :6
+com.android.tests.pkgup023.TestApp : ResourceVersion:1
+com.android.tests.pkgup023.TestApp : SourceDir   :/data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==/base.apk
+com.android.tests.pkgup023.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==/base.apk
+com.android.tests.pkgup023.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup023
+com.android.tests.pkgup023.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==/lib/arm64
+com.android.tests.pkgup023.TestApp : flags:0x3888BE44
+com.android.tests.pkgup023.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup023.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup023.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup023.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup023.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup023.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup023.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup023.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup023.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup023.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup023.TestApp : splitSourceDirs :null
+com.android.tests.pkgup023.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup023.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup023.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==
+com.android.tests.pkgup023.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==
+com.android.tests.pkgup023.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup023.TestApp : NativeLibVersion:6
+com.android.tests.pkgup023.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup023.TestApp : UserDataHistory :6
+com.android.tests.pkgup023.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup023.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup023.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==/base.apk
+com.android.tests.pkgup023.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup023-jLhgMffonyZx-Ayc69Y23A==/lib/arm64/libTestApp023ver6.so
+com.android.tests.pkgup023.Host : Exist: -rw-rw---- 1 u0_a101 u0_a101 141 2009-01-01 00:08 /data/data/com.android.tests.pkgup023/shared_prefs/data_history.xml
+com.android.tests.pkgup023.Host : #[END]-----------------------------------#
+com.android.tests.pkgup024.Host : #[START]---------------------------------#
+com.android.tests.pkgup024.TestApp : Package :com.android.tests.pkgup024
+com.android.tests.pkgup024.TestApp : VersionName :6
+com.android.tests.pkgup024.TestApp : VersionCode :6
+com.android.tests.pkgup024.TestApp : ResourceVersion:1
+com.android.tests.pkgup024.TestApp : SourceDir   :/data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==/base.apk
+com.android.tests.pkgup024.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==/base.apk
+com.android.tests.pkgup024.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup024
+com.android.tests.pkgup024.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==/lib/arm64
+com.android.tests.pkgup024.TestApp : flags:0x3888BE44
+com.android.tests.pkgup024.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup024.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup024.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup024.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup024.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup024.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup024.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup024.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup024.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup024.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup024.TestApp : splitSourceDirs :null
+com.android.tests.pkgup024.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup024.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup024.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==
+com.android.tests.pkgup024.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==
+com.android.tests.pkgup024.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup024.TestApp : NativeLibVersion:6
+com.android.tests.pkgup024.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup024.TestApp : UserDataHistory :6
+com.android.tests.pkgup024.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup024.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup024.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==/base.apk
+com.android.tests.pkgup024.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup024-EDrt8jAJNs38pRZoOMuozg==/lib/arm64/libTestApp024ver6.so
+com.android.tests.pkgup024.Host : Exist: -rw-rw---- 1 u0_a102 u0_a102 141 2009-01-01 00:08 /data/data/com.android.tests.pkgup024/shared_prefs/data_history.xml
+com.android.tests.pkgup024.Host : #[END]-----------------------------------#
+com.android.tests.pkgup025.Host : #[START]---------------------------------#
+com.android.tests.pkgup025.TestApp : Package :com.android.tests.pkgup025
+com.android.tests.pkgup025.TestApp : VersionName :5
+com.android.tests.pkgup025.TestApp : VersionCode :5
+com.android.tests.pkgup025.TestApp : ResourceVersion:1
+com.android.tests.pkgup025.TestApp : SourceDir   :/system/priv-app/TestApp025/TestApp025.apk
+com.android.tests.pkgup025.TestApp : publicSourceDir   :/system/priv-app/TestApp025/TestApp025.apk
+com.android.tests.pkgup025.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup025
+com.android.tests.pkgup025.TestApp : NativeLibDir:/system/priv-app/TestApp025/lib/arm64
+com.android.tests.pkgup025.TestApp : flags:0x3888BE45
+com.android.tests.pkgup025.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup025.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup025.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup025.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup025.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup025.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup025.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup025.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup025.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup025.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup025.TestApp : splitSourceDirs :null
+com.android.tests.pkgup025.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup025.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup025.TestApp : scanSourceDir   :/system/priv-app/TestApp025
+com.android.tests.pkgup025.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp025
+com.android.tests.pkgup025.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup025.TestApp : NativeLibVersion:5
+com.android.tests.pkgup025.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup025.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup025.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup025.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp025/TestApp025.apk
+com.android.tests.pkgup025.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp025/lib/arm64/libTestApp025ver5.so
+com.android.tests.pkgup025.Host : Exist: -rw-rw---- 1 u0_a41 u0_a41 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup025/shared_prefs/data_history.xml
+com.android.tests.pkgup025.Host : #[END]-----------------------------------#
+com.android.tests.pkgup026.Host : #[START]---------------------------------#
+com.android.tests.pkgup026.TestApp : Package :com.android.tests.pkgup026
+com.android.tests.pkgup026.TestApp : VersionName :5
+com.android.tests.pkgup026.TestApp : VersionCode :5
+com.android.tests.pkgup026.TestApp : ResourceVersion:1
+com.android.tests.pkgup026.TestApp : SourceDir   :/system/priv-app/TestApp026/TestApp026.apk
+com.android.tests.pkgup026.TestApp : publicSourceDir   :/system/priv-app/TestApp026/TestApp026.apk
+com.android.tests.pkgup026.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup026
+com.android.tests.pkgup026.TestApp : NativeLibDir:/system/priv-app/TestApp026/lib/arm64
+com.android.tests.pkgup026.TestApp : flags:0x3888BE45
+com.android.tests.pkgup026.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup026.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup026.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup026.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup026.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup026.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup026.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup026.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup026.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup026.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup026.TestApp : splitSourceDirs :null
+com.android.tests.pkgup026.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup026.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup026.TestApp : scanSourceDir   :/system/priv-app/TestApp026
+com.android.tests.pkgup026.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp026
+com.android.tests.pkgup026.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup026.TestApp : NativeLibVersion:5
+com.android.tests.pkgup026.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup026.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup026.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup026.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp026/TestApp026.apk
+com.android.tests.pkgup026.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp026/lib/arm64/libTestApp026ver5.so
+com.android.tests.pkgup026.Host : Exist: -rw-rw---- 1 u0_a33 u0_a33 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup026/shared_prefs/data_history.xml
+com.android.tests.pkgup026.Host : #[END]-----------------------------------#
+com.android.tests.pkgup027.Host : #[START]---------------------------------#
+com.android.tests.pkgup027.TestApp : Package :com.android.tests.pkgup027
+com.android.tests.pkgup027.TestApp : VersionName :5
+com.android.tests.pkgup027.TestApp : VersionCode :5
+com.android.tests.pkgup027.TestApp : ResourceVersion:1
+com.android.tests.pkgup027.TestApp : SourceDir   :/system/priv-app/TestApp027/TestApp027.apk
+com.android.tests.pkgup027.TestApp : publicSourceDir   :/system/priv-app/TestApp027/TestApp027.apk
+com.android.tests.pkgup027.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup027
+com.android.tests.pkgup027.TestApp : NativeLibDir:/system/priv-app/TestApp027/lib/arm64
+com.android.tests.pkgup027.TestApp : flags:0x3888BE45
+com.android.tests.pkgup027.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup027.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup027.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup027.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup027.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup027.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup027.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup027.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup027.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup027.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup027.TestApp : splitSourceDirs :null
+com.android.tests.pkgup027.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup027.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup027.TestApp : scanSourceDir   :/system/priv-app/TestApp027
+com.android.tests.pkgup027.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp027
+com.android.tests.pkgup027.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup027.TestApp : NativeLibVersion:5
+com.android.tests.pkgup027.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup027.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup027.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup027.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp027/TestApp027.apk
+com.android.tests.pkgup027.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp027/lib/arm64/libTestApp027ver5.so
+com.android.tests.pkgup027.Host : Exist: -rw-rw---- 1 u0_a10 u0_a10 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup027/shared_prefs/data_history.xml
+com.android.tests.pkgup027.Host : #[END]-----------------------------------#
+com.android.tests.pkgup028.Host : #[START]---------------------------------#
+com.android.tests.pkgup028.TestApp : Package :com.android.tests.pkgup028
+com.android.tests.pkgup028.TestApp : VersionName :5
+com.android.tests.pkgup028.TestApp : VersionCode :5
+com.android.tests.pkgup028.TestApp : ResourceVersion:1
+com.android.tests.pkgup028.TestApp : SourceDir   :/system/app/TestApp028/TestApp028.apk
+com.android.tests.pkgup028.TestApp : publicSourceDir   :/system/app/TestApp028/TestApp028.apk
+com.android.tests.pkgup028.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup028
+com.android.tests.pkgup028.TestApp : NativeLibDir:/system/app/TestApp028/lib/arm64
+com.android.tests.pkgup028.TestApp : flags:0x3888BE45
+com.android.tests.pkgup028.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup028.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup028.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup028.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup028.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup028.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup028.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup028.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup028.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup028.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup028.TestApp : splitSourceDirs :null
+com.android.tests.pkgup028.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup028.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup028.TestApp : scanSourceDir   :/system/app/TestApp028
+com.android.tests.pkgup028.TestApp : scanPublicSourceDir   :/system/app/TestApp028
+com.android.tests.pkgup028.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup028.TestApp : NativeLibVersion:5
+com.android.tests.pkgup028.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup028.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup028.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup028.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp028/TestApp028.apk
+com.android.tests.pkgup028.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp028/lib/arm64/libTestApp028ver5.so
+com.android.tests.pkgup028.Host : Exist: -rw-rw---- 1 u0_a69 u0_a69 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup028/shared_prefs/data_history.xml
+com.android.tests.pkgup028.Host : #[END]-----------------------------------#
+com.android.tests.pkgup029.Host : #[START]---------------------------------#
+com.android.tests.pkgup029.TestApp : Package :com.android.tests.pkgup029
+com.android.tests.pkgup029.TestApp : VersionName :6
+com.android.tests.pkgup029.TestApp : VersionCode :6
+com.android.tests.pkgup029.TestApp : ResourceVersion:1
+com.android.tests.pkgup029.TestApp : SourceDir   :/data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==/base.apk
+com.android.tests.pkgup029.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==/base.apk
+com.android.tests.pkgup029.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup029
+com.android.tests.pkgup029.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==/lib/arm64
+com.android.tests.pkgup029.TestApp : flags:0x3888BE44
+com.android.tests.pkgup029.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup029.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup029.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup029.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup029.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup029.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup029.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup029.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup029.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup029.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup029.TestApp : splitSourceDirs :null
+com.android.tests.pkgup029.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup029.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup029.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==
+com.android.tests.pkgup029.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==
+com.android.tests.pkgup029.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup029.TestApp : NativeLibVersion:6
+com.android.tests.pkgup029.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup029.TestApp : UserDataHistory :6
+com.android.tests.pkgup029.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup029.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup029.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==/base.apk
+com.android.tests.pkgup029.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup029-noghDquIFHahmlsTTSVuXA==/lib/arm64/libTestApp029ver6.so
+com.android.tests.pkgup029.Host : Exist: -rw-rw---- 1 u0_a103 u0_a103 141 2009-01-01 00:08 /data/data/com.android.tests.pkgup029/shared_prefs/data_history.xml
+com.android.tests.pkgup029.Host : #[END]-----------------------------------#
+com.android.tests.pkgup030.Host : #[START]---------------------------------#
+com.android.tests.pkgup030.TestApp : Package :com.android.tests.pkgup030
+com.android.tests.pkgup030.TestApp : VersionName :5
+com.android.tests.pkgup030.TestApp : VersionCode :5
+com.android.tests.pkgup030.TestApp : ResourceVersion:1
+com.android.tests.pkgup030.TestApp : SourceDir   :/system/app/TestApp030/TestApp030.apk
+com.android.tests.pkgup030.TestApp : publicSourceDir   :/system/app/TestApp030/TestApp030.apk
+com.android.tests.pkgup030.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup030
+com.android.tests.pkgup030.TestApp : NativeLibDir:/system/app/TestApp030/lib/arm64
+com.android.tests.pkgup030.TestApp : flags:0x3888BE45
+com.android.tests.pkgup030.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup030.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup030.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup030.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup030.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup030.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup030.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup030.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup030.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup030.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup030.TestApp : splitSourceDirs :null
+com.android.tests.pkgup030.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup030.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup030.TestApp : scanSourceDir   :/system/app/TestApp030
+com.android.tests.pkgup030.TestApp : scanPublicSourceDir   :/system/app/TestApp030
+com.android.tests.pkgup030.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup030.TestApp : NativeLibVersion:5
+com.android.tests.pkgup030.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup030.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup030.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup030.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp030/TestApp030.apk
+com.android.tests.pkgup030.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp030/lib/arm64/libTestApp030ver5.so
+com.android.tests.pkgup030.Host : Exist: -rw-rw---- 1 u0_a64 u0_a64 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup030/shared_prefs/data_history.xml
+com.android.tests.pkgup030.Host : #[END]-----------------------------------#
+com.android.tests.pkgup031.Host : #[START]---------------------------------#
+com.android.tests.pkgup031.TestApp : Package :com.android.tests.pkgup031
+com.android.tests.pkgup031.TestApp : VersionName :6
+com.android.tests.pkgup031.TestApp : VersionCode :6
+com.android.tests.pkgup031.TestApp : ResourceVersion:1
+com.android.tests.pkgup031.TestApp : SourceDir   :/data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==/base.apk
+com.android.tests.pkgup031.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==/base.apk
+com.android.tests.pkgup031.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup031
+com.android.tests.pkgup031.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==/lib/arm64
+com.android.tests.pkgup031.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup031.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup031.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup031.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup031.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup031.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup031.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup031.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup031.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup031.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup031.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup031.TestApp : splitSourceDirs :null
+com.android.tests.pkgup031.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup031.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup031.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==
+com.android.tests.pkgup031.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==
+com.android.tests.pkgup031.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup031.TestApp : NativeLibVersion:6
+com.android.tests.pkgup031.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup031.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup031.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup031.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp031/TestApp031.apk
+com.android.tests.pkgup031.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp031/lib/arm64/libTestApp031ver5.so
+com.android.tests.pkgup031.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==/base.apk
+com.android.tests.pkgup031.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup031-v_96UPi5tmjCcb918gTLag==/lib/arm64/libTestApp031ver6.so
+com.android.tests.pkgup031.Host : Exist: -rw-rw---- 1 u0_a76 u0_a76 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup031/shared_prefs/data_history.xml
+com.android.tests.pkgup031.Host : #[END]-----------------------------------#
+com.android.tests.pkgup032.Host : #[START]---------------------------------#
+com.android.tests.pkgup032.TestApp : Package :com.android.tests.pkgup032
+com.android.tests.pkgup032.TestApp : VersionName :6
+com.android.tests.pkgup032.TestApp : VersionCode :6
+com.android.tests.pkgup032.TestApp : ResourceVersion:1
+com.android.tests.pkgup032.TestApp : SourceDir   :/data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==/base.apk
+com.android.tests.pkgup032.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==/base.apk
+com.android.tests.pkgup032.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup032
+com.android.tests.pkgup032.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==/lib/arm64
+com.android.tests.pkgup032.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup032.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup032.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup032.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup032.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup032.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup032.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup032.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup032.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup032.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup032.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup032.TestApp : splitSourceDirs :null
+com.android.tests.pkgup032.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup032.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup032.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==
+com.android.tests.pkgup032.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==
+com.android.tests.pkgup032.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup032.TestApp : NativeLibVersion:6
+com.android.tests.pkgup032.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup032.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup032.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup032.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/app/TestApp032/TestApp032.apk
+com.android.tests.pkgup032.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/app/TestApp032/lib/arm64/libTestApp032ver5.so
+com.android.tests.pkgup032.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==/base.apk
+com.android.tests.pkgup032.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup032-1jNPg6oNsPrMdZCvh4STAQ==/lib/arm64/libTestApp032ver6.so
+com.android.tests.pkgup032.Host : Exist: -rw-rw---- 1 u0_a74 u0_a74 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup032/shared_prefs/data_history.xml
+com.android.tests.pkgup032.Host : #[END]-----------------------------------#
+com.android.tests.pkgup033.Host : #[START]---------------------------------#
+com.android.tests.pkgup033.TestApp : Package :com.android.tests.pkgup033
+com.android.tests.pkgup033.TestApp : VersionName :5
+com.android.tests.pkgup033.TestApp : VersionCode :5
+com.android.tests.pkgup033.TestApp : ResourceVersion:1
+com.android.tests.pkgup033.TestApp : SourceDir   :/system/priv-app/TestApp033/TestApp033.apk
+com.android.tests.pkgup033.TestApp : publicSourceDir   :/system/priv-app/TestApp033/TestApp033.apk
+com.android.tests.pkgup033.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup033
+com.android.tests.pkgup033.TestApp : NativeLibDir:/system/priv-app/TestApp033/lib/arm64
+com.android.tests.pkgup033.TestApp : flags:0x3888BE45
+com.android.tests.pkgup033.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup033.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup033.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup033.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup033.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup033.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup033.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup033.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup033.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup033.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup033.TestApp : splitSourceDirs :null
+com.android.tests.pkgup033.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup033.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup033.TestApp : scanSourceDir   :/system/priv-app/TestApp033
+com.android.tests.pkgup033.TestApp : scanPublicSourceDir   :/system/priv-app/TestApp033
+com.android.tests.pkgup033.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup033.TestApp : NativeLibVersion:5
+com.android.tests.pkgup033.TestApp : UserDataVersion :5 => 5
+com.android.tests.pkgup033.TestApp : UserDataHistory :5,5
+com.android.tests.pkgup033.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup033.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp033/TestApp033.apk
+com.android.tests.pkgup033.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp033/lib/arm64/libTestApp033ver5.so
+com.android.tests.pkgup033.Host : Exist: -rw-rw---- 1 u0_a37 u0_a37 143 2009-01-01 00:08 /data/data/com.android.tests.pkgup033/shared_prefs/data_history.xml
+com.android.tests.pkgup033.Host : #[END]-----------------------------------#
+com.android.tests.pkgup034.Host : #[START]---------------------------------#
+com.android.tests.pkgup034.TestApp : Package :com.android.tests.pkgup034
+com.android.tests.pkgup034.TestApp : VersionName :6
+com.android.tests.pkgup034.TestApp : VersionCode :6
+com.android.tests.pkgup034.TestApp : ResourceVersion:1
+com.android.tests.pkgup034.TestApp : SourceDir   :/data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==/base.apk
+com.android.tests.pkgup034.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==/base.apk
+com.android.tests.pkgup034.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup034
+com.android.tests.pkgup034.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==/lib/arm64
+com.android.tests.pkgup034.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup034.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup034.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup034.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup034.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup034.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup034.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup034.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup034.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup034.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup034.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup034.TestApp : splitSourceDirs :null
+com.android.tests.pkgup034.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup034.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup034.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==
+com.android.tests.pkgup034.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==
+com.android.tests.pkgup034.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup034.TestApp : NativeLibVersion:6
+com.android.tests.pkgup034.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup034.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup034.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup034.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp034/TestApp034.apk
+com.android.tests.pkgup034.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp034/lib/arm64/libTestApp034ver5.so
+com.android.tests.pkgup034.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==/base.apk
+com.android.tests.pkgup034.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup034-bqDlFKTsAcDZQCElHTVzpg==/lib/arm64/libTestApp034ver6.so
+com.android.tests.pkgup034.Host : Exist: -rw-rw---- 1 u0_a11 u0_a11 143 2009-01-01 00:09 /data/data/com.android.tests.pkgup034/shared_prefs/data_history.xml
+com.android.tests.pkgup034.Host : #[END]-----------------------------------#
+com.android.tests.pkgup035.Host : #[START]---------------------------------#
+com.android.tests.pkgup035.TestApp : Package :com.android.tests.pkgup035
+com.android.tests.pkgup035.TestApp : VersionName :6
+com.android.tests.pkgup035.TestApp : VersionCode :6
+com.android.tests.pkgup035.TestApp : ResourceVersion:1
+com.android.tests.pkgup035.TestApp : SourceDir   :/data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==/base.apk
+com.android.tests.pkgup035.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==/base.apk
+com.android.tests.pkgup035.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup035
+com.android.tests.pkgup035.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==/lib/arm64
+com.android.tests.pkgup035.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup035.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup035.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup035.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup035.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup035.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup035.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup035.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup035.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup035.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup035.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup035.TestApp : splitSourceDirs :null
+com.android.tests.pkgup035.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup035.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup035.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==
+com.android.tests.pkgup035.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==
+com.android.tests.pkgup035.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup035.TestApp : NativeLibVersion:6
+com.android.tests.pkgup035.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup035.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup035.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup035.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp035/TestApp035.apk
+com.android.tests.pkgup035.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp035/lib/arm64/libTestApp035ver5.so
+com.android.tests.pkgup035.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==/base.apk
+com.android.tests.pkgup035.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup035-F5Z74nbzOgIusuQoqJbQHA==/lib/arm64/libTestApp035ver6.so
+com.android.tests.pkgup035.Host : Exist: -rw-rw---- 1 u0_a43 u0_a43 143 2009-01-01 00:09 /data/data/com.android.tests.pkgup035/shared_prefs/data_history.xml
+com.android.tests.pkgup035.Host : #[END]-----------------------------------#
+com.android.tests.pkgup036.Host : #[START]---------------------------------#
+com.android.tests.pkgup036.TestApp : Package :com.android.tests.pkgup036
+com.android.tests.pkgup036.TestApp : VersionName :6
+com.android.tests.pkgup036.TestApp : VersionCode :6
+com.android.tests.pkgup036.TestApp : ResourceVersion:1
+com.android.tests.pkgup036.TestApp : SourceDir   :/data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==/base.apk
+com.android.tests.pkgup036.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==/base.apk
+com.android.tests.pkgup036.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup036
+com.android.tests.pkgup036.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==/lib/arm64
+com.android.tests.pkgup036.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup036.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup036.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup036.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup036.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup036.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup036.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup036.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup036.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup036.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup036.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup036.TestApp : splitSourceDirs :null
+com.android.tests.pkgup036.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup036.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup036.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==
+com.android.tests.pkgup036.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==
+com.android.tests.pkgup036.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup036.TestApp : NativeLibVersion:6
+com.android.tests.pkgup036.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup036.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup036.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup036.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp036/TestApp036.apk
+com.android.tests.pkgup036.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp036/lib/arm64/libTestApp036ver5.so
+com.android.tests.pkgup036.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==/base.apk
+com.android.tests.pkgup036.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup036-m12CBqk6QKJCjBjJQOA2WQ==/lib/arm64/libTestApp036ver6.so
+com.android.tests.pkgup036.Host : Exist: -rw-rw---- 1 u0_a9 u0_a9 143 2009-01-01 00:09 /data/data/com.android.tests.pkgup036/shared_prefs/data_history.xml
+com.android.tests.pkgup036.Host : #[END]-----------------------------------#
+com.android.tests.pkgup037.Host : #[START]---------------------------------#
+com.android.tests.pkgup037.TestApp : Package :com.android.tests.pkgup037
+com.android.tests.pkgup037.TestApp : VersionName :6
+com.android.tests.pkgup037.TestApp : VersionCode :6
+com.android.tests.pkgup037.TestApp : ResourceVersion:1
+com.android.tests.pkgup037.TestApp : SourceDir   :/data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==/base.apk
+com.android.tests.pkgup037.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==/base.apk
+com.android.tests.pkgup037.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup037
+com.android.tests.pkgup037.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==/lib/arm64
+com.android.tests.pkgup037.TestApp : flags:0x3888BE44
+com.android.tests.pkgup037.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup037.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup037.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup037.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup037.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup037.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup037.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup037.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup037.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup037.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup037.TestApp : splitSourceDirs :null
+com.android.tests.pkgup037.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup037.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup037.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==
+com.android.tests.pkgup037.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==
+com.android.tests.pkgup037.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup037.TestApp : NativeLibVersion:6
+com.android.tests.pkgup037.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup037.TestApp : UserDataHistory :6
+com.android.tests.pkgup037.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup037.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup037.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==/base.apk
+com.android.tests.pkgup037.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup037-KeVHE6phvwAeiwulx2CDvA==/lib/arm64/libTestApp037ver6.so
+com.android.tests.pkgup037.Host : Exist: -rw-rw---- 1 u0_a104 u0_a104 141 2009-01-01 00:09 /data/data/com.android.tests.pkgup037/shared_prefs/data_history.xml
+com.android.tests.pkgup037.Host : #[END]-----------------------------------#
+com.android.tests.pkgup038.Host : #[START]---------------------------------#
+com.android.tests.pkgup038.TestApp : Package :com.android.tests.pkgup038
+com.android.tests.pkgup038.TestApp : VersionName :6
+com.android.tests.pkgup038.TestApp : VersionCode :6
+com.android.tests.pkgup038.TestApp : ResourceVersion:1
+com.android.tests.pkgup038.TestApp : SourceDir   :/data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==/base.apk
+com.android.tests.pkgup038.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==/base.apk
+com.android.tests.pkgup038.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup038
+com.android.tests.pkgup038.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==/lib/arm64
+com.android.tests.pkgup038.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup038.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup038.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup038.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup038.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup038.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup038.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup038.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup038.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup038.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup038.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup038.TestApp : splitSourceDirs :null
+com.android.tests.pkgup038.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup038.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup038.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==
+com.android.tests.pkgup038.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==
+com.android.tests.pkgup038.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup038.TestApp : NativeLibVersion:6
+com.android.tests.pkgup038.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup038.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup038.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup038.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp038/TestApp038.apk
+com.android.tests.pkgup038.Host : Exist: -rw-r--r-- 1 root root 68248 2018-04-25 11:41 /system/priv-app/TestApp038/lib/arm64/libTestApp038ver5.so
+com.android.tests.pkgup038.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==/base.apk
+com.android.tests.pkgup038.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup038-RXQqEMv6vqaWjoYOzHlNEA==/lib/arm64/libTestApp038ver6.so
+com.android.tests.pkgup038.Host : Exist: -rw-rw---- 1 u0_a32 u0_a32 143 2009-01-01 00:09 /data/data/com.android.tests.pkgup038/shared_prefs/data_history.xml
+com.android.tests.pkgup038.Host : #[END]-----------------------------------#
+com.android.tests.pkgup039.Host : #[START]---------------------------------#
+com.android.tests.pkgup039.TestApp : Package :com.android.tests.pkgup039
+com.android.tests.pkgup039.TestApp : VersionName :6
+com.android.tests.pkgup039.TestApp : VersionCode :6
+com.android.tests.pkgup039.TestApp : ResourceVersion:1
+com.android.tests.pkgup039.TestApp : SourceDir   :/data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==/base.apk
+com.android.tests.pkgup039.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==/base.apk
+com.android.tests.pkgup039.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup039
+com.android.tests.pkgup039.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==/lib/arm64
+com.android.tests.pkgup039.TestApp : flags:0x3888BE44
+com.android.tests.pkgup039.TestApp :     FLAG_SYSTEM : false
+com.android.tests.pkgup039.TestApp :     FLAG_UPDATED_SYSTEM_APP : false
+com.android.tests.pkgup039.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup039.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup039.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup039.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup039.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup039.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup039.TestApp : privateFlags:0x00001000
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_PRIVILEGED : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup039.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup039.TestApp : splitSourceDirs :null
+com.android.tests.pkgup039.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup039.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup039.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==
+com.android.tests.pkgup039.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==
+com.android.tests.pkgup039.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup039.TestApp : NativeLibVersion:6
+com.android.tests.pkgup039.TestApp : UserDataVersion :-1 => 6
+com.android.tests.pkgup039.TestApp : UserDataHistory :6
+com.android.tests.pkgup039.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup039.TestApp.diag : * EMPTY UserData.
+com.android.tests.pkgup039.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==/base.apk
+com.android.tests.pkgup039.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup039-TVKbjul-gK0YS_4vljuKgA==/lib/arm64/libTestApp039ver6.so
+com.android.tests.pkgup039.Host : Exist: -rw-rw---- 1 u0_a105 u0_a105 141 2009-01-01 00:09 /data/data/com.android.tests.pkgup039/shared_prefs/data_history.xml
+com.android.tests.pkgup039.Host : #[END]-----------------------------------#
+com.android.tests.pkgup040.Host : #[START]---------------------------------#
+com.android.tests.pkgup040.TestApp : Package :com.android.tests.pkgup040
+com.android.tests.pkgup040.TestApp : VersionName :6
+com.android.tests.pkgup040.TestApp : VersionCode :6
+com.android.tests.pkgup040.TestApp : ResourceVersion:1
+com.android.tests.pkgup040.TestApp : SourceDir   :/data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==/base.apk
+com.android.tests.pkgup040.TestApp : publicSourceDir   :/data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==/base.apk
+com.android.tests.pkgup040.TestApp : DataDir     :/data/user/0/com.android.tests.pkgup040
+com.android.tests.pkgup040.TestApp : NativeLibDir:/data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==/lib/arm64
+com.android.tests.pkgup040.TestApp : flags:0x3888BEC5
+com.android.tests.pkgup040.TestApp :     FLAG_SYSTEM : true
+com.android.tests.pkgup040.TestApp :     FLAG_UPDATED_SYSTEM_APP : true
+com.android.tests.pkgup040.TestApp :     FLAG_IS_DATA_ONLY : false
+com.android.tests.pkgup040.TestApp :     FLAG_INSTALLED : true
+com.android.tests.pkgup040.TestApp :     FLAG_EXTERNAL_STORAGE : false
+com.android.tests.pkgup040.TestApp :     FLAG_MULTIARCH : false
+com.android.tests.pkgup040.TestApp :     FLAG_EXTRACT_NATIVE_LIBS : true
+com.android.tests.pkgup040.TestApp :     FLAG_SUSPENDED : false
+com.android.tests.pkgup040.TestApp : privateFlags:0x00001008
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_HIDDEN : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_CANT_SAVE_STATE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_FORWARD_LOCK : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_PRIVILEGED : true
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_HAS_DOMAIN_URLS : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_BACKUP_IN_FOREGROUND : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_INSTANT : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION : true
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_STATIC_SHARED_LIBRARY : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_ISOLATED_SPLIT_LOADING : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_VIRTUAL_PRELOAD : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_OEM : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_VENDOR : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_PRODUCT : false
+com.android.tests.pkgup040.TestApp :     PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY : false
+com.android.tests.pkgup040.TestApp : splitSourceDirs :null
+com.android.tests.pkgup040.TestApp : splitPublicSourceDirs :null
+com.android.tests.pkgup040.TestApp : sharedLibraryFiles :null
+com.android.tests.pkgup040.TestApp : scanSourceDir   :/data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==
+com.android.tests.pkgup040.TestApp : scanPublicSourceDir   :/data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==
+com.android.tests.pkgup040.TestApp : secondaryNativeLibraryDir   :null
+com.android.tests.pkgup040.TestApp : NativeLibVersion:6
+com.android.tests.pkgup040.TestApp : UserDataVersion :5 => 6
+com.android.tests.pkgup040.TestApp : UserDataHistory :5,6
+com.android.tests.pkgup040.TestApp.diag : * Something wrong with Resource Version.
+com.android.tests.pkgup040.Host : Exist: -rw-r--r-- 1 root root 102971 2018-04-25 11:41 /system/priv-app/TestApp040/TestApp040.apk
+com.android.tests.pkgup040.Host : Exist: -rw-r--r-- 1 root root 68256 2018-04-25 11:41 /system/priv-app/TestApp040/lib/arm64/libTestApp040ver5.so
+com.android.tests.pkgup040.Host : Exist: -rw-r--r-- 1 system system 102971 2009-01-01 00:05 /data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==/base.apk
+com.android.tests.pkgup040.Host : Exist: -rwxr-xr-x 1 system system 68256 2009-01-01 00:00 /data/app/com.android.tests.pkgup040-MCs2e0S0JcBRuajWeFZx-w==/lib/arm64/libTestApp040ver6.so
+com.android.tests.pkgup040.Host : Exist: -rw-rw---- 1 u0_a24 u0_a24 143 2009-01-01 00:09 /data/data/com.android.tests.pkgup040/shared_prefs/data_history.xml
+com.android.tests.pkgup040.Host : #[END]-----------------------------------#

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="%(package_name)s"
+      android:versionCode="%(version_code)s"
+      android:versionName="%(version_name)s"
+      android:installLocation="%(install_loc)s"
+      >
+    <uses-sdk android:minSdkVersion="%(min_sdk_version)s" android:targetSdkVersion="%(target_sdk_version)s" />
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+        <activity android:name="%(activity_name)s"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
