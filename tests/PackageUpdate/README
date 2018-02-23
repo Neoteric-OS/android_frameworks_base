@@ -1,0 +1,113 @@
+Package Update Test Suite
+
+Package Update Test Suite is framework for testing of package install/update.
+This test suite virifies whether PackageManagerService can manage installed applications and
+user data correctly through SW update (ROM1 -> ROM2).
+
+Background:
+- PackageManagerService is huge and complicated.
+- Bugs in PackageManagerService cause serious problems on market.
+- To maintain PackageManagerService securely, automated test is thought to be needed.
+
+How to use it:
+
+[Prerequisite]
+- Ubuntu PC is required.
+  (Test execution has been verified on Ubuntu14.)
+- Pixel / Pixel 2 are available with bootloader unlocked fully.
+- Latest fastboot
+- Latest Android SDK / NDK
+- Download ROM images
+  Need to place 2 version ROM for simulating letter update
+  ex:ROM
+      + -- radio.img
+      + -- bootloader.img
+      + -- aosp_walleye-img-xxxx-zip
+
+[Create test applications]
+1. $ cd frameworks/base/tests/PackageUpdate/app-generate
+2. $ export SDK_ROOT=<path/to/sdk>
+3. $ export NDK_ROOT=<path/to/ndk>
+4. $ app-genrerate.bash
+5. When it is succeeded in building test applications, below directory and applications are created.
+
+        app-generate
+        +-- results
+        |   +-- com.android.tests.pkgup001
+        |   |   +-- ver1
+        |   |   |   +-- TestApp001.apk
+        |   |   |   +-- libs
+        |   |   |       +-- arm64-v8a
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi-v7a
+        |   |   |           +-- libTestApp001.so
+        |   |   +-- ver10
+        |   |   |   +-- TestApp001.apk
+        |   |   |   +-- libs
+        |   |   |       +-- arm64-v8a
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi-v7a
+        |   |   |           +-- libTestApp001.so
+        |   |   +-- ver2
+        |   |   |   +-- TestApp001.apk
+        |   |   |   +-- libs
+        |   |   |       +-- arm64-v8a
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi-v7a
+        |   |   |           +-- libTestApp001.so
+        |   |   +-- ver3
+        |   |   |   +-- TestApp001.apk
+        |   |   |   +-- libs
+        |   |   |       +-- arm64-v8a
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi
+        |   |   |       |   +-- libTestApp001.so
+        |   |   |       +-- armeabi-v7a
+        |   |   |           +-- libTestApp001.so
+
+
+6. Compress the test applications
+   $ cd results/
+   $ zip -r testapps.zip ./
+
+
+[Run test]
+1. $ cd frameworks/base/tests/PackageUpdate
+2. $ bash run_test.bash -s <ANDROID_SERIAL> -r testcases/01_basic-scope/o2o/ testcases/01_basic-scope/testcase.txt <path/to/the/test_apps> <path/to/the/rom_1st> <path/to/the/rom_2nd>
+
+ex) $ bash run_test.bash -s XXXXXXX -r testcases/01_basic-scope/o2o/ testcases/01_basic-scope/testcase.txt app-generate/results/testapps.zip ROM/ROM1.zip ROM/ROM2.zip
+
+- ANDROID_SERIAL: You can get info with below commands
+  $ adb devices
+- ROM1/ROM2.zip
+  ex:ROM1
+      + -- radio.img
+      + -- bootloader.img
+      + -- aosp_walleye-img-xxxx-zip
+
+3. If you are required to input sudo password, please input.
+4. When all tests are executed, whole results are placed in frameworks/base/tests/PackageUpdate/reports/
+   reports/html/analysis.html are available.
+
+
+Appendix:
+This test script uses ext2simg and related libraries in order to compose test images.
+These binaries in tools/ were made by full-build results of android-8.1.0_r5
+
+tools/
++ ext2simg
++--lib64
+|   +-- libbase.so
+|   +-- libc++.so
+|   +-- libext2_com_err-host.so
+|   +-- libext2fs-host.so
+|   +-- liblog.so
+|   +-- libsparse-host.so
+|   +-- libz-host.so
++ simg2img

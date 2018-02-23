@@ -1,0 +1,120 @@
+This document explains test case specification and view points.
+Test cases are defined in testcase.txt
+
+
+----------
+1- Summary
+----------
+Test scenario of this test suite is composed of below view points.
+
+ROM Image:
+    This SW includes not only system image, but also test applications.
+    You can select the condition whether System or System privileged application is pre-installed.
+
+Operation:
+     You can execute some operation for the device.
+
+----------
+2- Column
+----------
+id:
+    summary:
+        test case id
+
+ROM1:
+    summary:
+        It is flashed into Device as initial SW
+    params:
+        No-exist:
+            No test application is included in SW image.
+        Pre-installed:
+            System application (located in /system/app/) is included in SW image.
+        Priv-installed:
+            System privileged applistion (located in /system/priv-app/) is included in SW image.
+
+ROM1_Op1:
+    summary:
+        It is first operation for ROM1
+    params:
+        NA:
+            Not execute any operation
+        Install-UP:
+            Install newer version of application (located in /data/app/)
+        Install-Keep:
+            Install same version of application (located in /data/app/)
+        Install-Down:
+            Install older version of application (located in /data/app/)
+ROM1_Op2:
+    summary:
+        It is second operation for ROM2
+    params:
+        NA:
+            Not execute any operation
+        Install-UP:
+            Install newer version of application (located in /data/app/)
+        Install-Keep:
+            Install same version of application (located in /data/app/)
+        Install-Down:
+            Install older version of application (located in /data/app/)
+ROM2:
+    summary:
+        It is flashed into Device as simulation of letter upgrade.
+    params:
+        No-exist:
+            No test application is included in SW image.
+        Version-Up:
+            Newer system application (located in /system/app/) is included in SW image.
+        Version-Keep:
+            Same system application (located in /system/app/) is included in SW image.
+        Verson-Down:
+            Older system application (located in /system/app/) is included in SW image.
+        Priv-UP:
+            Newer system privileged application (located in /system/priv-app/) is included in SW image.
+        Priv-Down:
+            Older system privileged application (located in /system/priv-app/) is included in SW image.
+        Priv-Keep:
+            Same system privileged application (located in /system/priv-app/) is included in SW image.
+ROM2_Op1:
+    summary:
+        It is first operation for ROM1
+    params:
+        NA:
+            Not execute any operation
+        Install-UP:
+            Install newer version of application (located in /data/app/)
+        Install-Keep:
+            Install same version of application (located in /data/app/)
+        Install-Down:
+            Install older version of application (located in /data/app/)
+        Uninstall:
+            Uninstall application
+ROM2_Op2:
+    summary:
+        It is first operation for ROM2
+    params:
+        NA:
+            Not execute any operation
+        Install-UP:
+            Install newer version of application (located in /data/app/)
+        Install-Keep:
+            Install same version of application (located in /data/app/)
+        Install-Down:
+            Install older version of application (located in /data/app/)
+        Uninstall:
+            Uninstall application
+
+
+
+----------
+3- View points of each test scenario
+----------
+From id 1 to 8 and 40:
+    Focus on fundamental version upgrade or keep.
+From id 9 to 13:
+    Focus on fundamental version downgrade.
+From id 14 to 29:
+    Focus on basic operation for privileged application
+From id 30 to 35
+    Focus on removing system and system privileged application
+From id 36 to 39
+    Focus on version downgrade or keep from data application
