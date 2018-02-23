@@ -1,0 +1,97 @@
+Package Update Test Suite
+
+Package Update Test Suite is framework for testing of package install/update.
+This test suite verifies whether PackageManagerService can manage installed applications and
+user data correctly through SW update (ROM1 -> ROM2).
+
+Background:
+- PackageManagerService is huge and complicated.
+- Bugs in PackageManagerService cause serious problems on market.
+- To maintain PackageManagerService securely, automated test is thought to be needed.
+
+How to use it:
+
+[Prerequisite]
+- Ubuntu PC is required.
+  - Test execution has been verified on Ubuntu14.
+  - Add udev rule into /etc/udev/rules.d/51-android.rules for detecting target device by fastboot.
+    see: https://developer.android.com/studio/run/device.html
+- Pixel / Pixel 2 are available with bootloader unlocked fully.
+- Latest fastboot
+- Download ROM images
+  Need to place 2 version ROM for simulating letter update
+  ex:ROM
+      + -- radio.img
+      + -- bootloader.img
+      + -- aosp_walleye-img-xxxx-zip
+- Build Android code
+    - see: https://source.android.com/setup/build/building
+
+[Run test]
+ 1. Move to root directory of source tree
+ 2. $ source ./build/envsetup.sh
+ 3. $ lunch <device-target>
+ 4. Create test applications
+    $ make package_update_testapps
+    NOTE:
+      Build test applications and create zip archive in
+        $OUT/obj/PACKAGING/PackageUpdate_intermediates/testapps/testapps.zip
+
+ 5. $ make package_update_harnesses
+ 6. Copy sources under frameworks/base/tests/PackageUpdate/harnesses/tradefed/ to tools/tradefederation/contrib.
+    $ mkdir -p tools/tradefederation/contrib/res/config/pkgup
+    $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/config/* tools/tradefederation/contrib/res/config/pkgup/
+    $ mkdir -p tools/tradefederation/contrib/src/com/android/tests/pkgup
+    $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/src/com/android/tests/pkgup/* tools/tradefederation/contrib/src/com/android/tests/pkgup/
+ 7. $ make tradefed-all
+ 8. $ tradefed.sh
+ 9. tf >run pkgup/<config> --rom1-zip <path/to/the/rom_1st> --rom2-zip <path/to/the/rom_2nd>
+
+    <config> is a tradefed test configuration which has a name like basic-scope-v2s-o2p.
+      - basic scope
+        Testcase that is used for this configuration. Currently this framework support following 2 testcases.
+        - testcases/01_basic-scope/TestcaseSpec.txt
+        - testcases/02_disable-app/TestcaseSpec.txt
+      - v2s
+        It means test applications will be pre-installed into vendor partition at ROM1,
+        and they will be pre-installed system partition at ROM2.
+      - o2p
+        It means that ROM1 is based on Android O, and ROM2 is based on Android P.
+        It is used for evaluation of test results.
+
+    You can get all available configurations by
+      tf >list config
+    command on tradefed.
+
+
+[Test result]
+- When all tests are executed, logs and results are placed in $OUT/obj/PACKAGING/PackageUpdate_intermediates/0/<config>/inv_<integer value>/.
+    - Test summary is included in test_result_<hash>.zip.
+- The detailed test results are reported in $OUT/obj/PACKAGING/PackageUpdate_intermediates/0/<config>/inv_<hash>/reports/html/analysis.html.
+
+
+[Standalone package]
+- Create standalone package
+  1. Move to root directory of source tree
+  2. $ source ./build/envsetup.sh
+  3. $ lunch <device-target>
+  4. Copy sources under frameworks/base/tests/PackageUpdate/harnesses/tradefed/ to tools/tradefederation/contrib.
+     $ mkdir -p tools/tradefederation/contrib/res/config/pkgup
+     $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/config/* tools/tradefederation/contrib/res/config/pkgup/
+     $ mkdir -p tools/tradefederation/contrib/src/com/android/tests/pkgup
+     $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/src/com/android/tests/pkgup/* tools/tradefederation/contrib/src/com/android/tests/pkgup/
+
+  5. $ make package_update_zip
+     NOTE:
+       Create zip package in
+         $OUT/obj/PACKAGING/PackageUpdate_intermediates/PackageUpdate.zip
+
+- Run test
+  1. $ unzip PackageUpdate.zip
+  2. $ ./PackageUpdate/pkgup_tradefed run pkgup/<config> --rom1-zip <path/to/the/rom_1st> --rom2-zip <path/to/the/rom_2nd>
+
+
+[Cleanup]
+- If you want to reset the test environment, please execute folloing command.
+    - $ make package_update_clean
+
