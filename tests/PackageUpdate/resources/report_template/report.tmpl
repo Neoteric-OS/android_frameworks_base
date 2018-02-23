@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <title>%(description)s</title>
+    <h1>%(description)s</h1>
+    <table class="main_table">
+        <thead class="main_table">%(table_header)s</thead>
+        <tbody>%(table_content)s</tbody>
+    </table>
+    <style type="text/css">
+    body {
+        font: 80%%/1.45em Arial, Verdana, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #111;
+        background-color: #fff;
+        overflow : scroll;
+    }
+    h1 {
+        text-align: left;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 1em 0;
+    }
+    td {
+        text-align: left;
+        padding: 3px;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+    table.testcase_result {
+        font-size: 9px;
+        width: 550px;
+        border: black;
+    }
+    table.testcase_result td {
+        padding: 1px;
+    }
+    table.testcase_result th {
+        padding: 1px;
+    }
+    table.main_table {
+        width: 100%%;
+        clear: both;
+    }
+    table.main_table td,
+    table.main_table th {
+        padding: 3px;
+        border: 1px solid #fff;
+        text-align: left;
+    }
+    table.main_table thead th {
+        text-align: center;
+        background: #66a9bd;
+        background-color: #A5C639;
+    }
+    table.main_table tbody th {
+        text-align: left;
+        background-color: rgb(212, 233, 169);
+        border-collapse:collapse;
+    }
+
+    table.main_table tbody td {
+        background-color: rgb(212, 233, 169);
+    }
+    tr.result_alert {
+        background: #FF4500;
+        text-align: center;
+        font-weight: bold;
+        color: #FF4500;
+    }
+    </style>
+</body>
+</html>
