@@ -1,0 +1,65 @@
+Package Update Test Suite
+
+Package Update Test Suite is framework for testing of package install/update.
+This test suite verifies whether PackageManagerService can manage installed applications and
+user data correctly through SW update (ROM1 -> ROM2).
+
+Background:
+- PackageManagerService is huge and complicated.
+- Bugs in PackageManagerService cause serious problems on market.
+- To maintain PackageManagerService securely, automated test is thought to be needed.
+
+How to use it:
+
+[Prerequisite]
+- Ubuntu PC is required.
+  - Test execution has been verified on Ubuntu14.
+  - Add udev rule into /etc/udev/rules.d/51-android.rules for detecting target device by fastboot.
+    see: https://developer.android.com/studio/run/device.html
+  - Change sudo password timeout longer than the default.
+    - $ sudo visudo
+    - set timestamp_timeout=60 for example.
+- Pixel / Pixel 2 are available with bootloader unlocked fully.
+- Latest fastboot
+- Download ROM images
+  Need to place 2 version ROM for simulating letter update
+  ex:ROM
+      + -- radio.img
+      + -- bootloader.img
+      + -- aosp_walleye-img-xxxx-zip
+- Build Android code
+    - see: https://source.android.com/setup/build/building
+
+[Run test]
+ 1. Move to root directory of source tree
+ 2. $ source ./build/envsetup.sh
+ 3. $ lunch <device-target>
+ 4. Create test applications
+    $ make package_update-testapps
+    NOTE:
+      Build test applications and create zip archive in
+        out/host/linux-x86/framework/PackageUpdate/testapps/testapps.zip
+
+ 5. $ make package_update-all
+ 6. Copy sources under frameworks/base/tests/PackageUpdate/harnesses/tradefed/ to tools/tradefederation/core/prod-tests.
+    $ mkdir -p tools/tradefederation/core/prod-tests/res/config/pkgup
+    $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/config/* tools/tradefederation/core/prod-tests/res/config/pkgup/
+    $ mkdir -p tools/tradefederation/core/prod-tests/src/com/android/tests/pkgup
+    $ cp frameworks/base/tests/PackageUpdate/harnesses/tradefed/src/com/android/tests/pkgup/* tools/tradefederation/core/prod-tests/src/com/android/tests/pkgup/
+ 7. $ make tradefed-all
+ 8. $ cd out/host/linux-x86/framework/PackageUpdate/
+ 9. $ sudo echo
+10. $ tradefed.sh
+11. $ tf >run pkgup/basic-scope --rom1-zip <path/to/the/rom_1st> --rom2-zip <path/to/the/rom_2nd>
+
+
+[Test result]
+- When all tests are executed, logs and results are placed in out/host/linux-x86/framework/PackageUpdate/inv_<integer value>/.
+    - Test summary is included in test_result_<integer value>.zip.
+- The detailed test results are reported in out/host/linux-x86/framework/PackageUpdate/reports/html/analysis.html.
+
+
+[Cleanup]
+- If you want to reset the test environment, please execute folloing command.
+    - $ make package_update-clean
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Runs the PackageUpdate demo test">
+    <option name="test-tag" value=""/>
+    <build_provider class="com.android.tests.pkgup.PackageUpdateBuildProvider" >
+        <option name="build-id" value="" />
+        <option name="reference" value="testcases/00_demo/o2o" />
+        <option name="testcase-name" value="demo" />
+        <option name="testcase" value="testcases/00_demo/testcase.txt" />
+        <option name="testapks-zip" value="testapps/testapps.zip" />
+    </build_provider>
+    <target_preparer class="com.android.tests.pkgup.PackageUpdateSetup"/>
+    <test class="com.android.tests.pkgup.PackageUpdateTest" />
+    <logger class="com.android.tradefed.log.FileLogger"/>
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver">
+        <option name="log-file-path" value="."/>
+    </log_saver>
+    <result_reporter class="com.android.tests.pkgup.ResultReporter" />
+</configuration>
+

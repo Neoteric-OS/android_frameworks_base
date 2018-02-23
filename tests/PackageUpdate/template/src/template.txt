@@ -1,0 +1,279 @@
+
+package %(packagename)s;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+import java.util.Arrays;
+
+import %(packagename)s.R;
+
+public class %(classname)s extends Activity {
+    static final String TAG_INFO = "%(packagename)s.%(classname)s";
+    static final String TAG_DIAG = TAG_INFO + ".diag";
+
+    private static final String SP_NAME_EMULATED_USERDATA = "data_history";
+    private static final String SP_KEY_DATA_VERSION_CURRENT = "ver";
+    private static final String SP_KEY_DATA_VERSION_HISTORY = "history";
+
+    private String mPkgName;
+    private PackageInfo mPkgInfo;
+    private StringBuilder mInfoBuffer = new StringBuilder();
+    private StringBuilder mDiagBuffer = new StringBuilder();
+
+    static {
+        try {
+            System.loadLibrary("%(libname)s");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e(TAG_INFO, e.toString());
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        mPkgName = getPackageName();
+        try {
+            mPkgInfo = getPackageManager().getPackageInfo(mPkgName, PackageManager.GET_ACTIVITIES);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        appendPackageInfoToBuffer();
+
+        Log.d(TAG_INFO, mInfoBuffer.toString());
+        if (mDiagBuffer.length() > 0) {
+            Log.d(TAG_DIAG, mDiagBuffer.toString());
+        }
+
+        TextView view = (TextView) findViewById(R.id.textView);
+        view.setText(mInfoBuffer.toString() + "\n\n" + mDiagBuffer.toString());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void appendPackageInfoToBuffer() {
+        mInfoBuffer.append(String.format("Package :%%s\n",
+                mPkgName));
+        mInfoBuffer.append(String.format("VersionName :%%s\n",
+                mPkgInfo.versionName));
+        mInfoBuffer.append(String.format("VersionCode :%%s\n",
+                mPkgInfo.versionCode));
+        String resver = getString(R.integer.versionCode);
+        if (! resver.equals(Integer.toString(mPkgInfo.versionCode))){
+            mDiagBuffer.append("* Something wrong with Resource Version.\n");
+        }
+        mInfoBuffer.append(String.format("ResourceVersion:%%s\n", resver));
+        mInfoBuffer.append(String.format("SourceDir   :%%s\n",
+                mPkgInfo.applicationInfo.sourceDir));
+        mInfoBuffer.append(String.format("publicSourceDir   :%%s\n",
+                mPkgInfo.applicationInfo.publicSourceDir));
+        mInfoBuffer.append(String.format("DataDir     :%%s\n",
+                mPkgInfo.applicationInfo.dataDir));
+        mInfoBuffer.append(String.format("NativeLibDir:%%s\n",
+                mPkgInfo.applicationInfo.nativeLibraryDir));
+
+        appendApplicationFlagsInfo();
+
+        mInfoBuffer.append(String.format("splitSourceDirs :%%s\n",
+                Arrays.toString(mPkgInfo.applicationInfo.splitSourceDirs)));
+        mInfoBuffer.append(String.format("splitPublicSourceDirs :%%s\n",
+                Arrays.toString(mPkgInfo.applicationInfo.splitPublicSourceDirs)));
+        mInfoBuffer.append(String.format("sharedLibraryFiles :%%s\n",
+                Arrays.toString(mPkgInfo.applicationInfo.sharedLibraryFiles)));
+        mInfoBuffer.append(String.format("scanSourceDir   :%%s\n",
+                getFieldValue(mPkgInfo.applicationInfo, "scanSourceDir")));
+        mInfoBuffer.append(String.format("scanPublicSourceDir   :%%s\n",
+                getFieldValue(mPkgInfo.applicationInfo, "scanPublicSourceDir")));
+        mInfoBuffer.append(String.format("secondaryNativeLibraryDir   :%%s\n",
+                getFieldValue(mPkgInfo.applicationInfo, "secondaryNativeLibraryDir")));
+        // mInfoBuffer.append(String.format("nativeLibraryRootDir   :%%s\n",
+        //        getFieldValue(mPkgInfo.applicationInfo, "nativeLibraryRootDir")));
+
+        try {
+            mInfoBuffer.append(String.format("NativeLibVersion:%%s\n", getLibraryVersion()));
+        } catch (UnsatisfiedLinkError e) {
+            mInfoBuffer.append("NativeLibVersion: Error\n");
+            mDiagBuffer.append("* UnsatisfiedLinkError occured.\n");
+        }
+
+        updateSharedPreference();
+    }
+
+    private void appendApplicationFlagsInfo() {
+        ApplicationFlags applicationFlags = new ApplicationFlagsForO();
+        int flags = mPkgInfo.applicationInfo.flags;
+        mInfoBuffer.append(String.format("flags:0x%%08X\n", flags));
+
+        applicationFlags.appendFlagDetailInfo(mInfoBuffer, flags);
+
+        int privateFlags = (int) getFieldValue(mPkgInfo.applicationInfo, "privateFlags");
+        mInfoBuffer.append(String.format("privateFlags:0x%%08X\n", privateFlags));
+
+        applicationFlags.appendPrivateFlagDetailInfo(mInfoBuffer, privateFlags);
+    }
+
+    private void updateSharedPreference() {
+        SharedPreferences pref = getSharedPreferences(SP_NAME_EMULATED_USERDATA,
+                Activity.MODE_PRIVATE);
+
+        int ver = pref.getInt(SP_KEY_DATA_VERSION_CURRENT, -1);
+        String history = pref.getString(SP_KEY_DATA_VERSION_HISTORY, "");
+
+        if (ver == -1) {
+            mDiagBuffer.append("* EMPTY UserData.\n");
+        } else if (ver > mPkgInfo.versionCode) {
+            this.mDiagBuffer.append(String.format(
+                    "* UserData version is %%s but app version is %%s\n", ver, mPkgInfo.versionCode));
+        }
+        if (history != "") {
+            history += ",";
+        }
+        history += mPkgInfo.versionCode;
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(SP_KEY_DATA_VERSION_HISTORY, history);
+        editor.putInt(SP_KEY_DATA_VERSION_CURRENT, mPkgInfo.versionCode);
+        editor.commit();
+
+        mInfoBuffer.append(String.format("UserDataVersion :%%s\n", ver + " => " + mPkgInfo.versionCode));
+        mInfoBuffer.append(String.format("UserDataHistory :%%s\n", history));
+    }
+
+    /** Shared Library Interface */
+    public native String getLibraryVersion();
+
+    abstract static class ApplicationFlags {
+        void appendFlagDetailInfo(StringBuilder buffer, int flag) {
+            appendAnyFlagsDetailInfo(buffer, flag, getTargetFlags());
+        }
+        void appendPrivateFlagDetailInfo(StringBuilder buffer, int privateFlag) {
+            appendAnyFlagsDetailInfo(buffer, privateFlag, getTargetPrivateFlags());
+        }
+        protected abstract String[] getTargetFlags();
+        protected abstract String[] getTargetPrivateFlags();
+        protected void appendAnyFlagsDetailInfo(StringBuilder buffer, int flags, String[] targetFields) {
+            for (String targetField : targetFields) {
+                boolean isFlagSet = ((int)getFieldValue(this, targetField) & flags) != 0;
+                buffer.append(String.format("    %%s : %%s\n", targetField, isFlagSet));
+            }
+        }
+    }
+
+    static class ApplicationFlagsForO extends ApplicationFlags {
+        public static final int FLAG_SYSTEM = 1 << 0;
+        public static final int FLAG_DEBUGGABLE = 1 << 1;
+        public static final int FLAG_HAS_CODE = 1 << 2;
+        public static final int FLAG_PERSISTENT = 1 << 3;
+        public static final int FLAG_FACTORY_TEST = 1 << 4;
+        public static final int FLAG_ALLOW_TASK_REPARENTING = 1 << 5;
+        public static final int FLAG_ALLOW_CLEAR_USER_DATA = 1 << 6;
+        public static final int FLAG_UPDATED_SYSTEM_APP = 1 << 7;
+        public static final int FLAG_TEST_ONLY = 1 << 8;
+        public static final int FLAG_SUPPORTS_SMALL_SCREENS = 1 << 9;
+        public static final int FLAG_SUPPORTS_NORMAL_SCREENS = 1 << 10;
+        public static final int FLAG_SUPPORTS_LARGE_SCREENS = 1 << 11;
+        public static final int FLAG_RESIZEABLE_FOR_SCREENS = 1 << 12;
+        public static final int FLAG_SUPPORTS_SCREEN_DENSITIES = 1 << 13;
+        public static final int FLAG_VM_SAFE_MODE = 1 << 14;
+        public static final int FLAG_ALLOW_BACKUP = 1 << 15;
+        public static final int FLAG_KILL_AFTER_RESTORE = 1 << 16;
+        public static final int FLAG_RESTORE_ANY_VERSION = 1 << 17;
+        public static final int FLAG_EXTERNAL_STORAGE = 1 << 18;
+        public static final int FLAG_SUPPORTS_XLARGE_SCREENS = 1 << 19;
+        public static final int FLAG_LARGE_HEAP = 1 << 20;
+        public static final int FLAG_STOPPED = 1 << 21;
+        public static final int FLAG_SUPPORTS_RTL = 1 << 22;
+        public static final int FLAG_INSTALLED = 1 << 23;
+        public static final int FLAG_IS_DATA_ONLY = 1 << 24;
+        public static final int FLAG_IS_GAME = 1 << 25;
+        public static final int FLAG_FULL_BACKUP_ONLY = 1 << 26;
+        public static final int FLAG_USES_CLEARTEXT_TRAFFIC = 1 << 27;
+        public static final int FLAG_EXTRACT_NATIVE_LIBS = 1 << 28;
+        public static final int FLAG_HARDWARE_ACCELERATED = 1 << 29;
+        public static final int FLAG_SUSPENDED = 1 << 30;
+        public static final int FLAG_MULTIARCH = 1 << 31;
+        public static final int PRIVATE_FLAG_HIDDEN = 1 << 0;
+        public static final int PRIVATE_FLAG_CANT_SAVE_STATE = 1 << 1;
+        public static final int PRIVATE_FLAG_FORWARD_LOCK = 1 << 2;
+        public static final int PRIVATE_FLAG_PRIVILEGED = 1 << 3;
+        public static final int PRIVATE_FLAG_HAS_DOMAIN_URLS = 1 << 4;
+        public static final int PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE = 1 << 5;
+        public static final int PRIVATE_FLAG_DIRECT_BOOT_AWARE = 1 << 6;
+        public static final int PRIVATE_FLAG_INSTANT = 1 << 7;
+        public static final int PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE = 1 << 8;
+        public static final int PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER = 1 << 9;
+        public static final int PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE = 1 << 10;
+        public static final int PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE = 1 << 11;
+        public static final int PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION = 1 << 12;
+        public static final int PRIVATE_FLAG_BACKUP_IN_FOREGROUND = 1 << 13;
+        public static final int PRIVATE_FLAG_STATIC_SHARED_LIBRARY = 1 << 14;
+        public static final int PRIVATE_FLAG_ISOLATED_SPLIT_LOADING = 1 << 15;
+        public static final int PRIVATE_FLAG_VIRTUAL_PRELOAD = 1 << 16;
+        public static final int PRIVATE_FLAG_OEM = 1 << 17;
+        public static final int PRIVATE_FLAG_VENDOR = 1 << 18;
+        public static final int PRIVATE_FLAG_PRODUCT = 1 << 19;
+        public static final int PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY = 1 << 20;
+
+        public String[] getTargetFlags() {
+            return new String[]{
+                "FLAG_SYSTEM",
+                "FLAG_UPDATED_SYSTEM_APP",
+                "FLAG_IS_DATA_ONLY",
+                "FLAG_INSTALLED",
+                "FLAG_EXTERNAL_STORAGE",
+                "FLAG_MULTIARCH",
+                "FLAG_EXTRACT_NATIVE_LIBS",
+                "FLAG_SUSPENDED",
+            };
+        }
+
+        public String[] getTargetPrivateFlags() {
+            return new String[]{
+                "PRIVATE_FLAG_HIDDEN",
+                "PRIVATE_FLAG_CANT_SAVE_STATE",
+                "PRIVATE_FLAG_FORWARD_LOCK",
+                "PRIVATE_FLAG_PRIVILEGED",
+                "PRIVATE_FLAG_HAS_DOMAIN_URLS",
+                "PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE",
+                "PRIVATE_FLAG_DIRECT_BOOT_AWARE",
+                "PRIVATE_FLAG_PARTIALLY_DIRECT_BOOT_AWARE",
+                "PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER",
+                "PRIVATE_FLAG_BACKUP_IN_FOREGROUND",
+                "PRIVATE_FLAG_INSTANT",
+                "PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE",
+                "PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_UNRESIZEABLE",
+                "PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION",
+                "PRIVATE_FLAG_STATIC_SHARED_LIBRARY",
+                "PRIVATE_FLAG_ISOLATED_SPLIT_LOADING",
+                "PRIVATE_FLAG_VIRTUAL_PRELOAD",
+                "PRIVATE_FLAG_OEM",
+                "PRIVATE_FLAG_VENDOR",
+                "PRIVATE_FLAG_PRODUCT",
+                "PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY"
+            };
+        }
+    }
+
+    private static Object getFieldValue(Object instance, String field) {
+        try {
+            java.lang.reflect.Field f = instance.getClass().getDeclaredField(field);
+            f.setAccessible(true);
+            return f.get(instance);
+        } catch (ReflectiveOperationException e) {
+            Log.e(TAG_INFO, field, e);
+            return "<failed to get value>";
+        }
+    }
+}

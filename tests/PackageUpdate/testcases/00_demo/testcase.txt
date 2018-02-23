@@ -1,0 +1,7 @@
+id	ROM1	ROM1_Op1	ROM1_Op2	ROM2	ROM2_Op1	ROM2_Op2
+1	Priv-installed	NA	NA	Priv-Up	NA	NA
+2	Priv-installed	Install-Up	NA	Priv-Down	Install-Up	Uninstall
+3	Priv-installed	Install-Up	NA	Priv-Up	Install-Up	Uninstall
+4	No-exist	Install-Keep	Install-Up	No-exist	Install-Up	Uninstall
+5	No-exist	Install-Keep	Install-Up	Priv-Down	Install-Up	Uninstall
+6	No-exist	Install-Keep	Install-Up	Priv-Up	Install-Up	Uninstall
