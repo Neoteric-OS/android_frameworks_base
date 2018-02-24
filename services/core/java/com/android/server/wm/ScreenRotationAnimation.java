@@ -282,7 +282,7 @@ class ScreenRotationAnimation {
                 sur.copyFrom(mSurfaceControl);
                 // TODO(multidisplay): we should use the proper display
                 SurfaceControl.screenshot(SurfaceControl.getBuiltInDisplay(
-                        SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN), sur);
+                        displayContent.getDisplayId()), sur);
                 mSurfaceControl.setLayerStack(display.getLayerStack());
                 mSurfaceControl.setLayer(SCREEN_FREEZE_LAYER_SCREENSHOT);
                 mSurfaceControl.setAlpha(0);
