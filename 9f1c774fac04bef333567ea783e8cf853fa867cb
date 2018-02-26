@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31f7c4f_ebb85409",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T23:35:20Z",
+      "side": 1,
+      "message": "Actually.... I just realized I don\u0027t like this. There\u0027s now a side-effect in getLteLevel(). We shouldn\u0027t make this assignment.",
+      "range": {
+        "startLine": 755,
+        "startChar": 16,
+        "endLine": 755,
+        "endChar": 24
+      },
+      "revId": "9f1c774fac04bef333567ea783e8cf853fa867cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
