@@ -22,6 +22,30 @@
       "revId": "9f1c774fac04bef333567ea783e8cf853fa867cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79188573_bdc79511",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-02-26T23:40:03Z",
+      "side": 1,
+      "message": "good point. a getter probably shouldn\u0027t modify a member",
+      "parentUuid": "c31f7c4f_ebb85409",
+      "range": {
+        "startLine": 755,
+        "startChar": 16,
+        "endLine": 755,
+        "endChar": 24
+      },
+      "revId": "9f1c774fac04bef333567ea783e8cf853fa867cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
