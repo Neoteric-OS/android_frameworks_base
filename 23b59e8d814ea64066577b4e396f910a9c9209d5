@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7b35cc1d_a019e9fd",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-02-26T20:14:34Z",
+      "side": 1,
+      "message": "yes (:",
+      "parentUuid": "14d529b9_d47dda83",
+      "range": {
+        "startLine": 2122,
+        "startChar": 24,
+        "endLine": 2125,
+        "endChar": 57
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3833e634_fb102305",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
