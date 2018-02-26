@@ -4268,8 +4268,17 @@ public class PackageParser {
         a.info.taskAffinity = buildTaskAffinityName(owner.applicationInfo.packageName,
                 owner.applicationInfo.taskAffinity, str, outError);
 
-        a.info.splitName =
-                sa.getNonConfigurationString(R.styleable.AndroidManifestActivity_splitName, 0);
+        final String splitName =
+            sa.getNonConfigurationString(R.styleable.AndroidManifestActivity_splitName, 0);
+        if (!TextUtils.isEmpty(splitName)) {
+            final String error = validateName(splitName, false, false);
+            if (error != null) {
+                Slog.w(TAG, "Activity " + a.info.name + " specified invalid splitName " +
+                        splitName + " at " + mArchiveSourcePath);
+            } else {
+                a.info.splitName = splitName;
+            }
+        }
 
         a.info.flags = 0;
         if (sa.getBoolean(
@@ -5001,8 +5010,17 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifestProvider_initOrder,
                 0);
 
-        p.info.splitName =
-                sa.getNonConfigurationString(R.styleable.AndroidManifestProvider_splitName, 0);
+        final String splitName =
+            sa.getNonConfigurationString(R.styleable.AndroidManifestProvider_splitName, 0);
+        if (!TextUtils.isEmpty(splitName)) {
+            final String error = validateName(splitName, false, false);
+            if (error != null) {
+                Slog.w(TAG, "Provider " + p.info.name + " specified invalid splitName " +
+                        splitName + " at " + mArchiveSourcePath);
+            } else {
+                p.info.splitName = splitName;
+            }
+        }
 
         p.info.flags = 0;
 
@@ -5314,8 +5332,17 @@ public class PackageParser {
             s.info.permission = str.length() > 0 ? str.toString().intern() : null;
         }
 
-        s.info.splitName =
-                sa.getNonConfigurationString(R.styleable.AndroidManifestService_splitName, 0);
+        final String splitName =
+            sa.getNonConfigurationString(R.styleable.AndroidManifestService_splitName, 0);
+        if (!TextUtils.isEmpty(splitName)) {
+            final String error = validateName(splitName, false, false);
+            if (error != null) {
+                Slog.w(TAG, "Service " + s.info.name + " specified invalid splitName " +
+                        splitName + " at " + mArchiveSourcePath);
+            } else {
+                s.info.splitName = splitName;
+            }
+        }
 
         s.info.flags = 0;
         if (sa.getBoolean(
