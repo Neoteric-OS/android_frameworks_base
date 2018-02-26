@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538452e5_a0dacd9e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T23:42:57Z",
+      "side": 1,
+      "message": "nit, remove the 1 here to plz.",
+      "range": {
+        "startLine": 1807,
+        "startChar": 10,
+        "endLine": 1807,
+        "endChar": 11
+      },
+      "revId": "4e67193d9ff05db753ca455564c5dcb3d58a06d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de584ae0_955d5241",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T23:42:57Z",
+      "side": 1,
+      "message": "nit, this usually just goes on the same line. :-)",
+      "revId": "4e67193d9ff05db753ca455564c5dcb3d58a06d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
