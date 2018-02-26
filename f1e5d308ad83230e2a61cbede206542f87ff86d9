@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408e929c_5719ec5a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T22:01:44Z",
+      "side": 1,
+      "message": "No need for the \"(\"... I think you want to use a \u003cp\u003e to separate this from the above paragraph, but I\u0027m not a javadoc ninja.",
+      "range": {
+        "startLine": 1809,
+        "startChar": 7,
+        "endLine": 1809,
+        "endChar": 8
+      },
+      "revId": "f1e5d308ad83230e2a61cbede206542f87ff86d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd7597f6_b4cecf72",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T22:01:44Z",
+      "side": 1,
+      "message": "we should reference the 3gpp specs, so you don\u0027t want these \u00271\u0027s here.",
+      "range": {
+        "startLine": 742,
+        "startChar": 14,
+        "endLine": 742,
+        "endChar": 15
+      },
+      "revId": "f1e5d308ad83230e2a61cbede206542f87ff86d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "614bdf9b_a27981d2",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T22:01:44Z",
+      "side": 1,
+      "message": "this is the overkill approach, but that\u0027s fine.",
+      "range": {
+        "startLine": 752,
+        "startChar": 8,
+        "endLine": 752,
+        "endChar": 65
+      },
+      "revId": "f1e5d308ad83230e2a61cbede206542f87ff86d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
