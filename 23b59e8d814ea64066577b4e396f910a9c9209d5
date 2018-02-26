@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82ccca7_9ae149bb",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "It would be helpful if the comment pointed out where/why this is.\nAlso, since this is a pretty fixed set of data, can we be very specific?\n\nThis is a list of 4 LTE RSRP thresholds above which a signal level is considered POOR, MODERATE, GOOD, or EXCELLENT for purposes of SignalStrength reporting. (etc etc, wordsmith and make it nice).",
+      "range": {
+        "startLine": 1803,
+        "startChar": 87,
+        "endLine": 1804,
+        "endChar": 56
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3833e634_fb102305",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "nit, *",
+      "range": {
+        "startLine": 746,
+        "startChar": 66,
+        "endLine": 746,
+        "endChar": 67
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb451397_53a99ab8",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "nit spacing",
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "866140dc_af854a96",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "while this may look like good defensive coding, it has the potential to hide bugs. There is at least one other place in the code where we rely on the value being either within range (enforced here: https://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/SignalStrength.java?q\u003dSignalStrength.java\u0026sq\u003dpackage:android\u0026dr\u0026l\u003d327) or INVALID.\n\ntl;dr, if the value gets here, we should explicitly check for \u003d\u003d INVALID and be done with it (just like we do for the getAsuLevel() function), or if we really want to triple check ourselves, there should be two checks... one for INVALID (normal) and a nasty Log.WTF() for value !\u003d invalid \u0026\u0026 value \u003e MAX. I submit that the latter is overkill, and we should just check for invalid.",
+      "range": {
+        "startLine": 751,
+        "startChar": 7,
+        "endLine": 752,
+        "endChar": 31
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48a0da0b_1493b5b6",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "since we can rely on this class to check that out of range values result in INVALID (which we can enforce with a swanky unit test), we don\u0027t need to check to be sure that the value is \u003e MIN_LTE_RSRP... if we aren\u0027t moderate, and we aren\u0027t UNKNOWN, then we NONE_UNKNOWN by default.",
+      "range": {
+        "startLine": 761,
+        "startChar": 10,
+        "endLine": 761,
+        "endChar": 46
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c54efe0_04dcac96",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-26T19:45:14Z",
+      "side": 1,
+      "message": "as written, this is a bug. if we have useOnlyRsrpForIconLevel() and it\u0027s invalid, then we\u0027ve hit a case where we don\u0027t know what to show and should return unconditionally. Maybe for a follow-up CL where we fix the \"if only\" logic.",
+      "range": {
+        "startLine": 767,
+        "startChar": 7,
+        "endLine": 768,
+        "endChar": 37
+      },
+      "revId": "23b59e8d814ea64066577b4e396f910a9c9209d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
