@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e6bc15b_a1bcfed2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-26T11:36:08Z",
+      "side": 1,
+      "message": "Style-wise I\u0027ve no trouble whatsoever with:\n\n    ... \u003d (mEstablishingVpnAppUid \u003e 0)\n            ? \" EstablishingAppUid: \" + mEstablishingVpnAppUid\n            : \"\";\n\nfoolish consistency be damned.",
+      "range": {
+        "startLine": 1254,
+        "startChar": 66,
+        "endLine": 1254,
+        "endChar": 67
+      },
+      "revId": "b2c9029882ad8119e167cc0ef66d538e8a9bf287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb37b43_d57350f6",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-26T11:36:08Z",
+      "side": 1,
+      "message": "Could alternatively have a count() method which returns \"stop - start + 1\".",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "b2c9029882ad8119e167cc0ef66d538e8a9bf287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
