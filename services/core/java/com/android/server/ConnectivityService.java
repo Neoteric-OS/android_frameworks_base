@@ -122,7 +122,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.net.LegacyVpnInfo;
-import com.android.internal.net.NetworkStatsFactory;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
@@ -5257,7 +5256,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 for (LinkProperties stacked : newNetwork.linkProperties.getStackedLinks()) {
                     final String stackedIface = stacked.getInterfaceName();
                     bs.noteNetworkInterfaceType(stackedIface, type);
-                    NetworkStatsFactory.noteStackedIface(stackedIface, baseIface);
                 }
             } catch (RemoteException ignored) {
             }
