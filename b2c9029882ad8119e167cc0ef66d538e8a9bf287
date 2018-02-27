@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "262da84b_2b57b3f7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-27T06:48:04Z",
+      "side": 1,
+      "message": "1. Read Erik\u0027s comment. Agree with it.\n2. Look at the existing style in the function. Notice it\u0027s already not consistent.\n3. Start fixing it.\n4. Notice TODOs at the top of the function.\n5. while(you\u0027re at it) { Fix them. }\n6. ???\n7. PROFIT !!\n\n8... PTAL.",
+      "parentUuid": "1e6bc15b_a1bcfed2",
+      "range": {
+        "startLine": 1254,
+        "startChar": 66,
+        "endLine": 1254,
+        "endChar": 67
+      },
+      "revId": "b2c9029882ad8119e167cc0ef66d538e8a9bf287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb37b43_d57350f6",
         "filename": "core/java/android/net/UidRange.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b2c9029882ad8119e167cc0ef66d538e8a9bf287",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d21ecd_78c4c757",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-27T06:48:04Z",
+      "side": 1,
+      "message": "I like it ; it\u0027s more versatile than isSingleUid. Done.",
+      "parentUuid": "dcb37b43_d57350f6",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "b2c9029882ad8119e167cc0ef66d538e8a9bf287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
