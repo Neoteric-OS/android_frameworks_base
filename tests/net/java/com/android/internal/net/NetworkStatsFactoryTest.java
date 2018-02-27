@@ -35,6 +35,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
+import android.util.ArrayMap;
 import com.android.frameworks.tests.net.R;
 
 import java.io.File;
@@ -154,19 +155,22 @@ public class NetworkStatsFactoryTest {
 
     @Test
     public void testDoubleClatAccounting() throws Exception {
-        NetworkStatsFactory.noteStackedIface("v4-wlan0", "wlan0");
+        ArrayMap<String, String> stackedIface = new ArrayMap<>();
+        stackedIface.put("v4-wlan0", "wlan0");
 
         // xt_qtaguid_with_clat_simple is a synthetic file that simulates
         //  - 213 received 464xlat packets of size 200 bytes
         //  - 41 sent 464xlat packets of size 100 bytes
         //  - no other traffic on base interface for root uid.
         NetworkStats stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat_simple);
+        stats.apply464xlatAdjustments(stackedIface);
         assertEquals(4, stats.size());
 
         assertStatsEntry(stats, "v4-wlan0", 10060, SET_DEFAULT, 0x0, 46860L, 4920L);
         assertStatsEntry(stats, "wlan0", 0, SET_DEFAULT, 0x0, 0L, 0L);
 
         stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat);
+        stats.apply464xlatAdjustments(stackedIface);
         assertEquals(42, stats.size());
 
         assertStatsEntry(stats, "v4-wlan0", 0, SET_DEFAULT, 0x0, 356L, 276L);
@@ -183,8 +187,6 @@ public class NetworkStatsFactoryTest {
         assertStatsEntry(stats, "wlan0", 10103, SET_DEFAULT, 0x0, 0L, 192L);
         assertStatsEntry(stats, "dummy0", 0, SET_DEFAULT, 0x0, 0L, 168L);
         assertStatsEntry(stats, "lo", 0, SET_DEFAULT, 0x0, 1288L, 1288L);
-
-        NetworkStatsFactory.noteStackedIface("v4-wlan0", null);
     }
 
     @Test
@@ -199,20 +201,21 @@ public class NetworkStatsFactoryTest {
         long rootRxBytesAfter = 1398634L;
         assertEquals("UID 0 traffic should be ~0", 4623, rootRxBytesAfter - rootRxBytesBefore);
 
-        NetworkStatsFactory.noteStackedIface("v4-wlan0", "wlan0");
+        ArrayMap<String, String> stackedIface = new ArrayMap<>();
+        stackedIface.put("v4-wlan0", "wlan0");
         NetworkStats stats;
 
         // Stats snapshot before the download
         stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat_100mb_download_before);
+        stats.apply464xlatAdjustments(stackedIface);
         assertStatsEntry(stats, "v4-wlan0", 10106, SET_FOREGROUND, 0x0, appRxBytesBefore, 5199872L);
         assertStatsEntry(stats, "wlan0", 0, SET_DEFAULT, 0x0, rootRxBytesBefore, 647888L);
 
         // Stats snapshot after the download
         stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat_100mb_download_after);
+        stats.apply464xlatAdjustments(stackedIface);
         assertStatsEntry(stats, "v4-wlan0", 10106, SET_FOREGROUND, 0x0, appRxBytesAfter, 7867488L);
         assertStatsEntry(stats, "wlan0", 0, SET_DEFAULT, 0x0, rootRxBytesAfter, 647587L);
-
-        NetworkStatsFactory.noteStackedIface("v4-wlan0", null);
     }
 
     /**
