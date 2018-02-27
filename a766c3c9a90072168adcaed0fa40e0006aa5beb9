@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6636e3e3_187b24e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T14:16:20Z",
+      "side": 1,
+      "message": "Change this to:\n\nBug: xxx\nBug: yyy",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73c429c_a0a1833f",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T14:16:20Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 18
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99c07b8_e1f7298b",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T14:16:20Z",
+      "side": 1,
+      "message": "Remove s.",
+      "range": {
+        "startLine": 207,
+        "startChar": 77,
+        "endLine": 207,
+        "endChar": 78
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b05d158_85a35d19",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T14:16:20Z",
+      "side": 1,
+      "message": "Nit: consider not using NET_CAPABILITY_INTERNET for all of these. Maybe use MMS, or VALIDATED, or ....",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 51
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46b0816_5a67617a",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T14:16:20Z",
+      "side": 1,
+      "message": "Can we test for getUnwantedCapabilities too? Or don\u0027t we have that method? If we don\u0027t, should we?",
+      "range": {
+        "startLine": 366,
+        "startChar": 53,
+        "endLine": 366,
+        "endChar": 68
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
