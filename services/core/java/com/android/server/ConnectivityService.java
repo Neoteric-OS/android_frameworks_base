@@ -5429,7 +5429,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.everConnected = true;
 
             updateLinkProperties(networkAgent, null);
-            notifyIfacesChangedForNetworkStats();
 
             networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
             scheduleUnvalidatedPrompt(networkAgent);
