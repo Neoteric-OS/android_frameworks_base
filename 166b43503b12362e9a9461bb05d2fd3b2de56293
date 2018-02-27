@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72441fcd_6eb87b50",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T13:09:38Z",
+      "side": 1,
+      "message": "Nit: you could also just call append here too:\n\n    sb.append(\" LinkUpBandwidth\u003e\u003d\").append(mLinkUpBandwidthKbps).append(\"Kbps\");",
+      "range": {
+        "startLine": 1234,
+        "startChar": 12,
+        "endLine": 1234,
+        "endChar": 76
+      },
+      "revId": "166b43503b12362e9a9461bb05d2fd3b2de56293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f10f825_2ecaf850",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T13:09:38Z",
+      "side": 1,
+      "message": "Nit: I should this be \"\u003d\u003d\"? In the (impossible?) case where count \u003c 1 because we have a range that ends before it starts, we probably want to display \"10-9\" instead of \"10\", no?",
+      "range": {
+        "startLine": 1247,
+        "startChar": 65,
+        "endLine": 1247,
+        "endChar": 67
+      },
+      "revId": "166b43503b12362e9a9461bb05d2fd3b2de56293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48a09b7_e641a29d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-02-27T13:09:38Z",
+      "side": 1,
+      "message": "Nit: should this be \"!\u003d INVALID_UID\"?",
+      "range": {
+        "startLine": 1253,
+        "startChar": 35,
+        "endLine": 1253,
+        "endChar": 38
+      },
+      "revId": "166b43503b12362e9a9461bb05d2fd3b2de56293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
