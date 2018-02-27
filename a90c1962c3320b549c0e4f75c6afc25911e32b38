@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34f70c21_f5488f3e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-27T07:31:47Z",
+      "side": 1,
+      "message": "Glorious  :-)",
+      "range": {
+        "startLine": 1268,
+        "startChar": 23,
+        "endLine": 1268,
+        "endChar": 73
+      },
+      "revId": "a90c1962c3320b549c0e4f75c6afc25911e32b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "227efba5_d34ceb50",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-27T07:31:47Z",
+      "side": 1,
+      "message": "Can you avoid this by keeping track of a \"boolean isFirstBitSet\" within the while+if loop?",
+      "range": {
+        "startLine": 1279,
+        "startChar": 17,
+        "endLine": 1279,
+        "endChar": 63
+      },
+      "revId": "a90c1962c3320b549c0e4f75c6afc25911e32b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
