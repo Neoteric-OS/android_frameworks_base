@@ -1490,12 +1490,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private NetworkStats getNetworkStatsUidDetail(String[] ifaces)
             throws RemoteException {
 
+        // TODO: remove 464xlat adjustments from NetworkStatsFactory and apply all at once here.
         final NetworkStats uidSnapshot = mNetworkManager.getNetworkStatsUidDetail(UID_ALL,
                 ifaces);
 
         // fold tethering stats and operations into uid snapshot
         final NetworkStats tetherSnapshot = getNetworkStatsTethering(STATS_PER_UID);
         tetherSnapshot.filter(UID_ALL, ifaces, TAG_ALL);
+        NetworkStatsFactory.apply464xlatAdjustments(uidSnapshot, tetherSnapshot);
         uidSnapshot.combineAllValues(tetherSnapshot);
 
         final TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(
@@ -1505,12 +1507,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStats vtStats = telephonyManager.getVtDataUsage(STATS_PER_UID);
         if (vtStats != null) {
             vtStats.filter(UID_ALL, ifaces, TAG_ALL);
+            NetworkStatsFactory.apply464xlatAdjustments(uidSnapshot, vtStats);
             uidSnapshot.combineAllValues(vtStats);
         }
 
         uidSnapshot.combineAllValues(mUidOperations);
-
-        // TODO: apply tethering & VC 464xlat adjustments here
 
         return uidSnapshot;
     }
