@@ -164,6 +164,30 @@
       "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27f09726_35d86c06",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-27T08:31:08Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I updated it.",
+      "parentUuid": "8b7df9ad_1c49b0a8",
+      "range": {
+        "startLine": 1235,
+        "startChar": 18,
+        "endLine": 1235,
+        "endChar": 45
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
