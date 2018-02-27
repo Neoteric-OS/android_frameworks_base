@@ -247,6 +247,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @GuardedBy("mStatsLock")
     private String[] mMobileIfaces = new String[0];
 
+    /** (Stacked interface) -> (base interface) association for all connected ifaces since boot. */
+    @GuardedBy("mStatsLock")
+    private ArrayMap<String, String> mStackedIfaces = new ArrayMap<>();
+
     /** Set of all ifaces currently used by traffic that does not explicitly specify a Network. */
     @GuardedBy("mStatsLock")
     private Network[] mDefaultNetworks = new Network[0];
@@ -1110,6 +1114,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                         if (isMobile) {
                             mobileIfaces.add(stackedIface);
                         }
+
+                        mStackedIfaces.put(stackedIface, baseIface);
                     }
                 }
             }
@@ -1131,7 +1137,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void recordSnapshotLocked(long currentTime) throws RemoteException {
         // snapshot and record current counters; read UID stats first to
         // avoid over counting dev stats.
-        final NetworkStats uidSnapshot = getNetworkStatsUidDetail();
+        final NetworkStats uidSnapshot = getNetworkStatsUidDetailLocked();
         final NetworkStats xtSnapshot = getNetworkStatsXt();
         final NetworkStats devSnapshot = mNetworkManager.getNetworkStatsSummaryDev();
 
@@ -1466,7 +1472,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * {@link TrafficStats#UID_TETHERING}, video calling data usage, and {@link #mUidOperations}
      * values.
      */
-    private NetworkStats getNetworkStatsUidDetail() throws RemoteException {
+    private NetworkStats getNetworkStatsUidDetailLocked() throws RemoteException {
         final NetworkStats uidSnapshot = mNetworkManager.getNetworkStatsUidDetail(UID_ALL);
 
         // fold tethering stats and operations into uid snapshot
@@ -1482,6 +1488,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             uidSnapshot.combineAllValues(vtStats);
         }
         uidSnapshot.combineAllValues(mUidOperations);
+
+        uidSnapshot.apply464xlatAdjustments(mStackedIfaces);
 
         return uidSnapshot;
     }

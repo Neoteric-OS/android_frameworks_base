@@ -25,14 +25,11 @@ import static com.android.server.NetworkManagementSocketTagger.kernelToTag;
 import android.net.NetworkStats;
 import android.os.StrictMode;
 import android.os.SystemClock;
-import android.util.ArrayMap;
-
-import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ProcFileReader;
-import com.google.android.collect.Lists;
 
+import java.util.Map;
 import libcore.io.IoUtils;
 
 import java.io.BufferedReader;
@@ -41,8 +38,6 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.ProtocolException;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Creates {@link NetworkStats} instances by parsing various {@code /proc/}
@@ -54,11 +49,6 @@ public class NetworkStatsFactory {
     private static final boolean USE_NATIVE_PARSING = true;
     private static final boolean SANITY_CHECK_NATIVE = false;
 
-    private static final String CLATD_INTERFACE_PREFIX = "v4-";
-    // Delta between IPv4 header (20b) and IPv6 header (40b).
-    // Used for correct stats accounting on clatd interfaces.
-    private static final int IPV4V6_HEADER_DELTA = 20;
-
     /** Path to {@code /proc/net/dev}. */
     private final File mStatsIfaceDev;
     /** Path to {@code /proc/net/xt_qtaguid/iface_stat_all}. */
@@ -69,20 +59,6 @@ public class NetworkStatsFactory {
     private final File mStatsXtUid;
 
     private boolean mUseBpfStats;
-
-    // TODO: to improve testability and avoid global state, do not use a static variable.
-    @GuardedBy("sStackedIfaces")
-    private static final ArrayMap<String, String> sStackedIfaces = new ArrayMap<>();
-
-    public static void noteStackedIface(String stackedIface, String baseIface) {
-        synchronized (sStackedIfaces) {
-            if (baseIface != null) {
-                sStackedIfaces.put(stackedIface, baseIface);
-            } else {
-                sStackedIfaces.remove(stackedIface);
-            }
-        }
-    }
 
     public NetworkStatsFactory() {
         this(new File("/proc/"), new File("/sys/fs/bpf/traffic_uid_stats_map").exists());
@@ -242,65 +218,29 @@ public class NetworkStatsFactory {
         return stats;
     }
 
+    /**
+     * Read network statistics that were compiled by the kernel on a per-socket basis.
+     *
+     * Equivalent to calling {@link #readNetworkStatsDetail(int, String[], int, NetworkStats)} with
+     * no filtering.
+     */
     public NetworkStats readNetworkStatsDetail() throws IOException {
         return readNetworkStatsDetail(UID_ALL, null, TAG_ALL, null);
     }
 
+    /**
+     * Read network statistics that were compiled by the kernel on a per-socket basis.
+     *
+     * <p>As data is counted separately for each interface, some statistics may be double-counted;
+     * this is the case for clat traffic in particular
+     * (see {@link NetworkStats#apply464xlatAdjustments(Map)}.
+     * @param limitUid UID to return statistics for.
+     * @param limitIfaces Interfaces to return statistics for; null for all.
+     * @param limitTag Tag to return statistics for.
+     * @param lastStats Object to recycle and fill with the new values.
+     */
     public NetworkStats readNetworkStatsDetail(int limitUid, String[] limitIfaces, int limitTag,
             NetworkStats lastStats) throws IOException {
-        final NetworkStats stats =
-              readNetworkStatsDetailInternal(limitUid, limitIfaces, limitTag, lastStats);
-        final ArrayMap<String, String> stackedIfaces;
-        synchronized (sStackedIfaces) {
-            stackedIfaces = new ArrayMap<>(sStackedIfaces);
-        }
-        // Total 464xlat traffic to subtract from uid 0 on all base interfaces.
-        final NetworkStats adjustments = new NetworkStats(0, stackedIfaces.size());
-
-        NetworkStats.Entry entry = null; // For recycling
-
-        // For 464xlat traffic, xt_qtaguid sees every IPv4 packet twice, once as a native IPv4
-        // packet on the stacked interface, and once as translated to an IPv6 packet on the
-        // base interface. For correct stats accounting on the base interface, every 464xlat
-        // packet needs to be subtracted from the root UID on the base interface both for tx
-        // and rx traffic (http://b/12249687, http:/b/33681750).
-        for (int i = 0; i < stats.size(); i++) {
-            entry = stats.getValues(i, entry);
-            if (entry.iface == null || !entry.iface.startsWith(CLATD_INTERFACE_PREFIX)) {
-                continue;
-            }
-            final String baseIface = stackedIfaces.get(entry.iface);
-            if (baseIface == null) {
-                continue;
-            }
-
-            NetworkStats.Entry adjust =
-                    new NetworkStats.Entry(baseIface, 0, 0, 0, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);
-            // Subtract any 464lat traffic seen for the root UID on the current base interface.
-            adjust.rxBytes -= (entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
-            adjust.txBytes -= (entry.txBytes + entry.txPackets * IPV4V6_HEADER_DELTA);
-            adjust.rxPackets -= entry.rxPackets;
-            adjust.txPackets -= entry.txPackets;
-            adjustments.combineValues(adjust);
-
-            // For 464xlat traffic, xt_qtaguid only counts the bytes of the native IPv4 packet sent
-            // on the stacked interface with prefix "v4-" and drops the IPv6 header size after
-            // unwrapping. To account correctly for on-the-wire traffic, add the 20 additional bytes
-            // difference for all packets (http://b/12249687, http:/b/33681750).
-            entry.rxBytes = entry.rxPackets * IPV4V6_HEADER_DELTA;
-            entry.txBytes = entry.txPackets * IPV4V6_HEADER_DELTA;
-            entry.rxPackets = 0;
-            entry.txPackets = 0;
-            stats.combineValues(entry);
-        }
-
-        stats.combineAllValues(adjustments);
-
-        return stats;
-    }
-
-    private NetworkStats readNetworkStatsDetailInternal(int limitUid, String[] limitIfaces,
-            int limitTag, NetworkStats lastStats) throws IOException {
         if (USE_NATIVE_PARSING) {
             final NetworkStats stats;
             if (lastStats != null) {
