@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40bb54da_1d0282d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-27T22:20:54Z",
+      "side": 1,
+      "message": "merged-in?",
+      "revId": "33931a631dc0896e4badca1afdba66aa76405e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
