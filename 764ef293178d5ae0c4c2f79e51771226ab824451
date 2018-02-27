@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "779ecd46_c64e6d32",
+        "filename": "packages/SettingsLib/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2018-02-27T23:56:14Z",
+      "side": 1,
+      "message": "Can we remove these lines 76-84? They aren\u0027t needed for this change",
+      "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
