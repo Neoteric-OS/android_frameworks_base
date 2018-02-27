@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51cf62f9_b33dd139",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-02-27T23:20:34Z",
+      "side": 1,
+      "message": "can we do this with rscp to be consistent?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1046,
+        "endChar": 33
+      },
+      "revId": "58363d7a26b0c008d33deb7fb43342f385f961e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
