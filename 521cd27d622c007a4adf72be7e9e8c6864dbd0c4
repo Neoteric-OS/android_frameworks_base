@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c9dba5f1_1cea3470",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-02-27T08:29:35Z",
+      "side": 1,
+      "message": "Thank you for your comments. I understand it is better to separate the configuration. I will update it.",
+      "parentUuid": "312b1c74_9a2d442d",
+      "range": {
+        "startLine": 1827,
+        "startChar": 7,
+        "endLine": 1827,
+        "endChar": 100
+      },
+      "revId": "521cd27d622c007a4adf72be7e9e8c6864dbd0c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ca9974_c52bea63",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 3
