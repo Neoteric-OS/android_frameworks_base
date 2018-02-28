@@ -992,7 +992,6 @@ public class CarrierConfigManager {
 
     /**
      * Boolean to decide whether to use #KEY_CARRIER_NAME_STRING from CarrierConfig app.
-     * @hide
      */
     public static final String KEY_CARRIER_NAME_OVERRIDE_BOOL = "carrier_name_override_bool";
 
@@ -1000,7 +999,6 @@ public class CarrierConfigManager {
      * String to identify carrier name in CarrierConfig app. This string overrides SPN if
      * #KEY_CARRIER_NAME_OVERRIDE_BOOL is true; otherwise, it will be used if its value is provided
      * and SPN is unavailable
-     * @hide
      */
     public static final String KEY_CARRIER_NAME_STRING = "carrier_name_string";
 
