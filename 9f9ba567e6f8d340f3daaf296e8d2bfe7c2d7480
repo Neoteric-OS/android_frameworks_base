@@ -22,6 +22,30 @@
       "revId": "9f9ba567e6f8d340f3daaf296e8d2bfe7c2d7480",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234a7d86_5c939fab",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-02-28T22:04:00Z",
+      "side": 1,
+      "message": "actually I\u0027ll go ahead and upload patchset 6 to fix this",
+      "parentUuid": "72033e43_e4d1a843",
+      "range": {
+        "startLine": 2154,
+        "startChar": 5,
+        "endLine": 2157,
+        "endChar": 55
+      },
+      "revId": "9f9ba567e6f8d340f3daaf296e8d2bfe7c2d7480",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
