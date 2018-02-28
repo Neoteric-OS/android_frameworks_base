@@ -17,6 +17,7 @@
 package android.telephony.data;
 
 import android.telephony.data.DataCallResponse;
+import android.telephony.data.LinkCapacityEstimate;
 
 /**
  * The call back interface
@@ -30,4 +31,5 @@ oneway interface IDataServiceCallback
     void onSetDataProfileComplete(int result);
     void onGetDataCallListComplete(int result, in List<DataCallResponse> dataCallList);
     void onDataCallListChanged(in List<DataCallResponse> dataCallList);
+    void onLinkCapacityEstimateChanged(in LinkCapacityEstimate lce);
 }
