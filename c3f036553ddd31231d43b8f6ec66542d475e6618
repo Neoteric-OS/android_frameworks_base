@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2320177e_d9456cce",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-28T04:01:08Z",
+      "side": 1,
+      "message": "Consider moving to DnsManager as something like\n\n    public static class ValidationUpdate {...}\n\nsince the main purpose of the struct is package into an Object and lob it over to DnsManager.",
+      "range": {
+        "startLine": 1496,
+        "startChar": 25,
+        "endLine": 1496,
+        "endChar": 51
+      },
+      "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b7fafb_f977b53b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2344,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-28T04:01:08Z",
+      "side": 1,
+      "message": "It would be good to not send spurious LP updates if things haven\u0027t really changed.  Consider, for example, opportunistic mode with 5 DNS servers all of which validate one after the other...\n\n(same applies elsewhere)",
+      "range": {
+        "startLine": 2344,
+        "startChar": 8,
+        "endLine": 2344,
+        "endChar": 34
+      },
+      "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "451bb1a5_730d91b2",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 9
@@ -18,6 +64,52 @@
         "startChar": 8,
         "endLine": 4617,
         "endChar": 62
+      },
+      "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7830d8_79fa706b",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-28T04:01:08Z",
+      "side": 1,
+      "message": "Might be good to have a simple private static makeKey() method.  Maybe not, but I just hope one day we don\u0027t create a bug via \"new Pair(ipAddress, hostname)\", since both arguments are just strings.",
+      "range": {
+        "startLine": 199,
+        "startChar": 37,
+        "endLine": 199,
+        "endChar": 45
+      },
+      "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcb8fc3_7093dc9e",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-28T04:01:08Z",
+      "side": 1,
+      "message": "This could be a boolean method on the Private...Statuses class?",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 17
       },
       "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -45,6 +137,30 @@
       "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2790cb93_d5f2f934",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-02-28T04:01:08Z",
+      "side": 1,
+      "message": "I think this is fine as is.  We might want to interrogate the validation statuses at some point in the future (for example to see how many of the resolved IP addresses actually validated).",
+      "parentUuid": "0c01efa6_0ad3af4c",
+      "range": {
+        "startLine": 322,
+        "startChar": 12,
+        "endLine": 322,
+        "endChar": 18
+      },
+      "revId": "c3f036553ddd31231d43b8f6ec66542d475e6618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
