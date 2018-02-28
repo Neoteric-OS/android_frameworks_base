@@ -220,8 +220,10 @@ public class Tethering extends BaseNetworkObserver {
         mCarrierConfigChange = new VersionedBroadcastListener(
                 "CarrierConfigChangeListener", mContext, smHandler, filter,
                 (Intent ignored) -> {
-                    mLog.log("OBSERVED carrier config change");
-                    reevaluateSimCardProvisioning();
+                    // This already runs on the correct handler, but we want the
+                    // option to ignore the updates unless tethering is already
+                    // active (alive mode state).
+                    mTetherMasterSM.sendMessage(TetherMasterSM.EVENT_CARRIER_CONFIG_CHANGE);
                 });
         // TODO: Remove SimChangeListener altogether. For now, we retain it
         // for logging purposes in case we need to debug something that might
@@ -233,21 +235,29 @@ public class Tethering extends BaseNetworkObserver {
                 });
 
         mStateReceiver = new StateReceiver();
-        filter = new IntentFilter();
+
+        // Load tethering configuration.
+        updateConfiguration();
+
+        startStateMachineUpdaters();
+    }
+
+    private void startStateMachineUpdaters() {
+        mCarrierConfigChange.startListening();
+
+        final Handler handler = mTetherMasterSM.getHandler();
+        IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_STATE);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        mContext.registerReceiver(mStateReceiver, filter, null, smHandler);
+        mContext.registerReceiver(mStateReceiver, filter, null, handler);
 
         filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_SHARED);
         filter.addAction(Intent.ACTION_MEDIA_UNSHARED);
         filter.addDataScheme("file");
-        mContext.registerReceiver(mStateReceiver, filter, null, smHandler);
-
-        // load device config info
-        updateConfiguration();
+        mContext.registerReceiver(mStateReceiver, filter, null, handler);
     }
 
     // We can't do this once in the Tethering() constructor and cache the value, because the
@@ -355,17 +365,15 @@ public class Tethering extends BaseNetworkObserver {
      */
     @VisibleForTesting
     protected boolean isTetherProvisioningRequired() {
-        String[] provisionApp = mContext.getResources().getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app);
+        final TetheringConfiguration cfg = mConfig;
         if (mSystemProperties.getBoolean(DISABLE_PROVISIONING_SYSPROP_KEY, false)
-                || provisionApp == null) {
+                || cfg.provisioningApp == null) {
             return false;
         }
-
         if (carrierConfigAffirmsEntitlementCheckNotRequired()) {
             return false;
         }
-        return (provisionApp.length == 2);
+        return (cfg.provisioningApp.length == 2);
     }
 
     // The logic here is aimed solely at confirming that a CarrierConfig exists
@@ -386,20 +394,6 @@ public class Tethering extends BaseNetworkObserver {
         final boolean isEntitlementCheckRequired = carrierConfig.getBoolean(
                 CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL);
         return !isEntitlementCheckRequired;
-    }
-
-    // Used by the SIM card change observation code.
-    // TODO: De-duplicate above code.
-    private boolean hasMobileHotspotProvisionApp() {
-        try {
-            if (!mContext.getResources().getString(com.android.internal.R.string.
-                    config_mobile_hotspot_provision_app_no_ui).isEmpty()) {
-                Log.d(TAG, "re-evaluate provisioning");
-                return true;
-            }
-        } catch (Resources.NotFoundException e) {}
-        Log.d(TAG, "no prov-check needed for new SIM");
-        return false;
     }
 
     /**
@@ -1117,7 +1111,7 @@ public class Tethering extends BaseNetworkObserver {
     }
 
     private void reevaluateSimCardProvisioning() {
-        if (!hasMobileHotspotProvisionApp()) return;
+        if (!mConfig.hasMobileHotspotProvisionApp()) return;
         if (carrierConfigAffirmsEntitlementCheckNotRequired()) return;
 
         ArrayList<Integer> tethered = new ArrayList<>();
@@ -1156,6 +1150,7 @@ public class Tethering extends BaseNetworkObserver {
         // we treated the error and want now to clear it
         static final int CMD_CLEAR_ERROR                        = BASE_MASTER + 6;
         static final int EVENT_IFACE_UPDATE_LINKPROPERTIES      = BASE_MASTER + 7;
+        static final int EVENT_CARRIER_CONFIG_CHANGE            = BASE_MASTER + 8;
 
         private final State mInitialState;
         private final State mTetherModeAliveState;
@@ -1483,7 +1478,6 @@ public class Tethering extends BaseNetworkObserver {
                     return;
                 }
 
-                mCarrierConfigChange.startListening();
                 mSimChange.startListening();
                 mUpstreamNetworkMonitor.start();
 
@@ -1501,7 +1495,6 @@ public class Tethering extends BaseNetworkObserver {
                 mOffload.stop();
                 mUpstreamNetworkMonitor.stop();
                 mSimChange.stopListening();
-                mCarrierConfigChange.stopListening();
                 notifyDownstreamsOfNewUpstreamIface(null);
                 handleNewUpstreamNetworkState(null);
             }
@@ -1574,6 +1567,10 @@ public class Tethering extends BaseNetworkObserver {
                         }
                         break;
                     }
+                    case EVENT_CARRIER_CONFIG_CHANGE:
+                        mLog.log("OBSERVED carrier config change");
+                        reevaluateSimCardProvisioning();
+                        break;
                     case CMD_UPSTREAM_CHANGED:
                         updateUpstreamWanted();
                         if (!mUpstreamWanted) break;
