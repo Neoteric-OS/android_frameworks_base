@@ -16,6 +16,24 @@
       "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36545172_4cfdf262",
+        "filename": "packages/SettingsLib/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-28T00:12:05Z",
+      "side": 1,
+      "message": "There would be merge conflict here if I remove those lines.",
+      "parentUuid": "779ecd46_c64e6d32",
+      "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
