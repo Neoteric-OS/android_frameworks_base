@@ -25,8 +25,9 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.telephony.TelephonyManager;
 import android.net.util.SharedLog;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -79,6 +80,9 @@ public class TetheringConfiguration {
     public final String[] dhcpRanges;
     public final String[] defaultIPv4DNS;
 
+    public final String[] provisioningApp;
+    public final String provisioningAppNoUi;
+
     public TetheringConfiguration(Context ctx, SharedLog log) {
         final SharedLog configLog = log.forSubComponent("config");
 
@@ -101,6 +105,10 @@ public class TetheringConfiguration {
         dhcpRanges = getDhcpRanges(ctx);
         defaultIPv4DNS = copy(DEFAULT_IPV4_DNS);
 
+        provisioningApp = ctx.getResources().getStringArray(
+                com.android.internal.R.array.config_mobile_hotspot_provision_app);
+        provisioningAppNoUi = getPovisioningAppNoUi(ctx);
+
         configLog.log(toString());
     }
 
@@ -114,6 +122,10 @@ public class TetheringConfiguration {
 
     public boolean isBluetooth(String iface) {
         return matchesDownstreamRegexs(iface, tetherableBluetoothRegexs);
+    }
+
+    public boolean hasMobileHotspotProvisionApp() {
+        return !TextUtils.isEmpty(provisioningAppNoUi);
     }
 
     public void dump(PrintWriter pw) {
@@ -140,6 +152,8 @@ public class TetheringConfiguration {
         sj.add(String.format("isDunRequired:%s", isDunRequired));
         sj.add(String.format("preferredUpstreamIfaceTypes:%s",
                 makeString(preferredUpstreamNames(preferredUpstreamIfaceTypes))));
+        sj.add(String.format("provisioningApp:%s", makeString(provisioningApp)));
+        sj.add(String.format("provisioningAppNoUi:%s", provisioningAppNoUi));
         return String.format("TetheringConfiguration{%s}", sj.toString());
     }
 
@@ -159,6 +173,7 @@ public class TetheringConfiguration {
     }
 
     private static String makeString(String[] strings) {
+        if (strings == null) return "null";
         final StringJoiner sj = new StringJoiner(",", "[", "]");
         for (String s : strings) sj.add(s);
         return sj.toString();
@@ -253,6 +268,15 @@ public class TetheringConfiguration {
             return fromResource;
         }
         return copy(DHCP_DEFAULT_RANGE);
+    }
+
+    private static String getPovisioningAppNoUi(Context ctx) {
+        try {
+            return ctx.getResources().getString(
+                    com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui);
+        } catch (Resources.NotFoundException e) {
+            return "";
+        }
     }
 
     private static String[] copy(String[] strarray) {
