@@ -52,6 +52,24 @@
       "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41d567de_c46a38a6",
+        "filename": "packages/SettingsLib/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-02-28T00:18:53Z",
+      "side": 1,
+      "message": "From my understanding, Automerger will skip the change with Merged-In, but pre-submit won\u0027t pass with those merge-conflicts.\n\nhttps://g3doc.corp.google.com/wireless/android/build_tools/g3doc/public/automerger.md?cl\u003dhead#using-merged-in",
+      "parentUuid": "f066c522_5ef40c04",
+      "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
