@@ -31,7 +31,7 @@ import android.util.Log;
  * @hide
  */
 @SystemApi
-public class NanoApp {
+public class NanoApp implements Parcelable {
     private final String TAG = "NanoApp";
 
     private final String UNKNOWN = "Unknown";

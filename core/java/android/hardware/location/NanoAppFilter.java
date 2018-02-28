@@ -26,7 +26,7 @@ import android.util.Log;
  * @hide
  */
 @SystemApi
-public class NanoAppFilter {
+public class NanoAppFilter implements Parcelable {
 
     private static final String TAG = "NanoAppFilter";
 

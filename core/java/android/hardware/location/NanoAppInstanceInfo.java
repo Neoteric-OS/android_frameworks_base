@@ -29,7 +29,7 @@ import libcore.util.EmptyArray;
  * @hide
  */
 @SystemApi
-public class NanoAppInstanceInfo {
+public class NanoAppInstanceInfo implements Parcelable {
     private String mPublisher;
     private String mName;
 

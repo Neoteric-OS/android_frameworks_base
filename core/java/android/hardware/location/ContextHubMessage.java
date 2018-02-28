@@ -27,7 +27,7 @@ import java.util.Arrays;
  * @hide
  */
 @SystemApi
-public class ContextHubMessage {
+public class ContextHubMessage implements Parcelable {
     private int mType;
     private int mVersion;
     private byte[]mData;
