@@ -69,6 +69,30 @@
       "revId": "9f9ba567e6f8d340f3daaf296e8d2bfe7c2d7480",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1331be6e_af9744ba",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-28T22:54:34Z",
+      "side": 1,
+      "message": "This needs to be consistent with the other RATs and do RSSI if nothing is specified. I believe. You can/should copy the pattern from GSM.",
+      "parentUuid": "6b1c244c_3bd5e269",
+      "range": {
+        "startLine": 1070,
+        "startChar": 12,
+        "endLine": 1071,
+        "endChar": 22
+      },
+      "revId": "9f9ba567e6f8d340f3daaf296e8d2bfe7c2d7480",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
