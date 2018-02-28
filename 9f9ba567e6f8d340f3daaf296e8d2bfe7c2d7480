@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72033e43_e4d1a843",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-28T21:59:11Z",
+      "side": 1,
+      "message": "We\u0027re still not consistent with LTE. These numbers are still in ASU rather than in RSCP values (which would carry units of dBm).\n\nAs per discussion with jminjie, that work will go in a follow-up CL.",
+      "range": {
+        "startLine": 2154,
+        "startChar": 5,
+        "endLine": 2157,
+        "endChar": 55
+      },
+      "revId": "9f9ba567e6f8d340f3daaf296e8d2bfe7c2d7480",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
