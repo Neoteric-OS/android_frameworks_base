@@ -25814,6 +25814,16 @@ package android.net {
     field public static final int DIRECTION_OUT = 1; // 0x1
   }
 
+  public static class IpSecManager.NattKeepaliveCallback {
+    ctor public IpSecManager.NattKeepaliveCallback();
+    method public void onError(int);
+    method public void onStarted();
+    method public void onStopped();
+    field public static final int ERROR_HARDWARE_ERROR = 3; // 0x3
+    field public static final int ERROR_HARDWARE_UNSUPPORTED = 2; // 0x2
+    field public static final int ERROR_INVALID_NETWORK = 1; // 0x1
+  }
+
   public static final class IpSecManager.ResourceUnavailableException extends android.util.AndroidException {
   }
 
@@ -25830,6 +25840,8 @@ package android.net {
     method public void close() throws java.io.IOException;
     method public java.io.FileDescriptor getFileDescriptor();
     method public int getPort();
+    method public void startNattKeepalive(java.net.InetAddress, java.net.InetAddress, android.net.Network, int, android.os.Handler, android.net.IpSecManager.NattKeepaliveCallback) throws java.io.IOException;
+    method public void stopNattKeepalive();
   }
 
   public final class IpSecTransform implements java.lang.AutoCloseable {

@@ -29,6 +29,7 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.IIpSecService;
+import android.net.INattKeepaliveCallback;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
@@ -65,6 +66,7 @@ import com.android.internal.util.Preconditions;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -912,6 +914,7 @@ public class IpSecService extends IIpSecService.Stub {
     private final class EncapSocketRecord extends OwnedResourceRecord {
         private FileDescriptor mSocket;
         private final int mPort;
+        private ConnectivityManager.PacketKeepalive mKeepalive;
 
         EncapSocketRecord(int resourceId, FileDescriptor socket, int port) {
             super(resourceId);
@@ -922,6 +925,8 @@ public class IpSecService extends IIpSecService.Stub {
         /** always guarded by IpSecService#this */
         @Override
         public void freeUnderlyingResources() {
+            if (mKeepalive != null) stopNattKeepalive();
+
             Log.d(TAG, "Closing port " + mPort);
             IoUtils.closeQuietly(mSocket);
             mSocket = null;
@@ -945,6 +950,107 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void invalidate() {
             getUserRecord().removeEncapSocketRecord(mResourceId);
+        }
+
+        private Network getNetwork() {
+            try {
+                // The netid is the least significant 16 bits of the mark; preferably, there would
+                // be a function for this. I haven't seen one.
+                return new Network(Os.getsockoptInt(
+                       mSocket, OsConstants.SOL_SOCKET, 36 /*OsConstants.SO_MARK*/) & 0xffff);
+            } catch (ErrnoException e) {
+                // TODO: is there a constant for an invalid netid?
+                return new Network(ConnectivityManager.NETID_UNSET);
+            }
+        }
+
+        public void startNattKeepalive(
+                String srcAddress, String dstAddress, Network net,
+                int intervalSeconds, INattKeepaliveCallback callback) {
+            if (mKeepalive != null) {
+                throw new IllegalStateException(
+                        "Only one keepalive is possible per IpSecTransform.");
+            }
+
+            Network sockNetwork = getNetwork();
+            // Socket is not bound, so it will be bound to user-provided network
+            if (sockNetwork.getNetworkHandle() == 0) {
+                if (net == null) {
+                    // This check is currently redundant, but if we relax the check for a network
+                    // in the case of a connected socket, this will become useful. It also serves
+                    // to document the restrictions on the Network parameter.
+                    throw new IllegalArgumentException(
+                            "Null network passed to startNattKeepalive()");
+                }
+
+                try {
+                    net.bindSocket(mSocket);
+                } catch (IOException e) {
+                    throw new IllegalStateException("Socket couldn't be bound to network.", e);
+                }
+            // Check for a mismatch if socket is bound and net is non-null
+            } else if (net != null && !sockNetwork.equals(net)) {
+                throw new IllegalArgumentException(
+                        "Socket is already bound to a different network");
+            // The socket is bound; if net is non-null they are identical
+            } else {
+                net = sockNetwork;
+            }
+
+            // Needs to be final to satisfy the lambda
+            final Network finalNet = net;
+
+            ConnectivityManager cm =
+                    (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            ConnectivityManager.PacketKeepaliveCallback keepaliveCb =
+                    new ConnectivityManager.PacketKeepaliveCallback() {
+                        WeakReference<INattKeepaliveCallback> mBinderCallback
+                                = new WeakReference<>(callback);
+
+                        @Override
+                        public void onStarted() {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onStarted(); } catch (RemoteException r) {}
+                            }
+                        }
+
+                        @Override
+                        public void onStopped() {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onStopped(); } catch (RemoteException r) {}
+                            }
+                            mKeepalive = null;
+                        }
+
+                        @Override
+                        public void onError(int error) {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onError(error); } catch (RemoteException r) {}
+                            }
+                            mKeepalive = null;
+                        }
+                    };
+
+            Binder.withCleanCallingIdentity(() -> {
+                    mKeepalive = cm.startNattKeepalive(
+                            finalNet,
+                            intervalSeconds,
+                            keepaliveCb,
+                            NetworkUtils.numericToInetAddress(srcAddress),
+                            mPort,
+                            NetworkUtils.numericToInetAddress(dstAddress));
+                });
+        }
+
+        public void stopNattKeepalive() {
+            if (mKeepalive == null) {
+                throw new IllegalStateException("No active Keepalive to stop.");
+            }
+            Binder.withCleanCallingIdentity(() -> { mKeepalive.stop(); });
         }
 
         @Override
@@ -1729,6 +1835,35 @@ public class IpSecService extends IIpSecService.Stub {
                 throw e;
             }
         }
+    }
+
+    @Override
+    synchronized public void startNattKeepalive(
+            int resourceId, String srcAddress, String dstAddress,
+            Network net, int intervalSeconds, INattKeepaliveCallback cb, String callingPackage) {
+        enforceTunnelPermissions(callingPackage);
+        checkNotNull(net, "Received a null network!");
+        checkNotNull(srcAddress, "Received null source address!");
+        checkNotNull(dstAddress, "Received null destination address!");
+        checkNotNull(cb, "Received null KeepaliveCallback!");
+        if (intervalSeconds < 20 || intervalSeconds > 3600) {
+            throw new IllegalArgumentException("Invalid NAT-T keepalive interval");
+        }
+        // Get EncapSocket record; if no EncapSocket is found, will throw IllegalArgumentException
+        mUserResourceTracker
+                .getUserRecord(Binder.getCallingUid())
+                .mEncapSocketRecords.getResourceOrThrow(resourceId)
+                .startNattKeepalive(srcAddress, dstAddress, net, intervalSeconds, cb);
+    }
+
+    @Override
+    synchronized public void stopNattKeepalive(int resourceId, String callingPackage) {
+        enforceTunnelPermissions(callingPackage);
+        // Get EncapSocket record; if no EncapSocket is found, will throw IllegalArgumentException
+        mUserResourceTracker
+                .getUserRecord(Binder.getCallingUid())
+                .mEncapSocketRecords.getResourceOrThrow(resourceId)
+                .stopNattKeepalive();
     }
 
     @Override

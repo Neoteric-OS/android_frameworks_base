@@ -25,6 +25,7 @@ import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.content.Context;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
@@ -44,6 +45,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.Executor;
 
 /**
  * This class contains methods for managing IPsec sessions. Once configured, the kernel will apply
@@ -534,6 +536,29 @@ public final class IpSecManager {
     public void removeTunnelModeTransform(Network net, IpSecTransform transform) {}
 
     /**
+     * A callback class to provide status information regarding a NAT-T keepalive session
+     *
+     * <p>Use this callback to receive status information regarding a NAT-T keepalive session
+     * by registering it when calling {@link UdpEncapsulationSocket#startNattKeepalive}.
+     *
+     */
+    public static class NattKeepaliveCallback {
+        /** The specified {@code Network} is not connected. */
+        public static final int ERROR_INVALID_NETWORK = 1;
+        /** The hardware does not support this request. */
+        public static final int ERROR_HARDWARE_UNSUPPORTED = 2;
+        /** The hardware returned an error. */
+        public static final int ERROR_HARDWARE_ERROR = 3;
+
+        /** The requested keepalive was successfully started. */
+        public void onStarted() {}
+        /** The keepalive was successfully stopped. */
+        public void onStopped() {}
+        /** An error occurred. */
+        public void onError(int error) {}
+    }
+
+    /**
      * This class provides access to a UDP encapsulation Socket.
      *
      * <p>{@code UdpEncapsulationSocket} wraps a system-provided datagram socket intended for IKEv2
@@ -552,11 +577,15 @@ public final class IpSecManager {
         private final IIpSecService mService;
         private int mResourceId = INVALID_RESOURCE_ID;
         private final int mPort;
+        private INattKeepaliveCallback mKeepaliveCallback;
+        private Object mLock = new Object();
         private final CloseGuard mCloseGuard = CloseGuard.get();
+        private final String mPkgName;
 
-        private UdpEncapsulationSocket(@NonNull IIpSecService service, int port)
+        private UdpEncapsulationSocket(IIpSecService service, String pkgName, int port)
                 throws ResourceUnavailableException, IOException {
             mService = service;
+            mPkgName = pkgName;
             try {
                 IpSecUdpEncapResponse result =
                         mService.openUdpEncapsulationSocket(port, new Binder());
@@ -602,6 +631,11 @@ public final class IpSecManager {
         @Override
         public void close() throws IOException {
             try {
+                // If we don't have an active keepalive, this will harmlessly throw
+                try {
+                    stopNattKeepalive();
+                } catch (IllegalStateException ignore) {
+                }
                 mService.closeUdpEncapsulationSocket(mResourceId);
                 mResourceId = INVALID_RESOURCE_ID;
             } catch (RemoteException e) {
@@ -636,6 +670,177 @@ public final class IpSecManager {
         @VisibleForTesting
         public int getResourceId() {
             return mResourceId;
+        }
+
+        /**
+         * Start a NAT-T keepalive session for the current encapsulation socket.
+         *
+         * NAT-T offloading provides a power efficient mechanism of sending NAT-T packets at a
+         * specified interval.
+         *
+         * @param localAddress The local address of the tunnel.
+         * @param remoteAddress The remote address of the tunnel.
+         * @param net The {@link Network} that will carry the offloaded session.
+         * @param intervalSeconds The interval between NAT-T keepalives being sent. The
+         *      the allowed range is between 20 and 3600 seconds.
+         * @param handler A handler on which to post callbacks when received.
+         * @param userCallback a {@link NattKeepaliveCallback} to receive asynchronous status
+         *      information about the requested NAT-T keepalive session.
+         *
+         */
+        @RequiresPermission(anyOf = {
+                android.Manifest.permission.MANAGE_IPSEC_TUNNELS,
+                android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD
+        })
+        public void startNattKeepalive(
+                @NonNull InetAddress localAddress, @NonNull InetAddress remoteAddress,
+                @NonNull Network net, int intervalSeconds,
+                @NonNull Handler handler, @NonNull NattKeepaliveCallback userCallback)
+                throws IOException {
+            checkNotNull(userCallback);
+            checkNotNull(handler);
+
+            synchronized (mLock) {
+                INattKeepaliveCallback tmp = new INattKeepaliveCallback.Stub() {
+                    private final Handler mKeepaliveCallbackHandler = handler;
+                    private final NattKeepaliveCallback mUserKeepaliveCallback = userCallback;
+                    @Override
+                    public void onStarted() {
+                        synchronized (mLock) {
+                            mKeepaliveCallbackHandler.post(
+                                    () -> mUserKeepaliveCallback.onStarted());
+                        }
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        synchronized (mLock) {
+                            mKeepaliveCallbackHandler.post(
+                                    () -> mUserKeepaliveCallback.onStopped());
+                            mKeepaliveCallback = null;
+                        }
+                    }
+
+                    @Override
+                    public void onError(int error) {
+                        synchronized (mLock) {
+                            mKeepaliveCallbackHandler.post(
+                                    () -> mUserKeepaliveCallback.onError(error));
+                            mKeepaliveCallback = null;
+                        }
+                    }
+                };
+                try {
+                    mService.startNattKeepalive(
+                            mResourceId,
+                            localAddress.getHostAddress(),
+                            remoteAddress.getHostAddress(),
+                            net, intervalSeconds, tmp, mPkgName);
+                    mKeepaliveCallback = tmp;
+                } catch (RemoteException r) {
+                    r.rethrowAsRuntimeException();
+                }
+            }
+        }
+
+        /**
+         * Start a NAT-T keepalive session for the current encapsulation socket.
+         *
+         * For a transform that is using UDP encapsulated IPv4, NAT-T offloading provides
+         * a power efficient mechanism of sending NAT-T packets at a specified interval.
+         *
+         * @param localAddress The local address of the tunnel.
+         * @param remoteAddress The remote address of the tunnel.
+         * @param net The {@link Network} that will carry the offloaded session.
+         * @param intervalSeconds The interval between NAT-T keepalives being sent. The
+         *      the allowed range is between 20 and 3600 seconds.
+         * @param executor An executor on which to execute callbacks when received.
+         * @param userCallback A {@link #NattKeepaliveCallback} to receive asynchronous status
+         *      information about the requested NAT-T keepalive session.
+         *
+         * @hide
+         */
+        @RequiresPermission(anyOf = {
+                android.Manifest.permission.MANAGE_IPSEC_TUNNELS,
+                android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD
+        })
+        public void startNattKeepalive(
+                @NonNull InetAddress localAddress, @NonNull InetAddress remoteAddress,
+                @NonNull Network net, int intervalSeconds,
+                @NonNull Executor executor, @NonNull NattKeepaliveCallback userCallback)
+                throws IOException {
+            checkNotNull(userCallback);
+            checkNotNull(executor);
+
+            synchronized (mLock) {
+                INattKeepaliveCallback tmp = new INattKeepaliveCallback.Stub() {
+                    private final Executor mKeepaliveCallbackExecutor = executor;
+                    private final NattKeepaliveCallback mUserKeepaliveCallback = userCallback;
+                    @Override
+                    public void onStarted() {
+                        synchronized (mLock) {
+                            Binder.withCleanCallingIdentity(() -> {
+                                mKeepaliveCallbackExecutor.execute(
+                                        () -> mUserKeepaliveCallback.onStarted());
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        synchronized (mLock) {
+                            Binder.withCleanCallingIdentity(() -> {
+                                mKeepaliveCallbackExecutor.execute(
+                                        () -> mUserKeepaliveCallback.onStopped());
+                                mKeepaliveCallback = null;
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(int error) {
+                        synchronized (mLock) {
+                            Binder.withCleanCallingIdentity(() -> {
+                                mKeepaliveCallbackExecutor.execute(
+                                        () -> mUserKeepaliveCallback.onError(error));
+                                mKeepaliveCallback = null;
+                            });
+                        }
+                    }
+                };
+                try {
+                    mService.startNattKeepalive(
+                            mResourceId,
+                            localAddress.getHostAddress(),
+                            remoteAddress.getHostAddress(),
+                            net, intervalSeconds, tmp, mPkgName);
+                    mKeepaliveCallback = tmp;
+                } catch (RemoteException r) {
+                    r.rethrowAsRuntimeException();
+                }
+            }
+        }
+
+        /**
+         * Stop an ongoing NAT-T keepalive session.
+         *
+         * Calling this API will request that an ongoing NAT-T keepalive session be terminated.
+         * If this API is not called before {@link UdpEncapsulationSocket#close()} is invoked,
+         * the underlying NAT-T session will be terminated automatically.
+         *
+         */
+        @RequiresPermission(anyOf = {
+                android.Manifest.permission.MANAGE_IPSEC_TUNNELS,
+                android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD
+        })
+        public void stopNattKeepalive() {
+            synchronized (mLock) {
+                try {
+                    mService.stopNattKeepalive(mResourceId, mPkgName);
+                } catch (RemoteException r) {
+                    r.rethrowAsRuntimeException();
+                }
+            }
         }
 
         @Override
@@ -676,7 +881,7 @@ public final class IpSecManager {
             throw new IllegalArgumentException("Specified port must be a valid port number!");
         }
         try {
-            return new UdpEncapsulationSocket(mService, port);
+            return new UdpEncapsulationSocket(mService, mContext.getOpPackageName(), port);
         } catch (ServiceSpecificException e) {
             throw rethrowCheckedExceptionFromServiceSpecificException(e);
         }
@@ -703,7 +908,7 @@ public final class IpSecManager {
     public UdpEncapsulationSocket openUdpEncapsulationSocket()
             throws IOException, ResourceUnavailableException {
         try {
-            return new UdpEncapsulationSocket(mService, 0);
+            return new UdpEncapsulationSocket(mService, mContext.getOpPackageName(), 0);
         } catch (ServiceSpecificException e) {
             throw rethrowCheckedExceptionFromServiceSpecificException(e);
         }
@@ -875,8 +1080,8 @@ public final class IpSecManager {
      * <p>An application that creates tunnels is responsible for cleaning up the tunnel when the
      * underlying network goes away, and the onLost() callback is received.
      *
-     * @param localAddress The local addres of the tunnel
-     * @param remoteAddress The local addres of the tunnel
+     * @param localAddress The local address of the tunnel
+     * @param remoteAddress The local address of the tunnel
      * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
      *        This network should almost certainly be a network such as WiFi with an L2 address.
      * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties

@@ -18,6 +18,7 @@ package android.net;
 
 import android.net.LinkAddress;
 import android.net.Network;
+import android.net.INattKeepaliveCallback;
 import android.net.IpSecConfig;
 import android.net.IpSecUdpEncapResponse;
 import android.net.IpSecSpiResponse;
@@ -62,6 +63,12 @@ interface IIpSecService
 
     IpSecTransformResponse createTransform(
             in IpSecConfig c, in IBinder binder, in String callingPackage);
+
+    void startNattKeepalive(
+            int resourceId, String localAddress, String remoteAddress, in Network net,
+            int intervalSeconds, in INattKeepaliveCallback cb, in String callingPackage);
+
+    void stopNattKeepalive(int resourceId, in String callingPackage);
 
     void deleteTransform(int transformId);
 
