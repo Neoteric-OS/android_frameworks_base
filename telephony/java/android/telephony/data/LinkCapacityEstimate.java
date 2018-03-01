@@ -16,6 +16,7 @@
 
 package android.telephony.data;
 
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -26,6 +27,7 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public class LinkCapacityEstimate implements Parcelable {
     /** Any field that is not reported shall be set to INVALID */
     public static final int INVALID = -1;
@@ -48,7 +50,11 @@ public class LinkCapacityEstimate implements Parcelable {
     /** Status of the LCE; deprecated in HAL 1.2 */
     public final int status; // either STATUS_ACTIVE, STATUS_SUSPENDED, or INVALID
 
-    /** Constructor matching the estimate in Radio HAL v1.0 */
+    /**
+     * Constructor matching the estimate in Radio HAL v1.0
+     *
+     * @hide
+     */
     public LinkCapacityEstimate(int downlinkCapacityKbps, int confidence, int status) {
         this.downlinkCapacityKbps = downlinkCapacityKbps;
         this.confidence = confidence;
@@ -56,7 +62,11 @@ public class LinkCapacityEstimate implements Parcelable {
         this.uplinkCapacityKbps = INVALID;
     }
 
-    /** Constructor matching the estimate in Radio HAL v1.2 */
+    /**
+     * Constructor matching the estimate in Radio HAL v1.2
+     *
+     * @hide
+     */
     public LinkCapacityEstimate(int downlinkCapacityKbps, int uplinkCapacityKbps) {
         this.downlinkCapacityKbps = downlinkCapacityKbps;
         this.uplinkCapacityKbps = uplinkCapacityKbps;
@@ -64,7 +74,11 @@ public class LinkCapacityEstimate implements Parcelable {
         this.status = INVALID;
     }
 
-    /** Parcelable constructor */
+    /**
+     * Parcelable constructor
+     *
+     * @hide
+     */
     private LinkCapacityEstimate(Parcel p) {
         downlinkCapacityKbps = p.readInt();
         uplinkCapacityKbps = p.readInt();
@@ -117,6 +131,7 @@ public class LinkCapacityEstimate implements Parcelable {
         dest.writeInt(status);
     }
 
+    /** Parcelable creator */
     public static final Parcelable.Creator<LinkCapacityEstimate> CREATOR =
             new Parcelable.Creator<LinkCapacityEstimate>() {
                 @Override

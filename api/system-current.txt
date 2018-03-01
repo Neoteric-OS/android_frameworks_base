@@ -4446,6 +4446,7 @@ package android.telephony.data {
     method public void onDataCallListChanged(java.util.List<android.telephony.data.DataCallResponse>);
     method public void onDeactivateDataCallComplete(int);
     method public void onGetDataCallListComplete(int, java.util.List<android.telephony.data.DataCallResponse>);
+    method public void onLinkCapacityEstimateChanged(android.telephony.data.LinkCapacityEstimate);
     method public void onSetDataProfileComplete(int);
     method public void onSetInitialAttachApnComplete(int);
     method public void onSetupDataCallComplete(int, android.telephony.data.DataCallResponse);
@@ -4454,6 +4455,19 @@ package android.telephony.data {
     field public static final int RESULT_ERROR_INVALID_ARG = 2; // 0x2
     field public static final int RESULT_ERROR_UNSUPPORTED = 1; // 0x1
     field public static final int RESULT_SUCCESS = 0; // 0x0
+  }
+
+  public class LinkCapacityEstimate implements android.os.Parcelable {
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.data.LinkCapacityEstimate> CREATOR;
+    field public static final int INVALID = -1; // 0xffffffff
+    field public static final int STATUS_ACTIVE = 0; // 0x0
+    field public static final int STATUS_SUSPENDED = 1; // 0x1
+    field public final int confidence;
+    field public final int downlinkCapacityKbps;
+    field public final int status;
+    field public final int uplinkCapacityKbps;
   }
 
 }
