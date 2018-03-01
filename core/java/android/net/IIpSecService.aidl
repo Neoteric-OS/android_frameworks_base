@@ -17,6 +17,7 @@
 package android.net;
 
 import android.net.Network;
+import android.net.INattKeepaliveCallback;
 import android.net.IpSecConfig;
 import android.net.IpSecUdpEncapResponse;
 import android.net.IpSecSpiResponse;
@@ -57,6 +58,10 @@ interface IIpSecService
     void deleteTunnelInterface(int resourceId);
 
     IpSecTransformResponse createTransform(in IpSecConfig c, in IBinder binder);
+
+    void startNattKeepalive(int transformId, int intervalSeconds, in INattKeepaliveCallback cb);
+
+    void stopNattKeepalive(int transformId);
 
     void deleteTransform(int transformId);
 
