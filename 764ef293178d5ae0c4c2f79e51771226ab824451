@@ -88,6 +88,24 @@
       "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1b0b1a5_afd372aa",
+        "filename": "packages/SettingsLib/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-03-01T16:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be2b1e1_19a47864",
+      "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
