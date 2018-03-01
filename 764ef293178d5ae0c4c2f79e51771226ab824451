@@ -70,6 +70,24 @@
       "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6be2b1e1_19a47864",
+        "filename": "packages/SettingsLib/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2018-03-01T15:53:41Z",
+      "side": 1,
+      "message": "Presubmit should only fail on a merge if it can\u0027t be merged into the target branch. I don\u0027t think that the merge back into internal (which should be skipped) would block presubmit? That happens async as the automerger comes around was my understanding.\n\nIn any event, can we try it without these lines? I just don\u0027t want to push things to AOSP that aren\u0027t actually part of the feature if we can help it.",
+      "parentUuid": "41d567de_c46a38a6",
+      "revId": "764ef293178d5ae0c4c2f79e51771226ab824451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
