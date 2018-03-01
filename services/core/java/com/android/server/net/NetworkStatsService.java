@@ -749,6 +749,18 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     @Override
+    public NetworkStats getDetailedUidStats(int limitUid, String[] limitIfaces, int limitTag) {
+        try {
+            NetworkStats stats = getNetworkStatsUidDetail();
+            stats.filter(limitUid, limitIfaces, limitTag);
+            return stats;
+        } catch (RemoteException e) {
+            Log.wtf(TAG, "Error compiling UID stats", e);
+            return new NetworkStats(0L, 0);
+        }
+    }
+
+    @Override
     public String[] getMobileIfaces() {
         return mMobileIfaces;
     }

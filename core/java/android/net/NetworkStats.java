@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -359,21 +360,25 @@ public class NetworkStats implements Parcelable {
             capacity = newLength;
         }
 
-        iface[size] = entry.iface;
-        uid[size] = entry.uid;
-        set[size] = entry.set;
-        tag[size] = entry.tag;
-        metered[size] = entry.metered;
-        roaming[size] = entry.roaming;
-        defaultNetwork[size] = entry.defaultNetwork;
-        rxBytes[size] = entry.rxBytes;
-        rxPackets[size] = entry.rxPackets;
-        txBytes[size] = entry.txBytes;
-        txPackets[size] = entry.txPackets;
-        operations[size] = entry.operations;
+        setValues(size, entry);
         size++;
 
         return this;
+    }
+
+    private void setValues(int i, Entry values) {
+        iface[i] = values.iface;
+        uid[i] = values.uid;
+        set[i] = values.set;
+        tag[i] = values.tag;
+        metered[i] = values.metered;
+        roaming[i] = values.roaming;
+        defaultNetwork[i] = values.defaultNetwork;
+        rxBytes[i] = values.rxBytes;
+        rxPackets[i] = values.rxPackets;
+        txBytes[i] = values.txBytes;
+        txPackets[i] = values.txPackets;
+        operations[i] = values.operations;
     }
 
     /**
@@ -822,6 +827,33 @@ public class NetworkStats implements Parcelable {
         }
 
         return stats;
+    }
+
+    /**
+     * Only keep rows that match all specified filters.
+     *
+     * <p>This mutates the original structure.
+     * @param limitUid UID to filter for, or {@link #UID_ALL}.
+     * @param limitIfaces Interfaces to filter for, or null.
+     * @param limitTag Tag to filter for, or {@link #TAG_ALL}.
+     */
+    public void filter(int limitUid, @Nullable  String[] limitIfaces, int limitTag) {
+        Entry entry = new Entry();
+        int nextOutputEntry = 0;
+        for (int i = 0; i < size; i++) {
+            entry = getValues(i, entry);
+            final boolean matches =
+                    (limitUid == UID_ALL || limitUid == entry.uid)
+                    && (limitTag == TAG_ALL || limitTag == entry.tag)
+                    && (limitIfaces == null || ArrayUtils.contains(limitIfaces, entry.iface));
+
+            if (matches) {
+                setValues(nextOutputEntry, entry);
+                nextOutputEntry++;
+            }
+        }
+
+        size = nextOutputEntry;
     }
 
     public void dump(String prefix, PrintWriter pw) {

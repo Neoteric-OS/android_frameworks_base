@@ -44,6 +44,14 @@ interface INetworkStatsService {
 
     /** Return data layer snapshot of UID network usage. */
     NetworkStats getDataLayerSnapshotForUid(int uid);
+
+    /** Get a detailed snapshot of stats since boot for all UIDs.
+    * @param limitUid UID to filter for, or {@link NetworkStats#UID_ALL}.
+    * @param limitIfaces Interfaces to filter for, or null.
+    * @param limitTag Tag to filter for, or {@link NetworkStats#TAG_ALL}.
+    */
+    NetworkStats getDetailedUidStats(int limitUid, in String[] limitIfaces, int limitTag);
+
     /** Return set of any ifaces associated with mobile networks since boot. */
     String[] getMobileIfaces();
 

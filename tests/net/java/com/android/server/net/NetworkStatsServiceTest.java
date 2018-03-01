@@ -36,6 +36,7 @@ import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.SET_FOREGROUND;
 import static android.net.NetworkStats.STATS_PER_IFACE;
 import static android.net.NetworkStats.STATS_PER_UID;
+import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStatsHistory.FIELD_ALL;
@@ -665,6 +666,83 @@ public class NetworkStatsServiceTest {
         assertEquals(1, stats.size());
         assertValues(stats, IFACE_ALL, UID_BLUE, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
                 DEFAULT_NETWORK_YES, 1024L, 8L, 512L, 4L, 0);
+    }
+
+    @Test
+    public void testDetailedUidStats() throws Exception {
+        // pretend that network comes online
+        expectCurrentTime();
+        expectDefaultSettings();
+        expectNetworkState(buildWifiState());
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_WIFI);
+
+        NetworkStats.Entry entry1 = new NetworkStats.Entry(
+                TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L);
+        NetworkStats.Entry entry2 = new NetworkStats.Entry(
+                TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 50L, 5L, 50L, 5L, 0L);
+        NetworkStats.Entry entry3 = new NetworkStats.Entry(
+                TEST_IFACE, UID_BLUE, SET_DEFAULT, 0xBEEF, 1024L, 8L, 512L, 4L, 0L);
+
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectCurrentTime();
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
+                .addValues(entry1)
+                .addValues(entry2)
+                .addValues(entry3));
+        mService.incrementOperationCount(UID_RED, 0xF00D, 1);
+
+        NetworkStats stats = mService.getDetailedUidStats(UID_ALL, null, TAG_ALL);
+
+        assertEquals(3, stats.size());
+        entry1.operations = 1;
+        assertEquals(entry1, stats.getValues(0, null));
+        entry2.operations = 1;
+        assertEquals(entry2, stats.getValues(1, null));
+        assertEquals(entry3, stats.getValues(2, null));
+    }
+
+    @Test
+    public void testDetailedUidStats_Filtered() throws Exception {
+        // pretend that network comes online
+        expectCurrentTime();
+        expectDefaultSettings();
+        expectNetworkState(buildWifiState());
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_WIFI);
+
+        NetworkStats.Entry entry1 = new NetworkStats.Entry(
+                TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L); // Different UID
+        NetworkStats.Entry entry2 = new NetworkStats.Entry(
+                TEST_IFACE, UID_BLUE, SET_DEFAULT, 0xBEEF, 50L, 5L, 50L, 5L, 0L); // Different tag
+        NetworkStats.Entry entry3 = new NetworkStats.Entry(
+                "otherif", UID_BLUE, SET_DEFAULT, 0xF00D, 1024L, 8L, 512L, 4L, 0L); // Different IF
+        NetworkStats.Entry entry4 = new NetworkStats.Entry(
+                TEST_IFACE, UID_BLUE, SET_DEFAULT, 0xF00D, 1024L, 8L, 512L, 4L, 0L); // Matches
+
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectCurrentTime();
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 4)
+                .addValues(entry1)
+                .addValues(entry2)
+                .addValues(entry3)
+                .addValues(entry4));
+
+        NetworkStats stats = mService.getDetailedUidStats(UID_BLUE, new String[] { TEST_IFACE },
+                0xF00D);
+
+        assertEquals(1, stats.size());
+        assertEquals(entry4, stats.getValues(0, null));
     }
 
     @Test

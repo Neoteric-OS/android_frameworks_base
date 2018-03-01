@@ -24,6 +24,7 @@ import android.bluetooth.UidTraffic;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.INetworkStatsService;
 import android.net.NetworkStats;
 import android.net.wifi.WifiActivityEnergyInfo;
 import android.net.wifi.WifiManager;
@@ -9705,7 +9706,7 @@ public class BatteryStatsImpl extends BatteryStats {
         }
     }
 
-    private final NetworkStatsFactory mNetworkStatsFactory = new NetworkStatsFactory();
+    private INetworkStatsService mNetworkStatsService;
     private final Pools.Pool<NetworkStats> mNetworkStatsPool = new Pools.SynchronizedPool<>(6);
 
     private final Object mWifiNetworkLock = new Object();
@@ -9725,14 +9726,25 @@ public class BatteryStatsImpl extends BatteryStats {
     private NetworkStats mLastModemNetworkStats = new NetworkStats(0, -1);
 
     private NetworkStats readNetworkStatsLocked(String[] ifaces) {
-        try {
-            if (!ArrayUtils.isEmpty(ifaces)) {
-                return mNetworkStatsFactory.readNetworkStatsDetail(NetworkStats.UID_ALL, ifaces,
-                        NetworkStats.TAG_NONE, mNetworkStatsPool.acquire());
-            }
-        } catch (IOException e) {
-            Slog.e(TAG, "failed to read network stats for ifaces: " + Arrays.toString(ifaces));
+        if (ArrayUtils.isEmpty(ifaces)) {
+            return null;
         }
+
+        if (mNetworkStatsService == null) {
+            mNetworkStatsService = INetworkStatsService.Stub.asInterface(
+                    ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        }
+
+        if (mNetworkStatsService != null) {
+            try {
+                return mNetworkStatsService.getDetailedUidStats(NetworkStats.UID_ALL, ifaces,
+                        NetworkStats.TAG_ALL);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "failed to read network stats for ifaces: " + Arrays.toString(ifaces));
+                // fall through
+            }
+        }
+
         return null;
     }
 
@@ -9752,7 +9764,6 @@ public class BatteryStatsImpl extends BatteryStats {
             if (latestStats != null) {
                 delta = NetworkStats.subtract(latestStats, mLastWifiNetworkStats, null, null,
                         mNetworkStatsPool.acquire());
-                mNetworkStatsPool.release(mLastWifiNetworkStats);
                 mLastWifiNetworkStats = latestStats;
             }
         }
@@ -10011,7 +10022,6 @@ public class BatteryStatsImpl extends BatteryStats {
             if (latestStats != null) {
                 delta = NetworkStats.subtract(latestStats, mLastModemNetworkStats, null, null,
                         mNetworkStatsPool.acquire());
-                mNetworkStatsPool.release(mLastModemNetworkStats);
                 mLastModemNetworkStats = latestStats;
             }
         }
