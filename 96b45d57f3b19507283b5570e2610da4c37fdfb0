@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92bd8b75_bfb4ce95",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2315,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "updateLinkProperties appears to only send a network callback if the old and new LPs actually differ by the end of the function. I\u0027m calling maybeFixLinkPropertiesPrivateDns with a copy to check if the private DNS fields need updating but am waiting to actually update them until updateLinkProperties in order to trigger a callback. For handleUpdateLinkProperties, I\u0027m passing in a copy so that the old and new LPs sent to updateLinkProperties aren\u0027t the same object. (There\u0027s an earlier comment on this file in patchset 9 about spurious LP updates that\u0027s related.)",
+      "parentUuid": "26072fe1_4a215aef",
+      "range": {
+        "startLine": 2315,
+        "startChar": 35,
+        "endLine": 2315,
+        "endChar": 72
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79de1be3_fca5e28a",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32db952c_7ce9b728",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79de1be3_fca5e28a",
+      "range": {
+        "startLine": 277,
+        "startChar": 8,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d7e53c83_0d48c5e5",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "I can see how moving this into updatePrivateDns() could make sense, but I think there\u0027s also something nice about keeping the serverStrs logic in one place and preparing the tracker for validation events right before mNMS.setDnsConfigurationForNetwork gets called in order to keep the tracker and the dns config that\u0027s been sent to netd in sync. Thoughts?",
+      "parentUuid": "39d5722c_9e032e0e",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "627f3d07_6abde9a9",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 10
@@ -114,6 +186,30 @@
       "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560461d8_3952b1bb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3893,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "627f3d07_6abde9a9",
+      "range": {
+        "startLine": 3893,
+        "startChar": 4,
+        "endLine": 3893,
+        "endChar": 11
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8aa6b6f4_9c0ca079",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c55772_6d57fac7",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c1841f_c59728c9",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 10
@@ -160,6 +280,30 @@
       "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0a6b65_37be8626",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c1841f_c59728c9",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "9590c3cc_7008471e",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e2d8ed_369bc96c",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e697e25_b6a6eac5",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 10
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "647db9fe_8b978c4d",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e697e25_b6a6eac5",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3c40ec1_08809cef",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 10
@@ -229,6 +421,30 @@
       "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c99be59_69ae80a1",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c40ec1_08809cef",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
