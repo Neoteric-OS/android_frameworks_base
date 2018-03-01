@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "26072fe1_4a215aef",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2315,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "How exactly does this work?  I think you\u0027re passing in a copy, which DnsManager modifies and then we effectively discard it to pass in another copy to handleUpdateLinkProperties...\n\nI must be confused about something...\n\nI guess I just expected this to be passing in nai.linkProperties directly.",
+      "range": {
+        "startLine": 2315,
+        "startChar": 35,
+        "endLine": 2315,
+        "endChar": 72
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79de1be3_fca5e28a",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "[nit] could be final",
+      "range": {
+        "startLine": 277,
+        "startChar": 8,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6772c14_64f707ee",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 10
@@ -22,6 +68,167 @@
       "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39d5722c_9e032e0e",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "Can\u0027t/shouldn\u0027t this be moved into updatePrivateDns()?  I think might be cleaner...no?",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627f3d07_6abde9a9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3893,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "Can this also be static?",
+      "range": {
+        "startLine": 3893,
+        "startChar": 4,
+        "endLine": 3893,
+        "endChar": 11
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c55772_6d57fac7",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "assertFalse(...)?",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c1841f_c59728c9",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "assertTrue(...)?",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e2d8ed_369bc96c",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "assertTrue(...)?",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e697e25_b6a6eac5",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "assertFalse(...)?",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c40ec1_08809cef",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-01T08:07:01Z",
+      "side": 1,
+      "message": "assertFalse(...)?",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
