@@ -204,36 +204,10 @@ public final class IpSecTransform implements AutoCloseable {
     private int mResourceId;
     private final Context mContext;
     private final CloseGuard mCloseGuard = CloseGuard.get();
-    private ConnectivityManager.PacketKeepalive mKeepalive;
-    private Handler mCallbackHandler;
-    private final ConnectivityManager.PacketKeepaliveCallback mKeepaliveCallback =
-            new ConnectivityManager.PacketKeepaliveCallback() {
-
-                @Override
-                public void onStarted() {
-                    synchronized (this) {
-                        mCallbackHandler.post(() -> mUserKeepaliveCallback.onStarted());
-                    }
-                }
-
-                @Override
-                public void onStopped() {
-                    synchronized (this) {
-                        mKeepalive = null;
-                        mCallbackHandler.post(() -> mUserKeepaliveCallback.onStopped());
-                    }
-                }
-
-                @Override
-                public void onError(int error) {
-                    synchronized (this) {
-                        mKeepalive = null;
-                        mCallbackHandler.post(() -> mUserKeepaliveCallback.onError(error));
-                    }
-                }
-            };
-
+    private final Object mLock = new Object();
+    private Handler mKeepaliveCallbackHandler;
     private NattKeepaliveCallback mUserKeepaliveCallback;
+    private INattKeepaliveCallback mKeepaliveCallback;
 
     /** @hide */
     @VisibleForTesting
@@ -288,29 +262,49 @@ public final class IpSecTransform implements AutoCloseable {
     public void startNattKeepalive(@NonNull NattKeepaliveCallback userCallback,
             int intervalSeconds, @NonNull Handler handler) throws IOException {
         checkNotNull(userCallback);
-        if (intervalSeconds < 20 || intervalSeconds > 3600) {
-            throw new IllegalArgumentException("Invalid NAT-T keepalive interval");
-        }
         checkNotNull(handler);
-        if (mResourceId == INVALID_RESOURCE_ID) {
-            throw new IllegalStateException(
-                    "Packet keepalive cannot be started for an inactive transform");
-        }
 
-        synchronized (mKeepaliveCallback) {
+        synchronized (mLock) {
             if (mKeepaliveCallback != null) {
                 throw new IllegalStateException("Keepalive already active");
             }
 
+            mKeepaliveCallbackHandler = handler;
             mUserKeepaliveCallback = userCallback;
-            ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(
-                    Context.CONNECTIVITY_SERVICE);
-            mKeepalive = cm.startNattKeepalive(
-                    mConfig.getNetwork(), intervalSeconds, mKeepaliveCallback,
-                    NetworkUtils.numericToInetAddress(mConfig.getSourceAddress()),
-                    4500, // FIXME urgently, we need to get the port number from the Encap socket
-                    NetworkUtils.numericToInetAddress(mConfig.getDestinationAddress()));
-            mCallbackHandler = handler;
+            mKeepaliveCallback = new INattKeepaliveCallback.Stub() {
+                @Override
+                public void onStarted() {
+                    synchronized (mLock) {
+                        mKeepaliveCallbackHandler.post(() -> mUserKeepaliveCallback.onStarted());
+                    }
+                }
+
+                @Override
+                public void onStopped() {
+                    synchronized (mLock) {
+                        mKeepaliveCallbackHandler.post(() -> mUserKeepaliveCallback.onStopped());
+                        mUserKeepaliveCallback = null;
+                        mKeepaliveCallback = null;
+                        mKeepaliveCallbackHandler = null;
+                    }
+                }
+
+                @Override
+                public void onError(int error) {
+                    synchronized (mLock) {
+                        mKeepaliveCallbackHandler.post(() -> mUserKeepaliveCallback.onError(error));
+                        mUserKeepaliveCallback = null;
+                        mKeepaliveCallback = null;
+                        mKeepaliveCallbackHandler = null;
+                    }
+                }
+            };
+            try {
+                getIpSecService().startNattKeepalive(
+                        mResourceId, intervalSeconds, mKeepaliveCallback);
+            } catch (RemoteException r) {
+                r.rethrowAsRuntimeException();
+            }
         }
     }
 
@@ -329,12 +323,16 @@ public final class IpSecTransform implements AutoCloseable {
             android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD
     })
     public void stopNattKeepalive() {
-        synchronized (mKeepaliveCallback) {
-            if (mKeepalive == null) {
+        synchronized (mLock) {
+            if (mKeepaliveCallback == null) {
                 Log.e(TAG, "No active keepalive to stop");
                 return;
             }
-            mKeepalive.stop();
+            try {
+                getIpSecService().stopNattKeepalive(mResourceId);
+            } catch (RemoteException r) {
+                r.rethrowAsRuntimeException();
+            }
         }
     }
 
