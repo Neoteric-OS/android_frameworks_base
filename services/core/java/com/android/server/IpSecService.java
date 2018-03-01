@@ -27,6 +27,7 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.IIpSecService;
+import android.net.INattKeepaliveCallback;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
@@ -61,6 +62,7 @@ import com.android.internal.util.Preconditions;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -581,6 +583,7 @@ public class IpSecService extends IIpSecService.Stub {
         private final IpSecConfig mConfig;
         private final SpiRecord mSpi;
         private final EncapSocketRecord mSocket;
+        private ConnectivityManager.PacketKeepalive mKeepalive;
 
         TransformRecord(
                 int resourceId, IpSecConfig config, SpiRecord spi, EncapSocketRecord socket) {
@@ -651,6 +654,68 @@ public class IpSecService extends IIpSecService.Stub {
                     .append(mConfig)
                     .append("}");
             return strBuilder.toString();
+        }
+
+        public void startNattKeepalive(int intervalSeconds, INattKeepaliveCallback callback) {
+            if (mKeepalive != null) {
+                throw new IllegalStateException(
+                        "Only one keepalive is possible per IpSecTransform.");
+            }
+            if (mConfig.getNetwork() == null) {
+                throw new IllegalArgumentException(
+                        "Keepalives are only available if an underlying Network is specified.");
+            }
+            if (mSocket == null) {
+                throw new IllegalArgumentException(
+                        "Keepalives are only available when UDP Encapsulation is used.");
+            }
+
+            ConnectivityManager cm =
+                    (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            mKeepalive = cm.startNattKeepalive(
+                    mConfig.getNetwork(),
+                    intervalSeconds,
+                    new ConnectivityManager.PacketKeepaliveCallback() {
+                        WeakReference<INattKeepaliveCallback> mBinderCallback
+                                = new WeakReference<>(callback);
+
+                        @Override
+                        public void onStarted() {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onStarted(); } catch(RemoteException r) {}
+                            }
+                        }
+
+                        @Override
+                        public void onStopped() {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onStopped(); } catch(RemoteException r) {}
+                            }
+                            mKeepalive = null;
+                        }
+
+                        @Override
+                        public void onError(int error) {
+                            INattKeepaliveCallback tmpStrong = mBinderCallback.get();
+                            if (tmpStrong != null) {
+                                try { tmpStrong.onError(error); } catch(RemoteException r) {}
+                            }
+                            mKeepalive = null;
+                        }
+                    },
+                    NetworkUtils.numericToInetAddress(mConfig.getSourceAddress()),
+                    mSocket.getPort(),
+                    NetworkUtils.numericToInetAddress(mConfig.getDestinationAddress()));
+        }
+
+        public void stopNattKeepalive() {
+            if (mKeepalive == null) {
+                throw new IllegalStateException("No active Keepalive to stop.");
+            }
+            mKeepalive.stop();
         }
     }
 
@@ -1686,6 +1751,29 @@ public class IpSecService extends IIpSecService.Stub {
                 throw e;
             }
         }
+    }
+
+    @Override
+    synchronized public void startNattKeepalive(
+            int transformId, int intervalSeconds, INattKeepaliveCallback cb) {
+        checkNotNull(cb, "Received null KeepaliveCallback!");
+        if (intervalSeconds < 20 || intervalSeconds > 3600) {
+            throw new IllegalArgumentException("Invalid NAT-T keepalive interval");
+        }
+        if (transformId == INVALID_RESOURCE_ID) {
+            throw new IllegalStateException(
+                    "Packet keepalive cannot be started for an inactive transform");
+        }
+        // Get transform record; if no transform is found, will throw IllegalArgumentException
+        TransformRecord tr = mUserResourceTracker
+            .getUserRecord(Binder.getCallingUid())
+            .mTransformRecords.getResourceOrThrow(transformId);
+
+        tr.startNattKeepalive(intervalSeconds, cb);
+    }
+
+    @Override
+    synchronized public void stopNattKeepalive(int transformId) {
     }
 
     @Override
