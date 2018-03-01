@@ -171,4 +171,20 @@ public class DataServiceCallback {
             }
         }
     }
+
+    /**
+     * Called to indicate that data connection list changed.
+     *
+     * @param lce a LinkCapacityEstimate indicating the current estimate
+     */
+    public void onLinkCapacityEstimateChanged(LinkCapacityEstimate lce) {
+        IDataServiceCallback callback = mCallback.get();
+        if (callback != null) {
+            try {
+                callback.onLinkCapacityEstimateChanged(lce);
+            } catch (RemoteException e) {
+                Rlog.e(TAG, "Failed to onLinkCapacityEstimateChanged on the remote");
+            }
+        }
+    }
 }

@@ -16,6 +16,7 @@
 
 package android.telephony.data;
 
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -26,29 +27,59 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public class LinkCapacityEstimate implements Parcelable {
-    /** Any field that is not reported shall be set to INVALID */
+    /**
+     * Any field that is not reported shall be set to INVALID
+     *
+     * @deprecated in HAL 1.2
+     * @hide
+     */
     public static final int INVALID = -1;
 
-    /** LCE is active; Deprecated in HAL 1.2 */
+    /**
+     * LCE is active
+     *
+     * @deprecated in HAL 1.2
+     * @hide
+     */
     public static final int STATUS_ACTIVE = 0;
 
-    /** LCE is suspended; Deprecated in HAL 1.2 */
+    /**
+     * LCE is suspended
+     *
+     * @deprecated in HAL 1.2
+     * @hide
+     */
     public static final int STATUS_SUSPENDED = 1;
 
     /** Downlink radio link capacity in kbps */
     public final int downlinkCapacityKbps;
 
-    /** Uplink radio link capacity; added in HAL 1.2 */
+    /** Uplink radio link capacity */
     public final int uplinkCapacityKbps;
 
-    /** Confidence of the downlink estimate as a percentage [1, 100]; deprecated in HAL 1.2 */
+    /**
+     * Confidence of the downlink estimate as a percentage [1, 100];
+     *
+     * @deprecated in Radio HAL 1.2
+     * @hide
+     */
     public final int confidence;
 
-    /** Status of the LCE; deprecated in HAL 1.2 */
-    public final int status; // either STATUS_ACTIVE, STATUS_SUSPENDED, or INVALID
+    /**
+     * Status of the LCE, either STATUS_ACTIVE, STATUS_SUSPENDED, or INVALID in error scenarios.
+     *
+     * @deprecated in Radio HAL 1.2
+     * @hide
+     */
+    public final int status;
 
-    /** Constructor matching the estimate in Radio HAL v1.0 */
+    /** Constructor matching the estimate in Radio HAL v1.0
+     *
+     * @deprecated in Radio HAL 1.2
+     * @hide
+     */
     public LinkCapacityEstimate(int downlinkCapacityKbps, int confidence, int status) {
         this.downlinkCapacityKbps = downlinkCapacityKbps;
         this.confidence = confidence;
@@ -56,7 +87,12 @@ public class LinkCapacityEstimate implements Parcelable {
         this.uplinkCapacityKbps = INVALID;
     }
 
-    /** Constructor matching the estimate in Radio HAL v1.2 */
+    /**
+     * Constructor matching the estimate in Radio HAL v1.2
+     *
+     * @param downlinkCapacityKbps the estimated downlink capacity at the upper L2 interface.
+     * @param uplinkCapacityKbps the estimated uplink capacity at the upper L2 interface.
+     */
     public LinkCapacityEstimate(int downlinkCapacityKbps, int uplinkCapacityKbps) {
         this.downlinkCapacityKbps = downlinkCapacityKbps;
         this.uplinkCapacityKbps = uplinkCapacityKbps;
@@ -64,7 +100,11 @@ public class LinkCapacityEstimate implements Parcelable {
         this.status = INVALID;
     }
 
-    /** Parcelable constructor */
+    /**
+     * Parcelable constructor
+     *
+     * @hide
+     */
     private LinkCapacityEstimate(Parcel p) {
         downlinkCapacityKbps = p.readInt();
         uplinkCapacityKbps = p.readInt();
@@ -117,6 +157,7 @@ public class LinkCapacityEstimate implements Parcelable {
         dest.writeInt(status);
     }
 
+    /** Parcelable creator */
     public static final Parcelable.Creator<LinkCapacityEstimate> CREATOR =
             new Parcelable.Creator<LinkCapacityEstimate>() {
                 @Override
