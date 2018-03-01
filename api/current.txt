@@ -41083,9 +41083,9 @@ package android.telephony.data {
     method public int getAuthType();
     method public java.lang.String getEntryName();
     method public int getId();
-    method public int getMmsPort();
-    method public java.net.InetAddress getMmsProxy();
-    method public java.net.URL getMmsc();
+    method public java.net.InetAddress getMmsProxyAddress();
+    method public int getMmsProxyPort();
+    method public android.net.Uri getMmsc();
     method public java.lang.String getMvnoType();
     method public int getNetworkTypeBitmask();
     method public java.lang.String getOperatorNumeric();
@@ -41131,9 +41131,9 @@ package android.telephony.data {
     method public android.telephony.data.ApnSetting.Builder setAuthType(int);
     method public android.telephony.data.ApnSetting.Builder setCarrierEnabled(boolean);
     method public android.telephony.data.ApnSetting.Builder setEntryName(java.lang.String);
-    method public android.telephony.data.ApnSetting.Builder setMmsPort(int);
-    method public android.telephony.data.ApnSetting.Builder setMmsProxy(java.net.InetAddress);
-    method public android.telephony.data.ApnSetting.Builder setMmsc(java.net.URL);
+    method public android.telephony.data.ApnSetting.Builder setMmsProxyAddress(java.net.InetAddress);
+    method public android.telephony.data.ApnSetting.Builder setMmsProxyPort(int);
+    method public android.telephony.data.ApnSetting.Builder setMmsc(android.net.Uri);
     method public android.telephony.data.ApnSetting.Builder setMvnoType(java.lang.String);
     method public android.telephony.data.ApnSetting.Builder setNetworkTypeBitmask(int);
     method public android.telephony.data.ApnSetting.Builder setOperatorNumeric(java.lang.String);
