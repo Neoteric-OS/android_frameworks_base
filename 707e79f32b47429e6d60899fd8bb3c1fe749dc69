@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0be24920_97908cf2",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T02:43:33Z",
+      "side": 1,
+      "message": "Hostname being sent now too.",
+      "parentUuid": "e8fc5f96_aae626e4",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "707e79f32b47429e6d60899fd8bb3c1fe749dc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8bbe5ad_40b37a97",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4

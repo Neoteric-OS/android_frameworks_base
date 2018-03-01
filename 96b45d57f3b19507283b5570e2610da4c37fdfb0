@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6772c14_64f707ee",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-03-01T02:43:33Z",
+      "side": 1,
+      "message": "Highlighting this change, which necessitated moving some logic around in ConnectivityService (moving handleUpdateLinkProperties from handlePrivateDnsSettingsChanged into updatePrivateDns) to preserve LP callback notifications for strict mode.",
+      "range": {
+        "startLine": 279,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 73
+      },
+      "revId": "96b45d57f3b19507283b5570e2610da4c37fdfb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
