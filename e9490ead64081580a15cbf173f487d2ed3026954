@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b93a38_031ac854",
+        "filename": "core/java/android/view/IWindowManager.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T00:04:08Z",
+      "side": 1,
+      "message": "Request that the WindowManager send WindowManagerPolicy#ACTION_USER_ACTIVITY_NOTIFICATION on the next user activity.",
+      "range": {
+        "startLine": 402,
+        "startChar": 7,
+        "endLine": 402,
+        "endChar": 48
+      },
+      "revId": "e9490ead64081580a15cbf173f487d2ed3026954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b3ef58_1ac732d5",
+        "filename": "core/java/android/view/WindowManagerPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T00:04:08Z",
+      "side": 1,
+      "message": "nit: a",
+      "range": {
+        "startLine": 162,
+        "startChar": 27,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "e9490ead64081580a15cbf173f487d2ed3026954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31aa4fc1_b72abcd5",
+        "filename": "core/java/android/view/WindowManagerPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T00:04:08Z",
+      "side": 1,
+      "message": "Request that the WindowManager send WindowManagerPolicy#ACTION_USER_ACTIVITY_NOTIFICATION on the next user activity.",
+      "range": {
+        "startLine": 1752,
+        "startChar": 7,
+        "endLine": 1752,
+        "endChar": 48
+      },
+      "revId": "e9490ead64081580a15cbf173f487d2ed3026954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
