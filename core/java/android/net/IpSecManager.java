@@ -664,6 +664,11 @@ public final class IpSecManager {
          * @hide
          */
         public void addAddress(LinkAddress address) throws IOException {
+            try {
+                mService.addAddressToTunnelInterface(mResourceId, address);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
 
         /**
@@ -676,6 +681,11 @@ public final class IpSecManager {
          * @hide
          */
         public void removeAddress(LinkAddress address) throws IOException {
+            try {
+                mService.removeAddressFromTunnelInterface(mResourceId, address);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
 
         private IpSecTunnelInterface(@NonNull IIpSecService service,

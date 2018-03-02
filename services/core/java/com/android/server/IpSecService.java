@@ -36,6 +36,7 @@ import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecTunnelInterfaceResponse;
 import android.net.IpSecUdpEncapResponse;
+import android.net.LinkAddress;
 import android.net.Network;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
@@ -1314,12 +1315,19 @@ public class IpSecService extends IIpSecService.Stub {
         return new IpSecTunnelInterfaceResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
     }
 
+    private void throwFromServiceSpecificException(ServiceSpecificException e) {
+        throw new RuntimeException(
+                new IOException(
+            String.format("Service specific exception - error code %d", e.errorCode)));
+    }
+
     /**
      * Adds a new local address to the tunnel interface. This allows packets to be sent and received
      * from multiple local IP addresses over the same tunnel.
      */
     @Override
-    public synchronized void addAddressToTunnelInterface(int tunnelResourceId, String localAddr) {
+    public synchronized void addAddressToTunnelInterface(
+            int tunnelResourceId, LinkAddress localAddr) {
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
 
         // Get tunnelInterface record; if no such interface is found, will throw
@@ -1327,8 +1335,18 @@ public class IpSecService extends IIpSecService.Stub {
         TunnelInterfaceRecord tunnelInterfaceInfo =
                 userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
 
-        // TODO: Add calls to netd:
-        //       Add address to TunnelInterface
+        try {
+            mSrvConfig
+                    .getNetdInstance()
+                    .interfaceAddAddress(
+                            tunnelInterfaceInfo.mInterfaceName,
+                            localAddr.getAddress().getHostAddress(),
+                            localAddr.getPrefixLength());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        } catch (ServiceSpecificException e) {
+            throwFromServiceSpecificException(e);
+        }
     }
 
     /**
@@ -1337,7 +1355,7 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized void removeAddressFromTunnelInterface(
-            int tunnelResourceId, String localAddr) {
+            int tunnelResourceId, LinkAddress localAddr) {
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
 
         // Get tunnelInterface record; if no such interface is found, will throw
@@ -1345,8 +1363,18 @@ public class IpSecService extends IIpSecService.Stub {
         TunnelInterfaceRecord tunnelInterfaceInfo =
                 userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
 
-        // TODO: Add calls to netd:
-        //       Remove address from TunnelInterface
+        try {
+            mSrvConfig
+                    .getNetdInstance()
+                    .interfaceDelAddress(
+                            tunnelInterfaceInfo.mInterfaceName,
+                            localAddr.getAddress().getHostAddress(),
+                            localAddr.getPrefixLength());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        } catch (ServiceSpecificException e) {
+            throwFromServiceSpecificException(e);
+        }
     }
 
     /**
