@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45311f6_ad61f27b",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T00:41:56Z",
+      "side": 1,
+      "message": "these 4 values need to be recalculated",
+      "range": {
+        "startLine": 1091,
+        "startChar": 18,
+        "endLine": 1097,
+        "endChar": 55
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
