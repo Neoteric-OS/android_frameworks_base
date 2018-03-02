@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b33d8efa_f43a5a0d",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-02T01:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73c429c_a0a1833f",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 18
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c99c07b8_e1f7298b",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c7230420_d98ecdd1",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-02T01:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c99c07b8_e1f7298b",
+      "range": {
+        "startLine": 207,
+        "startChar": 77,
+        "endLine": 207,
+        "endChar": 78
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b05d158_85a35d19",
         "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -91,6 +139,30 @@
       "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b19bfb_db98666d",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-02T01:52:46Z",
+      "side": 1,
+      "message": "Done.  Out of curiosity, is this because INTERNET is mutable?",
+      "parentUuid": "9b05d158_85a35d19",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 51
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
