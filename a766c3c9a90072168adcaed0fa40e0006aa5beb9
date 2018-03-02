@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "17a2e028_3074ead5",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-02T01:54:41Z",
+      "side": 1,
+      "message": "No specific reason, just for general test coverage.",
+      "parentUuid": "b8b19bfb_db98666d",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 51
+      },
+      "revId": "a766c3c9a90072168adcaed0fa40e0006aa5beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46b0816_5a67617a",
         "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
