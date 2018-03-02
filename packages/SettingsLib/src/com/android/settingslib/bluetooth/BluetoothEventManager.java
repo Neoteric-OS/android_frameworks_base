@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
+import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -115,6 +116,13 @@ public class BluetoothEventManager {
                    new ActiveDeviceChangedHandler());
         addHandler(BluetoothHeadset.ACTION_ACTIVE_DEVICE_CHANGED,
                    new ActiveDeviceChangedHandler());
+        addHandler(BluetoothHearingAid.ACTION_ACTIVE_DEVICE_CHANGED,
+                   new ActiveDeviceChangedHandler());
+
+        // Individual profile broadcasts (for special handling)
+        Log.d(TAG, "Adding handler for BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED");
+        addHandler(BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED,
+                new ConnectionStateChangedHandler());
 
         mContext.registerReceiver(mBroadcastReceiver, mAdapterIntentFilter, null, mReceiverHandler);
         mContext.registerReceiver(mProfileBroadcastReceiver, mProfileIntentFilter, null, mReceiverHandler);
@@ -166,6 +174,18 @@ public class BluetoothEventManager {
             String action = intent.getAction();
             BluetoothDevice device = intent
                     .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+            /* For some strange reason, we cannot register the same intent twice in the same APP */
+            if (Objects.equals(action, BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED)) {
+
+                int toState = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1);
+                int fromState = intent.getIntExtra(BluetoothProfile.EXTRA_PREVIOUS_STATE, -1);
+                Log.w(TAG, "STNG: mProfileBroadcastReceiver: onReceive: device=" + device
+                      + ", toState=" + toState);
+                if (toState == BluetoothProfile.STATE_CONNECTED) {
+                    Log.d(TAG, "mProfileBroadcastReceiver: action=" + action + ", STATE_CONNECTED");
+                }
+            }
 
             Handler handler = mHandlerMap.get(action);
             if (handler != null) {
@@ -240,9 +260,22 @@ public class BluetoothEventManager {
         @Override
         public void onReceive(Context context, Intent intent, BluetoothDevice device) {
             CachedBluetoothDevice cachedDevice = mDeviceManager.findDevice(device);
+            String action = intent.getAction();
             int state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE,
                     BluetoothAdapter.ERROR);
-            dispatchConnectionStateChanged(cachedDevice, state);
+
+            Log.d(TAG, "ConnectionStateChangedHandler: action=" + action);
+            if (Objects.equals(action, BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)) {
+                dispatchConnectionStateChanged(cachedDevice, state);
+            }
+            else if (Objects.equals(action, BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED)) {
+                if (state == BluetoothProfile.STATE_CONNECTED) {
+                    Log.d(TAG, "ConnectionStateChangedHandler: action=" + action + ", STATE_CONNECTED");
+                }
+            }
+            else {
+                Log.d(TAG, "ConnectionStateChangedHandler: Unhandled intent. action=" + action);
+            }
         }
     }
 
@@ -434,6 +467,8 @@ public class BluetoothEventManager {
                 bluetoothProfile = BluetoothProfile.A2DP;
             } else if (Objects.equals(action, BluetoothHeadset.ACTION_ACTIVE_DEVICE_CHANGED)) {
                 bluetoothProfile = BluetoothProfile.HEADSET;
+            } else if (Objects.equals(action, BluetoothHearingAid.ACTION_ACTIVE_DEVICE_CHANGED)) {
+                bluetoothProfile = BluetoothProfile.HEARING_AID;
             } else {
                 Log.w(TAG, "ActiveDeviceChangedHandler: unknown action " + action);
                 return;
@@ -444,6 +479,8 @@ public class BluetoothEventManager {
 
     private void dispatchActiveDeviceChanged(CachedBluetoothDevice activeDevice,
                                              int bluetoothProfile) {
+        Log.d(TAG, "dispatchActiveDeviceChanged: activeDevice=" + activeDevice
+              + ", bluetoothProfile=" + bluetoothProfile);
         synchronized (mCallbacks) {
             for (BluetoothCallback callback : mCallbacks) {
                 callback.onActiveDeviceChanged(activeDevice, bluetoothProfile);
