@@ -167,6 +167,28 @@ public class CachedBluetoothDeviceManager {
             }
         }
     }
+
+    public synchronized void onHiSyncIdChanged(long hiSyncId) {
+        int firstMatchedIndex = -1;
+
+        log("onHiSyncIdChanged: HiSyncId=" + hiSyncId);
+
+        for (int i = mCachedDevices.size() - 1; i >= 0; i--) {
+            CachedBluetoothDevice cachedDevice = mCachedDevices.get(i);
+            if (cachedDevice.getHiSyncId() == hiSyncId) {
+                if (firstMatchedIndex != -1) {
+                    /* Found the second one */
+                    log("onHiSyncIdChanged: Found second device with same hiSyncId. Move it.");
+                    mCachedDevices.remove(i);
+                    hearingAidDevicesNotAddedInCache.add(cachedDevice);
+                    break;
+                } else {
+                    firstMatchedIndex = i;
+                }
+            }
+        }
+    }
+
     private void log(String msg) {
         if (DEBUG) {
             Log.d(TAG, msg);

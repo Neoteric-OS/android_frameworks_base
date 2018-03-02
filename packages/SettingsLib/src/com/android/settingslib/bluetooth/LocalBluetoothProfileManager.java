@@ -330,6 +330,39 @@ public class LocalBluetoothProfileManager {
                 Log.i(TAG, "Failed to connect " + mProfile + " device");
             }
 
+            if (getHearingAidProfile() != null &&
+                mProfile instanceof HearingAidProfile &&
+                (newState == BluetoothProfile.STATE_CONNECTED)) {
+                // Check if the HiSyncID has being initialized
+                if (cachedDevice.getHiSyncId() == BluetoothHearingAid.HI_SYNC_ID_INVALID) {
+
+                    /* DEBUG HACK: please remove once the Sync ID is updated as part of
+                       state change */
+                    int sanity = 10;
+                    while (getHearingAidProfile().getHiSyncId(device) == 
+                           BluetoothHearingAid.HI_SYNC_ID_INVALID) {
+                        sanity--;
+                        if (sanity <= 0) {
+                            Log.e(TAG, "onHiSyncIdChanged: ERROR: HiSyncId is still 0");
+                            break;
+                        }
+                        try {
+                            Thread.sleep(50);
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    long newHiSyncId = getHearingAidProfile().getHiSyncId(device);
+                    Log.d(TAG, "onHiSyncIdChanged: New HiSyncId=" + newHiSyncId);
+
+                    if (newHiSyncId != BluetoothHearingAid.HI_SYNC_ID_INVALID) {
+                        Log.d(TAG, "onHiSyncIdChanged: set HiSyncId=" + newHiSyncId);
+                        cachedDevice.setHiSyncId(newHiSyncId);
+                        mDeviceManager.onHiSyncIdChanged(newHiSyncId);
+                    }
+                }
+            }
+
             cachedDevice.onProfileStateChanged(mProfile, newState);
             cachedDevice.refresh();
         }
@@ -539,6 +572,7 @@ public class LocalBluetoothProfileManager {
 
         if (BluetoothUuid.isUuidPresent(uuids, BluetoothUuid.HearingAid) &&
             mHearingAidProfile != null) {
+            Log.d(TAG,"updateProfiles: UUID Found, add HearingAid profile");
             profiles.add(mHearingAidProfile);
             removedProfiles.remove(mHearingAidProfile);
         }
