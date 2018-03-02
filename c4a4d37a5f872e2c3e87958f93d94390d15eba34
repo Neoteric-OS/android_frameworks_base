@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bdeeae0_461eb815",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-03-02T23:26:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a66546_726bc662",
+      "range": {
+        "startLine": 3364,
+        "startChar": 67,
+        "endLine": 3364,
+        "endChar": 89
+      },
+      "revId": "c4a4d37a5f872e2c3e87958f93d94390d15eba34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5e3656_de63a504",
         "filename": "telephony/java/android/telephony/Telephony.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dfaae545_f502c5aa",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3370,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-03-02T23:26:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f5e3656_de63a504",
+      "range": {
+        "startLine": 3370,
+        "startChar": 48,
+        "endLine": 3370,
+        "endChar": 70
+      },
+      "revId": "c4a4d37a5f872e2c3e87958f93d94390d15eba34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30363d51_06e48ee8",
         "filename": "telephony/java/android/telephony/Telephony.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-03-02T22:15:34Z",
       "side": 1,
       "message": "CARRIER_NAME",
+      "range": {
+        "startLine": 3397,
+        "startChar": 35,
+        "endLine": 3397,
+        "endChar": 39
+      },
+      "revId": "c4a4d37a5f872e2c3e87958f93d94390d15eba34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39c8b59d_a7c60e7d",
+        "filename": "telephony/java/android/telephony/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3397,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-03-02T23:26:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30363d51_06e48ee8",
       "range": {
         "startLine": 3397,
         "startChar": 35,
