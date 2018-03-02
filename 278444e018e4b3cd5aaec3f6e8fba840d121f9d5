@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9be6657c_cca0bb7b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T12:04:02Z",
+      "side": 1,
+      "message": "These values are based on 3GPP 27.007 (Ver 13.4.0) but the latest code of SignalStrength is based on 3GPP 27.007 (Ver 10.3.0).\n\nThere is 1dbm gab between them about ASU.\n\n3GPP 27.007 (Ver 10.3.0) Sec 8.69\nhttp://www.etsi.org/deliver/etsi_ts/127000_127099/127007/10.03.00_60/ts_127007v100300p.pdf\nASU1 -119dbm.\n\n\n3GPP 27.007 (Ver 13.4.0) Sec 8.69\nhttps://www.arib.or.jp/english/html/overview/doc/STD-T63V12_00/5_Appendix/Rel13/27/27007-d40.pdf\nASU1  -120 dBm ≤ rscp \u003c -119 dBm\n\n\nSo, we need to update the value like this. Could I update it?\nsDefaults.putIntArray(KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY,\n                new int[] {\n                        -115,  /* SIGNAL_STRENGTH_POOR */\n                        -105, /* SIGNAL_STRENGTH_MODERATE */\n                        -95, /* SIGNAL_STRENGTH_GOOD */\n                        -85  /* SIGNAL_STRENGTH_GREAT */\n                });",
+      "range": {
+        "startLine": 2160,
+        "startChar": 0,
+        "endLine": 2166,
+        "endChar": 19
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a43d81_58aaab17",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 8
@@ -18,6 +41,29 @@
         "startChar": 23,
         "endLine": 1025,
         "endChar": 29
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca4ad5f4_b80da4e6",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-02T12:04:02Z",
+      "side": 1,
+      "message": "It treats WCDMA RSCP as dbm but WcdmaSignalStrength treats rscp as asu. I think we need to align the unit.\n\n\nstruct WcdmaSignalStrength {\n    @1.0::WcdmaSignalStrength base;\n    /**\n     * CPICH RSCP as defined in TS 25.215 5.1.1\n     * Valid values are (0-96, 255) as defined in TS 27.007 8.69\n     */\n    uint32_t rscp;\n...\n};",
+      "range": {
+        "startLine": 1045,
+        "startChar": 0,
+        "endLine": 1047,
+        "endChar": 5
       },
       "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
