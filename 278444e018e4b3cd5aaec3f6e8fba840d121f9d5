@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a87f482_8e445fcf",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T23:30:00Z",
+      "side": 1,
+      "message": "good catch, will update.",
+      "parentUuid": "9be6657c_cca0bb7b",
+      "range": {
+        "startLine": 2160,
+        "startChar": 0,
+        "endLine": 2166,
+        "endChar": 19
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a43d81_58aaab17",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-02T02:48:23Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 1025,
+        "startChar": 23,
+        "endLine": 1025,
+        "endChar": 29
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70cd1ea2_99eb787b",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T23:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a43d81_58aaab17",
       "range": {
         "startLine": 1025,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "59bc7ffa_10baf149",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T23:30:00Z",
+      "side": 1,
+      "message": "to help with backwards compatibility, we will have the HAL interface report ASU, and convert the value in validateInput. In the future we plan to migrate away from using ASU values from the HAL and use only dBm.",
+      "parentUuid": "ca4ad5f4_b80da4e6",
+      "range": {
+        "startLine": 1045,
+        "startChar": 0,
+        "endLine": 1047,
+        "endChar": 5
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a45311f6_ad61f27b",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2018-03-02T00:41:56Z",
       "side": 1,
       "message": "these 4 values need to be recalculated",
+      "range": {
+        "startLine": 1091,
+        "startChar": 18,
+        "endLine": 1097,
+        "endChar": 55
+      },
+      "revId": "278444e018e4b3cd5aaec3f6e8fba840d121f9d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f683ee03_d35a54e9",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-02T23:30:00Z",
+      "side": 1,
+      "message": "we will follow the precedent set by mLteSignalStrength RSSI",
+      "parentUuid": "a45311f6_ad61f27b",
       "range": {
         "startLine": 1091,
         "startChar": 18,
