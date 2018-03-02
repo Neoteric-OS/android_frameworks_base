@@ -22,6 +22,98 @@
       "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bd48d0_b6698c0b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-02T13:49:19Z",
+      "side": 1,
+      "message": "s/was/were/",
+      "range": {
+        "startLine": 385,
+        "startChar": 55,
+        "endLine": 385,
+        "endChar": 58
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c2e1e9_ef2ab11d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-02T13:49:19Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right. This method should only be called on NetworkCapabilities objects that describe the capabilities of a network, and not on one that describe requested capabilities – those may not have non requestable capabilities as the name imply. And NetworkCapabilities objects that describe the capabilities of a network always have mUnwantedCapabilities \u003d 0 IIUC.\n\nBut to go further, even if my analysis above is wrong, then this is mightily confusing ; a caller would probably expect this to return a capability this NetworkCapabilities include, not one that it marks as unwanted. However, this would return either indiscriminately and without indication.",
+      "range": {
+        "startLine": 487,
+        "startChar": 60,
+        "endLine": 487,
+        "endChar": 88
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915b5f9f_bcebc419",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-02T13:49:19Z",
+      "side": 1,
+      "message": "s/doesn\u0027t/don\u0027t/",
+      "range": {
+        "startLine": 292,
+        "startChar": 36,
+        "endLine": 292,
+        "endChar": 43
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab098648_8078dbd8",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-02T13:49:19Z",
+      "side": 1,
+      "message": "This is accurate, working as intended, and... pretty confusing ? The rest of the API makes it look like it\u0027s an invariant that a capability can never be both wanted and unwanted ; I suggest at the very least combineCapabilities and combineNetCapabilitise have a comment saying they can violate that.",
+      "range": {
+        "startLine": 367,
+        "startChar": 8,
+        "endLine": 368,
+        "endChar": 35
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
