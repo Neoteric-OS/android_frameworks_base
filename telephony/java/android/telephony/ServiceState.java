@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.AccessNetworkConstants.AccessNetworkType;
+import android.telephony.AccessNetworkConstants.EutranBand;
 import android.text.TextUtils;
 
 import java.lang.annotation.Retention;
@@ -470,8 +471,21 @@ public class ServiceState implements Parcelable {
      */
     @DuplexMode
     public int getDuplexMode() {
-        // TODO(b/72117602) determine duplex mode from channel number, using 3GPP 36.101 sections
-        // 5.7.3-1 and 5.5-1
+        // only support LTE duplex mode
+        if (!isLte(mRilDataRadioTechnology)) {
+            return DUPLEX_MODE_UNKNOWN;
+        }
+
+        int band = ChannelUtils.getOperatingBandForEarfcn(mChannelNumber);
+
+        if (band >= EutranBand.BAND_65) {
+            return DUPLEX_MODE_FDD;
+        } else if (band >= EutranBand.BAND_33) {
+            return DUPLEX_MODE_TDD;
+        } else if (band >= EutranBand.BAND_1) {
+            return DUPLEX_MODE_FDD;
+        }
+
         return DUPLEX_MODE_UNKNOWN;
     }
 
