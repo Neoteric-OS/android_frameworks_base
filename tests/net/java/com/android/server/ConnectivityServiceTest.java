@@ -63,6 +63,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -3664,10 +3665,11 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testBasicDnsConfigurationPushed() throws Exception {
+        final String[] EMPTY_TLS_SERVERS = new String[0];
         mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
         waitForIdle();
         verify(mNetworkManagementService, never()).setDnsConfigurationForNetwork(
-                anyInt(), any(), any(), any(), anyBoolean(), anyString());
+                anyInt(), any(), any(), any(), anyBoolean(), anyString(), eq(EMPTY_TLS_SERVERS));
 
         final LinkProperties cellLp = new LinkProperties();
         cellLp.setInterfaceName("test_rmnet_data0");
@@ -3675,7 +3677,8 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(false);
         waitForIdle();
         verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
-                anyInt(), mStringArrayCaptor.capture(), any(), any(), anyBoolean(), anyString());
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                anyBoolean(), anyString(), eq(EMPTY_TLS_SERVERS));
         // CS tells netd about the empty DNS config for this network.
         assertEmpty(mStringArrayCaptor.getValue());
         reset(mNetworkManagementService);
@@ -3684,7 +3687,8 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
         verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
-                anyInt(), mStringArrayCaptor.capture(), any(), any(), anyBoolean(), anyString());
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                anyBoolean(), anyString(), eq(EMPTY_TLS_SERVERS));
         assertEquals(1, mStringArrayCaptor.getValue().length);
         assertTrue(ArrayUtils.contains(mStringArrayCaptor.getValue(), "2001:db8::1"));
         reset(mNetworkManagementService);
@@ -3693,7 +3697,8 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
         verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
-                anyInt(), mStringArrayCaptor.capture(), any(), any(), anyBoolean(), anyString());
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                anyBoolean(), anyString(), eq(EMPTY_TLS_SERVERS));
         assertEquals(2, mStringArrayCaptor.getValue().length);
         assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
                 new String[]{"2001:db8::1", "192.0.2.1"}));
