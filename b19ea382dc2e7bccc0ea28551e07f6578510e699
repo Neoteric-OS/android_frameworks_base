@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de89d7ea_8143baf5",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-03-04T18:24:55Z",
+      "side": 1,
+      "message": "Consider defining an ENFORCE_COARSE_LOCATION_PERMISSION_MASK \u003d LISTEN_CELL_LOCATION | LISTEN CELL_INFO at the top, like ENFORCE_PHONE_STATE_PERMISSION_MASK, and then using it here instead of checking these two conditions individually. That will save a duplicate call to enforceCallingOrSelfPermission+noteOp for any callers who look at both cell location and cell info, and cut down on some duplicate code.",
+      "range": {
+        "startLine": 1724,
+        "startChar": 1,
+        "endLine": 1733,
+        "endChar": 66
+      },
+      "revId": "b19ea382dc2e7bccc0ea28551e07f6578510e699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
