@@ -204,23 +204,26 @@ public class DnsManager {
         final boolean useTls = (privateDnsCfg != null) && privateDnsCfg.useTls;
         final boolean strictMode = (privateDnsCfg != null) && privateDnsCfg.inStrictMode();
         final String tlsHostname = strictMode ? privateDnsCfg.hostname : "";
+        final String[] tlsServers = strictMode
+                ? NetworkUtils.makeStrings(
+                        Arrays.stream(privateDnsCfg.ips)
+                              .filter((ip) -> lp.isReachable(ip))
+                              .collect(Collectors.toList()))
+                : new String[0];
 
-        final String[] serverStrs = NetworkUtils.makeStrings(
-                strictMode ? Arrays.stream(privateDnsCfg.ips)
-                                   .filter((ip) -> lp.isReachable(ip))
-                                   .collect(Collectors.toList())
-                           : lp.getDnsServers());
+        final String[] assignedServers = NetworkUtils.makeStrings(lp.getDnsServers());
         final String[] domainStrs = getDomainStrings(lp.getDomains());
 
         updateParametersSettings();
         final int[] params = { mSampleValidity, mSuccessThreshold, mMinSamples, mMaxSamples };
 
-        Slog.d(TAG, String.format("setDnsConfigurationForNetwork(%d, %s, %s, %s, %s, %s)",
-                netId, Arrays.toString(serverStrs), Arrays.toString(domainStrs),
-                Arrays.toString(params), useTls, tlsHostname));
+        Slog.d(TAG, String.format("setDnsConfigurationForNetwork(%d, %s, %s, %s, %s, %s, %s)",
+                netId, Arrays.toString(assignedServers), Arrays.toString(domainStrs),
+                Arrays.toString(params), useTls, tlsHostname, Arrays.toString(tlsServers)));
         try {
             mNMS.setDnsConfigurationForNetwork(
-                    netId, serverStrs, domainStrs, params, useTls, tlsHostname);
+                    netId, assignedServers, domainStrs, params,
+                    useTls, tlsHostname, tlsServers);
         } catch (Exception e) {
             Slog.e(TAG, "Error setting DNS configuration: " + e);
             return;
