@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0cb3730_e61cc888",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10200,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-03-05T21:47:02Z",
+      "side": 1,
+      "message": "Don\u0027t go into the handler here; you\u0027re only adding another chance for this to remain unwritten.\n\nIf the handler has the message, remove it and do the write here.\n\nMake sure to take the mPackages lock when you do so",
+      "range": {
+        "startLine": 10196,
+        "startChar": 0,
+        "endLine": 10200,
+        "endChar": 9
+      },
+      "revId": "b9597c5d1cc4d703a410e366465e237cd56ef536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
