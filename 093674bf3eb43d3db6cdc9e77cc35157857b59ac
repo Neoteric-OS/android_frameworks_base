@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23182d2c_1070c5e1",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-03-05T23:01:58Z",
+      "side": 1,
+      "message": "Note that this statement is redundant because the package was already empty. Perhaps I should drop this line, or alternatively add additional -hidePackage arguments for other sub-packages of com.android.internal? Opinions?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
