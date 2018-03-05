@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49f3f55_325163e9",
+        "filename": "core/java/android/app/usage/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-05T10:00:50Z",
+      "side": 1,
+      "message": "Note that for testability you don\u0027t necessarily need to pass this in as a parameter, because you also pass in a context, and the context is where the code gets services from.\n\nSo instead of passing this parameter you also make sure that in the test, the passed-in context is some flavour of MockContext that overrides getSystemService. Or, you could use a standard @Mock Context and do when(mockContext).getSystemService(...).... Take a look at ConnectivityServiceTest or TetheringTest for examples.",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0514ad7d_346142be",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-05T10:00:50Z",
+      "side": 1,
+      "message": "Thanks for writing this new test! Can you put it in frameworks/base/tests/net instead of here?",
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee6c103_a25076ec",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-05T10:00:50Z",
+      "side": 1,
+      "message": "I don\u0027t think you want a real context here. See other comment.",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 79
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24795b71_45574f10",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-05T10:00:50Z",
+      "side": 1,
+      "message": "Nit: if you wanted to you could also \"import android.net.NetwrokStats.Entry\" above and just use Entry here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59370d3b_cc6cebb1",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-05T10:00:50Z",
+      "side": 1,
+      "message": "If all you\u0027re doing here is checking that getHistoryIntervalForUid() is called, you might also just be able to use verify() for that.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 59
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
