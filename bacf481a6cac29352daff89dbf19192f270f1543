@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9092b6a3_d3257ca8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-05T22:55:35Z",
+      "side": 1,
+      "message": "nit, it\u0027s probably worth explaining why there\u0027s no test for this, though I had some ideas on what we should test with it... we shouldn\u0027t bother testing all the individual band mappings, but we can probably write 3 unit tests:\n\n1) a valid earfcn should go through and provide the correct result\n2) if the earfcn is unreported, we should correctly report the duplex mode as missing\n3) if the earfcn is reported and is crap we should make sure we get the UNKNOWN value and that nothing blows up.\n\nWe also need a CTS test for getDuplexMode(). :-)",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "bacf481a6cac29352daff89dbf19192f270f1543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
