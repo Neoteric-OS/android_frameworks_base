@@ -22,6 +22,30 @@
       "revId": "bacf481a6cac29352daff89dbf19192f270f1543",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ead6e9a7_26cb8402",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Added unit tests. Filed tracking bug for cts tests",
+      "parentUuid": "9092b6a3_d3257ca8",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "bacf481a6cac29352daff89dbf19192f270f1543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

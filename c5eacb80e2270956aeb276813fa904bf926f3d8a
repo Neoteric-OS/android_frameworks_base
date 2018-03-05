@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4f810eb_aeb0cc96",
+        "filename": "telephony/java/android/telephony/ChannelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae382e6_4241e893",
+      "range": {
+        "startLine": 7,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "c5eacb80e2270956aeb276813fa904bf926f3d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b105d4cd_60e294b1",
         "filename": "telephony/java/android/telephony/ChannelUtils.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-03T02:37:32Z",
       "side": 1,
       "message": "I\u0027m trying to imagine what else might go in here....\nandroid.telephony.AccessNetworkUtils?\n\nThe word \"channel\" just doesn\u0027t convey enough information for me, and we already have AccessNetworkConstants.\n\nso far we have:\nearfcn -\u003e band\nband -\u003e duplex_mode\n\nat some point we might also do\nuarfcn -\u003e band\nuarfcn -\u003e duplex_mode\n\nband -\u003e earfcn\nband -\u003e uarfcn + \"special channel numbers\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "c5eacb80e2270956aeb276813fa904bf926f3d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "513e879a_ab134c69",
+        "filename": "telephony/java/android/telephony/ChannelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b105d4cd_60e294b1",
       "range": {
         "startLine": 11,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3c62cd26_59112bd0",
+        "filename": "telephony/java/android/telephony/ChannelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "113e54ba_75b85150",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "c5eacb80e2270956aeb276813fa904bf926f3d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43517611_e2d453e0",
         "filename": "telephony/java/android/telephony/ChannelUtils.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "45a570e2_22a443ac",
+        "filename": "telephony/java/android/telephony/ChannelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43517611_e2d453e0",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "c5eacb80e2270956aeb276813fa904bf926f3d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0d3464_4e1c3f90",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2018-03-03T02:37:32Z",
       "side": 1,
       "message": "suggest that we move this logic in to the static class too and have another little util that takes a band and spits out a duplex mode.",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 35
+      },
+      "revId": "c5eacb80e2270956aeb276813fa904bf926f3d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31ae8bb7_159630c2",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-05T23:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0d3464_4e1c3f90",
       "range": {
         "startLine": 481,
         "startChar": 0,
