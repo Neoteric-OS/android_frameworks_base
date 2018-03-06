@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1749f987_e005370b",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSContainerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-03-06T15:12:01Z",
+      "side": 1,
+      "message": "From these comments, it looks like performClick is overriden here simply to prevent QQS from collapsing when a user taps outside of the bounds of a QQS tap taget. Would moving this performClick overriding and setClickable(true) calls to QuickQSpanel also fix this issue? Or adding a conditional here to check if only QQS is shown instead of simply absorbing clicks for the entire view?",
+      "revId": "ee3de43c6e02a23b4f928068f7034f6a97a5804f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
