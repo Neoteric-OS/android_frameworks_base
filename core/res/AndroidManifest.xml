@@ -1074,6 +1074,15 @@
         android:description="@string/permdesc_useFingerprint"
         android:protectionLevel="normal" />
 
+    <!-- Allows an app to use iris hardware.
+         <p>Protection level: normal
+    -->
+    <permission android:name="android.permission.USE_IRIS"
+        android:permissionGroup="android.permission-group.SENSORS"
+        android:label="@string/permlab_useIris"
+        android:description="@string/permdesc_useIris"
+        android:protectionLevel="normal" />
+
     <!-- ====================================================================== -->
     <!-- REMOVED PERMISSIONS                                                    -->
     <!-- ====================================================================== -->
@@ -3331,8 +3340,16 @@
     <permission android:name="android.permission.MANAGE_FINGERPRINT"
         android:protectionLevel="signature|privileged" />
 
+    <!-- Allows managing (adding, removing) iris templates. Reserved for the system. @hide -->
+    <permission android:name="android.permission.MANAGE_IRIS"
+        android:protectionLevel="signature|privileged" />
+
     <!-- Allows an app to reset fingerprint attempt counter. Reserved for the system. @hide -->
     <permission android:name="android.permission.RESET_FINGERPRINT_LOCKOUT"
+        android:protectionLevel="signature" />
+
+    <!-- Allows an app to reset iris attempt counter. Reserved for the system. @hide -->
+    <permission android:name="android.permission.RESET_IRIS_LOCKOUT"
         android:protectionLevel="signature" />
 
     <!-- Allows an application to control keyguard.  Only allowed for system processes.

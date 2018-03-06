@@ -2301,6 +2301,28 @@
   <!-- Fingerprint config -->
   <java-symbol type="integer" name="config_fingerprintMaxTemplatesPerUser"/>
 
+  <!-- Iris messages -->
+  <java-symbol type="string" name="iris_error_unable_to_process" />
+  <java-symbol type="string" name="iris_error_hw_not_available" />
+  <java-symbol type="string" name="iris_error_no_space" />
+  <java-symbol type="string" name="iris_error_timeout" />
+  <java-symbol type="array" name="iris_error_vendor" />
+  <java-symbol type="string" name="iris_acquired_insufficient" />
+  <java-symbol type="string" name="iris_acquired_too_bright" />
+  <java-symbol type="string" name="iris_acquired_too_dark" />
+  <java-symbol type="string" name="iris_acquired_too_close" />
+  <java-symbol type="string" name="iris_acquired_too_far" />
+  <java-symbol type="string" name="iris_acquired_eyes_closed" />
+  <java-symbol type="string" name="iris_acquired_eyes_partially_obscured" />
+  <java-symbol type="array" name="iris_acquired_vendor" />
+  <java-symbol type="string" name="iris_error_canceled" />
+  <java-symbol type="string" name="iris_error_lockout" />
+  <java-symbol type="string" name="iris_error_lockout_permanent" />
+  <java-symbol type="string" name="iris_name_template" />
+
+  <!-- Iris config -->
+  <java-symbol type="integer" name="config_irisMaxTemplatesPerUser"/>
+
   <!-- From various Material changes -->
   <java-symbol type="attr" name="titleTextAppearance" />
   <java-symbol type="attr" name="subtitleTextAppearance" />

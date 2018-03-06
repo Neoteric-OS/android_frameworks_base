@@ -2219,6 +2219,14 @@ public abstract class PackageManager {
     public static final String FEATURE_FINGERPRINT = "android.hardware.fingerprint";
 
     /**
+     * @hide
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device has biometric hardware to detect a iris.
+      */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_IRIS = "android.hardware.iris";
+
+    /**
      * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device supports portrait orientation
      * screens.  For backwards compatibility, you can assume that if neither

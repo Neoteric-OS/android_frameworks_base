@@ -2688,6 +2688,9 @@
     <!-- For performance and storage reasons, limit the number of fingerprints per user -->
     <integer name="config_fingerprintMaxTemplatesPerUser">5</integer>
 
+    <!-- For performance and storage reasons, limit the number of iris per user -->
+    <integer name="config_irisMaxTemplatesPerUser">1</integer>
+
     <!-- This config is used to force VoiceInteractionService to start on certain low ram devices.
          It declares the package name of VoiceInteractionService that should be started. -->
     <string translatable="false" name="config_forceVoiceInteractionServicePackage"></string>
