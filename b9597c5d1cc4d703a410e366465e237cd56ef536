@@ -46,6 +46,30 @@
       "revId": "b9597c5d1cc4d703a410e366465e237cd56ef536",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ef50cef_840618d1",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10200,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-03-06T17:59:04Z",
+      "side": 1,
+      "message": "Writing shouldn\u0027t take that long. But, if you don\u0027t wait, then you\u0027re not actually fixing the bug; you\u0027re only shrinking the window in which it could occur.",
+      "parentUuid": "c032ecd9_221c16f8",
+      "range": {
+        "startLine": 10196,
+        "startChar": 0,
+        "endLine": 10200,
+        "endChar": 9
+      },
+      "revId": "b9597c5d1cc4d703a410e366465e237cd56ef536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
