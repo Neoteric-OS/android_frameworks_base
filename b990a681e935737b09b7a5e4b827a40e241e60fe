@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac4e0a2f_0f3f7b77",
+        "filename": "core/java/android/app/usage/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-06T01:57:10Z",
+      "side": 1,
+      "message": "Not sure I am getting this right, but INetworkStatsService is obtained from (static) ServiceManager.getService: ConnectivityServiceTest and TetheringTest are both passing mStatsService as argument directly. Context#getSystemService(Context.NETWORK_STATS_SERVICE) seems to be returning a NetworkStatsManager instead. Is there another way to get NetworkStatsService from a Context ?",
+      "parentUuid": "a49f3f55_325163e9",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0514ad7d_346142be",
         "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2acb4e_58e1e34b",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-06T01:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0514ad7d_346142be",
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "db86a0df_96cfd01d",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-06T01:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24795b71_45574f10",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59370d3b_cc6cebb1",
         "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
         "patchSetId": 1
@@ -108,6 +174,30 @@
       "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eff69cb_edb66a31",
+        "filename": "core/tests/coretests/src/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-06T01:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59370d3b_cc6cebb1",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 59
+      },
+      "revId": "b990a681e935737b09b7a5e4b827a40e241e60fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

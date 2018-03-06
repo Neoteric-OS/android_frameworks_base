@@ -22,6 +22,30 @@
       "revId": "03664c94aecd84e159f4a23aa6250bdfd4aa9de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939d542a_f9a7ca35",
+        "filename": "core/java/android/app/usage/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-06T01:57:10Z",
+      "side": 0,
+      "message": "Oops - I probably tried out different constructors and ended up missing that exception: added back.",
+      "parentUuid": "f7de98c0_75917a8e",
+      "range": {
+        "startLine": 101,
+        "startChar": 55,
+        "endLine": 101,
+        "endChar": 72
+      },
+      "revId": "03664c94aecd84e159f4a23aa6250bdfd4aa9de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
