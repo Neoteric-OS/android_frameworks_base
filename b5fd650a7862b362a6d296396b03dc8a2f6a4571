@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee4b8de4_ecd7c68e",
+        "filename": "tests/net/java/android/app/usage/NetworkStatsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-06T02:25:28Z",
+      "side": 1,
+      "message": "Nit: .times(1) instead?",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 43
+      },
+      "revId": "b5fd650a7862b362a6d296396b03dc8a2f6a4571",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
