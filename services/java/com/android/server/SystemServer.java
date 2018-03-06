@@ -75,6 +75,7 @@ import com.android.server.emergency.EmergencyAffordanceService;
 import com.android.server.fingerprint.FingerprintService;
 import com.android.server.hdmi.HdmiControlService;
 import com.android.server.input.InputManagerService;
+import com.android.server.iris.IrisService;
 import com.android.server.job.JobSchedulerService;
 import com.android.server.lights.LightsService;
 import com.android.server.media.MediaResourceMonitorService;
@@ -1487,6 +1488,12 @@ public final class SystemServer {
                 if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
                     traceBeginAndSlog("StartFingerprintSensor");
                     mSystemServiceManager.startService(FingerprintService.class);
+                    traceEnd();
+                }
+
+                if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_IRIS)) {
+                    traceBeginAndSlog("StartIrisSensor");
+                    mSystemServiceManager.startService(IrisService.class);
                     traceEnd();
                 }
 

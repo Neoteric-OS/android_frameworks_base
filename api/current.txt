@@ -142,6 +142,7 @@ package android {
     field public static final java.lang.String UNINSTALL_SHORTCUT = "com.android.launcher.permission.UNINSTALL_SHORTCUT";
     field public static final java.lang.String UPDATE_DEVICE_STATS = "android.permission.UPDATE_DEVICE_STATS";
     field public static final java.lang.String USE_FINGERPRINT = "android.permission.USE_FINGERPRINT";
+    field public static final java.lang.String USE_IRIS = "android.permission.USE_IRIS";
     field public static final java.lang.String USE_SIP = "android.permission.USE_SIP";
     field public static final java.lang.String VIBRATE = "android.permission.VIBRATE";
     field public static final java.lang.String WAKE_LOCK = "android.permission.WAKE_LOCK";
@@ -15968,6 +15969,57 @@ package android.hardware.input {
     method public abstract void onInputDeviceAdded(int);
     method public abstract void onInputDeviceChanged(int);
     method public abstract void onInputDeviceRemoved(int);
+  }
+
+}
+
+package android.hardware.iris {
+
+  public class IrisManager {
+    method public void authenticate(android.hardware.iris.IrisManager.CryptoObject, android.os.CancellationSignal, int, android.hardware.iris.IrisManager.AuthenticationCallback, android.os.Handler);
+    method public boolean hasEnrolledIrises();
+    method public boolean isHardwareDetected();
+    field public static final int IRIS_ACQUIRED_DETECTED_ONE_EYE = 8; // 0x8
+    field public static final int IRIS_ACQUIRED_DETECTED_TOO_MANY_EYES = 10; // 0xa
+    field public static final int IRIS_ACQUIRED_DETECTED_TWO_EYE = 9; // 0x9
+    field public static final int IRIS_ACQUIRED_EYES_CLOSED = 6; // 0x6
+    field public static final int IRIS_ACQUIRED_EYES_PARTIALLY_OBSCURED = 7; // 0x7
+    field public static final int IRIS_ACQUIRED_GOOD = 0; // 0x0
+    field public static final int IRIS_ACQUIRED_INSUFFICIENT = 1; // 0x1
+    field public static final int IRIS_ACQUIRED_TOO_BRIGHT = 2; // 0x2
+    field public static final int IRIS_ACQUIRED_TOO_CLOSE = 4; // 0x4
+    field public static final int IRIS_ACQUIRED_TOO_DARK = 3; // 0x3
+    field public static final int IRIS_ACQUIRED_TOO_FAR = 5; // 0x5
+    field public static final int IRIS_ERROR_CANCELED = 5; // 0x5
+    field public static final int IRIS_ERROR_HW_UNAVAILABLE = 1; // 0x1
+    field public static final int IRIS_ERROR_LOCKOUT = 7; // 0x7
+    field public static final int IRIS_ERROR_LOCKOUT_PERMANENT = 9; // 0x9
+    field public static final int IRIS_ERROR_NO_SPACE = 4; // 0x4
+    field public static final int IRIS_ERROR_TIMEOUT = 3; // 0x3
+    field public static final int IRIS_ERROR_UNABLE_TO_PROCESS = 2; // 0x2
+    field public static final int IRIS_ERROR_USER_CANCELED = 10; // 0xa
+    field public static final int IRIS_ERROR_VENDOR = 8; // 0x8
+  }
+
+  public static abstract class IrisManager.AuthenticationCallback {
+    ctor public IrisManager.AuthenticationCallback();
+    method public void onAuthenticationError(int, java.lang.CharSequence);
+    method public void onAuthenticationFailed();
+    method public void onAuthenticationHelp(int, java.lang.CharSequence);
+    method public void onAuthenticationSucceeded(android.hardware.iris.IrisManager.AuthenticationResult);
+  }
+
+  public static class IrisManager.AuthenticationResult {
+    method public android.hardware.iris.IrisManager.CryptoObject getCryptoObject();
+  }
+
+  public static final class IrisManager.CryptoObject {
+    ctor public IrisManager.CryptoObject(java.security.Signature);
+    ctor public IrisManager.CryptoObject(javax.crypto.Cipher);
+    ctor public IrisManager.CryptoObject(javax.crypto.Mac);
+    method public javax.crypto.Cipher getCipher();
+    method public javax.crypto.Mac getMac();
+    method public java.security.Signature getSignature();
   }
 
 }

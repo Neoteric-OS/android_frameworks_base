@@ -2969,6 +2969,7 @@ public abstract class Context {
             NSD_SERVICE,
             AUDIO_SERVICE,
             FINGERPRINT_SERVICE,
+            //@hide: IRIS_SERVICE,
             MEDIA_ROUTER_SERVICE,
             TELEPHONY_SERVICE,
             TELEPHONY_SUBSCRIPTION_SERVICE,
@@ -3545,6 +3546,17 @@ public abstract class Context {
      * @see android.hardware.fingerprint.FingerprintManager
      */
     public static final String FINGERPRINT_SERVICE = "fingerprint";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a
+     * {@link android.hardware.iris.IrisManager} for handling management
+     * of iris.
+     *
+     * @hide
+     * @see #getSystemService
+     * @see android.hardware.iris.IrisManager
+     */
+    public static final String IRIS_SERVICE = "iris";
 
     /**
      * Use with {@link #getSystemService} to retrieve a
