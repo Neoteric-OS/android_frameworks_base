@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d456a9f4_2b876dc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-06T10:23:52Z",
+      "side": 1,
+      "message": "I think this is a bit too low level for the casual reader.\n\nMight be worth just expanding on the outcome in terms of documentation (as well as keeping the implementation details below that if you like).\n\ne.g.\n\nThe switch to using OpenJDK 9\u0027s javadoc meant that\ncom.android.internal.util classes started being included\nin the platform API doclava output from that point. This\nchange is to remove com.android.internal.util from the\ngenerated documentation packages.\n\nNote that this package was already missing from generated\nSDK stubs so this change only affects the documentation.\n\n\u003cAnd then talk about the out/ dirs if you like\u003e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 2
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8298153f_1fb3534a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-06T10:23:52Z",
+      "side": 1,
+      "message": "I thought this was default at this point?",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23182d2c_1070c5e1",
         "filename": "Android.mk",
         "patchSetId": 1
@@ -13,6 +59,30 @@
       "writtenOn": "2018-03-05T23:01:58Z",
       "side": 1,
       "message": "Note that this statement is redundant because the package was already empty. Perhaps I should drop this line, or alternatively add additional -hidePackage arguments for other sub-packages of com.android.internal? Opinions?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd458ff_bb473fc1",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-06T10:23:52Z",
+      "side": 1,
+      "message": "From com.android.okhttp, it looks like it\u0027s covering subpackages too. \n\nSo I\u0027d keep the internal but drop the internal.util if we can. Seems least prone to having to be revisited - we never want things under com.android.internal to show up in docs AIUI.\n\nWe may even be able to replace the lot with \"com.android\" at this point but I\u0027ll leave that up to you - it may affect other things.",
+      "parentUuid": "23182d2c_1070c5e1",
       "range": {
         "startLine": 176,
         "startChar": 0,
