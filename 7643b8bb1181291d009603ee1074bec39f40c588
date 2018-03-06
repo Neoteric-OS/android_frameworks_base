@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c716c602_59bdb5ca",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-06T12:59:17Z",
+      "side": 1,
+      "message": "Should we also have a test that non-empty servers are actually sent correctly ?",
+      "range": {
+        "startLine": 3679,
+        "startChar": 8,
+        "endLine": 3679,
+        "endChar": 14
+      },
+      "revId": "7643b8bb1181291d009603ee1074bec39f40c588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
