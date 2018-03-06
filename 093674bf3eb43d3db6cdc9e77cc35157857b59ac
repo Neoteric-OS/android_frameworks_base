@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1df6850_c63b336f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-03-06T12:16:20Z",
+      "side": 1,
+      "message": "Rephrased/expanded the CL description.\n\nNote that I\u0027m not happy about not understanding why some but not all packages/classes show up in the docs. I didn\u0027t investigate this further because (a) doclava is a mess / hard to debug, and (b) my understanding is that doclava is in maintenance mode with a replacement in the works.\n\nLet me know if you want me to investigate in more detail.",
+      "parentUuid": "d456a9f4_2b876dc8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 2
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8298153f_1fb3534a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-06T10:23:52Z",
       "side": 1,
       "message": "I thought this was default at this point?",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4c41e5f_0aea1c78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-03-06T12:16:20Z",
+      "side": 1,
+      "message": "The current default is still EXPERIMENTAL_USE_OPENJDK9\u003d1.8 (which means use of OpenJDK 9 toolchain but with -target 1.8, ie. v52 class files). We\u0027re moving towards EXPERIMENTAL_USE_OPENJDK9\u003dtrue which means -target 1.9 / v53 class files.\n\nThe behavior should be the same for the purposes of this CL, but I have my local workspaces set to \u0027true\u0027 at the moment (unlikely to hide breakages, but likely to discover breakages).",
+      "parentUuid": "8298153f_1fb3534a",
       "range": {
         "startLine": 20,
         "startChar": 18,
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "From com.android.okhttp, it looks like it\u0027s covering subpackages too. \n\nSo I\u0027d keep the internal but drop the internal.util if we can. Seems least prone to having to be revisited - we never want things under com.android.internal to show up in docs AIUI.\n\nWe may even be able to replace the lot with \"com.android\" at this point but I\u0027ll leave that up to you - it may affect other things.",
       "parentUuid": "23182d2c_1070c5e1",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "093674bf3eb43d3db6cdc9e77cc35157857b59ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccac99c_2eff69fa",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-03-06T12:16:20Z",
+      "side": 1,
+      "message": "It might look like that, but it does not cover subpackages.\n\nFrom looking at the doclava source, this is implemented by checking contains(packageName) on a Set\u003cString\u003e of hiddenPackages; The documentation here also refers to this behavior:\n\nhttps://android.googlesource.com/platform/frameworks/support/+/master/buildSrc/src/main/kotlin/android/support/doclava/DoclavaTask.kt#66\n\nI think it would be better for doclava to hide subpackages (through this or another option), but that\u0027s a larger task and with potential unintended side-effects. Let\u0027s discuss on http://b/74227351 whether these semantics should change.",
+      "parentUuid": "dbd458ff_bb473fc1",
       "range": {
         "startLine": 176,
         "startChar": 0,
