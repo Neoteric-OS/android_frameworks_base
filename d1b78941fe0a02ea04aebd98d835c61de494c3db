@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa821038_6918a2b7",
+        "filename": "telephony/java/android/telephony/AccessNetworkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-03-06T22:44:30Z",
+      "side": 1,
+      "message": "is BAND_47 to 64 reserved from the 3Gpp? Why it be considered as TDD?",
+      "revId": "d1b78941fe0a02ea04aebd98d835c61de494c3db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
