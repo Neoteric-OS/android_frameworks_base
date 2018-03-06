@@ -22,6 +22,30 @@
       "revId": "b9597c5d1cc4d703a410e366465e237cd56ef536",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c032ecd9_221c16f8",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10200,
+      "author": {
+        "id": 1230992
+      },
+      "writtenOn": "2018-03-06T04:54:13Z",
+      "side": 1,
+      "message": "Thank you for your feedback.\nWhen I call write function here directly,  if it take long time to write out, shutdown thread may stop for a while. \nIs it acceptable?\nIf no problem, I upload new patch set.",
+      "parentUuid": "d0cb3730_e61cc888",
+      "range": {
+        "startLine": 10196,
+        "startChar": 0,
+        "endLine": 10200,
+        "endChar": 9
+      },
+      "revId": "b9597c5d1cc4d703a410e366465e237cd56ef536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
