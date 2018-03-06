@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e329a1b6_4faef222",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-06T12:26:10Z",
+      "side": 1,
+      "message": "When I debugged one of the other issues  (android.system) I found it related to changes in javadoc 9 for modules. Then I discovered we were already using -hidePackage elsewhere and it was to solve a build break so I didn\u0027t look closer.\n\nWith the proposed new chain for stubs generation / docs generation it\u0027s likely a lot of the logic in doclava will be able to go away so I don\u0027t think we need any more investigation.",
+      "range": {
+        "startLine": 14,
+        "startChar": 55,
+        "endLine": 14,
+        "endChar": 65
+      },
+      "revId": "97bb6cf371f51549c708cf58a04584968eaf7d5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
