@@ -261,6 +261,8 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     private boolean mIsOnDefaultDisplay;
     public boolean mHomeBlockedThisTouch;
 
+    private int mAutoDimTimeout;
+
     /**
      * When user is QuickSwitching between apps of different orientations, we'll draw a fake
      * home handle on the orientation they originally touched down to start their swipe
@@ -711,6 +713,8 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
 
         // Respect the latest disabled-flags.
         mCommandQueue.recomputeDisableFlags(mDisplayId, false);
+
+        mAutoDimTimeout = mContext.getResources().getInteger(R.integer.navbar_auto_dim_timeout);
 
         mNotificationShadeDepthController.addListener(mDepthListener);
         mTaskStackChangeListeners.registerTaskStackListener(mTaskStackListener);
@@ -1543,7 +1547,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         mHandler.removeCallbacks(mAutoDim);
         int state = mStatusBarStateController.getState();
         if (state != StatusBarState.KEYGUARD && state != StatusBarState.SHADE_LOCKED) {
-            mHandler.postDelayed(mAutoDim, AUTODIM_TIMEOUT_MS);
+            mHandler.postDelayed(mAutoDim, mAutoDimTimeout);
         }
     }
 
