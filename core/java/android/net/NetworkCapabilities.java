@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.IntDef;
+import android.annotation.SystemApi;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -56,6 +57,7 @@ public final class NetworkCapabilities implements Parcelable {
     public NetworkCapabilities() {
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
+        mUnwantedNetworkCapabilities = DEFAULT_UNWANTED_CAPABILITIES;
     }
 
     public NetworkCapabilities(NetworkCapabilities nc) {
@@ -275,6 +277,7 @@ public final class NetworkCapabilities implements Parcelable {
      * this network can be used by system apps to upload telemetry data.
      * @hide
      */
+    @SystemApi
     public static final int NET_CAPABILITY_OEM_PAID = 22;
 
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
@@ -312,6 +315,13 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_NOT_RESTRICTED) |
             (1 << NET_CAPABILITY_TRUSTED) |
             (1 << NET_CAPABILITY_NOT_VPN);
+
+    /**
+     * Capabilities that are added by default to the unwanted list when the object is constructed.
+     * This makes sense when the {@code NetworkCapabilities} object is used for network request.
+     */
+    private static final long DEFAULT_UNWANTED_CAPABILITIES =
+            (1 << NET_CAPABILITY_OEM_PAID);
 
     /**
      * Capabilities that suggest that a network is restricted.
