@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8f75638_76f4249e",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-07T02:46:41Z",
+      "side": 1,
+      "message": "I\u0027d prefer a switch statement to make this more explicit and not auto-opt-in new dexopt reasons.",
+      "range": {
+        "startLine": 538,
+        "startChar": 7,
+        "endLine": 541,
+        "endChar": 76
+      },
+      "revId": "a1e921f000de528310105db2adbb10aa2ff89cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
