@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b82d199_f00ea579",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-07T02:06:41Z",
+      "side": 1,
+      "message": "It\u0027s better to set an initial value(255) for mWcdmaRscpAsu too. Otherwise, it will be 0 and 0 is a valid value for ASU.\n\nmWcdmaRscpAsu \u003d 255;",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 29
+      },
+      "revId": "f99e1c8e76e961ad80ff0c71829b1c8383c023a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29501eed_8d0d5dfe",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-03-07T02:06:41Z",
+      "side": 1,
+      "message": "Invalid value of ASU is 255 not -1 from the 3gpp 27.007 (Ver 10.3.0) Sec 8.69 and getWcdmaAsuLevel correctly sets invalid value as 255. So, I think this invalid should also be 255.",
+      "range": {
+        "startLine": 381,
+        "startChar": 34,
+        "endLine": 381,
+        "endChar": 41
+      },
+      "revId": "f99e1c8e76e961ad80ff0c71829b1c8383c023a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
