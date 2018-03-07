@@ -57,6 +57,7 @@ import static com.android.server.pm.Installer.DEXOPT_STORAGE_CE;
 import static com.android.server.pm.Installer.DEXOPT_STORAGE_DE;
 import static com.android.server.pm.Installer.DEXOPT_IDLE_BACKGROUND_JOB;
 import static com.android.server.pm.Installer.DEXOPT_ENABLE_HIDDEN_API_CHECKS;
+import static com.android.server.pm.Installer.DEXOPT_GENERATE_COMPACT_DEX;
 import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 import static com.android.server.pm.InstructionSets.getDexCodeInstructionSets;
 
@@ -532,12 +533,19 @@ public class PackageDexOptimizer {
         // Some apps are executed with restrictions on hidden API usage. If this app is one
         // of them, pass a flag to dexopt to enable the same restrictions during compilation.
         int hiddenApiFlag = info.isAllowedToUseHiddenApi() ? 0 : DEXOPT_ENABLE_HIDDEN_API_CHECKS;
+        // Enable CompactDex generation for modes that aren't latency critical.
+        final int compilationReason = options.getCompilationReason();
+        final boolean generateCompactDex =
+                (compilationReason != PackageManagerService.REASON_FIRST_BOOT) &&
+                (compilationReason != PackageManagerService.REASON_BOOT) &&
+                (compilationReason != PackageManagerService.REASON_INSTALL);
         int dexFlags =
                 (isPublic ? DEXOPT_PUBLIC : 0)
                 | (debuggable ? DEXOPT_DEBUGGABLE : 0)
                 | profileFlag
                 | (options.isBootComplete() ? DEXOPT_BOOTCOMPLETE : 0)
                 | (options.isDexoptIdleBackgroundJob() ? DEXOPT_IDLE_BACKGROUND_JOB : 0)
+                | (generateCompactDex ? DEXOPT_GENERATE_COMPACT_DEX : 0)
                 | hiddenApiFlag;
         return adjustDexoptFlags(dexFlags);
     }
