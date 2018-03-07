@@ -16,6 +16,24 @@
       "revId": "d1b78941fe0a02ea04aebd98d835c61de494c3db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29ea6998_26205d13",
+        "filename": "telephony/java/android/telephony/AccessNetworkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-07T19:57:45Z",
+      "side": 1,
+      "message": "Good catch. Fixed.",
+      "parentUuid": "aa821038_6918a2b7",
+      "revId": "d1b78941fe0a02ea04aebd98d835c61de494c3db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
