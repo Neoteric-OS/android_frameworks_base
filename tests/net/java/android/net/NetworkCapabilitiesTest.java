@@ -273,11 +273,16 @@ public class NetworkCapabilitiesTest {
     @Test
     public void testOemPaid() {
         NetworkCapabilities nc = new NetworkCapabilities();
-        nc.maybeMarkCapabilitiesRestricted();
+        assertTrue(nc.hasUnwantedCapability(NET_CAPABILITY_OEM_PAID));
         assertFalse(nc.hasCapability(NET_CAPABILITY_OEM_PAID));
+
+        // Having OEM_PAID in unwanted list shouldn't make it restricted network.
+        nc.maybeMarkCapabilitiesRestricted();
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
 
+        // Adding OEM_PAID to capability list should make network restricted.
         nc.addCapability(NET_CAPABILITY_OEM_PAID);
+        nc.addCapability(NET_CAPABILITY_INTERNET);  // Combine with unrestricted capability.
         nc.maybeMarkCapabilitiesRestricted();
         assertTrue(nc.hasCapability(NET_CAPABILITY_OEM_PAID));
         assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
@@ -295,7 +300,8 @@ public class NetworkCapabilitiesTest {
         request.addUnwantedCapability(NET_CAPABILITY_WIFI_P2P);
         request.addUnwantedCapability(NET_CAPABILITY_NOT_METERED);
         assertTrue(request.satisfiedByNetworkCapabilities(network));
-        assertArrayEquals(new int[] {NET_CAPABILITY_WIFI_P2P, NET_CAPABILITY_NOT_METERED},
+        assertArrayEquals(new int[] {NET_CAPABILITY_WIFI_P2P,
+                        NET_CAPABILITY_NOT_METERED, NET_CAPABILITY_OEM_PAID},
                 request.getUnwantedCapabilities());
 
         // This is a default capability, just want to make sure its there because we use it below.
