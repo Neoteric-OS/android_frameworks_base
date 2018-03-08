@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51a2c3d_bf4c41b4",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3692,
+      "author": {
+        "id": 1206003
+      },
+      "writtenOn": "2018-03-08T02:23:38Z",
+      "side": 1,
+      "message": "https://issuetracker.google.com/issues/74050210",
+      "range": {
+        "startLine": 3692,
+        "startChar": 20,
+        "endLine": 3692,
+        "endChar": 28
+      },
+      "revId": "7d256ac93766a3f5ac248516bbcbdc74ebd9b9e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
