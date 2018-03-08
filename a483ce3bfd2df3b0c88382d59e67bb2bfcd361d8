@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20bb059_67d60359",
+        "filename": "telephony/java/android/telephony/CellIdentity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-08T17:59:50Z",
+      "side": 1,
+      "message": "nit: suggest the word \"identity\" here isn\u0027t really adding anything.",
+      "range": {
+        "startLine": 131,
+        "startChar": 45,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "a483ce3bfd2df3b0c88382d59e67bb2bfcd361d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "720fd05f_930ceef7",
+        "filename": "telephony/java/android/telephony/CellIdentity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-08T17:59:50Z",
+      "side": 1,
+      "message": "nit: .",
+      "revId": "a483ce3bfd2df3b0c88382d59e67bb2bfcd361d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
