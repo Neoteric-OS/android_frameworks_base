@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d327f23b_5ae0cd43",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-08T18:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bd48d0_b6698c0b",
+      "range": {
+        "startLine": 385,
+        "startChar": 55,
+        "endLine": 385,
+        "endChar": 58
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c2e1e9_ef2ab11d",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2018-03-02T13:49:19Z",
       "side": 1,
       "message": "I don\u0027t think this is right. This method should only be called on NetworkCapabilities objects that describe the capabilities of a network, and not on one that describe requested capabilities – those may not have non requestable capabilities as the name imply. And NetworkCapabilities objects that describe the capabilities of a network always have mUnwantedCapabilities \u003d 0 IIUC.\n\nBut to go further, even if my analysis above is wrong, then this is mightily confusing ; a caller would probably expect this to return a capability this NetworkCapabilities include, not one that it marks as unwanted. However, this would return either indiscriminately and without indication.",
+      "range": {
+        "startLine": 487,
+        "startChar": 60,
+        "endLine": 487,
+        "endChar": 88
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ba9f07_2f24a571",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-08T18:26:47Z",
+      "side": 1,
+      "message": "This method makes sense when the object describes *request* for the network (not the capability of a network). This is useful to check that request doesn\u0027t contain any non-requestable capability (we have this in the comment to this method).\n\nHere\u0027s an example of usage.\nhttps://cs.corp.google.com/android/frameworks/base/services/core/java/com/android/server/ConnectivityService.java?rcl\u003d2b56a589b487d2ce4449df8055331bef37bc20d5\u0026l\u003d4204\n\nIn this case it make sense to include unwanted capabilities here, thus no changes required.",
+      "parentUuid": "89c2e1e9_ef2ab11d",
       "range": {
         "startLine": 487,
         "startChar": 60,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7361a6dd_fcf34ae0",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-08T18:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "915b5f9f_bcebc419",
+      "range": {
+        "startLine": 292,
+        "startChar": 36,
+        "endLine": 292,
+        "endChar": 43
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab098648_8078dbd8",
         "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 14
@@ -105,6 +177,30 @@
       "writtenOn": "2018-03-02T13:49:19Z",
       "side": 1,
       "message": "This is accurate, working as intended, and... pretty confusing ? The rest of the API makes it look like it\u0027s an invariant that a capability can never be both wanted and unwanted ; I suggest at the very least combineCapabilities and combineNetCapabilitise have a comment saying they can violate that.",
+      "range": {
+        "startLine": 367,
+        "startChar": 8,
+        "endLine": 368,
+        "endChar": 35
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec6d187_164c19ae",
+        "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-03-08T18:26:47Z",
+      "side": 1,
+      "message": "Done. Added comments",
+      "parentUuid": "ab098648_8078dbd8",
       "range": {
         "startLine": 367,
         "startChar": 8,
