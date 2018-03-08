@@ -3375,7 +3375,7 @@ public final class Telephony {
          * on the given subscriptionId
          * <p>
          * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-         * carrier identity {@link TelephonyManager#getAndroidCarrierIdForSubscription()}
+         * carrier identity {@link TelephonyManager#getSimCarrierId()}
          * while your app is running. You can also use a {@link JobService} to ensure your app
          * is notified of changes to the {@link Uri} even when it is not running.
          * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -3391,14 +3391,14 @@ public final class Telephony {
 
         /**
          * A user facing carrier name.
-         * @see TelephonyManager#getAndroidCarrierNameForSubscription()
+         * @see TelephonyManager#getSimCarrierIdName()
          * <P>Type: TEXT </P>
          */
         public static final String NAME = "carrier_name";
 
         /**
          * A unique carrier id
-         * @see TelephonyManager#getAndroidCarrierIdForSubscription()
+         * @see TelephonyManager#getSimCarrierId()
          * <P>Type: INTEGER </P>
          */
         public static final String CID = "carrier_id";
