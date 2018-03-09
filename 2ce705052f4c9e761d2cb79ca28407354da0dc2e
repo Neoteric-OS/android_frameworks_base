@@ -22,6 +22,30 @@
       "revId": "2ce705052f4c9e761d2cb79ca28407354da0dc2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8879ff0_54cd8e32",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-09T22:34:33Z",
+      "side": 1,
+      "message": "my mistake, the correct spec is 27.007 (definition of rssi) http://www.etsi.org/deliver/etsi_ts/127000_127099/127007/10.03.00_60/ts_127007v100300p.pdf. Will update the comment",
+      "parentUuid": "1632a749_6bf8fe9e",
+      "range": {
+        "startLine": 909,
+        "startChar": 53,
+        "endLine": 909,
+        "endChar": 66
+      },
+      "revId": "2ce705052f4c9e761d2cb79ca28407354da0dc2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
