@@ -29,7 +29,6 @@ import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
@@ -222,7 +221,8 @@ public class TetheringTest {
         }
     }
 
-    private static NetworkState buildMobileUpstreamState(boolean withIPv4, boolean withIPv6) {
+    private static NetworkState buildMobileUpstreamState(boolean withIPv4, boolean withIPv6,
+            boolean with464xlat) {
         final NetworkInfo info = new NetworkInfo(ConnectivityManager.TYPE_MOBILE, 0, null, null);
         info.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
         final LinkProperties prop = new LinkProperties();
@@ -242,6 +242,15 @@ public class TetheringTest {
                     NetworkUtils.numericToInetAddress("2001:db8::1"), TEST_MOBILE_IFNAME));
         }
 
+        if (with464xlat) {
+            final LinkProperties stackedLink = new LinkProperties();
+            stackedLink.setInterfaceName(TEST_XLAT_MOBILE_IFNAME);
+            stackedLink.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
+                    NetworkUtils.numericToInetAddress("10.0.0.1"), TEST_XLAT_MOBILE_IFNAME));
+
+            prop.addStackedLink(stackedLink);
+        }
+
 
         final NetworkCapabilities capabilities = new NetworkCapabilities()
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);;
@@ -249,11 +258,15 @@ public class TetheringTest {
     }
 
     private static NetworkState buildMobileIPv4UpstreamState() {
-        return buildMobileUpstreamState(true, false);
+        return buildMobileUpstreamState(true, false, false);
     }
 
     private static NetworkState buildMobileDualStackUpstreamState() {
-        return buildMobileUpstreamState(true, true);
+        return buildMobileUpstreamState(true, true, false);
+    }
+
+    private static NetworkState buildMobile464xlatUpstreamState() {
+        return buildMobileUpstreamState(false, true, true);
     }
 
     @Before
@@ -518,7 +531,7 @@ public class TetheringTest {
 
         for (TetherInterfaceStateMachine tism :
                 mTetheringDependencies.ipv6CoordinatorNotifyList) {
-            NetworkState ipv6OnlyState = buildMobileUpstreamState(false, true);
+                    NetworkState ipv6OnlyState = buildMobileUpstreamState(false, true, false);
             tism.sendMessage(TetherInterfaceStateMachine.CMD_IPV6_TETHER_UPDATE, 0, 0,
                     upstreamState.linkProperties.isIPv6Provisioned()
                             ? ipv6OnlyState.linkProperties
@@ -559,6 +572,21 @@ public class TetheringTest {
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }
 
+    @Test
+    public void workingMobileUsbTethering_464xlat() throws Exception {
+        NetworkState upstreamState = buildMobile464xlatUpstreamState();
+        runUsbTethering(upstreamState);
+
+        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
+        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME,
+                TEST_XLAT_MOBILE_IFNAME);
+
+        sendIPv6TetherUpdates(upstreamState);
+        verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
+        verify(mNetd, times(1)).tetherApplyDnsInterfaces();
+    }
 
     @Test
     public void workingLocalOnlyHotspotEnrichedApBroadcastWithIfaceChanged() throws Exception {
