@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1632a749_6bf8fe9e",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-03-09T19:47:02Z",
+      "side": 1,
+      "message": "Sorry that I didn\u0027t see the range definition in TS 27.001 8.5(http://www.etsi.org/deliver/etsi_ts/127000_127099/127001/11.00.00_60/ts_127001v110000p.pdf), am I missed something?",
+      "range": {
+        "startLine": 909,
+        "startChar": 53,
+        "endLine": 909,
+        "endChar": 66
+      },
+      "revId": "2ce705052f4c9e761d2cb79ca28407354da0dc2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
