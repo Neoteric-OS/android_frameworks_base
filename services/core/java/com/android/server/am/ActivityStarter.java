@@ -1603,6 +1603,17 @@ class ActivityStarter {
                         mTargetStack.moveTaskToFrontLocked(intentTask, mNoAnimation, mOptions,
                                 mStartActivity.appTimeTracker, "bringingFoundTaskToFront");
                         mMovedToFront = true;
+                    } else if (launchStack.mDisplayId != mTargetStack.mDisplayId) {
+                        // Target and computed stacks are on different displays and we've
+                        // found a matching task - move the existing instance to that display and
+                        // move it to front.
+                        // This case must be handled before FULLSCREEN_WORKSPACE_STACK_ID in order
+                        // to allow a task that is running on a secondary display to be moved to
+                        // the default display.
+                        intentActivity.getTask().reparent(launchStack.mStackId, ON_TOP,
+                                REPARENT_MOVE_STACK_TO_FRONT, ANIMATE, DEFER_RESUME,
+                                "reparentToDisplay");
+                        mMovedToFront = true;
                     } else if (launchStack.mStackId == DOCKED_STACK_ID
                             || launchStack.mStackId == FULLSCREEN_WORKSPACE_STACK_ID) {
                         if ((mLaunchFlags & FLAG_ACTIVITY_LAUNCH_ADJACENT) != 0) {
@@ -1620,14 +1631,6 @@ class ActivityStarter {
                                     mNoAnimation, mOptions, mStartActivity.appTimeTracker,
                                     "bringToFrontInsteadOfAdjacentLaunch");
                         }
-                        mMovedToFront = true;
-                    } else if (launchStack.mDisplayId != mTargetStack.mDisplayId) {
-                        // Target and computed stacks are on different displays and we've
-                        // found a matching task - move the existing instance to that display and
-                        // move it to front.
-                        intentActivity.getTask().reparent(launchStack.mStackId, ON_TOP,
-                                REPARENT_MOVE_STACK_TO_FRONT, ANIMATE, DEFER_RESUME,
-                                "reparentToDisplay");
                         mMovedToFront = true;
                     } else if (launchStack.getStackId() == StackId.HOME_STACK_ID
                         && mTargetStack.getStackId() != StackId.HOME_STACK_ID) {
