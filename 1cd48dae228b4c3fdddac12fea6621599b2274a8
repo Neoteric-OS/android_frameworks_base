@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86e29adf_b4c37ec2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-09T07:47:43Z",
+      "side": 1,
+      "message": "Hm, I see. Indeed it\u0027s only used there. I think the name of the method is very confusing then, but it\u0027s unrelated to your change, which is right. Thanks.",
+      "parentUuid": "35ba9f07_2f24a571",
+      "range": {
+        "startLine": 487,
+        "startChar": 60,
+        "endLine": 487,
+        "endChar": 88
+      },
+      "revId": "1cd48dae228b4c3fdddac12fea6621599b2274a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "915b5f9f_bcebc419",
         "filename": "tests/net/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 14
