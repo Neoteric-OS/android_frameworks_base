@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc5d3571_7fec85d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-09T18:03:13Z",
+      "side": 1,
+      "message": "I think you want both lines\n\nChange-Id: I6b54db63b318564983ae11cffaf7fc27df71b060\nMerged-In: I6b54db63b318564983ae11cffaf7fc27df71b060\n\nthough I\u0027m not sure. If treehugger says its fine then its probably fine",
+      "revId": "08941a5f3efd7def6e840fc04ae407f64be7adc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
