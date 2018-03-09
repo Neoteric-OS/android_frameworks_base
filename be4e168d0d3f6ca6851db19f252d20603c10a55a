@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cd16e17_f78c2ce8",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-09T08:07:51Z",
+      "side": 1,
+      "message": "Add private static method way at the bottom of the file, like:\n\n    private static InterfaceSet getUpstreamInterfaceSet(NetworkState ns) {\n        if (ns \u003d\u003d null || ns.linkProperties \u003d\u003d null) return null;\n\n        final String iface4 \u003d getv4 interface\n        final NetworkCapabilites nc \u003d ns.networkCapabilities;\n        final String iface6 \u003d (nc !\u003d null \u0026\u0026 nc.hasTransport(CELLULAR))\n                ? get v6 interface\n                : null;\n\n        ...\n    }",
+      "range": {
+        "startLine": 1368,
+        "startChar": 82,
+        "endLine": 1368,
+        "endChar": 83
+      },
+      "revId": "be4e168d0d3f6ca6851db19f252d20603c10a55a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8ad8dc_de3b8a4e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-09T08:07:51Z",
+      "side": 1,
+      "message": "I think these probably need to change to calls to setUpstreamNetwork(), or some extremely similar code...",
+      "range": {
+        "startLine": 1511,
+        "startChar": 20,
+        "endLine": 1511,
+        "endChar": 49
+      },
+      "revId": "be4e168d0d3f6ca6851db19f252d20603c10a55a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
