@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c40f764_4489adb8",
+        "filename": "data/keyboards/Vendor_054c_Product_0268.kcm",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-03-10T02:44:36Z",
+      "side": 1,
+      "message": "In Generic.kcm, such buttons as BUTTON_X, BUTTON_Y, BUTTON_SELECT, BUTTON_START also have fallbacks. Why do we choose to only have fallbacks for a specific subset here?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "e461bd274ba80af0d2b328d518b08e06e6376e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
