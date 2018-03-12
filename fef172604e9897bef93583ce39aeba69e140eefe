@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40aa5f9_4b98d7c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-03-12T10:09:12Z",
+      "side": 1,
+      "message": "use git cherry-pick -x or \"repo cherry-pick\" to get the standard git messaging which is \"(cherry-picked from..)\".\n\nLooks fine otherwise.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "fef172604e9897bef93583ce39aeba69e140eefe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
