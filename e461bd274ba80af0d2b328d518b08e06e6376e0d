@@ -22,6 +22,30 @@
       "revId": "e461bd274ba80af0d2b328d518b08e06e6376e0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac26e3f3_932e8b02",
+        "filename": "data/keyboards/Vendor_054c_Product_0268.kcm",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2018-03-12T19:31:09Z",
+      "side": 1,
+      "message": "Actually, can we change BUTTON_MODE fallback to HOME in Generic.kcm? If so, we don\u0027t have to have any of these .kcm.",
+      "parentUuid": "9c40f764_4489adb8",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "e461bd274ba80af0d2b328d518b08e06e6376e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

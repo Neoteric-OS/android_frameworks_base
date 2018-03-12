@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "14a2aaf3_09d05e9c",
+        "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8000.kl",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2018-03-12T19:31:09Z",
+      "side": 1,
+      "message": "Not sure what you meant, the mapping order is the same as Vendor_054c_Product_0268.kl. We intentionally omit the analog buttons, since those are commented out in the original mapping file, and they are not mapped in the kernel driver.",
+      "parentUuid": "b9d9fa0d_07a82f81",
+      "revId": "a4039fbefd0dd5958e574d2b6e9eb3593cbff330",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6997eb91_7486de51",
         "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8100.kl",
         "patchSetId": 9
