@@ -54,6 +54,7 @@ public class SettingsBackupTest {
                     Settings.System.ALARM_ALERT, // backup candidate?
                     Settings.System.ALARM_ALERT_CACHE, // internal cache
                     Settings.System.APPEND_FOR_LAST_AUDIBLE, // suffix deprecated since API 2
+                    Settings.System.DEBUG_ENABLE_ENHANCED_CALL_BLOCKING, // used for testing only
                     Settings.System.EGG_MODE, // I am the lolrus
                     Settings.System.END_BUTTON_BEHAVIOR, // bug?
                     Settings.System
