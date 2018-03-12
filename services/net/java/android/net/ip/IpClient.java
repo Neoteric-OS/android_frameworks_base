@@ -150,6 +150,35 @@ public class IpClient extends StateMachine {
         public void setNeighborDiscoveryOffload(boolean enable) {}
     }
 
+    public static class WaitForProvisioningCallback extends Callback {
+        private LinkProperties mCallbackLinkProperties;
+
+        public LinkProperties waitForProvisioning() {
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {}
+                return mCallbackLinkProperties;
+            }
+        }
+
+        @Override
+        public void onProvisioningSuccess(LinkProperties newLp) {
+            synchronized (this) {
+                mCallbackLinkProperties = newLp;
+                notify();
+            }
+        }
+
+        @Override
+        public void onProvisioningFailure(LinkProperties newLp) {
+            synchronized (this) {
+                mCallbackLinkProperties = null;
+                notify();
+            }
+        }
+    }
+
     // Use a wrapper class to log in order to ensure complete and detailed
     // logging. This method is lighter weight than annotations/reflection
     // and has the following benefits:
@@ -281,6 +310,11 @@ public class IpClient extends StateMachine {
                 return this;
             }
 
+            public Builder withoutMultinetworkPolicyTracker() {
+                mConfig.mUsingMultinetworkPolicyTracker = false;
+                return this;
+            }
+
             public Builder withoutIpReachabilityMonitor() {
                 mConfig.mUsingIpReachabilityMonitor = false;
                 return this;
@@ -343,6 +377,7 @@ public class IpClient extends StateMachine {
 
         /* package */ boolean mEnableIPv4 = true;
         /* package */ boolean mEnableIPv6 = true;
+        /* package */ boolean mUsingMultinetworkPolicyTracker = true;
         /* package */ boolean mUsingIpReachabilityMonitor = true;
         /* package */ int mRequestedPreDhcpActionMs;
         /* package */ InitialConfiguration mInitialConfig;
@@ -374,6 +409,7 @@ public class IpClient extends StateMachine {
             return new StringJoiner(", ", getClass().getSimpleName() + "{", "}")
                     .add("mEnableIPv4: " + mEnableIPv4)
                     .add("mEnableIPv6: " + mEnableIPv6)
+                    .add("mUsingMultinetworkPolicyTracker: " + mUsingMultinetworkPolicyTracker)
                     .add("mUsingIpReachabilityMonitor: " + mUsingIpReachabilityMonitor)
                     .add("mRequestedPreDhcpActionMs: " + mRequestedPreDhcpActionMs)
                     .add("mInitialConfig: " + mInitialConfig)
@@ -559,7 +595,6 @@ public class IpClient extends StateMachine {
     private final NetlinkTracker mNetlinkTracker;
     private final WakeupMessage mProvisioningTimeoutAlarm;
     private final WakeupMessage mDhcpActionTimeoutAlarm;
-    private final MultinetworkPolicyTracker mMultinetworkPolicyTracker;
     private final SharedLog mLog;
     private final LocalLog mConnectivityPacketLog;
     private final MessageHandlingLogger mMsgStateLogger;
@@ -573,6 +608,7 @@ public class IpClient extends StateMachine {
      */
     private LinkProperties mLinkProperties;
     private ProvisioningConfiguration mConfiguration;
+    private MultinetworkPolicyTracker mMultinetworkPolicyTracker;
     private IpReachabilityMonitor mIpReachabilityMonitor;
     private DhcpClient mDhcpClient;
     private DhcpResults mDhcpResults;
@@ -685,9 +721,6 @@ public class IpClient extends StateMachine {
         mLinkProperties = new LinkProperties();
         mLinkProperties.setInterfaceName(mInterfaceName);
 
-        mMultinetworkPolicyTracker = new MultinetworkPolicyTracker(mContext, getHandler(),
-                () -> { mLog.log("OBSERVED AvoidBadWifi changed"); });
-
         mProvisioningTimeoutAlarm = new WakeupMessage(mContext, getHandler(),
                 mTag + ".EVENT_PROVISIONING_TIMEOUT", EVENT_PROVISIONING_TIMEOUT);
         mDhcpActionTimeoutAlarm = new WakeupMessage(mContext, getHandler(),
@@ -719,8 +752,6 @@ public class IpClient extends StateMachine {
         } catch (RemoteException e) {
             logError("Couldn't register NetlinkTracker: %s", e);
         }
-
-        mMultinetworkPolicyTracker.start();
     }
 
     private void stopStateMachineUpdaters() {
@@ -729,8 +760,6 @@ public class IpClient extends StateMachine {
         } catch (RemoteException e) {
             logError("Couldn't unregister NetlinkTracker: %s", e);
         }
-
-        mMultinetworkPolicyTracker.shutdown();
     }
 
     @Override
@@ -1028,7 +1057,8 @@ public class IpClient extends StateMachine {
         // Note that we can still be disconnected by IpReachabilityMonitor
         // if the IPv6 default gateway (but not the IPv6 DNS servers; see
         // accompanying code in IpReachabilityMonitor) is unreachable.
-        final boolean ignoreIPv6ProvisioningLoss = !mMultinetworkPolicyTracker.getAvoidBadWifi();
+        final boolean ignoreIPv6ProvisioningLoss = (mMultinetworkPolicyTracker != null)
+                && !mMultinetworkPolicyTracker.getAvoidBadWifi();
 
         // Additionally:
         //
@@ -1520,6 +1550,13 @@ public class IpClient extends StateMachine {
                 return;
             }
 
+            if (mConfiguration.mUsingMultinetworkPolicyTracker) {
+                mMultinetworkPolicyTracker = new MultinetworkPolicyTracker(
+                        mContext, getHandler(),
+                        () -> { mLog.log("OBSERVED AvoidBadWifi changed"); });
+                mMultinetworkPolicyTracker.start();
+            }
+
             if (mConfiguration.mUsingIpReachabilityMonitor && !startIpReachabilityMonitor()) {
                 doImmediateProvisioningFailure(
                         IpManagerEvent.ERROR_STARTING_IPREACHABILITYMONITOR);
@@ -1535,6 +1572,11 @@ public class IpClient extends StateMachine {
             if (mIpReachabilityMonitor != null) {
                 mIpReachabilityMonitor.stop();
                 mIpReachabilityMonitor = null;
+            }
+
+            if (mMultinetworkPolicyTracker != null) {
+                mMultinetworkPolicyTracker.shutdown();
+                mMultinetworkPolicyTracker = null;
             }
 
             if (mDhcpClient != null) {
