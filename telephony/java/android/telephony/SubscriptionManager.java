@@ -70,7 +70,6 @@ public class SubscriptionManager {
     public static final int INVALID_PHONE_INDEX = -1;
 
     /** An invalid slot identifier */
-    /** @hide */
     public static final int INVALID_SIM_SLOT_INDEX = -1;
 
     /** Indicates the caller wants the default sub id. */
