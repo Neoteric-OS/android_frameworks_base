@@ -16,6 +16,24 @@
       "revId": "ee3de43c6e02a23b4f928068f7034f6a97a5804f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76cb8e4_408c1b99",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSContainerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1230992
+      },
+      "writtenOn": "2018-03-13T04:08:03Z",
+      "side": 1,
+      "message": "Thank you for your comment.\nWe\u0027re confirming inside our team.\nI\u0027ll update after internal discussion.",
+      "parentUuid": "1749f987_e005370b",
+      "revId": "ee3de43c6e02a23b4f928068f7034f6a97a5804f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
