@@ -470,6 +470,9 @@ public class SmsMessage extends SmsMessageBase {
         int bearerDataLength;
         SmsEnvelope env = new SmsEnvelope();
         CdmaSmsAddress addr = new CdmaSmsAddress();
+        // We currently do not parse subaddress in PDU, but it is required when determining
+        // fingerprint (see getIncomingSmsFingerprint()).
+        CdmaSmsSubaddress subaddr = new CdmaSmsSubaddress();
 
         try {
             env.messageType = dis.readInt();
@@ -520,6 +523,7 @@ public class SmsMessage extends SmsMessageBase {
         // link the filled objects to this SMS
         mOriginatingAddress = addr;
         env.origAddress = addr;
+        env.origSubaddress = subaddr;
         mEnvelope = env;
         mPdu = pdu;
 
