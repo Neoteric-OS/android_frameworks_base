@@ -50,6 +50,7 @@ import android.util.SparseBooleanArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.DeviceDiscoveryAction.DeviceDiscoveryCallback;
+import com.android.server.hdmi.MenuRequestAction.MenuStateCallback;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 import java.io.UnsupportedEncodingException;
@@ -116,6 +117,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     // If true, TV wakes itself up when receiving <Text/Image View On>.
     private boolean mAutoWakeup;
+
+    // If false, Device is showing its own menu.
+    private boolean mMenuState;
 
     // List of the logical address of local CEC devices. Unmodifiable, thread-safe.
     private List<Integer> mLocalDeviceAddresses;
@@ -388,6 +392,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             }
             mService.invokeInputChangeListener(info);
         }
+        //Query Menu Status
+        sendMenuRequest(Constants.MENU_REQUEST_TYPE_QUERY);
     }
 
     @ServiceThreadOnly
@@ -1878,7 +1884,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Override
     protected boolean handleMenuStatus(HdmiCecMessage message) {
-        // Do nothing and just return true not to prevent from responding <Feature Abort>.
+        int menuState = message.getParams()[0] & 0xFF;
+        mMenuState = (menuState != 0);
         return true;
     }
 
@@ -1890,6 +1897,21 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
         int targetAddress = targetDevice.getLogicalAddress();
         mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(mAddress, targetAddress));
+    }
+
+    public void sendMenuRequest(int menuRequestType) {
+        MenuRequestAction action = new MenuRequestAction(this, findKeyReceiverAddress(),
+                menuRequestType, new MenuStateCallback() {
+                    @Override
+                    public void updateMenuState(boolean menuState) {
+                        mMenuState = menuState;
+                    }
+                });
+        addAndStartAction(action);
+    }
+
+    public boolean getMenuState() {
+        return mMenuState;
     }
 
     @ServiceThreadOnly
