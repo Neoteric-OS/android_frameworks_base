@@ -1,0 +1,11 @@
+Code-Review+1: Patrick Shi <patrick.shi@spreadtrum.com>
+Code-Review+1: huasong chai <chrison.chai@spreadtrum.com>
+Code-Review+2: Jason Monk <jmonk@google.com>
+Verified+1: Jason Monk <jmonk@google.com>
+Autosubmit+1: Jason Monk <jmonk@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 15 Mar 2018 13:23:47 +0000
+Reviewed-on: https://android-review.googlesource.com/640380
+Project: platform/frameworks/base
+Branch: refs/heads/oreo-mr1-dev
