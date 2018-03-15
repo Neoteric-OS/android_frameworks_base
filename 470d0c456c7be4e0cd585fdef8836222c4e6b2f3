@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "08a68ea0_00a03a34",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-15T08:54:38Z",
+      "side": 1,
+      "message": "tgt ?",
+      "range": {
+        "startLine": 191,
+        "startChar": 90,
+        "endLine": 191,
+        "endChar": 93
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecadb9ed_17a8977a",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 3
@@ -68,6 +91,29 @@
       "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e1ddf3_dae1e1d8",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-15T08:54:38Z",
+      "side": 1,
+      "message": "import com.android.internal.util.ArrayUtils;\nArrayUtils.indexOf(ifaces, ifName);",
+      "range": {
+        "startLine": 218,
+        "startChar": 31,
+        "endLine": 218,
+        "endChar": 60
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
