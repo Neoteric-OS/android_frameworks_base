@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c2d953d_b72e6093",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "\"P\", please.\n\nBeware \"a foolish consistency\"...",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6006a4_91f7d800",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "Consider just making these public.  It\u0027s only a test, anyway.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 15
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecadb9ed_17a8977a",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "Perhaps not recommended, but I\u0027ll observe that if you put \"placeholder0\" as the first ifname, then you can just check \"index \u003e 0\" and pass only \"index\" (not +1) into InterfaceParams.\n\n:-)",
+      "range": {
+        "startLine": 216,
+        "startChar": 49,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f595512_bbbb2dfc",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "\"P\"",
+      "range": {
+        "startLine": 232,
+        "startChar": 70,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8971bf1b_ce1c1afb",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "We have a, android.net.utils.NetworkConstants constant for this.",
+      "range": {
+        "startLine": 246,
+        "startChar": 85,
+        "endLine": 246,
+        "endChar": 87
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec57953a_39ac5714",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T04:55:59Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary.  The USB broadcast triggers tetherMatchingInterfaces() which will do a listInterfaces() and find one.\n\nEventually, we want to require that the USB system send us the exact interface name in the broadcast, and move away from all this interface regex business entirely (it\u0027s awful).\n\nYou can leave this here for now if you like, but just to give you some more context: the interface watching stuff needs to go.\n\nIf you want, you could mock mNWService.listInterfaces() to return [TEST_USB_IFNAME], and it should work just as well.",
+      "range": {
+        "startLine": 434,
+        "startChar": 64,
+        "endLine": 434,
+        "endChar": 65
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
