@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a2bcb9b_aa2f0085",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2018-03-16T19:47:35Z",
+      "side": 1,
+      "message": "Needs unit tests as well. See this AOSP CL and the corresponding one\nin the internal tree:\nhttps://android-review.googlesource.com/#/c/platform/frameworks/base/+/626488/",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "7e7a1832a3261fe9340f1f8edccb050db18af339",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7988286_a5facb6f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2018-03-16T19:47:35Z",
+      "side": 1,
+      "message": "Nit: remove extra empty space.",
+      "range": {
+        "startLine": 958,
+        "startChar": 54,
+        "endLine": 958,
+        "endChar": 55
+      },
+      "revId": "7e7a1832a3261fe9340f1f8edccb050db18af339",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
