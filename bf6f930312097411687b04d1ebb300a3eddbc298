@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b7cbb7b_aabfc511",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3628,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-03-16T18:33:30Z",
+      "side": 1,
+      "message": "I recall that unless you put this into the backup list and define a validator, you get a presubmit failure in internal master. Dunno if the debug. prefix fixes that though",
+      "range": {
+        "startLine": 3628,
+        "startChar": 35,
+        "endLine": 3628,
+        "endChar": 70
+      },
+      "revId": "bf6f930312097411687b04d1ebb300a3eddbc298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
