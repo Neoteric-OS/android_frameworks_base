@@ -109,6 +109,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     // Active device state
     private boolean mIsActiveDeviceA2dp = false;
     private boolean mIsActiveDeviceHeadset = false;
+    private boolean mIsActiveDeviceHearingAid = false;
 
     /**
      * Describes the current device and profile for logging.
@@ -478,6 +479,10 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
             changed = (mIsActiveDeviceHeadset != isActive);
             mIsActiveDeviceHeadset = isActive;
             break;
+        case BluetoothProfile.HEARING_AID:
+            changed = (mIsActiveDeviceHearingAid != isActive);
+            mIsActiveDeviceHearingAid = isActive;
+            break;
         default:
             Log.w(TAG, "onActiveDeviceChanged: unknown profile " + bluetoothProfile +
                     " isActive " + isActive);
@@ -501,6 +506,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                 return mIsActiveDeviceA2dp;
             case BluetoothProfile.HEADSET:
                 return mIsActiveDeviceHeadset;
+            case BluetoothProfile.HEARING_AID:
+                return mIsActiveDeviceHearingAid;
             default:
                 Log.w(TAG, "getActiveDevice: unknown profile " + bluetoothProfile);
                 break;
@@ -591,6 +598,10 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         HeadsetProfile headsetProfile = mProfileManager.getHeadsetProfile();
         if (headsetProfile != null) {
             mIsActiveDeviceHeadset = mDevice.equals(headsetProfile.getActiveDevice());
+        }
+        HearingAidProfile hearingAidProfile = mProfileManager.getHearingAidProfile();
+        if (hearingAidProfile != null) {
+            mIsActiveDeviceHearingAid = hearingAidProfile.isActiveDevice(mDevice);
         }
     }
 
@@ -922,6 +933,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         boolean profileConnected = false;       // at least one profile is connected
         boolean a2dpNotConnected = false;       // A2DP is preferred but not connected
         boolean hfpNotConnected = false;    // HFP is preferred but not connected
+        boolean hearingAidNotConnected = false; // Hearing Aid is preferred but not connected
 
         for (LocalBluetoothProfile profile : getProfiles()) {
             int connectionStatus = getProfileConnectionState(profile);
@@ -942,6 +954,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                             a2dpNotConnected = true;
                         } else if ((profile instanceof HeadsetProfile) ||
                                    (profile instanceof HfpClientProfile)) {
+                            hfpNotConnected = true;
+                        } else if (profile instanceof  HearingAidProfile) {
                             hfpNotConnected = true;
                         }
                     }
@@ -974,6 +988,10 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
             if (mIsActiveDeviceHeadset) {
                 activeDeviceString = activeDeviceStringsArray[3]; // Active for Phone only
             }
+        }
+        if (mIsActiveDeviceHearingAid) {
+            activeDeviceString = activeDeviceStringsArray[1];
+            return mContext.getString(R.string.bluetooth_connected, activeDeviceString);
         }
 
         if (profileConnected) {
