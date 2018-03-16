@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7ce8bed_6c0910e9",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c2d953d_b72e6093",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e6006a4_91f7d800",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f25aa_13c4b65c",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Actually private still works since it\u0027s an internal class - removed the getters and renamed the fields without the leading \"m\".",
+      "parentUuid": "2e6006a4_91f7d800",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 15
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "02e172d1_a4d27e91",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "This was for \"target\", following naming in TetheringDependencies, which follows naming in the UpstreamNetworkMonitor constructor - but that\u0027s indeed not clear. Renamed to messageTarget in this change\u0027s references.",
+      "parentUuid": "08a68ea0_00a03a34",
+      "range": {
+        "startLine": 191,
+        "startChar": 90,
+        "endLine": 191,
+        "endChar": 93
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecadb9ed_17a8977a",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-03-15T04:55:59Z",
       "side": 1,
       "message": "Perhaps not recommended, but I\u0027ll observe that if you put \"placeholder0\" as the first ifname, then you can just check \"index \u003e 0\" and pass only \"index\" (not +1) into InterfaceParams.\n\n:-)",
+      "range": {
+        "startLine": 216,
+        "startChar": 49,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a778e88_1cd05e60",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ecadb9ed_17a8977a",
       "range": {
         "startLine": 216,
         "startChar": 49,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6c795c86_de211db8",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e1ddf3_dae1e1d8",
+      "range": {
+        "startLine": 218,
+        "startChar": 31,
+        "endLine": 218,
+        "endChar": 60
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f595512_bbbb2dfc",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "751ee909_53853389",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f595512_bbbb2dfc",
+      "range": {
+        "startLine": 232,
+        "startChar": 70,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8971bf1b_ce1c1afb",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2018-03-15T04:55:59Z",
       "side": 1,
       "message": "We have a, android.net.utils.NetworkConstants constant for this.",
+      "range": {
+        "startLine": 246,
+        "startChar": 85,
+        "endLine": 246,
+        "endChar": 87
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "705c0e1b_2e388879",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8971bf1b_ce1c1afb",
       "range": {
         "startLine": 246,
         "startChar": 85,
@@ -183,6 +351,30 @@
       "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e738b507_8cfd8473",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-16T03:39:25Z",
+      "side": 1,
+      "message": "Not sure if I\u0027m getting this right, but the interface is only put into mTetherStates in maybeTrackNewInterfaceLocked, which is only called from interfaceAdded() or interfaceStatusChanged(). Without the interface in mTetherStates, tether() will not send TetherInterfaceStateMachine.CMD_TETHER_REQUESTED, so enableNat() is not called. Should the flow be different ?\nAt the moment listInterfaces() is already mocked in setUp() to return the 3 interfaces, but commenting this out breaks the test (enableNat() not called).",
+      "parentUuid": "ec57953a_39ac5714",
+      "range": {
+        "startLine": 434,
+        "startChar": 64,
+        "endLine": 434,
+        "endChar": 65
+      },
+      "revId": "470d0c456c7be4e0cd585fdef8836222c4e6b2f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
