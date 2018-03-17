@@ -16,6 +16,24 @@
       "revId": "764ce8fb9e2443fd287b11403b69adb7094f9740",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a110d68_e1496e60",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-17T23:27:37Z",
+      "side": 1,
+      "message": "Yeah, this is a call up from native. We can, by pushing it to the uncaught exception handler as mentioned (similar to what the Binder code does for Errors). I\u0027m just not sure that it\u0027s warranted for everything - I prefer to try to be more robust and avoid a crashloop (reminder: things like NoClassDefFound and IllegalAccess are Errors).\n\nHow about a Log.wtf for everything (including Exception)?",
+      "parentUuid": "b1db73a8_6d8dfa4f",
+      "revId": "764ce8fb9e2443fd287b11403b69adb7094f9740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
