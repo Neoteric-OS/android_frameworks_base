@@ -117,6 +117,8 @@ public class IpSecService extends IIpSecService.Stub {
     @GuardedBy("IpSecService.this")
     private int mNextResourceId = 1;
 
+    private boolean mIsSystemReady = false;
+
     interface IpSecServiceConfiguration {
         INetd getNetdInstance() throws RemoteException;
 
@@ -1002,9 +1004,22 @@ public class IpSecService extends IIpSecService.Stub {
         mUidFdTagger = uidFdTagger;
     }
 
+    void checkSystemReadyOrThrow() {
+        if (mIsSystemReady) return;
+        throw new IllegalStateException("IpSecService isn't ready.");
+    }
+
+    synchronized boolean flushIpSecState() {
+        try {
+            mSrvConfig.getNetdInstance().ipSecFlushState();
+        } catch (RemoteException e) { return false; }
+        return true;
+    }
+
     public void systemReady() {
-        if (isNetdAlive()) {
+        if (isNetdAlive() && flushIpSecState()) {
             Slog.d(TAG, "IpSecService is ready");
+            mIsSystemReady = true;
         } else {
             Slog.wtf(TAG, "IpSecService not ready: failed to connect to NetD Native Service!");
         }
@@ -1067,6 +1082,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized IpSecSpiResponse allocateSecurityParameterIndex(
             String destinationAddress, int requestedSpi, IBinder binder) throws RemoteException {
+        checkSystemReadyOrThrow();
         checkInetAddress(destinationAddress);
         /* requestedSpi can be anything in the int range, so no check is needed. */
         checkNotNull(binder, "Null Binder passed to allocateSecurityParameterIndex");
@@ -1112,6 +1128,7 @@ public class IpSecService extends IIpSecService.Stub {
     /** Release a previously allocated SPI that has been registered with the system server */
     @Override
     public synchronized void releaseSecurityParameterIndex(int resourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         releaseResource(userRecord.mSpiRecords, resourceId);
     }
@@ -1180,6 +1197,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized IpSecUdpEncapResponse openUdpEncapsulationSocket(int port, IBinder binder)
             throws RemoteException {
+        checkSystemReadyOrThrow();
         if (port != 0 && (port < FREE_PORT_MIN || port > PORT_MAX)) {
             throw new IllegalArgumentException(
                     "Specified port number must be a valid non-reserved UDP port");
@@ -1229,6 +1247,7 @@ public class IpSecService extends IIpSecService.Stub {
     /** close a socket that has been been allocated by and registered with the system server */
     @Override
     public synchronized void closeUdpEncapsulationSocket(int resourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         releaseResource(userRecord.mEncapSocketRecords, resourceId);
     }
@@ -1241,6 +1260,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized IpSecTunnelInterfaceResponse createTunnelInterface(
             String localAddr, String remoteAddr, Network underlyingNetwork, IBinder binder) {
+        checkSystemReadyOrThrow();
         checkNotNull(binder, "Null Binder passed to createTunnelInterface");
         checkNotNull(underlyingNetwork, "No underlying network was specified");
         checkInetAddress(localAddr);
@@ -1320,6 +1340,7 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized void addAddressToTunnelInterface(int tunnelResourceId, String localAddr) {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
 
         // Get tunnelInterface record; if no such interface is found, will throw
@@ -1338,6 +1359,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void removeAddressFromTunnelInterface(
             int tunnelResourceId, String localAddr) {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
 
         // Get tunnelInterface record; if no such interface is found, will throw
@@ -1355,6 +1377,7 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized void deleteTunnelInterface(int resourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         releaseResource(userRecord.mTunnelInterfaceRecords, resourceId);
     }
@@ -1501,6 +1524,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized IpSecTransformResponse createTransform(IpSecConfig c, IBinder binder)
             throws RemoteException {
+        checkSystemReadyOrThrow();
         checkIpSecConfig(c);
         checkNotNull(binder, "Null Binder passed to createTransform");
         final int resourceId = mNextResourceId++;
@@ -1551,6 +1575,7 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized void deleteTransform(int resourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         releaseResource(userRecord.mTransformRecords, resourceId);
     }
@@ -1562,6 +1587,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void applyTransportModeTransform(
             ParcelFileDescriptor socket, int direction, int resourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         checkDirection(direction);
         // Get transform record; if no transform is found, will throw IllegalArgumentException
@@ -1606,6 +1632,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void removeTransportModeTransforms(ParcelFileDescriptor socket)
             throws RemoteException {
+        checkSystemReadyOrThrow();
         try {
             mSrvConfig
                     .getNetdInstance()
@@ -1622,6 +1649,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void applyTunnelModeTransform(
             int tunnelResourceId, int direction, int transformResourceId) throws RemoteException {
+        checkSystemReadyOrThrow();
         enforceNetworkStackPermission();
         checkDirection(direction);
 
