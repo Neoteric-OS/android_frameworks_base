@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1db73a8_6d8dfa4f",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-03-17T16:19:38Z",
+      "side": 1,
+      "message": "Can we not get the VM to handle the exception normally and crash the process?  Or is it funky because it\u0027s an up-call from native?",
+      "revId": "764ce8fb9e2443fd287b11403b69adb7094f9740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
