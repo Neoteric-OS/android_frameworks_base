@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c76ca6fa_cd60fcc7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-19T20:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedc0942_8586ed8b",
+      "range": {
+        "startLine": 645,
+        "startChar": 30,
+        "endLine": 645,
+        "endChar": 43
+      },
+      "revId": "c9df7c4079a0a7f02ce735ab353cf84cad9ccb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c92b12b7_230d31e4",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f1feaff3_0cd87f3f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-19T20:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c92b12b7_230d31e4",
+      "range": {
+        "startLine": 646,
+        "startChar": 12,
+        "endLine": 646,
+        "endChar": 45
+      },
+      "revId": "c9df7c4079a0a7f02ce735ab353cf84cad9ccb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32b0d4c_8e3224cc",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-03-19T20:40:43Z",
       "side": 1,
       "message": "Can this be null?",
+      "range": {
+        "startLine": 648,
+        "startChar": 37,
+        "endLine": 648,
+        "endChar": 45
+      },
+      "revId": "c9df7c4079a0a7f02ce735ab353cf84cad9ccb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "426bfdfa_255fb398",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-19T20:59:38Z",
+      "side": 1,
+      "message": "No since we always add a non-null value in this list that we are currently iterating.",
+      "parentUuid": "a32b0d4c_8e3224cc",
       "range": {
         "startLine": 648,
         "startChar": 37,
