@@ -4059,7 +4059,7 @@ public class NotificationManagerService extends SystemService {
                     if (hasValidSound) {
                         mSoundNotificationKey = key;
                         if (mInCall) {
-                            playInCallNotification();
+                            playInCallNotification(record);
                             beep = true;
                         } else {
                             beep = playSound(record, soundUri);
@@ -4224,17 +4224,17 @@ public class NotificationManagerService extends SystemService {
                 mUserProfiles.isCurrentProfile(record.getUserId()));
     }
 
-    protected void playInCallNotification() {
+    protected void playInCallNotification(final NotificationRecord record) {
         new Thread() {
             @Override
             public void run() {
                 final long identity = Binder.clearCallingIdentity();
+                boolean looping = (record.getNotification().flags & Notification.FLAG_INSISTENT) != 0;
                 try {
                     final IRingtonePlayer player = mAudioManager.getRingtonePlayer();
                     if (player != null) {
-                        player.play(new Binder(), mInCallNotificationUri,
-                                mInCallNotificationAudioAttributes,
-                                mInCallNotificationVolume, false);
+                        player.playAsync(mInCallNotificationUri, record.sbn.getUser(), looping,
+                        record.getAudioAttributes());
                     }
                 } catch (RemoteException e) {
                 } finally {
