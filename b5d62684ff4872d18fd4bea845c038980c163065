@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6de76dcd_81add14d",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/BluetoothTile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-03-19T17:33:44Z",
+      "side": 1,
+      "message": "This isn\u0027t the right fix. mController is initialized in the constructor and is guaranteed to be nonnull, however, this issue is occurring because QSTileImpl\u0027s constructor calls handleStale in its constructor, which enqueues work on the background handler, and that thread can execute the call to handleRefreshState before BluetoothTile is in a fully initialized state.\n\nThe correct fix here is to remove the call to QSTileImpl#handleStale in the constructor and instead in QSFactoryImpl, call QSTileImpl#handleStale immediately after calling the specific tile\u0027s constructor.",
+      "revId": "b5d62684ff4872d18fd4bea845c038980c163065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
