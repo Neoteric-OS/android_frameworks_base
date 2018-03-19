@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315833eb_c8077059",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsSmsImplBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2018-03-19T21:47:35Z",
+      "side": 1,
+      "message": "While here, can you do the same in ImsSmsDispatcher#onSmsReceived.",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "4bdebd98e7a08f96e8144437ad089285b4cdc494",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
