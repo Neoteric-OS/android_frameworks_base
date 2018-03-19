@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fedc0942_8586ed8b",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2018-03-19T20:19:59Z",
+      "side": 1,
+      "message": "nit: camelCase.",
+      "range": {
+        "startLine": 645,
+        "startChar": 30,
+        "endLine": 645,
+        "endChar": 43
+      },
+      "revId": "c9df7c4079a0a7f02ce735ab353cf84cad9ccb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92b12b7_230d31e4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2018-03-19T20:19:59Z",
+      "side": 1,
+      "message": "nit: You can use for each.",
+      "range": {
+        "startLine": 646,
+        "startChar": 12,
+        "endLine": 646,
+        "endChar": 45
+      },
+      "revId": "c9df7c4079a0a7f02ce735ab353cf84cad9ccb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
