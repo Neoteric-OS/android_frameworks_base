@@ -34,6 +34,24 @@
       "revId": "764ce8fb9e2443fd287b11403b69adb7094f9740",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad44025e_5f1ebb1f",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-03-19T10:49:52Z",
+      "side": 1,
+      "message": "Log.wtf() sgtm, we may still have a few undiscovered offenders too.",
+      "parentUuid": "3a110d68_e1496e60",
+      "revId": "764ce8fb9e2443fd287b11403b69adb7094f9740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
