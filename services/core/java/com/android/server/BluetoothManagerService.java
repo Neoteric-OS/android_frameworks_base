@@ -67,6 +67,7 @@ import com.android.server.pm.UserRestrictionsUtils;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
@@ -640,6 +641,20 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             if (DBG) {
                 Slog.d(TAG, "Binder is dead - unregister " + mPackageName);
             }
+
+            Iterator<IBinder> list_iterator = mBleApps.keySet().iterator();
+            while (list_iterator.hasNext()) {
+                IBinder token = list_iterator.next();
+                ClientDeathRecipient deathRec = mBleApps.get(token);
+                if (deathRec.equals(this)) {
+                    if (DBG) {
+                        Slog.d(TAG, "Remove this BLE app " + mPackageName);
+                    }
+                    mBleApps.remove(token);
+                    break;
+                }
+            }
+
             if (isBleAppPresent()) {
                 // Nothing to do, another app is here.
                 return;
