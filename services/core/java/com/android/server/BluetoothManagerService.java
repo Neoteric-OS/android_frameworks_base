@@ -640,6 +640,19 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             if (DBG) {
                 Slog.d(TAG, "Binder is dead - unregister " + mPackageName);
             }
+
+            for (Map.Entry<IBinder, ClientDeathRecipient> entry : mBleApps.entrySet()) {
+                IBinder token = entry.getKey();
+                ClientDeathRecipient deathRec = entry.getValue();
+                if (deathRec.equals(this)) {
+                    if (DBG) {
+                        Slog.d(TAG, "Remove this BLE app " + mPackageName);
+                    }
+                    mBleApps.remove(token);
+                    break;
+                }
+            }
+
             if (isBleAppPresent()) {
                 // Nothing to do, another app is here.
                 return;
