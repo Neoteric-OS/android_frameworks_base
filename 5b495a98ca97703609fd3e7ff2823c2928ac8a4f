@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6f531f_6c4662b1",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2018-03-20T01:35:48Z",
+      "side": 1,
+      "message": "Nit: \"Removing BLE application ...\" or similar.",
+      "range": {
+        "startLine": 649,
+        "startChar": 37,
+        "endLine": 649,
+        "endChar": 56
+      },
+      "revId": "5b495a98ca97703609fd3e7ff2823c2928ac8a4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
