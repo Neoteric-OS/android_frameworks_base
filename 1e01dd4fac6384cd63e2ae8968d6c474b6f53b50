@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4dd5dd2_d246184f",
+        "filename": "core/java/android/nfc/cardemulation/SeSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1238035
+      },
+      "writtenOn": "2018-03-20T02:07:36Z",
+      "side": 1,
+      "message": "exceeds preferred line length",
+      "revId": "1e01dd4fac6384cd63e2ae8968d6c474b6f53b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
