@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb0de06_3d74ec19",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1060609
+      },
+      "writtenOn": "2018-03-20T19:36:19Z",
+      "side": 1,
+      "message": "It looks like we don\u0027t call unlinkToDeath here, which I think causes a memory leak -- details: https://groups.google.com/a/google.com/d/msg/gmscore-clients/_CSaPPqVMEQ/iYONR7R0BAAJ\n\nHow about calling this here, which removes the app, calls unlinkToDeath, and stops BLE-only mode if necessary?\n  updateBleAppCount(token, /*enable\u003d*/ false, getPackageName())\n\nAnd then we could delete most of the rest of this method\u0027s code?",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 648,
+        "endChar": 43
+      },
+      "revId": "73a1651446c400ecd1b07f2f7f448d68406517f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
