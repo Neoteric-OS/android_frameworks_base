@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df783530_ea689b54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-20T17:48:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f6badc3_6b73d858",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "8cd95891e733fc82df8dadef7a2234e01d8b6230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61ed1cb9_b3305c85",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-20T17:26:31Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "8cd95891e733fc82df8dadef7a2234e01d8b6230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66334798_d32d292a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-20T17:48:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61ed1cb9_b3305c85",
       "range": {
         "startLine": 9,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2fbb32d1_6ed5dd96",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-20T17:48:48Z",
+      "side": 1,
+      "message": "entry should not be null since it is an iterator in the for-loop. deathRec should not be null since we always add a non-null deathRec into this Map data structure.",
+      "parentUuid": "490793a6_75db5bce",
+      "range": {
+        "startLine": 645,
+        "startChar": 15,
+        "endLine": 647,
+        "endChar": 44
+      },
+      "revId": "8cd95891e733fc82df8dadef7a2234e01d8b6230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b206273d_9f21205c",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-03-20T17:26:31Z",
       "side": 1,
       "message": "Seems highly unecessary - especially since there is already a log message for this function.",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 21
+      },
+      "revId": "8cd95891e733fc82df8dadef7a2234e01d8b6230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3374b0_d6e4a532",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-20T17:48:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b206273d_9f21205c",
       "range": {
         "startLine": 648,
         "startChar": 0,
