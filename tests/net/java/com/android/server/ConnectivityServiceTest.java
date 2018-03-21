@@ -17,6 +17,9 @@
 package com.android.server;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -70,6 +73,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 
@@ -153,11 +157,18 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -180,6 +191,9 @@ public class ConnectivityServiceTest {
 
     private static final int TIMEOUT_MS = 500;
     private static final int TEST_LINGER_DELAY_MS = 120;
+
+    private static final String MOBILE_IFNAME = "test_rmnet_data0";
+    private static final String WIFI_IFNAME = "test_wlan0";
 
     private MockContext mServiceContext;
     private WrappedConnectivityService mService;
@@ -749,19 +763,65 @@ public class ConnectivityServiceTest {
         }
     }
 
+    private static class CannedNetworkIO implements NetworkMonitor.NetworkIO {
+        public final Map<String, Set<InetAddress>> data = new HashMap<>();
+
+        public InetAddress[] getAllByName(Network network, boolean bypassPrivateDns, String host)
+                throws UnknownHostException {
+            final Set<InetAddress> ips = data.get(host);
+            if (ips == null) throw new UnknownHostException("UHE: " + host);
+
+            return ips.toArray(new InetAddress[ips.size()]);
+        }
+
+        public URLConnection openConnection(Network network, URL url) throws IOException {
+            throw new IOException("not opening URL: " + url);
+        }
+
+        public void clearAllHosts() {
+            data.clear();
+        }
+
+        public void clearHost(String hostname) {
+            data.remove(hostname);
+        }
+
+        public void addHost(String hostname, String ipLiteral) {
+            final InetAddress ip;
+            try {
+                ip = InetAddress.parseNumericAddress(ipLiteral);
+            } catch (IllegalArgumentException ignored) {
+                return;
+            }
+            Set<InetAddress> ips = data.remove(hostname);
+            if (ips == null) ips = new HashSet<>();
+            ips.add(ip);
+            data.put(hostname, ips);
+        }
+    }
+
     // NetworkMonitor implementation allowing overriding of Internet connectivity probe result.
     private class WrappedNetworkMonitor extends NetworkMonitor {
-        public Handler connectivityHandler;
+        public final CannedNetworkIO networkIO;
+        public final Handler connectivityHandler;
         // HTTP response code fed back to NetworkMonitor for Internet connectivity probe.
         public int gen204ProbeResult = 500;
         public String gen204ProbeRedirectUrl = null;
 
         public WrappedNetworkMonitor(Context context, Handler handler,
                 NetworkAgentInfo networkAgentInfo, NetworkRequest defaultRequest,
-                IpConnectivityLog log) {
-            super(context, handler, networkAgentInfo, defaultRequest, log,
+                IpConnectivityLog log, CannedNetworkIO netio) {
+            super(context, handler, networkAgentInfo, defaultRequest, log, netio,
                     NetworkMonitor.NetworkMonitorSettings.DEFAULT);
             connectivityHandler = handler;
+
+            networkIO = netio;
+            networkIO.addHost("connectivitycheck.gstatic.com", "2001:db8:2::1");
+            networkIO.addHost("connectivitycheck.gstatic.com", "2001:db8:2::2");
+            networkIO.addHost("connectivitycheck.gstatic.com", "192.0.2.1");
+            networkIO.addHost("connectivitycheck.gstatic.com", "192.0.2.2");
+            networkIO.addHost("www.google.com", "2001:db8:2::9");
+            networkIO.addHost("www.google.com", "192.0.2.9");
         }
 
         @Override
@@ -837,8 +897,10 @@ public class ConnectivityServiceTest {
         @Override
         public NetworkMonitor createNetworkMonitor(Context context, Handler handler,
                 NetworkAgentInfo nai, NetworkRequest defaultRequest) {
+            final CannedNetworkIO networkIO = new CannedNetworkIO();
             final WrappedNetworkMonitor monitor = new WrappedNetworkMonitor(
-                    context, handler, nai, defaultRequest, mock(IpConnectivityLog.class));
+                    context, handler, nai, defaultRequest, mock(IpConnectivityLog.class),
+                    networkIO);
             mLastCreatedNetworkMonitor = monitor;
             return monitor;
         }
@@ -3579,7 +3641,7 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(networkRequest, networkCallback);
 
         LinkProperties lp = new LinkProperties();
-        lp.setInterfaceName("wlan0");
+        lp.setInterfaceName("WIFI_IFNAME");
         LinkAddress myIpv4Address = new LinkAddress("192.168.12.3/24");
         RouteInfo myIpv4DefaultRoute = new RouteInfo((IpPrefix) null,
                 NetworkUtils.numericToInetAddress("192.168.12.1"), lp.getInterfaceName());
@@ -3668,12 +3730,19 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testBasicDnsConfigurationPushed() throws Exception {
+        ArgumentCaptor<String[]> tlsServers = ArgumentCaptor.forClass(String[].class);
+
+        // Clear any interactions that occur as a result of CS starting up.
+        reset(mNetworkManagementService);
+
         final String IFNAME = "test_rmnet_data0";
-        final String[] EMPTY_TLS_SERVERS = new String[0];
+        final String[] EMPTY_STRING_ARRAY = new String[0];
         mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
         waitForIdle();
+        // CS tells netd about the empty DNS config for this network.
         verify(mNetworkManagementService, never()).setDnsConfigurationForNetwork(
-                anyInt(), any(), any(), any(), anyString(), eq(EMPTY_TLS_SERVERS));
+                anyInt(), eq(EMPTY_STRING_ARRAY), any(), any(), eq(""), eq(EMPTY_STRING_ARRAY));
+        verifyNoMoreInteractions(mNetworkManagementService);
 
         final LinkProperties cellLp = new LinkProperties();
         cellLp.setInterfaceName(IFNAME);
@@ -3688,31 +3757,35 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         mCellNetworkAgent.connect(false);
         waitForIdle();
-        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
-                anyInt(), mStringArrayCaptor.capture(), any(), any(),
-                anyString(), eq(EMPTY_TLS_SERVERS));
         // CS tells netd about the empty DNS config for this network.
-        assertEmpty(mStringArrayCaptor.getValue());
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
+                anyInt(), eq(EMPTY_STRING_ARRAY), any(), any(), eq(""), eq(EMPTY_STRING_ARRAY));
         reset(mNetworkManagementService);
 
         cellLp.addDnsServer(InetAddress.getByName("2001:db8::1"));
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
-        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
                 anyInt(), mStringArrayCaptor.capture(), any(), any(),
-                anyString(), eq(EMPTY_TLS_SERVERS));
+                eq(""), tlsServers.capture());
         assertEquals(1, mStringArrayCaptor.getValue().length);
         assertTrue(ArrayUtils.contains(mStringArrayCaptor.getValue(), "2001:db8::1"));
+        // Opportunistic mode.
+        assertTrue(ArrayUtils.contains(tlsServers.getValue(), "2001:db8::1"));
         reset(mNetworkManagementService);
 
         cellLp.addDnsServer(InetAddress.getByName("192.0.2.1"));
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
-        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
                 anyInt(), mStringArrayCaptor.capture(), any(), any(),
-                anyString(), eq(EMPTY_TLS_SERVERS));
+                eq(""), tlsServers.capture());
         assertEquals(2, mStringArrayCaptor.getValue().length);
         assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        // Opportunistic mode.
+        assertEquals(2, tlsServers.getValue().length);
+        assertTrue(ArrayUtils.containsAll(tlsServers.getValue(),
                 new String[]{"2001:db8::1", "192.0.2.1"}));
         reset(mNetworkManagementService);
 
@@ -3726,13 +3799,105 @@ public class ConnectivityServiceTest {
                 mCellNetworkAgent.getNetwork().netId,
                 new DnsManager.PrivateDnsConfig(TLS_SPECIFIER, TLS_IPS)));
         waitForIdle();
-        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
                 anyInt(), mStringArrayCaptor.capture(), any(), any(),
                 eq(TLS_SPECIFIER), eq(TLS_SERVERS));
         assertEquals(2, mStringArrayCaptor.getValue().length);
         assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
                 new String[]{"2001:db8::1", "192.0.2.1"}));
         reset(mNetworkManagementService);
+    }
+
+    @Test
+    public void testPrivateDnsSettingsChange() throws Exception {
+        final String[] EMPTY_STRING_ARRAY = new String[0];
+        final String IFNAME = "test_rmnet_data0";
+        ArgumentCaptor<String[]> tlsServers = ArgumentCaptor.forClass(String[].class);
+
+        // Clear any interactions that occur as a result of CS starting up.
+        reset(mNetworkManagementService);
+
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
+        waitForIdle();
+        // CS tells netd about the empty DNS config for this network.
+        verify(mNetworkManagementService, never()).setDnsConfigurationForNetwork(
+                anyInt(), eq(EMPTY_STRING_ARRAY), any(), any(), eq(""), eq(EMPTY_STRING_ARRAY));
+        verifyNoMoreInteractions(mNetworkManagementService);
+
+        final LinkProperties cellLp = new LinkProperties();
+        cellLp.setInterfaceName(IFNAME);
+        // Add IPv4 and IPv6 default routes, because DNS-over-TLS code does
+        // "is-reachable" testing in order to not program netd with unreachable
+        // nameservers that it might try repeated to validate.
+        cellLp.addLinkAddress(new LinkAddress("192.0.2.4/24"));
+        cellLp.addRoute(new RouteInfo((IpPrefix) null, InetAddress.getByName("192.0.2.4"), IFNAME));
+        cellLp.addLinkAddress(new LinkAddress("2001:db8:1::1/64"));
+        cellLp.addRoute(
+                new RouteInfo((IpPrefix) null, InetAddress.getByName("2001:db8:1::1"), IFNAME));
+        cellLp.addDnsServer(InetAddress.getByName("2001:db8::1"));
+        cellLp.addDnsServer(InetAddress.getByName("192.0.2.1"));
+
+        mCellNetworkAgent.sendLinkProperties(cellLp);
+        mCellNetworkAgent.connect(false);
+        waitForIdle();
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                eq(""), tlsServers.capture());
+        assertEquals(2, mStringArrayCaptor.getValue().length);
+        assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        // Opportunistic mode.
+        assertEquals(2, tlsServers.getValue().length);
+        assertTrue(ArrayUtils.containsAll(tlsServers.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        reset(mNetworkManagementService);
+
+        setPrivateDnsSettings(PRIVATE_DNS_MODE_OFF, "ignored.example.com");
+        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                eq(""), eq(EMPTY_STRING_ARRAY));
+        assertEquals(2, mStringArrayCaptor.getValue().length);
+        assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        reset(mNetworkManagementService);
+
+        setPrivateDnsSettings(PRIVATE_DNS_MODE_OPPORTUNISTIC, "ignored.example.com");
+        verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                eq(""), tlsServers.capture());
+        assertEquals(2, mStringArrayCaptor.getValue().length);
+        assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        assertEquals(2, tlsServers.getValue().length);
+        assertTrue(ArrayUtils.containsAll(tlsServers.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        reset(mNetworkManagementService);
+
+/*
+        // XXX
+        final String STRICT_MODE_HOSTNAME = "strictmode.example.com";
+        final CannedNetworkIO networkIO =
+                mCellNetworkAgent.getWrappedNetworkMonitor().networkIO;
+        networkIO.addHost(STRICT_MODE_HOSTNAME, "2001:db8:2::250");
+        networkIO.addHost(STRICT_MODE_HOSTNAME, "192.0.2.250");
+
+        setPrivateDnsSettings(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME, STRICT_MODE_HOSTNAME);
+        verify(mNetworkManagementService, times(1)).setDnsConfigurationForNetwork(
+                anyInt(), mStringArrayCaptor.capture(), any(), any(),
+                eq(STRICT_MODE_HOSTNAME), eq(EMPTY_STRING_ARRAY));
+        assertEquals(2, mStringArrayCaptor.getValue().length);
+        assertTrue(ArrayUtils.containsAll(mStringArrayCaptor.getValue(),
+                new String[]{"2001:db8::1", "192.0.2.1"}));
+        reset(mNetworkManagementService);
+*/
+    }
+
+    private void setPrivateDnsSettings(String mode, String specifier) {
+        final ContentResolver cr = mServiceContext.getContentResolver();
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_MODE, mode);
+        Settings.Global.putString(cr, Settings.Global.PRIVATE_DNS_SPECIFIER, specifier);
+        mService.updatePrivateDnsSettings();
+        waitForIdle();
     }
 
     private void checkDirectlyConnectedRoutes(Object callbackObj,
