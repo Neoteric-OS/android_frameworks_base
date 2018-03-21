@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b7a3d1_294e8f6e",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-21T09:56:37Z",
+      "side": 1,
+      "message": "General question: if we annotate things as @NonNull, must we also throw NPE if the caller passes in null? Here we throw IAE, which I suppose is fine.",
+      "range": {
+        "startLine": 148,
+        "startChar": 13,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffd9bef_1a433342",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-21T09:56:37Z",
+      "side": 1,
+      "message": "Near as I can tell, passing in a null socket will cause this to throw IOException instead of NPE. Perhaps that\u0027s fine. But we might also want to Preconditions.checkNotNull(socket). Also elsewhere.",
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f26b66_4c108536",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-21T09:56:37Z",
+      "side": 1,
+      "message": "This isn\u0027t true, is it? Since we can return null at line 521?",
+      "range": {
+        "startLine": 519,
+        "startChar": 9,
+        "endLine": 519,
+        "endChar": 16
+      },
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
