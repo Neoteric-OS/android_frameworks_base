@@ -460,13 +460,22 @@ public class IpSecServiceParameterizedTest {
     }
 
     private IpSecTunnelInterfaceResponse createAndValidateTunnel(
-            String localAddr, String remoteAddr) {
+            String localAddr, String remoteAddr) throws Exception {
         IpSecTunnelInterfaceResponse createTunnelResp =
                 mIpSecService.createTunnelInterface(
                         mSourceAddr, mDestinationAddr, fakeNetwork, new Binder());
 
         assertNotNull(createTunnelResp);
         assertEquals(IpSecManager.Status.OK, createTunnelResp.status);
+        verify(mMockNetd).networkIsValid(eq(fakeNetwork.netId));
+        verify(mMockNetd)
+                .addVirtualTunnelInterface(
+                        eq(createTunnelResp.interfaceName),
+                        eq(mSourceAddr),
+                        eq(mDestinationAddr),
+                        anyInt(),
+                        anyInt());
+
         return createTunnelResp;
     }
 
@@ -483,13 +492,6 @@ public class IpSecServiceParameterizedTest {
                         createTunnelResp.resourceId);
 
         assertEquals(1, userRecord.mTunnelQuotaTracker.mCurrent);
-        verify(mMockNetd)
-                .addVirtualTunnelInterface(
-                        eq(createTunnelResp.interfaceName),
-                        eq(mSourceAddr),
-                        eq(mDestinationAddr),
-                        anyInt(),
-                        anyInt());
     }
 
     @Test
