@@ -174,6 +174,9 @@ public final class NetworkConstants {
      */
     public static final int DNS_SERVER_PORT = 53;
 
+    // Non-portable DNS resolution flag.
+    public static final long NETID_USE_LOCAL_NAMESERVERS = 0x80000000L;
+
     /**
      * Utility functions.
      */
