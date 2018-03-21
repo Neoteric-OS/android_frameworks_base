@@ -50,6 +50,7 @@ public class NetworkMonitorTest {
     @Mock Handler mHandler;
     @Mock IpConnectivityLog mLogger;
     @Mock NetworkAgentInfo mAgent;
+    @Mock NetworkMonitor.NetworkIO mNetworkIO;
     @Mock NetworkMonitor.NetworkMonitorSettings mSettings;
     @Mock NetworkRequest mRequest;
     @Mock TelephonyManager mTelephony;
@@ -65,7 +66,8 @@ public class NetworkMonitorTest {
     }
 
     NetworkMonitor makeMonitor() {
-        return new NetworkMonitor(mContext, mHandler, mAgent, mRequest, mLogger, mSettings);
+        return new NetworkMonitor(
+                mContext, mHandler, mAgent, mRequest, mLogger, mNetworkIO, mSettings);
     }
 
     @Test
