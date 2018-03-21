@@ -460,13 +460,25 @@ public class IpSecServiceParameterizedTest {
     }
 
     private IpSecTunnelInterfaceResponse createAndValidateTunnel(
-            String localAddr, String remoteAddr) {
+            String localAddr, String remoteAddr) throws Exception {
+        when(mMockNetd.networkIsValid(anyInt())).thenReturn(false);
+        when(mMockNetd.networkIsValid(eq(fakeNetwork.netId))).thenReturn(true);
+
         IpSecTunnelInterfaceResponse createTunnelResp =
                 mIpSecService.createTunnelInterface(
                         mSourceAddr, mDestinationAddr, fakeNetwork, new Binder());
 
         assertNotNull(createTunnelResp);
         assertEquals(IpSecManager.Status.OK, createTunnelResp.status);
+        verify(mMockNetd).networkIsValid(eq(fakeNetwork.netId));
+        verify(mMockNetd)
+                .addVirtualTunnelInterface(
+                        eq(createTunnelResp.interfaceName),
+                        eq(mSourceAddr),
+                        eq(mDestinationAddr),
+                        anyInt(),
+                        anyInt());
+
         return createTunnelResp;
     }
 
@@ -483,13 +495,17 @@ public class IpSecServiceParameterizedTest {
                         createTunnelResp.resourceId);
 
         assertEquals(1, userRecord.mTunnelQuotaTracker.mCurrent);
-        verify(mMockNetd)
-                .addVirtualTunnelInterface(
-                        eq(createTunnelResp.interfaceName),
-                        eq(mSourceAddr),
-                        eq(mDestinationAddr),
-                        anyInt(),
-                        anyInt());
+    }
+
+    @Test
+    public void testCreateTunnelInterfaceInvalidNetId() throws Exception {
+        try {
+            IpSecTunnelInterfaceResponse createTunnelResp =
+                mIpSecService.createTunnelInterface(
+                    mSourceAddr, mDestinationAddr, new Network(0xFF), new Binder());
+            fail("Expected exception for invalid netId");
+        } catch (Exception expected) {
+        }
     }
 
     @Test

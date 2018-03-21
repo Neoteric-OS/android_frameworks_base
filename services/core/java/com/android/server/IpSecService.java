@@ -1258,9 +1258,14 @@ public class IpSecService extends IIpSecService.Stub {
 
         try {
             // Calls to netd:
+            //       Check underlying network valid
             //       Create VTI
             //       Add inbound/outbound global policies
             //              (use reqid = 0)
+            if (!mSrvConfig.getNetdInstance().networkIsValid(underlyingNetwork.netId)) {
+                throw new IllegalArgumentException("Invalid underlying network provided");
+            }
+
             mSrvConfig
                     .getNetdInstance()
                     .addVirtualTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey);
