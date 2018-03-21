@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f8127a0_6c8623de",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-21T17:08:53Z",
+      "side": 1,
+      "message": "AIUI @NonNull is telling the caller that null isn\u0027t an acceptable value and nothing more; I don\u0027t believe it guarantees what will be thrown if it\u0027s invalid. It\u0027s purely cosmetic / used for IDEs to do static analysis.",
+      "parentUuid": "e0b7a3d1_294e8f6e",
+      "range": {
+        "startLine": 148,
+        "startChar": 13,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dffd9bef_1a433342",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2807b0ea_dee6531b",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-21T17:08:53Z",
+      "side": 1,
+      "message": "Same answer: the input mustn\u0027t be null... the corresponding exception is not part of the contract (AIUI).",
+      "parentUuid": "dffd9bef_1a433342",
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28f26b66_4c108536",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2018-03-21T09:56:37Z",
       "side": 1,
       "message": "This isn\u0027t true, is it? Since we can return null at line 521?",
+      "range": {
+        "startLine": 519,
+        "startChar": 9,
+        "endLine": 519,
+        "endChar": 16
+      },
+      "revId": "79e1a205de198b4489474fe3e656c5193f705fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a9fd1f_7df34a42",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-21T17:08:53Z",
+      "side": 1,
+      "message": "This is not. Good catch.",
+      "parentUuid": "28f26b66_4c108536",
       "range": {
         "startLine": 519,
         "startChar": 9,
