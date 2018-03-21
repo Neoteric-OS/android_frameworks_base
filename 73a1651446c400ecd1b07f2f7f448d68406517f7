@@ -22,6 +22,30 @@
       "revId": "73a1651446c400ecd1b07f2f7f448d68406517f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b075edd_81964422",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-21T00:02:20Z",
+      "side": 1,
+      "message": "Thanks for the helpful comment. I will upload a new patch in a different CL and adds you as a reviewer.",
+      "parentUuid": "dbb0de06_3d74ec19",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 648,
+        "endChar": 43
+      },
+      "revId": "73a1651446c400ecd1b07f2f7f448d68406517f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
