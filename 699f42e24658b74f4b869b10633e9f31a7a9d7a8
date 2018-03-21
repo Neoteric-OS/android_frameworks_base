@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3241cb_054f21df",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-03-21T15:55:59Z",
+      "side": 1,
+      "message": "code you deleted was acquiring  mBluetoothLock.readLock()\n\nDo you need to acquire it before calling updateBleAppCount() ?",
+      "range": {
+        "startLine": 648,
+        "startChar": 20,
+        "endLine": 648,
+        "endChar": 37
+      },
+      "revId": "699f42e24658b74f4b869b10633e9f31a7a9d7a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
