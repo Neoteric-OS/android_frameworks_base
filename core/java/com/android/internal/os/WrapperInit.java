@@ -115,6 +115,10 @@ public class WrapperInit {
         command.append(' ');
         command.append(appProcess);
 
+        // Generate bare minimum of debug information to be able to backtrace through JITed code.
+        // This only affects debuggable apps since the invoke-with wrapper is ignored otherwise.
+        command.append(" -Xcompiler-option --generate-mini-debug-info");
+
         command.append(" /system/bin --application");
         if (niceName != null) {
             command.append(" '--nice-name=").append(niceName).append("'");
