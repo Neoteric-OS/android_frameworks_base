@@ -22,6 +22,30 @@
       "revId": "699f42e24658b74f4b869b10633e9f31a7a9d7a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60d5129_a16b6075",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-03-21T17:41:05Z",
+      "side": 1,
+      "message": "I don\u0027t think acquiring mBluetoothLock.readLock() is necessary before calling updateBleAppCount. In updateBleAppCount(), it calls sendBrEdrDownCallback(), and then it acquires the same lock before calling mBluetooth.onBrEdrDown(). Effectively, both code paths are almost the same.",
+      "parentUuid": "0e3241cb_054f21df",
+      "range": {
+        "startLine": 648,
+        "startChar": 20,
+        "endLine": 648,
+        "endChar": 37
+      },
+      "revId": "699f42e24658b74f4b869b10633e9f31a7a9d7a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
