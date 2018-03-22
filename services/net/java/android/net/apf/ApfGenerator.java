@@ -58,7 +58,9 @@ public class ApfGenerator {
         JLT(18),   // Compare less than and branch, e.g. "jlt R0,5,label"
         JSET(19),  // Compare any bits set and branch, e.g. "jset R0,5,label"
         JNEBS(20), // Compare not equal byte sequence, e.g. "jnebs R0,5,label,0x1122334455"
-        EXT(21);   // Followed by immediate indicating ExtendedOpcodes.
+        EXT(21),   // Followed by immediate indicating ExtendedOpcodes.
+        LDDW(22),  // Load 4 bytes from data memory address (register + immediate): "lddw R0, [5]R1"
+        STDW(23);  // Store 4 bytes to data memory address (register + immediate): "stdw R0, [5]R1"
 
         final int value;
 
@@ -360,6 +362,7 @@ public class ApfGenerator {
     private final Instruction mDropLabel = new Instruction(Opcodes.LABEL);
     private final Instruction mPassLabel = new Instruction(Opcodes.LABEL);
     private boolean mGenerated;
+    private int mVersion;
 
     /**
      * Set version of APF instruction set to generate instructions for. Returns {@code true}
@@ -367,7 +370,8 @@ public class ApfGenerator {
      */
     public boolean setApfVersion(int version) {
         // This version number syncs up with APF_VERSION in hardware/google/apf/apf_interpreter.h
-        return version == 2;
+        mVersion = version;
+        return version >= 2;
     }
 
     private void addInstruction(Instruction instruction) {
@@ -814,6 +818,38 @@ public class ApfGenerator {
     public ApfGenerator addMove(Register register) {
         Instruction instruction = new Instruction(Opcodes.EXT, register);
         instruction.setUnsignedImm(ExtendedOpcodes.MOVE.value);
+        addInstruction(instruction);
+        return this;
+    }
+
+    /**
+     * Add an instruction to the end of the program to load 32 bits from the data memory into
+     * {@code register}. The source address is computed by adding @{code offset} to the other
+     * register.
+     */
+    public ApfGenerator addLoadData(Register destinationRegister, int offset)
+            throws IllegalInstructionException {
+        if (mVersion < 3) {
+            throw new IllegalInstructionException("Requires APF >= 3");
+        }
+        Instruction instruction = new Instruction(Opcodes.LDDW, destinationRegister);
+        instruction.setUnsignedImm(offset);
+        addInstruction(instruction);
+        return this;
+    }
+
+    /**
+     * Add an instruction to the end of the program to store 32 bits from {@code register} into the
+     * data memory. The destination address is computed by adding @{code offset} to the other
+     * register.
+     */
+    public ApfGenerator addStoreData(Register sourceRegister, int offset)
+            throws IllegalInstructionException {
+        if (mVersion < 3) {
+            throw new IllegalInstructionException("Requires APF >= 3");
+        }
+        Instruction instruction = new Instruction(Opcodes.STDW, sourceRegister);
+        instruction.setUnsignedImm(offset);
         addInstruction(instruction);
         return this;
     }
