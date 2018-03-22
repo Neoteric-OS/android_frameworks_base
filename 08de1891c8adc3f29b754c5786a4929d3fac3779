@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9965bd_f9b6006b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-03-22T21:10:10Z",
+      "side": 1,
+      "message": "since they\u0027re sorted, we could remove all the remaining files once this is true, but the extra code didn\u0027t seem justified.",
+      "range": {
+        "startLine": 5688,
+        "startChar": 27,
+        "endLine": 5688,
+        "endChar": 74
+      },
+      "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
