@@ -28,7 +28,6 @@ import static org.mockito.Mockito.verify;
 
 import android.net.LinkAddress;
 import android.net.LinkProperties;
-import android.net.NetworkUtils;
 import android.net.apf.ApfFilter.ApfConfiguration;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
@@ -40,22 +39,13 @@ import android.os.ConditionVariable;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.text.format.DateUtils;
-
 import com.android.frameworks.tests.net.R;
 import com.android.internal.util.HexDump;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -66,9 +56,14 @@ import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Random;
-
 import libcore.io.IoUtils;
 import libcore.io.Streams;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * Tests for APF program generator and interpreter.
@@ -128,11 +123,11 @@ public class ApfTest {
     }
 
     private void assertVerdict(int expected, byte[] program, byte[] packet, int filterAge) {
-        assertReturnCodesEqual(expected, apfSimulate(program, packet, filterAge));
+        assertReturnCodesEqual(expected, apfSimulate(program, packet, null, filterAge));
     }
 
     private void assertVerdict(int expected, byte[] program, byte[] packet) {
-        assertReturnCodesEqual(expected, apfSimulate(program, packet, 0));
+        assertReturnCodesEqual(expected, apfSimulate(program, packet, null, 0));
     }
 
     private void assertPass(byte[] program, byte[] packet, int filterAge) {
@@ -151,9 +146,24 @@ public class ApfTest {
         assertVerdict(DROP, program, packet);
     }
 
+  private void assertDataMemoryContents(
+          int expected, byte[] program, byte[] packet, byte[] data, byte[] expected_data)
+      throws IllegalInstructionException, Exception {
+        assertReturnCodesEqual(expected, apfSimulate(program, packet, data, 0 /* filterAge */));
+
+        // assertArrayEquals() would only print one byte, making debugging difficult.
+        if (!java.util.Arrays.equals(expected_data, data)) {
+            throw new Exception(
+                    "program: " + HexDump.toHexString(program) +
+                    "\ndata memory: " + HexDump.toHexString(data) +
+                    "\nexpected: " + HexDump.toHexString(expected_data));
+        }
+    }
+
     private void assertVerdict(int expected, ApfGenerator gen, byte[] packet, int filterAge)
             throws IllegalInstructionException {
-        assertReturnCodesEqual(expected, apfSimulate(gen.generate(), packet, filterAge));
+        assertReturnCodesEqual(expected, apfSimulate(gen.generate(), packet, null,
+              filterAge));
     }
 
     private void assertPass(ApfGenerator gen, byte[] packet, int filterAge)
@@ -583,6 +593,146 @@ public class ApfTest {
         gen.addLoadImmediate(Register.R0, 1);
         gen.addJumpIfBytesNotEqual(Register.R0, new byte[]{1,2,3,4,5}, gen.DROP_LABEL);
         assertPass(gen, packet12345, 0);
+    }
+
+    @Test
+    public void testApfGeneratorWantsV2OrGreater() throws IllegalInstructionException, Exception {
+        // The minimum supported APF version is 2.
+        assertFalse(new ApfGenerator().setApfVersion(1));
+
+        // Anything greater than V2 must be backwards-compatible, at least for now.
+        assertTrue(new ApfGenerator().setApfVersion(2));
+        assertTrue(new ApfGenerator().setApfVersion(3));
+    }
+
+    @Test
+    public void testApfDataOpcodesWantApfV3() throws IllegalInstructionException, Exception {
+        ApfGenerator gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(2));
+        try {
+            gen.addStoreData(Register.R0, 0);
+            fail();
+        } catch (IllegalInstructionException e) {
+            /* pass */
+        }
+        try {
+            gen.addLoadData(Register.R0, 0);
+            fail();
+        } catch (IllegalInstructionException e) {
+            /* pass */
+        }
+    }
+
+    @Test
+    public void testApfDataWrite() throws IllegalInstructionException, Exception {
+        byte[] packet = new byte[MIN_PKT_SIZE];
+        byte[] data = new byte[32];
+        byte[] expected_data = new byte[32];
+
+        // No memory access instructions: should leave the data segment to all zeros.
+        ApfGenerator gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        assertDataMemoryContents(PASS, gen.generate(), packet, data, expected_data);
+
+        // Expect value 0x87654321 to be stored starting from address 3 + 2, in big-endian order.
+        gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R0, 0x87654321);
+        gen.addLoadImmediate(Register.R1, 2);
+        gen.addStoreData(Register.R0, 3);
+        expected_data[5] = (byte)0x87;
+        expected_data[6] = (byte)0x65;
+        expected_data[7] = (byte)0x43;
+        expected_data[8] = (byte)0x21;
+        assertDataMemoryContents(PASS, gen.generate(), packet, data, expected_data);
+    }
+
+    @Test
+    public void testApfDataRead() throws IllegalInstructionException, Exception {
+        // Program that DROPs if address 11 (7 + 3) contains 0x87654321.
+        ApfGenerator gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R1, 3);
+        gen.addLoadData(Register.R0, 7);
+        gen.addJumpIfR0Equals(0x87654321, gen.DROP_LABEL);
+        byte[] program = gen.generate();
+        byte[] packet = new byte[MIN_PKT_SIZE];
+
+        // Content is incorrect (last byte does not match) -> PASS
+        byte[] data = new byte[32];
+        data[10] = (byte)0x87;
+        data[11] = (byte)0x65;
+        data[12] = (byte)0x43;
+        data[13] = (byte)0x00;  // != 0x21
+        byte[] expected_data = data.clone();
+        assertDataMemoryContents(PASS, program, packet, data, expected_data);
+
+        // Fix the last byte -> conditional jump taken -> DROP
+        data[13] = (byte)0x21;
+        expected_data = data;
+        assertDataMemoryContents(DROP, program, packet, data, expected_data);
+    }
+
+    @Test
+    public void testApfDataReadModifyWrite() throws IllegalInstructionException, Exception {
+        ApfGenerator gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R1, 3);
+        gen.addLoadData(Register.R0, 7);  // Load from address 7 + 3 = 10
+        gen.addAdd(0x78453412);  // 87654321 + 78453412 = FFAA7733
+        gen.addStoreData(Register.R0, 11);  // Write back to address 11 + 3 = 14
+
+        byte[] packet = new byte[MIN_PKT_SIZE];
+        byte[] data = new byte[32];
+        data[10] = (byte)0x87;
+        data[11] = (byte)0x65;
+        data[12] = (byte)0x43;
+        data[13] = (byte)0x21;
+        byte[] expected_data = data.clone();
+        expected_data[14] = (byte)0xFF;
+        expected_data[15] = (byte)0xAA;
+        expected_data[16] = (byte)0x77;
+        expected_data[17] = (byte)0x33;
+        assertDataMemoryContents(PASS, gen.generate(), packet, data, expected_data);
+    }
+
+    @Test
+    public void testApfDataBoundChecking() throws IllegalInstructionException, Exception {
+        byte[] packet = new byte[MIN_PKT_SIZE];
+        byte[] data = new byte[32];
+        byte[] expected_data = data;
+
+        // Program that DROPs unconditionally. This is our the baseline.
+        ApfGenerator gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R0, 3);
+        gen.addLoadData(Register.R1, 7);
+        gen.addJump(gen.DROP_LABEL);
+        assertDataMemoryContents(DROP, gen.generate(), packet, data, expected_data);
+
+        // Same program of before, but this time we're trying to load past the end of the data.
+        gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R0, 20);
+        gen.addLoadData(Register.R1, 15);  // 20 + 15 > 32
+        gen.addJump(gen.DROP_LABEL);  // Not reached.
+        assertDataMemoryContents(PASS, gen.generate(), packet, data, expected_data);
+
+        // Subtracting an immediate should work...
+        gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R0, 20);
+        gen.addLoadData(Register.R1, -4);
+        gen.addJump(gen.DROP_LABEL);
+        assertDataMemoryContents(DROP, gen.generate(), packet, data, expected_data);
+
+        // ...but underflowing isn't allowed.
+        gen = new ApfGenerator();
+        assertTrue(gen.setApfVersion(3));
+        gen.addLoadImmediate(Register.R0, 20);
+        gen.addLoadData(Register.R1, -30);
+        gen.addJump(gen.DROP_LABEL);  // Not reached.
+        assertDataMemoryContents(PASS, gen.generate(), packet, data, expected_data);
     }
 
     /**
@@ -1385,10 +1535,11 @@ public class ApfTest {
     }
 
     /**
-     * Call the APF interpreter the run {@code program} on {@code packet} pretending the
-     * filter was installed {@code filter_age} seconds ago.
+     * Call the APF interpreter to run {@code program} on {@code packet} with persistent memory
+     * segment {@data} pretending the filter was installed {@code filter_age} seconds ago.
      */
-    private native static int apfSimulate(byte[] program, byte[] packet, int filter_age);
+    private native static int apfSimulate(byte[] program, byte[] packet, byte[] data,
+        int filter_age);
 
     /**
      * Compile a tcpdump human-readable filter (e.g. "icmp" or "tcp port 54") into a BPF
