@@ -29,6 +29,7 @@ import android.util.ArrayMap;
 
 /**
  * See {@link com.android.server.trust.TrustManagerService}
+ *
  * @hide
  */
 @SystemService(Context.TRUST_SERVICE)
@@ -186,26 +187,28 @@ public class TrustManager {
     }
 
     /**
-     * Updates the trust state for the user due to the user unlocking via fingerprint.
-     * Should only be called if user authenticated via fingerprint and bouncer can be skipped.
+     * Updates the trust state for the user due to the user unlocking via a biometric sensor.
+     * Should only be called if user authenticated via fingerprint, face, or iris and bouncer
+     * can be skipped.
+     *
      * @param userId
      */
     @RequiresPermission(Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE)
-    public void unlockedByFingerprintForUser(int userId) {
+    public void unlockedByBiometricForUser(int userId, BiometricSourceType source) {
         try {
-            mService.unlockedByFingerprintForUser(userId);
+            mService.unlockedByBiometricForUser(userId, source);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
     }
 
     /**
-     * Clears authenticated fingerprints for all users.
+     * Clears authentication by the specified biometric type for all users.
      */
     @RequiresPermission(Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE)
-    public void clearAllFingerprints() {
+    public void clearAllBiometricRecognized(BiometricSourceType source) {
         try {
-            mService.clearAllFingerprints();
+            mService.clearAllBiometricRecognized(source);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
