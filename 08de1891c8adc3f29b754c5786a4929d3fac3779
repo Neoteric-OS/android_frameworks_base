@@ -22,6 +22,30 @@
       "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ed0d215_f0db70ae",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-23T16:13:13Z",
+      "side": 1,
+      "message": "Have you considered Streams? Something like this looks this much more \"concise\" and \"elegant:\"\n\n  List\u003cFiles\u003e removeFiles \u003d Arrays.toList(files);\n  removeFiles.removeAll(Arrays.stream(files)\n                              .sorted(Comparator.comparingLong(File::lastModified).reversed())\n                              .filter(now - files[i].lastModified() \u003c\u003d DAY_IN_MILLIS)\n                              .limit(max)\n                              .collect(toList()));\n  removeFiles.forEach((File f) -\u003e {\n                          if (!files[i].delete()) {\n                              Slog.w(TAG, \"Unable to prune stale trace file: \" + files[i]);\n                          }\n                      });",
+      "parentUuid": "5a9965bd_f9b6006b",
+      "range": {
+        "startLine": 5688,
+        "startChar": 27,
+        "endLine": 5688,
+        "endChar": 74
+      },
+      "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
