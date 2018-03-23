@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff302ecc_94623e15",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T00:57:23Z",
+      "side": 1,
+      "message": "2018 Apache license?",
+      "range": {
+        "startLine": 1,
+        "startChar": 49,
+        "endLine": 1,
+        "endChar": 50
+      },
+      "revId": "95f76e34a4458fd02761643a3068de43e2ad0faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1d4128_0e98a174",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T00:57:23Z",
+      "side": 1,
+      "message": "I don\u0027t think 2 levels of 8-space indentation improve readability, given that this is just a giant list of things that all have to be true.",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "95f76e34a4458fd02761643a3068de43e2ad0faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a95b4b_ac1e3882",
+        "filename": "services/net/java/android/net/util/InterfaceSet.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T00:57:23Z",
+      "side": 1,
+      "message": "Why does this work?",
+      "range": {
+        "startLine": 56,
+        "startChar": 55,
+        "endLine": 56,
+        "endChar": 74
+      },
+      "revId": "95f76e34a4458fd02761643a3068de43e2ad0faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915dcac8_417e2702",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T00:57:23Z",
+      "side": 1,
+      "message": "192?",
+      "range": {
+        "startLine": 249,
+        "startChar": 55,
+        "endLine": 249,
+        "endChar": 57
+      },
+      "revId": "95f76e34a4458fd02761643a3068de43e2ad0faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
