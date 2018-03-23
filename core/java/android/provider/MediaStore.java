@@ -1457,8 +1457,14 @@ public final class MediaStore {
             }
 
             public static Uri getContentUriForPath(String path) {
-                return (path.startsWith(Environment.getExternalStorageDirectory().getPath()) ?
-                        EXTERNAL_CONTENT_URI : INTERNAL_CONTENT_URI);
+                // check internal storages
+                if (path.startsWith(Environment.getRootDirectory())
+                        || path.startsWith(Environment.getOemDirectory())
+                        || path.startsWith(Environment.getProductDirectory())
+                        || path.startsWith(Environment.getDataDirectory() + "/user")) {
+                    return INTERNAL_CONTENT_URI;
+                }
+                return EXTERNAL_CONTENT_URI;
             }
 
             /**
