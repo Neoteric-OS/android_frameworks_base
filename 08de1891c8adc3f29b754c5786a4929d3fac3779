@@ -46,6 +46,30 @@
       "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de86ea0e_39112e34",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-03-23T16:43:13Z",
+      "side": 1,
+      "message": "dude, i don\u0027t even know what Java programmers call File::lastModified (i\u0027m assuming not \"member function pointer\").\n\nthe idea here was just to do the minimum right now because the _right_ thing to do is what all the TODOs say: let tombstoned handle this like it already does for all tombstones and (some?) ANRs.\n\n(i\u0027m not sure how much of that work to do versus leaving it for narayan\u0027s new guy.)",
+      "parentUuid": "9ed0d215_f0db70ae",
+      "range": {
+        "startLine": 5688,
+        "startChar": 27,
+        "endLine": 5688,
+        "endChar": 74
+      },
+      "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
