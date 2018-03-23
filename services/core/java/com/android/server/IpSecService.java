@@ -62,6 +62,7 @@ import com.android.internal.util.Preconditions;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -1461,6 +1462,15 @@ public class IpSecService extends IIpSecService.Stub {
 
         // Require a valid source address for all transforms.
         checkInetAddress(config.getSourceAddress());
+
+        // Check to ensure UDP Encapsulation is not used in IPv6.
+        if (config.getEncapType() != IpSecTransform.ENCAP_NONE
+                && (NetworkUtils.numericToInetAddress(config.getDestinationAddress())
+                                instanceof Inet6Address
+                        || NetworkUtils.numericToInetAddress(config.getSourceAddress())
+                                instanceof Inet6Address)) {
+            throw new IllegalArgumentException("IPv6 does not support UDP Encapsulation.");
+        }
 
         switch (config.getMode()) {
             case IpSecTransform.MODE_TRANSPORT:
