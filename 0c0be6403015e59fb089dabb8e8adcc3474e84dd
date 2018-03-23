@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53e4303d_5ff3bb3d",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T04:04:47Z",
+      "side": 1,
+      "message": "We also need a test for the opposite order of events.\n\nWhen switching upstreams to a 464xlat mobile network we\u0027ll get IPv6 connectivity first, and IPv4 connectivity will arrive a bit later after DNS64 completes.",
+      "range": {
+        "startLine": 576,
+        "startChar": 69,
+        "endLine": 576,
+        "endChar": 70
+      },
+      "revId": "0c0be6403015e59fb089dabb8e8adcc3474e84dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
