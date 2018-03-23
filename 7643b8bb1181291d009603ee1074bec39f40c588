@@ -22,6 +22,30 @@
       "revId": "7643b8bb1181291d009603ee1074bec39f40c588",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "560f3e36_9c8af529",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-23T06:50:57Z",
+      "side": 1,
+      "message": "Done\n\nIt took a non-trivial amount of time for me to figure out which 1 of the 17,000 handlers the \"resolved\" messages are sent to, but I got there in the end.  \u003d)",
+      "parentUuid": "c716c602_59bdb5ca",
+      "range": {
+        "startLine": 3679,
+        "startChar": 8,
+        "endLine": 3679,
+        "endChar": 14
+      },
+      "revId": "7643b8bb1181291d009603ee1074bec39f40c588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
