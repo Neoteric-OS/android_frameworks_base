@@ -70,6 +70,30 @@
       "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b454b3d_68bd9910",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-23T16:45:21Z",
+      "side": 1,
+      "message": "I assume the quotes around concise and elegant didn\u0027t make the joke clear...",
+      "parentUuid": "de86ea0e_39112e34",
+      "range": {
+        "startLine": 5688,
+        "startChar": 27,
+        "endLine": 5688,
+        "endChar": 74
+      },
+      "revId": "08de1891c8adc3f29b754c5786a4929d3fac3779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
