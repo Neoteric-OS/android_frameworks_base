@@ -22,6 +22,30 @@
       "revId": "0c0be6403015e59fb089dabb8e8adcc3474e84dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46e831f_f3cabdf4",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-23T10:27:31Z",
+      "side": 1,
+      "message": "Added test, and it was indeed not working. I changed handleUpstreamNetworkMonitorCallback to call chooseUpstreamType() on EVENT_ON_LINKPROPERTIES (we had discussed modifying this code path before - shame on me for forgetting that !)\nOn Tetsudobashi this worked fine since we don\u0027t do IPv6 tethering on Wifi, but this would be necessary for 464xlat on mobile - which I had tested via some hack, but maybe too hacky to be realistic.\nLet me know if you think the chooseUpstreamType() in handleUpstreamNetworkMonitorCallback is not reasonable. Eventually removing the CONNECTIVITY_ACTION code would allow cleaner handling.",
+      "parentUuid": "53e4303d_5ff3bb3d",
+      "range": {
+        "startLine": 576,
+        "startChar": 69,
+        "endLine": 576,
+        "endChar": 70
+      },
+      "revId": "0c0be6403015e59fb089dabb8e8adcc3474e84dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
