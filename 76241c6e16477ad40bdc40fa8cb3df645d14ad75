@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f291f9c_cc07e5f9",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-25T12:02:52Z",
+      "side": 1,
+      "message": "All the the existing LDxx opcodes deal with packets, not data memory.\n\nThere are also extended opcodes to read and write a \"memory\" which is actually a volatile register file.",
+      "parentUuid": "7f8bc3f3_e1812e7b",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "76241c6e16477ad40bdc40fa8cb3df645d14ad75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4124a7b4_6e7f92d9",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 2
