@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f9e6bd9_fd0f1288",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-26T02:42:24Z",
+      "side": 1,
+      "message": "I actually changed it from \"tgt\" as Jean was unsure about it in a previous comment: changed to \"target\" to be shorter but still clear.",
+      "parentUuid": "b6c577d4_d2439065",
+      "range": {
+        "startLine": 42,
+        "startChar": 86,
+        "endLine": 42,
+        "endChar": 99
+      },
+      "revId": "e5c2ea2acc44d9525756dc18beb8eec42ffbe188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d4fc39_13ed31a1",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e5c2ea2acc44d9525756dc18beb8eec42ffbe188",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca97c65_8734b3d0",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-26T02:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d4fc39_13ed31a1",
+      "range": {
+        "startLine": 221,
+        "startChar": 55,
+        "endLine": 221,
+        "endChar": 56
+      },
+      "revId": "e5c2ea2acc44d9525756dc18beb8eec42ffbe188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
