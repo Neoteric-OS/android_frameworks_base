@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "95456462_fee006b8",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9b47da_e3e8e59e",
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a723d2_75dbb62a",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 5
@@ -62,6 +80,30 @@
       "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6879f26_8bca2f2a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1906,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a723d2_75dbb62a",
+      "range": {
+        "startLine": 1906,
+        "startChar": 37,
+        "endLine": 1906,
+        "endChar": 46
+      },
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "b2b37ed6_96ff4e31",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:17:41Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. This is a mistake, we\u0027ll remove this line.",
+      "parentUuid": "43301cd2_a47a621d",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5379179_33538687",
         "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
         "patchSetId": 5
@@ -102,6 +168,24 @@
       "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016eed32_80bb9f13",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5379179_33538687",
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +209,30 @@
       "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4068292_40d1d965",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8aa832f_41fc4790",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
