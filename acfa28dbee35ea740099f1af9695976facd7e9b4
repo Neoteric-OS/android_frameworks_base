@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cb1cfd6_6e89b2f2",
+        "filename": "core/java/android/hardware/hdmi/HdmiTvClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-03-27T07:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af50ae05_f51a45bb",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 6
+      },
+      "revId": "acfa28dbee35ea740099f1af9695976facd7e9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9b47da_e3e8e59e",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 5
