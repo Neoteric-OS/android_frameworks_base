@@ -266,6 +266,9 @@ public final class AudioFormat implements Parcelable {
     /** Audio data format: DOLBY TRUEHD compressed
      **/
     public static final int ENCODING_DOLBY_TRUEHD = 14;
+    /** Audio data format: AC4 compressed
+     **/
+    public static final int ENCODING_AC4 = 15;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
@@ -514,6 +517,7 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_AAC_HE_V1:
         case ENCODING_AAC_HE_V2:
         case ENCODING_IEC61937:
+        case ENCODING_AC4:
             return true;
         default:
             return false;
@@ -532,6 +536,7 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
         case ENCODING_IEC61937:
+        case ENCODING_AC4:
             return true;
         default:
             return false;
@@ -556,6 +561,7 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_AAC_HE_V1:
         case ENCODING_AAC_HE_V2:
         case ENCODING_IEC61937: // wrapped in PCM but compressed
+        case ENCODING_AC4:
             return false;
         case ENCODING_INVALID:
         default:
@@ -581,6 +587,7 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_AAC_LC:
         case ENCODING_AAC_HE_V1:
         case ENCODING_AAC_HE_V2:
+        case ENCODING_AC4:
             return false;
         case ENCODING_INVALID:
         default:
@@ -801,7 +808,8 @@ public final class AudioFormat implements Parcelable {
          *     {@link AudioFormat#ENCODING_AC3},
          *     {@link AudioFormat#ENCODING_E_AC3}.
          *     {@link AudioFormat#ENCODING_DTS},
-         *     {@link AudioFormat#ENCODING_DTS_HD}.
+         *     {@link AudioFormat#ENCODING_DTS_HD},
+         *     {@link AudioFormat#ENCODING_AC4}.
          * @return the same Builder instance.
          * @throws java.lang.IllegalArgumentException
          */
@@ -818,6 +826,7 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_DTS:
                 case ENCODING_DTS_HD:
                 case ENCODING_IEC61937:
+                case ENCODING_AC4:
                     mEncoding = encoding;
                     break;
                 case ENCODING_INVALID:
@@ -1025,7 +1034,8 @@ public final class AudioFormat implements Parcelable {
         ENCODING_E_AC3,
         ENCODING_DTS,
         ENCODING_DTS_HD,
-        ENCODING_IEC61937
+        ENCODING_IEC61937,
+        ENCODING_AC4
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface Encoding {}
