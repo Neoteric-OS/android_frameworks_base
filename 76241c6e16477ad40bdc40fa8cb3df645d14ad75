@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "92830a12_5f272323",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "I see. Maybe you want to take the occasion to amend the comments of those instructions too to clarify the distinction with your new ones.",
+      "parentUuid": "7f291f9c_cc07e5f9",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "76241c6e16477ad40bdc40fa8cb3df645d14ad75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4124a7b4_6e7f92d9",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Now the new opcodes are only enabled when the apf version is \u003e\u003d 3, so I\u0027d rather keep the tests separate.",
       "parentUuid": "6ecbbf0b_d816e79b",
+      "range": {
+        "startLine": 507,
+        "startChar": 23,
+        "endLine": 508,
+        "endChar": 0
+      },
+      "revId": "76241c6e16477ad40bdc40fa8cb3df645d14ad75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9159c033_ceea4d15",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Fair enough, thanks.",
+      "parentUuid": "7db577c8_ebcc415c",
       "range": {
         "startLine": 507,
         "startChar": 23,

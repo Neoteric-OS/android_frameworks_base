@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a0c505d_6fbecbee",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "I don\u0027t think that generating bytecode with mixed versions is something we will never want to do, and given that this should be final.\n\nIn fact I expect we\u0027ll even never want to generate bytecode for two different APF versions in the same environment because the hardware supports a specific given version... But if I\u0027m wrong about that and we do, it sounds like having two generator objects would be much cleaner, so even in this case final is better.\n\nIs mixed bytecode your intended use case ?",
+      "range": {
+        "startLine": 365,
+        "startChar": 16,
+        "endLine": 365,
+        "endChar": 24
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10da869a_fc014bfa",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what a caller is supposed to do if this method returns false and now is probably a good time to clean this up. We typically don\u0027t have any need for backward compatibility of API in services/, is this case different and if it is how strong is that need ?",
+      "range": {
+        "startLine": 368,
+        "startChar": 72,
+        "endLine": 369,
+        "endChar": 76
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3000d6_016d0d91",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70f28b0_0b360b4a",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "In Android land we use 8 spaces for this continuation indent (I was surprised to find out we do things like you did here when it\u0027s C++)",
+      "range": {
+        "startLine": 151,
+        "startChar": 42,
+        "endLine": 151,
+        "endChar": 46
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a35524_4df646ef",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Most local style seems to use :\n0 /* filterAge */",
+      "range": {
+        "startLine": 153,
+        "startChar": 78,
+        "endLine": 153,
+        "endChar": 87
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf076e4_d13f67aa",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Note on my comment from the other file : this test would then build two different ApfGenerator instances, one to test it fails, and one to test it succeeds",
+      "range": {
+        "startLine": 602,
+        "startChar": 23,
+        "endLine": 602,
+        "endChar": 36
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4813cbef_b5541cee",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Maybe \"last byte doesn\u0027t match\" ? WDYT ?",
+      "range": {
+        "startLine": 652,
+        "startChar": 43,
+        "endLine": 652,
+        "endChar": 51
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b692eb57_9f365328",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:15:39Z",
+      "side": 1,
+      "message": "Comment unclear ; you have already a comment in l.652 explaining this so I suggest just removing it, but clarifying it if you feel it\u0027s useful is fine too",
+      "range": {
+        "startLine": 657,
+        "startChar": 35,
+        "endLine": 657,
+        "endChar": 39
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
