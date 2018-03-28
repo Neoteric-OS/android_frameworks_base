@@ -112,6 +112,7 @@ public final class IpSecAlgorithm implements Parcelable {
         AUTH_HMAC_MD5,
         AUTH_HMAC_SHA1,
         AUTH_HMAC_SHA256,
+        AUTH_HMAC_SHA384,
         AUTH_HMAC_SHA512,
         AUTH_CRYPT_AES_GCM
     })
@@ -126,11 +127,14 @@ public final class IpSecAlgorithm implements Parcelable {
      * Creates an IpSecAlgorithm of one of the supported types. Supported algorithm names are
      * defined as constants in this class.
      *
+     * <p>This constructor only supports algorithms that do NOT use a truncation length. i.e.
+     * Encryption algorithms.
+     *
      * @param algorithm name of the algorithm.
      * @param key key padded to a multiple of 8 bits.
      */
     public IpSecAlgorithm(@NonNull @AlgorithmName String algorithm, @NonNull byte[] key) {
-        this(algorithm, key, key.length * 8);
+        this(algorithm, key, 0);
     }
 
     /**
@@ -228,6 +232,7 @@ public final class IpSecAlgorithm implements Parcelable {
             case AUTH_CRYPT_AES_GCM:
                 // The keying material for GCM is a key plus a 32-bit salt
                 isValidLen = keyLen == 128 + 32 || keyLen == 192 + 32 || keyLen == 256 + 32;
+                isValidTruncLen = truncLen == 64 || truncLen == 96 || truncLen == 128;
                 break;
             default:
                 throw new IllegalArgumentException("Couldn't find an algorithm: " + name);
