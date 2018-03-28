@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
+import android.content.Context;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkUtils;
@@ -82,6 +83,7 @@ public class ApfTest {
     private static final int TIMEOUT_MS = 500;
 
     @Mock IpConnectivityLog mLog;
+    @Mock Context mContext;
 
     @Before
     public void setUp() throws Exception {
@@ -633,9 +635,9 @@ public class ApfTest {
         private FileDescriptor mWriteSocket;
         private final long mFixedTimeMs = SystemClock.elapsedRealtime();
 
-        public TestApfFilter(ApfConfiguration config, IpManager.Callback ipManagerCallback,
-                IpConnectivityLog log) throws Exception {
-            super(config, InterfaceParams.getByName("lo"), ipManagerCallback, log);
+        public TestApfFilter(Context context, ApfConfiguration config,
+                IpManager.Callback ipManagerCallback, IpConnectivityLog log) throws Exception {
+            super(context, config, InterfaceParams.getByName("lo"), ipManagerCallback, log);
         }
 
         // Pretend an RA packet has been received and show it to ApfFilter.
@@ -766,7 +768,7 @@ public class ApfTest {
 
         ApfConfiguration config = getDefaultConfig();
         config.multicastFilter = DROP_MULTICAST;
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
 
         byte[] program = ipManagerCallback.getApfProgram();
@@ -818,7 +820,7 @@ public class ApfTest {
     public void testApfFilterIPv6() throws Exception {
         MockIpManagerCallback ipManagerCallback = new MockIpManagerCallback();
         ApfConfiguration config = getDefaultConfig();
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         byte[] program = ipManagerCallback.getApfProgram();
 
         // Verify empty IPv6 packet is passed
@@ -861,7 +863,7 @@ public class ApfTest {
 
         ApfConfiguration config = getDefaultConfig();
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
 
         byte[] program = ipManagerCallback.getApfProgram();
@@ -925,7 +927,7 @@ public class ApfTest {
         apfFilter.shutdown();
         config.multicastFilter = DROP_MULTICAST;
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
         program = ipManagerCallback.getApfProgram();
         assertDrop(program, mcastv4packet.array());
@@ -948,7 +950,7 @@ public class ApfTest {
         lp.addLinkAddress(link);
 
         ApfConfiguration config = getDefaultConfig();
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
 
         byte[] program = ipManagerCallback.getApfProgram();
@@ -970,7 +972,7 @@ public class ApfTest {
         ipManagerCallback.resetApfProgramWait();
         apfFilter.shutdown();
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
         program = ipManagerCallback.getApfProgram();
 
@@ -1001,7 +1003,7 @@ public class ApfTest {
         final int[] ipv4Ipv6BlackList = {ETH_P_IP, ETH_P_IPV6};
 
         ApfConfiguration config = getDefaultConfig();
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
 
         byte[] program = ipManagerCallback.getApfProgram();
@@ -1023,7 +1025,7 @@ public class ApfTest {
         ipManagerCallback.resetApfProgramWait();
         apfFilter.shutdown();
         config.ethTypeBlackList = ipv4BlackList;
-        apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
         program = ipManagerCallback.getApfProgram();
 
@@ -1039,7 +1041,7 @@ public class ApfTest {
         ipManagerCallback.resetApfProgramWait();
         apfFilter.shutdown();
         config.ethTypeBlackList = ipv4Ipv6BlackList;
-        apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         apfFilter.setLinkProperties(lp);
         program = ipManagerCallback.getApfProgram();
 
@@ -1081,7 +1083,7 @@ public class ApfTest {
         ApfConfiguration config = getDefaultConfig();
         config.multicastFilter = DROP_MULTICAST;
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
 
         // Verify initially ARP request filter is off, and GARP filter is on.
         verifyArpFilter(ipManagerCallback.getApfProgram(), PASS);
@@ -1205,7 +1207,7 @@ public class ApfTest {
         ApfConfiguration config = getDefaultConfig();
         config.multicastFilter = DROP_MULTICAST;
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        TestApfFilter apfFilter = new TestApfFilter(config, ipManagerCallback, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipManagerCallback, mLog);
         byte[] program = ipManagerCallback.getApfProgram();
 
         final int ROUTER_LIFETIME = 1000;
@@ -1351,7 +1353,7 @@ public class ApfTest {
         ApfConfiguration config = getDefaultConfig();
         config.multicastFilter = DROP_MULTICAST;
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        TestApfFilter apfFilter = new TestApfFilter(config, cb, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, cb, mLog);
         for (int i = 0; i < 1000; i++) {
             byte[] packet = new byte[r.nextInt(maxRandomPacketSize + 1)];
             r.nextBytes(packet);
@@ -1372,7 +1374,7 @@ public class ApfTest {
         ApfConfiguration config = getDefaultConfig();
         config.multicastFilter = DROP_MULTICAST;
         config.ieee802_3Filter = DROP_802_3_FRAMES;
-        TestApfFilter apfFilter = new TestApfFilter(config, cb, mLog);
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, cb, mLog);
         for (int i = 0; i < 1000; i++) {
             byte[] packet = new byte[r.nextInt(maxRandomPacketSize + 1)];
             r.nextBytes(packet);
