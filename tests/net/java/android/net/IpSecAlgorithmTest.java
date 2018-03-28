@@ -40,19 +40,25 @@ public class IpSecAlgorithmTest {
     };
 
     @Test
-    public void testDefaultTruncLen() throws Exception {
-        IpSecAlgorithm explicit =
-                new IpSecAlgorithm(
-                        IpSecAlgorithm.AUTH_HMAC_SHA256, Arrays.copyOf(KEY_MATERIAL, 256 / 8), 256);
-        IpSecAlgorithm implicit =
-                new IpSecAlgorithm(
-                        IpSecAlgorithm.AUTH_HMAC_SHA256, Arrays.copyOf(KEY_MATERIAL, 256 / 8));
-        assertTrue(
-                "Default Truncation Length Incorrect, Explicit: "
-                        + explicit
-                        + "implicit: "
-                        + implicit,
-                IpSecAlgorithm.equals(explicit, implicit));
+    public void testDefaultTruncLenAuth() throws Exception {
+        try{
+            IpSecAlgorithm implicit =
+                    new IpSecAlgorithm(
+                            IpSecAlgorithm.AUTH_HMAC_SHA256, Arrays.copyOf(KEY_MATERIAL, 256 / 8));
+            fail("Expected exception on unprovided auth trunclen");
+        } catch (IllegalArgumentException expected){
+        }
+    }
+
+    @Test
+    public void testDefaultTruncLenAead() throws Exception {
+        try{
+            IpSecAlgorithm implicit =
+                    new IpSecAlgorithm(
+                            IpSecAlgorithm.AUTH_CRYPT_AES_GCM, Arrays.copyOf(KEY_MATERIAL, 288 / 8));
+            fail("Expected exception on unprovided aead trunclen");
+        } catch (IllegalArgumentException expected){
+        }
     }
 
     @Test
