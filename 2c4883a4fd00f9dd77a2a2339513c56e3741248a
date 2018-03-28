@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eec45ced_9b569145",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-28T06:20:36Z",
+      "side": 1,
+      "message": "Of course I meant \"I don\u0027t think [...] mixed versions is something we will ever want to do\", sorry for the confusion",
+      "parentUuid": "4a0c505d_6fbecbee",
+      "range": {
+        "startLine": 365,
+        "startChar": 16,
+        "endLine": 365,
+        "endChar": 24
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10da869a_fc014bfa",
         "filename": "services/net/java/android/net/apf/ApfGenerator.java",
         "patchSetId": 7
