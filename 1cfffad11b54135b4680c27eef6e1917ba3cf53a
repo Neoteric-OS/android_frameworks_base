@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d42be679_0ea0e3d8",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-29T02:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151fc8a4_35efeb74",
+      "range": {
+        "startLine": 632,
+        "startChar": 83,
+        "endLine": 632,
+        "endChar": 84
+      },
+      "revId": "1cfffad11b54135b4680c27eef6e1917ba3cf53a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "561910e3_d3f68bcf",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "1cfffad11b54135b4680c27eef6e1917ba3cf53a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efd80cb_f56f2435",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-29T02:15:03Z",
+      "side": 1,
+      "message": "These should be run after runUsbTethering (as checked in other tests), but I put these verify() here to check that forwarding was only added once in total for v6 (so not re-added when LinkProperties changed).\nI copied the 2 checks below runUsbTethering and modified comments to make it more clear that it should have been called at that point, but we\u0027re checking that it was not called again.",
+      "parentUuid": "561910e3_d3f68bcf",
+      "range": {
+        "startLine": 633,
+        "startChar": 98,
+        "endLine": 633,
+        "endChar": 99
+      },
+      "revId": "1cfffad11b54135b4680c27eef6e1917ba3cf53a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
