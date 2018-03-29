@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a528b8_477b1e44",
+        "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2018-03-29T23:47:11Z",
+      "side": 1,
+      "message": "Nit: there should be a period at the end - this is multi-sentence description.",
+      "range": {
+        "startLine": 431,
+        "startChar": 56,
+        "endLine": 431,
+        "endChar": 83
+      },
+      "revId": "d232210ea8e3086498c781ccca92c51784930654",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
