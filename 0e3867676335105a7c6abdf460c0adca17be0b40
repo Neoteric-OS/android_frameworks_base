@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88a8bb8d_541629b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2018-03-29T23:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7548b89d_533e23f2",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "0e3867676335105a7c6abdf460c0adca17be0b40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce4a326_8b000f84",
         "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e7552d9f_97a9fa01",
+        "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2018-03-29T23:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ce4a326_8b000f84",
+      "range": {
+        "startLine": 424,
+        "startChar": 7,
+        "endLine": 424,
+        "endChar": 48
+      },
+      "revId": "0e3867676335105a7c6abdf460c0adca17be0b40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d2cc08f_6444719d",
         "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "0e3867676335105a7c6abdf460c0adca17be0b40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad9cd51_ef7e70c6",
+        "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2018-03-29T23:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d2cc08f_6444719d",
+      "range": {
+        "startLine": 431,
+        "startChar": 56,
+        "endLine": 432,
+        "endChar": 29
+      },
+      "revId": "0e3867676335105a7c6abdf460c0adca17be0b40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
