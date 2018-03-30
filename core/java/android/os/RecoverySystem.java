@@ -32,6 +32,7 @@ import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.telephony.euicc.EuiccManager;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -52,6 +53,7 @@ import java.security.SignatureException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Locale;
@@ -133,6 +135,8 @@ public class RecoverySystem {
     private static final Object sRequestLock = new Object();
 
     private final IRecoverySystem mService;
+
+    private static final String WIPE_DATA_TIME_FORMAT = "yyyy/MM/dd, E, kk:mm:ss";
 
     /**
      * Interface definition for a callback to be invoked regularly as
@@ -762,7 +766,9 @@ public class RecoverySystem {
 
         String reasonArg = null;
         if (!TextUtils.isEmpty(reason)) {
-            reasonArg = "--reason=" + sanitizeArg(reason);
+            Calendar calendar = Calendar.getInstance();
+            String timeStamp = DateFormat.format(WIPE_DATA_TIME_FORMAT, calendar).toString();
+            reasonArg = "--reason=" + sanitizeArg(reason + "," + timeStamp);
         }
 
         final String localeArg = "--locale=" + Locale.getDefault().toLanguageTag() ;
