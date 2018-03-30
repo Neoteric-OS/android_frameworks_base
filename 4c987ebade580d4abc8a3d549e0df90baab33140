@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c347cdb2_0307850a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-30T04:35:18Z",
+      "side": 1,
+      "message": "Looks like this is unused/unnecessary.",
+      "revId": "4c987ebade580d4abc8a3d549e0df90baab33140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
