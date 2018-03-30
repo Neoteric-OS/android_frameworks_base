@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c37568e2_be612b3e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-03-30T03:33:15Z",
+      "side": 1,
+      "message": "Nit: Perhaps \"local/internal use only\" would be more descriptive? In the context of tests, we use the term \"local\" a decent amount, referring to InetAddress(es), and that would be my first thought",
+      "range": {
+        "startLine": 1068,
+        "startChar": 36,
+        "endLine": 1068,
+        "endChar": 41
+      },
+      "revId": "7f606ee8e57d9d8b7c5d0cb2a78421aa02efb385",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94371d31_d0f5518f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-03-30T03:33:15Z",
+      "side": 1,
+      "message": "Nit: I feel that \"(requestedSpi \u003e\u003d 1 \u0026\u0026 requestedSpi \u003c\u003d 255)\" would be a little clearer?",
+      "range": {
+        "startLine": 1069,
+        "startChar": 12,
+        "endLine": 1069,
+        "endChar": 50
+      },
+      "revId": "7f606ee8e57d9d8b7c5d0cb2a78421aa02efb385",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
