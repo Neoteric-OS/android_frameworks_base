@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7222f40d_534d0d14",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-30T13:11:09Z",
+      "side": 1,
+      "message": "I know this is just moving code, but while you\u0027re here, how about making that a ConditionVariable or CountDownLatch or even Semaphore",
+      "range": {
+        "startLine": 159,
+        "startChar": 20,
+        "endLine": 159,
+        "endChar": 24
+      },
+      "revId": "88cbe86fe3ca5b51a6c22f701903138b0c52a22f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
