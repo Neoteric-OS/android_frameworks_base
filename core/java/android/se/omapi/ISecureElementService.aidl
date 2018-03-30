@@ -47,4 +47,10 @@ interface ISecureElementService {
     boolean[] isNFCEventAllowed(String reader, in byte[] aid,
             in String[] packageNames);
 
+    /**
+     * Checks if the application defined by package name is allowed to
+     * routing off host for the defined AID.
+     */
+    boolean[] isOffhostAidRouteAllowed(String reader, in byte[] aid,
+            in String[] packageNames, int aidSupport);
 }
