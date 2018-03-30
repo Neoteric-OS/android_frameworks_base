@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b39d109b_1f0192c5",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:20:02Z",
+      "side": 1,
+      "message": "\u003e Is mixed bytecode your intended use case ?\n\nNo, we just need to remember which interpreter version the firmware advertised, so we know whether we can emit the code to count packets (which will come in followup patches).",
+      "parentUuid": "eec45ced_9b569145",
+      "range": {
+        "startLine": 365,
+        "startChar": 16,
+        "endLine": 365,
+        "endChar": 24
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10da869a_fc014bfa",
         "filename": "services/net/java/android/net/apf/ApfGenerator.java",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b94efa5_9ccd0c77",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:20:02Z",
+      "side": 1,
+      "message": "Yes, I think checking for an *exact* version of the APF interpreter was needlessly strict, which is why I\u0027m relaxing the check to require a minimum version. We can certainly add new opcodes in a backwards-compatible way.\n\nIf setApfVersion() returns false, we disable APF filters altogether:\n\nhttps://cs.corp.google.com/android/frameworks/base/services/net/java/android/net/apf/ApfFilter.java?q\u003dsetApfVersion\u0026l\u003d1186\n\nI will send the change to relax the version check separately because it\u0027s a pre-requisite to submit aosp/642746.",
+      "parentUuid": "10da869a_fc014bfa",
+      "range": {
+        "startLine": 368,
+        "startChar": 72,
+        "endLine": 369,
+        "endChar": 76
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
