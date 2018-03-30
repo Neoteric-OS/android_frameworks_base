@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9295d6d8_c658e6e9",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3000d6_016d0d91",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f70f28b0_0b360b4a",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 7
@@ -163,6 +187,30 @@
       "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b33ab6_5f728d53",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Done (yeah, I\u0027m also not a fan of Google\u0027s C++ argument alignment style)",
+      "parentUuid": "f70f28b0_0b360b4a",
+      "range": {
+        "startLine": 151,
+        "startChar": 42,
+        "endLine": 151,
+        "endChar": 46
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "92d071d5_63afe844",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95a35524_4df646ef",
+      "range": {
+        "startLine": 153,
+        "startChar": 78,
+        "endLine": 153,
+        "endChar": 87
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf076e4_d13f67aa",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 7
@@ -200,6 +272,30 @@
       "writtenOn": "2018-03-28T06:15:39Z",
       "side": 1,
       "message": "Note on my comment from the other file : this test would then build two different ApfGenerator instances, one to test it fails, and one to test it succeeds",
+      "range": {
+        "startLine": 602,
+        "startChar": 23,
+        "endLine": 602,
+        "endChar": 36
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2c432df_65d41a87",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Added a separate test for the version checks.\nAs for testing the new opcodes with V3, it\u0027s done in the tests below.\n\nbtw, I\u0027m breaking things up this way to follow the mantra that each test should cover a single property or behavior, but if JUnit has high test setup cost or anything like that, I can change style to aggregate more.",
+      "parentUuid": "1bf076e4_d13f67aa",
       "range": {
         "startLine": 602,
         "startChar": 23,
@@ -235,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "729ee871_b54d9678",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4813cbef_b5541cee",
+      "range": {
+        "startLine": 652,
+        "startChar": 43,
+        "endLine": 652,
+        "endChar": 51
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b692eb57_9f365328",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 7
@@ -255,6 +375,30 @@
       "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7471a2_6149eee2",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-03-30T04:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b692eb57_9f365328",
+      "range": {
+        "startLine": 657,
+        "startChar": 35,
+        "endLine": 657,
+        "endChar": 39
+      },
+      "revId": "2c4883a4fd00f9dd77a2a2339513c56e3741248a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
