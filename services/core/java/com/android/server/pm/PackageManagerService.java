@@ -9206,6 +9206,20 @@ public class PackageManagerService extends IPackageManager.Stub
         }
     }
 
+    private void checkVersionForProfileLI(PackageSetting ps, PackageParser.Package pkg) {
+        if (isUpgrade() && ps != null && pkg != null) {
+            if (ps.versionCode != pkg.mVersionCode) {
+                Slog.d(TAG, ps.name + " clear profile due to version change " +
+                    ps.versionCode + " != " + pkg.mVersionCode);
+                clearAppProfilesLIF(pkg, UserHandle.USER_ALL);
+                return;
+            }
+            if (DEBUG_INSTALL) {
+              Slog.d(TAG, "Package " + ps.name + " keep profile");
+            }
+        }
+    }
+
     /**
      *  Traces a package scan.
      *  @see #scanPackageLI(File, int, int, long, UserHandle)
@@ -9490,6 +9504,9 @@ public class PackageManagerService extends IPackageManager.Stub
 
         // Verify certificates against what was last scanned
         collectCertificatesLI(ps, pkg, scanFile, policyFlags);
+
+        // Reset profile if the application version is changed
+        checkVersionForProfileLI(ps, pkg);
 
         /*
          * A new system app appeared, but we already had a non-system one of the
