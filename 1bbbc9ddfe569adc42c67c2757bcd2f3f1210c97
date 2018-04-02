@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df08451e_2e730f61",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-04-02T21:13:59Z",
+      "side": 1,
+      "message": "nit: final?",
+      "revId": "1bbbc9ddfe569adc42c67c2757bcd2f3f1210c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
