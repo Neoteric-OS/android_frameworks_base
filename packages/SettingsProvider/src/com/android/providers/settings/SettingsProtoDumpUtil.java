@@ -1303,6 +1303,9 @@ class SettingsProtoDumpUtil {
                 Settings.Secure.UI_NIGHT_MODE,
                 SecureSettingsProto.UI_NIGHT_MODE);
         dumpSetting(s, p,
+                Settings.Secure.RTT_CALLING_MODE,
+                SecureSettingsProto.RTT_CALLING_MODE);
+        dumpSetting(s, p,
                 Settings.Secure.SCREENSAVER_ENABLED,
                 SecureSettingsProto.SCREENSAVER_ENABLED);
         dumpSetting(s, p,
