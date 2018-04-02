@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68a7e02_ce62c5db",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-04-02T00:22:08Z",
+      "side": 1,
+      "message": "Sorry for not commenting this at the same time, but\nthis looks the menu state of active source device not the TV device.\nWhat about keeping this into ActiveSource class?",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "8f99b9a678fd3572aae76af66d550b1cb73894e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
