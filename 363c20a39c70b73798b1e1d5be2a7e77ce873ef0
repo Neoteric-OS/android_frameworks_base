@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a23558cf_9f770924",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-04-03T11:27:19Z",
+      "side": 1,
+      "message": "code style (in this area, not the one I\u0027d prefer): member variable names start with \"m\".",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73714e4_c4cac0e6",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-04-03T11:27:19Z",
+      "side": 1,
+      "message": "FWIW if you extracted an abstract base class UncaughtExceptionPreHandler then you could do Thread.getUncaughtExceptionPreHandler() below rather than having it passed into the constructor; having it delegate to \"whatever the pre-handler\" is might increase clarity of responsibility boundaries but may decrease clarity that in practice, this results in logging :)\n\nAlso, we\u0027d then still not be able to test in ThreadTest.java that the KillApplicationHandler delegates to the preHandler because KillApplicationHandler kills the app/test :) So, probably not worth it. Just mentioning it in case you have a good idea.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 70
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb11a843_869ee0ff",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-04-03T11:27:19Z",
+      "side": 1,
+      "message": "might be clearer to:\n\n1.) Either document that logggingHandler is nullable, or enforce that it is not null (slighty preference for the latter, since that is the only case you\u0027re using):\n  this.loggingHandler \u003d Objects.requireNonNull(loggingHandler);\n...\nand drop the \"loggingHandler !\u003d null\" in line 115.\n\n2.) Rename loggingHandler -\u003e expectedPreHandler and provide some documentation around contract:\n\n\n@param expectedPreHandler the preHandler that will already have run if\n       this handler is invoked as part of an uncaught exception. Unlike\n       this handler, the preHandler cannot be replaced by an application.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50110a75_f302513f",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-04-03T11:27:19Z",
+      "side": 1,
+      "message": "I suggest that you add a comment above here:\n\n// http://b/73380984 Re-instate the pre-O behavior of\n//   thread.getUncaughtExceptionHandler().uncaughtException(thread, e);\n// logging the exception (in addition to killing the app). This behavior\n// was never documented / guaranteed but some apps assume it.\n// If this KillApplicationHandler is invoked the \"regular\" way (by\n// Thread.dispatchUncaughtException() in case of an uncaught exception)\n// then the pre-handler will already have run. Otherwise, we manually\n// invoke it here.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 71
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
