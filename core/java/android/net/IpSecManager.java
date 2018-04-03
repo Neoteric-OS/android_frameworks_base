@@ -27,6 +27,9 @@ import android.content.Context;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.os.ServiceSpecificException;
+import android.system.ErrnoException;
+import android.system.OsConstants;
 import android.util.AndroidException;
 import android.util.Log;
 
@@ -173,6 +176,8 @@ public final class IpSecManager {
             try {
                 mService.releaseSecurityParameterIndex(mResourceId);
                 mResourceId = INVALID_RESOURCE_ID;
+            } catch (ServiceSpecificException e) {
+                throw handleUncheckedServiceSpecificException("SecurityParameterIndex.close", e);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -227,7 +232,6 @@ public final class IpSecManager {
                     throw new RuntimeException(
                             "Invalid Resource ID returned by IpSecService: " + status);
                 }
-
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -261,7 +265,11 @@ public final class IpSecManager {
                     mService,
                     destinationAddress,
                     IpSecManager.INVALID_SECURITY_PARAMETER_INDEX);
+        } catch (ServiceSpecificException e) {
+            throw handleUncheckedServiceSpecificException("allocateSecurityParameterIndex", e);
         } catch (SpiUnavailableException unlikely) {
+            // Because this function allocates a totally random SPI, it really shouldn't ever
+            // fail to allocate an SPI; we simply need this because the exception is checked.
             throw new ResourceUnavailableException("No SPIs available");
         }
     }
@@ -274,8 +282,8 @@ public final class IpSecManager {
      *
      * @param destinationAddress the destination address for traffic bearing the requested SPI.
      *     For inbound traffic, the destination should be an address currently assigned on-device.
-     * @param requestedSpi the requested SPI, or '0' to allocate a random SPI. The range 1-255 is
-     *     reserved and may not be used. See RFC 4303 Section 2.1.
+     * @param requestedSpi the requested SPI. The range 1-255 is reserved and may not be used. See
+     *     RFC 4303 Section 2.1.
      * @return the reserved SecurityParameterIndex
      * @throws {@link #ResourceUnavailableException} indicating that too many SPIs are
      *     currently allocated for this user
@@ -289,7 +297,11 @@ public final class IpSecManager {
         if (requestedSpi == IpSecManager.INVALID_SECURITY_PARAMETER_INDEX) {
             throw new IllegalArgumentException("Requested SPI must be a valid (non-zero) SPI");
         }
-        return new SecurityParameterIndex(mService, destinationAddress, requestedSpi);
+        try {
+            return new SecurityParameterIndex(mService, destinationAddress, requestedSpi);
+        } catch (ServiceSpecificException e) {
+            throw handleUncheckedServiceSpecificException("allocateSecurityParameterIndex", e);
+        }
     }
 
     /**
@@ -421,6 +433,8 @@ public final class IpSecManager {
         // constructor takes control and closes the user's FD when we exit the method.
         try (ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(socket)) {
             mService.applyTransportModeTransform(pfd, direction, transform.getResourceId());
+        } catch (ServiceSpecificException e) {
+            throw handleCheckedServiceSpecificException("applyTransportModeTransform", e);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -476,6 +490,8 @@ public final class IpSecManager {
     public void removeTransportModeTransforms(@NonNull FileDescriptor socket) throws IOException {
         try (ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(socket)) {
             mService.removeTransportModeTransforms(pfd);
+        } catch (ServiceSpecificException e) {
+            throw handleCheckedServiceSpecificException("removeTransportModeTransforms", e);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -567,6 +583,8 @@ public final class IpSecManager {
             try {
                 mService.closeUdpEncapsulationSocket(mResourceId);
                 mResourceId = INVALID_RESOURCE_ID;
+            } catch (ServiceSpecificException e) {
+                throw handleCheckedServiceSpecificException("UdpEncapsulationSocket.close", e);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -621,7 +639,11 @@ public final class IpSecManager {
         if (port == 0) {
             throw new IllegalArgumentException("Specified port must be a valid port number!");
         }
-        return new UdpEncapsulationSocket(mService, port);
+        try {
+            return new UdpEncapsulationSocket(mService, port);
+        } catch (ServiceSpecificException e) {
+            throw handleCheckedServiceSpecificException("openUdpEncapsulationSocket", e);
+        }
     }
 
     /**
@@ -644,7 +666,11 @@ public final class IpSecManager {
     @NonNull
     public UdpEncapsulationSocket openUdpEncapsulationSocket()
             throws IOException, ResourceUnavailableException {
-        return new UdpEncapsulationSocket(mService, 0);
+        try {
+            return new UdpEncapsulationSocket(mService, 0);
+        } catch (ServiceSpecificException e) {
+            throw handleCheckedServiceSpecificException("openUdpEncapsulationSocket", e);
+        }
     }
 
     /**
@@ -705,6 +731,9 @@ public final class IpSecManager {
         public void removeAddress(@NonNull LinkAddress address) throws IOException {
             try {
                 mService.removeAddressFromTunnelInterface(mResourceId, address);
+            } catch (ServiceSpecificException e) {
+                throw handleCheckedServiceSpecificException(
+                        "IpSecTunnelInterface.removeAddress", e);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -756,6 +785,8 @@ public final class IpSecManager {
             try {
                 mService.deleteTunnelInterface(mResourceId);
                 mResourceId = INVALID_RESOURCE_ID;
+            } catch (ServiceSpecificException e) {
+                throw handleUncheckedServiceSpecificException("IpSecTunnelInterface.close", e);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -799,7 +830,12 @@ public final class IpSecManager {
     public IpSecTunnelInterface createIpSecTunnelInterface(@NonNull InetAddress localAddress,
             @NonNull InetAddress remoteAddress, @NonNull Network underlyingNetwork)
             throws ResourceUnavailableException, IOException {
-        return new IpSecTunnelInterface(mService, localAddress, remoteAddress, underlyingNetwork);
+        try {
+            return new IpSecTunnelInterface(
+                    mService, localAddress, remoteAddress, underlyingNetwork);
+        } catch (ServiceSpecificException e) {
+            throw handleCheckedServiceSpecificException("createIpSecTunnelInterface", e);
+        }
     }
 
     /**
@@ -826,6 +862,8 @@ public final class IpSecManager {
         try {
             mService.applyTunnelModeTransform(
                     tunnel.getResourceId(), direction, transform.getResourceId());
+        } catch (ServiceSpecificException e) {
+            handleCheckedServiceSpecificException("applyTunnelModeTransform", e);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -839,5 +877,42 @@ public final class IpSecManager {
      */
     public IpSecManager(IIpSecService service) {
         mService = checkNotNull(service, "missing service");
+    }
+
+    /**
+     * Convert an Errno to the correct exception type if has an equivalent unchecked exception.
+     */
+    // package
+    static RuntimeException handleUncheckedServiceSpecificException(
+            String funcName, ServiceSpecificException sse) {
+        // OsConstants are late binding, so switch statements can't be used.
+        if (sse.errorCode == OsConstants.EINVAL) {
+            throw new IllegalArgumentException("Illegal argument to " + funcName + "().");
+        } else if (sse.errorCode == OsConstants.EAGAIN) {
+            throw new IllegalStateException(funcName + "() cannot be called in this state.");
+        } else if (sse.errorCode == OsConstants.EOPNOTSUPP) {
+            throw new UnsupportedOperationException(funcName + "() is not supported.");
+        }
+        // A few callers would like to convert to known unchecked exceptions, but as they do not
+        // expect to throw, if they do throw it's somewhat catastrophic. Thus, we throw an unchecked
+        // generic exception type to indicate that we don't know what happened. Note, the caller
+        // needs to actually throw in this case.
+        return new RuntimeException(sse);
+    }
+
+    /**
+     * Convert an Errno to the correct exception type.
+     *
+     * This method may throw IOException, or it may throw an unchecked exception; it will never
+     * actually return.
+     */
+    // package
+    static IOException handleCheckedServiceSpecificException(
+            String funcName, ServiceSpecificException sse) throws IOException {
+        // First see if this is an unchecked exception of a type we know.
+        // If so, then we prefer the unchecked (specific) type of exception.
+        handleUncheckedServiceSpecificException(funcName, sse);
+        // If not, then all we can do is provide the Errno in the form of an IOException.
+        throw new ErrnoException(funcName, sse.errorCode, sse).rethrowAsIOException();
     }
 }
