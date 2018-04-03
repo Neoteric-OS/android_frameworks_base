@@ -2472,6 +2472,13 @@ public abstract class PackageManager {
             = "android.hardware.vr.high_performance";
 
     /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device supports cell broadcast.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_CELL_BROADCAST = "tcl.software.cell_broadcast"£»
+
+    /**
      * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}:
      * The device supports autofill of user credentials, addresses, credit cards, etc
      * via integration with {@link android.service.autofill.AutofillService autofill
