@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eacfe9ef_52d736c1",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-04-03T16:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23558cf_9f770924",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e73714e4_c4cac0e6",
         "filename": "core/java/com/android/internal/os/RuntimeInit.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-04-03T11:27:19Z",
       "side": 1,
       "message": "FWIW if you extracted an abstract base class UncaughtExceptionPreHandler then you could do Thread.getUncaughtExceptionPreHandler() below rather than having it passed into the constructor; having it delegate to \"whatever the pre-handler\" is might increase clarity of responsibility boundaries but may decrease clarity that in practice, this results in logging :)\n\nAlso, we\u0027d then still not be able to test in ThreadTest.java that the KillApplicationHandler delegates to the preHandler because KillApplicationHandler kills the app/test :) So, probably not worth it. Just mentioning it in case you have a good idea.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 70
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76b35bfc_b5bc7324",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-04-03T16:22:35Z",
+      "side": 1,
+      "message": "Considering that any frameworks code can change the pre-handler, this isn\u0027t safe.",
+      "parentUuid": "e73714e4_c4cac0e6",
       "range": {
         "startLine": 109,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5250f9bf_c67ceb99",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-04-03T16:22:35Z",
+      "side": 1,
+      "message": "Did 1). I prefer expressive names in 2). This is already tightly coupled, so \"expectedPreHandler\" only tells you half of what is expected.\n\nI updated the comment on the class and constructor.",
+      "parentUuid": "fb11a843_869ee0ff",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50110a75_f302513f",
         "filename": "core/java/com/android/internal/os/RuntimeInit.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3042ec0b_b7659f9f",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-04-03T16:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50110a75_f302513f",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 71
+      },
+      "revId": "363c20a39c70b73798b1e1d5be2a7e77ce873ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
