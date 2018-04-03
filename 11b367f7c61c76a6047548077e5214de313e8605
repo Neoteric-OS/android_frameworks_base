@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a0f567_b2249c0b",
+        "filename": "services/net/java/android/net/dns/ResolvUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-03T06:30:18Z",
+      "side": 1,
+      "message": "Does this exception clearly contains the hostname that we tried to resolve? If not, maybe make this be:\n\n    gai.rethrowAsUnknownHostException(host + \": TLS-bypass resolution failed\");",
+      "range": {
+        "startLine": 56,
+        "startChar": 46,
+        "endLine": 56,
+        "endChar": 76
+      },
+      "revId": "11b367f7c61c76a6047548077e5214de313e8605",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
