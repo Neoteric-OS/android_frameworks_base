@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -136,6 +137,9 @@ public final class IpSecTransform implements AutoCloseable {
                 mResourceId = result.resourceId;
                 Log.d(TAG, "Added Transform with Id " + mResourceId);
                 mCloseGuard.open("build");
+            } catch (ServiceSpecificException e) {
+                throw IpSecManager.handleUncheckedServiceSpecificException(
+                        "IpSecTransform.createTransform", e);
             } catch (RemoteException e) {
                 throw e.rethrowAsRuntimeException();
             }
@@ -178,6 +182,8 @@ public final class IpSecTransform implements AutoCloseable {
             IIpSecService svc = getIpSecService();
             svc.deleteTransform(mResourceId);
             stopNattKeepalive();
+        } catch (ServiceSpecificException e) {
+            throw IpSecManager.handleUncheckedServiceSpecificException("IpSecTransform.close", e);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         } finally {
