@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d2c106_6068b12e",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Instead of creating this object and seeing if it throws, why not just add a \"static boolean supportsVersion()\" method to ApfGenerator?",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1185,
+        "endChar": 66
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079b574e_af580696",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "if (!supportsVersion(version))",
+      "range": {
+        "startLine": 374,
+        "startChar": 8,
+        "endLine": 374,
+        "endChar": 26
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e524c9_8257ec68",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "In order to reduce future work, suggest adding:\n\n    void requireApfVersion(int version) {\n        if (mVersion \u003c version) {\n            throw new IllegalInstructionException(\"Requires APF \u003e\u003d \" + version);\n        }\n    }",
+      "range": {
+        "startLine": 835,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 9
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00590933_48d837bc",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Suggest naming this variable \"expected\".",
+      "range": {
+        "startLine": 611,
+        "startChar": 45,
+        "endLine": 611,
+        "endChar": 46
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60ed795_59d13ac4",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Actually, it should leave it untouched. I believe Java guarantees that the data array is initialized to all zeros. But it would be good to check that if there\u0027s already data there, the interpreter doesn\u0027t clobber it.",
+      "range": {
+        "startLine": 628,
+        "startChar": 72,
+        "endLine": 628,
+        "endChar": 84
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030cfff5_b0ed105f",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "as",
+      "range": {
+        "startLine": 704,
+        "startChar": 24,
+        "endLine": 704,
+        "endChar": 26
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6068fb04_f9a5b34c",
+        "filename": "tests/net/java/android/net/apf/Bpf2Apf.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Why not 3?",
+      "range": {
+        "startLine": 310,
+        "startChar": 44,
+        "endLine": 310,
+        "endChar": 45
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feeaf6c6_e4ef50b1",
+        "filename": "tests/net/java/android/net/apf/Bpf2Apf.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Ditto, why not 3?",
+      "range": {
+        "startLine": 323,
+        "startChar": 44,
+        "endLine": 323,
+        "endChar": 45
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e3ebc6_8b36ebad",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "How is vendor firmware supposed to know what to pass in for data_raw? Is it always program+program_len? If so, then we should remove that argument. It\u0027s not useful, and will cause problems if the vendor firmware passes an incorrect value.\n\nAlso would suggest something more realistic: create a fixed buffer size (say, 4k), and make tha code and the data coexist in that range as opposed to passing in separate arrays.",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa67140b_3892bf1d",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-06T13:42:11Z",
+      "side": 1,
+      "message": "Use braces in multiline if statements.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 81
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
