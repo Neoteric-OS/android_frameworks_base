@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8724f2fb_1a586353",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-04-09T06:22:06Z",
+      "side": 1,
+      "message": "I think Lorenzo\u0027s suggestion makes sense ; emphasis on the *static* part. You would keep the version as an argument to the constructor, the constructor would still throw if the version is not supported (because there isn\u0027t much else it can do) by checking for its own static method, but the test could test for the support before it tries to create the object instead of catching.",
+      "parentUuid": "13cdfdeb_5f4e94b2",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1185,
+        "endChar": 66
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079b574e_af580696",
         "filename": "services/net/java/android/net/apf/ApfGenerator.java",
         "patchSetId": 11
