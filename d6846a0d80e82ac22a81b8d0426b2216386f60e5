@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13cdfdeb_5f4e94b2",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "There was a setApfVersion() method which returned true/false to signal whether the apf version was supported.\n\nDuring Jean\u0027s review, we agreed to make ApfGenerator stateless -- or rather, to configure it once at construction-time, so that you couldn\u0027t end up with a generator instance set to a non-working state.\n\nInstead of throwing from the constructor, we could do a factory method that returns null when the version is bad. Not sure what\u0027s the most idiomatic thing in Java... Probably throwing?",
+      "parentUuid": "44d2c106_6068b12e",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1185,
+        "endChar": 66
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079b574e_af580696",
         "filename": "services/net/java/android/net/apf/ApfGenerator.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cca603_037f9370",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079b574e_af580696",
+      "range": {
+        "startLine": 374,
+        "startChar": 8,
+        "endLine": 374,
+        "endChar": 26
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f0a8092_b20760fd",
+        "filename": "services/net/java/android/net/apf/ApfGenerator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81e524c9_8257ec68",
+      "range": {
+        "startLine": 835,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 9
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00590933_48d837bc",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d32ec3_8d46940c",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00590933_48d837bc",
+      "range": {
+        "startLine": 611,
+        "startChar": 45,
+        "endLine": 611,
+        "endChar": 46
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d092f455_82596530",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a60ed795_59d13ac4",
+      "range": {
+        "startLine": 628,
+        "startChar": 72,
+        "endLine": 628,
+        "endChar": 84
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "030cfff5_b0ed105f",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d73736_16d1a342",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "030cfff5_b0ed105f",
+      "range": {
+        "startLine": 704,
+        "startChar": 24,
+        "endLine": 704,
+        "endChar": 26
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a67e59d4_ce33bba0",
+        "filename": "tests/net/java/android/net/apf/Bpf2Apf.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Right.",
+      "parentUuid": "6068fb04_f9a5b34c",
+      "range": {
+        "startLine": 310,
+        "startChar": 44,
+        "endLine": 310,
+        "endChar": 45
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feeaf6c6_e4ef50b1",
         "filename": "tests/net/java/android/net/apf/Bpf2Apf.java",
         "patchSetId": 11
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1c076a04_de13a207",
+        "filename": "tests/net/java/android/net/apf/Bpf2Apf.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feeaf6c6_e4ef50b1",
+      "range": {
+        "startLine": 323,
+        "startChar": 44,
+        "endLine": 323,
+        "endChar": 45
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e3ebc6_8b36ebad",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 11
@@ -206,6 +398,30 @@
       "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a60e36_3f694181",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-09T05:11:50Z",
+      "side": 1,
+      "message": "As discussed today, I\u0027ll change the interpreter call signature to\n\n  accept_packet(program_raw, program_len, memory_len, packet_raw,\n                packet_len, filter_age);\n\nwhere `memory_len` is the total buffer size (as documented in the original design doc).\n\nThe change needs to be atomic wrt to the interpreter, so I\u0027ll do it in a separate topic.",
+      "parentUuid": "54e3ebc6_8b36ebad",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "d6846a0d80e82ac22a81b8d0426b2216386f60e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
