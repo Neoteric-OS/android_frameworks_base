@@ -3834,6 +3834,14 @@ package android.media {
     method @NonNull public android.media.HwAudioSource.Builder setAudioDeviceInfo(@NonNull android.media.AudioDeviceInfo);
   }
 
+  public class MediaPlayer implements android.media.AudioRouting android.media.VolumeAutomation {
+    method public void setOnImsRxNoticeListener(@Nullable android.media.MediaPlayer.OnImsRxNoticeListener);
+  }
+
+  public static interface MediaPlayer.OnImsRxNoticeListener {
+    method public void onImsRxNotice(@NonNull android.media.MediaPlayer, @NonNull byte[]);
+  }
+
   public final class MediaRecorder.AudioSource {
     field @RequiresPermission(android.Manifest.permission.CAPTURE_AUDIO_OUTPUT) public static final int ECHO_REFERENCE = 1997; // 0x7cd
     field @RequiresPermission(android.Manifest.permission.CAPTURE_AUDIO_HOTWORD) public static final int HOTWORD = 1999; // 0x7cf
