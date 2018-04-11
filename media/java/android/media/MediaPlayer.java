@@ -2088,6 +2088,7 @@ public class MediaPlayer extends PlayerBase
         mOnErrorListener = null;
         mOnInfoListener = null;
         mOnVideoSizeChangedListener = null;
+        mOnIMSRxNoticeListener = null;
         mOnTimedTextListener = null;
         synchronized (mTimeProviderLock) {
             if (mTimeProvider != null) {
@@ -3296,6 +3297,7 @@ public class MediaPlayer extends PlayerBase
     private static final int MEDIA_SUBTITLE_DATA = 201;
     private static final int MEDIA_META_DATA = 202;
     private static final int MEDIA_DRM_INFO = 210;
+    private static final int MEDIA_IMS_RX_NOTICE = 300;
     private static final int MEDIA_TIME_DISCONTINUITY = 211;
     private static final int MEDIA_AUDIO_ROUTING_CHANGED = 10000;
 
@@ -3553,6 +3555,19 @@ public class MediaPlayer extends PlayerBase
                     TimedMetaData data = TimedMetaData.createTimedMetaDataFromParcel(parcel);
                     parcel.recycle();
                     onTimedMetaDataAvailableListener.onTimedMetaDataAvailable(mMediaPlayer, data);
+                }
+                return;
+
+            case MEDIA_IMS_RX_NOTICE:
+                OnIMSRxNoticeListener onIMSRxNoticeListener =
+                    mOnIMSRxNoticeListener;
+                if (onIMSRxNoticeListener == null) {
+                    return;
+                }
+                if (msg.obj instanceof Parcel) {
+                    Parcel parcel = (Parcel) msg.obj;
+                    onIMSRxNoticeListener.onIMSRxNotice(parcel);
+                    parcel.recycle();
                 }
                 return;
 
@@ -4044,6 +4059,29 @@ public class MediaPlayer extends PlayerBase
          */
         public void onTimedMetaDataAvailable(MediaPlayer mp, TimedMetaData data);
     }
+
+    /**
+     * Interface definition of a callback to be invoked when
+     * IMS Rx connection has a notice.
+     *
+     * @hide
+     */
+    public interface OnIMSRxNoticeListener
+    {
+        public void onIMSRxNotice(Parcel parcel);
+    }
+
+    /**
+     * Register a callback to be invoked when IMS Rx connection has a notice.
+     *
+     * @hide
+     */
+    public void setOnIMSRxNoticeListener(OnIMSRxNoticeListener listener)
+    {
+        mOnIMSRxNoticeListener = listener;
+    }
+
+    private OnIMSRxNoticeListener mOnIMSRxNoticeListener;
 
     /**
      * Register a callback to be invoked when a selected track has timed metadata available.
