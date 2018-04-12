@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Binder;
@@ -214,7 +215,11 @@ public class Ringtone {
         if (uri != null) {
             String authority = ContentProvider.getAuthorityWithoutUserId(uri.getAuthority());
 
-            if (Settings.AUTHORITY.equals(authority)) {
+            if (ContentResolver.SCHEME_ANDROID_RESOURCE.equals(uri.getScheme())) {
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.setDataSource(context, uri);
+                title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+            } else if (Settings.AUTHORITY.equals(authority)) {
                 if (followSettingsUri) {
                     Uri actualUri = RingtoneManager.getActualDefaultRingtoneUri(context,
                             RingtoneManager.getDefaultType(uri));

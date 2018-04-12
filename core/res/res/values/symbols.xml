@@ -2149,6 +2149,11 @@
   <java-symbol type="string" name="dial_number_using" />
   <java-symbol type="string" name="create_contact_using" />
 
+  <!-- From MediaProvider -->
+  <java-symbol type="raw" name="default_alarm_alert" />
+  <java-symbol type="raw" name="default_notification_sound" />
+  <java-symbol type="raw" name="default_ringtone" />
+
   <!-- From DownloadProvider -->
   <java-symbol type="integer" name="config_MaxConcurrentDownloadsAllowed" />
   <java-symbol type="integer" name="config_downloadDataDirSize" />

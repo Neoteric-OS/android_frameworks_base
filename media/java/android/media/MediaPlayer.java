@@ -1063,7 +1063,8 @@ public class MediaPlayer extends PlayerBase
             final int type = RingtoneManager.getDefaultType(uri);
             final Uri cacheUri = RingtoneManager.getCacheForType(type, context.getUserId());
             final Uri actualUri = RingtoneManager.getActualDefaultRingtoneUri(context, type);
-            if (attemptDataSource(resolver, cacheUri)) {
+            if (!ContentResolver.SCHEME_ANDROID_RESOURCE.equals(actualUri.getScheme()) &&
+                    attemptDataSource(resolver, cacheUri)) {
                 return;
             } else if (attemptDataSource(resolver, actualUri)) {
                 return;

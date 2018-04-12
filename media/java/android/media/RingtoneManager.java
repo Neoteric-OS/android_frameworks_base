@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
 import android.os.Environment;
@@ -198,6 +199,15 @@ public class RingtoneManager {
             "android.intent.extra.ringtone.AUDIO_ATTRIBUTES_FLAGS";
 
     /**
+     * @hide
+     * The prefix for system resources that define the default sound for
+     * ringtones. Concatenate the name of the setting from Settings
+     * to get the full system resource.
+     */
+    public static final String DEFAULT_RINGTONE_RESOURCE_PREFIX =
+        ContentResolver.SCHEME_ANDROID_RESOURCE + "://android/raw/default_";
+
+    /**
      * Returned from the ringtone picker as a {@link Uri}.
      * <p>
      * It will be one of:
@@ -225,7 +235,12 @@ public class RingtoneManager {
         "\"" + MediaStore.Audio.Media.EXTERNAL_CONTENT_URI + "\"",
         MediaStore.Audio.Media.TITLE_KEY
     };
-    
+
+    private static final String[] RESOURCE_COLUMNS = new String[] {
+        MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
+        "uri", MediaStore.Audio.Media.TITLE_KEY
+    };
+
     /**
      * The column index (in the cursor returned by {@link #getCursor()} for the
      * row ID.
@@ -435,6 +450,7 @@ public class RingtoneManager {
         }
 
         ArrayList<Cursor> ringtoneCursors = new ArrayList<Cursor>();
+        ringtoneCursors.add(getResourceRingtones());
         ringtoneCursors.add(getInternalRingtones());
         ringtoneCursors.add(getMediaRingtones());
 
@@ -526,8 +542,12 @@ public class RingtoneManager {
     }
 
     private static Uri getUriFromCursor(Cursor cursor) {
-        return ContentUris.withAppendedId(Uri.parse(cursor.getString(URI_COLUMN_INDEX)), cursor
-                .getLong(ID_COLUMN_INDEX));
+        Uri uri = Uri.parse(cursor.getString(URI_COLUMN_INDEX));
+        if (isResourceUri(uri)) {
+            return uri;
+        } else {
+            return ContentUris.withAppendedId(uri, cursor.getLong(ID_COLUMN_INDEX));
+        }
     }
     
     /**
@@ -554,6 +574,10 @@ public class RingtoneManager {
             String uriString = cursor.getString(URI_COLUMN_INDEX);
             if (currentUri == null || !uriString.equals(previousUriString)) {
                 currentUri = Uri.parse(uriString);
+            }
+
+            if (ringtoneUri.equals(currentUri)) {
+                return i;
             }
             
             if (ringtoneUri.equals(ContentUris.withAppendedId(currentUri, cursor
@@ -603,6 +627,36 @@ public class RingtoneManager {
         } else {
             return null;
         }
+    }
+
+    private Cursor getResourceRingtones() {
+        MatrixCursor c = new MatrixCursor(RESOURCE_COLUMNS, 1);
+
+        if ((mType & TYPE_RINGTONE) != 0) {
+            addResourceRingtone(c, TYPE_RINGTONE);
+        }
+        if ((mType & TYPE_NOTIFICATION) != 0) {
+            addResourceRingtone(c, TYPE_NOTIFICATION);
+        }
+        if ((mType & TYPE_ALARM) != 0) {
+            addResourceRingtone(c, TYPE_ALARM);
+        }
+
+        return c;
+    }
+
+    private void addResourceRingtone(MatrixCursor c, int type) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
+        Uri uri = Uri.parse(DEFAULT_RINGTONE_RESOURCE_PREFIX + getSettingForType(type));
+        retriever.setDataSource(mContext, uri);
+
+        String title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+
+        c.newRow()
+            .add(MediaStore.Audio.Media.TITLE, title)
+            .add("uri", uri)
+            .add(MediaStore.Audio.Media.TITLE_KEY, MediaStore.Audio.keyFor(title));
     }
 
     private Cursor getInternalRingtones() {
@@ -851,7 +905,7 @@ public class RingtoneManager {
 
         // Stream selected ringtone into cache so it's available for playback
         // when CE storage is still locked
-        if (ringtoneUri != null) {
+        if (ringtoneUri != null && !isResourceUri(ringtoneUri)) {
             final Uri cacheUri = getCacheForType(type, context.getUserId());
             try (InputStream in = openRingtone(context, ringtoneUri);
                     OutputStream out = resolver.openOutputStream(cacheUri)) {
@@ -874,6 +928,10 @@ public class RingtoneManager {
         Uri uriWithoutUserId = ContentProvider.getUriWithoutUserId(ringtone);
         return uriWithoutUserId == null ? false
                 : uriWithoutUserId.toString().startsWith(storage.toString());
+    }
+
+    private static boolean isResourceUri(Uri uri) {
+        return ContentResolver.SCHEME_ANDROID_RESOURCE.equals(uri.getScheme());
     }
 
     /** @hide */

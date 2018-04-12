@@ -72,6 +72,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static android.media.RingtoneManager.DEFAULT_RINGTONE_RESOURCE_PREFIX;
+
 /**
  * Internal service helper that no-one should use directly.
  *
@@ -403,6 +405,14 @@ public class MediaScanner implements AutoCloseable {
 
         mBitmapOptions.inSampleSize = 1;
         mBitmapOptions.inJustDecodeBounds = true;
+
+        // Set URI:s for the default sound resources
+        setRingtoneIfNotSet(Settings.System.NOTIFICATION_SOUND,
+            Uri.parse(DEFAULT_RINGTONE_RESOURCE_PREFIX + Settings.System.NOTIFICATION_SOUND));
+        setRingtoneIfNotSet(Settings.System.RINGTONE,
+            Uri.parse(DEFAULT_RINGTONE_RESOURCE_PREFIX + Settings.System.RINGTONE));
+        setRingtoneIfNotSet(Settings.System.ALARM_ALERT,
+            Uri.parse(DEFAULT_RINGTONE_RESOURCE_PREFIX + Settings.System.ALARM_ALERT));
 
         setDefaultRingtoneFileNames();
 
@@ -1110,22 +1120,6 @@ public class MediaScanner implements AutoCloseable {
                     pathFilenameStart + filenameLength == path.length();
         }
 
-        private void setRingtoneIfNotSet(String settingName, Uri uri, long rowId) {
-            if (wasRingtoneAlreadySet(settingName)) {
-                return;
-            }
-
-            ContentResolver cr = mContext.getContentResolver();
-            String existingSettingValue = Settings.System.getString(cr, settingName);
-            if (TextUtils.isEmpty(existingSettingValue)) {
-                final Uri settingUri = Settings.System.getUriFor(settingName);
-                final Uri ringtoneUri = ContentUris.withAppendedId(uri, rowId);
-                RingtoneManager.setActualDefaultRingtoneUri(mContext,
-                        RingtoneManager.getDefaultType(settingUri), ringtoneUri);
-            }
-            Settings.System.putInt(cr, settingSetIndicatorName(settingName), 1);
-        }
-
         private int getFileTypeFromDrm(String path) {
             if (!isDrmEnabled()) {
                 return 0;
@@ -1171,6 +1165,25 @@ public class MediaScanner implements AutoCloseable {
         } catch (SettingNotFoundException e) {
             return false;
         }
+    }
+
+    private void setRingtoneIfNotSet(String settingName, Uri uri, long rowId) {
+        setRingtoneIfNotSet(settingName, ContentUris.withAppendedId(uri, rowId));
+    }
+
+    private void setRingtoneIfNotSet(String settingName, Uri ringtoneUri) {
+        if (wasRingtoneAlreadySet(settingName)) {
+            return;
+        }
+
+        ContentResolver cr = mContext.getContentResolver();
+        String existingSettingValue = Settings.System.getString(cr, settingName);
+        if (TextUtils.isEmpty(existingSettingValue)) {
+            final Uri settingUri = Settings.System.getUriFor(settingName);
+            RingtoneManager.setActualDefaultRingtoneUri(mContext,
+                    RingtoneManager.getDefaultType(settingUri), ringtoneUri);
+        }
+        Settings.System.putInt(cr, settingSetIndicatorName(settingName), 1);
     }
 
     private void prescan(String filePath, boolean prescanFiles) throws RemoteException {
