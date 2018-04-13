@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d27a2e_b62fa561",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-13T08:50:35Z",
+      "side": 1,
+      "message": "Typo, Unsupported",
+      "range": {
+        "startLine": 1185,
+        "startChar": 24,
+        "endLine": 1185,
+        "endChar": 35
+      },
+      "revId": "45e0705ec4f8cdd1e335ed017cff59c44975a9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
