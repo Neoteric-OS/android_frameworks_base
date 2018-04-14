@@ -199,6 +199,8 @@
     <!-- to change themes - light or dark -->
     <uses-permission android:name="android.permission.CHANGE_OVERLAY_PACKAGES" />
 
+    <uses-sdk android:minSdkVersion="21"/>
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
