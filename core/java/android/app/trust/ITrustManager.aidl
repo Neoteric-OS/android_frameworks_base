@@ -34,6 +34,6 @@ interface ITrustManager {
     boolean isDeviceLocked(int userId);
     boolean isDeviceSecure(int userId);
     boolean isTrustUsuallyManaged(int userId);
-    void unlockedByFingerprintForUser(int userId);
-    void clearAllFingerprints();
+    void unlockedByBiometricsForUser(int userId, int biometricType);
+    void clearAllBiometrics();
 }

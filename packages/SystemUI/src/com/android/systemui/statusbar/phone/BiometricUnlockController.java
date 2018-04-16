@@ -35,14 +35,15 @@ import com.android.systemui.keyguard.WakefulnessLifecycle;
 import java.io.PrintWriter;
 
 /**
- * Controller which coordinates all the fingerprint unlocking actions with the UI.
+ * Controller which coordinates all the biometric unlocking actions with the UI.
  */
-public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
+public class BiometricUnlockController extends KeyguardUpdateMonitorCallback {
 
-    private static final String TAG = "FingerprintController";
+    private static final String TAG = "BiometricUnlockController";
+    private static final boolean DEBUG = KeyguardConstants.DEBUG;
     private static final boolean DEBUG_FP_WAKELOCK = KeyguardConstants.DEBUG_FP_WAKELOCK;
-    private static final long FINGERPRINT_WAKELOCK_TIMEOUT_MS = 15 * 1000;
-    private static final String FINGERPRINT_WAKE_LOCK_NAME = "wake-and-unlock wakelock";
+    private static final long BIOMETRIC_WAKELOCK_TIMEOUT_MS = 15 * 1000;
+    private static final String BIOMETRIC_WAKE_LOCK_NAME = "wake-and-unlock wakelock";
 
     /**
      * Mode in which we don't need to wake up the device when we get a fingerprint.
@@ -94,6 +95,16 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
      */
     private static final float FINGERPRINT_COLLAPSE_SPEEDUP_FACTOR = 1.1f;
 
+    /**
+      * Internal code for handling fingerprint commands.
+      */
+    private static final int BIOMETRIC_FINGERPRINT = 0;
+
+    /**
+      * Internal code for handling iris commands.
+      */
+    private static final int BIOMETRIC_IRIS = 1;
+
     private PowerManager mPowerManager;
     private Handler mHandler = new Handler();
     private PowerManager.WakeLock mWakeLock;
@@ -111,24 +122,25 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
     private boolean mPendingShowBouncer;
     private boolean mHasScreenTurnedOnSinceAuthenticating;
 
-    public FingerprintUnlockController(Context context,
-            DozeScrimController dozeScrimController,
-            KeyguardViewMediator keyguardViewMediator,
-            ScrimController scrimController,
-            StatusBar statusBar,
-            UnlockMethodCache unlockMethodCache) {
-        mContext = context;
-        mPowerManager = context.getSystemService(PowerManager.class);
-        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
+    public BiometricUnlockController(Context context,
+                                     DozeScrimController dozeScrimController,
+                                     KeyguardViewMediator keyguardViewMediator,
+                                     ScrimController scrimController,
+                                     StatusBar statusBar,
+                                     UnlockMethodCache unlockMethodCache) {
+        mContext                = context;
+        mPowerManager           = context.getSystemService(PowerManager.class);
+        mUpdateMonitor          = KeyguardUpdateMonitor.getInstance(context);
+        mStatusBarWindowManager = Dependency.get(StatusBarWindowManager.class);
+        mDozeScrimController    = dozeScrimController;
+        mKeyguardViewMediator   = keyguardViewMediator;
+        mScrimController        = scrimController;
+        mStatusBar              = statusBar;
+        mUnlockMethodCache      = unlockMethodCache;
+
         mUpdateMonitor.registerCallback(this);
         Dependency.get(WakefulnessLifecycle.class).addObserver(mWakefulnessObserver);
         Dependency.get(ScreenLifecycle.class).addObserver(mScreenObserver);
-        mStatusBarWindowManager = Dependency.get(StatusBarWindowManager.class);
-        mDozeScrimController = dozeScrimController;
-        mKeyguardViewMediator = keyguardViewMediator;
-        mScrimController = scrimController;
-        mStatusBar = statusBar;
-        mUnlockMethodCache = unlockMethodCache;
     }
 
     public void setStatusBarKeyguardViewManager(
@@ -136,21 +148,21 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
         mStatusBarKeyguardViewManager = statusBarKeyguardViewManager;
     }
 
-    private final Runnable mReleaseFingerprintWakeLockRunnable = new Runnable() {
+    private final Runnable mReleaseBiometricWakeLockRunnable = new Runnable() {
         @Override
         public void run() {
             if (DEBUG_FP_WAKELOCK) {
-                Log.i(TAG, "fp wakelock: TIMEOUT!!");
+                Log.i(TAG, "biometric wakelock: TIMEOUT!!");
             }
-            releaseFingerprintWakeLock();
+            releaseBiometricWakeLock();
         }
     };
 
-    private void releaseFingerprintWakeLock() {
+    private void releaseBiometricWakeLock() {
         if (mWakeLock != null) {
-            mHandler.removeCallbacks(mReleaseFingerprintWakeLockRunnable);
+            mHandler.removeCallbacks(mReleaseBiometricWakeLockRunnable);
             if (DEBUG_FP_WAKELOCK) {
-                Log.i(TAG, "releasing fp wakelock");
+                Log.i(TAG, "releasing biometric wakelock");
             }
             mWakeLock.release();
             mWakeLock = null;
@@ -159,23 +171,46 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
 
     @Override
     public void onFingerprintAcquired() {
-        Trace.beginSection("FingerprintUnlockController#onFingerprintAcquired");
-        releaseFingerprintWakeLock();
+        Trace.beginSection("BiometricUnlockController#onFingerprintAcquired");
+        releaseBiometricWakeLock();
         if (!mUpdateMonitor.isDeviceInteractive()) {
             if (LatencyTracker.isEnabled(mContext)) {
                 LatencyTracker.getInstance(mContext).onActionStart(
                         LatencyTracker.ACTION_FINGERPRINT_WAKE_AND_UNLOCK);
             }
             mWakeLock = mPowerManager.newWakeLock(
-                    PowerManager.PARTIAL_WAKE_LOCK, FINGERPRINT_WAKE_LOCK_NAME);
+                    PowerManager.PARTIAL_WAKE_LOCK, BIOMETRIC_WAKE_LOCK_NAME);
             Trace.beginSection("acquiring wake-and-unlock");
             mWakeLock.acquire();
             Trace.endSection();
             if (DEBUG_FP_WAKELOCK) {
-                Log.i(TAG, "fingerprint acquired, grabbing fp wakelock");
+                Log.i(TAG, "fingerprint acquired, grabbing biometric wakelock");
             }
-            mHandler.postDelayed(mReleaseFingerprintWakeLockRunnable,
-                    FINGERPRINT_WAKELOCK_TIMEOUT_MS);
+            mHandler.postDelayed(mReleaseBiometricWakeLockRunnable,
+                    BIOMETRIC_WAKELOCK_TIMEOUT_MS);
+        }
+        Trace.endSection();
+    }
+
+    @Override
+    public void onIrisAcquired() {
+        Trace.beginSection("BiometricUnlockController#onIrisAcquired");
+        releaseBiometricWakeLock();
+        if (!mUpdateMonitor.isDeviceInteractive()) {
+            if (LatencyTracker.isEnabled(mContext)) {
+                LatencyTracker.getInstance(mContext).onActionStart(
+                        LatencyTracker.ACTION_FINGERPRINT_WAKE_AND_UNLOCK);
+            }
+            mWakeLock = mPowerManager.newWakeLock(
+                    PowerManager.PARTIAL_WAKE_LOCK, BIOMETRIC_WAKE_LOCK_NAME);
+            Trace.beginSection("acquiring wake-and-unlock");
+            mWakeLock.acquire();
+            Trace.endSection();
+            if (DEBUG_FP_WAKELOCK) {
+                Log.i(TAG, "iris acquired, grabbing biometric wakelock");
+            }
+            mHandler.postDelayed(mReleaseBiometricWakeLockRunnable,
+                    BIOMETRIC_WAKELOCK_TIMEOUT_MS);
         }
         Trace.endSection();
     }
@@ -188,13 +223,24 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
 
     @Override
     public void onFingerprintAuthenticated(int userId) {
-        Trace.beginSection("FingerprintUnlockController#onFingerprintAuthenticated");
+        Trace.beginSection("BiometricUnlockController#onFingerprintAuthenticated");
         if (mUpdateMonitor.isGoingToSleep()) {
             mPendingAuthenticatedUserId = userId;
             Trace.endSection();
             return;
         }
-        startWakeAndUnlock(calculateMode());
+        startWakeAndUnlock(calculateMode(BIOMETRIC_FINGERPRINT));
+    }
+
+    @Override
+    public void onIrisAuthenticated(int userId) {
+        Trace.beginSection("BiometricUnlockController#onIrisAuthenticated");
+        if (mUpdateMonitor.isGoingToSleep()) {
+            mPendingAuthenticatedUserId = userId;
+            Trace.endSection();
+            return;
+        }
+        startWakeAndUnlock(calculateMode(BIOMETRIC_IRIS));
     }
 
     public void startWakeAndUnlock(int mode) {
@@ -217,7 +263,7 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
             mPowerManager.wakeUp(SystemClock.uptimeMillis(), "android.policy:FINGERPRINT");
         }
         Trace.beginSection("release wake-and-unlock");
-        releaseFingerprintWakeLock();
+        releaseBiometricWakeLock();
         Trace.endSection();
         switch (mMode) {
             case MODE_DISMISS_BOUNCER:
@@ -282,7 +328,7 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
 
     @Override
     public void onFinishedGoingToSleep(int why) {
-        Trace.beginSection("FingerprintUnlockController#onFinishedGoingToSleep");
+        Trace.beginSection("BiometricUnlockController#onFinishedGoingToSleep");
         if (mPendingAuthenticatedUserId != -1) {
 
             // Post this to make sure it's executed after the device is fully locked.
@@ -307,8 +353,29 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
         return mMode;
     }
 
-    private int calculateMode() {
-        boolean unlockingAllowed = mUpdateMonitor.isUnlockingWithFingerprintAllowed();
+    private boolean isUnlockingWithBiometricAllowed(int biometricType)
+    {
+        boolean unlockingAllowed = false;
+
+        switch(biometricType)
+        {
+            case BIOMETRIC_IRIS:
+                unlockingAllowed = mUpdateMonitor.isUnlockingWithIrisAllowed();
+                break;
+            case BIOMETRIC_FINGERPRINT:
+                unlockingAllowed = mUpdateMonitor.isUnlockingWithFingerprintAllowed();
+                break;
+            default:
+                if(DEBUG) Log.i(TAG,"Unsupported BimetricsType: " + biometricType);
+                break;
+        }
+
+
+        return unlockingAllowed;
+    }
+
+    private int calculateMode(int biometricType) {
+        boolean unlockingAllowed = isUnlockingWithBiometricAllowed(biometricType);
         boolean deviceDreaming = mUpdateMonitor.isDreaming();
 
         if (!mUpdateMonitor.isDeviceInteractive()) {
@@ -343,12 +410,22 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
     }
 
     @Override
+    public void onIrisAuthFailed() {
+        cleanup();
+    }
+
+    @Override
     public void onFingerprintError(int msgId, String errString) {
         cleanup();
     }
 
+    @Override
+    public void onIrisError(int msgId, String errString) {
+        cleanup();
+    }
+
     private void cleanup() {
-        releaseFingerprintWakeLock();
+        releaseBiometricWakeLock();
     }
 
     public void startKeyguardFadingAway() {
@@ -380,7 +457,7 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
         @Override
         public void onFinishedWakingUp() {
             if (mPendingShowBouncer) {
-                FingerprintUnlockController.this.showBouncer();
+                BiometricUnlockController.this.showBouncer();
             }
         }
     };
@@ -398,7 +475,7 @@ public class FingerprintUnlockController extends KeyguardUpdateMonitorCallback {
     }
 
     public void dump(PrintWriter pw) {
-        pw.println(" FingerprintUnlockController:");
+        pw.println(" BiometricUnlockController:");
         pw.print("   mMode="); pw.println(mMode);
         pw.print("   mWakeLock="); pw.println(mWakeLock);
     }

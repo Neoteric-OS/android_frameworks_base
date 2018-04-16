@@ -1152,6 +1152,18 @@ public class DevicePolicyManager {
     public static final String EXTRA_RESTRICTION = "android.app.extra.RESTRICTION";
 
     /**
+     * A Key indicating that the Authentication in Keyguard was authorized using Fingerprint
+     *
+     */
+    public static final int KEGUARD_BIOMETRIC_TYPE_FINGERPRINT = 1 << 0;
+
+     /**
+     * A Key indicating that the Authentication in Keyguard was authorized using Iris
+     *
+     */
+    public static final int KEGUARD_BIOMETRIC_TYPE_IRIS = 1 << 1;
+
+    /**
      * Activity action: have the user enter a new password. This activity should
      * be launched after using {@link #setPasswordQuality(ComponentName, int)},
      * or {@link #setPasswordMinimumLength(ComponentName, int)} to have the user

@@ -129,8 +129,8 @@ public class TrustManagerService extends SystemService {
     private final SparseBooleanArray mTrustUsuallyManagedForUser = new SparseBooleanArray();
 
     // set to true only if user can skip bouncer
-    @GuardedBy("mUsersUnlockedByFingerprint")
-    private final SparseBooleanArray mUsersUnlockedByFingerprint = new SparseBooleanArray();
+    @GuardedBy("mUsersUnlockedByBiometrics")
+    private final SparseBooleanArray mUsersUnlockedByBiometrics = new SparseBooleanArray();
 
     private final StrongAuthTracker mStrongAuthTracker;
 
@@ -435,11 +435,12 @@ public class TrustManagerService extends SystemService {
             boolean secure = mLockPatternUtils.isSecure(id);
             boolean trusted = aggregateIsTrusted(id);
             boolean showingKeyguard = true;
-            boolean fingerprintAuthenticated = false;
+            boolean biometricsAuthenticated = false;
+            boolean irisAuthenticated = false;
 
             if (mCurrentUser == id) {
-                synchronized(mUsersUnlockedByFingerprint) {
-                    fingerprintAuthenticated = mUsersUnlockedByFingerprint.get(id, false);
+                synchronized(mUsersUnlockedByBiometrics) {
+                    biometricsAuthenticated = mUsersUnlockedByBiometrics.get(id, false);
                 }
                 try {
                     showingKeyguard = wm.isKeyguardLocked();
@@ -447,7 +448,7 @@ public class TrustManagerService extends SystemService {
                 }
             }
             boolean deviceLocked = secure && showingKeyguard && !trusted &&
-                    !fingerprintAuthenticated;
+                    biometricsAuthenticated;
             setDeviceLockedForUser(id, deviceLocked);
         }
     }
@@ -999,21 +1000,22 @@ public class TrustManagerService extends SystemService {
         }
 
         @Override
-        public void unlockedByFingerprintForUser(int userId) {
+        public void unlockedByBiometricsForUser(int userId, int biometricType) {
             enforceReportPermission();
-            synchronized(mUsersUnlockedByFingerprint) {
-                mUsersUnlockedByFingerprint.put(userId, true);
+            synchronized(mUsersUnlockedByBiometrics) {
+                mUsersUnlockedByBiometrics.put(userId, true);
             }
             mHandler.obtainMessage(MSG_REFRESH_DEVICE_LOCKED_FOR_USER, userId,
                     0 /* arg2 */).sendToTarget();
         }
 
         @Override
-        public void clearAllFingerprints() {
+        public void clearAllBiometrics() {
             enforceReportPermission();
-            synchronized(mUsersUnlockedByFingerprint) {
-                mUsersUnlockedByFingerprint.clear();
+            synchronized(mUsersUnlockedByBiometrics) {
+                mUsersUnlockedByBiometrics.clear();
             }
+
             mHandler.obtainMessage(MSG_REFRESH_DEVICE_LOCKED_FOR_USER, UserHandle.USER_ALL,
                     0 /* arg2 */).sendToTarget();
         }
@@ -1166,8 +1168,8 @@ public class TrustManagerService extends SystemService {
                     synchronized (mTrustUsuallyManagedForUser) {
                         mTrustUsuallyManagedForUser.delete(userId);
                     }
-                    synchronized (mUsersUnlockedByFingerprint) {
-                        mUsersUnlockedByFingerprint.delete(userId);
+                    synchronized (mUsersUnlockedByBiometrics) {
+                        mUsersUnlockedByBiometrics.delete(userId);
                     }
                     refreshAgentList(userId);
                     refreshDeviceLockedForUser(userId);

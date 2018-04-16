@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
+import android.hardware.iris.IrisManager;
 import android.os.BatteryManager;
 import android.os.BatteryStats;
 import android.os.Handler;
@@ -468,6 +469,56 @@ public class KeyguardIndicationController {
             if ((!updateMonitor.isUnlockingWithFingerprintAllowed()
                     && msgId != FingerprintManager.FINGERPRINT_ERROR_LOCKOUT_PERMANENT)
                     || msgId == FingerprintManager.FINGERPRINT_ERROR_CANCELED) {
+                return;
+            }
+            int errorColor = Utils.getColorError(mContext);
+            if (mStatusBarKeyguardViewManager.isBouncerShowing()) {
+                // When swiping up right after receiving a fingerprint error, the bouncer calls
+                // authenticate leading to the same message being shown again on the bouncer.
+                // We want to avoid this, as it may confuse the user when the message is too
+                // generic.
+                if (mLastSuccessiveErrorMessage != msgId) {
+                    mStatusBarKeyguardViewManager.showBouncerMessage(errString, errorColor);
+                }
+            } else if (updateMonitor.isScreenOn()) {
+                showTransientIndication(errString, errorColor);
+                // We want to keep this message around in case the screen was off
+                hideTransientIndicationDelayed(HIDE_DELAY_MS);
+            } else {
+                mMessageToShowOnScreenOn = errString;
+            }
+            mLastSuccessiveErrorMessage = msgId;
+        }
+
+        @Override
+        public void onIrisHelp(int msgId, String helpString) {
+            KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+            if (!updateMonitor.isUnlockingWithIrisAllowed()) {
+                return;
+            }
+            int errorColor = Utils.getColorError(mContext);
+            if (mStatusBarKeyguardViewManager.isBouncerShowing()) {
+                mStatusBarKeyguardViewManager.showBouncerMessage(helpString, errorColor);
+            } else if (updateMonitor.isScreenOn()) {
+                mLockIcon.setTransientFpError(true);
+                showTransientIndication(helpString, errorColor);
+                hideTransientIndicationDelayed(TRANSIENT_FP_ERROR_TIMEOUT);
+                mHandler.removeMessages(MSG_CLEAR_FP_MSG);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_CLEAR_FP_MSG),
+                        TRANSIENT_FP_ERROR_TIMEOUT);
+            }
+            // Help messages indicate that there was actually a try since the last error, so those
+            // are not two successive error messages anymore.
+            mLastSuccessiveErrorMessage = -1;
+        }
+
+
+        @Override
+        public void onIrisError(int msgId, String errString) {
+            KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+            if ((!updateMonitor.isUnlockingWithIrisAllowed()
+                    && msgId != IrisManager.IRIS_ERROR_LOCKOUT_PERMANENT)
+                    || msgId == IrisManager.IRIS_ERROR_CANCELED) {
                 return;
             }
             int errorColor = Utils.getColorError(mContext);

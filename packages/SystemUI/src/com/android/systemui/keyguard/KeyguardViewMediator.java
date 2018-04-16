@@ -85,7 +85,7 @@ import com.android.systemui.UiOffloadThread;
 import com.android.systemui.classifier.FalsingManager;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.misc.SystemServicesProxy;
-import com.android.systemui.statusbar.phone.FingerprintUnlockController;
+import com.android.systemui.statusbar.phone.BiometricUnlockController;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.phone.ScrimController;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
@@ -1604,7 +1604,7 @@ public class KeyguardViewMediator extends SystemUI {
         }
 
         mUpdateMonitor.clearFailedUnlockAttempts();
-        mUpdateMonitor.clearFingerprintRecognized();
+        mUpdateMonitor.clearBiometricsRecognized();
 
         if (mGoingToSleep) {
             Log.i(TAG, "Device is going to sleep, aborting keyguardDone");
@@ -2008,9 +2008,9 @@ public class KeyguardViewMediator extends SystemUI {
     public StatusBarKeyguardViewManager registerStatusBar(StatusBar statusBar,
             ViewGroup container,
             ScrimController scrimController,
-            FingerprintUnlockController fingerprintUnlockController) {
+            BiometricUnlockController biometricUnlockController) {
         mStatusBarKeyguardViewManager.registerStatusBar(statusBar, container,
-                scrimController, fingerprintUnlockController,
+                scrimController, biometricUnlockController,
                 mDismissCallbackRegistry);
         return mStatusBarKeyguardViewManager;
     }
