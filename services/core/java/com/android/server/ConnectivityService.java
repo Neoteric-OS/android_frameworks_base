@@ -1371,7 +1371,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             NetworkCapabilities nc, int callerPid, int callerUid) {
         final NetworkCapabilities newNc = new NetworkCapabilities(nc);
         if (!checkSettingsPermission(callerPid, callerUid)) newNc.setUids(null);
-        if (!checkNetworkStackPermission(callerPid, callerUid)) newNc.setSSID(null);
+        if (!checkSettingsPermission(callerPid, callerUid)) newNc.setSSID(null);
         return newNc;
     }
 
@@ -1628,11 +1628,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private boolean checkSettingsPermission(int pid, int uid) {
         return PERMISSION_GRANTED == mContext.checkPermission(
                 android.Manifest.permission.NETWORK_SETTINGS, pid, uid);
-    }
-
-    private boolean checkNetworkStackPermission(int pid, int uid) {
-        return PERMISSION_GRANTED == mContext.checkPermission(
-                android.Manifest.permission.NETWORK_STACK, pid, uid);
     }
 
     private void enforceTetherAccessPermission() {
@@ -4193,7 +4188,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // calling app has permission to do so.
     private void ensureSufficientPermissionsForRequest(NetworkCapabilities nc,
             int callerPid, int callerUid) {
-        if (null != nc.getSSID() && !checkNetworkStackPermission(callerPid, callerUid)) {
+        if (null != nc.getSSID() && !checkSettingsPermission(callerPid, callerUid)) {
             throw new SecurityException("Insufficient permissions to request a specific SSID");
         }
     }
