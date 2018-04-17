@@ -1038,7 +1038,6 @@ public class PackageManagerService extends IPackageManager.Stub
             pkg = _pkg;
             replacing = _replacing;
             userId = _userId;
-            replacing = _replacing;
             verifierUid = _verifierUid;
         }
     }
