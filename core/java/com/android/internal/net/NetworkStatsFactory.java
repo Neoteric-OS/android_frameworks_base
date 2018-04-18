@@ -172,6 +172,13 @@ public class NetworkStatsFactory {
         return stats;
     }
 
+    public NetworkStats readBpfNetworkStatsDev() throws IOException {
+        final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), 6);
+        if (nativeReadNetworkStatsDev(stats) != 0) {
+            throw new IOException("Failed to parse bpf iface stats");
+        }
+        return stats;
+    }
     /**
      * Parse and return interface-level summary {@link NetworkStats} measured
      * using {@code /proc/net/dev} style hooks, which may include non IP layer
@@ -184,7 +191,7 @@ public class NetworkStatsFactory {
 
         // Return the stats get from /proc/net/dev if switched to bpf module.
         if (mUseBpfStats)
-            return readNetworkStatsIfaceDev();
+            return readBpfNetworkStatsDev();
 
         final StrictMode.ThreadPolicy savedPolicy = StrictMode.allowThreadDiskReads();
 
@@ -240,7 +247,7 @@ public class NetworkStatsFactory {
 
         // Return the stats get from /proc/net/dev if qtaguid  module is replaced.
         if (mUseBpfStats)
-            return readNetworkStatsIfaceDev();
+            return readBpfNetworkStatsDev();
 
         final StrictMode.ThreadPolicy savedPolicy = StrictMode.allowThreadDiskReads();
 
@@ -440,4 +447,7 @@ public class NetworkStatsFactory {
     @VisibleForTesting
     public static native int nativeReadNetworkStatsDetail(NetworkStats stats, String path,
         int limitUid, String[] limitIfaces, int limitTag, boolean useBpfStats);
+
+    @VisibleForTesting
+    public static native int nativeReadNetworkStatsDev(NetworkStats stats);
 }
