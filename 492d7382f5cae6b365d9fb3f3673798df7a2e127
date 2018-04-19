@@ -1,0 +1,423 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948384b7_223d2bc8",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "These don\u0027t seem to be used -- if they are, they should probably be closer to the $(BUILD_PACKAGE) line that they\u0027re associated with",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 35
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36d166f_dabade37",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like a reasonable output path -- why is this being treated specially? It should likely be in one of the existing suites instead of creating a special one in a non-standard manner.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95d57f0_af193261",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Make may not write into the source directory",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 61
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d7766d_a63bd218",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "We definitely don\u0027t want yet another list of libraries required by these binaries.",
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890bf051_df1a90b9",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Make may not write into the source directory.",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a375bddb_0154748a",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This would need a list of real outputs and inputs, not be a phony rule.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 47
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770a7124_812052a1",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This should not depend on a phony target, otherwise it\u0027ll always need to be re-run",
+      "range": {
+        "startLine": 93,
+        "startChar": 45,
+        "endLine": 93,
+        "endChar": 65
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f8527a_f2db596c",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Use soong_zip instead of zip in order to produce reproducible outputs (and it handles the `cd` for you with -C)",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 80
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b745aa3b_604d9edd",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This should go at the top so that it becomes the status description. Passing rules shouldn\u0027t print any output (except the one status line, which becomes the description and is overwritten)",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9f49f4_c8bbc618",
+        "filename": "tests/PackageUpdate/app-generate/generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "You\u0027re not going to be able to generate an Android.mk like this -- you\u0027d need to do it entirely inside make and use $(eval), not execute a python script.",
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97b11df_eae88545",
+        "filename": "tests/PackageUpdate/app-generate/template/Android.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Can we set LOCAL_USE_AAPT2 :\u003d true? We\u0027re trying to move the entire tree to AAPT2 (this is done more in P, where we\u0027ve actually got aapt2 support for support library)",
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420bd450_b796d9fc",
+        "filename": "tests/PackageUpdate/app-generate/template/PackageUpdateTestApps.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "In my make example, I set up ALL_PACKAGE_UPDATE_TESTS to have the same contents as this.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac0e32c_c0ba0d33",
+        "filename": "tests/PackageUpdate/app-generate/template/PackageUpdateTestApps.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "You can\u0027t assume that this is installed, you\u0027ll need to use $(call intermediates-dir-for,APPS,$(t)ver$(v))/package.apk (and add a dependency on that, not the phony targets)",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c36d2b_8f34d3af",
+        "filename": "tests/PackageUpdate/app-generate/template/PackageUpdateTestApps.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "TARGET_OUT_INTERMEDIATE_LIBRARIES is deprecated. You need to get the library using $(call intermediates-dir-for,SHARED_LIBRARIES,lib$(t)ver$(v))/lib$(t)ver$(v).so\n\nOr more reasonably we should probably be embedding it into the APK itself",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc34cfe_61faba07",
+        "filename": "tests/PackageUpdate/app-generate/template/PackageUpdateTestApps.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Use soong_zip instead of zip in order to produce reproducible outputs (and it handles the `cd` for you with -C)",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9288c3c4_8201adb3",
+        "filename": "tests/PackageUpdate/app-generate/template/PackageUpdateTestApps.mk.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This should go at the top so that it becomes the status description. Passing rules shouldn\u0027t print any output (except the one status line, which becomes the description and is overwritten)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c701d6_ee297b4f",
+        "filename": "tests/PackageUpdate/autoflash.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be `$FASTBOOT flashall`? Why does this file even exist? Shouldn\u0027t the tests be using the harness(es) that already know how to flash a device?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 8
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a3d843_9e261654",
+        "filename": "tests/PackageUpdate/build-image/run_build.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "Nothing in android should be requiring sudo access -- if you want to do something special, you should probably be ingesting a target-files package, then regenerating the image with releasetools, not mounting it.\n\nOr modifying it on the device (though I imagine you might need to wipe some state in data and/or reboot to make things appear as preinstalled)",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 4
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a9cf20_a1b896e1",
+        "filename": "tests/PackageUpdate/run_test.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-19T06:30:42Z",
+      "side": 1,
+      "message": "This should not be required, there are Android developers that do not have this access. And it\u0027s likely a blocker to getting this in any of our automated fleets.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
