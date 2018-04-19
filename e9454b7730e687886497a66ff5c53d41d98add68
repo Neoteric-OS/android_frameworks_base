@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e569f07c_9d5496e3",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-19T12:19:31Z",
+      "side": 1,
+      "message": "Does LI support R1 as well? If so, consider adding a testcase for R1 as well.",
+      "range": {
+        "startLine": 654,
+        "startChar": 38,
+        "endLine": 654,
+        "endChar": 40
+      },
+      "revId": "e9454b7730e687886497a66ff5c53d41d98add68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ecbb94_6d580a0a",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-19T12:19:31Z",
+      "side": 1,
+      "message": "Should we try something that\u0027s greater than 0x80000000 as well?",
+      "range": {
+        "startLine": 657,
+        "startChar": 36,
+        "endLine": 657,
+        "endChar": 46
+      },
+      "revId": "e9454b7730e687886497a66ff5c53d41d98add68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
