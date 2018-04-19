@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "391e6baf_4d4fbcda",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-19T13:56:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e569f07c_9d5496e3",
+      "range": {
+        "startLine": 654,
+        "startChar": 38,
+        "endLine": 654,
+        "endChar": 40
+      },
+      "revId": "e9454b7730e687886497a66ff5c53d41d98add68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ecbb94_6d580a0a",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e9454b7730e687886497a66ff5c53d41d98add68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77f641a_20287e0c",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-04-19T13:56:15Z",
+      "side": 1,
+      "message": "The negative values below are all greater than 0x80000000 (i.e. -0x1122 is really 0xFFFFEEDE).",
+      "parentUuid": "39ecbb94_6d580a0a",
+      "range": {
+        "startLine": 657,
+        "startChar": 36,
+        "endLine": 657,
+        "endChar": 46
+      },
+      "revId": "e9454b7730e687886497a66ff5c53d41d98add68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
