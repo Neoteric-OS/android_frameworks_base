@@ -16,6 +16,24 @@
       "revId": "f951d784d65afc2459cbc4965b7b804df79f429c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1e9946_f3b521b2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3020,
+      "author": {
+        "id": 1299528
+      },
+      "writtenOn": "2018-04-19T01:35:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca1e1e51_478879f0",
+      "revId": "f951d784d65afc2459cbc4965b7b804df79f429c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
