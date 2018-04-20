@@ -1615,6 +1615,12 @@ public class IpClient extends StateMachine {
                 mApfFilter = null;
             }
 
+            // Forget the last collected APF data snapshot (if any).
+            // This avoids misleading dumpsys output containing a stale data snapshot.
+            // Note that the APF data buffer in the wifi chipset retains its previous contents
+            // until explicitly cleared, or until vendor-specific events such as a firmware reset.
+            mApfDataSnapshot = null;
+
             resetLinkProperties();
         }
 
