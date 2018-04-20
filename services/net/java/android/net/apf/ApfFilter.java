@@ -239,6 +239,25 @@ public class ApfFilter {
     // TODO: Select a proper max length
     private static final int APF_MAX_ETH_TYPE_BLACK_LIST_LEN = 20;
 
+    /*
+     * APF counters
+     *
+     * Packet counters are 32bit big-endian values, and allocated near the end of the APF data
+     * buffer, using negative offsets, where -4 is equivalent to maximumApfProgramSize - 4, the last
+     * writable 32bit word.
+     *
+     * The last 16bytes of the data buffer are reserved for future APF debugging features, such as
+     * counters for illegal instruction and other exceptional events occurred in the interpreter.
+     * The generated filter program shouldn't touch this range.
+     */
+    private static String countAndDropLabel = "countAndDrop";
+    private static final int RESERVED_DATA = -16;  // Reserve bytes -16..-1 for future use.
+    private static final int DROPPED_ETH_BROADCASTS_COUNT = -20;
+    private static final int DROPPED_RA_COUNT = -24;
+    private static final int DROPPED_ANY_HOST_COUNT = -28;
+    private static final int DROPPED_OTHER_HOST_COUNT = -32;
+    private static final int DATA_SIZE = 32;  // Remember to update when adding new counters.
+
     private final ApfCapabilities mApfCapabilities;
     private final IpClient.Callback mIpClientCallback;
     private final InterfaceParams mInterfaceParams;
@@ -729,7 +748,8 @@ public class ApfFilter {
                     gen.addJumpIfR0LessThan(filterLifetime, nextFilterLabel);
                 }
             }
-            gen.addJump(gen.DROP_LABEL);
+            gen.addLoadImmediate(Register.R1, DROPPED_RA_COUNT);
+            gen.addJump(countAndDropLabel);
             gen.defineLabel(nextFilterLabel);
             return filterLifetime;
         }
@@ -815,11 +835,13 @@ public class ApfFilter {
         if (mIPv4Address == null) {
             // When there is no IPv4 address, drop GARP replies (b/29404209).
             gen.addLoad32(Register.R0, ARP_TARGET_IP_ADDRESS_OFFSET);
-            gen.addJumpIfR0Equals(IPV4_ANY_HOST_ADDRESS, gen.DROP_LABEL);
+            gen.addLoadImmediate(Register.R1, DROPPED_ANY_HOST_COUNT);
+            gen.addJumpIfR0Equals(IPV4_ANY_HOST_ADDRESS, countAndDropLabel);
         } else {
             // When there is an IPv4 address, drop unicast/broadcast requests
             // and broadcast replies with a different target IPv4 address.
             gen.addLoadImmediate(Register.R0, ARP_TARGET_IP_ADDRESS_OFFSET);
+            gen.addLoadImmediate(Register.R1, DROPPED_OTHER_HOST_COUNT);
             gen.addJumpIfBytesNotEqual(Register.R0, mIPv4Address, gen.DROP_LABEL);
         }
 
@@ -1042,12 +1064,35 @@ public class ApfFilter {
         // Drop non-IP non-ARP broadcasts, pass the rest
         gen.addLoadImmediate(Register.R0, ETH_DEST_ADDR_OFFSET);
         gen.addJumpIfBytesNotEqual(Register.R0, ETH_BROADCAST_MAC_ADDRESS, gen.PASS_LABEL);
-        gen.addJump(gen.DROP_LABEL);
+        gen.addLoadImmediate(Register.R1, DROPPED_ETH_BROADCASTS_COUNT);
+        gen.addJump(countAndDropLabel);
 
         // Add IPv6 filters:
         gen.defineLabel(ipv6FilterLabel);
         generateIPv6FilterLocked(gen);
         return gen;
+    }
+
+    /**
+     * Append tail code to the APF program.
+     *
+     * Currently, this only includes a trampoline which counts dropped packets before jumping to the
+     * actual DROP label.
+     */
+    @GuardedBy("this")
+    private void endProgramLocked(ApfGenerator gen) throws IllegalInstructionException {
+        // Execution will reach the end of the program if no filters match, which will pass the
+        // packet to the AP.
+        gen.addJump(gen.PASS_LABEL);
+
+        // Append the count & drop trampoline which increments the counter at the data address
+        // pointed to by R1, then jumps to the drop label. This saves a few bytes over inserting
+        // the entire sequence inline for every counter.
+        gen.defineLabel(countAndDropLabel);
+        gen.addLoadData(Register.R0, 0);  // R0 = *(R1 + 0)
+        gen.addAdd(1);  // R0++
+        gen.addStoreData(Register.R0, 0);  // *(R1 + 0) = R0
+        gen.addJump(gen.DROP_LABEL);
     }
 
     /**
@@ -1060,13 +1105,21 @@ public class ApfFilter {
         ArrayList<Ra> rasToFilter = new ArrayList<>();
         final byte[] program;
         long programMinLifetime = Long.MAX_VALUE;
+        long maximumApfProgramSize = mApfCapabilities.maximumApfProgramSize;
+        if (mApfCapabilities.apfVersionSupported >= 3) {
+            // If we have the APFv3 opcodes to access data, reserve 16 bytes for counters.
+            maximumApfProgramSize -= DATA_SIZE;
+        }
         try {
             // Step 1: Determine how many RA filters we can fit in the program.
             ApfGenerator gen = beginProgramLocked();
+            // The tail code normally goes after the RA filters, but add it early to include its
+            // length when estimating the total.
+            endProgramLocked(gen);
             for (Ra ra : mRas) {
                 ra.generateFilterLocked(gen);
                 // Stop if we get too big.
-                if (gen.programLengthOverEstimate() > mApfCapabilities.maximumApfProgramSize) break;
+                if (gen.programLengthOverEstimate() > maximumApfProgramSize) break;
                 rasToFilter.add(ra);
             }
             // Step 2: Actually generate the program
@@ -1074,8 +1127,7 @@ public class ApfFilter {
             for (Ra ra : rasToFilter) {
                 programMinLifetime = Math.min(programMinLifetime, ra.generateFilterLocked(gen));
             }
-            // Execution will reach the end of the program if no filters match, which will pass the
-            // packet to the AP.
+            endProgramLocked(gen);
             program = gen.generate();
         } catch (IllegalInstructionException|IllegalStateException e) {
             Log.e(TAG, "Failed to generate APF program.", e);
