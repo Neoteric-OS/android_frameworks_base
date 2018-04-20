@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274cd691_578b5a9d",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-20T00:23:50Z",
+      "side": 1,
+      "message": "-0x1234 or -0x1122?",
+      "range": {
+        "startLine": 680,
+        "startChar": 43,
+        "endLine": 680,
+        "endChar": 49
+      },
+      "revId": "18050000d76b5458938e5b563e2374dbd2d5831e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
