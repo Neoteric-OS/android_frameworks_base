@@ -51,6 +51,7 @@ import android.view.ViewRootImpl;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -414,6 +415,36 @@ public class TvView extends ViewGroup {
             mSession.setCaptionEnabled(enabled);
         }
     }
+
+    /**
+     * Sets an audio presentation
+     *
+     * @param presentation The audio presentation to set.
+     * @see #getAudioPresentations
+     * @see #getSelectedAudioPresentation
+     */
+    public void setPresentation(@NonNull TvAudioPresentation presentation) {
+        if (mSession != null) {
+            mSession.setPresentation(presentation);
+        }
+    }
+
+    /**
+     * Returns the list of audio presentation from the selected track of type
+     * {@link TvTrackInfo#TYPE_AUDIO}. Returns empty TvAudioPresentation list if no presentation is
+     * available.
+     *
+     * @see #setPresentation
+     * @see #getSelectedAudioPresentation
+     */
+    @NonNull
+    public List<TvAudioPresentation> getAudioPresentations() {
+        if (mSession == null) {
+            return new ArrayList<TvAudioPresentation>();
+        }
+        return mSession.getAudioPresentations();
+    }
+
 
     /**
      * Selects a track.
@@ -928,6 +959,26 @@ public class TvView extends ViewGroup {
         }
 
         /**
+         * This is called when the audio presentation information has been changed.
+         *
+         * @param inputId The ID of the TV input bound to this view.
+         * @param audioPresentations A list which includes audio presentations information.
+         */
+        public void onAudioPresentationsChanged(@NonNull String inputId,
+                @NonNull List<TvAudioPresentation> audioPresentations) {
+        }
+
+        /**
+         * This is called when there is a change on the selected tracks.
+         *
+         * @param inputId The ID of the TV input bound to this view.
+         * @param presentationId The ID of the audio presentation selected.
+         * @param programId The ID of the program providing the selected audio presentation.
+         */
+        public void onAudioPresentationSelected(@NonNull String inputId, @NonNull TvAudioPresentation presentation) {
+        }
+
+        /**
          * This is called when the track information has been changed.
          *
          * @param inputId The ID of the TV input bound to this view.
@@ -1152,6 +1203,35 @@ public class TvView extends ViewGroup {
             }
             if (mCallback != null) {
                 mCallback.onChannelRetuned(mInputId, channelUri);
+            }
+        }
+
+        @Override
+        public void onAudioPresentationsChanged(Session session,
+                List<TvAudioPresentation> audioPresentations) {
+            if (DEBUG) {
+                Log.d(TAG, "onAudioPresentationsChanged(" + audioPresentations + ")");
+            }
+            if (this != mSessionCallback) {
+                Log.w(TAG, "onAudioPresentationsChanged - session not created");
+                return;
+            }
+            if (mCallback != null) {
+                mCallback.onAudioPresentationsChanged(mInputId, audioPresentations);
+            }
+        }
+
+        @Override
+        public void onAudioPresentationSelected(Session session, TvAudioPresentation presentation) {
+            if (DEBUG) {
+                Log.d(TAG, "onAudioPresentationSelected(presentation = " + presentation);
+            }
+            if (this != mSessionCallback) {
+                Log.w(TAG, "onAudioPresentationSelected - session not created");
+                return;
+            }
+            if (mCallback != null) {
+                mCallback.onAudioPresentationSelected(mInputId, presentation);
             }
         }
 

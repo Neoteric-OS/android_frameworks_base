@@ -70,6 +70,7 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
     private static final int DO_STOP_RECORDING = 21;
     private static final int DO_PAUSE_RECORDING = 22;
     private static final int DO_RESUME_RECORDING = 23;
+    private static final int DO_SELECT_AUDIO_PRESENTATION = 24;
 
     private final boolean mIsRecordingSession;
     private final HandlerCaller mCaller;
@@ -234,6 +235,12 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
                 mTvInputRecordingSessionImpl.resumeRecording((Bundle) msg.obj);
                 break;
             }
+            case DO_SELECT_AUDIO_PRESENTATION: {
+                SomeArgs args = (SomeArgs) msg.obj;
+                mTvInputSessionImpl.setAudioPresentation((TvAudioPresentation)msg.obj);
+                args.recycle();
+                break;
+            }
             default: {
                 Log.w(TAG, "Unhandled message code: " + msg.what);
                 break;
@@ -294,6 +301,12 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
     @Override
     public void setCaptionEnabled(boolean enabled) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_SET_CAPTION_ENABLED, enabled));
+    }
+
+    @Override
+    public void setAudioPresentation(TvAudioPresentation presentation) {
+        mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_SELECT_AUDIO_PRESENTATION,
+                                                             presentation));
     }
 
     @Override

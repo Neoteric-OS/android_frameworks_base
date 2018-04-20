@@ -59,6 +59,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -495,6 +496,26 @@ public final class TvInputManager {
         }
 
         /**
+         * This is called when the audio presentation information of the session has been changed.
+         *
+         * @param session A {@link TvInputManager.Session} associated with this callback.
+         * @param audioPresentations An updated list of selectable audio presentations.
+         */
+        public void onAudioPresentationsChanged(Session session,
+                                                List<TvAudioPresentation> audioPresentations) {
+        }
+
+        /**
+         * This is called when an audio presentation is selected.
+         *
+         * @param session A {@link TvInputManager.Session} associated with this callback.
+         * @param presentationId The ID of the selected audio presentation.
+         * @param programId The ID of the program providing the selected audio presentation.
+         */
+        public void onAudioPresentationSelected(Session session, TvAudioPresentation presentation) {
+        }
+
+        /**
          * This is called when the track information of the session has been changed.
          *
          * @param session A {@link TvInputManager.Session} associated with this callback.
@@ -693,6 +714,24 @@ public final class TvInputManager {
                 @Override
                 public void run() {
                     mSessionCallback.onChannelRetuned(mSession, channelUri);
+                }
+            });
+        }
+
+        void postAudioPresentationsChanged(final List<TvAudioPresentation> audioPresentations) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSessionCallback.onAudioPresentationsChanged(mSession, audioPresentations);
+                }
+            });
+        }
+
+        void postAudioPresentationSelected(final TvAudioPresentation presentation) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSessionCallback.onAudioPresentationSelected(mSession, presentation);
                 }
             });
         }
@@ -1052,6 +1091,35 @@ public final class TvInputManager {
                     record.postChannelRetuned(channelUri);
                 }
             }
+            @Override
+            public void onAudioPresentationsChanged(List<TvAudioPresentation> audioPresentations,
+                    int seq) {
+                synchronized (mSessionCallbackRecordMap) {
+                    SessionCallbackRecord record = mSessionCallbackRecordMap.get(seq);
+                    if (record == null) {
+                        Log.e(TAG, "Callback not found for seq " + seq);
+                        return;
+                    }
+                    if (record.mSession.updateAudioPresentations(audioPresentations)) {
+                        record.postAudioPresentationsChanged(audioPresentations);
+                    }
+                }
+            }
+
+            @Override
+            public void onAudioPresentationSelected(TvAudioPresentation presentation, int seq) {
+                synchronized (mSessionCallbackRecordMap) {
+                    SessionCallbackRecord record = mSessionCallbackRecordMap.get(seq);
+                    if (record == null) {
+                        Log.e(TAG, "Callback not found for seq " + seq);
+                        return;
+                    }
+                    if (record.mSession.updateAudioPresentationSelection(presentation)) {
+                        record.postAudioPresentationSelected(presentation);
+                    }
+                }
+            }
+
 
             @Override
             public void onTracksChanged(List<TvTrackInfo> tracks, int seq) {
@@ -2029,11 +2097,15 @@ public final class TvInputManager {
 
         private final Object mMetadataLock = new Object();
         // @GuardedBy("mMetadataLock")
+        private final List<TvAudioPresentation> mAudioPresentations = new ArrayList<>();
+        // @GuardedBy("mMetadataLock")
         private final List<TvTrackInfo> mAudioTracks = new ArrayList<>();
         // @GuardedBy("mMetadataLock")
         private final List<TvTrackInfo> mVideoTracks = new ArrayList<>();
         // @GuardedBy("mMetadataLock")
         private final List<TvTrackInfo> mSubtitleTracks = new ArrayList<>();
+        // @GuardedBy("mMetadataLock")
+        private TvAudioPresentation mSelectedAudioPresentation;
         // @GuardedBy("mMetadataLock")
         private String mSelectedAudioTrackId;
         // @GuardedBy("mMetadataLock")
@@ -2171,9 +2243,11 @@ public final class TvInputManager {
                 return;
             }
             synchronized (mMetadataLock) {
+                mAudioPresentations.clear();
                 mAudioTracks.clear();
                 mVideoTracks.clear();
                 mSubtitleTracks.clear();
+                mSelectedAudioPresentation = null;
                 mSelectedAudioTrackId = null;
                 mSelectedVideoTrackId = null;
                 mSelectedSubtitleTrackId = null;
@@ -2202,6 +2276,88 @@ public final class TvInputManager {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
+        }
+
+        /**
+         * Sets the audio presentation.
+         *
+         * @param presentation see {@link TvAudioPresentation}. In particular, id should be set.
+         * @see #getAudioPresentations
+         */
+        public void setPresentation(@NonNull TvAudioPresentation presentation) {
+            synchronized (mMetadataLock) {
+                Objects.requireNonNull(presentation);
+                if (!mAudioPresentations.stream().anyMatch(ap -> ap == presentation)) {
+                    Log.w(TAG, "Invalid audio presentation : " + presentation);
+                    return;
+                }
+            }
+            if (mToken == null) {
+                Log.w(TAG, "The session has been already released");
+                return;
+            }
+            try {
+                mService.setPresentation(mToken, presentation, mUserId);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
+        /**
+         * Returns the list of audio presentations. Returns empty audio presentation list
+         * if no presentation is available.
+         *
+         * @return the list of audio presentations
+         */
+        public List<TvAudioPresentation> getAudioPresentations() {
+            synchronized (mMetadataLock) {
+                if (mAudioPresentations == null) {
+                    return new ArrayList<TvAudioPresentation>();
+                }
+                return new ArrayList<>(mAudioPresentations);
+            }
+        }
+
+        /**
+         * Returns the selected audio presentation. Returns {@code null} if no audio presentation
+         * has been selected.
+         *
+         * @return The selected audio presentation.
+         * @see #setAudioPresentation
+         */
+        @Nullable
+        public TvAudioPresentation getSelectedAudioPresentation() {
+            synchronized (mMetadataLock) {
+                return mSelectedAudioPresentation;
+            }
+        }
+
+        /**
+         * Responds to onAudioPresentationsChanged() and updates the internal audio presentation
+         * information.
+         * Returns true if here is an update.
+         */
+        boolean updateAudioPresentations(List<TvAudioPresentation> audioPresentations) {
+            synchronized (mMetadataLock) {
+                mAudioPresentations.clear();
+                mAudioPresentations.addAll(audioPresentations);
+                return !mAudioPresentations.isEmpty();
+            }
+        }
+
+        /**
+         * Responds to onAudioPresentationSelected() and updates the internal audio presentation
+         * selection information.
+         * Returns true if there is an update.
+         */
+        boolean updateAudioPresentationSelection(TvAudioPresentation presentation) {
+            synchronized (mMetadataLock) {
+                if (presentation != mSelectedAudioPresentation) {
+                    mSelectedAudioPresentation = presentation;
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**

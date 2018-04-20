@@ -19,6 +19,7 @@ package android.media.tv;
 import android.content.ComponentName;
 import android.media.tv.ITvInputSession;
 import android.net.Uri;
+import android.media.tv.TvAudioPresentation;
 import android.media.tv.TvTrackInfo;
 import android.os.Bundle;
 import android.view.InputChannel;
@@ -33,6 +34,8 @@ oneway interface ITvInputClient {
     void onSessionReleased(int seq);
     void onSessionEvent(in String name, in Bundle args, int seq);
     void onChannelRetuned(in Uri channelUri, int seq);
+    void onAudioPresentationsChanged(in List<TvAudioPresentation> presentations, int seq);
+    void onAudioPresentationSelected(in TvAudioPresentation presentation, int seq);
     void onTracksChanged(in List<TvTrackInfo> tracks, int seq);
     void onTrackSelected(int type, in String trackId, int seq);
     void onVideoAvailable(int seq);

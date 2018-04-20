@@ -26,6 +26,7 @@ import android.media.tv.ITvInputHardware;
 import android.media.tv.ITvInputHardwareCallback;
 import android.media.tv.ITvInputManagerCallback;
 import android.media.tv.TunedInfo;
+import android.media.tv.TvAudioPresentation;
 import android.media.tv.TvContentRatingSystemInfo;
 import android.media.tv.TvInputHardwareInfo;
 import android.media.tv.TvInputInfo;
@@ -71,6 +72,8 @@ interface ITvInputManager {
     void tune(in IBinder sessionToken, in Uri channelUri, in Bundle params, int userId);
     void setCaptionEnabled(in IBinder sessionToken, boolean enabled, int userId);
     void selectTrack(in IBinder sessionToken, int type, in String trackId, int userId);
+    void setPresentation(in IBinder sessionToken, in TvAudioPresentation presentation,
+            int userId);
 
     void sendAppPrivateCommand(in IBinder sessionToken, in String action, in Bundle data,
             int userId);

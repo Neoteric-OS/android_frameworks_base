@@ -18,6 +18,7 @@ package android.media.tv;
 
 import android.graphics.Rect;
 import android.media.PlaybackParams;
+import android.media.tv.TvAudioPresentation;
 import android.media.tv.TvTrackInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ oneway interface ITvInputSession {
     void setVolume(float volume);
     void tune(in Uri channelUri, in Bundle params);
     void setCaptionEnabled(boolean enabled);
+    void setAudioPresentation(in TvAudioPresentation presentation);
     void selectTrack(int type, in String trackId);
 
     void appPrivateCommand(in String action, in Bundle data);

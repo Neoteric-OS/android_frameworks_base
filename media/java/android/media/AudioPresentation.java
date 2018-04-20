@@ -49,7 +49,7 @@ import java.util.Objects;
  * Applications that parse media streams and extract presentation information on their own
  * can create instances of AudioPresentation by using {@link AudioPresentation.Builder} class.
  */
-public final class AudioPresentation {
+public class AudioPresentation {
     private final int mPresentationId;
     private final int mProgramId;
     private final ULocale mLanguage;
@@ -163,7 +163,14 @@ public final class AudioPresentation {
     /**
      * This ID is reserved. No items can be explicitly assigned this ID.
      */
-    private static final int UNKNOWN_ID = -1;
+    public static final int UNKNOWN_ID = -1;
+
+    /**
+     * Allow default constructor access by the extended classes.
+     */
+    // public AudioPresentation() {
+    //     mPresentationId = UNKNOWN_ID;
+    // }
 
     /**
      * This allows an application developer to construct an AudioPresentation object with all the
@@ -334,7 +341,7 @@ public final class AudioPresentation {
     /**
      * A builder class for creating {@link AudioPresentation} objects.
      */
-    public static final class Builder {
+    public static class Builder {
         private final int mPresentationId;
         private int mProgramId = UNKNOWN_ID;
         private ULocale mLanguage = new ULocale("");
