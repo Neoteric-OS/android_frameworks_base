@@ -2249,17 +2249,14 @@ public final class BluetoothAdapter {
     /**
      * Get the profile proxy object associated with the profile.
      *
-     * <p>Profile can be one of {@link BluetoothProfile#HEALTH}, {@link BluetoothProfile#HEADSET},
-     * {@link BluetoothProfile#A2DP}, {@link BluetoothProfile#GATT}, or
-     * {@link BluetoothProfile#GATT_SERVER}. Clients must implement
-     * {@link BluetoothProfile.ServiceListener} to get notified of
-     * the connection status and to get the proxy object.
+     * <p>Profile can be one of {@link BluetoothProfile#HEADSET}, {@link BluetoothProfile#A2DP},
+     * {@link BluetoothProfile#HEALTH} or {@link BluetoothProfile#HID_DEVICE}. Clients must
+     * implement {@link BluetoothProfile.ServiceListener} to get notified of the connection
+     * status and to get the proxy object.
      *
      * @param context Context of the application
      * @param listener The service Listener for connection callbacks.
-     * @param profile The Bluetooth profile; either {@link BluetoothProfile#HEALTH}, {@link
-     * BluetoothProfile#HEADSET}, {@link BluetoothProfile#A2DP}. {@link BluetoothProfile#GATT} or
-     * {@link BluetoothProfile#GATT_SERVER}.
+     * @param profile The Bluetooth profile
      * @return true on success, false on error
      */
     public boolean getProfileProxy(Context context, BluetoothProfile.ServiceListener listener,
@@ -2320,10 +2317,10 @@ public final class BluetoothAdapter {
      *
      * <p> Clients should call this when they are no longer using
      * the proxy obtained from {@link #getProfileProxy}.
-     * Profile can be one of  {@link BluetoothProfile#HEALTH}, {@link BluetoothProfile#HEADSET} or
-     * {@link BluetoothProfile#A2DP}
+     * Profile can be one of {@link BluetoothProfile#HEADSET}, {@link BluetoothProfile#A2DP},
+     * {@link BluetoothProfile#HEALTH} or {@link BluetoothProfile#HID_DEVICE}.
      *
-     * @param profile
+     * @param profile The Bluetooth profile
      * @param proxy Profile proxy object
      */
     public void closeProfileProxy(int profile, BluetoothProfile proxy) {
