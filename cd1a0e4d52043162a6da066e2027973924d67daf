@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cadd49da_dc72070d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-04-23T15:25:24Z",
+      "side": 1,
+      "message": "minor nit: this should follow git commit message \"style\". This page explains them quite well : https://chris.beams.io/posts/git-commit/\n\nThe TL;DR is that you need a 50-80 char commit summary, followed by a blank line, followed by a detailed commit message paragraph wrapped to 80 chars.\n\nE.g\n\n\"\"\"\nSet minSdk explicitly in AndroidManifest.xml\n\nThis is to allow merging....\n\nTest: ..\nBug: ..\nChange-Id: ..\n\"\"\"",
+      "revId": "cd1a0e4d52043162a6da066e2027973924d67daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
