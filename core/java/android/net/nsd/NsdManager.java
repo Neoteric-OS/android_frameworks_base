@@ -24,6 +24,7 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -243,9 +244,12 @@ public final class NsdManager {
         return name;
     }
 
+    private static final String MULTICAST_LOCK_NAME = "nsd_manager_mlock";
+
     private static final int FIRST_LISTENER_KEY = 1;
 
     private final INsdManager mService;
+    private final WifiManager mWifiManager;
     private final Context mContext;
 
     private int mListenerKey = FIRST_LISTENER_KEY;
@@ -257,6 +261,8 @@ public final class NsdManager {
     private ServiceHandler mHandler;
     private final CountDownLatch mConnected = new CountDownLatch(1);
 
+    private WifiManager.MulticastLock mMulticastLock;
+
     /**
      * Create a new Nsd instance. Applications use
      * {@link android.content.Context#getSystemService Context.getSystemService()} to retrieve
@@ -267,6 +273,7 @@ public final class NsdManager {
      */
     public NsdManager(Context context, INsdManager service) {
         mService = service;
+        mWifiManager = context.getSystemService(WifiManager.class);
         mContext = context;
         init();
     }
@@ -449,6 +456,12 @@ public final class NsdManager {
             key = nextListenerKey();
             mListenerMap.put(key, listener);
             mServiceMap.put(key, s);
+
+            if (mMulticastLock == null) {
+                mMulticastLock = mWifiManager.createMulticastLock(MULTICAST_LOCK_NAME);
+                mMulticastLock.setReferenceCounted(true);
+            }
+            mMulticastLock.acquire();
         }
         return key;
     }
@@ -457,6 +470,10 @@ public final class NsdManager {
         synchronized (mMapLock) {
             mListenerMap.remove(key);
             mServiceMap.remove(key);
+
+            if (mMulticastLock != null && mMulticastLock.isHeld()) {
+                mMulticastLock.release();
+            }
         }
     }
 

@@ -21,7 +21,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
@@ -30,6 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static com.android.internal.util.TestUtils.waitForIdleHandler;
 
+import android.net.wifi.WifiManager;
 import android.os.HandlerThread;
 import android.os.Handler;
 import android.os.Looper;
@@ -56,6 +56,8 @@ public class NsdManagerTest {
 
     @Mock Context mContext;
     @Mock INsdManager mService;
+    @Mock WifiManager mWifiManager;
+    @Mock WifiManager.MulticastLock mMulticastLock;
     MockServiceHandler mServiceHandler;
 
     NsdManager mManager;
@@ -68,6 +70,9 @@ public class NsdManagerTest {
 
         mServiceHandler = spy(MockServiceHandler.create(mContext));
         when(mService.getMessenger()).thenReturn(new Messenger(mServiceHandler));
+        when(mContext.getSystemServiceName(WifiManager.class)).thenReturn(Context.WIFI_SERVICE);
+        when(mContext.getSystemService(WifiManager.class)).thenReturn(mWifiManager);
+        when(mWifiManager.createMulticastLock(any())).thenReturn(mMulticastLock);
 
         mManager = makeManager();
     }
@@ -260,6 +265,53 @@ public class NsdManagerTest {
         // New notifications are not passed to the client anymore
         sendResponse(NsdManager.SERVICE_FOUND, 0, key3, reply1);
         verify(listener, timeout(mTimeoutMs).times(0)).onServiceFound(reply1);
+    }
+
+    @Test
+    public void testDiscoverService_MulticastLock() {
+        // Discover 2 service types, lock taken twice
+        NsdManager.DiscoveryListener listener1 = mock(NsdManager.DiscoveryListener.class);
+        mManager.discoverServices("a_type", PROTOCOL, listener1);
+        final int key1 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        sendResponse(NsdManager.DISCOVER_SERVICES_STARTED, 0, key1,
+                new NsdServiceInfo("a_name", "a_type"));
+        verify(mMulticastLock, times(1)).setReferenceCounted(true);
+        verify(mMulticastLock, times(1)).acquire();
+        when(mMulticastLock.isHeld()).thenReturn(true);
+
+        NsdManager.DiscoveryListener listener2 = mock(NsdManager.DiscoveryListener.class);
+        mManager.discoverServices("b_type", PROTOCOL, listener2);
+        final int key2 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        sendResponse(NsdManager.DISCOVER_SERVICES_STARTED, 0, key2,
+                new NsdServiceInfo("b_name", "b_type"));
+        verify(mMulticastLock, times(2)).acquire();
+
+        // Stop discovery, lock released twice
+        mManager.stopServiceDiscovery(listener1);
+        verifyRequest(NsdManager.STOP_DISCOVERY);
+        sendResponse(NsdManager.STOP_DISCOVERY_SUCCEEDED, 0, key1, "a_type");
+
+        mManager.stopServiceDiscovery(listener2);
+        verifyRequest(NsdManager.STOP_DISCOVERY);
+        sendResponse(NsdManager.STOP_DISCOVERY_SUCCEEDED, 0, key2, "b_type");
+
+        verify(mMulticastLock, timeout(mTimeoutMs).times(2)).release();
+    }
+
+    @Test
+    public void testDiscoverService_MulticastLock_DiscoveryFailed() {
+        // Discover 2 service types, lock taken twice
+        NsdManager.DiscoveryListener listener1 = mock(NsdManager.DiscoveryListener.class);
+        mManager.discoverServices("a_type", PROTOCOL, listener1);
+        final int key1 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        verify(mMulticastLock, times(1)).acquire();
+        verify(mMulticastLock, times(1)).setReferenceCounted(true);
+        when(mMulticastLock.isHeld()).thenReturn(true);
+        sendResponse(NsdManager.DISCOVER_SERVICES_FAILED, 1, key1,
+                new NsdServiceInfo("a_name", "a_type"));
+
+        // Lock released upon failure
+        verify(mMulticastLock, timeout(mTimeoutMs).times(1)).release();
     }
 
     @Test
