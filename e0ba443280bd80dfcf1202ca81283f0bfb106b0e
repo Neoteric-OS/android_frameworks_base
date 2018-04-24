@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24031c1_c49a6f1f",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPukView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-04-24T21:55:00Z",
+      "side": 1,
+      "message": "should we update mSubId? I\u0027m not sure I understand why it gets out of sync with subId but it probably shouldn\u0027t.",
+      "range": {
+        "startLine": 80,
+        "startChar": 86,
+        "endLine": 80,
+        "endChar": 91
+      },
+      "revId": "e0ba443280bd80dfcf1202ca81283f0bfb106b0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
