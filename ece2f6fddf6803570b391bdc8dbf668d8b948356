@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579a5029_4fcc740c",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-26T15:40:52Z",
+      "side": 1,
+      "message": "Return BPF stats if",
+      "range": {
+        "startLine": 192,
+        "startChar": 11,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca03741_227749b7",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-26T15:40:52Z",
+      "side": 1,
+      "message": "What does this code do? Does we need to replicate something like it in EBPF? A quick look at iface_stat_all showed that on my device active was always 1 and the first set of numbers was all 0. So perhaps not.",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cea687c_e43e7d78",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-26T15:40:52Z",
+      "side": 1,
+      "message": "Return BPF stats if",
+      "range": {
+        "startLine": 248,
+        "startChar": 11,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e766bac4_bacbe666",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-26T15:40:52Z",
+      "side": 1,
+      "message": "JObject is not a very meaningful name. Suggest renaming to \"statsLinesToNetworkStats\" or similar.",
+      "range": {
+        "startLine": 208,
+        "startChar": 11,
+        "endLine": 208,
+        "endChar": 27
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
