@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75b3dfee_32a7bf8c",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-04-27T18:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "579a5029_4fcc740c",
+      "range": {
+        "startLine": 192,
+        "startChar": 11,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ca03741_227749b7",
         "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567c3ab9_b82c35d3",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-04-27T18:31:28Z",
+      "side": 1,
+      "message": "This is used to populate the stats entry from proc strings, in eBPF we directly read stats from map and no string parsing process involved, so I think not.",
+      "parentUuid": "1ca03741_227749b7",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "26e9cd78_c00bc159",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-04-27T18:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cea687c_e43e7d78",
+      "range": {
+        "startLine": 248,
+        "startChar": 11,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e766bac4_bacbe666",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8eaceb_7adae5ec",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-04-27T18:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e766bac4_bacbe666",
+      "range": {
+        "startLine": 208,
+        "startChar": 11,
+        "endLine": 208,
+        "endChar": 27
+      },
+      "revId": "ece2f6fddf6803570b391bdc8dbf668d8b948356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
