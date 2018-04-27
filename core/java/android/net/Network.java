@@ -100,21 +100,30 @@ public class Network implements Parcelable {
     // anytime and (b) receivers should be explicit about attempts to bypass
     // Private DNS so that the intent of the code is easily determined and
     // code search audits are possible.
-    private boolean mPrivateDnsBypass = false;
+    private final transient boolean mPrivateDnsBypass;
 
     /**
      * @hide
      */
     @UnsupportedAppUsage
     public Network(int netId) {
+        this(netId, false);
+    }
+
+    /**
+     * @hide
+     */
+    @UnsupportedAppUsage
+    public Network(int netId, boolean privateDnsBypass) {
         this.netId = netId;
+        this.mPrivateDnsBypass = privateDnsBypass;
     }
 
     /**
      * @hide
      */
     public Network(Network that) {
-        this.netId = that.netId;
+        this(that.netId, that.mPrivateDnsBypass);
     }
 
     /**
@@ -133,8 +142,7 @@ public class Network implements Parcelable {
      * Operates the same as {@code InetAddress.getByName} except that host
      * resolution is done on this network.
      *
-     * @param host
-     *            the hostName to be resolved to an address or {@code null}.
+     * @param host the hostname to be resolved to an address or {@code null}.
      * @return the {@code InetAddress} instance representing the host.
      * @throws UnknownHostException
      *             if the address lookup fails.
@@ -150,8 +158,13 @@ public class Network implements Parcelable {
      *
      * @hide
      */
+/*
     public void setPrivateDnsBypass(boolean bypass) {
         mPrivateDnsBypass = bypass;
+    }
+*/
+    public Network getPrivateDnsBypassingCopy() {
+        return new Network(netId, true);
     }
 
     /**
