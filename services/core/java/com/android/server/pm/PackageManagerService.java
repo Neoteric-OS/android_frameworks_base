@@ -11007,18 +11007,21 @@ public class PackageManagerService extends IPackageManager.Stub
                     // The signature has changed, but this package is in the system
                     // image...  let's recover!
                     pkgSetting.signatures.mSignatures = pkg.mSignatures;
-                    // However...  if this package is part of a shared user, but it
-                    // doesn't match the signature of the shared user, let's fail.
-                    // What this means is that you can't change the signatures
-                    // associated with an overall shared user, which doesn't seem all
-                    // that unreasonable.
+                    // If the system app is part of a shared user we allow that shared user to
+                    // change signatures as well in part as part of an OTA, but still verify that
+                    // the signature is consistent within the shared user for a given boot.
                     if (signatureCheckPs.sharedUser != null) {
                         if (compareSignatures(signatureCheckPs.sharedUser.signatures.mSignatures,
                                 pkg.mSignatures) != PackageManager.SIGNATURE_MATCH) {
-                            throw new PackageManagerException(
-                                    INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES,
-                                    "Signature mismatch for shared user: "
-                                            + pkgSetting.sharedUser);
+                            if (signatureCheckPs.sharedUser.signaturesChanged) {
+                                throw new PackageManagerException(
+                                        INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES,
+                                        "Signature mismatch for shared user: "
+                                                + pkgSetting.sharedUser);
+                            }
+
+                            signatureCheckPs.sharedUser.signatures.mSignatures = pkg.mSignatures;
+                            signatureCheckPs.sharedUser.signaturesChanged = true;
                         }
                     }
                     // File a report about this.
