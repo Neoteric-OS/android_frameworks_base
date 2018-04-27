@@ -11015,10 +11015,15 @@ public class PackageManagerService extends IPackageManager.Stub
                     if (signatureCheckPs.sharedUser != null) {
                         if (compareSignatures(signatureCheckPs.sharedUser.signatures.mSignatures,
                                 pkg.mSignatures) != PackageManager.SIGNATURE_MATCH) {
-                            throw new PackageManagerException(
-                                    INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES,
-                                    "Signature mismatch for shared user: "
-                                            + pkgSetting.sharedUser);
+                            if (signatureCheckPs.sharedUser.signaturesChanged) {
+                                throw new PackageManagerException(
+                                        INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES,
+                                        "Signature mismatch for shared user: "
+                                                + pkgSetting.sharedUser);
+                            }
+
+                            signatureCheckPs.sharedUser.signatures.mSignatures = pkg.mSignatures;
+                            signatureCheckPs.sharedUser.signaturesChanged = true;
                         }
                     }
                     // File a report about this.
