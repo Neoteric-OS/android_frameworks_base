@@ -1760,12 +1760,26 @@ public class PackageParser {
         }
     }
 
-    private static String validateName(String name, boolean requireSeparator,
-            boolean requireFilename) {
+    /**
+     * check if the give name is a valid process name or task affinity name
+     * validate the value specified by "android:process" or "android:taskAffinity"
+     * attribute of a component declared in the AndroidManifest.xml
+     * if you want to check if a give name is legal package name, please consider using
+     * {@link #validatePackageName(String, boolean, boolean)} as package name requires
+     * more strict naming requirements
+     *
+     * @param name the process name or task affinity name to be examined
+     * @param requireSeparator if true, param name should contain at least one dot
+     * @return null if check passed, or return appropriate error message
+     */
+    private static String validateName(String name, boolean requireSeparator) {
         final int N = name.length();
+        if (N == 0) {
+            return "Must not be empty";
+        }
         boolean hasSep = false;
         boolean front = true;
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             final char c = name.charAt(i);
             if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 front = false;
@@ -1782,6 +1796,56 @@ public class PackageParser {
                 continue;
             }
             return "bad character '" + c + "'";
+        }
+        return hasSep || !requireSeparator
+                ? null : "must have at least one '.' separator";
+    }
+
+    /**
+     * check if the give name is a valid package name or shared user name
+     * this utility method should be used only when you are going to examine
+     * the value specified by "package" or "android:sharedUserId" attribute of
+     * the top level manifest tag in the AndroidManifest.xml
+     * if you want to check if a give name is valid process name, please use
+     * {@link #validateName(String, boolean)} as instead
+     *
+     * @param name the package name(or shared user name) to be examined
+     * @param requireSeparator if true, the param name should contain at least one dot
+     * @param requireFilename if true, check whether the param name can be used as file name
+     * @return null if check passed, or return appropriate error message
+     *
+     * @hide Exposed for unit testing only.
+     */
+    @VisibleForTesting
+    public static String validatePackageName(String name, boolean requireSeparator,
+                                      boolean requireFilename) {
+        final int N = name.length();
+        if (N == 0) {
+            return "Must not be empty";
+        }
+        boolean hasSep = false;
+        boolean front = true;
+        for (int i = 0; i < N; i++) {
+            final char c = name.charAt(i);
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                front = false;
+                continue;
+            }
+            if (front) {
+                break;
+            }
+            if ((c >= '0' && c <= '9') || c == '_') {
+                continue;
+            }
+            if (c == '.') {
+                hasSep = true;
+                front = true;
+                continue;
+            }
+            return "bad character '" + c + "'";
+        }
+        if (front) {
+            return "Each segment must start with a letter";
         }
         if (requireFilename && !FileUtils.isValidExtFilename(name)) {
             return "Invalid filename";
@@ -1810,7 +1874,7 @@ public class PackageParser {
 
         final String packageName = attrs.getAttributeValue(null, "package");
         if (!"android".equals(packageName)) {
-            final String error = validateName(packageName, true, true);
+            final String error = validatePackageName(packageName, true, true);
             if (error != null) {
                 throw new PackageParserException(INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME,
                         "Invalid manifest package: " + error);
@@ -1822,7 +1886,7 @@ public class PackageParser {
             if (splitName.length() == 0) {
                 splitName = null;
             } else {
-                final String error = validateName(splitName, false, false);
+                final String error = validateName(splitName, false);
                 if (error != null) {
                     throw new PackageParserException(INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME,
                             "Invalid manifest split: " + error);
@@ -1956,7 +2020,7 @@ public class PackageParser {
 
         // Make sure we have a valid child package name
         String childPackageName = parser.getAttributeValue(null, "package");
-        if (validateName(childPackageName, true, false) != null) {
+        if (validatePackageName(childPackageName, true, false) != null) {
             mParseError = PackageManager.INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME;
             return false;
         }
@@ -2110,7 +2174,7 @@ public class PackageParser {
                 mParseError = PackageManager.INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID;
                 return null;
             }
-            String nameError = validateName(str, true, false);
+            String nameError = validatePackageName(str, true, false);
             if (nameError != null && !"android".equals(pkg.packageName)) {
                 outError[0] = "<manifest> specifies bad sharedUserId name \""
                     + str + "\": " + nameError;
@@ -3012,7 +3076,7 @@ public class PackageParser {
                 return null;
             }
             String subName = proc.substring(1);
-            String nameError = validateName(subName, false, false);
+            String nameError = validateName(subName, false);
             if (nameError != null) {
                 outError[0] = "Invalid " + type + " name " + proc + " in package "
                         + pkg + ": " + nameError;
@@ -3020,7 +3084,7 @@ public class PackageParser {
             }
             return pkg + proc;
         }
-        String nameError = validateName(proc, true, false);
+        String nameError = validateName(proc, true);
         if (nameError != null && !"system".equals(proc)) {
             outError[0] = "Invalid " + type + " name " + proc + " in package "
                     + pkg + ": " + nameError;
