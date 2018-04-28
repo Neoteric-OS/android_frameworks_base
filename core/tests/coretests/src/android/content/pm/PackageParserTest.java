@@ -16,6 +16,7 @@
 
 package android.content.pm;
 
+import static android.content.pm.PackageParser.validatePackageName;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -446,5 +447,50 @@ public class PackageParserTest {
                         "android.permission.ACCESS_NETWORK_STATE",
                         "android.permission.READ_CONTACTS"),
                 secondChild.requestedPermissions);
+    }
+
+    @Test
+    public void testValidatePackageName() throws Exception {
+        // good ones
+        assertEquals(null, validatePackageName("com.foo1", true, true));
+        assertEquals(null, validatePackageName("com.foo", true, true));
+        assertEquals(null, validatePackageName("com.foo_", true, true));
+        assertEquals(null, validatePackageName("android", false, true));
+
+        // bad ones
+        assertEquals("must have at least one '.' separator",
+                validatePackageName("com", true, true));
+        assertEquals("Must not be empty",
+                validatePackageName("", true, true));
+        assertEquals("Must not be empty",
+                validatePackageName("", false, false));
+        assertEquals("Invalid filename",
+                validatePackageName("com.foo.really_long_name_xxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                        true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName(".", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("..", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("/com.evil", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("com.1234.foo", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("_com..foo", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("com.foo.", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName(".com.foo", true, true));
+        assertEquals("Each segment must start with a letter",
+                validatePackageName("com..foo", true, true));
+
+        assertEquals("bad character '#'",
+                validatePackageName("c#1234.foo1", true, true));
+        assertEquals("bad character '/'",
+                validatePackageName("c1234.foo1/", true, true));
     }
 }
