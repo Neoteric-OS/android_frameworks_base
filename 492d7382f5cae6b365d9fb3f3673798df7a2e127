@@ -812,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "0f4ef311_731b8d93",
+        "filename": "tests/PackageUpdate/build-image/run_build.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-04-30T16:17:08Z",
+      "side": 1,
+      "message": "Regarding previous my comment,  I\u0027d like to share the detail.\n\nIn my understanding, we need to have build environment to create target-files package by \"make dist\". But we have no AOSP build environment for new Android before formal release.\nInstead we receive the image files from Google directly.\nSo we need the tool to convert from image files to target-files package and add test applications into target-files package.\nWe\u0027re seeking it in releasetools, but we don\u0027t find yet.\n\nAs other idea, we try to add test applications into image files on Android device instead of Linux host PC.\nIn current implementation, we convert from image file to ext4 by using simg2img.\nAnd we mount ext4 in Linux host PC and add test applications into it.\nThen we need root privileges for mount command.\nSo we use \"sudo\".\nIn new idea, we push ext4 into Android device and mount ext4 there.\nWe can have root privileges with \"adb root\" command.",
+      "parentUuid": "34554d2f_a297da03",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 4
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a9cf20_a1b896e1",
         "filename": "tests/PackageUpdate/run_test.bash",
         "patchSetId": 3
