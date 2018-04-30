@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729e732c_0cfa0402",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "We really don\u0027t like $(shell) in Android.mk files when there are alternatives -- see https://android.googlesource.com/platform/build/soong/+/master/docs/perf.md#regen-check-is-slow\n\nIn this case I\u0027d probably just hardcode the list if the leading zeros are important -- that\u0027s what __MATH_NUMBERS is, just a hardcoded list of numbers.",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fca6f8_617684a0",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "To prevent confusion, these should probably be spaces instead of tabs -- tabs are used to indicate rules, which this is not. Kati doesn\u0027t actually care as long as there are line continuations, this is just to help reading.\n\n(This applies to LOCAL_CFLAGS above as well)",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 1
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d041f05d_6e0ec3a1",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "You need to depend on $(SOONG_ZIP)",
+      "range": {
+        "startLine": 69,
+        "startChar": 51,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba5eadc_ec561202",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "You should be depending on the intermediates-dir-for files that you calculate below, not the phony named targets",
+      "range": {
+        "startLine": 69,
+        "startChar": 26,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a05503_69f4a081",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "Use $(SOONG_ZIP) instead to match the dependency",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

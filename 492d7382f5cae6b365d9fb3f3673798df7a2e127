@@ -836,6 +836,30 @@
     },
     {
       "key": {
+        "uuid": "6c959f7a_a970709d",
+        "filename": "tests/PackageUpdate/build-image/run_build.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-04-30T22:25:08Z",
+      "side": 1,
+      "message": "\u003e In my understanding, we need to have build environment to create target-files package by \"make dist\". But we have no AOSP build environment for new Android before formal release.\n\nThis seems strange -- why are you testing a device that you don\u0027t have a build environment for? Are you trying to test the P developer preview? For test scripts in the tree you should be able to expect to be able to build the tree.",
+      "parentUuid": "0f4ef311_731b8d93",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 4
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a9cf20_a1b896e1",
         "filename": "tests/PackageUpdate/run_test.bash",
         "patchSetId": 3
