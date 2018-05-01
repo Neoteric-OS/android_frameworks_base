@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ada137_c02f1f7f",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-01T22:07:26Z",
+      "side": 1,
+      "message": "nit: use #toString() maybe better.",
+      "range": {
+        "startLine": 705,
+        "startChar": 42,
+        "endLine": 705,
+        "endChar": 52
+      },
+      "revId": "c260df98bbc1eae3dc3bbaabfb0988402e35db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e705dc8_dca3efcc",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-01T22:07:26Z",
+      "side": 1,
+      "message": "Add the document to clarify that this method can return null if the string is invalid.",
+      "range": {
+        "startLine": 707,
+        "startChar": 5,
+        "endLine": 707,
+        "endChar": 6
+      },
+      "revId": "c260df98bbc1eae3dc3bbaabfb0988402e35db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffbfa916_9594244e",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-01T22:07:26Z",
+      "side": 1,
+      "message": "Add a constant variable for this, for example, AUTH_TYPE_INDEX.",
+      "range": {
+        "startLine": 735,
+        "startChar": 42,
+        "endLine": 735,
+        "endChar": 44
+      },
+      "revId": "c260df98bbc1eae3dc3bbaabfb0988402e35db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e14304dc_03c9315a",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-01T22:07:26Z",
+      "side": 1,
+      "message": "Can we add some constant variable for these index to improve the readability?",
+      "range": {
+        "startLine": 765,
+        "startChar": 26,
+        "endLine": 765,
+        "endChar": 28
+      },
+      "revId": "c260df98bbc1eae3dc3bbaabfb0988402e35db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
