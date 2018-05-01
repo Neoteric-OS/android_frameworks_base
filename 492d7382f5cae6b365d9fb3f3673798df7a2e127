@@ -860,6 +860,30 @@
     },
     {
       "key": {
+        "uuid": "6f4d7859_c8406cc7",
+        "filename": "tests/PackageUpdate/build-image/run_build.bash",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-01T10:57:47Z",
+      "side": 1,
+      "message": "Sorry for confusing you.\nAbove my comment is not right.\nRegardless of whether we have build environment, we\u0027d like to use pre-build image files on our test.\nWe have following reason.\n\nThis test framework verifies the behaviour of package update at letter update. So we need two images of different Android version (ex, Android O and P). \nIf we don\u0027t use pre-build images, we need to sync the source code of both Android O and P and build them.\nIt takes a lot of time.\nThis test framework should run periodically to detect degradation. So we\u0027d like to avoid consuming a lot of time.",
+      "parentUuid": "6c959f7a_a970709d",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 4
+      },
+      "revId": "492d7382f5cae6b365d9fb3f3673798df7a2e127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a9cf20_a1b896e1",
         "filename": "tests/PackageUpdate/run_test.bash",
         "patchSetId": 3
