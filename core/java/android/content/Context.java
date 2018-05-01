@@ -3583,14 +3583,22 @@ public abstract class Context {
      *
      * @see #getSystemService
      * @see android.telephony.euicc.EuiccManager
-     * TODO(b/35851809): Unhide this API.
-     * @hide
      */
-    public static final String EUICC_SERVICE = "euicc_service";
+    public static final String EUICC_SERVICE = "euicc";
 
     /**
-     * Use with {@link #getSystemService} to retrieve a
-     * {@link android.text.ClipboardManager} for accessing and modifying
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.telephony.euicc.EuiccCardManager} to access the device eUICC (embedded SIM).
+     *
+     * @see #getSystemService(String)
+     * @see android.telephony.euicc.EuiccCardManager
+     * @hide
+     */
+    @SystemApi
+    public static final String EUICC_CARD_SERVICE = "euicc_card";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.content.ClipboardManager} for accessing and modifying
      * the contents of the global clipboard.
      *
@@ -4050,6 +4058,16 @@ public abstract class Context {
      * @see #getSystemService
      */
     public static final String TIME_ZONE_RULES_MANAGER_SERVICE = "timezone";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a
+     * {@link android.se.omapi.ISecureElementService}
+     * for accessing the SecureElementService.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String SECURE_ELEMENT_SERVICE = "secure_element";
 
     /**
      * Determine whether the given permission is allowed for a particular

@@ -20,12 +20,14 @@ package android.telephony.data;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.net.LinkAddress;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Description of the response of a setup data call connection request.
@@ -40,7 +42,7 @@ public final class DataCallResponse implements Parcelable {
     private final int mActive;
     private final String mType;
     private final String mIfname;
-    private final List<InterfaceAddress> mAddresses;
+    private final List<LinkAddress> mAddresses;
     private final List<InetAddress> mDnses;
     private final List<InetAddress> mGateways;
     private final List<String> mPcscfs;
@@ -71,7 +73,7 @@ public final class DataCallResponse implements Parcelable {
      */
     public DataCallResponse(int status, int suggestedRetryTime, int cid, int active,
                             @Nullable String type, @Nullable String ifname,
-                            @Nullable List<InterfaceAddress> addresses,
+                            @Nullable List<LinkAddress> addresses,
                             @Nullable List<InetAddress> dnses,
                             @Nullable List<InetAddress> gateways,
                             @Nullable List<String> pcscfs, int mtu) {
@@ -96,7 +98,7 @@ public final class DataCallResponse implements Parcelable {
         mType = source.readString();
         mIfname = source.readString();
         mAddresses = new ArrayList<>();
-        source.readList(mAddresses, InterfaceAddress.class.getClassLoader());
+        source.readList(mAddresses, LinkAddress.class.getClassLoader());
         mDnses = new ArrayList<>();
         source.readList(mDnses, InetAddress.class.getClassLoader());
         mGateways = new ArrayList<>();
@@ -140,10 +142,10 @@ public final class DataCallResponse implements Parcelable {
     public String getIfname() { return mIfname; }
 
     /**
-     * @return A list of {@link InterfaceAddress}
+     * @return A list of {@link LinkAddress}
      */
     @NonNull
-    public List<InterfaceAddress> getAddresses() { return mAddresses; }
+    public List<LinkAddress> getAddresses() { return mAddresses; }
 
     /**
      * @return A list of DNS server addresses, e.g., "192.0.1.3" or
@@ -219,17 +221,8 @@ public final class DataCallResponse implements Parcelable {
 
     @Override
     public int hashCode() {
-        return mStatus * 31
-                + mSuggestedRetryTime * 37
-                + mCid * 41
-                + mActive * 43
-                + mType.hashCode() * 47
-                + mIfname.hashCode() * 53
-                + mAddresses.hashCode() * 59
-                + mDnses.hashCode() * 61
-                + mGateways.hashCode() * 67
-                + mPcscfs.hashCode() * 71
-                + mMtu * 73;
+        return Objects.hash(mStatus, mSuggestedRetryTime, mCid, mActive, mType, mIfname, mAddresses,
+                mDnses, mGateways, mPcscfs, mMtu);
     }
 
     @Override

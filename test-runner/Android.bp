@@ -19,13 +19,37 @@
 java_library {
     name: "android.test.runner",
 
+    // Needs to be consistent with the repackaged version of this make target.
+    java_version: "1.8",
     srcs: ["src/**/*.java"],
+
+    errorprone: {
+      javacflags: ["-Xep:DepAnn:ERROR"],
+    },
 
     no_framework_libs: true,
     libs: [
         "framework",
-        "legacy-test",
-        "android.test.mock",
+        "android.test.base",
+        "android.test.mock.stubs",
+    ],
+}
+
+// Build the android.test.runner-minus-junit library
+// =================================================
+// This is only intended for inclusion in the legacy-android-test static
+// library and must not be used elsewhere.
+java_library {
+    name: "android.test.runner-minus-junit",
+
+    srcs: ["src/android/**/*.java"],
+
+    no_framework_libs: true,
+    libs: [
+        "framework",
+        "android.test.base",
+        "android.test.mock.stubs",
+        "junit",
     ],
 }
 
@@ -37,4 +61,6 @@ java_library_static {
     static_libs: ["android.test.runner"],
 
     jarjar_rules: "jarjar-rules.txt",
+    // Pin java_version until jarjar is certified to support later versions. http://b/72703434
+    java_version: "1.8",
 }

@@ -108,6 +108,7 @@ public class DctConstants {
     public static final int EVENT_SET_CARRIER_DATA_ENABLED = BASE + 46;
     public static final int EVENT_DATA_RECONNECT = BASE + 47;
     public static final int EVENT_ROAMING_SETTING_CHANGE = BASE + 48;
+    public static final int EVENT_DATA_SERVICE_BINDING_CHANGED = BASE + 49;
 
     /***** Constants *****/
 
@@ -122,7 +123,7 @@ public class DctConstants {
     public static final int APN_CBS_ID = 7;
     public static final int APN_IA_ID = 8;
     public static final int APN_EMERGENCY_ID = 9;
-    public static final int APN_PUSH_TO_TALK_VOICE_ID = 10;
+    public static final int APN_MCPTT_ID = 10;
     public static final int APN_PUBLIC_SAFETY_DATA_ID = 11;
     public static final int APN_NUM_TYPES = 12;
 

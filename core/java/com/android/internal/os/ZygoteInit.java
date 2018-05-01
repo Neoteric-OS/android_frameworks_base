@@ -30,7 +30,6 @@ import android.os.IInstalld;
 import android.os.Environment;
 import android.os.Process;
 import android.os.RemoteException;
-import android.os.Seccomp;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.SystemClock;
@@ -515,6 +514,10 @@ public class ZygoteInit {
         /* should never reach here */
     }
 
+    public static void setApiBlacklistExemptions(String[] exemptions) {
+        VMRuntime.getRuntime().setHiddenApiExemptions(exemptions);
+    }
+
     /**
      * Creates a PathClassLoader for the given class path that is associated with a shared
      * namespace, i.e., this classloader can access platform-private native libraries. The
@@ -572,10 +575,13 @@ public class ZygoteInit {
                 final String seInfo = null;
                 final String classLoaderContext =
                         getSystemServerClassLoaderContext(classPathForElement);
+                final int targetSdkVersion = 0;  // SystemServer targets the system's SDK version
                 try {
                     installd.dexopt(classPathElement, Process.SYSTEM_UID, packageName,
                             instructionSet, dexoptNeeded, outputPath, dexFlags, compilerFilter,
-                            uuid, classLoaderContext, seInfo, false /* downgrade */);
+                            uuid, classLoaderContext, seInfo, false /* downgrade */,
+                            targetSdkVersion, /*profileName*/ null, /*dexMetadataPath*/ null,
+                            "server-dexopt");
                 } catch (RemoteException | ServiceSpecificException e) {
                     // Ignore (but log), we need this on the classpath for fallback mode.
                     Log.w(TAG, "Failed compiling classpath element for system server: "
@@ -754,7 +760,7 @@ public class ZygoteInit {
                 throw new RuntimeException("No ABI list supplied.");
             }
 
-            zygoteServer.registerServerSocket(socketName);
+            zygoteServer.registerServerSocketFromEnv(socketName);
             // In some configurations, we avoid preloading resources and classes eagerly.
             // In such cases, we will preload things prior to our first fork.
             if (!enableLazyPreload) {
@@ -779,11 +785,10 @@ public class ZygoteInit {
             // Zygote.
             Trace.setTracingEnabled(false, 0);
 
+            Zygote.nativeSecurityInit();
+
             // Zygote process unmounts root storage spaces.
             Zygote.nativeUnmountStorageOnInit();
-
-            // Set seccomp policy
-            Seccomp.setPolicy();
 
             ZygoteHooks.stopZygoteNoThreadCreation();
 
@@ -868,6 +873,17 @@ public class ZygoteInit {
         RuntimeInit.commonInit();
         ZygoteInit.nativeZygoteInit();
         return RuntimeInit.applicationInit(targetSdkVersion, argv, classLoader);
+    }
+
+    /**
+     * The main function called when starting a child zygote process. This is used as an
+     * alternative to zygoteInit(), which skips calling into initialization routines that
+     * start the Binder threadpool.
+     */
+    static final Runnable childZygoteInit(
+            int targetSdkVersion, String[] argv, ClassLoader classLoader) {
+        RuntimeInit.Arguments args = new RuntimeInit.Arguments(argv);
+        return RuntimeInit.findStaticMain(args.startClass, args.startArgs, classLoader);
     }
 
     private static final native void nativeZygoteInit();

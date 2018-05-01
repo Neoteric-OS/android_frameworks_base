@@ -3511,7 +3511,10 @@ public class Intent implements Parcelable, Cloneable {
      * For more details see TelephonyIntents.ACTION_SIM_STATE_CHANGED. This is here
      * because TelephonyIntents is an internal class.
      * @hide
+     * @deprecated Use {@link #ACTION_SIM_CARD_STATE_CHANGED} or
+     * {@link #ACTION_SIM_APPLICATION_STATE_CHANGED}
      */
+    @Deprecated
     @SystemApi
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_SIM_STATE_CHANGED = "android.intent.action.SIM_STATE_CHANGED";
