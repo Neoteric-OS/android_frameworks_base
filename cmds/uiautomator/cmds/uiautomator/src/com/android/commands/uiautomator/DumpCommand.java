@@ -104,6 +104,6 @@ public class DumpCommand extends Command {
             automationWrapper.disconnect();
         }
         System.out.println(
-                String.format("UI hierchary dumped to: %s", dumpFile.getAbsolutePath()));
+                String.format("UI hierarchy dumped to: %s", dumpFile.getAbsolutePath()));
     }
 }
