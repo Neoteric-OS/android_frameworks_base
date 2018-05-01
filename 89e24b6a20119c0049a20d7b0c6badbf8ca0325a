@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa7ffff9_6a58ba2d",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-01T15:55:26Z",
+      "side": 1,
+      "message": "A quick code search suggests this code no longer has any callers. Can we delete it? It looks like we added it in P, because this code doesn\u0027t exist in O:\n\nhttps://cs.corp.google.com/aosp-oreo/frameworks/base/core/java/com/android/internal/net/NetworkStatsFactory.java",
+      "range": {
+        "startLine": 138,
+        "startChar": 24,
+        "endLine": 138,
+        "endChar": 48
+      },
+      "revId": "89e24b6a20119c0049a20d7b0c6badbf8ca0325a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
