@@ -56,6 +56,7 @@ public abstract class NetworkAgent extends Handler {
     private static final long BW_REFRESH_MIN_WIN_MS = 500;
     private boolean mPollLceScheduled = false;
     private AtomicBoolean mPollLcePending = new AtomicBoolean(false);
+    public final int mFactorySerialNumber;
 
     private static final int BASE = Protocol.BASE_NETWORK_AGENT;
 
@@ -192,15 +193,17 @@ public abstract class NetworkAgent extends Handler {
     public static final int CMD_PREVENT_AUTOMATIC_RECONNECT = BASE + 15;
 
     public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score) {
-        this(looper, context, logTag, ni, nc, lp, score, null);
+            NetworkCapabilities nc, LinkProperties lp, int score, int factorySerialNumber) {
+        this(looper, context, logTag, ni, nc, lp, score, null, factorySerialNumber);
     }
 
     public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {
+            NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc,
+            int factorySerialNumber) {
         super(looper);
         LOG_TAG = logTag;
         mContext = context;
+        mFactorySerialNumber = factorySerialNumber;
         if (ni == null || nc == null || lp == null) {
             throw new IllegalArgumentException();
         }
@@ -209,7 +212,8 @@ public abstract class NetworkAgent extends Handler {
         ConnectivityManager cm = (ConnectivityManager)mContext.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         netId = cm.registerNetworkAgent(new Messenger(this), new NetworkInfo(ni),
-                new LinkProperties(lp), new NetworkCapabilities(nc), score, misc);
+                new LinkProperties(lp), new NetworkCapabilities(nc), score, misc,
+                factorySerialNumber);
     }
 
     @Override

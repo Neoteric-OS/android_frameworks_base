@@ -34,6 +34,7 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.support.test.runner.AndroidJUnit4;
@@ -349,7 +350,7 @@ public class LingerMonitorTest {
         caps.addCapability(0);
         caps.addTransportType(transport);
         NetworkAgentInfo nai = new NetworkAgentInfo(null, null, new Network(netId), info, null,
-                caps, 50, mCtx, null, mMisc, null, mConnService);
+                caps, 50, mCtx, null, mMisc, null, mConnService, NetworkFactory.SerialNumber.NONE);
         nai.everValidated = true;
         return nai;
     }
