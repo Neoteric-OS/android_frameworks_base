@@ -378,6 +378,7 @@ public class SettingsBackupTest {
                     Settings.Global.WFC_IMS_MODE,
                     Settings.Global.WFC_IMS_ROAMING_ENABLED,
                     Settings.Global.WFC_IMS_ROAMING_MODE,
+                    Settings.Global.WIFI_ALWAYS_ON,
                     Settings.Global.WIFI_BADGING_THRESHOLDS,
                     Settings.Global.WIFI_BOUNCE_DELAY_OVERRIDE_MS,
                     Settings.Global.WIFI_COUNTRY_CODE,
