@@ -2688,10 +2688,10 @@ public class ConnectivityManager {
         }
     }
 
-    /** {@hide} */
-    public void registerNetworkFactory(Messenger messenger, String name) {
+    /** {@hide} - returns the factory serial number */
+    public int registerNetworkFactory(Messenger messenger, String name) {
         try {
-            mService.registerNetworkFactory(messenger, name);
+            return mService.registerNetworkFactory(messenger, name);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -2712,9 +2712,10 @@ public class ConnectivityManager {
      * @return NetID corresponding to NetworkAgent.
      */
     public int registerNetworkAgent(Messenger messenger, NetworkInfo ni, LinkProperties lp,
-            NetworkCapabilities nc, int score, NetworkMisc misc) {
+            NetworkCapabilities nc, int score, NetworkMisc misc, int factorySerialNumber) {
         try {
-            return mService.registerNetworkAgent(messenger, ni, lp, nc, score, misc);
+            return mService.registerNetworkAgent(messenger, ni, lp, nc, score, misc,
+                    factorySerialNumber);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
