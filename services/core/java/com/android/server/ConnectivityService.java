@@ -70,6 +70,7 @@ import android.net.Network;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
 import android.net.NetworkConfig;
+import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
@@ -2624,7 +2625,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             NetworkAgentInfo currentNetwork = getNetworkForRequest(request.requestId);
             if (currentNetwork != null && currentNetwork.network.netId == nai.network.netId) {
                 clearNetworkForRequest(request.requestId);
-                sendUpdatedScoreToFactories(request, 0);
+                sendUpdatedScoreToFactories(request, null);
             }
         }
         nai.clearLingerState();
@@ -2700,7 +2701,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         rematchAllNetworksAndRequests(null, 0);
         if (nri.request.isRequest() && getNetworkForRequest(nri.request.requestId) == null) {
-            sendUpdatedScoreToFactories(nri.request, 0);
+            sendUpdatedScoreToFactories(nri.request, null);
         }
     }
 
@@ -4115,11 +4116,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public final String name;
         public final Messenger messenger;
         public final AsyncChannel asyncChannel;
+        public final int factorySerialNumber;
 
-        public NetworkFactoryInfo(String name, Messenger messenger, AsyncChannel asyncChannel) {
+        NetworkFactoryInfo(String name, Messenger messenger, AsyncChannel asyncChannel,
+                int factorySerialNumber) {
             this.name = name;
             this.messenger = messenger;
             this.asyncChannel = asyncChannel;
+            this.factorySerialNumber = factorySerialNumber;
         }
     }
 
@@ -4480,10 +4484,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void registerNetworkFactory(Messenger messenger, String name) {
+    public int registerNetworkFactory(Messenger messenger, String name) {
         enforceConnectivityInternalPermission();
-        NetworkFactoryInfo nfi = new NetworkFactoryInfo(name, messenger, new AsyncChannel());
+        NetworkFactoryInfo nfi = new NetworkFactoryInfo(name, messenger, new AsyncChannel(),
+                NetworkFactory.SerialNumber.nextSerialNumber());
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_FACTORY, nfi));
+        return nfi.factorySerialNumber;
     }
 
     private void handleRegisterNetworkFactory(NetworkFactoryInfo nfi) {
@@ -4575,9 +4581,35 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return nri.request.requestId == mDefaultRequest.requestId;
     }
 
+    // TODO : remove this method. It's a stopgap measure to help sheperding a number of dependent
+    // changes that would conflict throughout the automerger graph. Having this method temporarily
+    // helps with the process of going through with all these dependent changes across the entire
+    // tree.
     public int registerNetworkAgent(Messenger messenger, NetworkInfo networkInfo,
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
             int currentScore, NetworkMisc networkMisc) {
+        return registerNetworkAgent(messenger, networkInfo, linkProperties, networkCapabilities,
+                currentScore, networkMisc, NetworkFactory.SerialNumber.NONE);
+    }
+
+    /**
+     * Register a new agent with ConnectivityService to handle a network.
+     *
+     * @param messenger a messenger for ConnectivityService to contact the agent asynchronously.
+     * @param networkInfo the initial info associated with this network. It can be updated later :
+     *         see {@link #updateNetworkInfo}.
+     * @param linkProperties the initial link properties of this network. They can be updated
+     *         later : see {@link #updateLinkProperties}.
+     * @param networkCapabilities the initial capabilites of this network. They can be updated
+     *         later : see {@link #updateNetworkCapabilities}.
+     * @param currentScore the initial score of the network. See
+     *         {@link NetworkAgentInfo#getCurrentScore}.
+     * @param networkMisc metadata about the network. This is never updated.
+     * @param factorySerialNumber the serial number of the factory owning this NetworkAgent.
+     */
+    public int registerNetworkAgent(Messenger messenger, NetworkInfo networkInfo,
+            LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
+            int currentScore, NetworkMisc networkMisc, int factorySerialNumber) {
         enforceConnectivityInternalPermission();
 
         LinkProperties lp = new LinkProperties(linkProperties);
@@ -4587,7 +4619,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         final NetworkAgentInfo nai = new NetworkAgentInfo(messenger, new AsyncChannel(),
                 new Network(reserveNetId()), new NetworkInfo(networkInfo), lp, nc, currentScore,
-                mContext, mTrackerHandler, new NetworkMisc(networkMisc), mDefaultRequest, this);
+                mContext, mTrackerHandler, new NetworkMisc(networkMisc), mDefaultRequest, this,
+                factorySerialNumber);
         // Make sure the network capabilities reflect what the agent info says.
         nai.networkCapabilities = mixInCapabilities(nai, nc);
         synchronized (this) {
@@ -4965,15 +4998,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
             NetworkRequest nr = nai.requestAt(i);
             // Don't send listening requests to factories. b/17393458
             if (nr.isListen()) continue;
-            sendUpdatedScoreToFactories(nr, nai.getCurrentScore());
+            sendUpdatedScoreToFactories(nr, nai);
         }
     }
 
-    private void sendUpdatedScoreToFactories(NetworkRequest networkRequest, int score) {
+    private void sendUpdatedScoreToFactories(NetworkRequest networkRequest, NetworkAgentInfo nai) {
+        int score = 0;
+        int serial = 0;
+        if (nai != null) {
+            score = nai.getCurrentScore();
+            serial = nai.factorySerialNumber;
+        }
         if (VDBG) log("sending new Min Network Score(" + score + "): " + networkRequest.toString());
         for (NetworkFactoryInfo nfi : mNetworkFactoryInfos.values()) {
-            nfi.asyncChannel.sendMessage(android.net.NetworkFactory.CMD_REQUEST_NETWORK, score, 0,
-                    networkRequest);
+            nfi.asyncChannel.sendMessage(android.net.NetworkFactory.CMD_REQUEST_NETWORK, score,
+                    serial, networkRequest);
         }
     }
 
@@ -5234,7 +5273,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // TODO - this could get expensive if we have a lot of requests for this
                     // network.  Think about if there is a way to reduce this.  Push
                     // netid->request mapping to each factory?
-                    sendUpdatedScoreToFactories(nri.request, score);
+                    sendUpdatedScoreToFactories(nri.request, newNetwork);
                     if (isDefaultRequest(nri)) {
                         isNewDefault = true;
                         oldDefaultNetwork = currentNetwork;
@@ -5258,7 +5297,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 newNetwork.removeRequest(nri.request.requestId);
                 if (currentNetwork == newNetwork) {
                     clearNetworkForRequest(nri.request.requestId);
-                    sendUpdatedScoreToFactories(nri.request, 0);
+                    sendUpdatedScoreToFactories(nri.request, null);
                 } else {
                     Slog.wtf(TAG, "BUG: Removing request " + nri.request.requestId + " from " +
                             newNetwork.name() +
