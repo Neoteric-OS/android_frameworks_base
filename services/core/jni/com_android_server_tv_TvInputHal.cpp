@@ -390,7 +390,14 @@ int JTvInputHal::addOrUpdateStream(int deviceId, int streamId, const sp<Surface>
                 [&result, &sidebandStream](Result res, const native_handle_t* handle) {
                     result = res;
                     if (res == Result::OK) {
-                        sidebandStream = handle;
+                        if(handle) {
+                            sidebandStream = (native_handle_t *) native_handle_create(handle->numFds, handle->numInts);
+                            if(sidebandStream) {
+                                memcpy((void*)sidebandStream, handle, sizeof(native_handle_t) + (sizeof(int) * (handle->numFds + handle->numInts)));
+                            }
+                        } else {
+                            sidebandStream = NULL;
+                        }
                     }
                 });
         if (result != Result::OK) {
@@ -398,7 +405,7 @@ int JTvInputHal::addOrUpdateStream(int deviceId, int streamId, const sp<Surface>
                     result);
             return UNKNOWN_ERROR;
         }
-        connection.mSourceHandle = NativeHandle::create((native_handle_t*)sidebandStream, false);
+        connection.mSourceHandle = NativeHandle::create((native_handle_t*)sidebandStream, true);
     }
     connection.mSurface = surface;
     if (connection.mSurface != nullptr) {
