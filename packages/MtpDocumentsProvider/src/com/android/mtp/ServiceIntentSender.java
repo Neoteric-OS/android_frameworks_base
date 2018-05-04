@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
+import android.app.PendingIntent;
+import android.hardware.usb.UsbManager;
 
 /**
  * Sends intent to MtpDocumentsService.
@@ -32,6 +34,7 @@ import com.android.internal.util.Preconditions;
 class ServiceIntentSender {
     private final static String CHANNEL_ID = "device_notification_channel";
     private final Context mContext;
+    private int mDeviceId;
 
     ServiceIntentSender(Context context) {
         mContext = context;
@@ -65,6 +68,7 @@ class ServiceIntentSender {
             final Notification[] notifications = new Notification[records.length];
             for (int i = 0; i < records.length; i++) {
                 ids[i] = records[i].deviceId;
+                mDeviceId = ids[i];
                 notifications[i] = createNotification(mContext, records[i]);
             }
             intent.putExtra(MtpDocumentsService.EXTRA_DEVICE_IDS, ids);
@@ -75,16 +79,21 @@ class ServiceIntentSender {
         }
     }
 
-    private static Notification createNotification(Context context, MtpDeviceRecord device) {
+    private Notification createNotification(Context context, MtpDeviceRecord device) {
         final String title = context.getResources().getString(
                 R.string.accessing_notification_title,
                 device.name);
+        Intent intent = new Intent(mContext,ReceiverActivity.class);
+        intent.setAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        intent.putExtra(MtpDocumentsService.EXTRA_DEVICE_IDS, mDeviceId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         return new Notification.Builder(context, CHANNEL_ID)
                 .setLocalOnly(true)
                 .setContentTitle(title)
                 .setSmallIcon(com.android.internal.R.drawable.stat_sys_data_usb)
                 .setCategory(Notification.CATEGORY_SYSTEM)
                 .setFlag(Notification.FLAG_NO_CLEAR, true)
+                .setContentIntent(pendingIntent)
                 .build();
     }
 }

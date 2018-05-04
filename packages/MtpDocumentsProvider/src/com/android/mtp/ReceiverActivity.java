@@ -39,10 +39,11 @@ public class ReceiverActivity extends Activity {
         super.onCreate(savedInstanceState);
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(getIntent().getAction())) {
             final UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
+            int deviceId = device == null ? getIntent().getIntExtra(MtpDocumentsService.EXTRA_DEVICE_IDS, 0) : device.getDeviceId();
             try {
                 final MtpDocumentsProvider provider = MtpDocumentsProvider.getInstance();
-                provider.openDevice(device.getDeviceId());
-                final String deviceRootId = provider.getDeviceDocumentId(device.getDeviceId());
+                provider.openDevice(deviceId);
+                final String deviceRootId = provider.getDeviceDocumentId(deviceId);
                 final Uri uri = DocumentsContract.buildRootUri(
                         MtpDocumentsProvider.AUTHORITY, deviceRootId);
 
