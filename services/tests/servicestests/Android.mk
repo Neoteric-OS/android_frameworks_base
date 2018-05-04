@@ -52,7 +52,6 @@ LOCAL_JNI_SHARED_LIBRARIES := \
     libnativehelper \
     libnetdaidl \
     libui \
-    libunwind \
     libutils
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
