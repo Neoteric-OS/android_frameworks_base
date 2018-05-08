@@ -34,6 +34,24 @@
       "revId": "1e01dd4fac6384cd63e2ae8968d6c474b6f53b50",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097c6033_2229f95a",
+        "filename": "core/java/android/nfc/cardemulation/SeSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103651
+      },
+      "writtenOn": "2018-05-08T03:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "725aee86_39e01333",
+      "revId": "1e01dd4fac6384cd63e2ae8968d6c474b6f53b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
