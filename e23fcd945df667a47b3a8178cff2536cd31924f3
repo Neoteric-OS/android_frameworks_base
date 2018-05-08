@@ -16,6 +16,24 @@
       "revId": "e23fcd945df667a47b3a8178cff2536cd31924f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cba021_c00c863e",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworkService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-05-08T19:19:15Z",
+      "side": 1,
+      "message": "If we follow the pattern of Android registrants, we can remove this call. @Jackyu, I\u0027d suggest that a call to \"registerForQualifiedNetworksChanges()\" should trigger a callback with the current list of QualifiedNetworks(); however, @Smita, even though we can remove this call, a QualifiedNetworkService needs to be able to provide this information within a few tens of milliseconds since it will be on the critical path for data call establishment. The QualifiedNetworkService can report changes, so if a RAT is not qualified due to something like hysteresis... then the report should come back immediately with the current list rather than expecting that a decision be deferred until the Qualified Network Service has made a final decision. Then later if a rat becomes qualified, the callback should fire and provide the updated info. Perhaps removing this polled version of the API will make that intention clearer as well. Basically there should be nothing triggered due to polling across this boundary (including waiting for someone to registerForQualifiedNetworksChanged()).",
+      "parentUuid": "cb14a3ea_0e3da316",
+      "revId": "e23fcd945df667a47b3a8178cff2536cd31924f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
