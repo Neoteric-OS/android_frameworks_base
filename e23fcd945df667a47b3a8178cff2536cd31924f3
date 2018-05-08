@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb14a3ea_0e3da316",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworkService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1316358
+      },
+      "writtenOn": "2018-05-08T19:10:20Z",
+      "side": 1,
+      "message": "Should we have a callback parameter passed in to getAllQualifiedNetworks, similar to other methods on IDataService.aidl. Not all implementation might be able to get it synchronously, hence the ask.",
+      "revId": "e23fcd945df667a47b3a8178cff2536cd31924f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
