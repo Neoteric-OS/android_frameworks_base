@@ -34,7 +34,6 @@ import android.net.dns.ResolvUtil;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -48,10 +47,8 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -352,7 +349,7 @@ public class CaptivePortalLoginActivity extends Activity {
                 } finally {
                     if (urlConnection != null) urlConnection.disconnect();
                 }
-                if (httpResponseCode == 204) {
+                if (!CaptivePortal.isCaptivePortal(httpResponseCode)) {
                     done(Result.DISMISSED);
                 }
             }

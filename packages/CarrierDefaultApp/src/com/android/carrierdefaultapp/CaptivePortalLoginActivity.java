@@ -24,6 +24,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.CaptivePortal;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
@@ -267,7 +268,7 @@ public class CaptivePortalLoginActivity extends Activity {
                     if (urlConnection != null) urlConnection.disconnect();
                     TrafficStats.setThreadStatsTag(oldTag);
                 }
-                if (httpResponseCode == 204) {
+                if (!CaptivePortal.isCaptivePortal(httpResponseCode)) {
                     done(true);
                 }
             }

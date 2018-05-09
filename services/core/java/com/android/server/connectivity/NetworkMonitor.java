@@ -567,11 +567,10 @@ public class NetworkMonitor extends StateMachine {
      */
     @VisibleForTesting
     public static final class CaptivePortalProbeResult {
-        static final int SUCCESS_CODE = 204;
-        static final int FAILED_CODE = 599;
-
-        static final CaptivePortalProbeResult FAILED = new CaptivePortalProbeResult(FAILED_CODE);
-        static final CaptivePortalProbeResult SUCCESS = new CaptivePortalProbeResult(SUCCESS_CODE);
+        static final CaptivePortalProbeResult FAILED = new CaptivePortalProbeResult(
+                CaptivePortal.HTTP_PROBE_FAILED_CODE);
+        static final CaptivePortalProbeResult SUCCESS = new CaptivePortalProbeResult(
+                CaptivePortal.HTTP_PROBE_SUCCESS_CODE);
 
         private final int mHttpResponseCode;  // HTTP response code returned from Internet probe.
         final String redirectUrl;             // Redirect destination returned from Internet probe.
@@ -590,11 +589,11 @@ public class NetworkMonitor extends StateMachine {
         }
 
         boolean isSuccessful() {
-            return mHttpResponseCode == SUCCESS_CODE;
+            return mHttpResponseCode == CaptivePortal.HTTP_PROBE_SUCCESS_CODE;
         }
 
         boolean isPortal() {
-            return !isSuccessful() && (mHttpResponseCode >= 200) && (mHttpResponseCode <= 399);
+            return CaptivePortal.isCaptivePortal(mHttpResponseCode);
         }
 
         boolean isFailed() {
@@ -1063,7 +1062,7 @@ public class NetworkMonitor extends StateMachine {
     @VisibleForTesting
     protected CaptivePortalProbeResult sendHttpProbe(URL url, int probeType) {
         HttpURLConnection urlConnection = null;
-        int httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+        int httpResponseCode = CaptivePortal.HTTP_PROBE_FAILED_CODE;
         String redirectUrl = null;
         final Stopwatch probeTimer = new Stopwatch().start();
         final int oldTag = TrafficStats.getAndSetThreadStatsTag(TrafficStats.TAG_SYSTEM_PROBE);
@@ -1102,7 +1101,7 @@ public class NetworkMonitor extends StateMachine {
                 if (probeType == ValidationProbeEvent.PROBE_PAC) {
                     validationLog(
                             probeType, url, "PAC fetch 200 response interpreted as 204 response.");
-                    httpResponseCode = CaptivePortalProbeResult.SUCCESS_CODE;
+                    httpResponseCode = CaptivePortal.HTTP_PROBE_SUCCESS_CODE;
                 } else if (urlConnection.getContentLengthLong() == 0) {
                     // Consider 200 response with "Content-length=0" to not be a captive portal.
                     // There's no point in considering this a captive portal as the user cannot
@@ -1110,20 +1109,20 @@ public class NetworkMonitor extends StateMachine {
                     // See http://b/9972012.
                     validationLog(probeType, url,
                         "200 response with Content-length=0 interpreted as 204 response.");
-                    httpResponseCode = CaptivePortalProbeResult.SUCCESS_CODE;
+                    httpResponseCode = CaptivePortal.HTTP_PROBE_SUCCESS_CODE;
                 } else if (urlConnection.getContentLengthLong() == -1) {
                     // When no Content-length (default value == -1), attempt to read a byte from the
                     // response. Do not use available() as it is unreliable. See http://b/33498325.
                     if (urlConnection.getInputStream().read() == -1) {
                         validationLog(
                                 probeType, url, "Empty 200 response interpreted as 204 response.");
-                        httpResponseCode = CaptivePortalProbeResult.SUCCESS_CODE;
+                        httpResponseCode = CaptivePortal.HTTP_PROBE_SUCCESS_CODE;
                     }
                 }
             }
         } catch (IOException e) {
             validationLog(probeType, url, "Probe failed with exception " + e);
-            if (httpResponseCode == CaptivePortalProbeResult.FAILED_CODE) {
+            if (httpResponseCode == CaptivePortal.HTTP_PROBE_FAILED_CODE) {
                 // TODO: Ping gateway and DNS server and log results.
             }
         } finally {

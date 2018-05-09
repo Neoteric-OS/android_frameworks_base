@@ -34,6 +34,11 @@ public class CaptivePortal implements Parcelable {
     /** @hide */
     public static final int APP_RETURN_WANTED_AS_IS = 2;
 
+    /** @hide */
+    public static final int HTTP_PROBE_SUCCESS_CODE = 204;
+    /** @hide */
+    public static final int HTTP_PROBE_FAILED_CODE = 599;
+
     private final IBinder mBinder;
 
     /** @hide */
@@ -104,5 +109,16 @@ public class CaptivePortal implements Parcelable {
             ICaptivePortal.Stub.asInterface(mBinder).appResponse(APP_RETURN_WANTED_AS_IS);
         } catch (RemoteException e) {
         }
+    }
+
+    /**
+     * Indicates whether the result of a HTTP probe should be interpreted as the user being behind
+     * a captive portal.
+     * @hide
+     */
+    public static boolean isCaptivePortal(int httpProbeResponseCode) {
+        return httpProbeResponseCode != HTTP_PROBE_SUCCESS_CODE
+                && httpProbeResponseCode >= 200
+                && httpProbeResponseCode <= 399;
     }
 }
