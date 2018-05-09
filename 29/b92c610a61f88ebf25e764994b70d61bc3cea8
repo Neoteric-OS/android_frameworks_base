@@ -1,0 +1,7 @@
+Build-Cop-Override+1: Pete Gillin <peteg@google.com>
+Presubmit-Ready+1: android-build-prod (mdb) <android-build-team-robot@google.com>
+Submitted-by: David Brazdil <dbrazdil@google.com>
+Submitted-at: Wed, 09 May 2018 12:32:26 +0000
+Reviewed-on: https://android-review.googlesource.com/682041
+Project: platform/frameworks/base
+Branch: refs/heads/master
