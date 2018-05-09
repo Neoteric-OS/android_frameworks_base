@@ -1,0 +1,8 @@
+Presubmit-Ready+1: David Brazdil <dbrazdil@google.com>
+Code-Review+2: Nicolas Geoffray <ngeoffray@google.com>
+Verified+1: David Brazdil <dbrazdil@google.com>
+Submitted-by: David Brazdil <dbrazdil@google.com>
+Submitted-at: Wed, 09 May 2018 09:43:44 +0000
+Reviewed-on: https://android-review.googlesource.com/681845
+Project: platform/frameworks/base
+Branch: refs/heads/master
