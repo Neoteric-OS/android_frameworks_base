@@ -41,10 +41,9 @@ import android.net.Network;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
-import android.test.mock.MockContext;
 import android.support.test.filters.SmallTest;
 import android.system.Os;
-
+import android.test.mock.MockContext;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
@@ -186,6 +185,7 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         eq(TEST_SPI),
                         anyInt(),
+                        anyInt(),
                         anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
@@ -222,6 +222,7 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
+                        anyInt(),
                         anyInt(),
                         anyInt());
 
@@ -289,6 +290,7 @@ public class IpSecServiceParameterizedTest {
                         eq(0),
                         anyInt(),
                         anyInt(),
+                        anyInt(),
                         anyInt());
     }
 
@@ -321,6 +323,7 @@ public class IpSecServiceParameterizedTest {
                         eq(0),
                         eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
                         eq(AEAD_KEY),
+                        anyInt(),
                         anyInt(),
                         anyInt(),
                         anyInt(),
@@ -372,6 +375,7 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         eq(TEST_SPI),
                         anyInt(),
+                        anyInt(),
                         anyInt());
         // quota is not released until the SPI is released by the Transform
         assertEquals(1, userRecord.mSpiQuotaTracker.mCurrent);
@@ -394,6 +398,7 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         eq(TEST_SPI),
                         anyInt(),
+                        anyInt(),
                         anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
@@ -410,6 +415,7 @@ public class IpSecServiceParameterizedTest {
                         anyInt(),
                         anyString(),
                         anyString(),
+                        anyInt(),
                         anyInt(),
                         anyInt(),
                         anyInt());
@@ -447,6 +453,7 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
+                        anyInt(),
                         anyInt(),
                         anyInt());
 
@@ -517,10 +524,11 @@ public class IpSecServiceParameterizedTest {
 
         assertEquals(1, userRecord.mTunnelQuotaTracker.mCurrent);
         verify(mMockNetd)
-                .addVirtualTunnelInterface(
+                .ipSecAddTunnelInterface(
                         eq(createTunnelResp.interfaceName),
                         eq(mSourceAddr),
                         eq(mDestinationAddr),
+                        anyInt(),
                         anyInt(),
                         anyInt());
     }
@@ -537,7 +545,7 @@ public class IpSecServiceParameterizedTest {
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTunnelQuotaTracker.mCurrent);
-        verify(mMockNetd).removeVirtualTunnelInterface(eq(createTunnelResp.interfaceName));
+        verify(mMockNetd).ipSecRemoveTunnelInterface(eq(createTunnelResp.interfaceName));
         try {
             userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
                     createTunnelResp.resourceId);
@@ -561,7 +569,7 @@ public class IpSecServiceParameterizedTest {
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTunnelQuotaTracker.mCurrent);
-        verify(mMockNetd).removeVirtualTunnelInterface(eq(createTunnelResp.interfaceName));
+        verify(mMockNetd).ipSecRemoveTunnelInterface(eq(createTunnelResp.interfaceName));
         try {
             userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
                     createTunnelResp.resourceId);
