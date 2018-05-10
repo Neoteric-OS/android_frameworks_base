@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d3859c_0755ee62",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-10T10:52:59Z",
+      "side": 1,
+      "message": "Technically, these and isCaptivePortalProbeResult below don\u0027t really belong in this class. Maybe add a comment saying that they\u0027re not really related to this class\u0027s main function, but this class provides a useful place to put them? That way if we then find a better place we\u0027ll know that we can move them.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "101430e0d75e522f9ce2473c17d08998c7a20461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
