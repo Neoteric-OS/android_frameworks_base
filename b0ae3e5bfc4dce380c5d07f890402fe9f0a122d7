@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da4a9f21_d45f1839",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-05-11T21:04:36Z",
+      "side": 0,
+      "message": "I don\u0027t know how this could ever make sense, so I removed it.",
+      "range": {
+        "startLine": 787,
+        "startChar": 58,
+        "endLine": 787,
+        "endChar": 76
+      },
+      "revId": "b0ae3e5bfc4dce380c5d07f890402fe9f0a122d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
