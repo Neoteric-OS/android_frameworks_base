@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216015b2_46306b26",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-05-11T21:37:05Z",
+      "side": 1,
+      "message": "This is the check to see if a BLE app enabled us.  I think there needs to be a better way to handle this, but it needs to be done in a different patch.",
+      "range": {
+        "startLine": 777,
+        "startChar": 58,
+        "endLine": 777,
+        "endChar": 76
+      },
+      "revId": "5123ebd75647d3e67487de69cd0381f325a0adc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
