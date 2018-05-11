@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd7275d_280fdaf1",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-05-11T16:25:45Z",
+      "side": 1,
+      "message": "Please rename since this name is no longer appropriate.",
+      "range": {
+        "startLine": 767,
+        "startChar": 17,
+        "endLine": 767,
+        "endChar": 41
+      },
+      "revId": "9baada911898eabfa235c64bfc8df933c772adc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
