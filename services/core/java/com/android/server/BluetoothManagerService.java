@@ -762,7 +762,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     }
 
     /**
-     * Action taken when GattService is turned on
+     * Action taken when GattService is turned on or LE is not supported
      */
     private void onBluetoothGattServiceUp() {
         if (DBG) {
@@ -2030,7 +2030,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 if (DBG) {
                     Slog.d(TAG, "Bluetooth is in LE only mode");
                 }
-                if (mBluetoothGatt != null) {
+                if (mBluetoothGatt != null || !mContext.getPackageManager()
+                            .hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
                     if (DBG) {
                         Slog.d(TAG, "Calling BluetoothGattServiceUp");
                     }
@@ -2039,12 +2040,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     if (DBG) {
                         Slog.d(TAG, "Binding Bluetooth GATT service");
                     }
-                    if (mContext.getPackageManager()
-                            .hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-                        Intent i = new Intent(IBluetoothGatt.class.getName());
-                        doBind(i, mConnection, Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT,
-                                UserHandle.CURRENT);
-                    }
+                    Intent i = new Intent(IBluetoothGatt.class.getName());
+                    doBind(i, mConnection, Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT,
+                            UserHandle.CURRENT);
                 }
                 sendBleStateChanged(prevState, newState);
                 //Don't broadcase this as std intent
