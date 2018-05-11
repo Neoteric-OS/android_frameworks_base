@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "026bcb3a_837538c1",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-11T16:42:21Z",
+      "side": 1,
+      "message": "to my understanding empty type only existed when user entered empty type via ApnEditor(and this case does not happen any more as now ApnEditor coverts empty to all_but_ia)?",
+      "range": {
+        "startLine": 1092,
+        "startChar": 6,
+        "endLine": 1094,
+        "endChar": 28
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

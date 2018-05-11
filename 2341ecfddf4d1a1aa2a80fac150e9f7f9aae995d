@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8bdb412_61fcdb06",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-11T16:42:21Z",
+      "side": 1,
+      "message": "copied this from phoneconstants because fromstring() needs it. feel it\u0027s better to remove the unset_mtu constant in phoneconstants so that we don\u0027t maintain two copies of it. WDYT?",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
