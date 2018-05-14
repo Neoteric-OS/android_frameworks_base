@@ -35,10 +35,12 @@ import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
+import android.net.util.InterfaceParams;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
+import android.os.ConditionVariable;
 import android.os.INetworkManagementService;
 import android.os.Message;
 import android.os.RemoteException;
@@ -51,6 +53,7 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.R;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.IState;
 import com.android.internal.util.Preconditions;
@@ -63,7 +66,6 @@ import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,6 +74,8 @@ import java.util.Objects;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -97,9 +101,44 @@ public class IpClient extends StateMachine {
     private static final Class[] sMessageClasses = { IpClient.class, DhcpClient.class };
     private static final SparseArray<String> sWhatToString =
             MessageUtils.findMessageNames(sMessageClasses);
+    // Two static concurrent hashmaps of interface name to logging classes.
+    // One holds StateMachine logs and the other connectivity packet logs.
+    private static final ConcurrentHashMap<String, SharedLog> sSmLogs = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, LocalLog> sPktLogs = new ConcurrentHashMap<>();
+
+    // If |args| is non-empty, assume it's a list of interface names for which
+    // we should print IpClient logs (filter out all others).
+    public static void dumpAllLogs(PrintWriter writer, String[] args) {
+        for (String ifname : sSmLogs.keySet()) {
+            if (!ArrayUtils.isEmpty(args) && !ArrayUtils.contains(args, ifname)) continue;
+
+            writer.println(String.format("--- BEGIN %s ---", ifname));
+
+            final SharedLog smLog = sSmLogs.get(ifname);
+            if (smLog != null) {
+                writer.println("State machine log:");
+                smLog.dump(null, writer, null);
+            }
+
+            writer.println("");
+
+            final LocalLog pktLog = sPktLogs.get(ifname);
+            if (pktLog != null) {
+                writer.println("Connectivity packet log:");
+                pktLog.readOnlyLocalLog().dump(null, writer, null);
+            }
+
+            writer.println(String.format("--- END %s ---", ifname));
+        }
+    }
 
     /**
      * Callbacks for handling IpClient events.
+     *
+     * These methods are called by IpClient on its own thread. Implementations
+     * of this class MUST NOT carry out long-running computations or hold locks
+     * for which there might be contention with other code calling public
+     * methods of the same IpClient instance.
      */
     public static class Callback {
         // In order to receive onPreDhcpAction(), call #withPreDhcpAction()
@@ -142,6 +181,28 @@ public class IpClient extends StateMachine {
         // Enabled/disable Neighbor Discover offload functionality. This is
         // called, for example, whenever 464xlat is being started or stopped.
         public void setNeighborDiscoveryOffload(boolean enable) {}
+    }
+
+    public static class WaitForProvisioningCallback extends Callback {
+        private final ConditionVariable mCV = new ConditionVariable();
+        private LinkProperties mCallbackLinkProperties;
+
+        public LinkProperties waitForProvisioning() {
+            mCV.block();
+            return mCallbackLinkProperties;
+        }
+
+        @Override
+        public void onProvisioningSuccess(LinkProperties newLp) {
+            mCallbackLinkProperties = newLp;
+            mCV.open();
+        }
+
+        @Override
+        public void onProvisioningFailure(LinkProperties newLp) {
+            mCallbackLinkProperties = null;
+            mCV.open();
+        }
     }
 
     // Use a wrapper class to log in order to ensure complete and detailed
@@ -275,6 +336,11 @@ public class IpClient extends StateMachine {
                 return this;
             }
 
+            public Builder withoutMultinetworkPolicyTracker() {
+                mConfig.mUsingMultinetworkPolicyTracker = false;
+                return this;
+            }
+
             public Builder withoutIpReachabilityMonitor() {
                 mConfig.mUsingIpReachabilityMonitor = false;
                 return this;
@@ -337,6 +403,7 @@ public class IpClient extends StateMachine {
 
         /* package */ boolean mEnableIPv4 = true;
         /* package */ boolean mEnableIPv6 = true;
+        /* package */ boolean mUsingMultinetworkPolicyTracker = true;
         /* package */ boolean mUsingIpReachabilityMonitor = true;
         /* package */ int mRequestedPreDhcpActionMs;
         /* package */ InitialConfiguration mInitialConfig;
@@ -368,6 +435,7 @@ public class IpClient extends StateMachine {
             return new StringJoiner(", ", getClass().getSimpleName() + "{", "}")
                     .add("mEnableIPv4: " + mEnableIPv4)
                     .add("mEnableIPv6: " + mEnableIPv6)
+                    .add("mUsingMultinetworkPolicyTracker: " + mUsingMultinetworkPolicyTracker)
                     .add("mUsingIpReachabilityMonitor: " + mUsingIpReachabilityMonitor)
                     .add("mRequestedPreDhcpActionMs: " + mRequestedPreDhcpActionMs)
                     .add("mInitialConfig: " + mInitialConfig)
@@ -534,6 +602,8 @@ public class IpClient extends StateMachine {
     // TODO: Revert this hack once IpClient and Nat464Xlat work in concert.
     private static final String CLAT_PREFIX = "v4-";
 
+    private static final int IMMEDIATE_FAILURE_DURATION = 0;
+
     private final State mStoppedState = new StoppedState();
     private final State mStoppingState = new StoppingState();
     private final State mStartedState = new StartedState();
@@ -545,24 +615,26 @@ public class IpClient extends StateMachine {
     private final String mClatInterfaceName;
     @VisibleForTesting
     protected final Callback mCallback;
+    private final Dependencies mDependencies;
+    private final CountDownLatch mShutdownLatch;
     private final INetworkManagementService mNwService;
     private final NetlinkTracker mNetlinkTracker;
     private final WakeupMessage mProvisioningTimeoutAlarm;
     private final WakeupMessage mDhcpActionTimeoutAlarm;
-    private final MultinetworkPolicyTracker mMultinetworkPolicyTracker;
     private final SharedLog mLog;
     private final LocalLog mConnectivityPacketLog;
     private final MessageHandlingLogger mMsgStateLogger;
     private final IpConnectivityLog mMetricsLog = new IpConnectivityLog();
     private final InterfaceController mInterfaceCtrl;
 
-    private NetworkInterface mNetworkInterface;
+    private InterfaceParams mInterfaceParams;
 
     /**
      * Non-final member variables accessed only from within our StateMachine.
      */
     private LinkProperties mLinkProperties;
     private ProvisioningConfiguration mConfiguration;
+    private MultinetworkPolicyTracker mMultinetworkPolicyTracker;
     private IpReachabilityMonitor mIpReachabilityMonitor;
     private DhcpClient mDhcpClient;
     private DhcpResults mDhcpResults;
@@ -572,10 +644,23 @@ public class IpClient extends StateMachine {
     private boolean mMulticastFiltering;
     private long mStartTimeMillis;
 
+    public static class Dependencies {
+        public INetworkManagementService getNMS() {
+            return INetworkManagementService.Stub.asInterface(
+                    ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+        }
+
+        public INetd getNetd() {
+            return NetdService.getInstance();
+        }
+
+        public InterfaceParams getInterfaceParams(String ifname) {
+            return InterfaceParams.getByName(ifname);
+        }
+    }
+
     public IpClient(Context context, String ifName, Callback callback) {
-        this(context, ifName, callback, INetworkManagementService.Stub.asInterface(
-                ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE)),
-                NetdService.getInstance());
+        this(context, ifName, callback, new Dependencies());
     }
 
     /**
@@ -584,26 +669,37 @@ public class IpClient extends StateMachine {
      */
     public IpClient(Context context, String ifName, Callback callback,
             INetworkManagementService nwService) {
-        this(context, ifName, callback, nwService, NetdService.getInstance());
+        this(context, ifName, callback, new Dependencies() {
+            @Override
+            public INetworkManagementService getNMS() { return nwService; }
+        });
     }
 
     @VisibleForTesting
-    IpClient(Context context, String ifName, Callback callback,
-            INetworkManagementService nwService, INetd netd) {
+    IpClient(Context context, String ifName, Callback callback, Dependencies deps) {
         super(IpClient.class.getSimpleName() + "." + ifName);
+        Preconditions.checkNotNull(ifName);
+        Preconditions.checkNotNull(callback);
+
         mTag = getName();
 
         mContext = context;
         mInterfaceName = ifName;
         mClatInterfaceName = CLAT_PREFIX + ifName;
         mCallback = new LoggingCallbackWrapper(callback);
-        mNwService = nwService;
+        mDependencies = deps;
+        mShutdownLatch = new CountDownLatch(1);
+        mNwService = deps.getNMS();
 
-        mLog = new SharedLog(MAX_LOG_RECORDS, mTag);
-        mConnectivityPacketLog = new LocalLog(MAX_PACKET_RECORDS);
+        sSmLogs.putIfAbsent(mInterfaceName, new SharedLog(MAX_LOG_RECORDS, mTag));
+        mLog = sSmLogs.get(mInterfaceName);
+        sPktLogs.putIfAbsent(mInterfaceName, new LocalLog(MAX_PACKET_RECORDS));
+        mConnectivityPacketLog = sPktLogs.get(mInterfaceName);
         mMsgStateLogger = new MessageHandlingLogger();
 
-        mInterfaceCtrl = new InterfaceController(mInterfaceName, mNwService, netd, mLog);
+        // TODO: Consider creating, constructing, and passing in some kind of
+        // InterfaceController.Dependencies class.
+        mInterfaceCtrl = new InterfaceController(mInterfaceName, mNwService, deps.getNetd(), mLog);
 
         mNetlinkTracker = new NetlinkTracker(
                 mInterfaceName,
@@ -653,9 +749,6 @@ public class IpClient extends StateMachine {
         mLinkProperties = new LinkProperties();
         mLinkProperties.setInterfaceName(mInterfaceName);
 
-        mMultinetworkPolicyTracker = new MultinetworkPolicyTracker(mContext, getHandler(),
-                () -> { mLog.log("OBSERVED AvoidBadWifi changed"); });
-
         mProvisioningTimeoutAlarm = new WakeupMessage(mContext, getHandler(),
                 mTag + ".EVENT_PROVISIONING_TIMEOUT", EVENT_PROVISIONING_TIMEOUT);
         mDhcpActionTimeoutAlarm = new WakeupMessage(mContext, getHandler(),
@@ -687,8 +780,6 @@ public class IpClient extends StateMachine {
         } catch (RemoteException e) {
             logError("Couldn't register NetlinkTracker: %s", e);
         }
-
-        mMultinetworkPolicyTracker.start();
     }
 
     private void stopStateMachineUpdaters() {
@@ -697,19 +788,29 @@ public class IpClient extends StateMachine {
         } catch (RemoteException e) {
             logError("Couldn't unregister NetlinkTracker: %s", e);
         }
-
-        mMultinetworkPolicyTracker.shutdown();
     }
 
     @Override
     protected void onQuitting() {
         mCallback.onQuit();
+        mShutdownLatch.countDown();
     }
 
     // Shut down this IpClient instance altogether.
     public void shutdown() {
         stop();
         sendMessage(CMD_TERMINATE_AFTER_STOP);
+    }
+
+    // In order to avoid deadlock, this method MUST NOT be called on the
+    // IpClient instance's thread. This prohibition includes code executed by
+    // when methods on the passed-in IpClient.Callback instance are called.
+    public void awaitShutdown() {
+        try {
+            mShutdownLatch.await();
+        } catch (InterruptedException e) {
+            mLog.e("Interrupted while awaiting shutdown: " + e);
+        }
     }
 
     public static ProvisioningConfiguration.Builder buildProvisioningConfiguration() {
@@ -722,7 +823,12 @@ public class IpClient extends StateMachine {
             return;
         }
 
-        getNetworkInterface();
+        mInterfaceParams = mDependencies.getInterfaceParams(mInterfaceName);
+        if (mInterfaceParams == null) {
+            logError("Failed to find InterfaceParams for " + mInterfaceName);
+            doImmediateProvisioningFailure(IpManagerEvent.ERROR_INTERFACE_NOT_FOUND);
+            return;
+        }
 
         mCallback.setNeighborDiscoveryOffload(true);
         sendMessage(CMD_START, new ProvisioningConfiguration(req));
@@ -858,7 +964,7 @@ public class IpClient extends StateMachine {
     protected String getLogRecString(Message msg) {
         final String logLine = String.format(
                 "%s/%d %d %d %s [%s]",
-                mInterfaceName, mNetworkInterface == null ? -1 : mNetworkInterface.getIndex(),
+                mInterfaceName, (mInterfaceParams == null) ? -1 : mInterfaceParams.index,
                 msg.arg1, msg.arg2, Objects.toString(msg.obj), mMsgStateLogger);
 
         final String richerLogLine = getWhatToString(msg.what) + " " + logLine;
@@ -889,15 +995,6 @@ public class IpClient extends StateMachine {
         mLog.log(msg);
     }
 
-    private void getNetworkInterface() {
-        try {
-            mNetworkInterface = NetworkInterface.getByName(mInterfaceName);
-        } catch (SocketException | NullPointerException e) {
-            // TODO: throw new IllegalStateException.
-            logError("Failed to get interface object: %s", e);
-        }
-    }
-
     // This needs to be called with care to ensure that our LinkProperties
     // are in sync with the actual LinkProperties of the interface. For example,
     // we should only call this if we know for sure that there are no IP addresses
@@ -914,8 +1011,11 @@ public class IpClient extends StateMachine {
     }
 
     private void recordMetric(final int type) {
-        if (mStartTimeMillis <= 0) { Log.wtf(mTag, "Start time undefined!"); }
-        final long duration = SystemClock.elapsedRealtime() - mStartTimeMillis;
+        // We may record error metrics prior to starting.
+        // Map this to IMMEDIATE_FAILURE_DURATION.
+        final long duration = (mStartTimeMillis > 0)
+                ? (SystemClock.elapsedRealtime() - mStartTimeMillis)
+                : IMMEDIATE_FAILURE_DURATION;
         mMetricsLog.log(mInterfaceName, new IpManagerEvent(type, duration));
     }
 
@@ -985,7 +1085,8 @@ public class IpClient extends StateMachine {
         // Note that we can still be disconnected by IpReachabilityMonitor
         // if the IPv6 default gateway (but not the IPv6 DNS servers; see
         // accompanying code in IpReachabilityMonitor) is unreachable.
-        final boolean ignoreIPv6ProvisioningLoss = !mMultinetworkPolicyTracker.getAvoidBadWifi();
+        final boolean ignoreIPv6ProvisioningLoss = (mMultinetworkPolicyTracker != null)
+                && !mMultinetworkPolicyTracker.getAvoidBadWifi();
 
         // Additionally:
         //
@@ -1218,7 +1319,7 @@ public class IpClient extends StateMachine {
             }
         } else {
             // Start DHCPv4.
-            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceName);
+            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceParams);
             mDhcpClient.registerForPreDhcpNotification();
             mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
         }
@@ -1245,7 +1346,7 @@ public class IpClient extends StateMachine {
         try {
             mIpReachabilityMonitor = new IpReachabilityMonitor(
                     mContext,
-                    mInterfaceName,
+                    mInterfaceParams,
                     getHandler(),
                     mLog,
                     new IpReachabilityMonitor.Callback() {
@@ -1447,7 +1548,7 @@ public class IpClient extends StateMachine {
                     mContext.getResources().getBoolean(R.bool.config_apfDrop802_3Frames);
             apfConfig.ethTypeBlackList =
                     mContext.getResources().getIntArray(R.array.config_apfEthTypeBlackList);
-            mApfFilter = ApfFilter.maybeCreate(apfConfig, mNetworkInterface, mCallback);
+            mApfFilter = ApfFilter.maybeCreate(mContext, apfConfig, mInterfaceParams, mCallback);
             // TODO: investigate the effects of any multicast filtering racing/interfering with the
             // rest of this IP configuration startup.
             if (mApfFilter == null) {
@@ -1477,6 +1578,13 @@ public class IpClient extends StateMachine {
                 return;
             }
 
+            if (mConfiguration.mUsingMultinetworkPolicyTracker) {
+                mMultinetworkPolicyTracker = new MultinetworkPolicyTracker(
+                        mContext, getHandler(),
+                        () -> { mLog.log("OBSERVED AvoidBadWifi changed"); });
+                mMultinetworkPolicyTracker.start();
+            }
+
             if (mConfiguration.mUsingIpReachabilityMonitor && !startIpReachabilityMonitor()) {
                 doImmediateProvisioningFailure(
                         IpManagerEvent.ERROR_STARTING_IPREACHABILITYMONITOR);
@@ -1492,6 +1600,11 @@ public class IpClient extends StateMachine {
             if (mIpReachabilityMonitor != null) {
                 mIpReachabilityMonitor.stop();
                 mIpReachabilityMonitor = null;
+            }
+
+            if (mMultinetworkPolicyTracker != null) {
+                mMultinetworkPolicyTracker.shutdown();
+                mMultinetworkPolicyTracker = null;
             }
 
             if (mDhcpClient != null) {
@@ -1515,7 +1628,7 @@ public class IpClient extends StateMachine {
         private ConnectivityPacketTracker createPacketTracker() {
             try {
                 return new ConnectivityPacketTracker(
-                        getHandler(), mNetworkInterface, mConnectivityPacketLog);
+                        getHandler(), mInterfaceParams, mConnectivityPacketLog);
             } catch (IllegalArgumentException e) {
                 return null;
             }
