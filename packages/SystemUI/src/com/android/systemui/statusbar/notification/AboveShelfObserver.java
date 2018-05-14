@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.systemui.statusbar.ExpandableNotificationRow;
+import com.android.systemui.statusbar.ExpandableView;
 
 /**
  * An observer that listens to the above shelf state and can notify listeners
@@ -46,8 +46,8 @@ public class AboveShelfObserver implements AboveShelfChangedListener {
             int n = mHostLayout.getChildCount();
             for (int i = 0; i < n; i++) {
                 View child = mHostLayout.getChildAt(i);
-                if (child instanceof ExpandableNotificationRow) {
-                    if (((ExpandableNotificationRow) child).isAboveShelf()) {
+                if (child instanceof ExpandableView) {
+                    if (((ExpandableView) child).isAboveShelf()) {
                         hasViewsAboveShelf = true;
                         break;
                     }

@@ -1014,6 +1014,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     public void setRemoved() {
+        boolean wasAboveShelf = isAboveShelf();
         mRemoved = true;
         mTranslationWhenRemoved = getTranslationY();
         mWasChildInGroupWhenRemoved = isChildInGroup();
@@ -1021,6 +1022,9 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
             mTranslationWhenRemoved += getNotificationParent().getTranslationY();
         }
         mPrivateLayout.setRemoved();
+        if (isAboveShelf() != wasAboveShelf) {
+            mAboveShelfChangedListener.onAboveShelfStateChanged(!wasAboveShelf);
+        }
     }
 
     public boolean wasChildInGroupWhenRemoved() {
@@ -2263,7 +2267,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
 
     @Override
     public boolean isAboveShelf() {
-        return !isOnKeyguard()
+        return !isRemoved() && !isOnKeyguard()
                 && (mIsPinned || mHeadsupDisappearRunning || (mIsHeadsUp && mAboveShelf));
     }
 
