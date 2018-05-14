@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2f261f7a_807f5971",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-14T03:25:21Z",
+      "side": 1,
+      "message": "Do you mean we should hardcode the list of number with leading zeros?\nIf so, we\u0027ll update hard-coded implementation.",
+      "parentUuid": "adc67494_497e079a",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "8ff90b811603d6bb112d0f14ef0ebbdb43f686a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fca6f8_617684a0",
         "filename": "tests/PackageUpdate/Android.mk",
         "patchSetId": 4
