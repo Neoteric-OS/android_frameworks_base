@@ -22,6 +22,30 @@
       "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ceece98_0c847cb5",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-14T07:18:34Z",
+      "side": 1,
+      "message": "Is UNSET_MTU only used in the APN settings? If so, I think we can move it from phoneConstants.",
+      "parentUuid": "a8bdb412_61fcdb06",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
