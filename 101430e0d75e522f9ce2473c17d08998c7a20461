@@ -22,6 +22,30 @@
       "revId": "101430e0d75e522f9ce2473c17d08998c7a20461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c19917f_447bbf02",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-05-14T04:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d3859c_0755ee62",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "101430e0d75e522f9ce2473c17d08998c7a20461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
