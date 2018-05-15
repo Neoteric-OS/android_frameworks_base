@@ -12671,6 +12671,14 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     @Override
+    public List<String> getDisallowedNonSystemApps(String provisioningAction)
+        throws RemoteException {
+        enforceCanManageProfileAndDeviceOwners();
+        return new ArrayList<>(
+                mOverlayPackagesProvider.getDisallowedNonSystemApps(provisioningAction));
+    }
+
+    @Override
     public void transferOwnership(@NonNull ComponentName admin, @NonNull ComponentName target,
             @Nullable PersistableBundle bundle) {
         if (!mHasFeature) {

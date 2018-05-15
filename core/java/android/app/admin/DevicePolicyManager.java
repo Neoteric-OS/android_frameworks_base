@@ -9297,6 +9297,24 @@ public class DevicePolicyManager {
     }
 
     /**
+     * Returns set of non-system apps that should be removed during provisioning.
+     *
+     * @param provisioningAction action indicating type of provisioning, should be one of
+     * {@link #ACTION_PROVISION_MANAGED_DEVICE}, {@link #ACTION_PROVISION_MANAGED_PROFILE} or
+     * {@link #ACTION_PROVISION_MANAGED_USER}.
+     *
+     * @hide
+     */
+    public Set<String> getDisallowedNonSystemApps(String provisioningAction) {
+        try {
+            return new ArraySet<>(
+                    mService.getDisallowedNonSystemApps(provisioningAction));
+        } catch (RemoteException re) {
+            throw re.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Changes the current administrator to another one. All policies from the current
      * administrator are migrated to the new administrator. The whole operation is atomic -
      * the transfer is either complete or not done at all.
