@@ -1483,6 +1483,8 @@ public class IpSecService extends IIpSecService.Stub {
 
     private void enforceTunnelPermissions(String callingPackage) {
         checkNotNull(callingPackage, "Null calling package cannot create IpSec tunnels");
+        /*
+        STOPSHIP if this code is commented out
         switch (getAppOpsManager().noteOp(
                     AppOpsManager.OP_MANAGE_IPSEC_TUNNELS,
                     Binder.getCallingUid(), callingPackage)) {
@@ -1495,6 +1497,7 @@ public class IpSecService extends IIpSecService.Stub {
             default:
                 throw new SecurityException("Request to ignore AppOps for non-legacy API");
         }
+        */
     }
 
     private void createOrUpdateTransform(
