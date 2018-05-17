@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2120ee17_cf3d90f5",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-05-17T14:44:55Z",
+      "side": 1,
+      "message": "__MATH_NUMBERS is an implementation detail, use $(call int_range_list,1,$(max_app_version)) instead.",
+      "revId": "b41ee29c5ece1413a1825fec07198e9f2ac0a378",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
