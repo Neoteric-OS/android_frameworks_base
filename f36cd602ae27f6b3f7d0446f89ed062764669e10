@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "db16f437_18f8490b",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "This sounds reasonable, thanks!",
+      "parentUuid": "5520fe60_4aad81e8",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f34bf02b_69335b46",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f34bf02b_69335b46",
+      "range": {
+        "startLine": 814,
+        "startChar": 20,
+        "endLine": 814,
+        "endChar": 24
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f896ea1_0e259bc8",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2f323df_5b26cf11",
       "range": {
         "startLine": 814,
         "startChar": 20,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "481ff991_23a01fc1",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe8664db_281f82a5",
+      "range": {
+        "startLine": 837,
+        "startChar": 13,
+        "endLine": 837,
+        "endChar": 15
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "972b4ffc_628a1864",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -237,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "d1505bd7_17116813",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e2272eb_7cd2b6c4",
+      "range": {
+        "startLine": 1043,
+        "startChar": 17,
+        "endLine": 1043,
+        "endChar": 21
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f708115_0c903c18",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -272,6 +368,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "2f708115_0c903c18",
+      "range": {
+        "startLine": 1075,
+        "startChar": 5,
+        "endLine": 1075,
+        "endChar": 7
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6c78097_c1ee8ce7",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae626081_417a4001",
       "range": {
         "startLine": 1075,
         "startChar": 5,
@@ -378,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "65edeec4_fb5a321a",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "I didn\u0027t find any empty string from the carrier database. But I found a bug from ApnEditor which cause the database store empty string for apn type...\n\nMaybe add a TODO comment to remove this tricky code.",
+      "parentUuid": "a2c6f4c2_5ad48a78",
+      "range": {
+        "startLine": 1092,
+        "startChar": 6,
+        "endLine": 1094,
+        "endChar": 28
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d3e7a5_b812766a",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -413,6 +557,30 @@
       "side": 1,
       "message": "IIRC we can\u0027t import internal classes(com.android.telephony.dataconnection) from here as they depend on framework/base and that would cause a circle dependency? If we move these methods to ApnSettingsUtil(or other internal packages) then we won\u0027t be able to access them from here?",
       "parentUuid": "c9d3e7a5_b812766a",
+      "range": {
+        "startLine": 1153,
+        "startChar": 4,
+        "endLine": 1153,
+        "endChar": 10
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc22986e_f37c9cc8",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "oh, sorry, I don\u0027t remember the ApnSettingsUtil is an internal class. So, let keep those method here ;-)",
+      "parentUuid": "11fc8f35_4e69a756",
       "range": {
         "startLine": 1153,
         "startChar": 4,

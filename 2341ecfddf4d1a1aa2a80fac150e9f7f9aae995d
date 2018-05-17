@@ -70,6 +70,30 @@
       "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c57eb55_3fd53ee0",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-05-17T22:53:48Z",
+      "side": 1,
+      "message": "Let keep it in this file, and remove the one from phoneConstants.",
+      "parentUuid": "7c501e1a_6e1d2a39",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
