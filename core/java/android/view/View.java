@@ -19598,8 +19598,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 if (ai != null && ai.metaData != null) {
                     mAttachInfo.mImmediateInputRequested =
                         ai.metaData.getBoolean("com.nvidia.immediateInput");
+                    mAttachInfo.mRawCursorInputRequested =
+                        ai.metaData.getBoolean("com.nvidia.rawCursorInput");
 
                     Log.d(VIEW_LOG_TAG, "com.nvidia.immediateInput = " + mAttachInfo.mImmediateInputRequested);
+                    Log.d(VIEW_LOG_TAG, "com.nvidia.mRawCursorInputRequested = " + mAttachInfo.mRawCursorInputRequested);
                 }
 
                 mAttachInfo.mImmediateInputQueried = true;
@@ -27993,9 +27996,14 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         boolean mImmediateInputRequested;
 
         /**
-         * Indicates whether the view has queries for the immmediate input requesting dispatch.
+         * Indicates whether the view has queries for the immmediate and raw cursor input requesting dispatch.
          */
         boolean mImmediateInputQueried;
+
+        /**
+         * Indicates whether the view has requested raw cursor input dispatching.
+         */
+        boolean mRawCursorInputRequested;
 
         /**
          * Indicates that ViewAncestor should trigger a global layout change

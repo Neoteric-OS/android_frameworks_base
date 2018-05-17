@@ -116,4 +116,9 @@ oneway interface IWindow {
      * Tell the window that it is either gaining or losing pointer capture.
      */
     void dispatchPointerCaptureChanged(boolean hasCapture);
+
+    /**
+     * Tell the window that it is either enable or disable raw pointer.
+     */
+    void dispatchRawPointerChanged(boolean isRaw);
 }

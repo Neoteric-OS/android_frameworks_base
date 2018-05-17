@@ -317,6 +317,9 @@ public final class ViewRootImpl implements ViewParent,
     // True if the window currently has pointer capture enabled.
     boolean mPointerCapture;
 
+    // True if the window currently has raw pointer enabled.
+    boolean mRawPointer;
+
     int mViewVisibility;
     boolean mAppVisible = true;
     // For recents to freeform transition we need to keep drawing after the app receives information
@@ -2896,9 +2899,18 @@ public final class ViewRootImpl implements ViewParent,
                 // Refocusing a window that has a focused view should fire a
                 // focus event for the view since the global focused view changed.
                 fireAccessibilityFocusEventIfHasFocusedNode();
+
+                if (!mRawPointer) {
+                    if (mAttachInfo.mRawCursorInputRequested) {
+                        requestRawPointer(true);
+                    }
+                }
             } else {
                 if (mPointerCapture) {
                     handlePointerCaptureChanged(false);
+                }
+                if (mRawPointer) {
+                    handleRawPointerChanged(false);
                 }
             }
         }
@@ -4082,6 +4094,24 @@ public final class ViewRootImpl implements ViewParent,
         return true;
     }
 
+    boolean hasRawPointer() {
+        return mRawPointer;
+    }
+
+    void requestRawPointer(boolean enabled) {
+        if (mRawPointer == enabled) {
+            return;
+        }
+        InputManager.getInstance().requestRawPointer(mAttachInfo.mWindowToken, enabled);
+    }
+
+    private void handleRawPointerChanged(boolean isRaw) {
+        if (mRawPointer == isRaw) {
+            return;
+        }
+        mRawPointer = isRaw;
+    }
+
     @Override
     public void requestChildFocus(View child, View focused) {
         if (DEBUG_INPUT_RESIZE) {
@@ -4339,6 +4369,7 @@ public final class ViewRootImpl implements ViewParent,
     private static final int MSG_INSETS_CHANGED = 30;
     private static final int MSG_INSETS_CONTROL_CHANGED = 31;
     private static final int MSG_SYSTEM_GESTURE_EXCLUSION_CHANGED = 32;
+    private final static int MSG_RAW_POINTER_CHANGED = 33;
 
     final class ViewRootHandler extends Handler {
         @Override
@@ -4400,6 +4431,8 @@ public final class ViewRootImpl implements ViewParent,
                     return "MSG_INSETS_CONTROL_CHANGED";
                 case MSG_SYSTEM_GESTURE_EXCLUSION_CHANGED:
                     return "MSG_SYSTEM_GESTURE_EXCLUSION_CHANGED";
+                case MSG_RAW_POINTER_CHANGED:
+                    return "MSG_RAW_POINTER_CHANGED";
             }
             return super.getMessageName(message);
         }
@@ -4634,6 +4667,10 @@ public final class ViewRootImpl implements ViewParent,
                 } break;
                 case MSG_SYSTEM_GESTURE_EXCLUSION_CHANGED: {
                     systemGestureExclusionChanged();
+		} break;
+                case MSG_RAW_POINTER_CHANGED: {
+                    final boolean isRaw = msg.arg1 != 0;
+                    handleRawPointerChanged(isRaw);
                 } break;
             }
         }
@@ -7915,6 +7952,14 @@ public final class ViewRootImpl implements ViewParent,
         mHandler.sendMessage(msg);
     }
 
+    public void dispatchRawPointerChanged(boolean on) {
+        final int what = MSG_RAW_POINTER_CHANGED;
+        mHandler.removeMessages(what);
+        Message msg = mHandler.obtainMessage(what);
+        msg.arg1 = on ? 1 : 0;
+        mHandler.sendMessage(msg);
+    }
+
     /**
      * Post a callback to send a
      * {@link AccessibilityEvent#TYPE_WINDOW_CONTENT_CHANGED} event.
@@ -8535,6 +8580,14 @@ public final class ViewRootImpl implements ViewParent,
             final ViewRootImpl viewAncestor = mViewAncestor.get();
             if (viewAncestor != null) {
                 viewAncestor.dispatchPointerCaptureChanged(hasCapture);
+            }
+        }
+
+        @Override
+        public void dispatchRawPointerChanged(boolean isRaw) {
+            final ViewRootImpl viewAncestor = mViewAncestor.get();
+            if (viewAncestor != null) {
+                viewAncestor.dispatchRawPointerChanged(isRaw);
             }
         }
 

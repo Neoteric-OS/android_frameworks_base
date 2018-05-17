@@ -227,6 +227,7 @@ public:
     void reloadPointerIcons();
     void setCustomPointerIcon(const SpriteIcon& icon);
     void setPointerCapture(bool enabled);
+    void setRawPointer(bool enabled);
 
     /* --- InputReaderPolicyInterface implementation --- */
 
@@ -300,6 +301,9 @@ private:
         // Pointer capture feature enable/disable.
         bool pointerCapture;
 
+        // raw pointer feature enable/disable.
+        bool rawPointer;
+
         // Sprite controller singleton, created on first use.
         sp<SpriteController> spriteController;
 
@@ -345,6 +349,7 @@ NativeInputManager::NativeInputManager(jobject contextObj,
         mLocked.showTouches = false;
         mLocked.pointerCapture = false;
         mLocked.pointerDisplayId = ADISPLAY_ID_DEFAULT;
+        mLocked.rawPointer = false;
     }
     mInteractive = true;
 
@@ -555,6 +560,7 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         outConfig->setDisplayViewports(mLocked.viewports);
 
         outConfig->disabledDevices = mLocked.disabledInputDevices;
+        outConfig->rawPointer = mLocked.rawPointer;
     } // release lock
 }
 
@@ -974,6 +980,22 @@ void NativeInputManager::setCustomPointerIcon(const SpriteIcon& icon) {
     if (controller != nullptr) {
         controller->setCustomPointerIcon(icon);
     }
+}
+
+void NativeInputManager::setRawPointer(bool enabled) {
+    { // acquire lock
+        AutoMutex _l(mLock);
+
+        if (mLocked.rawPointer == enabled) {
+            return;
+        }
+
+        ALOGI("Setting raw pointer to %s.", enabled ? "enabled" : "disabled");
+        mLocked.rawPointer = enabled;
+    } // release lock
+
+    mInputManager->getReader()->requestRefreshConfiguration(
+            InputReaderConfiguration::CHANGE_RAW_POINTER);
 }
 
 TouchAffineTransformation NativeInputManager::getTouchAffineTransformation(
@@ -1723,6 +1745,12 @@ static jboolean nativeCanDispatchToDisplay(JNIEnv* env, jclass /* clazz */, jlon
     return im->getInputManager()->getReader()->canDispatchToDisplay(deviceId, displayId);
 }
 
+static void nativeSetRawPointer(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jboolean enabled) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    im->setRawPointer(enabled);
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gInputManagerMethods[] = {
@@ -1804,6 +1832,8 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetCustomPointerIcon },
     { "nativeCanDispatchToDisplay", "(JII)Z",
             (void*) nativeCanDispatchToDisplay },
+    { "nativeSetRawPointer", "(JZ)V",
+            (void*) nativeSetRawPointer },
 };
 
 #define FIND_CLASS(var, className) \

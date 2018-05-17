@@ -87,4 +87,7 @@ interface IInputManager {
 
     /** Create an input monitor for gestures. */
     InputMonitor monitorGestureInput(String name, int displayId);
+
+    // Input raw pointer data
+    void requestRawPointer(IBinder windowToken, boolean enabled);
 }
