@@ -46,6 +46,30 @@
       "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c501e1a_6e1d2a39",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "It\u0027s also used in DataConnection. So we can either keep two copies of UNSET_MTU, or remove it in  phoneConstants, or move fromString to ApnSettingUtils.",
+      "parentUuid": "9ceece98_0c847cb5",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2341ecfddf4d1a1aa2a80fac150e9f7f9aae995d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

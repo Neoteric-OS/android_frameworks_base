@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da2bc26f_e0aa7829",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9f0c94_7d3da1ea",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cb6821_c7aae6b5",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-05-14T07:05:46Z",
       "side": 1,
       "message": "nit: remove the extra * and space.\n\nAnd why this field is hide?",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5520fe60_4aad81e8",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "do we want developers to set ALL directly? As in ApnEditor user won\u0027t be able to set ALL?",
+      "parentUuid": "21cb6821_c7aae6b5",
       "range": {
         "startLine": 66,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b2f323df_5b26cf11",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f34bf02b_69335b46",
+      "range": {
+        "startLine": 814,
+        "startChar": 20,
+        "endLine": 814,
+        "endChar": 24
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025f2992_ab4d224e",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fe8664db_281f82a5",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025f2992_ab4d224e",
+      "range": {
+        "startLine": 837,
+        "startChar": 13,
+        "endLine": 837,
+        "endChar": 15
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "972b4ffc_628a1864",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2018-05-14T07:05:46Z",
       "side": 1,
       "message": "what is the DPM? Is all fields are string value? how about the integer field, do we put UNSPECIFIED_INT to the content values?\n\n\n\nAlso, I think think the format for the comment of the method should like this:\n\n/**\n * Called by DPM. If a field is not specified then we put \"\" instead of null.\n * @hide\n */\n\nPlease fix all the comment style in this file, thanks!",
+      "range": {
+        "startLine": 1043,
+        "startChar": 17,
+        "endLine": 1043,
+        "endChar": 21
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2272eb_7cd2b6c4",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "port, proxyport, protocol and roamingprotocol, mvnotype are all Strings so we put \"\" if it\u0027s UNSPECIFIED_INT in ApnSetting. For authType which is int in provider, we can just put back what we read from the provider so no need to use UNSPECIFIED_INT.",
+      "parentUuid": "972b4ffc_628a1864",
       "range": {
         "startLine": 1043,
         "startChar": 17,
@@ -137,6 +257,30 @@
       "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae626081_417a4001",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f708115_0c903c18",
+      "range": {
+        "startLine": 1075,
+        "startChar": 5,
+        "endLine": 1075,
+        "endChar": 7
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "a2c6f4c2_5ad48a78",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "This method is also used in DcTracker so I\u0027m marking it as @hide. This method is moved from DcTracker.parsetypes: https://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DcTracker.java?type\u003dcs\u0026q\u003ddctracker.parse+package:%5Eandroid$\u0026g\u003d0\u0026l\u003d1837\nwhere emtpy string is converted to \"*\". \n\nNow as you mentioned ApnEditor has prevented empty string, what about other sources of APN? E.g. from the SIM database? If there can be empty string for APN type from other sources then it\u0027s better to keep the original behavior? Otherwise it\u0027s definitely better to return 0 for empty string.",
+      "parentUuid": "b9d4dff1_dc615bae",
+      "range": {
+        "startLine": 1092,
+        "startChar": 6,
+        "endLine": 1094,
+        "endChar": 28
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d3e7a5_b812766a",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 4
@@ -221,6 +389,30 @@
       "writtenOn": "2018-05-14T07:05:46Z",
       "side": 1,
       "message": "Can we move all the method like this one to a util class(maybe ApnSettingsUtil?), rather than mark all of them public with hide annotation.",
+      "range": {
+        "startLine": 1153,
+        "startChar": 4,
+        "endLine": 1153,
+        "endChar": 10
+      },
+      "revId": "f36cd602ae27f6b3f7d0446f89ed062764669e10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fc8f35_4e69a756",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-05-17T16:36:53Z",
+      "side": 1,
+      "message": "IIRC we can\u0027t import internal classes(com.android.telephony.dataconnection) from here as they depend on framework/base and that would cause a circle dependency? If we move these methods to ApnSettingsUtil(or other internal packages) then we won\u0027t be able to access them from here?",
+      "parentUuid": "c9d3e7a5_b812766a",
       "range": {
         "startLine": 1153,
         "startChar": 4,
