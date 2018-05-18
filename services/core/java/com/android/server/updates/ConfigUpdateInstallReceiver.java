@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.SELinux;
 import android.util.EventLog;
 import android.util.Slog;
 
@@ -204,6 +205,9 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
                 tmp.delete();
             }
             IoUtils.closeQuietly(out);
+            if (!SELinux.restorecon(file)) {
+                Slog.e(TAG, "SELinux restorecon failed on " + file);
+            }
         }
     }
 
