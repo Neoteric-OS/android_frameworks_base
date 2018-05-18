@@ -16,6 +16,8 @@
 
 package com.android.carrierdefaultapp;
 
+import static android.net.captiveportal.CaptivePortalProbeSpec.HTTP_LOCATION_HEADER_NAME;
+
 import android.app.Activity;
 import android.app.LoadedApk;
 import android.content.Context;
@@ -32,6 +34,7 @@ import android.net.NetworkRequest;
 import android.net.Proxy;
 import android.net.TrafficStats;
 import android.net.Uri;
+import android.net.captiveportal.CaptivePortalProbeSpec;
 import android.net.dns.ResolvUtil;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -76,6 +79,7 @@ public class CaptivePortalLoginActivity extends Activity {
     private static final int NETWORK_REQUEST_TIMEOUT_MS = 5 * 1000;
 
     private URL mUrl;
+    private CaptivePortalProbeSpec mProbeSpec;
     private Network mNetwork;
     private NetworkCallback mNetworkCallback;
     private ConnectivityManager mCm;
@@ -95,6 +99,7 @@ public class CaptivePortalLoginActivity extends Activity {
             return;
         }
         if (DBG) logd(String.format("onCreate for %s", mUrl.toString()));
+        mProbeSpec = getProbeSpec();
         setContentView(R.layout.activity_captive_portal_login);
         getActionBar().setDisplayShowHomeEnabled(false);
 
@@ -239,6 +244,12 @@ public class CaptivePortalLoginActivity extends Activity {
         return null;
     }
 
+    private CaptivePortalProbeSpec getProbeSpec() {
+        final String spec =
+                getIntent().getStringExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL_PROBE_SPEC);
+        return CaptivePortalProbeSpec.parseSpecOrUseStatusCodeFallback(spec, mUrl);
+    }
+
     private void testForCaptivePortal() {
         mTestingThread = new Thread(new Runnable() {
             public void run() {
@@ -251,6 +262,7 @@ public class CaptivePortalLoginActivity extends Activity {
                 if (isFinishing() || isDestroyed()) return;
                 HttpURLConnection urlConnection = null;
                 int httpResponseCode = 500;
+                String locationHeader = null;
                 int oldTag = TrafficStats.getAndSetThreadStatsTag(TrafficStats.TAG_SYSTEM_PROBE);
                 try {
                     urlConnection = (HttpURLConnection) network.openConnection(
@@ -261,13 +273,14 @@ public class CaptivePortalLoginActivity extends Activity {
                     urlConnection.setUseCaches(false);
                     urlConnection.getInputStream();
                     httpResponseCode = urlConnection.getResponseCode();
+                    locationHeader = urlConnection.getHeaderField(HTTP_LOCATION_HEADER_NAME);
                 } catch (IOException e) {
                     loge(e.getMessage());
                 } finally {
                     if (urlConnection != null) urlConnection.disconnect();
                     TrafficStats.setThreadStatsTag(oldTag);
                 }
-                if (httpResponseCode == 204) {
+                if (mProbeSpec.getResult(httpResponseCode, locationHeader).isSuccessful()) {
                     done(true);
                 }
             }
