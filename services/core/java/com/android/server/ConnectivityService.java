@@ -2493,6 +2493,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 ensureNetworkTransitionWakelock(nai.name());
             }
             mLegacyTypeTracker.remove(nai, wasDefault);
+            if (!nai.networkCapabilities.hasTransport(TRANSPORT_VPN)) {
+                updateAllVpnsCapabilities();
+            }
             rematchAllNetworksAndRequests(null, 0);
             mLingerMonitor.noteDisconnect(nai);
             if (nai.created) {
@@ -3762,6 +3765,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    /**
+     * Ask all VPN objects to recompute and update their capabilities.
+     *
+     * When underlying networks change, VPNs may have to update capabilities to reflect things
+     * like the metered bit, their transports, and so on. This asks the VPN objects to update
+     * their capabilities, and as this will cause them to send messages to the ConnectivityService
+     * handler thread through their agent, this is asynchronous. When the capabilities objects
+     * are computed they will be up-to-date as they are computed synchronously from here and
+     * this is running on the ConnectivityService thread.
+     * TODO : Fix this and call updateCapabilities inline to remove out-of-order events.
+     */
+    private void updateAllVpnsCapabilities() {
+        synchronized (mVpns) {
+            for (int i = 0; i < mVpns.size(); i++) {
+                final Vpn vpn = mVpns.valueAt(i);
+                vpn.updateCapabilities();
+            }
+        }
+    }
+
     @Override
     public boolean updateLockdownVpn() {
         if (Binder.getCallingUid() != Process.SYSTEM_UID) {
@@ -4559,7 +4582,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // Note: if mDefaultRequest is changed, NetworkMonitor needs to be updated.
     private final NetworkRequest mDefaultRequest;
- 
+
     // Request used to optionally keep mobile data active even when higher
     // priority networks like Wi-Fi are active.
     private final NetworkRequest mDefaultMobileDataRequest;
@@ -4919,12 +4942,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!newNc.hasTransport(TRANSPORT_VPN)) {
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
-            synchronized (mVpns) {
-                for (int i = 0; i < mVpns.size(); i++) {
-                    final Vpn vpn = mVpns.valueAt(i);
-                    vpn.updateCapabilities();
-                }
-            }
+            updateAllVpnsCapabilities();
         }
     }
 
