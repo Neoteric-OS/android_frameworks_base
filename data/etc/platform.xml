@@ -167,8 +167,6 @@
             file="/system/framework/android.test.mock.jar" />
     <library name="android.test.runner"
             file="/system/framework/android.test.runner.jar" />
-    <library name="javax.obex"
-            file="/system/framework/javax.obex.jar" />
     <library name="org.apache.http.legacy"
             file="/system/framework/org.apache.http.legacy.jar" />
 
