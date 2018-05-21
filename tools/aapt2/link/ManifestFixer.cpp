@@ -404,6 +404,20 @@ bool ManifestFixer::Consume(IAaptContext* context, xml::XmlResource* doc) {
     root->InsertChild(0, std::move(uses_sdk));
   }
 
+  xml::Element* application = root->FindChild({}, "application");
+  if (application != nullptr) {
+    for (const std::string& lib : options_.uses_libraries) {
+      if (application->FindChildWithAttribute(
+          {}, "uses-library", xml::kSchemaAndroid,"name", lib) == nullptr) {
+        std::unique_ptr<xml::Element> el = util::make_unique<xml::Element>();
+        el->name = "uses-library";
+        el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "name", lib});
+        el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "required", "true"});
+        application->AppendChild(std::move(el));
+      }
+    }
+  }
+
   xml::XmlActionExecutor executor;
   if (!BuildRules(&executor, context->GetDiagnostics())) {
     return false;

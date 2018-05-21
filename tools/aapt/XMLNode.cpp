@@ -797,6 +797,26 @@ sp<XMLNode> XMLNode::getChildElement(const String16& tagNamespace, const String1
     return NULL;
 }
 
+sp<XMLNode> XMLNode::getChildElementWithAttribute(const String16& tagNamespace,
+                                                  const String16& tagName,
+                                                  const String16& attrNamespace,
+                                                  const String16& attrName,
+                                                  const String16& attrValue) {
+    for (size_t i=0; i<mChildren.size(); i++) {
+        sp<XMLNode> child = mChildren.itemAt(i);
+        if (child->getType() == XMLNode::TYPE_ELEMENT
+                && child->mNamespaceUri == tagNamespace
+                && child->mElementName == tagName) {
+            const XMLNode::attribute_entry* attr = getAttribute(attrNamespace, attrName);
+            if (attr != NULL && attr->string == attrValue) {
+                return child;
+            }
+        }
+    }
+
+    return NULL;
+}
+
 status_t XMLNode::addChild(const sp<XMLNode>& child)
 {
     if (getType() == TYPE_CDATA) {
