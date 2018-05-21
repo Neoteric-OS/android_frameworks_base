@@ -28,5 +28,6 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
 LOCAL_PACKAGE_NAME := VpnDialogs
 LOCAL_PRIVATE_PLATFORM_APIS := true
+LOCAL_AAPT_FLAGS := --uses-library aaa.bbb --uses-library ccc.ddd
 
 include $(BUILD_PACKAGE)

@@ -735,6 +735,15 @@ int main(int argc, char* const argv[])
                         goto bail;
                     }
                     bundle.setPrivateSymbolsPackage(String8(argv[0]));
+                } else if (strcmp(cp, "-uses-library") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--uses-library' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.addUsesLibrary(argv[0]);
                 } else {
                     fprintf(stderr, "ERROR: Unknown option '-%s'\n", cp);
                     wantUsage = true;

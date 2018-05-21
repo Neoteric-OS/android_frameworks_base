@@ -112,6 +112,12 @@ public:
     sp<XMLNode> searchElement(const String16& tagNamespace, const String16& tagName);
     
     sp<XMLNode> getChildElement(const String16& tagNamespace, const String16& tagName);
+
+    sp<XMLNode> getChildElementWithAttribute(const String16& tagNamespace,
+                                             const String16& tagName,
+                                             const String16& attrNamespace,
+                                             const String16& attrName,
+                                             const String16& attrValue);
     
     status_t addChild(const sp<XMLNode>& child);
 

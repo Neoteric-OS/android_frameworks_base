@@ -222,6 +222,8 @@ public:
     bool getNoVersionVectors() const { return mNoVersionVectors; }
     void setNoVersionTransitions(bool val) { mNoVersionTransitions = val; }
     bool getNoVersionTransitions() const { return mNoVersionTransitions; }
+    const android::Vector<const char*>& getUsesLibraries() const { return mUsesLibraries; }
+    void addUsesLibrary(const char* lib) { mUsesLibraries.add(lib); }
 
     /*
      * Set and get the file specification.
@@ -347,6 +349,7 @@ private:
     android::String8 mPlatformVersionCode;
     android::String8 mPlatformVersionName;
     android::String8 mPrivateSymbolsPackage;
+    android::Vector<const char*> mUsesLibraries;
 
     /* file specification */
     int         mArgc;

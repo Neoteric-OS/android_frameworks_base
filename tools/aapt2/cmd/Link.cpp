@@ -1973,7 +1973,10 @@ int Link(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
                             "Syntax: path/to/output.apk:<config>[,<config>[...]].\n"
                             "On Windows, use a semicolon ';' separator instead.",
                             &split_args)
-          .OptionalSwitch("-v", "Enables verbose logging.", &verbose);
+          .OptionalSwitch("-v", "Enables verbose logging.", &verbose)
+          .OptionalFlagList("--uses-library",
+                            "Shared library that this apk is using.",
+                            &options.manifest_fixer_options.uses_libraries);
 
   if (!flags.Parse("aapt2 link", args, &std::cerr)) {
     return 1;

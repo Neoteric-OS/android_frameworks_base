@@ -35,6 +35,7 @@ struct ManifestFixerOptions {
   Maybe<std::string> rename_instrumentation_target_package;
   Maybe<std::string> version_name_default;
   Maybe<std::string> version_code_default;
+  std::vector<std::string> uses_libraries;
 };
 
 /**

@@ -1021,6 +1021,25 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
         }
     }
 
+    if (application != NULL) {
+        const Vector<const char*>& usesLibs = bundle->getUsesLibraries();
+        const int LN = usesLibs.size();
+        for (int i = 0; i < LN; i++) {
+            if (application->getChildElementWithAttribute(String16(), String16("application"),
+                                                          String16(RESOURCES_ANDROID_NAMESPACE),
+                                                          String16("versionCode"),
+                                                          String16(usesLibs[i])) == NULL) {
+                sp<XMLNode> node = XMLNode::newElement(root->getFilename(), String16(),
+                                                       String16("uses-library"));
+                node->addAttribute(String16(RESOURCES_ANDROID_NAMESPACE),String16("name"),
+                                   String16(usesLibs[i]));
+                node->addAttribute(String16(RESOURCES_ANDROID_NAMESPACE), String16("required"),
+                                   String16("true"));
+                application->addChild(node);
+            }
+        }
+    }
+
     return NO_ERROR;
 }
 
