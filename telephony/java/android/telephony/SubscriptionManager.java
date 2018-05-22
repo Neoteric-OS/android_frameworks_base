@@ -55,7 +55,6 @@ import android.os.ServiceManager;
 import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.ImsMmTelManager;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.android.internal.telephony.IOnSubscriptionsChangedListener;
@@ -2258,10 +2257,7 @@ public class SubscriptionManager {
             newConfig.setLocale(Locale.ROOT);
         }
 
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        DisplayMetrics newMetrics = new DisplayMetrics();
-        newMetrics.setTo(metrics);
-        return new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        return context.createConfigurationContext(newConfig).getResources();
     }
 
     /**
