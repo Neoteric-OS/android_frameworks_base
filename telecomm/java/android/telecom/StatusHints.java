@@ -19,11 +19,16 @@ package android.telecom;
 import android.annotation.SystemApi;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Objects;
 
@@ -31,6 +36,7 @@ import java.util.Objects;
  * Contains status label and icon displayed in the in-call UI.
  */
 public final class StatusHints implements Parcelable {
+    private static final String TAG = StatusHints.class.getSimpleName();
 
     private final CharSequence mLabel;
     private final Icon mIcon;
@@ -90,6 +96,35 @@ public final class StatusHints implements Parcelable {
      */
     @SystemApi @Deprecated
     public Drawable getIcon(Context context) {
+        return mIcon.loadDrawable(context);
+    }
+
+    /**
+     * Returns the icon associated with Subscription which displayed in the in-call UI.
+     *
+     * @param context Context object
+     * @param subId Subscription Id of Subscription who's resources are required
+     *
+     * @return the icon associated with Subscription.
+     */
+    public Drawable getIconForSubId(Context context, int subId) {
+        if (mIcon == null) {
+            return null;
+        }
+        if (mIcon.getType() == Icon.TYPE_RESOURCE && !TextUtils.isEmpty(mIcon.getResPackage())) {
+            try {
+                Context packageContext = context.createPackageContext(mIcon.getResPackage(), 0);
+                Resources res = SubscriptionManager.getResourcesForSubId(packageContext, subId);
+                if (res != null) {
+                    return res.getDrawable(mIcon.getResId(), context.getTheme());
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, String.format("Cannot find package %s", mIcon.getResPackage()));
+            } catch (Resources.NotFoundException e) {
+                Log.e(TAG, String.format("Cannot find icon %d in package %s",
+                        mIcon.getResId(), mIcon.getResPackage()), e);
+            }
+        }
         return mIcon.loadDrawable(context);
     }
 
