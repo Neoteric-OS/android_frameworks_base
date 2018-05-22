@@ -143,6 +143,14 @@ package android.service.notification {
 
 }
 
+package android.telecom {
+
+  public final class StatusHints implements android.os.Parcelable {
+    method public android.graphics.drawable.Drawable getIcon(android.content.Context);
+  }
+
+}
+
 package android.telephony {
 
   public class TelephonyManager {

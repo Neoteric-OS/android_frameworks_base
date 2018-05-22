@@ -19,11 +19,16 @@ package android.telecom;
 import android.annotation.SystemApi;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Objects;
 
@@ -31,10 +36,12 @@ import java.util.Objects;
  * Contains status label and icon displayed in the in-call UI.
  */
 public final class StatusHints implements Parcelable {
+    private static final String TAG = StatusHints.class.getSimpleName();
 
     private final CharSequence mLabel;
     private final Icon mIcon;
     private final Bundle mExtras;
+    private final int mSubId;
 
     /**
      * @hide
@@ -47,9 +54,14 @@ public final class StatusHints implements Parcelable {
     }
 
     public StatusHints(CharSequence label, Icon icon, Bundle extras) {
+        this(label, icon, extras, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+    }
+
+    public StatusHints(CharSequence label, Icon icon, Bundle extras, int subId) {
         mLabel = label;
         mIcon = icon;
         mExtras = extras;
+        mSubId = subId;
     }
 
     /**
@@ -87,9 +99,38 @@ public final class StatusHints implements Parcelable {
      * @return An icon displayed in the in-call UI.
      *
      * @hide
+     * @removed Use {@link #getIconDrawable} instead.
      */
-    @SystemApi @Deprecated
+    @SystemApi
     public Drawable getIcon(Context context) {
+        return getIconDrawable(context);
+    }
+
+    /**
+     * Returns an icon associated with Subscription which displayed in the in-call UI.
+     *
+     * @param context Context object
+     *
+     * @return An icon associated with Subscription which displayed in the in-call UI.
+     */
+    public Drawable getIconDrawable(Context context) {
+        if (mIcon == null) {
+            return null;
+        }
+        if (mIcon.getType() == Icon.TYPE_RESOURCE && !TextUtils.isEmpty(mIcon.getResPackage())) {
+            try {
+                Context packageContext = context.createPackageContext(mIcon.getResPackage(), 0);
+                Resources res = SubscriptionManager.getResourcesForSubId(packageContext, mSubId);
+                if (res != null) {
+                    return res.getDrawable(mIcon.getResId(), context.getTheme());
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, String.format("Cannot find package %s", mIcon.getResPackage()));
+            } catch (Resources.NotFoundException e) {
+                Log.e(TAG, String.format("Cannot find icon %d in package %s",
+                        mIcon.getResId(), mIcon.getResPackage()), e);
+            }
+        }
         return mIcon.loadDrawable(context);
     }
 
@@ -107,6 +148,13 @@ public final class StatusHints implements Parcelable {
         return mExtras;
     }
 
+    /**
+     * @return Subscription id used to display status.
+     */
+    public int getSubId() {
+        return mSubId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -117,6 +165,7 @@ public final class StatusHints implements Parcelable {
         out.writeCharSequence(mLabel);
         out.writeParcelable(mIcon, 0);
         out.writeParcelable(mExtras, 0);
+        out.writeInt(mSubId);
     }
 
     public static final Creator<StatusHints> CREATOR
@@ -134,6 +183,7 @@ public final class StatusHints implements Parcelable {
         mLabel = in.readCharSequence();
         mIcon = in.readParcelable(getClass().getClassLoader());
         mExtras = in.readParcelable(getClass().getClassLoader());
+        mSubId = in.readInt();
     }
 
     @Override
@@ -142,13 +192,15 @@ public final class StatusHints implements Parcelable {
             StatusHints otherHints = (StatusHints) other;
             return Objects.equals(otherHints.getLabel(), getLabel()) &&
                     Objects.equals(otherHints.getIcon(), getIcon()) &&
-                    Objects.equals(otherHints.getExtras(), getExtras());
+                    Objects.equals(otherHints.getExtras(), getExtras()) &&
+                    Objects.equals(otherHints.getSubId(), getSubId());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mLabel) + Objects.hashCode(mIcon) + Objects.hashCode(mExtras);
+        return Objects.hashCode(mLabel) + Objects.hashCode(mIcon) + Objects.hashCode(mExtras)
+                + Objects.hashCode(mSubId);
     }
 }

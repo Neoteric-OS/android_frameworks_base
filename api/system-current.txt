@@ -5012,7 +5012,6 @@ package android.telecom {
 
   public final class StatusHints implements android.os.Parcelable {
     ctor public deprecated StatusHints(android.content.ComponentName, java.lang.CharSequence, int, android.os.Bundle);
-    method public deprecated android.graphics.drawable.Drawable getIcon(android.content.Context);
     method public deprecated int getIconResId();
     method public deprecated android.content.ComponentName getPackageName();
   }
