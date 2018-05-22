@@ -41452,6 +41452,7 @@ package android.telecom {
     method public int describeContents();
     method public android.os.Bundle getExtras();
     method public android.graphics.drawable.Icon getIcon();
+    method public android.graphics.drawable.Drawable getIconForSubId(android.content.Context, int);
     method public java.lang.CharSequence getLabel();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.telecom.StatusHints> CREATOR;

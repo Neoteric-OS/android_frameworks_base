@@ -46,7 +46,6 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.euicc.EuiccManager;
-import android.util.DisplayMetrics;
 
 import com.android.internal.telephony.IOnSubscriptionsChangedListener;
 import com.android.internal.telephony.ISub;
@@ -1698,10 +1697,7 @@ public class SubscriptionManager {
             newConfig.mnc = subInfo.getMnc();
             if (newConfig.mnc == 0) newConfig.mnc = Configuration.MNC_ZERO;
         }
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        DisplayMetrics newMetrics = new DisplayMetrics();
-        newMetrics.setTo(metrics);
-        return new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        return context.createConfigurationContext(newConfig).getResources();
     }
 
     /**
