@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "931f79e2_1ef7aaa2",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-05-23T17:29:46Z",
+      "side": 1,
+      "message": "maybe $(call intermediates-dir-for,PACKAGING,PackageUpdate)?",
+      "range": {
+        "startLine": 5,
+        "startChar": 18,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ae2142_fec2e380",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-05-23T17:29:46Z",
+      "side": 1,
+      "message": "what are these for?",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
