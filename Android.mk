@@ -590,17 +590,15 @@ LOCAL_LIGHT_GREYLIST := $(INTERNAL_PLATFORM_HIDDENAPI_LIGHT_GREYLIST)
 LOCAL_DARK_GREYLIST := $(INTERNAL_PLATFORM_HIDDENAPI_DARK_GREYLIST)
 LOCAL_BLACKLIST := $(INTERNAL_PLATFORM_HIDDENAPI_BLACKLIST)
 
+LOCAL_P_LIGHT_GREYLIST := frameworks/base/config/hiddenapi-p-light-greylist.txt
+LOCAL_P_DARK_GREYLIST := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-dark-greylist.txt
+LOCAL_P_BLACKLIST := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-blacklist.txt
+
 # File names of source files we will use to generate the final API lists.
 LOCAL_SRC_GREYLIST := frameworks/base/config/hiddenapi-light-greylist.txt
 LOCAL_SRC_FORCE_BLACKLIST := frameworks/base/config/hiddenapi-force-blacklist.txt
 LOCAL_SRC_PRIVATE_API := $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
 LOCAL_SRC_REMOVED_API := $(INTERNAL_PLATFORM_REMOVED_DEX_API_FILE)
-
-LOCAL_SRC_ALL := \
-	$(LOCAL_SRC_GREYLIST) \
-	$(LOCAL_SRC_FORCE_BLACKLIST) \
-	$(LOCAL_SRC_PRIVATE_API) \
-	$(LOCAL_SRC_REMOVED_API)
 
 define assert-has-no-overlap
 if [ ! -z "`comm -12 <(sort $(1)) <(sort $(2))`" ]; then \
@@ -648,7 +646,8 @@ $(LOCAL_LIGHT_GREYLIST): REGEX_SERIALIZATION := \
     "serialPersistentFields:\[Ljava/io/ObjectStreamField;" \
     "writeObject\(Ljava/io/ObjectOutputStream;\)V" \
     "writeReplace\(\)Ljava/lang/Object;"
-$(LOCAL_LIGHT_GREYLIST): $(LOCAL_SRC_ALL)
+$(LOCAL_LIGHT_GREYLIST): $(LOCAL_SRC_GREYLIST) $(LOCAL_SRC_FORCE_BLACKLIST) \
+                         $(LOCAL_SRC_PRIVATE_API) $(LOCAL_SRC_REMOVED_API)
 	sort $(LOCAL_SRC_GREYLIST) \
 	     <(grep -E "\->("$(subst $(space),"|",$(REGEX_SERIALIZATION))")$$" \
 	               $(LOCAL_SRC_PRIVATE_API)) \
@@ -657,6 +656,8 @@ $(LOCAL_LIGHT_GREYLIST): $(LOCAL_SRC_ALL)
 	$(call assert-has-no-duplicates,$@)
 	$(call assert-is-subset,$@,$(LOCAL_SRC_PRIVATE_API))
 	$(call assert-has-no-overlap,$@,$(LOCAL_SRC_FORCE_BLACKLIST))
+
+define generate-hiddenapi-lists
 
 # Generate dark greylist as remaining classes and class members in the same
 # package as classes listed in the light greylist.
@@ -668,42 +669,34 @@ $(LOCAL_LIGHT_GREYLIST): $(LOCAL_SRC_ALL)
 #       name but do not contain another forward-slash in the class name, e.g.
 #       matching '^Lpackage/subpackage/[^/;]*;'
 #   (4) subtract entries shared with LOCAL_LIGHT_GREYLIST
-$(LOCAL_DARK_GREYLIST): $(LOCAL_SRC_ALL) $(LOCAL_LIGHT_GREYLIST)
-	comm -13 <(sort $(LOCAL_LIGHT_GREYLIST) $(LOCAL_SRC_FORCE_BLACKLIST)) \
-	         <(sed 's/\->.*//' $(LOCAL_LIGHT_GREYLIST) | sed 's/\(.*\/\).*/\1/' | sort | uniq | \
-	               while read PKG_NAME; do \
-	                   grep -E "^$${PKG_NAME}[^/;]*;" $(LOCAL_SRC_PRIVATE_API); \
-	               done | sort | uniq) \
-	         > $@
-	$(call assert-is-subset,$@,$(LOCAL_SRC_PRIVATE_API))
-	$(call assert-has-no-duplicates,$@)
-	$(call assert-has-no-overlap,$@,$(LOCAL_LIGHT_GREYLIST))
-	$(call assert-has-no-overlap,$@,$(LOCAL_SRC_FORCE_BLACKLIST))
+$(2): $(1) $(LOCAL_SRC_FORCE_BLACKLIST) $(LOCAL_SRC_PRIVATE_API)
+	LC_COLLATE=C comm -13
+		<(sort $(1) $(LOCAL_SRC_FORCE_BLACKLIST)) \
+		<(sed 's/\->.*//' $(1) | sed 's/\(.*\/\).*/\1/' | sort | uniq | \
+			while read PKG_NAME; do \
+				grep -E "^$${PKG_NAME}[^/;]*;" $(LOCAL_SRC_PRIVATE_API); \
+			done | sort | uniq) \
+		> $(2)
+	$(call assert-is-subset,$(2),$(LOCAL_SRC_PRIVATE_API))
+	$(call assert-has-no-duplicates,$(2))
+	$(call assert-has-no-overlap,$(2),$(1))
+	$(call assert-has-no-overlap,$(2),$(LOCAL_SRC_FORCE_BLACKLIST))
 
 # Generate blacklist as private API minus (light greylist plus dark greylist).
-$(LOCAL_BLACKLIST): $(LOCAL_SRC_ALL) $(LOCAL_LIGHT_GREYLIST) $(LOCAL_DARK_GREYLIST)
-	comm -13 <(sort $(LOCAL_LIGHT_GREYLIST) $(LOCAL_DARK_GREYLIST)) \
-	         <(sort $(LOCAL_SRC_PRIVATE_API)) \
-	         > $@
-	$(call assert-is-subset,$@,$(LOCAL_SRC_PRIVATE_API))
-	$(call assert-has-no-duplicates,$@)
-	$(call assert-has-no-overlap,$@,$(LOCAL_LIGHT_GREYLIST))
-	$(call assert-has-no-overlap,$@,$(LOCAL_DARK_GREYLIST))
-	$(call assert-is-subset,$(LOCAL_SRC_FORCE_BLACKLIST),$@)
+$(3): $(1) $(2) $(LOCAL_SRC_FORCE_BLACKLIST) $(LOCAL_SRC_PRIVATE_API)
+	LC_COLLATE=C comm -13 <(sort $(1) $(2)) <(sort $(LOCAL_SRC_PRIVATE_API)) > $(3)
+	$(call assert-is-subset,$(3),$(LOCAL_SRC_PRIVATE_API))
+	$(call assert-has-no-duplicates,$(3))
+	$(call assert-has-no-overlap,$(3),$(1))
+	$(call assert-has-no-overlap,$(3),$(2))
+	$(call assert-is-subset,$(LOCAL_SRC_FORCE_BLACKLIST),$(3))
+endef
 
-# Build AOSP blacklist
-# ============================================================
-include $(CLEAR_VARS)
-
-LOCAL_LIGHT_GREYLIST_FILE := frameworks/base/config/hiddenapi-p-light-greylist.txt
-LOCAL_BLACKLIST_FILE := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-blacklist.txt
+$(eval $(call generate-hiddenapi-lists,$(LOCAL_LIGHT_GREYLIST),$(LOCAL_DARK_GREYLIST),$(LOCAL_BLACKLIST)))
+$(eval $(call generate-hiddenapi-lists,$(LOCAL_P_LIGHT_GREYLIST),$(LOCAL_P_DARK_GREYLIST),$(LOCAL_P_BLACKLIST)))
 
 .PHONY: hiddenapi-aosp-blacklist
-hiddenapi-aosp-blacklist: $(LOCAL_BLACKLIST_FILE)
-
-$(LOCAL_BLACKLIST_FILE): $(LOCAL_LIGHT_GREYLIST_FILE) $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
-	LC_COLLATE=C comm -13 <(sort $(LOCAL_LIGHT_GREYLIST_FILE)) \
-		   <(sort $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)) > $@
+hiddenapi-aosp-blacklist: $(LOCAL_P_BLACKLIST)
 
 # Include subdirectory makefiles
 # ============================================================
