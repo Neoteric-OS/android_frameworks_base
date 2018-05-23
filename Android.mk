@@ -592,14 +592,12 @@ LOCAL_BLACKLIST := $(INTERNAL_PLATFORM_HIDDENAPI_BLACKLIST)
 
 # File names of source files we will use to generate the final API lists.
 LOCAL_SRC_GREYLIST := frameworks/base/config/hiddenapi-light-greylist.txt
-LOCAL_SRC_VENDOR_LIST := frameworks/base/config/hiddenapi-vendor-list.txt
 LOCAL_SRC_FORCE_BLACKLIST := frameworks/base/config/hiddenapi-force-blacklist.txt
 LOCAL_SRC_PRIVATE_API := $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
 LOCAL_SRC_REMOVED_API := $(INTERNAL_PLATFORM_REMOVED_DEX_API_FILE)
 
 LOCAL_SRC_ALL := \
 	$(LOCAL_SRC_GREYLIST) \
-	$(LOCAL_SRC_VENDOR_LIST) \
 	$(LOCAL_SRC_FORCE_BLACKLIST) \
 	$(LOCAL_SRC_PRIVATE_API) \
 	$(LOCAL_SRC_REMOVED_API)
@@ -635,11 +633,10 @@ endef
 
 # Merge light greylist from multiple files:
 #  (1) manual greylist LOCAL_SRC_GREYLIST
-#  (2) list of usages from vendor apps LOCAL_SRC_VENDOR_LIST
-#  (3) list of removed APIs in LOCAL_SRC_REMOVED_API
+#  (2) list of removed APIs in LOCAL_SRC_REMOVED_API
 #      @removed does not imply private in Doclava. We must take the subset also
 #      in LOCAL_SRC_PRIVATE_API.
-#  (4) list of serialization APIs
+#  (3) list of serialization APIs
 #      Automatically adds all methods which match the signatures in
 #      REGEX_SERIALIZATION. These are greylisted in order to allow applications
 #      to write their own serializers.
@@ -652,7 +649,7 @@ $(LOCAL_LIGHT_GREYLIST): REGEX_SERIALIZATION := \
     "writeObject\(Ljava/io/ObjectOutputStream;\)V" \
     "writeReplace\(\)Ljava/lang/Object;"
 $(LOCAL_LIGHT_GREYLIST): $(LOCAL_SRC_ALL)
-	sort $(LOCAL_SRC_GREYLIST) $(LOCAL_SRC_VENDOR_LIST) \
+	sort $(LOCAL_SRC_GREYLIST) \
 	     <(grep -E "\->("$(subst $(space),"|",$(REGEX_SERIALIZATION))")$$" \
 	               $(LOCAL_SRC_PRIVATE_API)) \
 	     <(comm -12 <(sort $(LOCAL_SRC_REMOVED_API)) <(sort $(LOCAL_SRC_PRIVATE_API))) \
