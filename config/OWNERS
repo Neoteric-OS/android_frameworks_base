@@ -1,0 +1,17 @@
+set noparent
+
+per-file hiddenapi-light-greylist.txt=ngeoffray@google.com
+per-file hiddenapi-light-greylist.txt=dbrazdil@google.com
+per-file hiddenapi-light-greylist.txt=mathewi@google.com
+
+per-file hiddenapi-p-light-greylist.txt=ngeoffray@google.com
+per-file hiddenapi-p-light-greylist.txt=dbrazdil@google.com
+per-file hiddenapi-p-light-greylist.txt=mathewi@google.com
+
+per-file hiddenapi-vendor-list.txt=ngeoffray@google.com
+per-file hiddenapi-vendor-list.txt=dbrazdil@google.com
+per-file hiddenapi-vendor-list.txt=mathewi@google.com
+
+per-file hiddenapi-force-blacklist.txt=ngeoffray@google.com
+per-file hiddenapi-force-blacklist.txt=dbrazdil@google.com
+per-file hiddenapi-force-blacklist.txt=mathewi@google.com
