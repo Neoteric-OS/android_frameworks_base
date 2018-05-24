@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b08a9597_447ea8b0",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-24T14:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931f79e2_1ef7aaa2",
+      "range": {
+        "startLine": 5,
+        "startChar": 18,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8ae2142_fec2e380",
         "filename": "tests/PackageUpdate/Android.mk",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-05-23T17:29:46Z",
       "side": 1,
       "message": "what are these for?",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a011f6_96234fe2",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-24T14:21:34Z",
+      "side": 1,
+      "message": "[Reason]\nOur Package Update test suite uses these tools.\n\nIn our test suite, we convert from pre-build ROM image to ext4 file by using simg2img.\nNext we mount ext4 file and insert test applications into it.\nFinally we convert again from ext4 file to image.\nIf simg2img and ext2simg are not build yet in tester’s environment, we need to build them.\nSo, we write the dependence on these tools in this line.\n\n[Background]\nWe assume to use pre-built ROM images including test applications in the implementation above.\nOur test suite verifies the behavior of package update at letter update.\nThen we need two ROM images of different Android version (for example, O and P).\nWe’d like to use pre-built ROM images, because it’s easier to prepare the test ROM images rather than full build both pre-OTA and post OTA ROM images.",
+      "parentUuid": "d8ae2142_fec2e380",
       "range": {
         "startLine": 109,
         "startChar": 43,
