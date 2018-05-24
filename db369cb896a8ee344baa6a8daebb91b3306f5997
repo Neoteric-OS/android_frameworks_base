@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "52268880_798fadcf",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-05-24T02:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "879179e0_70fe79bd",
+      "range": {
+        "startLine": 1884,
+        "startChar": 21,
+        "endLine": 1884,
+        "endChar": 27
+      },
+      "revId": "db369cb896a8ee344baa6a8daebb91b3306f5997",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52954444_704c05bc",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 9
@@ -80,6 +104,30 @@
       "revId": "db369cb896a8ee344baa6a8daebb91b3306f5997",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2e3d58_8e0a5415",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-05-24T02:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52954444_704c05bc",
+      "range": {
+        "startLine": 1885,
+        "startChar": 8,
+        "endLine": 1885,
+        "endChar": 11
+      },
+      "revId": "db369cb896a8ee344baa6a8daebb91b3306f5997",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "9380b38d_45105085",
+      "range": {
+        "startLine": 1901,
+        "startChar": 21,
+        "endLine": 1901,
+        "endChar": 27
+      },
+      "revId": "db369cb896a8ee344baa6a8daebb91b3306f5997",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d142531_f41ec242",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1901,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2018-05-24T02:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc24161_e69afc4d",
       "range": {
         "startLine": 1901,
         "startChar": 21,
