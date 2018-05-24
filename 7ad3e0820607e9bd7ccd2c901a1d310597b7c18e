@@ -93,6 +93,30 @@
       "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863c5613_c805d7a4",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-05-24T17:07:32Z",
+      "side": 1,
+      "message": "OK, use $(HOST_OUT_EXECUTABLES)/simg2img $(HOST_OUT_EXECUTABLES)/ext2simg",
+      "parentUuid": "a4a011f6_96234fe2",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
