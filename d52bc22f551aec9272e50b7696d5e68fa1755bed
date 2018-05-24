@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "d6ea87f5_58d9de1f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-05-24T22:32:05Z",
+      "side": 1,
+      "message": "Could you add javadoc for this method?",
+      "revId": "d52bc22f551aec9272e50b7696d5e68fa1755bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0f3da99_bfc42bc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 12
@@ -88,6 +105,23 @@
         "endLine": 1902,
         "endChar": 85
       },
+      "revId": "d52bc22f551aec9272e50b7696d5e68fa1755bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9250b66c_e0ee893b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-05-24T22:32:05Z",
+      "side": 1,
+      "message": "Could you add javadoc for this method?",
       "revId": "d52bc22f551aec9272e50b7696d5e68fa1755bed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
