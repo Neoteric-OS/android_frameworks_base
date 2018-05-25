@@ -141,6 +141,30 @@
       "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1f3232_349783ab",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-25T10:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6e0ba0_202db813",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
