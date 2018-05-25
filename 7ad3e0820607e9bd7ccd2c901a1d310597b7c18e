@@ -117,6 +117,30 @@
       "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6e0ba0_202db813",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-05-25T01:11:02Z",
+      "side": 1,
+      "message": "Hi, Colin\nWe\u0027ll update soon.",
+      "parentUuid": "863c5613_c805d7a4",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "7ad3e0820607e9bd7ccd2c901a1d310597b7c18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
