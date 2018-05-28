@@ -23,11 +23,13 @@ import android.graphics.Color;
 import android.telephony.Rlog;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.EncodeException;
 import com.android.internal.telephony.GsmAlphabet;
 
 import dalvik.annotation.compat.UnsupportedAppUsage;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -384,6 +386,105 @@ public class IccUtils {
             // Ignore Exception and defaultCharset is set to a empty string.
         }
         return GsmAlphabet.gsm8BitUnpackedToString(data, offset, length, defaultCharset.trim());
+    }
+
+    /**
+     * Based on the description in "3GPP TS 31.102 clause 4.4.2.3.
+     * Alpha Identifier of EF_ADN of USIM is defined in default 7-bit co
+     * ded alphabet if bit8 is set to 0 otherwise, it is defined in UCS2 cod
+     * ed.
+     */
+    @UnsupportedAppUsage
+    public static byte[] stringToAdnStringField(String alphaTag) {
+        boolean isUcs2 = false;
+        try {
+            for (int i = 0; i < alphaTag.length(); i++) {
+                GsmAlphabet.countGsmSeptets(alphaTag.charAt(i), true);
+            }
+        } catch (EncodeException e) {
+            isUcs2 = true;
+        }
+        return stringToAdnStringField(alphaTag, isUcs2);
+    }
+
+    /**
+     * Based on the description in "3GPP TS 31.102 clause 4.4.2.3.
+     * Alpha Identifier of EF_ADN of USIM is defined in default 7-bit co
+     * ded alphabet if bit8 is set to 0 otherwise, it is defined in UCS2 cod
+     * ed.
+     */
+    @UnsupportedAppUsage
+    public static byte[] stringToAdnStringField(String alphaTag, boolean isUcs2) {
+        // if GSM format, then return GSM8bit format target array
+        if (!isUcs2) {
+            return GsmAlphabet.stringToGsm8BitPacked(alphaTag);
+        }
+        int min = 0x7fff;
+        int max = 0;
+        int temp;
+        int outOff = 0;
+        int srcOff = 0;
+        int destOff = 0;
+        byte[] srcBytes = alphaTag.getBytes(Charset.forName("UTF-16BE"));
+        byte[] destBytes = null;
+        int srcBytes_len = srcBytes.length;
+        int index = 0;
+
+        if (srcBytes_len > 2) {
+            for (index = 0; index < srcBytes_len; index += 2) {
+                if (srcBytes[srcOff + index] != 0) {
+                    temp = (int) (((srcBytes[srcOff + index] << 8) & 0xFF00)
+                            | (srcBytes[srcOff + index + 1] & 0xFF));
+                    if (temp < 0) {
+                        max = min + 130;
+                        break;
+                    }
+                    if (min > temp) {
+                        min = temp;
+                    }
+                    if (max < temp) {
+                        max = temp;
+                    }
+                }
+            }
+        }
+
+        if ((max - min) < 129) {
+            if (((byte) (min & 0x80)) == ((byte) (max & 0x80))) {
+                Rlog.d(LOG_TAG, "stringToAdnStringField '0x81'");
+                destBytes = new byte[srcBytes_len / 2 + 3];
+                destBytes[destOff] = (byte) 0x81;
+                destBytes[destOff + 1] = (byte) (srcBytes_len / 2);
+                min = (min & 0x7f80);
+                destBytes[destOff + 2] = (byte) ((min >> 7) & 0xff);
+                outOff = destOff + 3;
+            } else {
+                Rlog.d(LOG_TAG, "stringToAdnStringField '0x82'");
+                destBytes = new byte[srcBytes_len / 2 + 4];
+                destBytes[destOff] = (byte) 0x82;
+                destBytes[destOff + 1] = (byte) (srcBytes_len / 2);
+                destBytes[destOff + 2] = (byte) ((min >> 8) & 0xff);
+                destBytes[destOff + 3] = (byte) (min & 0xff);
+                outOff = destOff + 4;
+            }
+
+            for (index = 0; index < srcBytes_len; index += 2) {
+                if (srcBytes[srcOff + index] == 0) {
+                    destBytes[outOff] = (byte) (srcBytes[srcOff + index + 1] & 0x7f);
+                } else {
+                    temp = ((((srcBytes[srcOff + index] << 8) & 0xFF00)
+                            | (srcBytes[srcOff + index + 1] & 0xFF)) - min);
+                    destBytes[outOff] = (byte) (temp | 0x80);
+                }
+                outOff++;
+            }
+            return destBytes;
+        }
+        Rlog.d(LOG_TAG, "stringToAdnStringField '0x80'");
+        destBytes = new byte[srcBytes_len + 1];
+        destBytes[destOff] = (byte) 0x80;
+        System.arraycopy(srcBytes, 0, destBytes, 1, srcBytes_len);
+        return destBytes;
     }
 
     @UnsupportedAppUsage
