@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eecaf1e2_e6093534",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2018-05-29T21:56:45Z",
+      "side": 1,
+      "message": "Combine this and the one below? (We probably want to do this even if fork fails)",
+      "range": {
+        "startLine": 795,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 5
+      },
+      "revId": "b822e5655ceec3a261f0dc426379cda982967cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
