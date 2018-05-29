@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a4169b7_cff64a01",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1103743
+      },
+      "writtenOn": "2018-05-29T21:55:34Z",
+      "side": 1,
+      "message": "I\u0027ll move it here.  Thanks.",
+      "parentUuid": "f601b0f9_00505f24",
+      "range": {
+        "startLine": 563,
+        "startChar": 4,
+        "endLine": 576,
+        "endChar": 3
+      },
+      "revId": "b5f0103668ad4686308487e23d250295b9b6d8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae1ecf7_a6950e74",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b5f0103668ad4686308487e23d250295b9b6d8d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287d95b3_0d41b3d2",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1103743
+      },
+      "writtenOn": "2018-05-29T21:55:34Z",
+      "side": 1,
+      "message": "Agreed.  Saves the declaration and setup as well.",
+      "parentUuid": "aae1ecf7_a6950e74",
+      "range": {
+        "startLine": 577,
+        "startChar": 0,
+        "endLine": 585,
+        "endChar": 0
+      },
+      "revId": "b5f0103668ad4686308487e23d250295b9b6d8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
