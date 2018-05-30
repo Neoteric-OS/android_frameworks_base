@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7877bd_c7781862",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-05-30T03:24:45Z",
+      "side": 1,
+      "message": "superfluous constant that I need to remove later.",
+      "range": {
+        "startLine": 1484,
+        "startChar": 32,
+        "endLine": 1484,
+        "endChar": 41
+      },
+      "revId": "0cb14ffd6086002db4d4e0512f00a6ae23eb5453",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d742400d_f5af1d48",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-05-30T03:24:45Z",
+      "side": 1,
+      "message": "just using a \"return\" here is a compile error, hence the if (false)...",
+      "range": {
+        "startLine": 1488,
+        "startChar": 8,
+        "endLine": 1488,
+        "endChar": 56
+      },
+      "revId": "0cb14ffd6086002db4d4e0512f00a6ae23eb5453",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91ff784c_a2a5f456",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-05-30T03:24:45Z",
+      "side": 1,
+      "message": "the blame...",
+      "range": {
+        "startLine": 1491,
+        "startChar": 23,
+        "endLine": 1491,
+        "endChar": 66
+      },
+      "revId": "0cb14ffd6086002db4d4e0512f00a6ae23eb5453",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
