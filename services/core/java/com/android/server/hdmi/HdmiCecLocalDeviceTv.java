@@ -50,6 +50,7 @@ import android.util.SparseBooleanArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.DeviceDiscoveryAction.DeviceDiscoveryCallback;
+import com.android.server.hdmi.MenuRequestAction.MenuStateCallback;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 import java.io.UnsupportedEncodingException;
@@ -388,6 +389,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             }
             mService.invokeInputChangeListener(info);
         }
+        //Query Menu Status
+        sendMenuRequest(Constants.MENU_REQUEST_TYPE_QUERY);
     }
 
     @ServiceThreadOnly
@@ -1878,7 +1881,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Override
     protected boolean handleMenuStatus(HdmiCecMessage message) {
-        // Do nothing and just return true not to prevent from responding <Feature Abort>.
+        ActiveSource activeSource = getActiveSource();
+		if (activeSource.logicalAddress != message.getSource()) {
+            return true;
+        }
+        boolean menuActivated = (message.getParams()[0] & 0xFF) != 0;
+        activeSource.menuActivated = menuActivated;
         return true;
     }
 
@@ -1890,6 +1898,30 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
         int targetAddress = targetDevice.getLogicalAddress();
         mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(mAddress, targetAddress));
+    }
+
+    /**
+     * Sends a Menu Request command to other device.     *
+     * @param menuRequestType Specifies whether to activate or deactive a
+     *         devcie's menu or simply query its current menu status.     */
+    public void sendMenuRequest(int menuRequestType) {
+        ActiveSource activeSource = getActiveSource();
+        MenuRequestAction action = new MenuRequestAction(this, findKeyReceiverAddress(),
+                menuRequestType, new MenuStateCallback() {
+                    @Override
+                    public void updateMenuState(boolean menuActivated) {
+                        activeSource.menuActivated = menuActivated;
+                    }
+                });
+        addAndStartAction(action);
+    }
+
+    /**
+     * Return device's menu state.
+     */
+    public boolean getMenuState() {
+        ActiveSource activeSource = getActiveSource();
+        return activeSource.menuActivated;
     }
 
     @ServiceThreadOnly
