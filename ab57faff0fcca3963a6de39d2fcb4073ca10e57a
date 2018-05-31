@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8147c0e2_34581186",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-05-31T12:34:06Z",
+      "side": 1,
+      "message": "given how the code looks now (and perhaps before this change even..) the Common suffix in ForkCommon and SpecializeCommon don\u0027t make much sense. I can\u0027t think of a better name at the moment, so LG i guess.",
+      "range": {
+        "startLine": 900,
+        "startChar": 16,
+        "endLine": 900,
+        "endChar": 26
+      },
+      "revId": "ab57faff0fcca3963a6de39d2fcb4073ca10e57a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
