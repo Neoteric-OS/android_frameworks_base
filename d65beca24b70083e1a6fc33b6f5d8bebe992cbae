@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e66ab3aa_e9b89678",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3498,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-04T14:58:00Z",
+      "side": 1,
+      "message": "I think this is correct, but in general, I\u0027d be leery of doing this sort of thing because of ambiguity on the method that is being called.\n\nFor example: if someone were to add a \"void obtainMessage(Object o)\" to Handler, I think this code would transparently stop autoboxing and call the new method, possibly causing a change in behaviour.\n\nI think there\u0027s another instance of this in this CL, also correct.",
+      "range": {
+        "startLine": 3498,
+        "startChar": 39,
+        "endLine": 3498,
+        "endChar": 43
+      },
+      "revId": "d65beca24b70083e1a6fc33b6f5d8bebe992cbae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
