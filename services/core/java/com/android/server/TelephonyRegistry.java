@@ -49,6 +49,7 @@ import android.telephony.TelephonyManager;
 import android.telephony.VoLteServiceState;
 import android.text.TextUtils;
 import android.util.LocalLog;
+import android.util.StatsLog;
 
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.telephony.IOnSubscriptionsChangedListener;
@@ -1512,6 +1513,12 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         long ident = Binder.clearCallingIdentity();
         try {
             mBatteryStats.notePhoneState(state.getState());
+
+            if (TelephonyManager.getDefault().getSimState() != TelephonyManager.SIM_STATE_ABSENT
+                    && state.getState() == ServiceState.STATE_OUT_OF_SERVICE) {
+                StatsLog.write(StatsLog.PHONE_SIGNAL_STRENGTH_CHANGED,
+                        SignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN);
+            }
         } catch (RemoteException re) {
             // Can't do much
         } finally {
@@ -1534,6 +1541,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         long ident = Binder.clearCallingIdentity();
         try {
             mBatteryStats.notePhoneSignalStrength(signalStrength);
+            StatsLog.write(StatsLog.PHONE_SIGNAL_STRENGTH_CHANGED, signalStrength.getLevel());
         } catch (RemoteException e) {
             /* The remote entity disappeared, we can safely ignore the exception. */
         } finally {
