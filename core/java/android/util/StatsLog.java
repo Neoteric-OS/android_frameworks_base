@@ -46,6 +46,8 @@ public final class StatsLog {
 
     public static void write(int id, int field1, int field2, int field3) {}
 
+    public static void write_non_chained(int id, int field1, String field2, int field3) {}
+
     public static void write_non_chained(int id, int uid, String tag,
             int field1, int field2, String field3) {}
 
