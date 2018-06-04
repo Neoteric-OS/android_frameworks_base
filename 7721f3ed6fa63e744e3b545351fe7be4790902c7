@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ac3121_eb7f3254",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-04T08:29:28Z",
+      "side": 1,
+      "message": "Separately, can we @deprecated this in Q?",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 126,
+        "endChar": 18
+      },
+      "revId": "7721f3ed6fa63e744e3b545351fe7be4790902c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
