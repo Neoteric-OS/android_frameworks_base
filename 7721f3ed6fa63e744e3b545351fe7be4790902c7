@@ -22,6 +22,30 @@
       "revId": "7721f3ed6fa63e744e3b545351fe7be4790902c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1ea28f_69503f85",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-04T08:33:06Z",
+      "side": 1,
+      "message": "It\u0027s @hide, so maybe we can even remove it. b/109636544",
+      "parentUuid": "90ac3121_eb7f3254",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 126,
+        "endChar": 18
+      },
+      "revId": "7721f3ed6fa63e744e3b545351fe7be4790902c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
