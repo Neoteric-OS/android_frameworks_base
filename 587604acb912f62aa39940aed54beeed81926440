@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6de61608_4672fe54",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3449,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-04T08:21:19Z",
+      "side": 1,
+      "message": "How about leaving proxyHost (and making it final) and change this to proxyHost?  That way our future selves will know that [0] is supposed to be the hostname.",
+      "range": {
+        "startLine": 3449,
+        "startChar": 40,
+        "endLine": 3449,
+        "endChar": 47
+      },
+      "revId": "587604acb912f62aa39940aed54beeed81926440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
