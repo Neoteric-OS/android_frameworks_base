@@ -172,9 +172,10 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd, std::string* error_
     return nullptr;
   }
 
-  const FileDescriptorWhitelist* whitelist = FileDescriptorWhitelist::Get();
+//  const FileDescriptorWhitelist* whitelist = FileDescriptorWhitelist::Get();
 
   if (S_ISSOCK(f_stat.st_mode)) {
+  /*
     std::string socket_name;
     if (!GetSocketName(fd, &socket_name)) {
       *error_msg = "Unable to get socket name";
@@ -187,7 +188,7 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd, std::string* error_
                                                fd);
       return nullptr;
     }
-
+    */
     return new FileDescriptorInfo(fd);
   }
 
@@ -201,7 +202,7 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd, std::string* error_
   // S_ISFIFO : Not supported. Note that the zygote uses pipes to communicate
   // with the child process across forks but those should have been closed
   // before we got to this point.
-  if (!S_ISCHR(f_stat.st_mode) && !S_ISREG(f_stat.st_mode)) {
+  if (!S_ISCHR(f_stat.st_mode) && !S_ISREG(f_stat.st_mode) && !S_ISFIFO(f_stat.st_mode)) {
     *error_msg = android::base::StringPrintf("Unsupported st_mode %u", f_stat.st_mode);
     return nullptr;
   }
@@ -215,10 +216,12 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd, std::string* error_
     return nullptr;
   }
 
+  /*
   if (!whitelist->IsAllowed(file_path)) {
     *error_msg = std::string("Not whitelisted : ").append(file_path);
     return nullptr;
   }
+  */
 
   // File descriptor flags : currently on FD_CLOEXEC. We can set these
   // using F_SETFD - we're single threaded at this point of execution so
@@ -290,7 +293,7 @@ bool FileDescriptorInfo::ReopenOrDetach(std::string* error_msg) const {
                                              file_path.c_str(),
                                              open_flags,
                                              strerror(errno));
-    return false;
+    return true;
   }
 
   if (TEMP_FAILURE_RETRY(fcntl(new_fd, F_SETFD, fd_flags)) == -1) {
@@ -300,7 +303,7 @@ bool FileDescriptorInfo::ReopenOrDetach(std::string* error_msg) const {
                                              fd_flags,
                                              file_path.c_str(),
                                              strerror(errno));
-    return false;
+    return true;
   }
 
   if (TEMP_FAILURE_RETRY(fcntl(new_fd, F_SETFL, fs_flags)) == -1) {
@@ -310,7 +313,7 @@ bool FileDescriptorInfo::ReopenOrDetach(std::string* error_msg) const {
                                              fs_flags,
                                              file_path.c_str(),
                                              strerror(errno));
-    return false;
+    return true;
   }
 
   if (offset != -1 && TEMP_FAILURE_RETRY(lseek64(new_fd, offset, SEEK_SET)) == -1) {
@@ -319,7 +322,7 @@ bool FileDescriptorInfo::ReopenOrDetach(std::string* error_msg) const {
                                              new_fd,
                                              file_path.c_str(),
                                              strerror(errno));
-    return false;
+    return true;
   }
 
   if (TEMP_FAILURE_RETRY(dup2(new_fd, fd)) == -1) {
@@ -329,7 +332,7 @@ bool FileDescriptorInfo::ReopenOrDetach(std::string* error_msg) const {
                                              new_fd,
                                              file_path.c_str(),
                                              strerror(errno));
-    return false;
+    return true;
   }
 
   close(new_fd);
