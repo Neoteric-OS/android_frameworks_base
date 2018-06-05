@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a574b8_bea2e63f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1139093
+      },
+      "writtenOn": "2018-06-05T17:50:03Z",
+      "side": 1,
+      "message": "I don\u0027t actually think we want to do this - and we should probably revert ag/3580901 from pi-dev.\n\nThis can cause a disconnect between isActiveNetworkMetered() and getNetworkCapabilities(getActiveNetwork()).hasCapability(NOT_METERED) - which is pretty confusing for developers, and could cause an inconsistent experience in apps.  When determining the VPN\u0027s capabilities, in PI, we look at all of the VPN\u0027s underlying networks, and the VPN is considered metered if any of the underlying networks are metered.  getUnfilteredActiveNetworkState only looks at the first underlying network.  So if the first underlying network is unmetered and the second is metered, then this API makes the VPN look unmetered, but looking at the VPN\u0027s capabilities makes it look metered.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 41,
+        "endLine": 1419,
+        "endChar": 72
+      },
+      "revId": "7784d2cdc45eb43cf1b7ef361b13e731700edc3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
