@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.AccessNetworkConstants.TransportType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -85,7 +86,7 @@ public class NetworkRegistrationState implements Parcelable {
     public static final int SERVICE_TYPE_VIDEO = 4;
     public static final int SERVICE_TYPE_EMERGENCY = 5;
 
-    /** {@link AccessNetworkConstants.TransportType}*/
+    /** {@link TransportType}*/
     private final int mTransportType;
 
     @Domain
@@ -112,13 +113,21 @@ public class NetworkRegistrationState implements Parcelable {
     private DataSpecificRegistrationStates mDataSpecificStates;
 
     /**
-     * @param transportType Transport type. Must be {@link AccessNetworkConstants.TransportType}
-     * @param domain Network domain. Must be DOMAIN_CS or DOMAIN_PS.
-     * @param regState Network registration state.
-     * @param accessNetworkTechnology See TelephonyManager NETWORK_TYPE_XXXX.
-     * @param reasonForDenial Reason for denial if the registration state is DENIED.
-     * @param availableServices The supported service.
-     * @param cellIdentity The identity representing a unique cell
+     * @param transportType Transport type. Must be one of the {@link TransportType}.
+     * @param domain Network domain. Must be a {@link @Domain}. For {@link TransportType#WWAN}
+     * transport, this must set to {@link #DOMAIN_PS}.
+     * @param regState Network registration state. Must be one of the {@link @RegState}. For
+     * {@link TransportType#WWAN} transport, only {@link #REG_STATE_HOME} and
+     * {@link #REG_STATE_NOT_REG_NOT_SEARCHING} are valid states.
+     * @param accessNetworkTechnology Access network technology. Must be one of TelephonyManager
+     * NETWORK_TYPE_XXXX. For {@link TransportType#WWAN} transport, set to
+     * {@link TelephonyManager#NETWORK_TYPE_IWLAN}.
+     * @param reasonForDenial Reason for denial if the registration state is
+     * {@link #REG_STATE_DENIED}. See 3GPP TS 24.008, 10.5.3.6 and Annex G for the values. Set to 0
+     * for {@link TransportType#WWAN} transport.
+     * @param availableServices The supported service. Must be one of the {@ServiceType}.
+     * @param cellIdentity The identity representing a unique cell. Set to null for
+     * {@link TransportType#WWAN} transport.
      */
     public NetworkRegistrationState(int transportType, int domain, int regState,
             int accessNetworkTechnology, int reasonForDenial, boolean emergencyOnly,
