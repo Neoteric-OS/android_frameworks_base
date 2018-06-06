@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd307ce_bb7fe1e4",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-06T00:56:04Z",
+      "side": 1,
+      "message": "Any reason we can\u0027t use the real string here? AOSP won\u0027t recognize it and the check will fail.",
+      "range": {
+        "startLine": 1484,
+        "startChar": 45,
+        "endLine": 1484,
+        "endChar": 53
+      },
+      "revId": "6048a891b7c662f7c2f4a226c00c7bf205b971b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
