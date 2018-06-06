@@ -22,6 +22,30 @@
       "revId": "6048a891b7c662f7c2f4a226c00c7bf205b971b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c381802_cd81e551",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-06T02:37:43Z",
+      "side": 1,
+      "message": "As per discussion, we can\u0027t use it anyway... since AppOps won\u0027t recognize it, we\u0027ll get a security exception because that\u0027s an obvious class of shenanigans, and we want this code to be callable, not just compile-able.",
+      "parentUuid": "2dd307ce_bb7fe1e4",
+      "range": {
+        "startLine": 1484,
+        "startChar": 45,
+        "endLine": 1484,
+        "endChar": 53
+      },
+      "revId": "6048a891b7c662f7c2f4a226c00c7bf205b971b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
