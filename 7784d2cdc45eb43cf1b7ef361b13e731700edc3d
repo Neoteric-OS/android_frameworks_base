@@ -22,6 +22,30 @@
       "revId": "7784d2cdc45eb43cf1b7ef361b13e731700edc3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea20ee9_be641ecf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-06T05:59:42Z",
+      "side": 1,
+      "message": "I think your assessment is right. I still want to point out this is not limited to isActiveNetworkMetered() ; getActiveNetworkInfo() or getActiveLinkProperties() exhibit the same discrepancy. Fixing this may be troublesome.\nThat being said, because this method is just a boolean and has such a reduced scope, in this particular case I think we can simply not take this change and everyone is actually better for it.\n\nI\u0027ll see about reverting ag/3580901 in pi-dev.",
+      "parentUuid": "99a574b8_bea2e63f",
+      "range": {
+        "startLine": 1419,
+        "startChar": 41,
+        "endLine": 1419,
+        "endChar": 72
+      },
+      "revId": "7784d2cdc45eb43cf1b7ef361b13e731700edc3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
