@@ -320,7 +320,11 @@ public class VolumeInfo implements Parcelable {
     public File getInternalPathForUser(int userId) {
         if (type == TYPE_PUBLIC) {
             // TODO: plumb through cleaner path from vold
-            return new File(path.replace("/storage/", "/mnt/media_rw/"));
+            if (path == null) {
+                return null;
+            } else {
+                return new File(path.replace("/storage/", "/mnt/media_rw/"));
+            }
         } else {
             return getPathForUser(userId);
         }
