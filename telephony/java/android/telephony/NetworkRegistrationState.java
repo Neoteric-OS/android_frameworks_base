@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.AccessNetworkConstants.TransportType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -59,15 +60,15 @@ public class NetworkRegistrationState implements Parcelable {
     /** Not registered. The device is not currently searching a new operator to register */
     public static final int REG_STATE_NOT_REG_NOT_SEARCHING = 0;
     /** Registered on home network */
-    public static final int REG_STATE_HOME = 1;
+    public static final int REG_STATE_HOME                  = 1;
     /** Not registered. The device is currently searching a new operator to register */
-    public static final int REG_STATE_NOT_REG_SEARCHING = 2;
+    public static final int REG_STATE_NOT_REG_SEARCHING     = 2;
     /** Registration denied */
-    public static final int REG_STATE_DENIED = 3;
+    public static final int REG_STATE_DENIED                = 3;
     /** Registration state is unknown */
-    public static final int REG_STATE_UNKNOWN = 4;
+    public static final int REG_STATE_UNKNOWN               = 4;
     /** Registered on roaming network */
-    public static final int REG_STATE_ROAMING = 5;
+    public static final int REG_STATE_ROAMING               = 5;
 
     /**
      * Supported service type
@@ -79,13 +80,95 @@ public class NetworkRegistrationState implements Parcelable {
                     SERVICE_TYPE_EMERGENCY})
     public @interface ServiceType {}
 
-    public static final int SERVICE_TYPE_VOICE = 1;
-    public static final int SERVICE_TYPE_DATA = 2;
-    public static final int SERVICE_TYPE_SMS = 3;
-    public static final int SERVICE_TYPE_VIDEO = 4;
-    public static final int SERVICE_TYPE_EMERGENCY = 5;
+    public static final int SERVICE_TYPE_VOICE      = 1;
+    public static final int SERVICE_TYPE_DATA       = 2;
+    public static final int SERVICE_TYPE_SMS        = 3;
+    public static final int SERVICE_TYPE_VIDEO      = 4;
+    public static final int SERVICE_TYPE_EMERGENCY  = 5;
 
-    /** {@link AccessNetworkConstants.TransportType}*/
+    /**
+     * Network reject cause. For {@link TransportType#WWAN} transport, the values are same as
+     * the definition in 3GPP TS 24.008 10.5.3.6 (UMTS) and 24.301 9.9.3.9 (LTE).
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "REJECT_CAUSE_",
+            value = {REJECT_CAUSE_IMSI_UNKNOWN_IN_HLR, REJECT_CAUSE_ILLEGAL_MS,
+                    REJECT_CAUSE_IMSI_UNKNOWN_IN_VLR, REJECT_CAUSE_IMEI_NOT_ACCEPTED,
+                    REJECT_CAUSE_ILLEGAL_ME, REJECT_CAUSE_EPS_SERVICES_NOT_ALLOWED,
+                    REJECT_CAUSE_EPS_AND_NON_EPS_SERVICES_NOT_ALLOWED,
+                    REJECT_CAUSE_IDENTITY_NOT_DERIVED_BY_NETWORK, REJECT_CAUSE_PLMN_NOT_ALLOWED,
+                    REJECT_CAUSE_LOCATION_AREA_NOT_ALLOWED,
+                    REJECT_CAUSE_ROAMING_NOT_ALLOWED_IN_THIS_LOCATION_AREA,
+                    REJECT_CAUSE_EPS_SERVICES_NOT_ALLOWED_IN_THIS_PLMN,
+                    REJECT_CAUSE_NO_SUITABLE_CELLS_IN_LOCATION_AREA,
+                    REJECT_CAUSE_MSC_TEMPORARILY_NOT_REACHABLE, REJECT_CAUSE_NETWORK_FAILURE,
+                    REJECT_CAUSE_CS_DOMAIN_NOT_AVAILABLE, REJECT_CAUSE_ESM_FAILURE,
+                    REJECT_CAUSE_MAC_FAILURE, REJECT_CAUSE_SYNCH_FAILURE, REJECT_CAUSE_CONGESTION,
+                    REJECT_CAUSE_GSM_AUTHENTICATION_UNACCEPTABLE,
+                    REJECT_CAUSE_SECURITY_MODE_REJECTED_UNSPECIFIED,
+                    REJECT_CAUSE_NOT_AUTHORIZED_FOR_THIS_CSG,
+                    REJECT_CAUSE_NON_EPS_AUTHENTICATION_UNACCEPTABLE,
+                    REJECT_CAUSE_SERVICE_OPTION_NOT_SUPPORTED,
+                    REJECT_CAUSE_REQUESTED_SERVICE_OPTION_NOT_SUBSCRIBED,
+                    REJECT_CAUSE_SERVICE_OPTION_TEMPORARILY_OUT_OF_ORDER,
+                    REJECT_CAUSE_REQUESTED_SERVICE_OPTION_NOT_AUTHORIZED,
+                    REJECT_CAUSE_CALL_CANNOT_BE_IDENTIFIED,
+                    REJECT_CAUSE_CS_SERVICE_TEMPORARILY_NOT_AVAILABLE,
+                    REJECT_CAUSE_NO_EPS_BEARER_CONTEXT_ACTIVATED,
+                    REJECT_CAUSE_RETRY_UPON_ENTRY_INTO_A_NEW_CELL,
+                    REJECT_CAUSE_SEMANTICALLY_INCORRECT_MESSAGE,
+                    REJECT_CAUSE_INVALID_MANDATORY_INFORMATION,
+                    REJECT_CAUSE_MESSAGE_TYPE_NON_EXISTENT_OR_NOT_IMPLEMENTED,
+                    REJECT_CAUSE_MESSAGE_TYPE_NOT_COMPATIBLE_WITH_THE_PROTOCOL_STATE,
+                    REJECT_CAUSE_INFORMATION_ELEMENT_NON_EXISTENT_OR_NOT_IMPLEMENTED,
+                    REJECT_CAUSE_CONDITIONAL_IE_ERROR,
+                    REJECT_CAUSE_MESSAGE_NOT_COMPATIBLE_WITH_THE_PROTOCOL_STATE,
+                    REJECT_CAUSE_PROTOCOL_ERROR_UNSPECIFIED})
+    public @interface RejectCause {}
+
+    public static final int REJECT_CAUSE_IMSI_UNKNOWN_IN_HLR                                 = 2;
+    public static final int REJECT_CAUSE_ILLEGAL_MS                                          = 3;
+    public static final int REJECT_CAUSE_IMSI_UNKNOWN_IN_VLR                                 = 4;
+    public static final int REJECT_CAUSE_IMEI_NOT_ACCEPTED                                   = 5;
+    public static final int REJECT_CAUSE_ILLEGAL_ME                                          = 6;
+    public static final int REJECT_CAUSE_EPS_SERVICES_NOT_ALLOWED                            = 7;
+    public static final int REJECT_CAUSE_EPS_AND_NON_EPS_SERVICES_NOT_ALLOWED                = 8;
+    public static final int REJECT_CAUSE_IDENTITY_NOT_DERIVED_BY_NETWORK                     = 10;
+    public static final int REJECT_CAUSE_PLMN_NOT_ALLOWED                                    = 11;
+    public static final int REJECT_CAUSE_LOCATION_AREA_NOT_ALLOWED                           = 12;
+    public static final int REJECT_CAUSE_ROAMING_NOT_ALLOWED_IN_THIS_LOCATION_AREA           = 13;
+    public static final int REJECT_CAUSE_EPS_SERVICES_NOT_ALLOWED_IN_THIS_PLMN               = 14;
+    public static final int REJECT_CAUSE_NO_SUITABLE_CELLS_IN_LOCATION_AREA                  = 15;
+    public static final int REJECT_CAUSE_MSC_TEMPORARILY_NOT_REACHABLE                       = 16;
+    public static final int REJECT_CAUSE_NETWORK_FAILURE                                     = 17;
+    public static final int REJECT_CAUSE_CS_DOMAIN_NOT_AVAILABLE                             = 18;
+    public static final int REJECT_CAUSE_ESM_FAILURE                                         = 19;
+    public static final int REJECT_CAUSE_MAC_FAILURE                                         = 20;
+    public static final int REJECT_CAUSE_SYNCH_FAILURE                                       = 21;
+    public static final int REJECT_CAUSE_CONGESTION                                          = 22;
+    public static final int REJECT_CAUSE_GSM_AUTHENTICATION_UNACCEPTABLE                     = 23;
+    public static final int REJECT_CAUSE_SECURITY_MODE_REJECTED_UNSPECIFIED                  = 24;
+    public static final int REJECT_CAUSE_NOT_AUTHORIZED_FOR_THIS_CSG                         = 25;
+    public static final int REJECT_CAUSE_NON_EPS_AUTHENTICATION_UNACCEPTABLE                 = 26;
+    public static final int REJECT_CAUSE_SERVICE_OPTION_NOT_SUPPORTED                        = 32;
+    public static final int REJECT_CAUSE_REQUESTED_SERVICE_OPTION_NOT_SUBSCRIBED             = 33;
+    public static final int REJECT_CAUSE_SERVICE_OPTION_TEMPORARILY_OUT_OF_ORDER             = 34;
+    public static final int REJECT_CAUSE_REQUESTED_SERVICE_OPTION_NOT_AUTHORIZED             = 35;
+    public static final int REJECT_CAUSE_CALL_CANNOT_BE_IDENTIFIED                           = 38;
+    public static final int REJECT_CAUSE_CS_SERVICE_TEMPORARILY_NOT_AVAILABLE                = 39;
+    public static final int REJECT_CAUSE_NO_EPS_BEARER_CONTEXT_ACTIVATED                     = 40;
+    public static final int REJECT_CAUSE_RETRY_UPON_ENTRY_INTO_A_NEW_CELL                    = 48;
+    public static final int REJECT_CAUSE_SEMANTICALLY_INCORRECT_MESSAGE                      = 95;
+    public static final int REJECT_CAUSE_INVALID_MANDATORY_INFORMATION                       = 96;
+    public static final int REJECT_CAUSE_MESSAGE_TYPE_NON_EXISTENT_OR_NOT_IMPLEMENTED        = 97;
+    public static final int REJECT_CAUSE_MESSAGE_TYPE_NOT_COMPATIBLE_WITH_THE_PROTOCOL_STATE = 98;
+    public static final int REJECT_CAUSE_INFORMATION_ELEMENT_NON_EXISTENT_OR_NOT_IMPLEMENTED = 99;
+    public static final int REJECT_CAUSE_CONDITIONAL_IE_ERROR                                = 100;
+    public static final int REJECT_CAUSE_MESSAGE_NOT_COMPATIBLE_WITH_THE_PROTOCOL_STATE      = 101;
+    public static final int REJECT_CAUSE_PROTOCOL_ERROR_UNSPECIFIED                          = 111;
+
+    /** {@link TransportType}*/
     private final int mTransportType;
 
     @Domain
@@ -96,6 +179,7 @@ public class NetworkRegistrationState implements Parcelable {
 
     private final int mAccessNetworkTechnology;
 
+    @RejectCause
     private final int mReasonForDenial;
 
     private final boolean mEmergencyOnly;
@@ -112,16 +196,25 @@ public class NetworkRegistrationState implements Parcelable {
     private DataSpecificRegistrationStates mDataSpecificStates;
 
     /**
-     * @param transportType Transport type. Must be {@link AccessNetworkConstants.TransportType}
-     * @param domain Network domain. Must be DOMAIN_CS or DOMAIN_PS.
-     * @param regState Network registration state.
-     * @param accessNetworkTechnology See TelephonyManager NETWORK_TYPE_XXXX.
-     * @param reasonForDenial Reason for denial if the registration state is DENIED.
-     * @param availableServices The supported service.
-     * @param cellIdentity The identity representing a unique cell
+     * @param transportType Transport type. Must be one of the {@link TransportType}.
+     * @param domain Network domain. Must be a {@link Domain}. For {@link TransportType#WLAN}
+     * transport, this must set to {@link #DOMAIN_PS}.
+     * @param regState Network registration state. Must be one of the {@link RegState}. For
+     * {@link TransportType#WLAN} transport, only {@link #REG_STATE_HOME} and
+     * {@link #REG_STATE_NOT_REG_NOT_SEARCHING} are valid states.
+     * @param accessNetworkTechnology Access network technology. Must be one of TelephonyManager
+     * NETWORK_TYPE_XXXX. For {@link TransportType#WLAN} transport, set to
+     * {@link TelephonyManager#NETWORK_TYPE_IWLAN}.
+     * @param reasonForDenial Reason for denial if the registration state is
+     * {@link #REG_STATE_DENIED}. Must be one of the {@link RejectCause}.
+     * @param emergencyOnly True if this registration is for emergency only.
+     * @param availableServices The list of the supported services. Each element must be one of
+     * the {@link ServiceType}.
+     * @param cellIdentity The identity representing a unique cell or wifi AP. Set to null if the
+     * information is not available.
      */
-    public NetworkRegistrationState(int transportType, int domain, int regState,
-            int accessNetworkTechnology, int reasonForDenial, boolean emergencyOnly,
+    public NetworkRegistrationState(int transportType, @Domain int domain, @RegState int regState,
+            int accessNetworkTechnology, @RejectCause int reasonForDenial, boolean emergencyOnly,
             int[] availableServices, @Nullable CellIdentity cellIdentity) {
         mTransportType = transportType;
         mDomain = domain;
