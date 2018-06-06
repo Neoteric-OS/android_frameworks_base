@@ -46,6 +46,30 @@
       "revId": "7784d2cdc45eb43cf1b7ef361b13e731700edc3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a02f6135_368e418e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-06T08:09:38Z",
+      "side": 1,
+      "message": "I had a long chat about this with Lorenzo. pi-dev is wrong on this and I am trying to create a strategic fix, but we won\u0027t be able to fix the entire problem for P.\n\nAs for AOSP, you point out rightfully that the new code in this change is wrong, but the old code was actually wronger in the most common case. When a VPN is in force but has no underlying networks, the old code will return true while it should return whatever the default network for the VPN app is.\nag/4098545 was meant to fix this, but it\u0027s not correct because it\u0027s not using any UIDs.\n\nI filed b/109784579 and b/109783091 to track this.\n\nSo, the new code is marginally more correct than the old code. We also believe there is value in having AOSP reflect what has shipped. So I think I want to still cherry-pick this, and overhaul the behavior going forward.",
+      "parentUuid": "7ea20ee9_be641ecf",
+      "range": {
+        "startLine": 1419,
+        "startChar": 41,
+        "endLine": 1419,
+        "endChar": 72
+      },
+      "revId": "7784d2cdc45eb43cf1b7ef361b13e731700edc3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
