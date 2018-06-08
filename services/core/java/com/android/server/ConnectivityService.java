@@ -74,7 +74,6 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
-import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.UidRange;
@@ -151,7 +150,6 @@ import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
 import com.android.server.connectivity.NetworkNotificationManager;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
-import com.android.server.connectivity.PacManager;
 import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
@@ -1758,8 +1756,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mInitialBroadcast = null;
             }
         }
-        // load the global proxy at startup
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_APPLY_GLOBAL_HTTP_PROXY));
 
         // Try bringing up tracker, but KeyStore won't be ready yet for secondary users so wait
         // for user to unlock device too.
@@ -2933,7 +2929,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_APPLY_GLOBAL_HTTP_PROXY: {
-                    handleDeprecatedGlobalHttpProxy();
+                    mProxyTracker.loadDeprecatedGlobalHttpProxy();
                     break;
                 }
                 case EVENT_PROXY_HAS_CHANGED: {
@@ -3323,29 +3319,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
             mProxyTracker.sendProxyBroadcast(mProxyTracker.getDefaultProxy());
-        }
-    }
-
-    private void handleDeprecatedGlobalHttpProxy() {
-        final String proxy = Settings.Global.getString(mContext.getContentResolver(),
-                Settings.Global.HTTP_PROXY);
-        if (!TextUtils.isEmpty(proxy)) {
-            String data[] = proxy.split(":");
-            if (data.length == 0) {
-                return;
-            }
-
-            final String proxyHost = data[0];
-            int proxyPort = 8080;
-            if (data.length > 1) {
-                try {
-                    proxyPort = Integer.parseInt(data[1]);
-                } catch (NumberFormatException e) {
-                    return;
-                }
-            }
-            final ProxyInfo p = new ProxyInfo(proxyHost, proxyPort, "");
-            setGlobalProxy(p);
         }
     }
 
