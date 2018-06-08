@@ -302,6 +302,7 @@ final public class MediaMuxer {
     private static native void nativeWriteSampleData(
             long nativeObject, int trackIndex, @NonNull ByteBuffer byteBuf,
             int offset, int size, long presentationTimeUs, @MediaCodec.BufferFlag int flags);
+    private static native void nativeSetMaxFileSize(long nativeObject, long maxFileSize);
 
     // Muxer internal states.
     @UnsupportedAppUsage
@@ -321,6 +322,7 @@ final public class MediaMuxer {
 
     @UnsupportedAppUsage
     private long mNativeObject;
+    private long mMaxFileSize;
 
     /**
      * Constructor.
@@ -372,6 +374,7 @@ final public class MediaMuxer {
         }
         mNativeObject = nativeSetup(fd, format);
         mState = MUXER_STATE_INITIALIZED;
+        mMaxFileSize = Utils.getMaxFileSize(fd);
         mCloseGuard.open("release");
     }
 
@@ -449,6 +452,9 @@ final public class MediaMuxer {
             throw new IllegalStateException("Muxer has been released!");
         }
         if (mState == MUXER_STATE_INITIALIZED) {
+            if (mMaxFileSize > 0) {
+                nativeSetMaxFileSize(mNativeObject, mMaxFileSize);
+            }
             nativeStart(mNativeObject);
             mState = MUXER_STATE_STARTED;
         } else {

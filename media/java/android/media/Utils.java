@@ -16,12 +16,17 @@
 
 package android.media;
 
+import android.app.ActivityThread;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.FileUtils;
+import android.os.ParcelFileDescriptor;
+import android.os.StatFs;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.util.Pair;
@@ -30,6 +35,7 @@ import android.util.Rational;
 import android.util.Size;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -294,6 +300,31 @@ class Utils {
         }
         Log.w(TAG, "could not parse rational range '" + o + "'");
         return fallback;
+    }
+
+    static long getMaxFileSize(FileDescriptor fd) {
+        long result = 0;
+        long maxFreeBytes = 0;
+        long maxFileSizeBytes = 0;
+        try {
+            File file = ParcelFileDescriptor.getFile(fd);
+            String path = file.getAbsolutePath();
+            maxFreeBytes = new StatFs(path).getAvailableBytes();
+            Context cxt = (Context) ActivityThread.currentApplication();
+            StorageManager sm = (StorageManager) cxt.getSystemService(Context.STORAGE_SERVICE);
+            StorageVolume vol = sm.getStorageVolume(new File(path));
+            maxFileSizeBytes = vol.getMaxFileSize();
+            if (maxFileSizeBytes > 0) {
+                result = Math.min(maxFreeBytes, maxFileSizeBytes);
+            } else {
+                result = maxFreeBytes;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getMaxFileSize", e);
+        }
+        Log.i(TAG, "getMaxFileSize: result=" + result
+                + ", free=" + maxFreeBytes + ", max files size=" + maxFileSizeBytes);
+        return result;
     }
 
     static Pair<Size, Size> parseSizeRange(Object o) {

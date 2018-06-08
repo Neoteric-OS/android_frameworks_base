@@ -122,6 +122,7 @@ public class MediaRecorder implements AudioRouting,
     private OnErrorListener mOnErrorListener;
     @UnsupportedAppUsage
     private OnInfoListener mOnInfoListener;
+    private long mMaxFileSize;
 
     private int mChannelCount;
 
@@ -1045,15 +1046,27 @@ public class MediaRecorder implements AudioRouting,
         if (mPath != null) {
             RandomAccessFile file = new RandomAccessFile(mPath, "rw");
             try {
+                mMaxFileSize = Utils.getMaxFileSize(file.getFD());
+                if (mMaxFileSize > 0) {
+                    setMaxFileSize(mMaxFileSize);
+                }
                 _setOutputFile(file.getFD());
             } finally {
                 file.close();
             }
         } else if (mFd != null) {
+            mMaxFileSize = Utils.getMaxFileSize(mFd);
+            if (mMaxFileSize > 0) {
+                setMaxFileSize(mMaxFileSize);
+            }
             _setOutputFile(mFd);
         } else if (mFile != null) {
             RandomAccessFile file = new RandomAccessFile(mFile, "rw");
             try {
+                mMaxFileSize = Utils.getMaxFileSize(file.getFD());
+                if (mMaxFileSize > 0) {
+                    setMaxFileSize(mMaxFileSize);
+                }
                 _setOutputFile(file.getFD());
             } finally {
                 file.close();
