@@ -244,6 +244,23 @@ static void android_media_MediaMuxer_native_release(
     }
 }
 
+static void android_media_MediaMuxer_setMaxFileSize(
+        JNIEnv *env, jclass /* clazz */, jlong nativeObject, jlong maxFileSize) {
+    sp<MediaMuxer> muxer(reinterpret_cast<MediaMuxer *>(nativeObject));
+    if (muxer == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException",
+                          "Muxer was not set up correctly");
+        return;
+    }
+    status_t err = muxer->setMaxFileSize(maxFileSize);
+
+    if (err != OK) {
+        jniThrowException(env, "java/lang/IllegalStateException",
+                          "Failed to set max file size");
+        return;
+    }
+}
+
 static const JNINativeMethod gMethods[] = {
 
     { "nativeAddTrack", "(J[Ljava/lang/String;[Ljava/lang/Object;)I",
@@ -267,6 +284,9 @@ static const JNINativeMethod gMethods[] = {
 
     { "nativeRelease", "(J)V",
         (void *)android_media_MediaMuxer_native_release },
+
+    { "nativeSetMaxFileSize", "(JJ)V",
+        (void *)android_media_MediaMuxer_setMaxFileSize },
 
 };
 

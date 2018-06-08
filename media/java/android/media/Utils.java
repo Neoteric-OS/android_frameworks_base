@@ -16,13 +16,18 @@
 
 package android.media;
 
+import android.app.ActivityThread;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.FileUtils;
+import android.os.StatFs;
+import android.os.storage.StorageVolume;
+import android.os.storage.StorageManager;
 import android.provider.OpenableColumns;
+import android.system.Os;
 import android.util.Log;
 import android.util.Pair;
 import android.util.Range;
@@ -30,6 +35,7 @@ import android.util.Rational;
 import android.util.Size;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -294,6 +300,43 @@ class Utils {
         }
         Log.w(TAG, "could not parse rational range '" + o + "'");
         return fallback;
+    }
+
+    static long getMaxFileSize(FileDescriptor fd) {
+        try {
+            if (fd.isSocket$()) {
+                return 0;
+            }
+            if (fd.valid()) {
+                String path = Os.readlink("/proc/self/fd/" + fd.getInt$());
+                if (path.startsWith("/mnt/media_rw/")) {
+                    path = path.replace("/mnt/media_rw/", "/storage/");
+                }
+                File file = new File(path);
+                if (file.exists() && file.isFile()) {
+                    return getMaxFileSize(file.getAbsolutePath());
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getMaxFileSize", e);
+        }
+        return 0x00ffffffffL;
+    }
+
+    static long getMaxFileSize(String path) {
+        Log.i(TAG, "getMaxFileSize: begin: path = " + path);
+        long maxFreeBytes = new StatFs(path).getAvailableBytes();
+        Context cxt = (Context)ActivityThread.currentApplication();
+        StorageManager sm = (StorageManager)cxt.getSystemService(Context.STORAGE_SERVICE);
+        StorageVolume vol = sm.getStorageVolume(new File(path));
+        long maxFileSizeBytes = vol.getMaxFileSize();
+        long result = maxFreeBytes;
+        if (maxFileSizeBytes > 0) {
+            result = Math.min(result, maxFileSizeBytes);
+        }
+        Log.i(TAG, "getMaxFileSize: end: result=" + result +
+                ", free=" + maxFreeBytes + ", max files size=" + maxFileSizeBytes);
+        return result;
     }
 
     static Pair<Size, Size> parseSizeRange(Object o) {
