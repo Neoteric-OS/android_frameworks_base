@@ -280,14 +280,14 @@ public class ProxyTracker {
                     && (!Uri.EMPTY.equals(proxyInfo.getPacFileUrl()))
                     && proxyInfo.getPacFileUrl().equals(mGlobalProxy.getPacFileUrl())) {
                 mGlobalProxy = proxyInfo;
-                sendProxyBroadcast(mGlobalProxy);
+                sendProxyBroadcast(getDefaultProxy());
                 return;
             }
             mDefaultProxy = proxyInfo;
 
             if (mGlobalProxy != null) return;
             if (mDefaultProxyEnabled) {
-                sendProxyBroadcast(proxyInfo);
+                sendProxyBroadcast(getDefaultProxy());
             }
         }
     }
@@ -304,7 +304,7 @@ public class ProxyTracker {
             if (mDefaultProxyEnabled != enabled) {
                 mDefaultProxyEnabled = enabled;
                 if (mGlobalProxy == null && mDefaultProxy != null) {
-                    sendProxyBroadcast(enabled ? mDefaultProxy : null);
+                    sendProxyBroadcast(getDefaultProxy());
                 }
             }
         }
