@@ -16,6 +16,12 @@
 
 package com.android.server.connectivity;
 
+import static android.provider.Settings.Global.GLOBAL_HTTP_PROXY_EXCLUSION_LIST;
+import static android.provider.Settings.Global.GLOBAL_HTTP_PROXY_HOST;
+import static android.provider.Settings.Global.GLOBAL_HTTP_PROXY_PAC;
+import static android.provider.Settings.Global.GLOBAL_HTTP_PROXY_PORT;
+import static android.provider.Settings.Global.HTTP_PROXY;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.ContentResolver;
@@ -47,24 +53,22 @@ public class ProxyTracker {
     @NonNull
     private final Context mContext;
 
-    // TODO : make this private and import as much managing logic from ConnectivityService as
-    // possible
     @NonNull
-    public final Object mProxyLock = new Object();
+    private final Object mProxyLock = new Object();
     // The global proxy is the proxy that is set device-wide, overriding any network-specific
     // proxy. Note however that proxies are hints ; the system does not enforce their use. Hence
     // this value is only for querying.
     @Nullable
     @GuardedBy("mProxyLock")
-    public ProxyInfo mGlobalProxy = null;
+    private ProxyInfo mGlobalProxy = null;
     // The default proxy is the proxy that applies to no particular network if the global proxy
     // is not set. Individual networks have their own settings that override this.
     @Nullable
     @GuardedBy("mProxyLock")
-    public volatile ProxyInfo mDefaultProxy = null;
-    // Whether the default proxy is disabled. TODO : make this mDefaultProxyEnabled
+    private volatile ProxyInfo mDefaultProxy = null;
+    // Whether the default proxy is enabled.
     @GuardedBy("mProxyLock")
-    public boolean mDefaultProxyDisabled = false;
+    private boolean mDefaultProxyEnabled = false;
 
     // The object responsible for Proxy Auto Configuration (PAC).
     @NonNull
@@ -82,7 +86,7 @@ public class ProxyTracker {
     @Nullable
     private static ProxyInfo canonicalizeProxyInfo(@Nullable final ProxyInfo proxy) {
         if (proxy != null && TextUtils.isEmpty(proxy.getHost())
-                && (proxy.getPacFileUrl() == null || Uri.EMPTY.equals(proxy.getPacFileUrl()))) {
+                && Uri.EMPTY.equals(proxy.getPacFileUrl())) {
             return null;
         }
         return proxy;
@@ -120,7 +124,7 @@ public class ProxyTracker {
         // This information is already available as a world read/writable jvm property.
         synchronized (mProxyLock) {
             final ProxyInfo ret = mGlobalProxy;
-            if ((ret == null) && !mDefaultProxyDisabled) return mDefaultProxy;
+            if ((ret == null) && mDefaultProxyEnabled) return mDefaultProxy;
             return ret;
         }
     }
@@ -142,11 +146,10 @@ public class ProxyTracker {
      */
     public void loadGlobalProxy() {
         ContentResolver res = mContext.getContentResolver();
-        String host = Settings.Global.getString(res, Settings.Global.GLOBAL_HTTP_PROXY_HOST);
-        int port = Settings.Global.getInt(res, Settings.Global.GLOBAL_HTTP_PROXY_PORT, 0);
-        String exclList = Settings.Global.getString(res,
-                Settings.Global.GLOBAL_HTTP_PROXY_EXCLUSION_LIST);
-        String pacFileUrl = Settings.Global.getString(res, Settings.Global.GLOBAL_HTTP_PROXY_PAC);
+        String host = Settings.Global.getString(res, GLOBAL_HTTP_PROXY_HOST);
+        int port = Settings.Global.getInt(res, GLOBAL_HTTP_PROXY_PORT, 0);
+        String exclList = Settings.Global.getString(res, GLOBAL_HTTP_PROXY_EXCLUSION_LIST);
+        String pacFileUrl = Settings.Global.getString(res, GLOBAL_HTTP_PROXY_PAC);
         if (!TextUtils.isEmpty(host) || !TextUtils.isEmpty(pacFileUrl)) {
             ProxyInfo proxyProperties;
             if (!TextUtils.isEmpty(pacFileUrl)) {
@@ -171,8 +174,7 @@ public class ProxyTracker {
      * Read the global proxy from the deprecated Settings.Global.HTTP_PROXY setting and apply it.
      */
     public void loadDeprecatedGlobalHttpProxy() {
-        final String proxy = Settings.Global.getString(mContext.getContentResolver(),
-                Settings.Global.HTTP_PROXY);
+        final String proxy = Settings.Global.getString(mContext.getContentResolver(), HTTP_PROXY);
         if (!TextUtils.isEmpty(proxy)) {
             String data[] = proxy.split(":");
             if (data.length == 0) {
@@ -258,11 +260,10 @@ public class ProxyTracker {
             final ContentResolver res = mContext.getContentResolver();
             final long token = Binder.clearCallingIdentity();
             try {
-                Settings.Global.putString(res, Settings.Global.GLOBAL_HTTP_PROXY_HOST, host);
-                Settings.Global.putInt(res, Settings.Global.GLOBAL_HTTP_PROXY_PORT, port);
-                Settings.Global.putString(res, Settings.Global.GLOBAL_HTTP_PROXY_EXCLUSION_LIST,
-                        exclList);
-                Settings.Global.putString(res, Settings.Global.GLOBAL_HTTP_PROXY_PAC, pacFileUrl);
+                Settings.Global.putString(res, GLOBAL_HTTP_PROXY_HOST, host);
+                Settings.Global.putInt(res, GLOBAL_HTTP_PROXY_PORT, port);
+                Settings.Global.putString(res, GLOBAL_HTTP_PROXY_EXCLUSION_LIST, exclList);
+                Settings.Global.putString(res, GLOBAL_HTTP_PROXY_PAC, pacFileUrl);
             } finally {
                 Binder.restoreCallingIdentity(token);
             }
@@ -303,7 +304,7 @@ public class ProxyTracker {
             mDefaultProxy = proxyInfo;
 
             if (mGlobalProxy != null) return;
-            if (!mDefaultProxyDisabled) {
+            if (mDefaultProxyEnabled) {
                 sendProxyBroadcast(proxyInfo);
             }
         }
@@ -318,8 +319,8 @@ public class ProxyTracker {
      */
     public void setDefaultProxyEnabled(final boolean enabled) {
         synchronized (mProxyLock) {
-            if (mDefaultProxyDisabled == enabled) {
-                mDefaultProxyDisabled = !enabled;
+            if (mDefaultProxyEnabled != enabled) {
+                mDefaultProxyEnabled = enabled;
                 if (mGlobalProxy == null && mDefaultProxy != null) {
                     sendProxyBroadcast(enabled ? mDefaultProxy : null);
                 }
