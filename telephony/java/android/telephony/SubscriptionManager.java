@@ -37,10 +37,12 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.DisplayMetrics;
+
 import com.android.internal.telephony.IOnSubscriptionsChangedListener;
 import com.android.internal.telephony.ISub;
 import com.android.internal.telephony.ITelephonyRegistry;
 import com.android.internal.telephony.PhoneConstants;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -241,6 +243,20 @@ public class SubscriptionManager {
 
     /** @hide */
     public static final int SIM_PROVISIONED = 0;
+
+    /**
+     * TelephonyProvider column name for the MCC associated with a SIM, stored as a string.
+     * <P>Type: TEXT (String)</P>
+     * @hide
+     */
+    public static final String MCC_STRING = "mcc_string";
+
+    /**
+     * TelephonyProvider column name for the MNC associated with a SIM, stored as a string.
+     * <P>Type: TEXT (String)</P>
+     * @hide
+     */
+    public static final String MNC_STRING = "mnc_string";
 
     /**
      * TelephonyProvider column name for the MCC associated with a SIM.
