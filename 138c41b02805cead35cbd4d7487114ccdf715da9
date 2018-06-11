@@ -22,6 +22,30 @@
       "revId": "138c41b02805cead35cbd4d7487114ccdf715da9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9600a74_5fff430c",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-11T09:54:55Z",
+      "side": 1,
+      "message": "Implemented as you suggested.\nAnother common pattern I\u0027ve seen is to call the method something like sendCurrentProxyScriptUrlAndReturnWhetherBroadcastShouldBeSent but that\u0027s a mouthful",
+      "parentUuid": "7ab14050_9598f453",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 36
+      },
+      "revId": "138c41b02805cead35cbd4d7487114ccdf715da9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
