@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd899fc_e173eaf8",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-11T04:19:24Z",
+      "side": 1,
+      "message": "Could probably be package-private now.",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 10
+      },
+      "revId": "a09ed91206ab04ccd346dbdeb6f7ac7c1ba68f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaab2622_66f2e709",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-11T04:19:24Z",
+      "side": 1,
+      "message": "\"or\"",
+      "range": {
+        "startLine": 112,
+        "startChar": 32,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "a09ed91206ab04ccd346dbdeb6f7ac7c1ba68f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
