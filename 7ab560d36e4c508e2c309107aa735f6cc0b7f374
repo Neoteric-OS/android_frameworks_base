@@ -45,6 +45,29 @@
       "revId": "7ab560d36e4c508e2c309107aa735f6cc0b7f374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bba4270_b2e04886",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-11T04:14:03Z",
+      "side": 1,
+      "message": "Can you add @GuardedBy annotations to the members that need them?",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "7ab560d36e4c508e2c309107aa735f6cc0b7f374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
