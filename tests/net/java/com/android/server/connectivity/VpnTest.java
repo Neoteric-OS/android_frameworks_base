@@ -57,7 +57,6 @@ import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.net.IConnectivityManager;
 import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -97,7 +96,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
