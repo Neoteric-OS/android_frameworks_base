@@ -332,6 +332,35 @@ public final class BluetoothGatt implements BluetoothProfile {
                 }
 
                 /**
+                 * Remote device has sent GATT service changed indication.
+                 * The internal object structure may not yet reflect the state
+                 * of the remote device database. Let the application know that
+                 * they may need to call discoverServices() at this point.
+                 * @hide
+                 */
+                @Override
+                public void onServiceChanged(String address) {
+                    if (DBG) {
+                        Log.d(TAG,
+                                "onServiceChanged() = Device=" + address);
+                    }
+                    if (!address.equals(mDevice.getAddress())) {
+                        return;
+                    }
+
+                    runOrQueueCallback(new Runnable() {
+                        @Override
+                        public void run() {
+                            final BluetoothGattCallback callback = mCallback;
+                            if (callback != null) {
+                                callback.onServiceChanged(BluetoothGatt.this);
+                            }
+                        }
+                    });
+                }
+
+
+                /**
                  * Remote characteristic has been read.
                  * Updates the internal value.
                  * @hide
