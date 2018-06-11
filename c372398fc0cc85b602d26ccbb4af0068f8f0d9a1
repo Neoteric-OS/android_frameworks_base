@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8450d978_2e2cbaaa",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-11T04:22:20Z",
+      "side": 1,
+      "message": "Given that many of the methods in this class are going to be synchronized on mProxyLock, consider just having them take the class lock and declaring the methods themselves synchronized. Given that this class is a private member of CS there doesn\u0027t seem to be a risk of callers blocking this class by taking its lock. OTOH, there\u0027s also Jeff\u0027s \"synchronized(this) considered harmful\" rant.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "c372398fc0cc85b602d26ccbb4af0068f8f0d9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801dedd6_f88f635e",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-11T04:22:20Z",
+      "side": 1,
+      "message": "Do we want to keep the commented-out \"enforceAccessPermission\" check? Or maybe add a comment that we used to check for ACCESS_NETWOKRK_STATE here, but no longer do?",
+      "range": {
+        "startLine": 66,
+        "startChar": 86,
+        "endLine": 66,
+        "endChar": 87
+      },
+      "revId": "c372398fc0cc85b602d26ccbb4af0068f8f0d9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
