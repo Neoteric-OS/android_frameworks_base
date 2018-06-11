@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "613bd7af_54930351",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-11T07:41:50Z",
+      "side": 1,
+      "message": "I agree with your assessment and did consider that. Jeff\u0027s rant struck a chord with me after I\u0027ve seen the very problem he spoke of happen. I don\u0027t think there is much of a difference in this specific place, so I thought I\u0027d just stay explicit and encapsulated. Let me know if you feel strongly about it.",
+      "parentUuid": "8450d978_2e2cbaaa",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "c372398fc0cc85b602d26ccbb4af0068f8f0d9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801dedd6_f88f635e",
         "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c372398fc0cc85b602d26ccbb4af0068f8f0d9a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116e56d2_d5b31a2d",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-11T07:41:50Z",
+      "side": 1,
+      "message": "We never really used to check for this permission. The check was added in ag/274369 on 2013-02-15 and reverted in ag/276577 one week later. That\u0027s why I decided to remove the comments as described in the cover comment for this patch : I felt they were misleading and lacking context.",
+      "parentUuid": "801dedd6_f88f635e",
+      "range": {
+        "startLine": 66,
+        "startChar": 86,
+        "endLine": 66,
+        "endChar": 87
+      },
+      "revId": "c372398fc0cc85b602d26ccbb4af0068f8f0d9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
