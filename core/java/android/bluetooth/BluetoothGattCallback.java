@@ -76,6 +76,16 @@ public abstract class BluetoothGattCallback {
     }
 
     /**
+     * Callback invoked when the remote device has sent a GATT service changed indication,
+     * warning that the GATT cache has been cleared and services need to be re-discovered.
+     *
+     * @param gatt GATT client
+     * @hide
+     */
+    public void onServiceChanged(BluetoothGatt gatt) {
+    }
+
+    /**
      * Callback reporting the result of a characteristic read operation.
      *
      * @param gatt GATT client invoked {@link BluetoothGatt#readCharacteristic}
