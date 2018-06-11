@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab14050_9598f453",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-11T04:07:44Z",
+      "side": 1,
+      "message": "Not in this change, but I think this situation calls for named-constants, a la:\n\n    final boolean DONT_SEND_BROADCAST \u003d true;\n\nand then:\n\n    if (setCurrentProxyScriptUrl(proxy) \u003d\u003d PacManager.DONT_SEND_BROADCAST) return;\n\nOtherwise, this requires spelunking to figure out what\u0027s going on.",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 36
+      },
+      "revId": "138c41b02805cead35cbd4d7487114ccdf715da9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
