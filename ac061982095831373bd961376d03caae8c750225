@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5439d146_2ddb9e83",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-12T09:45:02Z",
+      "side": 1,
+      "message": "I find this hard to read. Care to rewrite it? It think the following is equivalent, and is much simpler:\n\n    if (mGlobalProxy !\u003d null) return mGlobalProxy;\n    if (mDefaultProxyEnabled) return mDefaultProxy;\n    return null;",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "ac061982095831373bd961376d03caae8c750225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
