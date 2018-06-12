@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b2899a0_9a6d6f97",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-12T09:28:39Z",
+      "side": 1,
+      "message": "Not for this change since this is just moving code around, but should this use proxyInfoEqual()?",
+      "range": {
+        "startLine": 287,
+        "startChar": 16,
+        "endLine": 287,
+        "endChar": 30
+      },
+      "revId": "f826f8bc3a4401964ece0482de1d9ea484205cd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
