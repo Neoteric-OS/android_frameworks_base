@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23799ae9_e1bd7db4",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-12T09:54:43Z",
+      "side": 1,
+      "message": "Update comment to reflect the returned constants.",
+      "range": {
+        "startLine": 176,
+        "startChar": 15,
+        "endLine": 176,
+        "endChar": 65
+      },
+      "revId": "d57b96bce1305e1af8676132193977c06228b1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
