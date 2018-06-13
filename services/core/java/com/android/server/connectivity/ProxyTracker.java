@@ -127,12 +127,12 @@ public class ProxyTracker {
      * @return The default system-wide proxy or null if none.
      */
     @Nullable
-    public ProxyInfo getDefaultProxy() {
+    @VisibleForTesting
+    ProxyInfo getGlobalOrDefaultProxy() {
         // This information is already available as a world read/writable jvm property.
         synchronized (mProxyLock) {
             if (mGlobalProxy != null) return mGlobalProxy;
-            if (mDefaultProxyEnabled) return mDefaultProxy;
-            return null;
+            return mDefaultProxyEnabled ? mDefaultProxy : null;
         }
     }
 
@@ -212,7 +212,7 @@ public class ProxyTracker {
      * to do in a "sendProxyBroadcast" method.
      */
     private void sendProxyBroadcast() {
-        final ProxyInfo defaultProxy = getDefaultProxy();
+        final ProxyInfo defaultProxy = getGlobalOrDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ? defaultProxy : new ProxyInfo("", 0, "");
         if (mPacManager.setCurrentProxyScriptUrl(proxyInfo) == PacManager.DONT_SEND_BROADCAST) {
             return;

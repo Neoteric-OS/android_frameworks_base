@@ -177,7 +177,7 @@ public class ProxyTrackerTest {
         assertEquals(globalProxy.getPort(), TEST_GLOBAL_PORT);
         assertArrayEquals(globalProxy.getExclusionList(), TEST_GLOBAL_EXCLUSION_LIST.split(","));
 
-        final ProxyInfo defaultProxy = mProxyTracker.getDefaultProxy();
+        final ProxyInfo defaultProxy = mProxyTracker.getGlobalOrDefaultProxy();
         assertEquals(globalProxy, defaultProxy);
 
         // TODO : why not send the broadcast here, but do in testDeprecatedProxyOverrides ?
@@ -199,7 +199,7 @@ public class ProxyTrackerTest {
         assertEquals(globalProxy.getPort(), TEST_DEPRECATED_PROXY_PORT);
         assertArrayEquals(globalProxy.getExclusionList(), new String[]{""});
 
-        final ProxyInfo defaultProxy = mProxyTracker.getDefaultProxy();
+        final ProxyInfo defaultProxy = mProxyTracker.getGlobalOrDefaultProxy();
         assertEquals(globalProxy, defaultProxy);
 
         verify(mContext, times(1)).sendStickyBroadcastAsUser(any(), any());
@@ -212,13 +212,13 @@ public class ProxyTrackerTest {
         final ProxyInfo manualProxy =
                 ProxyInfo.buildDirectProxy(TEST_GLOBAL_HOST, TEST_GLOBAL_PORT);
         mProxyTracker.setDefaultProxy(manualProxy);
-        assertEquals(manualProxy, mProxyTracker.getDefaultProxy());
+        assertEquals(manualProxy, mProxyTracker.getGlobalOrDefaultProxy());
         assertEquals(null, mProxyTracker.getGlobalProxy());
 
         verifyIntentSentForProxy(manualProxy);
 
         mProxyTracker.setDefaultProxy(null);
-        assertEquals(null, mProxyTracker.getDefaultProxy());
+        assertEquals(null, mProxyTracker.getGlobalOrDefaultProxy());
         assertEquals(null, mProxyTracker.getGlobalProxy());
 
         verifyIntentSentForProxy(new ProxyInfo("", 0, ""));
