@@ -1005,8 +1005,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             // READ_NETWORK_USAGE_HISTORY permission above.
 
             synchronized (mNetworkPoliciesSecondLock) {
-                updateNetworkEnabledNL();
-                updateNotificationsNL();
+                boolean updateNetworkRulesNeeded = updateNetworkEnabledNL();
+                //sync quota of data limit when offload + upstream is not share with default (Internet)
+                if (updateNetworkRulesNeeded) {
+                    Slog.d(TAG, "updateNetworkRulesNL from mStatsReceiver");
+                    updateNetworkRulesNL();
+                }
             }
         }
     };
@@ -1630,9 +1634,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
      * Proactively control network data connections when they exceed
      * {@link NetworkPolicy#limitBytes}.
      */
-    void updateNetworkEnabledNL() {
+    boolean  updateNetworkEnabledNL() { //IKSWO-97695
         if (LOGV) Slog.v(TAG, "updateNetworkEnabledNL()");
         Trace.traceBegin(TRACE_TAG_NETWORK, "updateNetworkEnabledNL");
+        boolean updateNetworkRulesNeeded = false;
+        final String subscriberId = TelephonyManager.from(mContext).getSubscriberId();
+        final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
+                TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true);
 
         // TODO: reset any policy-disabled networks when any policy is removed
         // completely, which is currently rare case.
@@ -1659,10 +1667,45 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final boolean networkEnabled = !overLimitWithoutSnooze;
 
             setNetworkTemplateEnabled(policy.template, networkEnabled);
+            //sync quota of data limit when offload + upstream is not share with default (Internet)
+            if (!overLimitWithoutSnooze) {
+                final NetworkTemplate template = mNetworkPolicy.keyAt(i);
+                if (template.matches(probeIdent)) {
+                    if (!TextUtils.equals(subscriberId, subscriberIdInLimit)) {
+                        subscriberIdInLimit = subscriberId;
+                        lastTotalBytesInLimit = 0;
+                    }
+                    long delta = totalBytes>lastTotalBytesInLimit ?
+                        totalBytes-lastTotalBytesInLimit : 0;
+                    Slog.d(TAG, "updateNetworkEnabledNL on " + subscriberId + ": " +
+                            "bytesToSyncQuota=" + bytesToSyncQuota + 
+                            ",delta=" + delta + ",totalBytes=" + totalBytes);
+                    if (bytesToSyncQuota < 0) {
+                        lastTotalBytesInLimit = totalBytes;
+                    } else if (delta > bytesToSyncQuota) {
+                        lastTotalBytesInLimit = totalBytes;
+                        updateNetworkRulesNeeded = true;
+                    }
+                }
+            }
         }
-
         mStatLogger.logDurationStat(Stats.UPDATE_NETWORK_ENABLED, startTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
+        return updateNetworkRulesNeeded; //IKSWO-97695
+    }
+    //sync quota of data limit when offload + upstream is not share with default (Internet)
+    private String subscriberIdInLimit = null;
+    private long lastTotalBytesInLimit = 0;
+    private volatile long bytesToSyncQuota = -1;
+    void setSyncQuota(boolean enable) {
+        final long defaultDelta = 10*1000*1000; //10M
+        final String syncQuotaProp = "persist.data.syncquota_delta";
+        if (enable) {
+            bytesToSyncQuota = SystemProperties.getLong(syncQuotaProp, defaultDelta);
+        } else {
+            bytesToSyncQuota = -1;
+        }
+        Slog.v(TAG, "setSyncQuota:" + enable);
     }
 
     /**
@@ -4992,6 +5035,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         public void setMeteredRestrictedPackagesAsync(Set<String> packageNames, int userId) {
             mHandler.obtainMessage(MSG_METERED_RESTRICTED_PACKAGES_CHANGED,
                     userId, 0, packageNames).sendToTarget();
+        }
+
+        @Override
+        public void setTetherOffloadInfor(boolean isOffloadRunning, boolean internetShared) {
+            setSyncQuota(isOffloadRunning && !internetShared);
         }
     }
 

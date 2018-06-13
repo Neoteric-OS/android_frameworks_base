@@ -46,6 +46,7 @@ import static android.net.wifi.WifiManager.WIFI_AP_STATE_DISABLED;
 import static android.telephony.CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
+import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.server.ConnectivityService.SHORT_ARG;
 
 import android.app.Notification;
@@ -115,6 +116,7 @@ import com.android.server.connectivity.tethering.TetheringDependencies;
 import com.android.server.connectivity.tethering.TetheringInterfaceUtils;
 import com.android.server.connectivity.tethering.UpstreamNetworkMonitor;
 import com.android.server.net.BaseNetworkObserver;
+import com.android.server.net.NetworkPolicyManagerInternal;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -278,6 +280,9 @@ public class Tethering extends BaseNetworkObserver {
         updateConfiguration();
 
         startStateMachineUpdaters(mHandler);
+        mPolicyManagerInternal = checkNotNull(
+                LocalServices.getService(NetworkPolicyManagerInternal.class),
+                "missing NetworkPolicyManagerInternal");
     }
 
     private void startStateMachineUpdaters(Handler handler) {
@@ -530,6 +535,17 @@ public class Tethering extends BaseNetworkObserver {
         }
     }
 
+    //sync quota of data limit when offload + upstream is not share with default (Internet)
+    private boolean upstreamSharedInternet = true;
+    private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private void sendTetherOffloadInfor() {
+        boolean offloadRunning = mOffloadController.started() && !mForwardedDownstreams.isEmpty();
+        mPolicyManagerInternal.setTetherOffloadInfor(offloadRunning, upstreamSharedInternet);
+        mLog.log("sendTetherOffloadInfor: offload.started="+
+                mOffloadController.started()+
+                ",ForwardedDownstreams=" + !mForwardedDownstreams.isEmpty() +
+                ",upstreamShared=" + upstreamSharedInternet);
+    }
     // TODO: Figure out how to update for local hotspot mode interfaces.
     private void sendTetherStateChangedBroadcast() {
         if (!mDeps.isTetheringSupported()) return;
@@ -1209,6 +1225,13 @@ public class Tethering extends BaseNetworkObserver {
                 }
             }
             setUpstreamNetwork(ns);
+            //sync quota of data limit when offload + upstream is not share with default (Internet)
+            if (ns != null) {
+                boolean prevValue = upstreamSharedInternet;
+                upstreamSharedInternet = ns.networkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_INTERNET);
+                if (prevValue != upstreamSharedInternet) sendTetherOffloadInfor();
+            }
             final Network newUpstream = (ns != null) ? ns.network : null;
             if (mTetherUpstream != newUpstream) {
                 mTetherUpstream = newUpstream;
@@ -1594,10 +1617,12 @@ public class Tethering extends BaseNetworkObserver {
             public void start() {
                 mOffloadController.start();
                 sendOffloadExemptPrefixes();
+                sendTetherOffloadInfor();
             }
 
             public void stop() {
                 mOffloadController.stop();
+                sendTetherOffloadInfor();
             }
 
             public void updateUpstreamNetworkState(NetworkState ns) {

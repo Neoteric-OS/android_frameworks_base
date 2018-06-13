@@ -120,4 +120,5 @@ public abstract class NetworkPolicyManagerInternal {
      */
     public abstract void setMeteredRestrictedPackagesAsync(
             Set<String> packageNames, int userId);
+    public abstract void setTetherOffloadInfor(boolean isOffloadRunning, boolean internetShared);
 }

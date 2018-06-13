@@ -248,7 +248,7 @@ public class OffloadController {
         if (wasStarted) mLog.log("tethering offload stopped");
     }
 
-    private boolean started() {
+    public boolean started() {
         return mConfigInitialized && mControlInitialized;
     }
 
