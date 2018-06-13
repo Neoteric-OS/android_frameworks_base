@@ -1735,10 +1735,17 @@ class AlarmManagerService extends SystemService {
             // wakelock time spent in alarm delivery
             mAppOps.checkPackage(callingUid, callingPackage);
 
-            // Repeating alarms must use PendingIntent, not direct listener
-            if (interval != 0) {
-                if (directReceiver != null) {
-                    throw new IllegalArgumentException("Repeating alarms cannot use AlarmReceivers");
+            if (Binder.getCallingPid() == Os.getpid()) {
+                if (directReceiver == null) {
+                    Slog.wtf(TAG, "System process alarms should migrate to OnAlarmListener");
+                }
+            } else {
+                // Repeating alarms must use PendingIntent, not direct listener
+                if (interval != 0) {
+                    if (directReceiver != null) {
+                        throw new IllegalArgumentException(
+                                "Repeating alarms cannot use OnAlarmListener");
+                    }
                 }
             }
 
@@ -3161,8 +3168,9 @@ class AlarmManagerService extends SystemService {
                     final long nextElapsed = alarm.whenElapsed + delta;
                     setImplLocked(alarm.type, alarm.when + delta, nextElapsed, alarm.windowLength,
                             maxTriggerTime(nowELAPSED, nextElapsed, alarm.repeatInterval),
-                            alarm.repeatInterval, alarm.operation, null, null, alarm.flags, true,
-                            alarm.workSource, alarm.alarmClock, alarm.uid, alarm.packageName);
+                            alarm.repeatInterval, alarm.operation, alarm.listener,
+                            alarm.listenerTag, alarm.flags, true, alarm.workSource,
+                            alarm.alarmClock, alarm.uid, alarm.packageName);
                 }
 
                 if (alarm.wakeup) {
@@ -3260,6 +3268,11 @@ class AlarmManagerService extends SystemService {
             packageName = _pkgName;
             sourcePackage = (operation != null) ? operation.getCreatorPackage() : packageName;
             creatorUid = (operation != null) ? operation.getCreatorUid() : uid;
+
+            if (_op == null && _rec == null) {
+                throw new IllegalArgumentException(
+                        "Alarms must define either a PendingIntent or an IAlarmListener");
+            }
         }
 
         public static String makeTag(PendingIntent pi, String tag, int type) {

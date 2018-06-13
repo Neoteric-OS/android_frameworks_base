@@ -447,6 +447,14 @@ public class AlarmManager {
                 null, null, null, null, null);
     }
 
+    /** {@hide} */
+    public void setRepeating(@AlarmType int type, long triggerAtMillis,
+            long intervalMillis, String tag, OnAlarmListener listener,
+            Handler targetHandler) {
+        setImpl(type, triggerAtMillis, legacyExactLength(), intervalMillis, 0, null,
+                listener, tag, targetHandler, null, null);
+    }
+
     /**
      * Schedule an alarm to be delivered within a given window of time.  This method
      * is similar to {@link #set(int, long, PendingIntent)}, but allows the
@@ -803,6 +811,14 @@ public class AlarmManager {
                 null, null, null, null);
     }
 
+    /** {@hide} */
+    public void setInexactRepeating(@AlarmType int type, long triggerAtMillis,
+            long intervalMillis, String tag, OnAlarmListener listener,
+            Handler targetHandler) {
+        setImpl(type, triggerAtMillis, WINDOW_HEURISTIC, intervalMillis, 0, null, listener,
+                tag, targetHandler, null, null);
+    }
+
     /**
      * Like {@link #set(int, long, PendingIntent)}, but this alarm will be allowed to execute
      * even when the system is in low-power idle (a.k.a. doze) modes.  This type of alarm must
@@ -851,6 +867,13 @@ public class AlarmManager {
             PendingIntent operation) {
         setImpl(type, triggerAtMillis, WINDOW_HEURISTIC, 0, FLAG_ALLOW_WHILE_IDLE,
                 operation, null, null, null, null, null);
+    }
+
+    /** {@hide} */
+    public void setAndAllowWhileIdle(@AlarmType int type, long triggerAtMillis,
+            String tag, OnAlarmListener listener, Handler targetHandler) {
+        setImpl(type, triggerAtMillis, WINDOW_HEURISTIC, 0, FLAG_ALLOW_WHILE_IDLE,
+                null, listener, tag, targetHandler, null, null);
     }
 
     /**
@@ -905,6 +928,13 @@ public class AlarmManager {
             PendingIntent operation) {
         setImpl(type, triggerAtMillis, WINDOW_EXACT, 0, FLAG_ALLOW_WHILE_IDLE, operation,
                 null, null, null, null, null);
+    }
+
+    /** {@hide} */
+    public void setExactAndAllowWhileIdle(@AlarmType int type, long triggerAtMillis,
+            String tag, OnAlarmListener listener, Handler targetHandler) {
+        setImpl(type, triggerAtMillis, WINDOW_EXACT, 0, FLAG_ALLOW_WHILE_IDLE, null,
+                listener, tag, targetHandler, null, null);
     }
 
     /**
