@@ -27,6 +27,7 @@ import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.LinkProperties;
 import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.Uri;
@@ -210,7 +211,7 @@ public class ProxyTracker {
      * Confusingly this method also sets the PAC file URL. TODO : separate this, it has nothing
      * to do in a "sendProxyBroadcast" method.
      */
-    public void sendProxyBroadcast() {
+    private void sendProxyBroadcast() {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ? defaultProxy : new ProxyInfo("", 0, "");
         if (mPacManager.setCurrentProxyScriptUrl(proxyInfo) == PacManager.DONT_SEND_BROADCAST) {
@@ -227,6 +228,46 @@ public class ProxyTracker {
         } finally {
             Binder.restoreCallingIdentity(ident);
         }
+    }
+
+    // If the proxy has changed from oldLp to newLp, resend proxy broadcast with default proxy.
+    // This method gets called when any network changes proxy, but the broadcast only ever contains
+    // the default proxy (even if it hasn't changed).
+    // TODO: Remove usage of broadcast extras as they are deprecated and not applicable in a
+    // multi-network world where an app might be bound to a non-default network.
+    /**
+     * Notify the proxy tracker that a non-default network changed proxies.
+     *
+     * @param newLp the new LinkProperties for that network
+     * @parma oldLp the old LinkProperties for that network
+     */
+    public void changeProxyForNonDefaultNetwork(LinkProperties newLp, LinkProperties oldLp) {
+        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
+        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
+
+        if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
+            sendProxyBroadcast();
+        }
+    }
+
+    /**
+     * Notify the proxy tracker that a VPN underwent a change that may require a proxy update.
+     *
+     * VPNs connecting or disconnecting must broadcast the proxy info again even if it hasn't
+     * changed, because some apps may find themselves with a different default network than
+     * before even if the system default network did not change. Therefore the broadcast has
+     * to be sent so that apps (and importantly ActivityManager) know to pick up this change
+     * and call getDefaultProxy() again to get the new value.
+     * NOTE : at this time this method is only used when a VPN disconnects. VPN connections
+     * handle proxy changes through updateLinkProperties instead.
+     *
+     * @param nai the VPN that underwent a change. It may be disconnected.
+     */
+    public void handleVpnChange(@NonNull final NetworkAgentInfo nai) {
+        // As the active or bound network changes for apps, broadcast the default proxy, as
+        // apps may need to update their proxy data.
+        // TODO(b/122649188): send the broadcast only to VPN users.
+        sendProxyBroadcast();
     }
 
     /**
@@ -286,6 +327,10 @@ public class ProxyTracker {
      * @param proxyInfo the proxy spec, or null for no proxy.
      */
     public void setDefaultProxy(@Nullable ProxyInfo proxyInfo) {
+        if (proxyInfo != null && TextUtils.isEmpty(proxyInfo.getHost())
+                && Uri.EMPTY.equals(proxyInfo.getPacFileUrl())) {
+            proxyInfo = null;
+        }
         synchronized (mProxyLock) {
             if (Objects.equals(mDefaultProxy, proxyInfo)) return;
             if (proxyInfo != null &&  !proxyInfo.isValid()) {
@@ -297,7 +342,7 @@ public class ProxyTracker {
             // proxy. If this new proxy matches the global proxy then copy this proxy to the
             // global (to get the correct local port), and send a broadcast.
             // TODO: Switch PacManager to have its own message to send back rather than
-            // reusing EVENT_HAS_CHANGED_PROXY and this call to handleApplyDefaultProxy.
+            // reusing EVENT_PROXY_HAS_CHANGED to call setDefaultProxy.
             if ((mGlobalProxy != null) && (proxyInfo != null)
                     && (!Uri.EMPTY.equals(proxyInfo.getPacFileUrl()))
                     && proxyInfo.getPacFileUrl().equals(mGlobalProxy.getPacFileUrl())) {

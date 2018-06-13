@@ -3495,7 +3495,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_PROXY_HAS_CHANGED: {
-                    handleApplyDefaultProxy((ProxyInfo)msg.obj);
+                    mProxyTracker.setDefaultProxy((ProxyInfo) msg.obj);
                     break;
                 }
                 case EVENT_REGISTER_NETWORK_FACTORY: {
@@ -3923,27 +3923,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Nullable
     public ProxyInfo getGlobalProxy() {
         return mProxyTracker.getGlobalProxy();
-    }
-
-    private void handleApplyDefaultProxy(ProxyInfo proxy) {
-        if (proxy != null && TextUtils.isEmpty(proxy.getHost())
-                && Uri.EMPTY.equals(proxy.getPacFileUrl())) {
-            proxy = null;
-        }
-        mProxyTracker.setDefaultProxy(proxy);
-    }
-
-    // If the proxy has changed from oldLp to newLp, resend proxy broadcast. This method gets called
-    // when any network changes proxy.
-    // TODO: Remove usage of broadcast extras as they are deprecated and not applicable in a
-    // multi-network world where an app might be bound to a non-default network.
-    private void updateProxy(LinkProperties newLp, LinkProperties oldLp) {
-        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
-        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
-
-        if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
-            mProxyTracker.sendProxyBroadcast();
-        }
     }
 
     private static class SettingsObserver extends ContentObserver {
@@ -5246,9 +5225,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
         if (isDefaultNetwork(networkAgent)) {
-            handleApplyDefaultProxy(newLp.getHttpProxy());
+            mProxyTracker.setDefaultProxy(newLp.getHttpProxy());
         } else {
-            updateProxy(newLp, oldLp);
+            mProxyTracker.changeProxyForNonDefaultNetwork(newLp, oldLp);
         }
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
@@ -5738,7 +5717,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         notifyLockdownVpn(newNetwork);
-        handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
+        mProxyTracker.setDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
@@ -6200,11 +6179,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             disconnectAndDestroyNetwork(networkAgent);
             if (networkAgent.isVPN()) {
-                // As the active or bound network changes for apps, broadcast the default proxy, as
-                // apps may need to update their proxy data. This is called after disconnecting from
-                // VPN to make sure we do not broadcast the old proxy data.
-                // TODO(b/122649188): send the broadcast only to VPN users.
-                mProxyTracker.sendProxyBroadcast();
+                // This must be called after disconnecting and destroying the VPN to make sure
+                // the broadcast does not contain the proxy of the now-disconnected VPN.
+                mProxyTracker.handleVpnChange(networkAgent);
             }
         } else if ((oldInfo != null && oldInfo.getState() == NetworkInfo.State.SUSPENDED) ||
                 state == NetworkInfo.State.SUSPENDED) {
