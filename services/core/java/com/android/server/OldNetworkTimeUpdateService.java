@@ -17,7 +17,7 @@
 package com.android.server;
 
 import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.AlarmManager.OnAlarmListener;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -64,11 +64,6 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     private static final int EVENT_POLL_NETWORK_TIME = 2;
     private static final int EVENT_NETWORK_CHANGED = 3;
 
-    private static final String ACTION_POLL =
-            "com.android.server.NetworkTimeUpdateService.action.POLL";
-
-    private static final int POLL_REQUEST = 0;
-
     private static final long NOT_SET = -1;
     private long mNitzTimeSetTime = NOT_SET;
     private Network mDefaultNetwork = null;
@@ -77,7 +72,6 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     private final NtpTrustedTime mTime;
     private final AlarmManager mAlarmManager;
     private final ConnectivityManager mCM;
-    private final PendingIntent mPendingPollIntent;
     private final PowerManager.WakeLock mWakeLock;
 
     // NTP lookup is done on this thread and handler
@@ -104,9 +98,6 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
         mAlarmManager = mContext.getSystemService(AlarmManager.class);
         mCM = mContext.getSystemService(ConnectivityManager.class);
 
-        Intent pollIntent = new Intent(ACTION_POLL, null);
-        mPendingPollIntent = PendingIntent.getBroadcast(mContext, POLL_REQUEST, pollIntent, 0);
-
         mPollingIntervalMs = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_ntpPollingInterval);
         mPollingIntervalShorterMs = mContext.getResources().getInteger(
@@ -123,7 +114,6 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     @Override
     public void systemRunning() {
         registerForTelephonyIntents();
-        registerForAlarms();
 
         HandlerThread thread = new HandlerThread(TAG);
         thread.start();
@@ -139,16 +129,6 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(TelephonyIntents.ACTION_NETWORK_SET_TIME);
         mContext.registerReceiver(mNitzReceiver, intentFilter);
-    }
-
-    private void registerForAlarms() {
-        mContext.registerReceiver(
-            new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    mHandler.obtainMessage(EVENT_POLL_NETWORK_TIME).sendToTarget();
-                }
-            }, new IntentFilter(ACTION_POLL));
     }
 
     private void onPollNetworkTime(int event) {
@@ -226,10 +206,10 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
      * @param interval when to trigger the alarm, starting from now.
      */
     private void resetAlarm(long interval) {
-        mAlarmManager.cancel(mPendingPollIntent);
+        mAlarmManager.cancel(mPollListener);
         long now = SystemClock.elapsedRealtime();
         long next = now + interval;
-        mAlarmManager.set(AlarmManager.ELAPSED_REALTIME, next, mPendingPollIntent);
+        mAlarmManager.set(AlarmManager.ELAPSED_REALTIME, next, TAG, mPollListener, mHandler);
     }
 
     /**
@@ -250,6 +230,13 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
             if (TelephonyIntents.ACTION_NETWORK_SET_TIME.equals(action)) {
                 mNitzTimeSetTime = SystemClock.elapsedRealtime();
             }
+        }
+    };
+
+    private OnAlarmListener mPollListener = new OnAlarmListener() {
+        @Override
+        public void onAlarm() {
+            mHandler.obtainMessage(EVENT_POLL_NETWORK_TIME).sendToTarget();
         }
     };
 

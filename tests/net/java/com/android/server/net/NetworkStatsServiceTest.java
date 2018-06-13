@@ -51,7 +51,6 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
 import static com.android.internal.util.TestUtils.waitForIdleHandler;
-import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_POLL;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -100,7 +99,6 @@ import android.telephony.TelephonyManager;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.test.BroadcastInterceptingContext;
-import com.android.server.LocalServices;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings.Config;
 
@@ -1284,7 +1282,7 @@ public class NetworkStatsServiceTest {
     }
 
     private void forcePollAndWaitForIdle() {
-        mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
+        mService.forceUpdate();
         // Send dummy message to make sure that any previous message has been handled
         mHandler.sendMessage(mHandler.obtainMessage(-1));
         waitForIdleHandler(mHandler, WAIT_TIMEOUT);

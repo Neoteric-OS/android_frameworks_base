@@ -72,7 +72,7 @@ import static com.android.server.NetworkManagementSocketTagger.setKernelCounterS
 
 import android.annotation.NonNull;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.AlarmManager.OnAlarmListener;
 import android.app.usage.NetworkStatsManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -187,13 +187,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private IConnectivityManager mConnManager;
 
-    @VisibleForTesting
-    public static final String ACTION_NETWORK_STATS_POLL =
-            "com.android.server.action.NETWORK_STATS_POLL";
     public static final String ACTION_NETWORK_STATS_UPDATED =
             "com.android.server.action.NETWORK_STATS_UPDATED";
-
-    private PendingIntent mPollIntent;
 
     private static final String PREFIX_DEV = "dev";
     private static final String PREFIX_XT = "xt";
@@ -401,10 +396,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final IntentFilter tetherFilter = new IntentFilter(ACTION_TETHER_STATE_CHANGED);
         mContext.registerReceiver(mTetherReceiver, tetherFilter, null, mHandler);
 
-        // listen for periodic polling events
-        final IntentFilter pollFilter = new IntentFilter(ACTION_NETWORK_STATS_POLL);
-        mContext.registerReceiver(mPollReceiver, pollFilter, READ_NETWORK_USAGE_HISTORY, mHandler);
-
         // listen for uid removal to clean stats
         final IntentFilter removedFilter = new IntentFilter(ACTION_UID_REMOVED);
         mContext.registerReceiver(mRemovedReceiver, removedFilter, null, mHandler);
@@ -439,7 +430,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @GuardedBy("mStatsLock")
     private void shutdownLocked() {
         mContext.unregisterReceiver(mTetherReceiver);
-        mContext.unregisterReceiver(mPollReceiver);
         mContext.unregisterReceiver(mRemovedReceiver);
         mContext.unregisterReceiver(mUserReceiver);
         mContext.unregisterReceiver(mShutdownReceiver);
@@ -484,20 +474,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     /**
-     * Clear any existing {@link #ACTION_NETWORK_STATS_POLL} alarms, and
-     * reschedule based on current {@link NetworkStatsSettings#getPollInterval()}.
+     * Clear any existing poll alarms, and reschedule based on current
+     * {@link NetworkStatsSettings#getPollInterval()}.
      */
     private void registerPollAlarmLocked() {
-        if (mPollIntent != null) {
-            mAlarmManager.cancel(mPollIntent);
-        }
-
-        mPollIntent = PendingIntent.getBroadcast(
-                mContext, 0, new Intent(ACTION_NETWORK_STATS_POLL), 0);
+        mAlarmManager.cancel(mPollListener);
 
         final long currentRealtime = SystemClock.elapsedRealtime();
         mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, currentRealtime,
-                mSettings.getPollInterval(), mPollIntent);
+                mSettings.getPollInterval(), TAG, mPollListener, mHandler);
     }
 
     /**
@@ -983,11 +968,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     };
 
-    private BroadcastReceiver mPollReceiver = new BroadcastReceiver() {
+    private OnAlarmListener mPollListener = new OnAlarmListener() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            // on background handler thread, and verified UPDATE_DEVICE_STATS
-            // permission above.
+        public void onAlarm() {
             performPoll(FLAG_PERSIST_ALL);
 
             // verify that we're watching global alert
