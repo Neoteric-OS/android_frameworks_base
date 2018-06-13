@@ -129,9 +129,8 @@ public class ProxyTracker {
     public ProxyInfo getDefaultProxy() {
         // This information is already available as a world read/writable jvm property.
         synchronized (mProxyLock) {
-            final ProxyInfo ret = mGlobalProxy;
-            if ((ret == null) && mDefaultProxyEnabled) return mDefaultProxy;
-            return ret;
+            if (mGlobalProxy != null) return mGlobalProxy;
+            return mDefaultProxyEnabled ? mDefaultProxy : null;
         }
     }
 
