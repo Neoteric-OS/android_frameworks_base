@@ -130,8 +130,7 @@ public class ProxyTracker {
         // This information is already available as a world read/writable jvm property.
         synchronized (mProxyLock) {
             if (mGlobalProxy != null) return mGlobalProxy;
-            if (mDefaultProxyEnabled) return mDefaultProxy;
-            return null;
+            return mDefaultProxyEnabled ? mDefaultProxy : null;
         }
     }
 
