@@ -393,6 +393,8 @@ public final class HdmiControlService extends SystemService {
         if (mCecController != null) {
             if (mHdmiControlEnabled) {
                 initializeCec(INITIATED_BY_BOOT_UP);
+            } else {
+                mCecController.setOption(OptionKey.ENABLE_CEC, false);
             }
         } else {
             Slog.i(TAG, "Device does not support HDMI-CEC.");
@@ -2294,6 +2296,7 @@ public final class HdmiControlService extends SystemService {
 
     @ServiceThreadOnly
     private void enableHdmiControlService() {
+        mCecController.setOption(OptionKey.ENABLE_CEC, true);
         mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
         mMhlController.setOption(OPTION_MHL_ENABLE, ENABLED);
 
@@ -2310,6 +2313,7 @@ public final class HdmiControlService extends SystemService {
                     @Override
                     public void run() {
                         mCecController.setOption(OptionKey.ENABLE_CEC, false);
+                        mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, false);
                         mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
                         clearLocalDevices();
                     }
