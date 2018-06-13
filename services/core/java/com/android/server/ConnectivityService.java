@@ -3468,20 +3468,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mProxyTracker.setDefaultProxy(proxy);
     }
 
-    // If the proxy has changed from oldLp to newLp, resend proxy broadcast with default proxy.
-    // This method gets called when any network changes proxy, but the broadcast only ever contains
-    // the default proxy (even if it hasn't changed).
-    // TODO: Deprecate the broadcast extras as they aren't necessarily applicable in a multi-network
-    // world where an app might be bound to a non-default network.
-    private void updateProxy(LinkProperties newLp, LinkProperties oldLp) {
-        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
-        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
-
-        if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
-            mProxyTracker.sendProxyBroadcast();
-        }
-    }
-
     private static class SettingsObserver extends ContentObserver {
         final private HashMap<Uri, Integer> mUriEventMap;
         final private Context mContext;
@@ -4629,7 +4615,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
-            updateProxy(newLp, oldLp);
+            mProxyTracker.changeProxyForNonDefaultNetwork(newLp, oldLp);
         }
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
