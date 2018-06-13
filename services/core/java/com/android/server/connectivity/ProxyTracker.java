@@ -27,6 +27,7 @@ import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.LinkProperties;
 import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.Uri;
@@ -209,7 +210,7 @@ public class ProxyTracker {
      * Confusingly this method also sets the PAC file URL. TODO : separate this, it has nothing
      * to do in a "sendProxyBroadcast" method.
      */
-    public void sendProxyBroadcast() {
+    private void sendProxyBroadcast() {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ? defaultProxy : new ProxyInfo("", 0, "");
         if (mPacManager.setCurrentProxyScriptUrl(proxyInfo) ==
@@ -226,6 +227,20 @@ public class ProxyTracker {
             mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
         } finally {
             Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    // If the proxy has changed from oldLp to newLp, resend proxy broadcast with default proxy.
+    // This method gets called when any network changes proxy, but the broadcast only ever contains
+    // the default proxy (even if it hasn't changed).
+    // TODO: Deprecate the broadcast extras as they aren't necessarily applicable in a multi-network
+    // world where an app might be bound to a non-default network.
+    public void changeProxyForNonDefaultNetwork(LinkProperties newLp, LinkProperties oldLp) {
+        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
+        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
+
+        if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
+            sendProxyBroadcast();
         }
     }
 
