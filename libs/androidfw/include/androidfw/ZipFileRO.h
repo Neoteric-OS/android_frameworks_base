@@ -32,7 +32,7 @@
 
 #include <utils/Compat.h>
 #include <utils/Errors.h>
-#include <utils/FileMap.h>
+#include <filemap/FileMap.h>
 #include <utils/threads.h>
 
 #include <stdint.h>

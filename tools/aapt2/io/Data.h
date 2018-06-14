@@ -20,7 +20,7 @@
 #include <memory>
 
 #include "android-base/macros.h"
-#include "utils/FileMap.h"
+#include "filemap/FileMap.h"
 
 #include "io/Io.h"
 

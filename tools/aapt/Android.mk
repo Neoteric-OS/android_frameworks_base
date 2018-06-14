@@ -26,6 +26,7 @@ aaptHostStaticLibs := \
     libandroidfw \
     libpng \
     libutils \
+    libfilemap \
     liblog \
     libcutils \
     libexpat \

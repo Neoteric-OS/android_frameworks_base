@@ -27,7 +27,7 @@
 #include <androidfw/ZipFileRO.h>
 #include <androidfw/ZipUtils.h>
 #include <cutils/atomic.h>
-#include <utils/FileMap.h>
+#include <filemap/FileMap.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
 

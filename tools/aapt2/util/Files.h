@@ -23,7 +23,7 @@
 
 #include "android-base/macros.h"
 #include "androidfw/StringPiece.h"
-#include "utils/FileMap.h"
+#include "filemap/FileMap.h"
 
 #include "Diagnostics.h"
 #include "Maybe.h"

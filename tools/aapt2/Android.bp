@@ -48,6 +48,7 @@ cc_defaults {
     static_libs: [
         "libandroidfw",
         "libutils",
+        "libfilemap",
         "liblog",
         "libcutils",
         "libexpat",

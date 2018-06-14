@@ -19,7 +19,7 @@
 #include <utils/Log.h>
 
 #include <androidfw/StreamingZipInflater.h>
-#include <utils/FileMap.h>
+#include <filemap/FileMap.h>
 #include <string.h>
 #include <stddef.h>
 #include <assert.h>
