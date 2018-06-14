@@ -16,7 +16,7 @@
 
 #include "io/ZipArchive.h"
 
-#include "utils/FileMap.h"
+#include "filemap/FileMap.h"
 #include "ziparchive/zip_archive.h"
 
 #include "Source.h"

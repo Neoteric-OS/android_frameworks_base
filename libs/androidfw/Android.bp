@@ -61,6 +61,7 @@ cc_library {
                 "libcutils",
                 "libgui",
                 "libutils",
+                "libfilemap",
                 "libz",
             ],
             static: {
@@ -78,6 +79,7 @@ cc_library {
                 "liblog",
                 "libcutils",
                 "libutils",
+                "libfilemap",
             ],
             shared_libs: [
                 "libz",

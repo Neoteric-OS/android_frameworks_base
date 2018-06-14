@@ -17,6 +17,7 @@ cc_binary_host {
     static_libs: [
         "libinput",
         "libutils",
+        "libfilemap",
         "libcutils",
         "liblog",
     ],

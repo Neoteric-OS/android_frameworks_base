@@ -17,7 +17,7 @@
 #include "io/FileSystem.h"
 
 #include "androidfw/StringPiece.h"
-#include "utils/FileMap.h"
+#include "filemap/FileMap.h"
 
 #include "Source.h"
 #include "util/Files.h"

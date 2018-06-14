@@ -21,7 +21,7 @@
 #include <algorithm>
 
 #include "android-base/logging.h"
-#include "utils/FileMap.h"
+#include "filemap/FileMap.h"
 #include "utils/Trace.h"
 #include "ziparchive/zip_archive.h"
 
