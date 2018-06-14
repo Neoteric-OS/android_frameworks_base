@@ -61,6 +61,7 @@ LOCAL_JNI_SHARED_LIBRARIES := \
     libunwindstack \
     libutilscallstack \
     libziparchive \
+    libfilemap \
     libz
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk

@@ -75,7 +75,8 @@ LOCAL_STATIC_LIBRARIES := \
     libcutils \
     liblog \
     libz \
-    libziparchive
+    libziparchive \
+    libfilemap
 LOCAL_PICKUP_FILES := $(LOCAL_PATH)/data
 
 include $(BUILD_HOST_NATIVE_TEST)
@@ -98,7 +99,8 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libutils \
     libui \
-    libziparchive 
+    libziparchive \
+    libfilemap
 LOCAL_PICKUP_FILES := $(LOCAL_PATH)/data
 
 include $(BUILD_NATIVE_TEST)
@@ -118,7 +120,8 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libcutils \
     libutils \
-    libziparchive
+    libziparchive \
+    libfilemap
 LOCAL_PICKUP_FILES := $(LOCAL_PATH)/data
 
 include $(BUILD_NATIVE_TEST)
