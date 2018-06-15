@@ -47,17 +47,25 @@ public class Sms7BitEncodingTranslator {
     private static final String XML_TO_TAG = "to";
 
     /**
-     * Translates each message character that is not supported by GSM 7bit
-     * alphabet into a supported one
+     * Translates each message character that is not supported by GSM 7bit alphabet into a supported
+     * one.
      *
-     * @param message
-     *            message to be translated
-     * @param throwsException
-     *            if true and some error occurs during translation, an exception
-     *            is thrown; otherwise a null String is returned
-     * @return translated message or null if some error occur
+     * @param message message to be translated.
+     * @return translated message or null if some error occur.
      */
     public static String translate(CharSequence message) {
+        return translate(message, useCdmaFormatForMoSms());
+    }
+
+    /**
+     * Translates each message character that is not supported by GSM 7bit alphabet into a supported
+     * one.
+     *
+     * @param message message to be translated.
+     * @param isCdmaFormat true if cdma format should be used.
+     * @return translated message or null if some error occur.
+     */
+    public static String translate(CharSequence message, boolean isCdmaFormat) {
         if (message == null) {
             Rlog.w(TAG, "Null message can not be translated");
             return null;
@@ -80,7 +88,6 @@ public class Sms7BitEncodingTranslator {
                 (mTranslationTableGSM != null && mTranslationTableGSM.size() > 0) ||
                 (mTranslationTableCDMA != null && mTranslationTableCDMA.size() > 0)) {
             char[] output = new char[size];
-            boolean isCdmaFormat = useCdmaFormatForMoSms();
             for (int i = 0; i < size; i++) {
                 output[i] = translateIfNeeded(message.charAt(i), isCdmaFormat);
             }
