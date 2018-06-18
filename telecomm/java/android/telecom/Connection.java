@@ -2802,9 +2802,19 @@ public abstract class Connection extends Conferenceable {
     public void onReject(String replyMessage) {}
 
     /**
-     * Notifies the Connection of a request to silence the ringer.
-     *
-     * @hide
+     * Notifies this Connection of a request to silence the ringer.
+     * <p>
+     * The ringer may be silenced by any of the following methods:
+     * <ul>
+     *     <li>{@link TelecomManager#silenceRinger()}</li>
+     *     <li>The user presses the volume-down button while a call is ringing.</li>
+     * </ul>
+     * <p>
+     * Self-managed {@link ConnectionService} implementations should override this method in their
+     * {@link Connection} implementation and implement logic to silence their app's ringtone.  If
+     * your app set the ringtone as part of the incoming call {@link Notification} (see
+     * {@link #onShowIncomingCallUi()}), it should re-post the notification here with the sound set
+     * to {@code null}.
      */
     public void onSilence() {}
 
@@ -2908,6 +2918,14 @@ public abstract class Connection extends Conferenceable {
      *     builder.setContentText("Your notification content.");
      *
      *     // Use builder.addAction(..) to add buttons to answer or reject the call.
+     *
+     *     // Associate a ringtone with the incoming call notification; this example just uses the
+     *     // system ringtone.
+     *     Uri ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+     *     builder.setSound(ringtoneUri, new AudioAttributes.Builder()
+     *             .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+     *             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+     *             .build());
      *
      *     NotificationManager notificationManager = mContext.getSystemService(
      *         NotificationManager.class);
