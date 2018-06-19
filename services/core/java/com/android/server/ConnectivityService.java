@@ -347,11 +347,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_EXPIRE_NET_TRANSITION_WAKELOCK = 24;
 
     /**
-     * Used internally to indicate the system is ready.
-     */
-    private static final int EVENT_SYSTEM_READY = 25;
-
-    /**
      * used to add a network request with a pending intent
      * obj = NetworkRequestInfo
      */
@@ -417,9 +412,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
     private final DnsManager mDnsManager;
-
-    @GuardedBy("this")
-    private boolean mSystemReady;
 
     private PowerManager.WakeLock mNetTransitionWakeLock;
     private int mNetTransitionWakeLockTimeout;
@@ -1746,18 +1738,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mProxyTracker.loadGlobalProxy();
         registerNetdEventCallback();
 
-        synchronized (this) {
-            mSystemReady = true;
-        }
-
         // Try bringing up tracker, but KeyStore won't be ready yet for secondary users so wait
         // for user to unlock device too.
         updateLockdownVpn();
 
         // Configure whether mobile data is always on.
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_CONFIGURE_MOBILE_DATA_ALWAYS_ON));
-
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
 
         mPermissionMonitor.startMonitoring();
     }
@@ -2992,12 +2978,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     int slot = msg.arg1;
                     int reason = msg.arg2;
                     mKeepaliveTracker.handleStopKeepalive(nai, slot, reason);
-                    break;
-                }
-                case EVENT_SYSTEM_READY: {
-                    for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
-                        nai.networkMonitor.systemReady = true;
-                    }
                     break;
                 }
                 case EVENT_REVALIDATE_NETWORK: {
@@ -4380,9 +4360,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mContext, mTrackerHandler, new NetworkMisc(networkMisc), mDefaultRequest, this);
         // Make sure the network capabilities reflect what the agent info says.
         nai.networkCapabilities = mixInCapabilities(nai, nc);
-        synchronized (this) {
-            nai.networkMonitor.systemReady = mSystemReady;
-        }
         final String extraInfo = networkInfo.getExtraInfo();
         final String name = TextUtils.isEmpty(extraInfo)
                 ? nai.networkCapabilities.getSSID() : extraInfo;
