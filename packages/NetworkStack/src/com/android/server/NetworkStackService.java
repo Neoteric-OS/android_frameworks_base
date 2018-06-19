@@ -271,12 +271,6 @@ public class NetworkStackService extends Service {
         }
 
         @Override
-        public void notifySystemReady() {
-            checkNetworkStackCallingPermission();
-            mNm.notifySystemReady();
-        }
-
-        @Override
         public void notifyNetworkConnected() {
             checkNetworkStackCallingPermission();
             mNm.notifyNetworkConnected();

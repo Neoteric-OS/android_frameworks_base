@@ -277,8 +277,6 @@ public class NetworkMonitor extends StateMachine {
     // Avoids surfacing "Sign in to network" notification.
     private boolean mDontDisplaySigninNotification = false;
 
-    private volatile boolean mSystemReady = false;
-
     private final State mDefaultState = new DefaultState();
     private final State mValidatedState = new ValidatedState();
     private final State mMaybeNotifyState = new MaybeNotifyState();
@@ -402,15 +400,6 @@ public class NetworkMonitor extends StateMachine {
         removeMessages(CMD_PRIVATE_DNS_SETTINGS_CHANGED);
         // Send the update to the proper thread.
         sendMessage(CMD_PRIVATE_DNS_SETTINGS_CHANGED, newCfg);
-    }
-
-    /**
-     * Send a notification to NetworkMonitor indicating that the system is ready.
-     */
-    public void notifySystemReady() {
-        // No need to run on the handler thread: mSystemReady is volatile and read only once on the
-        // isCaptivePortal() thread.
-        mSystemReady = true;
     }
 
     /**
@@ -1536,20 +1525,20 @@ public class NetworkMonitor extends StateMachine {
     }
 
     /**
-     * @param responseReceived - whether or not we received a valid HTTP response to our request.
-     * If false, isCaptivePortal and responseTimestampMs are ignored
+     * @param responseReceived whether the probes for network validation received a valid response.
+     *         If false, isCaptivePortal and responseTimestampMs are ignored
+     * @param isCaptivePortal whether the probed network was found to have a captive portal.
+     * @param requestTimestampMs the time the probes were sent.
+     * @param responseTimestampMs the time the last probe terminated (response/timeout).
      * TODO: This should be moved to the transports.  The latency could be passed to the transports
      * along with the captive portal result.  Currently the TYPE_MOBILE broadcasts appear unused so
      * perhaps this could just be added to the WiFi transport only.
      */
     private void sendNetworkConditionsBroadcast(boolean responseReceived, boolean isCaptivePortal,
             long requestTimestampMs, long responseTimestampMs) {
-        if (!mSystemReady) {
-            return;
-        }
-
         Intent latencyBroadcast =
                 new Intent(NetworkMonitorUtils.ACTION_NETWORK_CONDITIONS_MEASURED);
+        latencyBroadcast.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
         if (mNetworkCapabilities.hasTransport(TRANSPORT_WIFI)) {
             if (!mWifiManager.isScanAlwaysAvailable()) {
                 return;
