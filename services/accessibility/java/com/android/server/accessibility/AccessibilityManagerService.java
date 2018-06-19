@@ -3711,9 +3711,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
                 getKeyEventDispatcher().flush(this);
                 UserState userState = getUserStateLocked(mUserId);
                 resetLocked();
+                removeServiceLocked(this, userState);
                 if (mIsAutomation) {
-                    // This is typically done when unbinding, but UiAutomation isn't bound.
-                    removeServiceLocked(this, userState);
                     // We no longer have an automation service, so restore
                     // the state based on values in the settings database.
                     userState.mInstalledServices.remove(mAccessibilityServiceInfo);
