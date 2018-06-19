@@ -418,8 +418,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     final private NetworkStateTrackerHandler mTrackerHandler;
     private final DnsManager mDnsManager;
 
+    @GuardedBy("this")
     private boolean mSystemReady;
-    private Intent mInitialBroadcast;
 
     private PowerManager.WakeLock mNetTransitionWakeLock;
     private int mNetTransitionWakeLockTimeout;
@@ -1707,10 +1707,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void sendStickyBroadcast(Intent intent) {
         synchronized (this) {
-            if (!mSystemReady
-                    && intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                mInitialBroadcast = new Intent(intent);
-            }
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
             if (VDBG) {
                 log("sendStickyBroadcast: action=" + intent.getAction());
@@ -1752,10 +1748,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         synchronized (this) {
             mSystemReady = true;
-            if (mInitialBroadcast != null) {
-                mContext.sendStickyBroadcastAsUser(mInitialBroadcast, UserHandle.ALL);
-                mInitialBroadcast = null;
-            }
         }
 
         // Try bringing up tracker, but KeyStore won't be ready yet for secondary users so wait
