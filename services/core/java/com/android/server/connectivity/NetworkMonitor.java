@@ -282,8 +282,6 @@ public class NetworkMonitor extends StateMachine {
     // Avoids surfacing "Sign in to network" notification.
     private boolean mDontDisplaySigninNotification = false;
 
-    public boolean systemReady = false;
-
     private final State mDefaultState = new DefaultState();
     private final State mValidatedState = new ValidatedState();
     private final State mMaybeNotifyState = new MaybeNotifyState();
@@ -1274,12 +1272,9 @@ public class NetworkMonitor extends StateMachine {
             return;
         }
 
-        if (!systemReady) {
-            return;
-        }
-
         Intent latencyBroadcast =
                 new Intent(ConnectivityConstants.ACTION_NETWORK_CONDITIONS_MEASURED);
+        latencyBroadcast.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
         switch (mNetworkAgentInfo.networkInfo.getType()) {
             case ConnectivityManager.TYPE_WIFI:
                 WifiInfo currentWifiInfo = mWifiManager.getConnectionInfo();
