@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af34b825_c3ae283b",
+        "filename": "libs/usb/tests/AccessoryChat/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-06-20T01:22:19Z",
+      "side": 1,
+      "message": "why this change is in this cl?",
+      "revId": "9794d2a5b902e68e10b8fad20a79df6caf8f546b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
