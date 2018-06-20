@@ -24,6 +24,7 @@ import static com.android.systemui.statusbar.policy.DarkIconDispatcher.isInArea;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -56,15 +57,14 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
     /// Contains the main icon layout
     private LinearLayout mWifiGroup;
     private ImageView mWifiIcon;
-    private ImageView mIn;
-    private ImageView mOut;
-    private View mInoutContainer;
+    private StatusBarInoutContainer mInoutContainer;
     private View mSignalSpacer;
     private View mAirplaneSpacer;
     private WifiIconState mState;
     private String mSlot;
     private float mDarkIntensity = 0;
     private int mVisibleState = -1;
+    private boolean mActivityEnabled;
 
     private ContextThemeWrapper mDarkContext;
     private ContextThemeWrapper mLightContext;
@@ -102,9 +102,9 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
     @Override
     public void setStaticDrawableColor(int color) {
         ColorStateList list = ColorStateList.valueOf(color);
+        float intensity = color == Color.WHITE ? 0 : 1;
         mWifiIcon.setImageTintList(list);
-        mIn.setImageTintList(list);
-        mOut.setImageTintList(list);
+        mInoutContainer.setDarkIntensity(intensity);
         mDotView.setDecorColor(color);
     }
 
@@ -171,11 +171,11 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
 
         mWifiGroup = findViewById(R.id.wifi_group);
         mWifiIcon = findViewById(R.id.wifi_signal);
-        mIn = findViewById(R.id.wifi_in);
-        mOut = findViewById(R.id.wifi_out);
         mSignalSpacer = findViewById(R.id.wifi_signal_spacer);
         mAirplaneSpacer = findViewById(R.id.wifi_airplane_spacer);
         mInoutContainer = findViewById(R.id.inout_container);
+
+        mActivityEnabled = mContext.getResources().getBoolean(R.bool.config_showActivity);
 
         initDotView();
     }
@@ -216,10 +216,8 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
             mWifiIcon.setImageDrawable(drawable);
         }
 
-        mIn.setVisibility(state.activityIn ? View.VISIBLE : View.GONE);
-        mOut.setVisibility(state.activityOut ? View.VISIBLE : View.GONE);
-        mInoutContainer.setVisibility(
-                (state.activityIn || state.activityOut) ? View.VISIBLE : View.GONE);
+        mInoutContainer.setVisibility(mActivityEnabled && state.visible ? View.VISIBLE : View.GONE);
+        mInoutContainer.setState(state.activityIn, state.activityOut);
         mAirplaneSpacer.setVisibility(state.airplaneSpacerVisible ? View.VISIBLE : View.GONE);
         mSignalSpacer.setVisibility(state.signalSpacerVisible ? View.VISIBLE : View.GONE);
         if (mState.visible != state.visible) {
@@ -238,10 +236,9 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
             mWifiIcon.setImageDrawable(drawable);
         }
 
-        mIn.setVisibility(mState.activityIn ? View.VISIBLE : View.GONE);
-        mOut.setVisibility(mState.activityOut ? View.VISIBLE : View.GONE);
         mInoutContainer.setVisibility(
-                (mState.activityIn || mState.activityOut) ? View.VISIBLE : View.GONE);
+                mActivityEnabled && mState.visible ? View.VISIBLE : View.GONE);
+        mInoutContainer.setState(mState.activityIn, mState.activityOut);
         mAirplaneSpacer.setVisibility(mState.airplaneSpacerVisible ? View.VISIBLE : View.GONE);
         mSignalSpacer.setVisibility(mState.signalSpacerVisible ? View.VISIBLE : View.GONE);
         setVisibility(mState.visible ? View.VISIBLE : View.GONE);
@@ -257,8 +254,7 @@ public class StatusBarWifiView extends FrameLayout implements DarkReceiver,
         if (d instanceof NeutralGoodDrawable) {
             ((NeutralGoodDrawable)d).setDarkIntensity(darkIntensity);
         }
-        mIn.setImageTintList(ColorStateList.valueOf(getTint(area, this, tint)));
-        mOut.setImageTintList(ColorStateList.valueOf(getTint(area, this, tint)));
+        mInoutContainer.setDarkIntensity(darkIntensity);
         mDotView.setDecorColor(tint);
         mDotView.setIconColor(tint, false);
     }
