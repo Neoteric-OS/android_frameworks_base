@@ -16,6 +16,24 @@
       "revId": "9794d2a5b902e68e10b8fad20a79df6caf8f546b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ccad99_87e07c47",
+        "filename": "libs/usb/tests/AccessoryChat/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2018-06-20T03:03:06Z",
+      "side": 1,
+      "message": "Because there were build errors after deleting Android.mk in lib/usb. And the reason of build error is that there is no LOCAL_SDK_VERSION and LOCAL_PRIVATE_PLATFORM_APIS. So I added it.",
+      "parentUuid": "af34b825_c3ae283b",
+      "revId": "9794d2a5b902e68e10b8fad20a79df6caf8f546b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
