@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90850476_e621d279",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-21T16:29:20Z",
+      "side": 1,
+      "message": "You must also add a default value",
+      "revId": "c3827798a09dbbf4e86d8c5a589288632f29972b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
