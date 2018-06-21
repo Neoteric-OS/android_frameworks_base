@@ -379,7 +379,7 @@ public class Watchdog extends Thread {
         return builder.toString();
     }
 
-    private ArrayList<Integer> getInterestingHalPids() {
+    public ArrayList<Integer> getInterestingHalPids() {
         try {
             IServiceManager serviceManager = IServiceManager.getService();
             ArrayList<IServiceManager.InstanceDebugInfo> dump =

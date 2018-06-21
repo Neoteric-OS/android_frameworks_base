@@ -918,6 +918,10 @@ class AppErrors {
             }
         }
 
+        if (!isSilentANR) {
+            nativePids.addAll(Watchdog.getInstance().getInterestingHalPids());
+        }
+
         // For background ANRs, don't pass the ProcessCpuTracker to
         // avoid spending 1/2 second collecting stats to rank lastPids.
         File tracesFile = ActivityManagerService.dumpStackTraces(
