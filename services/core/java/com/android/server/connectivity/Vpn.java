@@ -1040,6 +1040,7 @@ public class Vpn {
         String oldInterface = mInterface;
         Connection oldConnection = mConnection;
         NetworkAgent oldNetworkAgent = mNetworkAgent;
+        mNetworkAgent = null;
         Set<UidRange> oldUsers = mNetworkCapabilities.getUids();
 
         // Configure the interface. Abort if any of these steps fails.
@@ -1075,8 +1076,9 @@ public class Vpn {
             // First attempt to do a seamless handover that only changes the interface name and
             // parameters. If that fails, disconnect.
             if (oldConfig != null
-                    && updateLinkPropertiesInPlaceIfPossible(mNetworkAgent, oldConfig)) {
+                    && updateLinkPropertiesInPlaceIfPossible(oldNetworkAgent, oldConfig)) {
                 // Keep mNetworkAgent unchanged
+                mNetworkAgent = oldNetworkAgent;
             } else {
                 mNetworkAgent = null;
                 updateState(DetailedState.CONNECTING, "establish");
