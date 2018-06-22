@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f529a5_a0d7018f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-22T22:26:28Z",
+      "side": 1,
+      "message": "More specifically, is it better to say \"Flag indicating whether or not sending emergency SMS messages over IMS is supported when in limited (Emergency only) service mode.\"",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 51
+      },
+      "revId": "38c43c5dd612901da4cb3ca4d1c30523efa57ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8243dad7_c26a54a9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-22T22:26:28Z",
+      "side": 1,
+      "message": "remove @hide and run \"make update-api\"",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 12
+      },
+      "revId": "38c43c5dd612901da4cb3ca4d1c30523efa57ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14379845_91a33e88",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-22T22:26:28Z",
+      "side": 1,
+      "message": "supports_emergency_sms_over_ims_bool\n\n(also change key please)",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 72
+      },
+      "revId": "38c43c5dd612901da4cb3ca4d1c30523efa57ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
