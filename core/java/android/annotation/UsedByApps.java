@@ -32,7 +32,9 @@ import java.lang.annotation.Target;
  * restrictions on changes to the API.
  *
  * This annotations also results in access to the API being permitted by the
- * runtime, with a warning being generated in debug builds.
+ * runtime, with a warning being generated in debug builds. If
+ * {@link #maxTargetSdk()} is set, access will be allowed only by apps that
+ * have a maximum targetSdkVersion of this value.
  *
  * For more details, see go/usedbyapps.
  *
@@ -41,6 +43,38 @@ import java.lang.annotation.Target;
 @Retention(CLASS)
 @Target({CONSTRUCTOR, METHOD, FIELD})
 public @interface UsedByApps {
+
+    /**
+     * Indicates that usage of this API is limited to apps based on their target SDK version.
+     *
+     * Access to the API is allowed if the targetSdkVersion in the apps manifest is no greater than
+     * this value. Enforcement is done in the runtime.
+     *
+     * This is used to give app developers a grace period to migrate off a hidden API. When
+     * making Android version N, existing APIs can have a maxTargetSdk of N added to them.
+     * Developers must then migrate off the API when their app is updated in future, but it will
+     * continue working in the meantime.
+     *
+     * Possible values are:
+     * <ul>
+     *     <li>
+     *         {@link android.os.Build.VERSION_CODES#O} or {@link android.os.Build.VERSION_CODES#P},
+     *         to limit access to apps targeting these SDKs (or earlier).
+     *     </li>
+     *     <li>
+     *         0 - No apps may access this API.
+     *     </li>
+     *     <li>
+     *         {@link Integer#MAX_VALUE} - All apps can access this API, but doing so may result in
+     *         warnings in the log, UI warnings (on developer builds) and/or strictmode violations.
+     *         The API is likely to be further restricted in future.
+     *     </li>
+     *
+     * </ul>
+     *
+     * @return The maximum value for an apps targetSdkVersion in order to access this API.
+     */
+    int maxTargetSdk() default Integer.MAX_VALUE;
 
     /**
      * For debug use only. The expected dex signature to be generated for this API, used to verify
