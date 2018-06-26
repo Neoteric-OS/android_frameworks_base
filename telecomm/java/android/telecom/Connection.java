@@ -165,7 +165,7 @@ public abstract class Connection extends Conferenceable {
      * capability allows a merge button to be shown while the conference is in the foreground
      * of the in-call UI.
      * <p>
-     * This is only intended for use by a {@link Conference}.
+     * This can only be set on a {@link Conference}.
      */
     public static final int CAPABILITY_MERGE_CONFERENCE = 0x00000004;
 
@@ -173,7 +173,7 @@ public abstract class Connection extends Conferenceable {
      * Connections within a conference can be swapped between foreground and background.
      * See {@link #CAPABILITY_MERGE_CONFERENCE} for additional information.
      * <p>
-     * This is only intended for use by a {@link Conference}.
+     * This can only be set on a {@link Conference}.
      */
     public static final int CAPABILITY_SWAP_CONFERENCE = 0x00000008;
 
@@ -2213,6 +2213,8 @@ public abstract class Connection extends Conferenceable {
      */
     public final void setConnectionCapabilities(int connectionCapabilities) {
         checkImmutable();
+        // Ensure conference-specific capabilities are not propagated to Telecom.
+        connectionCapabilities &= ~(CAPABILITY_MERGE_CONFERENCE | CAPABILITY_SWAP_CONFERENCE);
         if (mConnectionCapabilities != connectionCapabilities) {
             mConnectionCapabilities = connectionCapabilities;
             for (Listener l : mListeners) {
