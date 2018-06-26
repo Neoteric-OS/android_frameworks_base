@@ -82,6 +82,8 @@ public abstract class PlayerBase {
     private float mPanMultiplierL = 1.0f;
     @GuardedBy("mLock")
     private float mPanMultiplierR = 1.0f;
+    @GuardedBy("mLock")
+    private float mVolumeMultiplier = 1.0f;
 
     /**
      * Constructor. Must be given audio attributes, as they are required for AppOps.
@@ -204,6 +206,13 @@ public abstract class PlayerBase {
         baseSetVolume(mLeftVolume, mRightVolume);
     }
 
+    private void setVolume(float volume) {
+        synchronized (mLock) {
+            mVolumeMultiplier = volume;
+        }
+        baseSetVolume(mLeftVolume, mRightVolume);
+    }
+
     void baseSetVolume(float leftVolume, float rightVolume) {
         final boolean isRestricted;
         synchronized (mLock) {
@@ -212,7 +221,8 @@ public abstract class PlayerBase {
             isRestricted = isRestricted_sync();
         }
         playerSetVolume(isRestricted/*muting*/,
-                leftVolume * mPanMultiplierL, rightVolume * mPanMultiplierR);
+                leftVolume * mPanMultiplierL * mVolumeMultiplier,
+                rightVolume * mPanMultiplierR * mVolumeMultiplier);
     }
 
     int baseSetAuxEffectSendLevel(float level) {
@@ -468,7 +478,7 @@ public abstract class PlayerBase {
         public void setVolume(float vol) {
             final PlayerBase pb = mWeakPB.get();
             if (pb != null) {
-                pb.baseSetVolume(vol, vol);
+                pb.setVolume(vol);
             }
         }
 
