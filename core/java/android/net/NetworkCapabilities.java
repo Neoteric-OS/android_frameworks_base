@@ -588,6 +588,7 @@ public final class NetworkCapabilities implements Parcelable {
             TRANSPORT_VPN,
             TRANSPORT_WIFI_AWARE,
             TRANSPORT_LOWPAN,
+            TRANSPORT_IPSEC,
     })
     public @interface Transport { }
 
@@ -626,10 +627,17 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int TRANSPORT_LOWPAN = 6;
 
+    /**
+     * Indicates this network uses an IPsec transport.
+     *
+     * @hide
+     */
+    public static final int TRANSPORT_IPSEC = 7;
+
     /** @hide */
     public static final int MIN_TRANSPORT = TRANSPORT_CELLULAR;
     /** @hide */
-    public static final int MAX_TRANSPORT = TRANSPORT_LOWPAN;
+    public static final int MAX_TRANSPORT = TRANSPORT_IPSEC;
 
     /** @hide */
     public static boolean isValidTransport(@Transport int transportType) {
@@ -643,7 +651,8 @@ public final class NetworkCapabilities implements Parcelable {
         "ETHERNET",
         "VPN",
         "WIFI_AWARE",
-        "LOWPAN"
+        "LOWPAN",
+        "IPSEC"
     };
 
     /**
