@@ -21,6 +21,7 @@
 // Also contains the com.android.internal.util.Predicate[s] classes.
 java_library {
     name: "android.test.base",
+    installable: true,
 
     srcs: ["src/**/*.java"],
 
