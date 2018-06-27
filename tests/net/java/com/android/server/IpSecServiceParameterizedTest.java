@@ -33,6 +33,7 @@ import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
+import android.net.IpSecNetworkFactory;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecTunnelInterfaceResponse;
@@ -141,7 +142,9 @@ public class IpSecServiceParameterizedTest {
     public void setUp() throws Exception {
         mMockNetd = mock(INetd.class);
         mMockIpSecSrvConfig = mock(IpSecService.IpSecServiceConfiguration.class);
-        mIpSecService = new IpSecService(mMockContext, mMockIpSecSrvConfig);
+        mIpSecService =
+                new IpSecService(
+                        mMockContext, mMockIpSecSrvConfig, mock(IpSecNetworkFactory.class));
 
         // Injecting mock netd
         when(mMockIpSecSrvConfig.getNetdInstance()).thenReturn(mMockNetd);
