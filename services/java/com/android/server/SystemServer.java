@@ -16,6 +16,8 @@
 
 package com.android.server;
 
+import static android.view.Display.DEFAULT_DISPLAY;
+
 import android.app.ActivityThread;
 import android.app.INotificationManager;
 import android.app.usage.UsageStatsManagerInternal;
@@ -45,10 +47,10 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.storage.IStorageManager;
-import android.util.TimingsTraceLog;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Slog;
+import android.util.TimingsTraceLog;
 import android.view.WindowManager;
 
 import com.android.internal.R;
@@ -56,12 +58,13 @@ import com.android.internal.app.NightDisplayController;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.os.BinderInternal;
-import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.ConcurrentUtils;
+import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.widget.ILockSettings;
 import com.android.server.accessibility.AccessibilityManagerService;
 import com.android.server.am.ActivityManagerService;
 import com.android.server.audio.AudioService;
+import com.android.server.broadcastradio.BroadcastRadioService;
 import com.android.server.camera.CameraServiceProxy;
 import com.android.server.car.CarServiceHelperService;
 import com.android.server.clipboard.ClipboardService;
@@ -98,7 +101,6 @@ import com.android.server.pm.UserManagerService;
 import com.android.server.policy.PhoneWindowManager;
 import com.android.server.power.PowerManagerService;
 import com.android.server.power.ShutdownThread;
-import com.android.server.broadcastradio.BroadcastRadioService;
 import com.android.server.restrictions.RestrictionsManagerService;
 import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.security.KeyChainSystemService;
@@ -123,8 +125,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
-
-import static android.view.Display.DEFAULT_DISPLAY;
 
 public final class SystemServer {
     private static final String TAG = "SystemServer";
@@ -1032,15 +1032,6 @@ public final class SystemServer {
                     reportWtf("starting NetworkManagement Service", e);
                 }
                 traceEnd();
-
-                traceBeginAndSlog("StartIpSecService");
-                try {
-                    ipSecService = IpSecService.create(context);
-                    ServiceManager.addService(Context.IPSEC_SERVICE, ipSecService);
-                } catch (Throwable e) {
-                    reportWtf("starting IpSec Service", e);
-                }
-                traceEnd();
             }
 
             if (!disableNonCoreServices && !disableTextServices) {
@@ -1132,6 +1123,15 @@ public final class SystemServer {
                     networkPolicy.bindConnectivityManager(connectivity);
                 } catch (Throwable e) {
                     reportWtf("starting Connectivity Service", e);
+                }
+                traceEnd();
+
+                traceBeginAndSlog("StartIpSecService");
+                try {
+                    ipSecService = IpSecService.create(context);
+                    ServiceManager.addService(Context.IPSEC_SERVICE, ipSecService);
+                } catch (Throwable e) {
+                    reportWtf("starting IpSec Service", e);
                 }
                 traceEnd();
 

@@ -21,6 +21,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
+import static android.net.ConnectivityManager.TYPE_IPSEC;
 import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.getNetworkTypeName;
@@ -74,7 +75,6 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
-import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.UidRange;
@@ -151,7 +151,6 @@ import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
 import com.android.server.connectivity.NetworkNotificationManager;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
-import com.android.server.connectivity.PacManager;
 import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
@@ -163,9 +162,6 @@ import com.android.server.net.LockdownVpnTracker;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
 import com.google.android.collect.Lists;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -188,6 +184,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * @hide
@@ -795,6 +794,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (mNetConfigs[TYPE_ETHERNET] == null && hasService(Context.ETHERNET_SERVICE)) {
             mLegacyTypeTracker.addSupportedType(TYPE_ETHERNET);
             mNetworksDefined++;
+        }
+
+        // TODO: REMOVE THIS AND FIND A BETTER WAY! Hacking TYPE_IPSEC in for debugging purposes
+        if (mNetConfigs[TYPE_IPSEC] == null) {
+            mLegacyTypeTracker.addSupportedType(TYPE_IPSEC);
+            mNetworksDefined++; // used only in the log() statement below.
         }
 
         if (VDBG) log("mNetworksDefined=" + mNetworksDefined);
