@@ -28,6 +28,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
+import android.net.IpSecNetworkFactory;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -59,7 +60,9 @@ public class IpSecServiceRefcountedResourceTest {
     public void setUp() throws Exception {
         mMockContext = mock(Context.class);
         mMockIpSecSrvConfig = mock(IpSecService.IpSecServiceConfiguration.class);
-        mIpSecService = new IpSecService(mMockContext, mMockIpSecSrvConfig);
+        mIpSecService =
+                new IpSecService(
+                        mMockContext, mMockIpSecSrvConfig, mock(IpSecNetworkFactory.class));
     }
 
     private void assertResourceState(

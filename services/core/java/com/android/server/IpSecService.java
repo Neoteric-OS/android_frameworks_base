@@ -32,6 +32,7 @@ import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
+import android.net.IpSecNetworkFactory;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
@@ -43,6 +44,8 @@ import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -107,6 +110,8 @@ public class IpSecService extends IIpSecService.Stub {
 
     /* Binder context for this service */
     private final Context mContext;
+
+    private final IpSecNetworkFactory mIpSecNetworkFactory;
 
     /**
      * The next non-repeating global ID for tracking resources between users, this service, and
@@ -807,6 +812,10 @@ public class IpSecService extends IIpSecService.Stub {
             mRemoteAddress = remoteAddr;
             mIkey = ikey;
             mOkey = okey;
+
+            long binderId = Binder.clearCallingIdentity();
+            mIpSecNetworkFactory.addInterface(mInterfaceName);
+            Binder.restoreCallingIdentity(binderId);
         }
 
         /** always guarded by IpSecService#this */
@@ -816,6 +825,8 @@ public class IpSecService extends IIpSecService.Stub {
             //       Teardown VTI
             //       Delete global policies
             try {
+                mIpSecNetworkFactory.removeInterface(mInterfaceName);
+
                 final INetd netd = mSrvConfig.getNetdInstance();
                 netd.removeVirtualTunnelInterface(mInterfaceName);
 
@@ -964,13 +975,20 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
+    private static IpSecNetworkFactory getDefaultNetworkFactory(Context context) {
+        HandlerThread handlerThread = new HandlerThread("IpSecNetworkFactoryServiceThread");
+        handlerThread.start();
+
+        return new IpSecNetworkFactory(new Handler(handlerThread.getLooper()), context);
+    }
+
     /**
      * Constructs a new IpSecService instance
      *
      * @param context Binder context for this service
      */
     private IpSecService(Context context) {
-        this(context, IpSecServiceConfiguration.GETSRVINSTANCE);
+        this(context, IpSecServiceConfiguration.GETSRVINSTANCE, getDefaultNetworkFactory(context));
     }
 
     static IpSecService create(Context context) throws InterruptedException {
@@ -988,7 +1006,8 @@ public class IpSecService extends IIpSecService.Stub {
 
     /** @hide */
     @VisibleForTesting
-    public IpSecService(Context context, IpSecServiceConfiguration config) {
+    public IpSecService(
+            Context context, IpSecServiceConfiguration config, IpSecNetworkFactory networkFactory) {
         this(
                 context,
                 config,
@@ -999,16 +1018,24 @@ public class IpSecService extends IIpSecService.Stub {
                     } finally {
                         TrafficStats.clearThreadStatsUid();
                     }
-                });
+                },
+                networkFactory);
     }
 
     /** @hide */
     @VisibleForTesting
     public IpSecService(
-            Context context, IpSecServiceConfiguration config, UidFdTagger uidFdTagger) {
+            Context context,
+            IpSecServiceConfiguration config,
+            UidFdTagger uidFdTagger,
+            IpSecNetworkFactory networkFactory) {
         mContext = context;
         mSrvConfig = config;
         mUidFdTagger = uidFdTagger;
+
+        mIpSecNetworkFactory = networkFactory;
+        mIpSecNetworkFactory.setScoreFilter(101);
+        mIpSecNetworkFactory.register();
     }
 
     public void systemReady() {
