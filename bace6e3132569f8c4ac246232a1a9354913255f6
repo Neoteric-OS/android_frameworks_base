@@ -22,6 +22,30 @@
       "revId": "bace6e3132569f8c4ac246232a1a9354913255f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bbcc80_760a2105",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-27T22:25:03Z",
+      "side": 1,
+      "message": "This is actually the override of the base class method that will get the \"appropriate\" dBm level for a given type. For LTE, the correct measurement of SignalStrength is Rsrp. In each of the CellSignalStrengthFoo() classes, there will be one specifically-named measurement that also maps to getDbm(). Since the meaning of this field is actually dependent on the underlying technology (same with ASU), it\u0027s debate-able whether this should have been put in the base class at all. Once the APIs merge to AOSP I think we should consider deprecating the getDbm() method for that reason... but that\u0027s for another day.",
+      "parentUuid": "a7a08602_5e00f66a",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "bace6e3132569f8c4ac246232a1a9354913255f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
