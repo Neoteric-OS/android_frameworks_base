@@ -44,7 +44,11 @@ public final class TimeSignal implements Parcelable {
                 }
             };
 
+    /** Used when a time signal originates from an NITZ signal. */
     public static final String SOURCE_ID_NITZ = "nitz";
+
+    /** Used when a time signal originates from an NTP server. */
+    public static final String SOURCE_ID_NTP = "ntp";
 
     private final String mSourceId;
     private final TimestampedValue<Long> mUtcTime;

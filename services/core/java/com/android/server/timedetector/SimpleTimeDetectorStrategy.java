@@ -66,30 +66,39 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
 
     @Override
     public void suggestTime(@NonNull TimeSignal timeSignal) {
-        if (!TimeSignal.SOURCE_ID_NITZ.equals(timeSignal.getSourceId())) {
-            Slog.w(TAG, "Ignoring signal from unsupported source: " + timeSignal);
-            return;
-        }
+        String signalSourceId = timeSignal.getSourceId();
 
-        // NITZ logic
-
-        TimestampedValue<Long> newNitzUtcTime = timeSignal.getUtcTime();
-        boolean nitzTimeIsValid = validateNewNitzTime(newNitzUtcTime, mLastNitzTime);
-        if (!nitzTimeIsValid) {
-            return;
+        final TimestampedValue<Long> newUtcTime;
+        switch (signalSourceId) {
+            case TimeSignal.SOURCE_ID_NITZ: {
+                // NITZ logic
+                TimestampedValue<Long> newNitzUtcTime = timeSignal.getUtcTime();
+                boolean nitzTimeIsValid = validateNewNitzTime(newNitzUtcTime, mLastNitzTime);
+                if (!nitzTimeIsValid) {
+                    return;
+                }
+                // Always store the last NITZ value received, regardless of whether we go on to use it to
+                // update the system clock. This is so that we can validate future NITZ signals.
+                mLastNitzTime = newNitzUtcTime;
+                newUtcTime = newNitzUtcTime;
+                break;
+            }
+            case TimeSignal.SOURCE_ID_NTP: {
+                newUtcTime = timeSignal.getUtcTime();
+                break;
+            }
+            default:
+                Slog.w(TAG, "Ignoring signal from unsupported source: " + timeSignal);
+                return;
         }
-        // Always store the last NITZ value received, regardless of whether we go on to use it to
-        // update the system clock. This is so that we can validate future NITZ signals.
-        mLastNitzTime = newNitzUtcTime;
 
         // System clock update logic.
 
         // Historically, Android has sent a telephony broadcast only when setting the time using
         // NITZ.
         final boolean sendNetworkBroadcast =
-                TimeSignal.SOURCE_ID_NITZ.equals(timeSignal.getSourceId());
+                TimeSignal.SOURCE_ID_NITZ.equals(signalSourceId);
 
-        final TimestampedValue<Long> newUtcTime = newNitzUtcTime;
         setSystemClockIfRequired(newUtcTime, sendNetworkBroadcast);
     }
 

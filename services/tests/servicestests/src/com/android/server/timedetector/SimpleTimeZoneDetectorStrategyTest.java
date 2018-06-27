@@ -28,14 +28,19 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.icu.util.TimeZone;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.TimestampedValue;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
+
+@RunWith(JUnitParamsRunner.class)
 public class SimpleTimeZoneDetectorStrategyTest {
 
     private static final Scenario SCENARIO_1 = new Scenario.Builder()
@@ -51,30 +56,32 @@ public class SimpleTimeZoneDetectorStrategyTest {
         mScript = new Script();
     }
 
+    @Parameters(method = "validSources")
     @Test
-    public void testSuggestTime_nitz_timeDetectionEnabled() {
+    public void testSuggestTime_timeDetectionEnabled(String sourceId) {
         Scenario scenario = SCENARIO_1;
         mScript.pokeFakeClocks(scenario)
                 .pokeTimeDetectionEnabled(true);
 
-        TimeSignal timeSignal = scenario.createTimeSignalForActual(TimeSignal.SOURCE_ID_NITZ);
+        TimeSignal timeSignal = scenario.createTimeSignalForActual(sourceId);
         final int clockIncrement = 1000;
         long expectSystemClockMillis = scenario.getActualTimeMillis() + clockIncrement;
 
         mScript.simulateTimePassing(clockIncrement)
                 .simulateTimeSignalReceived(timeSignal)
-                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis);
+                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis, sourceId);
     }
 
+    @Parameters(method = "validSources")
     @Test
-    public void testSuggestTime_systemClockThreshold() {
+    public void testSuggestTime_systemClockThreshold(String sourceId) {
         Scenario scenario = SCENARIO_1;
         final int systemClockUpdateThresholdMillis = 1000;
         mScript.pokeFakeClocks(scenario)
                 .pokeThresholds(systemClockUpdateThresholdMillis)
                 .pokeTimeDetectionEnabled(true);
 
-        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(TimeSignal.SOURCE_ID_NITZ);
+        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(sourceId);
         TimestampedValue<Long> utcTime1 = timeSignal1.getUtcTime();
 
         final int clockIncrement = 100;
@@ -86,7 +93,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
 
         // Send the first time signal. It should be used.
         mScript.simulateTimeSignalReceived(timeSignal1)
-                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis1);
+                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis1, sourceId);
 
         // Now send another time signal, but one that is too similar to the last one and should be
         // ignored.
@@ -94,7 +101,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
         TimestampedValue<Long> utcTime2 = new TimestampedValue<>(
                 mScript.peekElapsedRealtimeMillis(),
                 mScript.peekSystemClockMillis() + underThresholdMillis);
-        TimeSignal timeSignal2 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime2);
+        TimeSignal timeSignal2 = new TimeSignal(sourceId, utcTime2);
         mScript.simulateTimePassing(clockIncrement)
                 .simulateTimeSignalReceived(timeSignal2)
                 .verifySystemClockWasNotSetAndResetCallTracking();
@@ -104,23 +111,24 @@ public class SimpleTimeZoneDetectorStrategyTest {
                 mScript.peekElapsedRealtimeMillis(),
                 mScript.peekSystemClockMillis() + systemClockUpdateThresholdMillis);
 
-        TimeSignal timeSignal3 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime3);
+        TimeSignal timeSignal3 = new TimeSignal(sourceId, utcTime3);
         mScript.simulateTimePassing(clockIncrement);
 
         long expectSystemClockMillis3 =
                 TimeDetectorStrategy.getTimeAt(utcTime3, mScript.peekElapsedRealtimeMillis());
 
         mScript.simulateTimeSignalReceived(timeSignal3)
-                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis3);
+                .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis3, sourceId);
     }
 
+    @Parameters(method = "validSources")
     @Test
-    public void testSuggestTime_nitz_timeDetectionDisabled() {
+    public void testSuggestTime_timeDetectionDisabled(String sourceId) {
         Scenario scenario = SCENARIO_1;
         mScript.pokeFakeClocks(scenario)
                 .pokeTimeDetectionEnabled(false);
 
-        TimeSignal timeSignal = scenario.createTimeSignalForActual(TimeSignal.SOURCE_ID_NITZ);
+        TimeSignal timeSignal = scenario.createTimeSignalForActual(sourceId);
         mScript.simulateTimeSignalReceived(timeSignal)
                 .verifySystemClockWasNotSetAndResetCallTracking();
     }
@@ -128,11 +136,13 @@ public class SimpleTimeZoneDetectorStrategyTest {
     @Test
     public void testSuggestTime_nitz_invalidNitzReferenceTimesIgnored() {
         Scenario scenario = SCENARIO_1;
+        final String sourceId = TimeSignal.SOURCE_ID_NITZ;
+
         final int systemClockUpdateThreshold = 2000;
         mScript.pokeFakeClocks(scenario)
                 .pokeThresholds(systemClockUpdateThreshold)
                 .pokeTimeDetectionEnabled(true);
-        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(TimeSignal.SOURCE_ID_NITZ);
+        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(sourceId);
         TimestampedValue<Long> utcTime1 = timeSignal1.getUtcTime();
 
         // Initialize the strategy / device with a time set from NITZ.
@@ -140,7 +150,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
         long expectedSystemClockMillis1 =
                 TimeDetectorStrategy.getTimeAt(utcTime1, mScript.peekElapsedRealtimeMillis());
         mScript.simulateTimeSignalReceived(timeSignal1)
-                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1);
+                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1, sourceId);
 
         // The UTC time increment should be larger than the system clock update threshold so we
         // know it shouldn't be ignored for other reasons.
@@ -151,7 +161,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
         long referenceTimeBeforeLastSignalMillis = utcTime1.getReferenceTimeMillis() - 1;
         TimestampedValue<Long> utcTime2 = new TimestampedValue<>(
                 referenceTimeBeforeLastSignalMillis, validUtcTimeMillis);
-        TimeSignal timeSignal2 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime2);
+        TimeSignal timeSignal2 = new TimeSignal(sourceId, utcTime2);
         mScript.simulateTimeSignalReceived(timeSignal2)
                 .verifySystemClockWasNotSetAndResetCallTracking();
 
@@ -161,7 +171,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
                 utcTime1.getReferenceTimeMillis() + Integer.MAX_VALUE + 1;
         TimestampedValue<Long> utcTime3 = new TimestampedValue<>(
                 referenceTimeInFutureMillis, validUtcTimeMillis);
-        TimeSignal timeSignal3 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime3);
+        TimeSignal timeSignal3 = new TimeSignal(sourceId, utcTime3);
         mScript.simulateTimeSignalReceived(timeSignal3)
                 .verifySystemClockWasNotSetAndResetCallTracking();
 
@@ -171,13 +181,14 @@ public class SimpleTimeZoneDetectorStrategyTest {
                 validReferenceTimeMillis, validUtcTimeMillis);
         long expectedSystemClockMillis4 =
                 TimeDetectorStrategy.getTimeAt(utcTime4, mScript.peekElapsedRealtimeMillis());
-        TimeSignal timeSignal4 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime4);
+        TimeSignal timeSignal4 = new TimeSignal(sourceId, utcTime4);
         mScript.simulateTimeSignalReceived(timeSignal4)
-                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis4);
+                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis4, sourceId);
     }
 
+    @Parameters(method = "validSources")
     @Test
-    public void testSuggestTime_timeDetectionToggled() {
+    public void testSuggestTime_timeDetectionToggled(String sourceId) {
         Scenario scenario = SCENARIO_1;
         final int clockIncrementMillis = 100;
         final int systemClockUpdateThreshold = 2000;
@@ -185,7 +196,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
                 .pokeThresholds(systemClockUpdateThreshold)
                 .pokeTimeDetectionEnabled(false);
 
-        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(TimeSignal.SOURCE_ID_NITZ);
+        TimeSignal timeSignal1 = scenario.createTimeSignalForActual(sourceId);
         TimestampedValue<Long> utcTime1 = timeSignal1.getUtcTime();
 
         // Simulate time passing.
@@ -204,7 +215,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
 
         // Turn on auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
-                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1);
+                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1, sourceId);
 
         // Turn off auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
@@ -215,7 +226,7 @@ public class SimpleTimeZoneDetectorStrategyTest {
         TimestampedValue<Long> utcTime2 = new TimestampedValue<>(
                 mScript.peekElapsedRealtimeMillis(),
                 mScript.peekSystemClockMillis() + systemClockUpdateThreshold);
-        TimeSignal timeSignal2 = new TimeSignal(TimeSignal.SOURCE_ID_NITZ, utcTime2);
+        TimeSignal timeSignal2 = new TimeSignal(sourceId, utcTime2);
 
         // Simulate more time passing.
         mScript.simulateTimePassing(clockIncrementMillis);
@@ -230,7 +241,35 @@ public class SimpleTimeZoneDetectorStrategyTest {
 
         // Turn on auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
-                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis2);
+                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis2, sourceId);
+    }
+
+    // Confirms that NITZ and NTP are not currently prioritized so either will be taken over the
+    // other if suggested. This may not be the eventual behavior but it is intended right now.
+    @Test
+    public void testSuggestTime_noPrioritization() {
+        Scenario scenario = SCENARIO_1;
+        mScript.pokeFakeClocks(scenario)
+                .pokeTimeDetectionEnabled(true);
+
+        String[] sourceIdOrder = {
+                TimeSignal.SOURCE_ID_NITZ, TimeSignal.SOURCE_ID_NTP,
+                TimeSignal.SOURCE_ID_NITZ, TimeSignal.SOURCE_ID_NTP,
+        };
+
+        final int clockIncrement = 1000;
+        long actualTimeMillis = scenario.getActualTimeMillis();
+        for (String sourceId : sourceIdOrder) {
+            actualTimeMillis += TimeUnit.DAYS.toMillis(1);
+            long expectSystemClockMillis = actualTimeMillis + clockIncrement;
+
+            TimestampedValue<Long> utcTime = new TimestampedValue<>(
+                    mScript.peekElapsedRealtimeMillis(), actualTimeMillis);
+            TimeSignal timeSignal = new TimeSignal(sourceId, utcTime);
+            mScript.simulateTimePassing(clockIncrement)
+                    .simulateTimeSignalReceived(timeSignal)
+                    .verifySystemClockWasSetAndResetCallTracking(expectSystemClockMillis, sourceId);
+        }
     }
 
     @Test
@@ -430,9 +469,14 @@ public class SimpleTimeZoneDetectorStrategyTest {
             return this;
         }
 
-        Script verifySystemClockWasSetAndResetCallTracking(long expectSystemClockMillis) {
+        Script verifySystemClockWasSetAndResetCallTracking(
+                long expectSystemClockMillis, String sourceId) {
             mFakeCallback.verifySystemClockWasSet(expectSystemClockMillis);
-            mFakeCallback.verifyIntentWasBroadcast();
+
+            // TODO Remove this when the broadcast is removed.
+            if (TimeSignal.SOURCE_ID_NITZ.equals(sourceId)) {
+                mFakeCallback.verifyIntentWasBroadcast();
+            }
             mFakeCallback.resetCallTracking();
             return this;
         }
@@ -509,5 +553,14 @@ public class SimpleTimeZoneDetectorStrategyTest {
         cal.clear();
         cal.set(year, monthInYear - 1, day, hourOfDay, minute, second);
         return cal.getTimeInMillis();
+    }
+
+    /** Used with @Parameters to provide valid source IDs */
+    @SuppressWarnings("unused")
+    private static String[] validSources() {
+        return new String[] {
+                TimeSignal.SOURCE_ID_NITZ,
+                TimeSignal.SOURCE_ID_NTP,
+        };
     }
 }

@@ -23,33 +23,43 @@ package android.util;
  * @hide
  */
 public interface TrustedTime {
+
     /**
-     * Force update with an external trusted time source, returning {@code true}
+     * Forces an update with an external trusted time source, returning {@code true}
      * when successful.
      */
-    public boolean forceRefresh();
+    boolean forceRefresh();
 
     /**
-     * Check if this instance has cached a response from a trusted time source.
+     * Checks if this instance has cached a response from a trusted time source.
      */
-    public boolean hasCache();
+    boolean hasCache();
 
     /**
-     * Return time since last trusted time source contact, or
+     * Returns the time since last trusted time source contact, or
      * {@link Long#MAX_VALUE} if never contacted.
      */
-    public long getCacheAge();
+    long getCacheAge();
 
     /**
-     * Return certainty of cached trusted time in milliseconds, or
+     * Returns the certainty of the cached trusted time in milliseconds, or
      * {@link Long#MAX_VALUE} if never contacted. Smaller values are more
      * precise.
      */
-    public long getCacheCertainty();
+    long getCacheCertainty();
 
     /**
-     * Return current time similar to {@link System#currentTimeMillis()},
-     * possibly using a cached authoritative time source.
+     * Returns the cached time adjusted for the time elapsed since it was cached. Similar to
+     * {@link System#currentTimeMillis()}.
+     *
+     * @throws IllegalStateException if there is no cached time
      */
-    public long currentTimeMillis();
+    long currentTimeMillis();
+
+    /**
+     * Returns the cached time.
+     *
+     * @throws IllegalStateException if there is no cached time
+     */
+    TimestampedValue<Long> getCachedTime();
 }

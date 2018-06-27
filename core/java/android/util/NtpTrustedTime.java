@@ -160,6 +160,16 @@ public class NtpTrustedTime implements TrustedTime {
         return mCachedNtpTime + getCacheAge();
     }
 
+    @Override
+    public TimestampedValue<Long> getCachedTime() {
+        if (!mHasCache) {
+            throw new IllegalStateException("Missing authoritative time source");
+        }
+        if (LOGD) Log.d(TAG, "getCachedTime() cache hit");
+
+        return new TimestampedValue<>(mCachedNtpElapsedRealtime, mCachedNtpTime);
+    }
+
     public long getCachedNtpTime() {
         if (LOGD) Log.d(TAG, "getCachedNtpTime() cache hit");
         return mCachedNtpTime;

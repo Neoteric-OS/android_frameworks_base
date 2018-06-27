@@ -18,6 +18,8 @@ package com.android.server;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.timedetector.TimeDetector;
+import android.app.timedetector.TimeSignal;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -39,6 +41,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.util.NtpTrustedTime;
 import android.util.TimeUtils;
+import android.util.TimestampedValue;
 import android.util.TrustedTime;
 
 import com.android.internal.telephony.TelephonyIntents;
@@ -88,6 +91,7 @@ public class NewNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     // The last time that we successfully fetched the NTP time.
     private long mLastNtpFetchTime = NOT_SET;
     private final PowerManager.WakeLock mWakeLock;
+    private final TimeDetector mTimeDetector;
 
     // Normal polling frequency
     private final long mPollingIntervalMs;
@@ -121,6 +125,8 @@ public class NewNetworkTimeUpdateService extends Binder implements NetworkTimeUp
 
         mWakeLock = ((PowerManager) context.getSystemService(Context.POWER_SERVICE)).newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, TAG);
+
+        mTimeDetector = context.getSystemService(TimeDetector.class);
     }
 
     /** Initialize the receivers and initiate the first NTP request */
@@ -202,7 +208,9 @@ public class NewNetworkTimeUpdateService extends Binder implements NetworkTimeUp
                     if (DBG) Log.d(TAG, "Ntp time to be set = " + ntp);
                     // Make sure we don't overflow, since it's going to be converted to an int
                     if (ntp / 1000 < Integer.MAX_VALUE) {
-                        SystemClock.setCurrentTimeMillis(ntp);
+                        TimestampedValue<Long> utcTime = mTime.getCachedTime();
+                        TimeSignal timeSignal = new TimeSignal(TimeSignal.SOURCE_ID_NTP, utcTime);
+                        mTimeDetector.suggestTime(timeSignal);
                     }
                 } else {
                     if (DBG) Log.d(TAG, "Ntp time is close enough = " + ntp);
