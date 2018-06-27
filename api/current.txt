@@ -31302,6 +31302,7 @@ package android.os {
     method public abstract void dump(java.io.FileDescriptor, java.lang.String[]) throws android.os.RemoteException;
     method public abstract void dumpAsync(java.io.FileDescriptor, java.lang.String[]) throws android.os.RemoteException;
     method public abstract java.lang.String getInterfaceDescriptor() throws android.os.RemoteException;
+    method public default int getInterfaceVersion() throws android.os.RemoteException;
     method public abstract boolean isBinderAlive();
     method public abstract void linkToDeath(android.os.IBinder.DeathRecipient, int) throws android.os.RemoteException;
     method public abstract boolean pingBinder();
@@ -31316,6 +31317,7 @@ package android.os {
     field public static final int LIKE_TRANSACTION = 1598835019; // 0x5f4c494b
     field public static final int PING_TRANSACTION = 1599098439; // 0x5f504e47
     field public static final int TWEET_TRANSACTION = 1599362900; // 0x5f545754
+    field public static final int VERSION_TRANSACTION = 1599489362; // 0x5f564552
   }
 
   public static abstract interface IBinder.DeathRecipient {
@@ -31324,6 +31326,7 @@ package android.os {
 
   public abstract interface IInterface {
     method public abstract android.os.IBinder asBinder();
+    method public default int queryVersion() throws android.os.RemoteException;
   }
 
   public final class LocaleList implements android.os.Parcelable {

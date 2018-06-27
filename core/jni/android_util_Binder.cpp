@@ -1045,6 +1045,17 @@ static jstring android_os_BinderProxy_getInterfaceDescriptor(JNIEnv* env, jobjec
     return NULL;
 }
 
+static jint android_os_BinderProxy_getInterfaceVersion(JNIEnv* env, jobject obj)
+{
+    IBinder* target = getBPNativeData(env, obj)->mObject.get();
+    if (target != NULL) {
+        return static_cast<jint>(target->getInterfaceVersion());
+    }
+    jniThrowException(env, "java/lang/RuntimeException",
+            "No binder found for object");
+    return 0;
+}
+
 static jboolean android_os_BinderProxy_isBinderAlive(JNIEnv* env, jobject obj)
 {
     IBinder* target = getBPNativeData(env, obj)->mObject.get();
@@ -1309,6 +1320,7 @@ static const JNINativeMethod gBinderProxyMethods[] = {
     {"pingBinder",          "()Z", (void*)android_os_BinderProxy_pingBinder},
     {"isBinderAlive",       "()Z", (void*)android_os_BinderProxy_isBinderAlive},
     {"getInterfaceDescriptor", "()Ljava/lang/String;", (void*)android_os_BinderProxy_getInterfaceDescriptor},
+    {"getInterfaceVersion", "()I", (void*)android_os_BinderProxy_getInterfaceVersion},
     {"transactNative",      "(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z", (void*)android_os_BinderProxy_transact},
     {"linkToDeath",         "(Landroid/os/IBinder$DeathRecipient;I)V", (void*)android_os_BinderProxy_linkToDeath},
     {"unlinkToDeath",       "(Landroid/os/IBinder$DeathRecipient;I)Z", (void*)android_os_BinderProxy_unlinkToDeath},

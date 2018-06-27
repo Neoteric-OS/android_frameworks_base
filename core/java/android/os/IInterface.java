@@ -28,4 +28,15 @@ public interface IInterface
      * can return the correct result.
      */
     public IBinder asBinder();
+
+    /**
+     * Shortcut for <code>asBinder().getInterfaceVersion()</code>. Query the
+     * interface version number that the binder object associated with this
+     * interface is actually implementing.
+     *
+     * @see android.os.IBinder#getInterfaceVersion
+     */
+    default int queryVersion() throws RemoteException {
+        return asBinder().getInterfaceVersion();
+    }
 }

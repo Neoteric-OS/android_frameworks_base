@@ -152,6 +152,12 @@ public interface IBinder {
     int SYSPROPS_TRANSACTION = ('_'<<24)|('S'<<16)|('P'<<8)|'R';
 
     /**
+     * IBinder protocol transaction code: query the remote object the version
+     * number of the interface that the object is currently implementing.
+     */
+    int VERSION_TRANSACTION = ('_' << 24) | ('V' << 16) | ('E' << 8) | 'R';
+
+    /**
      * Flag to {@link #transact}: this is a one-way call, meaning that the
      * caller returns immediately, without waiting for a result from the
      * callee. Applies only if the caller and callee are in different
@@ -178,6 +184,28 @@ public interface IBinder {
      * Get the canonical name of the interface supported by this binder.
      */
     public @Nullable String getInterfaceDescriptor() throws RemoteException;
+
+    /**
+     * Get the interface version number that the binder object is actually
+     * implementing. This value may or may not be the same as the version number
+     * of the interface the caller is built against, which can be retrieved by
+     * the <code>VERSION</code> field of the interface class. The caller can
+     * compare the result of this method to <code>VERSION</code> to see if the
+     * interface is newer than the remote implementation.
+     *
+     * <pre class="prettyprint">
+     * IMyIface iface = IMyIface.asInterface(binder);
+     * if (iface.asBinder().getInterfaceVersion() < IMyIface.VERSION) {
+     *     // the remote impl is old. preserve the old behavior
+     * }
+     * </pre>
+     *
+     * @return The numeric version of the interface that the remote object
+     * is implementing. 0 if the version is unspecified.
+     */
+    default int getInterfaceVersion() throws RemoteException {
+        return 0;
+    }
 
     /**
      * Check to see if the object still exists.

@@ -1071,6 +1071,7 @@ final class BinderProxy implements IBinder {
 
     private static native long getNativeFinalizer();
     public native String getInterfaceDescriptor() throws RemoteException;
+    public native int getInterfaceVersion() throws RemoteException;
     public native boolean transactNative(int code, Parcel data, Parcel reply,
             int flags) throws RemoteException;
     public native void linkToDeath(DeathRecipient recipient, int flags)
