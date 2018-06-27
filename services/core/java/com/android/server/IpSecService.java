@@ -32,6 +32,7 @@ import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
+import android.net.IpSecNetworkFactory;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
@@ -43,6 +44,8 @@ import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -107,6 +110,8 @@ public class IpSecService extends IIpSecService.Stub {
 
     /* Binder context for this service */
     private final Context mContext;
+
+    private final IpSecNetworkFactory mIpSecNetworkFactory;
 
     /**
      * The next non-repeating global ID for tracking resources between users, this service, and
@@ -612,7 +617,7 @@ public class IpSecService extends IIpSecService.Stub {
                 mSrvConfig
                         .getNetdInstance()
                         .ipSecDeleteSecurityAssociation(
-                                mResourceId,
+                                0,
                                 mConfig.getSourceAddress(),
                                 mConfig.getDestinationAddress(),
                                 spi,
@@ -812,6 +817,10 @@ public class IpSecService extends IIpSecService.Stub {
             mIkey = ikey;
             mOkey = okey;
             mIfId = intfId;
+
+            long binderId = Binder.clearCallingIdentity();
+            mIpSecNetworkFactory.addInterface(mInterfaceName);
+            Binder.restoreCallingIdentity(binderId);
         }
 
         /** always guarded by IpSecService#this */
@@ -821,6 +830,8 @@ public class IpSecService extends IIpSecService.Stub {
             //       Teardown VTI
             //       Delete global policies
             try {
+                mIpSecNetworkFactory.removeInterface(mInterfaceName);
+
                 final INetd netd = mSrvConfig.getNetdInstance();
                 netd.ipSecRemoveTunnelInterface(mInterfaceName);
 
@@ -840,7 +851,7 @@ public class IpSecService extends IIpSecService.Stub {
                             0xffffffff,
                             mIfId);
                 }
-            } catch (ServiceSpecificException | RemoteException e) {
+            } catch (Exception e) {
                 Log.e(
                         TAG,
                         "Failed to delete VTI with interface name: "
@@ -1020,6 +1031,14 @@ public class IpSecService extends IIpSecService.Stub {
         mContext = context;
         mSrvConfig = config;
         mUidFdTagger = uidFdTagger;
+
+        HandlerThread handlerThread = new HandlerThread("IpSecNetworkFactoryServiceThread");
+        handlerThread.start();
+
+        mIpSecNetworkFactory = new IpSecNetworkFactory(
+                new Handler(handlerThread.getLooper()), mContext);
+        mIpSecNetworkFactory.setScoreFilter(101);
+        mIpSecNetworkFactory.register();
     }
 
     public void systemReady() {
@@ -1552,13 +1571,13 @@ public class IpSecService extends IIpSecService.Stub {
         mSrvConfig
                 .getNetdInstance()
                 .ipSecAddSecurityAssociation(
-                        resourceId,
+                        0,
                         c.getMode(),
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
                         (c.getNetwork() != null) ? c.getNetwork().netId : 0,
                         spiRecord.getSpi(),
-                        c.getMarkValue(),
+                        0,
                         c.getMarkMask(),
                         (auth != null) ? auth.getName() : "",
                         (auth != null) ? auth.getKey() : new byte[] {},
@@ -1664,7 +1683,7 @@ public class IpSecService extends IIpSecService.Stub {
                 .getNetdInstance()
                 .ipSecApplyTransportModeTransform(
                         socket.getFileDescriptor(),
-                        resourceId,
+                        0,
                         direction,
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
