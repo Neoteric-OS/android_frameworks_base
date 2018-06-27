@@ -34,12 +34,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
+import android.net.IpSecNetworkFactory;
 import android.net.IpSecSpiResponse;
-import android.net.IpSecTransform;
 import android.net.IpSecUdpEncapResponse;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
@@ -123,7 +124,9 @@ public class IpSecServiceTest {
         mMockContext = mock(Context.class);
         mMockNetd = mock(INetd.class);
         mMockIpSecSrvConfig = mock(IpSecService.IpSecServiceConfiguration.class);
-        mIpSecService = new IpSecService(mMockContext, mMockIpSecSrvConfig);
+        mIpSecService =
+                new IpSecService(
+                        mMockContext, mMockIpSecSrvConfig, mock(IpSecNetworkFactory.class));
 
         // Injecting mock netd
         when(mMockIpSecSrvConfig.getNetdInstance()).thenReturn(mMockNetd);
@@ -131,6 +134,10 @@ public class IpSecServiceTest {
 
     @Test
     public void testIpSecServiceCreate() throws InterruptedException {
+        // This tries to use a real IpSecNetworkFactory; mock out the ConnectivityManager call as
+        // well
+        when(mMockContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
+                .thenReturn(mock(ConnectivityManager.class));
         IpSecService ipSecSrv = IpSecService.create(mMockContext);
         assertNotNull(ipSecSrv);
     }
@@ -596,7 +603,11 @@ public class IpSecServiceTest {
     public void testOpenUdpEncapSocketTagsSocket() throws Exception {
         IpSecService.UidFdTagger mockTagger = mock(IpSecService.UidFdTagger.class);
         IpSecService testIpSecService =
-                new IpSecService(mMockContext, mMockIpSecSrvConfig, mockTagger);
+                new IpSecService(
+                        mMockContext,
+                        mMockIpSecSrvConfig,
+                        mockTagger,
+                        mock(IpSecNetworkFactory.class));
 
         IpSecUdpEncapResponse udpEncapResp =
                 testIpSecService.openUdpEncapsulationSocket(0, new Binder());
