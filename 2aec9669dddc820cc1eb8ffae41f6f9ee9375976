@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382245a7_ce933bdd",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1136369
+      },
+      "writtenOn": "2018-06-27T01:53:58Z",
+      "side": 1,
+      "message": "Not used, remove.",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "2aec9669dddc820cc1eb8ffae41f6f9ee9375976",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
