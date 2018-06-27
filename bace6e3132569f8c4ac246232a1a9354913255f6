@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a08602_5e00f66a",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-06-27T22:16:45Z",
+      "side": 1,
+      "message": "Is this the same as getRsrp()?  Or was this a copy-paste boo boo?",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "bace6e3132569f8c4ac246232a1a9354913255f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
