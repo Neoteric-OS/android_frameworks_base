@@ -261,6 +261,13 @@ public class ServiceState implements Parcelable {
 
     private List<NetworkRegistrationState> mNetworkRegistrationStates = new ArrayList<>();
 
+    // Valid cause codes are two octets long; -1 cannot be a valid cause code
+    private static final int INVALID_CAUSE_CODE = -1;
+    // Two octets; See getCsRegistrationCauseCode() for information.
+    private int mCsRegistrationCauseCode = INVALID_CAUSE_CODE;
+    // Two octets; See getPsRegistrationCauseCode() for information.
+    private int mPsRegistrationCauseCode = INVALID_CAUSE_CODE;
+
     /**
      * get String description of roaming type
      * @hide
@@ -344,6 +351,8 @@ public class ServiceState implements Parcelable {
         mCellBandwidths = Arrays.copyOf(s.mCellBandwidths, s.mCellBandwidths.length);
         mLteEarfcnRsrpBoost = s.mLteEarfcnRsrpBoost;
         mNetworkRegistrationStates = new ArrayList<>(s.mNetworkRegistrationStates);
+        mCsRegistrationCauseCode = s.mCsRegistrationCauseCode;
+        mPsRegistrationCauseCode = s.mPsRegistrationCauseCode;
     }
 
     /**
@@ -378,6 +387,8 @@ public class ServiceState implements Parcelable {
         in.readList(mNetworkRegistrationStates, NetworkRegistrationState.class.getClassLoader());
         mChannelNumber = in.readInt();
         mCellBandwidths = in.createIntArray();
+        mCsRegistrationCauseCode = in.readInt();
+        mPsRegistrationCauseCode = in.readInt();
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -408,6 +419,8 @@ public class ServiceState implements Parcelable {
         out.writeList(mNetworkRegistrationStates);
         out.writeInt(mChannelNumber);
         out.writeIntArray(mCellBandwidths);
+        out.writeInt(mCsRegistrationCauseCode);
+        out.writeInt(mPsRegistrationCauseCode);
     }
 
     public int describeContents() {
@@ -751,7 +764,9 @@ public class ServiceState implements Parcelable {
                 mIsDataRoamingFromRegistration,
                 mIsUsingCarrierAggregation,
                 mLteEarfcnRsrpBoost,
-                mNetworkRegistrationStates);
+                mNetworkRegistrationStates,
+                mCsRegistrationCauseCode,
+                mPsRegistrationCauseCode);
     }
 
     @Override
@@ -782,8 +797,10 @@ public class ServiceState implements Parcelable {
                         s.mCdmaDefaultRoamingIndicator)
                 && mIsEmergencyOnly == s.mIsEmergencyOnly
                 && mIsDataRoamingFromRegistration == s.mIsDataRoamingFromRegistration
-                && mIsUsingCarrierAggregation == s.mIsUsingCarrierAggregation)
-                && mNetworkRegistrationStates.containsAll(s.mNetworkRegistrationStates);
+                && mIsUsingCarrierAggregation == s.mIsUsingCarrierAggregation
+                && mNetworkRegistrationStates.containsAll(s.mNetworkRegistrationStates)
+                && mCsRegistrationCauseCode == s.mCsRegistrationCauseCode
+                && mPsRegistrationCauseCode == s.mPsRegistrationCauseCode);
     }
 
     /**
@@ -920,6 +937,8 @@ public class ServiceState implements Parcelable {
             .append(", mIsUsingCarrierAggregation=").append(mIsUsingCarrierAggregation)
             .append(", mLteEarfcnRsrpBoost=").append(mLteEarfcnRsrpBoost)
             .append(", mNetworkRegistrationStates=").append(mNetworkRegistrationStates)
+            .append(", mCsRegistrationCauseCode =").append(mCsRegistrationCauseCode)
+            .append(", mPsRegistrationCauseCode =").append(mPsRegistrationCauseCode)
             .append("}").toString();
     }
 
@@ -952,6 +971,8 @@ public class ServiceState implements Parcelable {
         mIsUsingCarrierAggregation = false;
         mLteEarfcnRsrpBoost = 0;
         mNetworkRegistrationStates = new ArrayList<>();
+        mCsRegistrationCauseCode = INVALID_CAUSE_CODE;
+        mPsRegistrationCauseCode = INVALID_CAUSE_CODE;
     }
 
     public void setStateOutOfService() {
@@ -1097,6 +1118,41 @@ public class ServiceState implements Parcelable {
         mIsManualNetworkSelection = isManual;
     }
 
+    /** @hide */
+    public void setCsRegistrationCauseCode(int cause) {
+        mCsRegistrationCauseCode = cause;
+    }
+
+    /** Registration Failure Cause Code for the CS Domain
+     *
+     * See 3GPP TS 24.008 10.5.3.6 and Annex G
+     *
+     * The valid range is 2 octets; this field is invalid if registration is successful.
+     * This field is inapplicable for EPC.
+     *
+     * @hide
+     */
+    public int getCsRegistrationCauseCode() {
+        return mCsRegistrationCauseCode;
+    }
+
+    /** @hide */
+    public void setPsRegistrationCauseCode(int cause) {
+        mPsRegistrationCauseCode = cause;
+    }
+
+    /** Registration Failure Cause Code for the PS Domain
+     *
+     * See 3gpp TS 24.008 10.5.5.14 and Table 10.5.147 for UMTS (GSM/WCDMA)
+     * See 3gpp TS 24.301 9.9.3.9 for EPC (LTE)
+     *
+     * The valid range is 2 octets; this field is invalid if registration is successful.
+     * @hide
+     */
+    public int getPsRegistrationCauseCode() {
+        return mPsRegistrationCauseCode;
+    }
+
     /**
      * Test whether two objects hold the same data values or both are null.
      *
@@ -1139,6 +1195,8 @@ public class ServiceState implements Parcelable {
         mLteEarfcnRsrpBoost = m.getInt("LteEarfcnRsrpBoost");
         mChannelNumber = m.getInt("ChannelNumber");
         mCellBandwidths = m.getIntArray("CellBandwidths");
+        mCsRegistrationCauseCode = m.getInt("CsRegistrationCauseCode");
+        mPsRegistrationCauseCode = m.getInt("PsRegistrationCauseCode");
     }
 
     /**
@@ -1172,6 +1230,8 @@ public class ServiceState implements Parcelable {
         m.putInt("LteEarfcnRsrpBoost", mLteEarfcnRsrpBoost);
         m.putInt("ChannelNumber", mChannelNumber);
         m.putIntArray("CellBandwidths", mCellBandwidths);
+        m.putInt("CsRegistrationCauseCode", mCsRegistrationCauseCode);
+        m.putInt("PsRegistrationCauseCode", mPsRegistrationCauseCode);
     }
 
     /** @hide */
