@@ -635,11 +635,20 @@ public class ConnectivityManager {
     @Deprecated
     public static final int TYPE_VPN = 17;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_VPN;
+    /**
+     * A IPsec-secured tunnel using one or more native bearers It may or may not be providing
+     * encryption and/or authentication services.
+     *
+     * @deprecated Applications should use {@link NetworkCapabilities#TRANSPORT_IPSEC} instead.
+     * @hide
+     */
+    @Deprecated public static final int TYPE_IPSEC = 18;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_VPN;
+    public static final int MAX_RADIO_TYPE = TYPE_IPSEC;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_IPSEC;
 
     private static final int MIN_NETWORK_TYPE = TYPE_MOBILE;
 
@@ -783,6 +792,8 @@ public class ConnectivityManager {
                 return "PROXY";
             case TYPE_VPN:
                 return "VPN";
+            case TYPE_IPSEC:
+                return "IPSEC";
             default:
                 return Integer.toString(type);
         }
