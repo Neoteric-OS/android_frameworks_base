@@ -526,6 +526,9 @@ public class Binder implements IBinder {
                 }
             }
             return true;
+        } else if (code == VERSION_TRANSACTION) {
+            reply.writeInt(getInterfaceVersion());
+            return true;
         }
         return false;
     }

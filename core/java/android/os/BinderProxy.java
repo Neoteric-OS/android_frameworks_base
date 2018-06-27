@@ -436,6 +436,11 @@ public final class BinderProxy implements IBinder {
     public native String getInterfaceDescriptor() throws RemoteException;
 
     /**
+     * See {@link IBinder#getInterfaceVersion()}
+     */
+    public native int getInterfaceVersion() throws RemoteException;
+
+    /**
      * Native implementation of transact() for proxies
      */
     public native boolean transactNative(int code, Parcel data, Parcel reply,
