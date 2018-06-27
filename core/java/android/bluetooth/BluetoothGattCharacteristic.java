@@ -72,6 +72,16 @@ public class BluetoothGattCharacteristic implements Parcelable {
      */
     public static final int PROPERTY_EXTENDED_PROPS = 0x80;
 
+   /**
+     * Characteristic Extended Properties: Reliable Writes are enabled
+     */
+    public static final int EXTENDED_PROPERTY_RELIABLE_WRITE = 0x01;
+
+   /**
+     * Characteristic Extended Properties: Characteristic User Description is writable
+     */
+    public static final int EXTENDED_PROPERTY_WRITABLE_AUXILIARIES = 0x02;
+
     /**
      * Characteristic read permission
      */
@@ -192,6 +202,13 @@ public class BluetoothGattCharacteristic implements Parcelable {
     protected int mProperties;
 
     /**
+     * Characteristic extended properties.
+     *
+     * @hide
+     */
+    protected int mExtendedProperties;
+
+    /**
      * Characteristic permissions.
      *
      * @hide
@@ -241,7 +258,23 @@ public class BluetoothGattCharacteristic implements Parcelable {
      * @param permissions Permissions for this characteristic
      */
     public BluetoothGattCharacteristic(UUID uuid, int properties, int permissions) {
-        initCharacteristic(null, uuid, 0, properties, permissions);
+        initCharacteristic(null, uuid, 0, properties, 0, permissions);
+    }
+
+    /**
+     * Create a new BluetoothGattCharacteristic.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission.
+     *
+     * @param uuid The UUID for this characteristic
+     * @param properties Properties of this characteristic
+     * @param extendedProperties Characteristnc Extended Properties. Note:
+     * {@link PROPERTY_EXTENDED_PROPS} bit must be set in properties to expose this value in
+     * descriptor.
+     * @param permissions Permissions for this characteristic
+     */
+    public BluetoothGattCharacteristic(UUID uuid, int properties, int extendedProperties,
+            int permissions) {
+        initCharacteristic(null, uuid, 0, properties, extendedProperties, permissions);
     }
 
     /**
@@ -251,8 +284,8 @@ public class BluetoothGattCharacteristic implements Parcelable {
      */
     /*package*/ BluetoothGattCharacteristic(BluetoothGattService service,
             UUID uuid, int instanceId,
-            int properties, int permissions) {
-        initCharacteristic(service, uuid, instanceId, properties, permissions);
+            int properties, int extendedProperties, int permissions) {
+        initCharacteristic(service, uuid, instanceId, properties, extendedProperties, permissions);
     }
 
     /**
@@ -261,16 +294,17 @@ public class BluetoothGattCharacteristic implements Parcelable {
      * @hide
      */
     public BluetoothGattCharacteristic(UUID uuid, int instanceId,
-            int properties, int permissions) {
-        initCharacteristic(null, uuid, instanceId, properties, permissions);
+            int properties, int extendedProperties, int permissions) {
+        initCharacteristic(null, uuid, instanceId, properties, extendedProperties, permissions);
     }
 
     private void initCharacteristic(BluetoothGattService service,
             UUID uuid, int instanceId,
-            int properties, int permissions) {
+            int properties, int extendedProperties, int permissions) {
         mUuid = uuid;
         mInstance = instanceId;
         mProperties = properties;
+        mExtendedProperties = extendedProperties;
         mPermissions = permissions;
         mService = service;
         mValue = null;
@@ -293,6 +327,7 @@ public class BluetoothGattCharacteristic implements Parcelable {
         out.writeParcelable(new ParcelUuid(mUuid), 0);
         out.writeInt(mInstance);
         out.writeInt(mProperties);
+        out.writeInt(mExtendedProperties);
         out.writeInt(mPermissions);
         out.writeInt(mKeySize);
         out.writeInt(mWriteType);
@@ -314,6 +349,7 @@ public class BluetoothGattCharacteristic implements Parcelable {
         mUuid = ((ParcelUuid) in.readParcelable(null)).getUuid();
         mInstance = in.readInt();
         mProperties = in.readInt();
+        mExtendedProperties = in.readInt();
         mPermissions = in.readInt();
         mKeySize = in.readInt();
         mWriteType = in.readInt();
@@ -425,6 +461,18 @@ public class BluetoothGattCharacteristic implements Parcelable {
      */
     public int getProperties() {
         return mProperties;
+    }
+
+    /**
+     * Returns the Characteristic Extended Properties.
+     *
+     * <p>The extended properties contain a bit mask of property flags indicating
+     * the features of this characteristic.
+     *
+     * @return Characteristic Extended Properties
+     */
+    public int getExtendedProperties() {
+        return mExtendedProperties;
     }
 
     /**
