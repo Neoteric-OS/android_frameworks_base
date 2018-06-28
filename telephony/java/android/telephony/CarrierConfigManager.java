@@ -2105,6 +2105,14 @@ public class CarrierConfigManager {
     public static final String KEY_CALL_REDIRECTION_SERVICE_COMPONENT_NAME_STRING =
             "call_redirection_service_component_name_string";
 
+    /**
+     * Flag specifying whether to show mute overlay during video call.
+     * When true, the mute overlay is shown on video call screen.
+     * When false, the mute overlay is not shown on video call screen.
+     */
+    public static final String KEY_VIDEO_CALL_MUTE_OVERLAY_VISIBLE_BOOL =
+            "video_call_mute_overlay_visible_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2442,6 +2450,7 @@ public class CarrierConfigManager {
                 });
         sDefaults.putString(KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING, "");
         sDefaults.putBoolean(KEY_CONFIG_SHOW_ORIG_DIAL_STRING_FOR_CDMA_BOOL, false);
+        sDefaults.putBoolean(KEY_VIDEO_CALL_MUTE_OVERLAY_VISIBLE_BOOL, true);
     }
 
     /**
