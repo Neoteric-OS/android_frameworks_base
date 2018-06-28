@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae1b278_21e49c04",
+        "filename": "telephony/java/android/telephony/ims/ImsExternalCallState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1047993
+      },
+      "writtenOn": "2018-06-28T22:08:49Z",
+      "side": 1,
+      "message": "1) Don\u0027t we need to store and read this from the Parcel?\n2) Getters?\n3) Update the toString()?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "0c7adfae2a86821d9792e732e09d28220cddbe56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
