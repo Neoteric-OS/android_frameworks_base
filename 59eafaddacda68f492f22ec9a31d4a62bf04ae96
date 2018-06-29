@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f495300_dc007492",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-29T20:56:39Z",
+      "side": 1,
+      "message": "I think now it\u0027s time to revisit the name \"Provider\" here. It\u0027s kind of a keyword in android with a specific meaning, so as we formalize the interface, we should try to avoid keywords that might create false expectations for how it behaves.\n\nSuggestions so far are;\n\nNetworkPreferenceInjector\nNetworkPreferenceUpdater\nAccessNetworkUpdater\nAccessNetworkInjector...\nNetworkAvailabilityUpdater\nNetworkAvailabilityInjector\n\nQualifiedNetworkUpdater",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b88f3e5_1ac670ab",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-29T20:56:39Z",
+      "side": 1,
+      "message": "Do we need this? It looks like we\u0027re expecting a \"holistic\" snapshot of QualifiedNetworks, which means we need to merge these lists with existing lists (since we could get partials). If we can get away with this simply being:\n\nonQualifiedNetworksChanged(in String apnType, in int[] networks)\n\nThat makes it simple. Since we will be registering separately for each APN type....",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c9611c_56b5a1fe",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-29T20:56:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure we need this parcelable... when we switched to a single \"QNP\" was this also discussed? If so, I\u0027ll just accept it.",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
