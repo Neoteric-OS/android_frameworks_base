@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169971e5_064b4f8d",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-06-29T18:49:47Z",
+      "side": 1,
+      "message": "The goal was to deprecate those fields in ServiceState and instead putting them into mNetworkRegistrationStates.",
+      "range": {
+        "startLine": 267,
+        "startChar": 16,
+        "endLine": 267,
+        "endChar": 40
+      },
+      "revId": "0166967ccbe980360e0ee8b0be2a81cebade93c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
