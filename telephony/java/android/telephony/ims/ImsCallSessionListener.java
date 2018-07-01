@@ -599,5 +599,18 @@ public class ImsCallSessionListener {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * While in call, there has been a change in media profile.
+     *
+     * @param profile updated ImsStreamMediaProfile
+     */
+    public void callSessionMediaProfileChanged(ImsStreamMediaProfile profile) {
+        try {
+            mListener.callSessionMediaProfileChanged(profile);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

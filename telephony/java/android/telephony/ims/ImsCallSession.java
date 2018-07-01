@@ -443,6 +443,13 @@ public class ImsCallSession {
         public void callSessionRttMessageReceived(String rttMessage) {
             // no-op
         }
+
+        /**
+         * While in call, there has been a change in media profile.
+         */
+        public void callSessionMediaProfileChanged(ImsStreamMediaProfile profile) {
+            // no-op
+        }
     }
 
     private final IImsCallSession miSession;
@@ -1395,6 +1402,16 @@ public class ImsCallSession {
         public void callSessionRttMessageReceived(String rttMessage) {
             if (mListener != null) {
                 mListener.callSessionRttMessageReceived(rttMessage);
+            }
+        }
+
+        /**
+         * While in call, there has been a change in media profile.
+         */
+        @Override
+        public void callSessionMediaProfileChanged(ImsStreamMediaProfile profile) {
+            if (mListener != null) {
+                mListener.callSessionMediaProfileChanged(profile);
             }
         }
     }

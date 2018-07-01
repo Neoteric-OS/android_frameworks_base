@@ -152,4 +152,10 @@ oneway interface IImsCallSessionListener {
      * @param rttMessage Received RTT message
      */
     void callSessionRttMessageReceived(in String rttMessage);
+
+    /*
+     * While in call, there has been a change in media profile.
+     * @param profile updated ImsStreamMediaProfile
+     */
+    void callSessionMediaProfileChanged(in ImsStreamMediaProfile profile);
 }
