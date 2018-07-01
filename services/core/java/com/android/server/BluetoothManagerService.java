@@ -290,7 +290,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                                         mContext.getPackageName(), false);
                                 mBluetooth.onBrEdrDown();
                                 mEnable = false;
-                                mEnableExternal = false;
                             }
                         } catch (RemoteException e) {
                             Slog.e(TAG, "Unable to call onBrEdrDown", e);
@@ -852,7 +851,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         return true;
     }
 
-    public boolean enable(String packageName) throws RemoteException {
+    public boolean enable(String packageName, boolean isBle) throws RemoteException {
         final int callingUid = Binder.getCallingUid();
         final boolean callerSystem = UserHandle.getAppId(callingUid) == Process.SYSTEM_UID;
 
@@ -885,7 +884,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
         synchronized (mReceiver) {
             mQuietEnableExternal = false;
-            mEnableExternal = true;
+            if (!isBle) {
+                mEnableExternal = true;
+            }
             // waive WRITE_SECURE_SETTINGS permission check
             sendEnableMsg(false,
                     BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST, packageName);
