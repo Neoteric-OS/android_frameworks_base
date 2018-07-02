@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c64fbeb_688a1caf",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "Use spaces instead of tabs",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 1
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb775aac_0a299c36",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "Please use visibilities (VISIBLE, INVISIBLE) instead of alpha.\nIt\u0027s not very clear that a view is invisible - or just in the middle of a transition - if its alpha is set to 0.",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4af352_fe126493",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "Remove this comment",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 109
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031cb36d_01ea2e9c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "use getVisibility()",
+      "range": {
+        "startLine": 76,
+        "startChar": 39,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13255457_a3e39d25",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201d5408_9599d8b6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T15:58:52Z",
+      "side": 1,
+      "message": "Incorporate visibility logic in here",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 29
+      },
+      "revId": "00bcfa2b8c3c8f4c1f37cca84bda2a2f85a2a174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
