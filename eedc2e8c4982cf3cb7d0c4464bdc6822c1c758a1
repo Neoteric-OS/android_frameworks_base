@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "785d1269_12429254",
+        "filename": "core/java/android/os/PlatformProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-02T13:07:32Z",
+      "side": 1,
+      "message": "Please remove this and add @hide into the comment block to make this as private at least for now.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "eedc2e8c4982cf3cb7d0c4464bdc6822c1c758a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b91b82f_5a1a8c1e",
+        "filename": "core/java/android/os/PlatformProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-02T13:07:32Z",
+      "side": 1,
+      "message": "Please remove these examples",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "eedc2e8c4982cf3cb7d0c4464bdc6822c1c758a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886552fb_eba3bc35",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-02T13:07:32Z",
+      "side": 1,
+      "message": "please do the same for @SystemApi annotations in this file.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "eedc2e8c4982cf3cb7d0c4464bdc6822c1c758a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
