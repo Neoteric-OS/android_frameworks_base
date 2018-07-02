@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f509041e_a7542d6e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T19:58:26Z",
+      "side": 1,
+      "message": "is empty without parameters?",
+      "range": {
+        "startLine": 78,
+        "startChar": 36,
+        "endLine": 78,
+        "endChar": 38
+      },
+      "revId": "a48832c435c7dff632ed5a7eba74c9235552af09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c74d47_b2bab4ce",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T19:58:26Z",
+      "side": 1,
+      "message": "line length, use lambda",
+      "range": {
+        "startLine": 83,
+        "startChar": 95,
+        "endLine": 83,
+        "endChar": 111
+      },
+      "revId": "a48832c435c7dff632ed5a7eba74c9235552af09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2cade2_37ba454f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T19:58:26Z",
+      "side": 1,
+      "message": "line length",
+      "range": {
+        "startLine": 88,
+        "startChar": 76,
+        "endLine": 88,
+        "endChar": 106
+      },
+      "revId": "a48832c435c7dff632ed5a7eba74c9235552af09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbc9306_1a365173",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T19:58:26Z",
+      "side": 1,
+      "message": "line length",
+      "range": {
+        "startLine": 94,
+        "startChar": 99,
+        "endLine": 94,
+        "endChar": 120
+      },
+      "revId": "a48832c435c7dff632ed5a7eba74c9235552af09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b5b21d_a46a5669",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-07-02T19:58:26Z",
+      "side": 1,
+      "message": "lambda",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "a48832c435c7dff632ed5a7eba74c9235552af09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
