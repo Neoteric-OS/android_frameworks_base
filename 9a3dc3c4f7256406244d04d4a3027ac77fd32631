@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236410b4_12fc14c0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardIndicationTextView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1072971
+      },
+      "writtenOn": "2018-07-03T22:35:55Z",
+      "side": 1,
+      "message": "Has an extra I - IN(I)VISIBLE -",
+      "revId": "9a3dc3c4f7256406244d04d4a3027ac77fd32631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
