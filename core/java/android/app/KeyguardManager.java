@@ -44,6 +44,7 @@ import android.view.WindowManagerGlobal;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.widget.LockPatternUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -479,26 +480,31 @@ public class KeyguardManager {
      */
     public void requestDismissKeyguard(@NonNull Activity activity,
             @Nullable KeyguardDismissCallback callback) {
+
+        final WeakReference activityWeakRef = new WeakReference(activity);
         try {
             mAm.dismissKeyguard(activity.getActivityToken(), new IKeyguardDismissCallback.Stub() {
                 @Override
                 public void onDismissError() throws RemoteException {
-                    if (callback != null && !activity.isDestroyed()) {
-                        activity.mHandler.post(callback::onDismissError);
+                    @Nullable final Activity safeActivity = activityWeakRef.get();
+                    if (callback != null && safeActivity != null && !safeActivity.isDestroyed()) {
+                        safeActivity.mHandler.post(callback::onDismissError);
                     }
                 }
 
                 @Override
                 public void onDismissSucceeded() throws RemoteException {
-                    if (callback != null && !activity.isDestroyed()) {
-                        activity.mHandler.post(callback::onDismissSucceeded);
+                    @Nullable final Activity safeActivity = activityWeakRef.get();
+                    if (callback != null && safeActivity != null && !safeActivity.isDestroyed()) {
+                        safeActivity.mHandler.post(callback::onDismissSucceeded);
                     }
                 }
 
                 @Override
                 public void onDismissCancelled() throws RemoteException {
-                    if (callback != null && !activity.isDestroyed()) {
-                        activity.mHandler.post(callback::onDismissCancelled);
+                    @Nullable final Activity safeActivity = activityWeakRef.get();
+                    if (callback != null && safeActivity != null && !safeActivity.isDestroyed()) {
+                        safeActivity.mHandler.post(callback::onDismissCancelled);
                     }
                 }
             });
