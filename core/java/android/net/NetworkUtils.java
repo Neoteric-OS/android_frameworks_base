@@ -399,6 +399,28 @@ public class NetworkUtils {
     }
 
     /**
+     * Get a prefix mask as Inet4Address for a given prefix length.
+     *
+     * <p>For example 20 -> 255.255.240.0
+     */
+    public static Inet4Address getPrefixMaskAsInet4Address(int prefixLength)
+            throws IllegalArgumentException {
+        return (Inet4Address) intToInet4AddressHTH(prefixLengthToV4NetmaskIntHTH(prefixLength));
+    }
+
+    /**
+     * Get the broadcast address for a given prefix.
+     *
+     * <p>For example 192.168.0.1/24 -> 192.168.0.255
+     */
+    public static Inet4Address getBroadcastAddress(Inet4Address addr, int prefixLength)
+            throws IllegalArgumentException {
+        final int intBroadcastAddr = inet4AddressToIntHTH(addr)
+                | ~prefixLengthToV4NetmaskIntHTH(prefixLength);
+        return (Inet4Address) intToInet4AddressHTH(intBroadcastAddr);
+    }
+
+    /**
      * Check if IP address type is consistent between two InetAddress.
      * @return true if both are the same type.  False otherwise.
      */
