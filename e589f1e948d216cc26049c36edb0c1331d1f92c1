@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c2b441_f2508027",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-04T06:45:56Z",
+      "side": 1,
+      "message": "How about \"hasExplicitClientId()\"?",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 356,
+        "endChar": 29
+      },
+      "revId": "e589f1e948d216cc26049c36edb0c1331d1f92c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4cd9ad_ce7f0b94",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-04T06:45:56Z",
+      "side": 1,
+      "message": "Isn\u0027t this what INADDR_ANY already is?",
+      "range": {
+        "startLine": 1203,
+        "startChar": 52,
+        "endLine": 1203,
+        "endChar": 68
+      },
+      "revId": "e589f1e948d216cc26049c36edb0c1331d1f92c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
