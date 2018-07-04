@@ -23,6 +23,7 @@
 #include <android_runtime/AndroidRuntime.h>
 #include <utils/Log.h>
 #include <arpa/inet.h>
+#include <arpa/nameser.h>
 #include <net/if.h>
 #include <linux/filter.h>
 #include <linux/if_arp.h>
@@ -323,6 +324,50 @@ static jboolean android_net_utils_queryUserAccess(JNIEnv *env, jobject thiz, jin
     return (jboolean) !queryUserAccess(uid, netId);
 }
 
+static bool getAddrData(JNIEnv *env, const jbyteArray& addr, int len, void* dst)
+{
+    if (env->GetArrayLength(addr) != len) {
+        return false;
+    }
+    env->GetByteArrayRegion(addr, 0, len, reinterpret_cast<jbyte*>(dst));
+    return true;
+}
+
+static void android_net_utils_addArpEntry(JNIEnv *env, jobject thiz, jbyteArray ethAddr,
+        jbyteArray netAddr, jchar netPort, jstring ifname, jobject javaFd)
+{
+    struct arpreq req = {};
+    struct sockaddr_in& netAddrStruct = *reinterpret_cast<sockaddr_in*>(&req.arp_pa);
+    struct sockaddr& ethAddrStruct = req.arp_ha;
+
+    ethAddrStruct.sa_family = ARPHRD_ETHER;
+    if (!getAddrData(env, ethAddr, ETH_ALEN, ethAddrStruct.sa_data)) {
+        jniThrowException(env, "java/io/IOException", "Invalid ethAddr");
+        return;
+    }
+
+    netAddrStruct.sin_family = AF_INET;
+    netAddrStruct.sin_port = htons(netPort);
+    if (!getAddrData(env, netAddr, NS_INADDRSZ, &netAddrStruct.sin_addr)) {
+        jniThrowException(env, "java/io/IOException", "Invalid netAddr");
+        return;
+    }
+
+    int ifLen = env->GetStringLength(ifname);
+    if (ifLen > 16) {
+        jniThrowException(env, "java/io/IOException", "Invalid ifname");
+        return;
+    }
+    env->GetStringUTFRegion(ifname, 0, ifLen, req.arp_dev);
+
+    req.arp_flags = ATF_COM;
+    int fd = jniGetFDFromFileDescriptor(env, javaFd);
+    if (ioctl(fd, SIOCSARP, &req)) {
+        jniThrowExceptionFmt(env, "java/io/IOException", "ioctl error: %s", strerror(errno));
+        return;
+    }
+}
+
 
 // ----------------------------------------------------------------------------
 
@@ -337,6 +382,7 @@ static const JNINativeMethod gNetworkUtilMethods[] = {
     { "bindSocketToNetwork", "(II)I", (void*) android_net_utils_bindSocketToNetwork },
     { "protectFromVpn", "(I)Z", (void*)android_net_utils_protectFromVpn },
     { "queryUserAccess", "(II)Z", (void*)android_net_utils_queryUserAccess },
+    { "addArpEntry", "([B[BCLjava/lang/String;Ljava/io/FileDescriptor;)V", (void*) android_net_utils_addArpEntry },
     { "attachDhcpFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_attachDhcpFilter },
     { "attachRaFilter", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_utils_attachRaFilter },
     { "attachControlPacketFilter", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_utils_attachControlPacketFilter },
