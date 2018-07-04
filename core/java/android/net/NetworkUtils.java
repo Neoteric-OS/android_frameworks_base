@@ -21,6 +21,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -124,6 +125,17 @@ public class NetworkUtils {
      * @return {@code true} if {@code uid} can access network, {@code false} otherwise.
      */
     public native static boolean queryUserAccess(int uid, int netId);
+
+    /**
+     * Add an entry into the ARP cache.
+     */
+    public static void addArpEntry(Inet4Address ipv4Addr, MacAddress ethAddr, String ifname,
+            FileDescriptor fd) throws IOException {
+        addArpEntry(ethAddr.toByteArray(), ipv4Addr.getAddress(), ifname, fd);
+    }
+
+    private static native void addArpEntry(byte[] ethAddr, byte[] netAddr, String ifname,
+            FileDescriptor fd) throws IOException;
 
     /**
      * Convert a IPv4 address from an integer to an InetAddress.
