@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea46751b_e223dd26",
+        "filename": "packages/SystemUI/src/com/android/systemui/doze/DozeUi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-05T08:43:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be Calendar.getInstance() instead ? That way it\u0027s truly a no-op.",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "ba3b9266f7f1bbe6c42d3d5aa1c29e1598a37389",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
