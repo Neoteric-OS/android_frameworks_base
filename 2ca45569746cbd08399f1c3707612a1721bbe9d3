@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef6af0d_54f829f6",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2018-07-05T06:36:04Z",
+      "side": 1,
+      "message": "should pass default value as Optional\u003cT\u003e",
+      "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
