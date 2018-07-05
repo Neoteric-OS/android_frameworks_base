@@ -16,6 +16,24 @@
       "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995fcd0b_f838d952",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-05T13:13:50Z",
+      "side": 1,
+      "message": "Why do we need to provide default value here? when a prop is not set, then get() will return Optional.empty() and then the client will use it\u0027s own default value.\n\nIn other words, the default value is not something that can be provided when defining a prop.",
+      "parentUuid": "2ef6af0d_54f829f6",
+      "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
