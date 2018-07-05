@@ -346,6 +346,15 @@ public class TrafficStats {
     }
 
     /**
+     * Tag the given {@link FileDescriptor} socket with the provided tag.
+     * @hide
+     */
+    public static void tagFileDescriptor(FileDescriptor fd, int tag) throws IOException {
+        final int uid = NetworkManagementSocketTagger.getThreadSocketStatsUid();
+        NetworkManagementSocketTagger.tagSocketFd(fd, tag, uid);
+    }
+
+    /**
      * Remove any statistics parameters from the given {@link FileDescriptor}
      * socket.
      */

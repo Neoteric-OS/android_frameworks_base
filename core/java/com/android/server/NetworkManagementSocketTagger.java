@@ -60,6 +60,7 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
     public static int getThreadSocketStatsTag() {
         return threadSocketTags.get().statsTag;
     }
+    public static int getThreadSocketStatsUid() { return threadSocketTags.get().statsUid; }
 
     public static int setThreadSocketStatsUid(int uid) {
         final int old = threadSocketTags.get().statsUid;
@@ -81,7 +82,7 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
         tagSocketFd(fd, options.statsTag, options.statsUid);
     }
 
-    private void tagSocketFd(FileDescriptor fd, int tag, int uid) {
+    public static void tagSocketFd(FileDescriptor fd, int tag, int uid) {
         if (tag == -1 && uid == -1) return;
 
         if (SystemProperties.getBoolean(PROP_QTAGUID_ENABLED, false)) {
