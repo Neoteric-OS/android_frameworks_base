@@ -46,6 +46,30 @@
       "revId": "ba3b9266f7f1bbe6c42d3d5aa1c29e1598a37389",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe3da4b_f0a514e7",
+        "filename": "packages/SystemUI/src/com/android/systemui/doze/DozeUi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-07-05T09:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b09c32_5a0ad3e9",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "ba3b9266f7f1bbe6c42d3d5aa1c29e1598a37389",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
