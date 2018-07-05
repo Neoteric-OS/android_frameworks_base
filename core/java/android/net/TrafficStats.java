@@ -346,6 +346,20 @@ public class TrafficStats {
     }
 
     /**
+     * Tag the given {@link FileDescriptor} socket with the provided tag.
+     * @hide
+     */
+    public static void tagFileDescriptor(FileDescriptor fd, int tag) throws IOException {
+        // TODO: have a better underlying API to avoid setting the thread tag just for a socket
+        final int oldTag = getAndSetThreadStatsTag(tag);
+        try {
+            tagFileDescriptor(fd);
+        } finally {
+            setThreadStatsTag(oldTag);
+        }
+    }
+
+    /**
      * Remove any statistics parameters from the given {@link FileDescriptor}
      * socket.
      */
