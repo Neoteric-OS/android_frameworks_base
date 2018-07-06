@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b1bfd3b_289fb358",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-06T10:15:44Z",
+      "side": 1,
+      "message": "This fails for me with :\n\n[ 80% 634/789] Copying: out/target/common/obj/APPS/TestApp037ver9_intermediates/classes.dex\nFAILED: out/target/common/obj/APPS/TestApp037ver9_intermediates/classes.dex \n/bin/bash -c \"(rm -f out/target/common/obj/APPS/TestApp037ver9_intermediates//classes*.dex ) \u0026\u0026 (cp -fp out/target/common/obj/APPS/TestApp037ver9_intermediates/dex//classes*.dex out/target/common/obj/APPS/TestApp037ver9_intermediates/ )\"\ncp: cannot stat \u0027out/target/common/obj/APPS/TestApp037ver9_intermediates/dex//classes*.dex\u0027: No such file or directory\n[ 86% 685/789] R8: out/target/common/obj/APPS/TestApp049ver6_intermediates/dex/classes.dex",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b2fda6_fd959cfa",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-06T10:15:44Z",
+      "side": 1,
+      "message": "This seems non-ideal, what would it take to avoid manually copying files to a different git repository each time the test is run ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 160
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2086a422_228f43b0",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-06T10:15:44Z",
+      "side": 1,
+      "message": "Will this need to be updated for every new release ? e.g p2q and so on ? What\u0027s O specific or P specific in the test configuration ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
