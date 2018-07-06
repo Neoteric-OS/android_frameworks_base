@@ -34,6 +34,24 @@
       "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113faadc_f0753a0a",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2018-07-06T01:20:39Z",
+      "side": 1,
+      "message": "I think that the default value should be a part of definition. And it won\u0027t be good to put \"if (get() is empty) use default value;\" to every client that uses props.",
+      "parentUuid": "995fcd0b_f838d952",
+      "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
