@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cda0b887_e7e4c288",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-07-06T11:41:49Z",
+      "side": 1,
+      "message": "Now we also run this build for marlin with latest AOSP source code.\nWe succeeded in build test applications.\nCould you share the detail of your environment?",
+      "parentUuid": "5b1bfd3b_289fb358",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2b2fda6_fd959cfa",
         "filename": "tests/PackageUpdate/README",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0912e189_69be3cd7",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-07-06T11:41:49Z",
+      "side": 1,
+      "message": "We\u0027re implementing tradefed handling along following document.\nhttps://source.android.com/devices/tech/test_infra/tradefed/\nCurrently we don\u0027t know how to include our implementation into tradefed target.\nSo we copy them manually.\nIf there is the way to include the our implementation into tradefed target, could you share us?",
+      "parentUuid": "d2b2fda6_fd959cfa",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 160
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2086a422_228f43b0",
         "filename": "tests/PackageUpdate/README",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2018-07-06T10:15:44Z",
       "side": 1,
       "message": "Will this need to be updated for every new release ? e.g p2q and so on ? What\u0027s O specific or P specific in the test configuration ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "1c870d5e7e96b0c668aaec8227a376a30c35bb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0a0996_3d4e4709",
+        "filename": "tests/PackageUpdate/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1235686
+      },
+      "writtenOn": "2018-07-06T11:41:49Z",
+      "side": 1,
+      "message": "Yes, we need to do it for now.\nThere are some changes about package installation between O and P.\nex) New private flags are added (PRIVATE_FLAG_VENDOR etc).\nex) New partitions are supported (/vendor/priv-app)\n\nSo we could not create common test case and reference between O and P.\nIf there are not any big changes between P and Q or future OS version, we can use same test configuration.",
+      "parentUuid": "2086a422_228f43b0",
       "range": {
         "startLine": 59,
         "startChar": 8,
