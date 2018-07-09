@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e241ed6d_ccebd76a",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-07-09T05:44:17Z",
+      "side": 1,
+      "message": "Nit: can we call this variable mask?",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5fbc135_a7663ec5",
         "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
         "patchSetId": 1
