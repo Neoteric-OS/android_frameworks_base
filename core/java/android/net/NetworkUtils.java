@@ -127,50 +127,81 @@ public class NetworkUtils {
 
     /**
      * Convert a IPv4 address from an integer to an InetAddress.
-     * @param hostAddress an int corresponding to the IPv4 address in network byte order
+     * @param hostAddress an int corresponding to the IPv4 address in inverted byte order (most
+     *                    significant byte at 0xff)
+     * @deprecated This uses inverted byte order for no good reason.
+     *             Use {@link #intToInet4Address(int)}.
      */
+    @Deprecated
     public static InetAddress intToInetAddress(int hostAddress) {
-        byte[] addressBytes = { (byte)(0xff & hostAddress),
-                                (byte)(0xff & (hostAddress >> 8)),
-                                (byte)(0xff & (hostAddress >> 16)),
-                                (byte)(0xff & (hostAddress >> 24)) };
+        return intToInet4Address(Integer.reverseBytes(hostAddress));
+    }
+
+    /**
+     * Convert a IPv4 address from an integer to an InetAddress.
+     *
+     * <p>For example, 192.168.0.1 -> 0xc0a80001
+     * @param hostAddress an int corresponding to the IPv4 address
+     */
+    public static InetAddress intToInet4Address(int hostAddress) {
+        byte[] addressBytes = { (byte) (0xff & (hostAddress >> 24)),
+                (byte) (0xff & (hostAddress >> 16)),
+                (byte) (0xff & (hostAddress >> 8)),
+                (byte) (0xff & hostAddress) };
 
         try {
-           return InetAddress.getByAddress(addressBytes);
+            return InetAddress.getByAddress(addressBytes);
         } catch (UnknownHostException e) {
-           throw new AssertionError();
+            throw new AssertionError();
         }
     }
 
     /**
      * Convert a IPv4 address from an InetAddress to an integer
      * @param inetAddr is an InetAddress corresponding to the IPv4 address
-     * @return the IP address as an integer in network byte order
+     * @return the IP address as integer in inverted byte order (most significant byte is at 0xff)
+     * @deprecated This returns values with inverted byte order for no good reason.
+     *             Use {@link #inet4AddressToInt(Inet4Address)}.
      */
+    @Deprecated
     public static int inetAddressToInt(Inet4Address inetAddr)
             throws IllegalArgumentException {
+        return Integer.reverseBytes(inet4AddressToInt(inetAddr));
+    }
+
+    /**
+     * Convert a IPv4 address from an InetAddress to an integer
+     *
+     * <p>This conversion can help order IP addresses: considering the ordering
+     * 192.0.2.1 < 192.0.2.2 < ..., resulting ints will follow that ordering if read as unsigned
+     * integers with {@link Integer#toUnsignedLong}.
+     * @param inetAddr is an InetAddress corresponding to the IPv4 address
+     * @return the IP address as integer (most significant byte is at 0xff000000)
+     */
+    public static int inet4AddressToInt(Inet4Address inetAddr)
+            throws IllegalArgumentException {
         byte [] addr = inetAddr.getAddress();
-        return ((addr[3] & 0xff) << 24) | ((addr[2] & 0xff) << 16) |
-                ((addr[1] & 0xff) << 8) | (addr[0] & 0xff);
+        return ((addr[0] & 0xff) << 24) | ((addr[1] & 0xff) << 16)
+                | ((addr[2] & 0xff) << 8) | (addr[3] & 0xff);
     }
 
     /**
      * Convert a network prefix length to an IPv4 netmask integer
      * @param prefixLength
-     * @return the IPv4 netmask as an integer in network byte order
+     * @return the IPv4 netmask as an integer (most significant byte is at 0xff000000)
      */
     public static int prefixLengthToNetmaskInt(int prefixLength)
             throws IllegalArgumentException {
         if (prefixLength < 0 || prefixLength > 32) {
             throw new IllegalArgumentException("Invalid prefix length (0 <= prefix <= 32)");
         }
-        int value = 0xffffffff << (32 - prefixLength);
-        return Integer.reverseBytes(value);
+        // (int)a << b is equivalent to a << (b & 0x1f): can't shift by 32 (-1 << 32 == -1)
+        return prefixLength == 0 ? 0 : 0xffffffff << (32 - prefixLength);
     }
 
     /**
      * Convert a IPv4 netmask integer to a prefix length
-     * @param netmask as an integer in network byte order
+     * @param netmask as an integer (most significant byte is at 0xff000000)
      * @return the network prefix length
      */
     public static int netmaskIntToPrefixLength(int netmask) {
