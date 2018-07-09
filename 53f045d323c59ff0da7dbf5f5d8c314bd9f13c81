@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5fbc135_a7663ec5",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-09T03:09:17Z",
+      "side": 1,
+      "message": "0x000001ff?",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27022e5_1566c0f6",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-09T03:09:17Z",
+      "side": 1,
+      "message": "0x0001ffff?",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d92f68f_6052ec9b",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-09T03:09:17Z",
+      "side": 1,
+      "message": "0x007fffff?",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bead8b99_7aa6798d",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-09T03:09:17Z",
+      "side": 1,
+      "message": "0x7fffffff?",
+      "range": {
+        "startLine": 90,
+        "startChar": 21,
+        "endLine": 90,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
