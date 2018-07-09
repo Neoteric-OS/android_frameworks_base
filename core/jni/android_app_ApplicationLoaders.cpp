@@ -24,7 +24,8 @@
 
 static void setupVulkanLayerPath_native(JNIEnv* env, jobject clazz,
         jobject classLoader, jstring librarySearchPath) {
-    android_namespace_t* ns = android::FindNamespaceByClassLoader(env, classLoader);
+    android::NativeLoaderNamespace* ns = android::FindNativeLoaderNamespaceByClassLoader(
+        env, classLoader);
     ScopedUtfChars layerPathChars(env, librarySearchPath);
 
     vulkan::LoaderData& loader_data = vulkan::LoaderData::GetInstance();
