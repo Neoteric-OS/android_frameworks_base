@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18bb3025_edfe2f9c",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-09T09:15:15Z",
+      "side": 1,
+      "message": "Variable ended up being unnecessary in new CL (not reversing bytes): removed.",
+      "parentUuid": "e241ed6d_ccebd76a",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fbc135_a7663ec5",
         "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbd82cf_890bc925",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-09T09:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5fbc135_a7663ec5",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e0f6794_9b9f80e6",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-09T09:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b27022e5_1566c0f6",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d92f68f_6052ec9b",
         "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d992fea1_efb49e90",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-09T09:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d92f68f_6052ec9b",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bead8b99_7aa6798d",
         "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd59e97_f6e00f0c",
+        "filename": "tests/net/java/android/net/NetworkUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-09T09:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bead8b99_7aa6798d",
+      "range": {
+        "startLine": 90,
+        "startChar": 21,
+        "endLine": 90,
+        "endChar": 31
+      },
+      "revId": "53f045d323c59ff0da7dbf5f5d8c314bd9f13c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
