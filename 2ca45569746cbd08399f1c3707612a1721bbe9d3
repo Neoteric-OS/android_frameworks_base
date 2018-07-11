@@ -52,6 +52,24 @@
       "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9c9eb3_27b0c564",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-11T12:42:10Z",
+      "side": 1,
+      "message": "then how can we distinguish a property that isn\u0027t defined from a property whose value is set to the default one?\n\n\nAnyway, if you are going to make the default value be set when defining sysprops, you need to change get() to return T instead of Optional\u003cT\u003e.",
+      "parentUuid": "113faadc_f0753a0a",
+      "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
