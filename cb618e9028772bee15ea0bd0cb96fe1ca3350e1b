@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c337d08_4d2e01b0",
+        "filename": "services/core/java/com/android/server/am/BroadcastQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-07-11T15:25:53Z",
+      "side": 1,
+      "message": "Hmm this isn\u0027t really an \"enqueue\" time at this point... I wonder if we want a separate \"replace time\". But it\u0027s just for dumpsys I believe, so I guess I\u0027m okay with it.",
+      "revId": "cb618e9028772bee15ea0bd0cb96fe1ca3350e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
