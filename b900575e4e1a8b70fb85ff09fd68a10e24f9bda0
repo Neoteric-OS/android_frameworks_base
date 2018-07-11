@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df257236_a17abe34",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-11T02:28:43Z",
+      "side": 1,
+      "message": "Can we just say \"host byte order\" or \"JVM byte order\"?\n\nBasically, the caller can think of an ordering on IPv4 addresses (192.0.2.1 \u003c 192.0.2.2 \u003c ...), and we guarantee that inet4AddressToInt(1.0.2.1) \u003c inet4Address(1.0.2.2), with the obvious problem of IP addresses above 127.0.0.0...  Argh.\n\nI might be better to see if we can make do with inet4AddressToLong...",
+      "range": {
+        "startLine": 174,
+        "startChar": 44,
+        "endLine": 174,
+        "endChar": 98
+      },
+      "revId": "b900575e4e1a8b70fb85ff09fd68a10e24f9bda0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
