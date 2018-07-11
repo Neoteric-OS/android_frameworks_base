@@ -262,6 +262,7 @@ public final class BroadcastQueue {
                     Slog.v(TAG_BROADCAST, "***** DROPPING "
                             + typeForLogging + " [" + mQueueName + "]: " + intent);
                 }
+                r.enqueueClockTime = old.enqueueClockTime;
                 queue.set(i, r);
                 return old;
             }
@@ -945,6 +946,10 @@ public final class BroadcastQueue {
 
                 if (r.receivers == null || r.nextReceiver >= numReceivers
                         || r.resultAbort || forceReceive) {
+                    if (numReceivers == 0) {
+                        r.dispatchTime = SystemClock.uptimeMillis();
+                        r.dispatchClockTime = System.currentTimeMillis();
+                    }
                     // No more receivers for this broadcast!  Send the final
                     // result if requested...
                     if (r.resultTo != null) {
