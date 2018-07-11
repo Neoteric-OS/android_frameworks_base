@@ -22,6 +22,30 @@
       "revId": "b900575e4e1a8b70fb85ff09fd68a10e24f9bda0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a657963c_88fe54c8",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-11T03:28:00Z",
+      "side": 1,
+      "message": "Oops, that\u0027s actually a bad copy-paste: this method does not return inverted bytes, but bytes in the \"right\" order.\nI discussed this with Bernie earlier this week, our conclusions were that machine endianness is not relevant when talking about an int: the high order byte is always 0xff000000 and the lower order byte is always 0xff. What changes is whether those are stored first or last in the machine memory or when writing to a file, but an int just has a \"right\" order.\nI\u0027ll remove that byte order part, only keeping \"most significant byte is at 0xff000000\" as example. Let me know if you think there is a better formulation.\nOrder will still be preserved when using Integer.toUnsignedLong(...): I\u0027ll add a note with that.",
+      "parentUuid": "df257236_a17abe34",
+      "range": {
+        "startLine": 174,
+        "startChar": 44,
+        "endLine": 174,
+        "endChar": 98
+      },
+      "revId": "b900575e4e1a8b70fb85ff09fd68a10e24f9bda0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
