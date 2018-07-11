@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953e7a98_96743848",
+        "filename": "tools/hiddenapi/class2greylist/src/com/android/class2greylist/Class2Greylist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-07-11T12:49:41Z",
+      "side": 1,
+      "message": "Nit: 80 chars",
+      "revId": "339458abb37ab8c397a0ce5dd6c0fbae4924839a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306df486_244a00a0",
+        "filename": "tools/hiddenapi/class2greylist/src/com/android/class2greylist/JarReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-07-11T12:49:41Z",
+      "side": 1,
+      "message": "Nit: 80 chars",
+      "revId": "339458abb37ab8c397a0ce5dd6c0fbae4924839a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
