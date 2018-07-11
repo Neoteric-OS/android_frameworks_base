@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2047e21b_1fe77dbe",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-07-11T17:27:09Z",
+      "side": 1,
+      "message": "sleep to avoid CPU churn when pkg mgr is actively processing",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 0
+      },
+      "revId": "550f865fe9b601703edef3aa4b58abf92263d681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
