@@ -70,6 +70,24 @@
       "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d07225_338fdae5",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2018-07-11T16:37:11Z",
+      "side": 1,
+      "message": "Should we distinguish them? Can\u0027t we just treat them as identical?\n\nAnd could you please elaborate why we should use T? I think changing Optional\u003cT\u003e to T is no-op. Optional\u003cT\u003e should be empty or hold some non-null value, which is identical to T: either null or non-null.",
+      "parentUuid": "ff9c9eb3_27b0c564",
+      "revId": "2ca45569746cbd08399f1c3707612a1721bbe9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
