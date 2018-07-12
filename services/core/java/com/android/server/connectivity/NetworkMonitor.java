@@ -104,6 +104,8 @@ public class NetworkMonitor extends StateMachine {
     // TODO: append a random length parameter to the default HTTPS url.
     // TODO: randomize browser version ids in the default User-Agent String.
     private static final String DEFAULT_HTTPS_URL     = "https://www.google.com/generate_204";
+    private static final String DEFAULT_HTTPS_URL_2ND =
+            "https://connectivitycheck.gstatic.com/generate_204";
     private static final String DEFAULT_HTTP_URL      =
             "http://connectivitycheck.gstatic.com/generate_204";
     private static final String DEFAULT_FALLBACK_URL  = "http://www.google.com/gen_204";
@@ -1166,13 +1168,18 @@ public class NetworkMonitor extends StateMachine {
         // Number of probes to wait for. If a probe completes with a conclusive answer
         // it shortcuts the latch immediately by forcing the count to 0.
         final CountDownLatch latch = new CountDownLatch(2);
+        final URL httpsUrl2nd = makeURL(DEFAULT_HTTPS_URL_2ND);
 
         final class ProbeThread extends Thread {
             private final boolean mIsHttps;
+            private final URL mUrl;
+            private final CountDownLatch mLatch;
             private volatile CaptivePortalProbeResult mResult = CaptivePortalProbeResult.FAILED;
 
-            public ProbeThread(boolean isHttps) {
+            public ProbeThread(boolean isHttps, URL url, CountDownLatch latch) {
                 mIsHttps = isHttps;
+                mUrl = url;
+                mLatch = latch;
             }
 
             public CaptivePortalProbeResult result() {
@@ -1182,24 +1189,23 @@ public class NetworkMonitor extends StateMachine {
             @Override
             public void run() {
                 if (mIsHttps) {
-                    mResult =
-                            sendDnsAndHttpProbes(proxy, httpsUrl, ValidationProbeEvent.PROBE_HTTPS);
+                    mResult = sendDnsAndHttpProbes(proxy, mUrl, ValidationProbeEvent.PROBE_HTTPS);
                 } else {
-                    mResult = sendDnsAndHttpProbes(proxy, httpUrl, ValidationProbeEvent.PROBE_HTTP);
+                    mResult = sendDnsAndHttpProbes(proxy, mUrl, ValidationProbeEvent.PROBE_HTTP);
                 }
                 if ((mIsHttps && mResult.isSuccessful()) || (!mIsHttps && mResult.isPortal())) {
                     // Stop waiting immediately if https succeeds or if http finds a portal.
-                    while (latch.getCount() > 0) {
-                        latch.countDown();
+                    while (mLatch.getCount() > 0) {
+                        mLatch.countDown();
                     }
                 }
                 // Signal this probe has completed.
-                latch.countDown();
+                mLatch.countDown();
             }
         }
 
-        final ProbeThread httpsProbe = new ProbeThread(true);
-        final ProbeThread httpProbe = new ProbeThread(false);
+        final ProbeThread httpsProbe = new ProbeThread(true, httpsUrl, latch);
+        final ProbeThread httpProbe = new ProbeThread(false, httpUrl, latch);
 
         try {
             httpsProbe.start();
@@ -1221,6 +1227,28 @@ public class NetworkMonitor extends StateMachine {
         if (httpsResult.isPortal() || httpsResult.isSuccessful()) {
             return httpsResult;
         }
+
+        if (httpResult.isSuccessful() && httpsResult.isFailed()) {
+
+            final CountDownLatch latch2nd = new CountDownLatch(1);
+
+            final ProbeThread httpsProbe2nd = new ProbeThread(true, httpsUrl2nd, latch2nd);
+
+            try {
+                httpsProbe2nd.start();
+                latch2nd.await(PROBE_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                validationLog("Error: probes wait interrupted!");
+                return CaptivePortalProbeResult.FAILED;
+            }
+
+            final CaptivePortalProbeResult httpsResult2nd = httpsProbe2nd.result();
+
+            if (httpsResult2nd.isPortal() || httpsResult2nd.isSuccessful()) {
+                return httpsResult2nd;
+            }
+        }
+
         // If a fallback method exists, use it to retry portal detection.
         // If we have new-style probe specs, use those. Otherwise, use the fallback URLs.
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
