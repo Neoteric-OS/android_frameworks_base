@@ -22,6 +22,30 @@
       "revId": "550f865fe9b601703edef3aa4b58abf92263d681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4e97d7_356fdda6",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1281589
+      },
+      "writtenOn": "2018-07-12T14:27:37Z",
+      "side": 1,
+      "message": "We would have to be interrupted frequently for that to be a problem.  I\u0027d expect interrupts to be rare if not non-existant.  Wrong?",
+      "parentUuid": "2047e21b_1fe77dbe",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 0
+      },
+      "revId": "550f865fe9b601703edef3aa4b58abf92263d681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
