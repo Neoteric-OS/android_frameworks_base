@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c8d8f7d_51b2f0aa",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-07-13T19:56:10Z",
+      "side": 1,
+      "message": "can you synchronize on `MtpDatabase.this`?",
+      "revId": "ca139a49f9714134c07335bc6a72a0b2d259c16a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b4b753_efdd25d4",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-07-13T19:56:10Z",
+      "side": 1,
+      "message": "instead, `public synchronized void setServer`",
+      "revId": "ca139a49f9714134c07335bc6a72a0b2d259c16a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
