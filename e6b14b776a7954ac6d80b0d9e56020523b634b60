@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20517d7d_7f06d3f1",
+        "filename": "core/java/android/os/TypedSystemProperty.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-07-14T11:30:33Z",
+      "side": 1,
+      "message": "this is the reason to have the class",
+      "range": {
+        "startLine": 425,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 65
+      },
+      "revId": "e6b14b776a7954ac6d80b0d9e56020523b634b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
