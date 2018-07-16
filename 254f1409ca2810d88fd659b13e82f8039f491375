@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b557e099_e23ebb1d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-07-16T15:04:19Z",
+      "side": 1,
+      "message": "We should explain somewhere why we use 300. Maybe a comment here that says that if we don\u0027t use this value, testMultipleLingering will fail?\n\nAlso, if this problem only affects testMultipleLingering, we could consider explicitly changing mLingerDelayMs in that method only.\n\nAlso, I see this comment in the test file. Does that mean that 120 was always incorrect, because 100 is not \"much less\" than 120?\n\n        // Chosen to be much less than the linger timeout. This ensures that we can distinguish\n        // between a LOST callback that arrives immediately and a LOST callback that arrives after\n        // the linger timeout.\n        private final static int TIMEOUT_MS \u003d 100;",
+      "range": {
+        "startLine": 199,
+        "startChar": 52,
+        "endLine": 199,
+        "endChar": 55
+      },
+      "revId": "254f1409ca2810d88fd659b13e82f8039f491375",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
