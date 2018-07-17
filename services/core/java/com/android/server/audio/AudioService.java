@@ -715,6 +715,11 @@ public class AudioService extends IAudioService.Stub
             }
         }
 
+        int maxSystemVolume = SystemProperties.getInt("ro.config.system_vol_steps", -1);
+        if (maxSystemVolume != -1) {
+            MAX_STREAM_VOLUME[AudioSystem.STREAM_SYSTEM] = maxSystemVolume;
+        }
+
         sSoundEffectVolumeDb = context.getResources().getInteger(
                 com.android.internal.R.integer.config_soundEffectVolumeDb);
 
