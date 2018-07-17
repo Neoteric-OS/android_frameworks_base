@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5083f299_307936c8",
+        "filename": "core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2018-07-17T18:29:08Z",
+      "side": 1,
+      "message": "I think this can be FileObserver.CREATE instead.",
+      "range": {
+        "startLine": 257,
+        "startChar": 84,
+        "endLine": 257,
+        "endChar": 94
+      },
+      "revId": "322a1ae068ad2f142855cac68ad1fa8a4fe9d16c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c201c2_dd5c146f",
+        "filename": "core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2018-07-17T18:29:08Z",
+      "side": 1,
+      "message": "We should change this to `if (!file.getName().startsWith(\".\") \u0026\u0026 file.isFile())`, to avoid capturing the .temporary files that get created if O_TMPFILE isn\u0027t available.",
+      "range": {
+        "startLine": 262,
+        "startChar": 62,
+        "endLine": 263,
+        "endChar": 40
+      },
+      "revId": "322a1ae068ad2f142855cac68ad1fa8a4fe9d16c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
