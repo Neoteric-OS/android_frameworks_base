@@ -701,15 +701,34 @@ $(LOCAL_BLACKLIST): $(LOCAL_SRC_ALL) $(LOCAL_LIGHT_GREYLIST) $(LOCAL_DARK_GREYLI
 # ============================================================
 include $(CLEAR_VARS)
 
-LOCAL_LIGHT_GREYLIST_FILE := frameworks/base/config/hiddenapi-p-light-greylist.txt
-LOCAL_BLACKLIST_FILE := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-blacklist.txt
+LOCAL_LIGHT_GREYLIST := frameworks/base/config/hiddenapi-p-light-greylist.txt
+LOCAL_DARK_GREYLIST := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-dark-greylist.txt
+LOCAL_BLACKLIST := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/hiddenapi-aosp-blacklist.txt
+LOCAL_SRC_PUBLIC_API := $(INTERNAL_PLATFORM_DEX_API_FILE)
+LOCAL_SRC_PRIVATE_API := $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
+LOCAL_SRC_FORCE_BLACKLIST := frameworks/base/config/hiddenapi-force-blacklist.txt
+
+LOCAL_SRC_ALL := \
+	$(LOCAL_SRC_FORCE_BLACKLIST) \
+	$(LOCAL_SRC_PUBLIC_API) \
+	$(LOCAL_SRC_PRIVATE_API)
 
 .PHONY: hiddenapi-aosp-blacklist
-hiddenapi-aosp-blacklist: $(LOCAL_BLACKLIST_FILE)
+hiddenapi-aosp-blacklist: $(LOCAL_BLACKLIST)
 
-$(LOCAL_BLACKLIST_FILE): $(LOCAL_LIGHT_GREYLIST_FILE) $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)
-	LC_COLLATE=C comm -13 <(sort $(LOCAL_LIGHT_GREYLIST_FILE)) \
-		   <(sort $(INTERNAL_PLATFORM_PRIVATE_DEX_API_FILE)) > $@
+$(LOCAL_DARK_GREYLIST): $(LOCAL_SRC_ALL) $(LOCAL_LIGHT_GREYLIST)
+	comm -13 <(sort $(LOCAL_LIGHT_GREYLIST) $(LOCAL_SRC_FORCE_BLACKLIST)) \
+	         <(cat $(LOCAL_SRC_PUBLIC_API) $(LOCAL_LIGHT_GREYLIST) | \
+	               sed 's/\->.*//' | sed 's/\(.*\/\).*/\1/' | sort | uniq | \
+	               while read PKG_NAME; do \
+	                   grep -E "^$${PKG_NAME}[^/;]*;" $(LOCAL_SRC_PRIVATE_API); \
+	               done | sort | uniq) \
+	         > $@
+
+$(LOCAL_BLACKLIST): $(LOCAL_SRC_ALL) $(LOCAL_LIGHT_GREYLIST) $(LOCAL_DARK_GREYLIST)
+	comm -13 <(sort $(LOCAL_LIGHT_GREYLIST) $(LOCAL_DARK_GREYLIST)) \
+	         <(sort $(LOCAL_SRC_PRIVATE_API)) \
+	         > $@
 
 # Include subdirectory makefiles
 # ============================================================
