@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753303da_12a78924",
+        "filename": "core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-19T05:00:16Z",
+      "side": 1,
+      "message": "This still needs to be changed to file.isFile() \u0026\u0026 file.getName().startsWith(\"tombstone_\") as per the previous comment.",
+      "revId": "0711655fd888ddb7d8173245a4307190112e4a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
