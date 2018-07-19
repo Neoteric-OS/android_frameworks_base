@@ -337,7 +337,28 @@ public final class ConnectionRequest implements Parcelable {
                 mAddress == null
                         ? Uri.EMPTY
                         : Connection.toLogSafePhoneNumber(mAddress.toString()),
-                mExtras == null ? "" : mExtras);
+                bundleToString(mExtras));
+    }
+
+    private String bundleToString(Bundle extra){
+        if (extra == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bundle[");
+        for (String key : extra.keySet()) {
+            sb.append(key);
+            sb.append("=");
+            if (key.equals(TelecomManager.EXTRA_INCOMING_CALL_ADDRESS)
+                    || key.equals(TelecomManager.EXTRA_UNKNOWN_CALL_HANDLE)) {
+                sb.append(Log.pii(extra.get(key)));
+            } else {
+                sb.append(extra.get(key));
+            }
+           sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     public static final Creator<ConnectionRequest> CREATOR = new Creator<ConnectionRequest> () {
