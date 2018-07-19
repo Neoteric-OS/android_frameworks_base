@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.os.Parcel;
+import android.telephony.cdma.CdmaCellLocation;
 
 import java.util.Objects;
 
@@ -172,6 +173,18 @@ public final class CellIdentityCdma extends CellIdentity {
     public int hashCode() {
         return Objects.hash(mNetworkId, mSystemId, mBasestationId, mLatitude, mLongitude,
                 super.hashCode());
+    }
+
+    /** @hide */
+    @Override
+    public CdmaCellLocation asCellLocation() {
+        CdmaCellLocation cl = new CdmaCellLocation();
+        int bsid = mBasestationId != Integer.MAX_VALUE ? mBasestationId : -1;
+        int sid = mSystemId != Integer.MAX_VALUE ? mSystemId : -1;
+        int nid = mNetworkId != Integer.MAX_VALUE ? mNetworkId : -1;
+        // lat and long already use Integer.MAX_VALUE for invalid/unknown
+        cl.setCellLocationData(bsid, mLatitude, mLongitude, sid, nid);
+        return cl;
     }
 
     @Override
