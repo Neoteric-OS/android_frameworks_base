@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a979f5cd_8b158660",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2018-07-19T11:43:12Z",
+      "side": 1,
+      "message": "Actually... is this check and the one above even needed?",
+      "revId": "36a8942ca2a9f8bd909d7afc1aa2290557a1cbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
