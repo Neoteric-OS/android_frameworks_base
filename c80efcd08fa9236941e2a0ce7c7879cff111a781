@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f545d5f1_9c7369f3",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2018-07-19T01:23:34Z",
+      "side": 1,
+      "message": "Can we just check to see if the windowContainerController is null?",
+      "range": {
+        "startLine": 1477,
+        "startChar": 32,
+        "endLine": 1477,
+        "endChar": 47
+      },
+      "revId": "c80efcd08fa9236941e2a0ce7c7879cff111a781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
