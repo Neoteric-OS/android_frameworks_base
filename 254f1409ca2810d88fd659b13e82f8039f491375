@@ -22,6 +22,30 @@
       "revId": "254f1409ca2810d88fd659b13e82f8039f491375",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9204585_dc367ca1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-19T08:14:42Z",
+      "side": 1,
+      "message": "Done: added comment and changed CL to only increase timeout in that single test. Also re-tested for flakes with a few hundred runs on the whole class.\n\nFor the \"much less\" part, my understanding is that we want to check that the callbacks are fired around the time we call expectCallback, not after lingering times out. For this to be true there should be less than (TEST_LINGER_DELAY_MS - TIMEOUT_MS) \u003d\u003d 20ms between the time ConnectivityService is supposed to fire the callback, and the time we call expectCallback. If we take more time, the test might pass even though it should not.\nSo \"much less\" does not need to be an order of magnitude lower than the linger delay, but just give us enough time to run assertions.\n20ms might be a little short, but I tried to reduce TIMEOUT_MS to 60ms and got a flake after 50 runs. So I\u0027m keeping it as-is and updating the comment. There is high flakes potential in all this though...",
+      "parentUuid": "b557e099_e23ebb1d",
+      "range": {
+        "startLine": 199,
+        "startChar": 52,
+        "endLine": 199,
+        "endChar": 55
+      },
+      "revId": "254f1409ca2810d88fd659b13e82f8039f491375",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
