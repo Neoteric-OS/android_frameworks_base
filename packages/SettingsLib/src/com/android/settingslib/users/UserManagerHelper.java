@@ -392,6 +392,21 @@ public final class UserManagerHelper {
     }
 
     /**
+     * Find the current guest user.
+     */
+    public UserInfo findCurrentGuestUser() {
+        final List<UserInfo> users = getAllUsers();
+        final int size = users.size();
+        for (int i = 0; i < size; i++) {
+            final UserInfo user = users.get(i);
+            if (user.isGuest() && !user.guestToRemove) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Gets an icon for the user.
      *
      * @param userInfo User for which we want to get the icon.
