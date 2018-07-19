@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.os.Parcel;
+import android.telephony.cdma.CdmaCellLocation;
 
 import java.util.Objects;
 
@@ -172,6 +173,14 @@ public final class CellIdentityCdma extends CellIdentity {
     public int hashCode() {
         return Objects.hash(mNetworkId, mSystemId, mBasestationId, mLatitude, mLongitude,
                 super.hashCode());
+    }
+
+    /** @hide */
+    @Override
+    public CdmaCellLocation asCellLocation() {
+        CdmaCellLocation cl = new CdmaCellLocation();
+        cl.setCellLocationData(mBasestationId, mLatitude, mLongitude, mSystemId, mNetworkId);
+        return cl;
     }
 
     @Override

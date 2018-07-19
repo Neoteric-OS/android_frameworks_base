@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.os.Parcel;
+import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
 
 import java.util.Objects;
@@ -186,6 +187,15 @@ public final class CellIdentityWcdma extends CellIdentity {
     @Override
     public int getChannelNumber() {
         return mUarfcn;
+    }
+
+    /** @hide */
+    @Override
+    public GsmCellLocation asCellLocation() {
+        GsmCellLocation cl = new GsmCellLocation();
+        cl.setLacAndCid(mLac, mCid);
+        cl.setPsc(mPsc);
+        return cl;
     }
 
     @Override

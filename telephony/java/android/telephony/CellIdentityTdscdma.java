@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.os.Parcel;
+import android.telephony.gsm.GsmCellLocation;
 
 import java.util.Objects;
 
@@ -132,6 +133,15 @@ public final class CellIdentityTdscdma extends CellIdentity {
     @Override
     public int getChannelNumber() {
         return mUarfcn;
+    }
+
+    /** @hide */
+    @Override
+    public GsmCellLocation asCellLocation() {
+        GsmCellLocation cl = new GsmCellLocation();
+        cl.setLacAndCid(mLac, mCid);
+        cl.setPsc(-1); // There is no PSC for TD-SCDMA; not using this for CPI to stem shenanigans
+        return cl;
     }
 
     @Override
