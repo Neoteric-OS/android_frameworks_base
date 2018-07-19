@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649c4dc0_f2f80fde",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1060916
+      },
+      "writtenOn": "2018-07-19T03:09:55Z",
+      "side": 1,
+      "message": "I think you meant -1 here.  Otherwise, you are setting the same value to MAX_STREAM_VOLUME[AudioSystem.STREAM_SYSTEM] when ro.config.system_vol_steps is not set/found.",
+      "range": {
+        "startLine": 719,
+        "startChar": 16,
+        "endLine": 719,
+        "endChar": 60
+      },
+      "revId": "678cd53d08792e5bb82c0250693eaf958968e385",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
