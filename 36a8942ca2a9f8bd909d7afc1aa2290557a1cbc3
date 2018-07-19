@@ -34,6 +34,24 @@
       "revId": "36a8942ca2a9f8bd909d7afc1aa2290557a1cbc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19a703bf_fd6906ba",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2018-07-19T13:20:34Z",
+      "side": 1,
+      "message": "Silly OEMs :)  Thanks for the clarification.",
+      "parentUuid": "a625bb30_f88943ee",
+      "revId": "36a8942ca2a9f8bd909d7afc1aa2290557a1cbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
