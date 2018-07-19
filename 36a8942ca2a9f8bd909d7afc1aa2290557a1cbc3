@@ -16,6 +16,24 @@
       "revId": "36a8942ca2a9f8bd909d7afc1aa2290557a1cbc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a625bb30_f88943ee",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2018-07-19T13:14:45Z",
+      "side": 1,
+      "message": "An OEM could remove that property from the frameworks config file, so in theory it is needed.",
+      "parentUuid": "a979f5cd_8b158660",
+      "revId": "36a8942ca2a9f8bd909d7afc1aa2290557a1cbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
