@@ -21,13 +21,14 @@ import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_SPLIT_SCREEN_PRIMARY;
 import static android.view.Display.DEFAULT_DISPLAY;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
+
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import android.app.ActivityOptions;
@@ -49,23 +50,27 @@ import android.hardware.display.DisplayManager;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.service.voice.IVoiceInteractionSession;
-import android.support.test.InstrumentationRegistry;
 import android.testing.DexmakerShareClassLoaderRule;
 
+import androidx.test.InstrumentationRegistry;
 
 import com.android.internal.app.IVoiceInteractor;
 
 import com.android.server.AttributeCache;
 import com.android.server.wm.AppWindowContainerController;
+import com.android.server.wm.DisplayWindowController;
 import com.android.server.wm.PinnedStackWindowController;
 import com.android.server.wm.StackWindowController;
 import com.android.server.wm.TaskWindowContainerController;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowTestUtils;
+
 import org.junit.After;
 import org.junit.Before;
-import org.mockito.MockitoAnnotations;
+import org.junit.Rule;
 
+import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
 
 /**
  * A base class to handle common operations in activity related unit tests.

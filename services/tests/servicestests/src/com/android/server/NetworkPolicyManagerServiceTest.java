@@ -122,8 +122,6 @@ import android.os.RemoteException;
 import android.os.SimpleClock;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.SubscriptionPlan;
@@ -137,15 +135,15 @@ import android.util.Pair;
 import android.util.Range;
 import android.util.RecurrenceRule;
 
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
+
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.BroadcastInterceptingContext.FutureIntent;
 import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsManagerInternal;
-
-import libcore.io.IoUtils;
-import libcore.io.Streams;
 
 import com.google.common.util.concurrent.AbstractFuture;
 
@@ -162,6 +160,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import libcore.io.IoUtils;
+import libcore.io.Streams;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -200,7 +201,7 @@ import java.util.stream.Collectors;
     m -j32 FrameworksServicesTests && adb install -r -g \
     ${ANDROID_PRODUCT_OUT}/data/app/FrameworksServicesTests/FrameworksServicesTests.apk && \
     adb shell am instrument -e class "com.android.server.NetworkPolicyManagerServiceTest" -w \
-    "com.android.frameworks.servicestests/android.support.test.runner.AndroidJUnitRunner"
+    "com.android.frameworks.servicestests/androidx.test.runner.AndroidJUnitRunner"
  * </code></pre>
  */
 @RunWith(AndroidJUnit4.class)
