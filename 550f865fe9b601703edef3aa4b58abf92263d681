@@ -70,6 +70,30 @@
       "revId": "550f865fe9b601703edef3aa4b58abf92263d681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82243e4e_8230fce8",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1281589
+      },
+      "writtenOn": "2018-07-24T15:00:47Z",
+      "side": 1,
+      "message": "Ok, maybe I\u0027m misunderstanding something, but the problem we see isn\u0027t that Thread.interrupt happens too often.\n\nThe problem is that bgdexopt isn\u0027t throttled in any way, so it just keeps grabbing the lock even though pm needs it.\n\nbgdexopt \"interrupts\" pm, not the other way around, and not in the Thread.interrupt sense.",
+      "parentUuid": "db938b47_8c82beb5",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 0
+      },
+      "revId": "550f865fe9b601703edef3aa4b58abf92263d681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
