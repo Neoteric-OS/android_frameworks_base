@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5852cf76_ffeea25d",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-07-24T00:21:37Z",
+      "side": 1,
+      "message": "The default value in CellSignalStrengthGsm is MAX_VALUE. Not sure if/where that is used though.",
+      "parentUuid": "29e5f793_41d945a8",
+      "range": {
+        "startLine": 106,
+        "startChar": 45,
+        "endLine": 106,
+        "endChar": 56
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e57357_7f42e1c6",
         "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
         "patchSetId": 9
@@ -201,6 +225,30 @@
       "side": 1,
       "message": "It would be a bug... you can\u0027t have a CellInfo without a valid signal strength (since that\u0027s the whole point of a CellInfo).",
       "parentUuid": "5a04f1d1_cbefed9e",
+      "range": {
+        "startLine": 118,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f92bbf4_13490f59",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-07-24T00:21:37Z",
+      "side": 1,
+      "message": "See the comment here: https://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/CellSignalStrengthWcdma.java?l\u003d37",
+      "parentUuid": "88252bc2_b5356eaf",
       "range": {
         "startLine": 118,
         "startChar": 45,
