@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b123115_524c81de",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1876,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-07-24T15:02:41Z",
+      "side": 1,
+      "message": "Line too long",
+      "range": {
+        "startLine": 1876,
+        "startChar": 100,
+        "endLine": 1876,
+        "endChar": 112
+      },
+      "revId": "fc5e270448b7ff0dd5e5142e1ff209ff84b6e864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
