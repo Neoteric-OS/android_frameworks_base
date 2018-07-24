@@ -3171,4 +3171,13 @@
     <!-- IWLAN network service package name to bind to by default. If none is specified in an overlay, an
          empty string is passed in -->
     <string name="config_wlan_network_service_package" translatable="false"></string>
+
+    <!-- Captive portal http url -->
+    <string name="config_captive_portal_http_url" translatable="false"></string>
+
+    <!-- Captive portal mode, valid values;
+         0 Settings.Global.CAPTIVE_PORTAL_MODE_IGNORE
+         1 Settings.Global.CAPTIVE_PORTAL_MODE_PROMPT
+         2 Settings.Global.CAPTIVE_PORTAL_MODE_AVOID -->
+    <integer name="config_captive_portal_mode">1</integer>
 </resources>

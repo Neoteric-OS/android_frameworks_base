@@ -68,6 +68,7 @@ import android.util.LocalLog.ReadOnlyLocalLog;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.R;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
@@ -866,7 +867,8 @@ public class NetworkMonitor extends StateMachine {
 
     public boolean getIsCaptivePortalCheckEnabled() {
         String symbol = Settings.Global.CAPTIVE_PORTAL_MODE;
-        int defaultValue = Settings.Global.CAPTIVE_PORTAL_MODE_PROMPT;
+        int defaultValue = mContext.getResources().getInteger(
+                                   R.integer.config_captive_portal_mode);
         int mode = mSettings.getSetting(mContext, symbol, defaultValue);
         return mode != Settings.Global.CAPTIVE_PORTAL_MODE_IGNORE;
     }
@@ -891,8 +893,10 @@ public class NetworkMonitor extends StateMachine {
 
     public static String getCaptivePortalServerHttpUrl(
             NetworkMonitorSettings settings, Context context) {
+        String httpUrl = context.getResources().getString(R.string.config_captive_portal_http_url);
         return settings.getSetting(
-                context, Settings.Global.CAPTIVE_PORTAL_HTTP_URL, DEFAULT_HTTP_URL);
+                context, Settings.Global.CAPTIVE_PORTAL_HTTP_URL,
+                !TextUtils.isEmpty(httpUrl) ? httpUrl : DEFAULT_HTTP_URL);
     }
 
     private URL[] makeCaptivePortalFallbackUrls() {

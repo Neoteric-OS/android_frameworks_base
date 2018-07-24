@@ -3097,4 +3097,7 @@
   <java-symbol type="bool" name="config_display_no_service_when_sim_unready" />
 
   <java-symbol type="bool" name="config_supportBluetoothPersistedState" />
+
+  <java-symbol type="integer" name="config_captive_portal_mode" />
+  <java-symbol type="string" name="config_captive_portal_http_url" />
 </resources>
