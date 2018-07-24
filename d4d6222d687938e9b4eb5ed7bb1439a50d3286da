@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29e5f793_41d945a8",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-24T00:13:27Z",
+      "side": 1,
+      "message": "Then we have a bug. getAsuLevel() shouldn\u0027t return Integer.MAX_VALUE. It\u0027s either 0-whatever, 99. The rationale for this is that while any individual signal strength measurement can be unreported, we calculate getAsuLevel based on the aggregate of all of them, and in order for cellInfo to be valid, at least one measurement must be valid. Now, bugs exist... it\u0027s not hard to add something here with a nasty log message. Do you think that would be helpful?",
+      "parentUuid": "04c16128_f6ab5e34",
+      "range": {
+        "startLine": 106,
+        "startChar": 45,
+        "endLine": 106,
+        "endChar": 56
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e57357_7f42e1c6",
         "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
         "patchSetId": 9
@@ -41,6 +65,53 @@
         "startChar": 8,
         "endLine": 111,
         "endChar": 12
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceefd263_731bbbe6",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-24T00:13:27Z",
+      "side": 1,
+      "message": "Looks like PSC is missing; good catch!",
+      "parentUuid": "11e57357_7f42e1c6",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 12
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcaf49e_88668277",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-24T00:13:27Z",
+      "side": 1,
+      "message": "also a bug.",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 16
       },
       "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1d3ac516_9755b95b",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-24T00:13:27Z",
+      "side": 1,
+      "message": "They are unsupported by getNeighboringCellInfo(). It\u0027s GSM, WCDMA, or bust. One of the many reasons I want to bury this API (and why I made the constructor rather narrow).",
+      "parentUuid": "cce64ae0_d383a60c",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a04f1d1_cbefed9e",
         "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
         "patchSetId": 9
@@ -82,6 +177,30 @@
       "writtenOn": "2018-07-24T00:04:26Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "d4d6222d687938e9b4eb5ed7bb1439a50d3286da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88252bc2_b5356eaf",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-24T00:13:27Z",
+      "side": 1,
+      "message": "It would be a bug... you can\u0027t have a CellInfo without a valid signal strength (since that\u0027s the whole point of a CellInfo).",
+      "parentUuid": "5a04f1d1_cbefed9e",
       "range": {
         "startLine": 118,
         "startChar": 45,
