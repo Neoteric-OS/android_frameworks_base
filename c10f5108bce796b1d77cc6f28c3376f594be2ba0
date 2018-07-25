@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5784604_f2544ed2",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-07-25T23:01:51Z",
+      "side": 1,
+      "message": "should be public, please call \"make update-api\" to add to system api.",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 12
+      },
+      "revId": "c10f5108bce796b1d77cc6f28c3376f594be2ba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6f2396_c4d86d54",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-07-25T23:01:51Z",
+      "side": 1,
+      "message": "Please add more information about how this reason info code is used, such as a spec ref or expected operation from the modem side.",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 40
+      },
+      "revId": "c10f5108bce796b1d77cc6f28c3376f594be2ba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
