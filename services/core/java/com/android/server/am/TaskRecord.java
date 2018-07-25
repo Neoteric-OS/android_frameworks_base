@@ -163,6 +163,7 @@ final class TaskRecord extends ConfigurationContainer implements TaskWindowConta
     private static final String ATTR_MIN_WIDTH = "min_width";
     private static final String ATTR_MIN_HEIGHT = "min_height";
     private static final String ATTR_PERSIST_TASK_VERSION = "persist_task_version";
+    private static final String ATTR_IS_AVAILABLE = "is_available";
 
     // Current version of the task record we persist. Used to check if we need to run any upgrade
     // code.
@@ -1778,6 +1779,7 @@ final class TaskRecord extends ConfigurationContainer implements TaskWindowConta
         out.attribute(null, ATTR_MIN_WIDTH, String.valueOf(mMinWidth));
         out.attribute(null, ATTR_MIN_HEIGHT, String.valueOf(mMinHeight));
         out.attribute(null, ATTR_PERSIST_TASK_VERSION, String.valueOf(PERSIST_TASK_VERSION));
+        out.attribute(null, ATTR_IS_AVAILABLE, String.valueOf(isAvailable));
 
         if (affinityIntent != null) {
             out.startTag(null, TAG_AFFINITYINTENT);
@@ -1919,6 +1921,8 @@ final class TaskRecord extends ConfigurationContainer implements TaskWindowConta
                 minHeight = Integer.parseInt(attrValue);
             } else if (ATTR_PERSIST_TASK_VERSION.equals(attrName)) {
                 persistTaskVersion = Integer.parseInt(attrValue);
+            } else if (ATTR_IS_AVAILABLE.equals(attrName)) {
+                isAvailable = Integer.parseInt(attrValue);
             } else {
                 Slog.w(TAG, "TaskRecord: Unknown attribute=" + attrName);
             }
