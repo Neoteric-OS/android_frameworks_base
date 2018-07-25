@@ -612,11 +612,11 @@ public class IpSecService extends IIpSecService.Stub {
                 mSrvConfig
                         .getNetdInstance()
                         .ipSecDeleteSecurityAssociation(
-                                mResourceId,
+                                uid,
                                 mConfig.getSourceAddress(),
                                 mConfig.getDestinationAddress(),
                                 spi,
-                                mConfig.getMarkValue(),
+                                0,
                                 mConfig.getMarkMask());
             } catch (RemoteException | ServiceSpecificException e) {
                 Log.e(TAG, "Failed to delete SA with ID: " + mResourceId, e);
@@ -679,7 +679,7 @@ public class IpSecService extends IIpSecService.Stub {
                     mSrvConfig
                             .getNetdInstance()
                             .ipSecDeleteSecurityAssociation(
-                                    mResourceId, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
+                                    uid, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
                 Log.e(TAG, "Failed to delete SPI reservation with ID: " + mResourceId, e);
@@ -821,16 +821,16 @@ public class IpSecService extends IIpSecService.Stub {
 
                 for (int selAddrFamily : ADDRESS_FAMILIES) {
                     netd.ipSecDeleteSecurityPolicy(
-                            0,
+                            uid,
                             selAddrFamily,
                             IpSecManager.DIRECTION_OUT,
-                            mOkey,
+                            0,
                             0xffffffff);
                     netd.ipSecDeleteSecurityPolicy(
-                            0,
+                            uid,
                             selAddrFamily,
                             IpSecManager.DIRECTION_IN,
-                            mIkey,
+                            0,
                             0xffffffff);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
@@ -1083,7 +1083,8 @@ public class IpSecService extends IIpSecService.Stub {
         }
         checkNotNull(binder, "Null Binder passed to allocateSecurityParameterIndex");
 
-        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        int callingUid = Binder.getCallingUid();
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(callingUid);
         final int resourceId = mNextResourceId++;
 
         int spi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
@@ -1096,7 +1097,7 @@ public class IpSecService extends IIpSecService.Stub {
             spi =
                     mSrvConfig
                             .getNetdInstance()
-                            .ipSecAllocateSpi(resourceId, "", destinationAddress, requestedSpi);
+                            .ipSecAllocateSpi(callingUid, "", destinationAddress, requestedSpi);
             Log.d(TAG, "Allocated SPI " + spi);
             userRecord.mSpiRecords.put(
                     resourceId,
@@ -1264,7 +1265,8 @@ public class IpSecService extends IIpSecService.Stub {
         // TODO: Check that underlying network exists, and IP addresses not assigned to a different
         //       network (b/72316676).
 
-        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        int callerUid = Binder.getCallingUid();
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(callerUid);
         if (!userRecord.mTunnelQuotaTracker.isAvailable()) {
             return new IpSecTunnelInterfaceResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
         }
@@ -1285,22 +1287,22 @@ public class IpSecService extends IIpSecService.Stub {
             for (int selAddrFamily : ADDRESS_FAMILIES) {
                 // Always send down correct local/remote addresses for template.
                 netd.ipSecAddSecurityPolicy(
-                        0, // Use 0 for reqId
+                        callerUid,
                         selAddrFamily,
                         IpSecManager.DIRECTION_OUT,
                         localAddr,
                         remoteAddr,
                         0,
-                        okey,
+                        0,
                         0xffffffff);
                 netd.ipSecAddSecurityPolicy(
-                        0, // Use 0 for reqId
+                        callerUid,
                         selAddrFamily,
                         IpSecManager.DIRECTION_IN,
                         remoteAddr,
                         localAddr,
                         0,
-                        ikey,
+                        0,
                         0xffffffff);
             }
 
@@ -1532,13 +1534,13 @@ public class IpSecService extends IIpSecService.Stub {
         mSrvConfig
                 .getNetdInstance()
                 .ipSecAddSecurityAssociation(
-                        resourceId,
+                        Binder.getCallingUid(),
                         c.getMode(),
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
                         (c.getNetwork() != null) ? c.getNetwork().netId : 0,
                         spiRecord.getSpi(),
-                        c.getMarkValue(),
+                        0,
                         c.getMarkMask(),
                         (auth != null) ? auth.getName() : "",
                         (auth != null) ? auth.getKey() : new byte[] {},
@@ -1623,13 +1625,14 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void applyTransportModeTransform(
             ParcelFileDescriptor socket, int direction, int resourceId) throws RemoteException {
-        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        int callingUid = Binder.getCallingUid();
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(callingUid);
         checkDirection(direction);
         // Get transform record; if no transform is found, will throw IllegalArgumentException
         TransformRecord info = userRecord.mTransformRecords.getResourceOrThrow(resourceId);
 
         // TODO: make this a function.
-        if (info.pid != getCallingPid() || info.uid != getCallingUid()) {
+        if (info.pid != getCallingPid() || info.uid != callingUid) {
             throw new SecurityException("Only the owner of an IpSec Transform may apply it!");
         }
 
@@ -1643,7 +1646,7 @@ public class IpSecService extends IIpSecService.Stub {
                 .getNetdInstance()
                 .ipSecApplyTransportModeTransform(
                         socket.getFileDescriptor(),
-                        resourceId,
+                        callingUid,
                         direction,
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
@@ -1675,7 +1678,8 @@ public class IpSecService extends IIpSecService.Stub {
         enforceTunnelPermissions(callingPackage);
         checkDirection(direction);
 
-        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        int callingUid = Binder.getCallingUid();
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(callingUid);
 
         // Get transform record; if no transform is found, will throw IllegalArgumentException
         TransformRecord transformInfo =
@@ -1717,13 +1721,13 @@ public class IpSecService extends IIpSecService.Stub {
                     mSrvConfig
                             .getNetdInstance()
                             .ipSecUpdateSecurityPolicy(
-                                    0, // Use 0 for reqId
+                                    callingUid,
                                     selAddrFamily,
                                     direction,
                                     tunnelInterfaceInfo.getLocalAddress(),
                                     tunnelInterfaceInfo.getRemoteAddress(),
                                     transformInfo.getSpiRecord().getSpi(),
-                                    mark,
+                                    0,
                                     0xffffffff);
                 }
             }
