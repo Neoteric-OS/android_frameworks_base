@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aa7e1fb_10413060",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "\"Inverted\" is improper here, and \"lowest order at 0xff000000\" is a contradiction in terms as by definition the lowest order byte in a 32-bit value is at 0x000000ff. Because you\u0027re referring to the bytes in an IPv4 address, I suggest something like\n\n  ...with the first byte of the address in the lowest-order bits of the int.\n\n(alongside a justification of why you find this confusing).\n\nSuggest also adding an example to help clarify. Order of data is a confusing problem, and examples are often illuminating.",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a84a488_88940b6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "Likewise, this is improper.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cb40a7_bfb1c34d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "\"Natural\" to whom ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab25652_a11fc862",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "So here, this does not make sense, because an int does not have byte order, it\u0027s a value and not a memory reference (so the old \"network byte order\" was already improper here, but this is significantly worse).\nYou could say something like :\n\n  an int coding for an IPv4 address by packing its individual bytes into the int, lower-order to higher-order.\n\n\nNote that the implementation however is fine ; what the code does is indeed reversing the bytes.",
+      "range": {
+        "startLine": 130,
+        "startChar": 70,
+        "endLine": 130,
+        "endChar": 78
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163c42f3_95407a26",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "I don\u0027t share your distaste of this method and I don\u0027t think this is a good reason to deprecate it. If you want to deprecate it, we should probably cite a stance where we want all int representations of IPv4 addresses in higher- to lower-order bytes order. Do we actually have such a stance ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 68
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57809f21_ab06b485",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "How about adding an example here like you did in line 143 ? That would help with understanding. Byte ordering issues are notoriously confusing so I think it would help.",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 7
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3cb569_71bfeb00",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "Same comments as above.",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 64
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f9cf5f_09890c5b",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "This is actually a pleonasm (assuming 32-bit value), because the most significant byte is always at the top, by definition. I don\u0027t think it\u0027s proper to refer to the first byte in an IPv4 address as \"most significant\" because an IPv4 address is not a scalar, it\u0027s 4 order scalars. You can just call it the first component of the address.",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 85
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7dd72b_ad373935",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T03:44:08Z",
+      "side": 1,
+      "message": "If you\u0027re going to go with the deprecation of the inetAddressToInt and intToInetAddress, then I think you also need to rename this to include a \"4\" somewhere to avoid confusion, e.g. prefixLengthToNetmask4Int or something.",
+      "range": {
+        "startLine": 193,
+        "startChar": 22,
+        "endLine": 193,
+        "endChar": 46
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
