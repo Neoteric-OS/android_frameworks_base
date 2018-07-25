@@ -99,6 +99,7 @@ droiddoc {
     api_tag_name: "ANDROID_TEST_BASE",
     api_filename: "android-test-base-api.txt",
     removed_api_filename: "android-test-base-removed.txt",
+    metalava_enabled: true,
 }
 
 // Build the android.test.base.stubs library
