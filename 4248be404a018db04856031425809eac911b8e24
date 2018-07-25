@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a90f988e_29b1bf64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Changed formulation as done in the code, and added example.",
+      "parentUuid": "8aa7e1fb_10413060",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a84a488_88940b6d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "4248be404a018db04856031425809eac911b8e24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2417b25_7455b179",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Not deprecating the methods: removed.",
+      "parentUuid": "3a84a488_88940b6d",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7fbb4c4_1850b7ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cb40a7_bfb1c34d",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ab25652_a11fc862",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-07-25T03:44:08Z",
       "side": 1,
       "message": "So here, this does not make sense, because an int does not have byte order, it\u0027s a value and not a memory reference (so the old \"network byte order\" was already improper here, but this is significantly worse).\nYou could say something like :\n\n  an int coding for an IPv4 address by packing its individual bytes into the int, lower-order to higher-order.\n\n\nNote that the implementation however is fine ; what the code does is indeed reversing the bytes.",
+      "range": {
+        "startLine": 130,
+        "startChar": 70,
+        "endLine": 130,
+        "endChar": 78
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c2fc33_40f258df",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Added a paragraph explaining the byte ordering logic, and changed param to some variant of the suggestion (I think \"lower-order to higher-order\" implies numbering of the bytes with some endianness convention, so I prefer \"higher-order int byte goes into lower-order IPv4 byte\")",
+      "parentUuid": "7ab25652_a11fc862",
       "range": {
         "startLine": 130,
         "startChar": 70,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4186c5fe_4da8e1e4",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "As discussed, not deprecating",
+      "parentUuid": "163c42f3_95407a26",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 68
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57809f21_ab06b485",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cef15a22_267927fe",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57809f21_ab06b485",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 7
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da3cb569_71bfeb00",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-07-25T03:44:08Z",
       "side": 1,
       "message": "Same comments as above.",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 64
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931cb8a0_0a668164",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Applied same corrections, let me know what you think.",
+      "parentUuid": "da3cb569_71bfeb00",
       "range": {
         "startLine": 162,
         "startChar": 1,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "af080bb4_7d23556b",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "I think the comments now consistently consider the address as a 32-bit scalar, which I find easier to document than 4 ordered 8-bit scalars (which would depend on some ordering convention), and consistent with RFC language.\nI changed the comment with an example and the same byte ordering note as the other similar methods - again let me know what you think.",
+      "parentUuid": "45f9cf5f_09890c5b",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 85
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e7dd72b_ad373935",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "4248be404a018db04856031425809eac911b8e24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa52b8cf_6ead5a17",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T08:40:58Z",
+      "side": 1,
+      "message": "Done: restored behavior of previous method and added new behavior as \"prefixLengthToV4NetmaskInt\"",
+      "parentUuid": "9e7dd72b_ad373935",
+      "range": {
+        "startLine": 193,
+        "startChar": 22,
+        "endLine": 193,
+        "endChar": 46
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
