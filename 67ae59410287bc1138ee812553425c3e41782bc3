@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ccb35a1_50a920de",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T09:15:39Z",
+      "side": 1,
+      "message": "So I think now we have a small readability problem in that it\u0027s entirely unclear from the method names what the difference is between intToInetAddress and intToInet4Address.\n\nWe could have two new functions, say intMTLToInet4Address and intLTMToInet4Address (where MTL stands for Most-significant To Least-significant) or something, and have the old function call intLTMToInet4Address. I\u0027m not sure how to name them though, everything I can think of sounds either poor or confusing :/",
+      "range": {
+        "startLine": 144,
+        "startChar": 30,
+        "endLine": 144,
+        "endChar": 47
+      },
+      "revId": "67ae59410287bc1138ee812553425c3e41782bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

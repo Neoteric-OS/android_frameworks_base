@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "1364f4fc_941efc4e",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T09:15:39Z",
+      "side": 1,
+      "message": "I think the new version is fine. Thanks.",
+      "parentUuid": "931cb8a0_0a668164",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 64
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45f9cf5f_09890c5b",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 4
@@ -375,6 +399,30 @@
       "revId": "4248be404a018db04856031425809eac911b8e24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5f5f4f_04f2b5e9",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T09:15:39Z",
+      "side": 1,
+      "message": "I like your new version. Thanks !",
+      "parentUuid": "af080bb4_7d23556b",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 85
+      },
+      "revId": "4248be404a018db04856031425809eac911b8e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
