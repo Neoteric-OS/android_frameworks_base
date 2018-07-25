@@ -22,6 +22,30 @@
       "revId": "67ae59410287bc1138ee812553425c3e41782bc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd5d5e6_e335b3cb",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-25T09:41:55Z",
+      "side": 1,
+      "message": "Agreed - in this scenario I would have felt a little better if the previous methods were marked as @Deprecated, so the difference becomes more clear (one version is there for compatibility reasons, the other should be used). But keeping the two, naming is even more problematic.\nI\u0027d like to avoid renaming the current functions because we would need to change many callers (including WiFi), get that reviewed too, and reflection might break. But at the same time we can\u0027t add stuff to the new method names, otherwise they become more confusing and that\u0027s encouraging callers to use the old ones. At least adding the \"v4\" naming is an improvement since int -\u003e IPv6 addr makes no sense, but that change does not explain the behavior difference.\n\nWithout a better naming idea, I\u0027d prefer to either add @Deprecated to the old methods, or keep it as-is. Or maybe the renaming could be in a separate change to get approved by WiFi and other clients ?",
+      "parentUuid": "4ccb35a1_50a920de",
+      "range": {
+        "startLine": 144,
+        "startChar": 30,
+        "endLine": 144,
+        "endChar": 47
+      },
+      "revId": "67ae59410287bc1138ee812553425c3e41782bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
