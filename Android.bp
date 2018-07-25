@@ -928,7 +928,7 @@ check_current_api_args = "-error 2 -error 3 -error 4 -error 5 -error 6 " +
     "-error 25 -error 26 -error 27"
 
 doc_defaults {
-    name: "framework-docs-default",
+    name: "metalava-framework-docs-default",
     srcs: [
         "test-base/src/**/*.java",
         ":opt-telephony-srcs",
@@ -985,16 +985,6 @@ doc_defaults {
         "android-support-multidex-instrumentation",
     ],
     local_sourcepaths: frameworks_base_subdirs,
-    html_dirs: [
-        "docs/html",
-    ],
-    knowntags: [
-        "docs/knowntags.txt",
-        ":known-oj-tags",
-    ],
-    custom_template: "droiddoc-templates-sdk",
-    resourcesdir: "docs/html/reference/images/",
-    resourcesoutdir: "reference/android/images/",
     hdf: [
         "dac true",
         "sdk.codename O",
@@ -1011,18 +1001,24 @@ doc_defaults {
         "api/current.txt",
     ],
     create_stubs: false,
+    metalava_enabled: true,
+    metalava_annotations_enabled: true,
+    metalava_previous_api: ":public-api-for-metalava-annotations",
+    metalava_merge_annotations_dirs: [
+        "tools/metalava/manual",
+    ],
 }
 
 droiddoc {
     name: "doc-comment-check-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     args: framework_docs_args + " -referenceonly -parsecomments",
     installable: false,
 }
 
 droiddoc {
     name: "offline-sdk-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc offline",
     ],
@@ -1034,7 +1030,7 @@ droiddoc {
 
 droiddoc {
     name: "offline-sdk-referenceonly-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc offline",
     ],
@@ -1047,7 +1043,7 @@ droiddoc {
 
 droiddoc {
     name: "online-sdk-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
         "android.hasSamples true",
@@ -1073,7 +1069,7 @@ droiddoc {
 
 droiddoc {
     name: "online-system-api-sdk-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
         "android.hasSamples true",
@@ -1106,7 +1102,7 @@ droiddoc {
 
 droiddoc {
     name: "ds-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
         "android.hasSamples true",
@@ -1132,7 +1128,7 @@ droiddoc {
 
 droiddoc {
     name: "ds-static-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
     ],
@@ -1146,7 +1142,7 @@ droiddoc {
 
 droiddoc {
     name: "ds-ref-navtree-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
     ],
@@ -1159,7 +1155,7 @@ droiddoc {
 
 droiddoc {
     name: "online-sdk-dev-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     hdf: [
         "android.whichdoc online",
         "android.hasSamples true",
@@ -1185,7 +1181,7 @@ droiddoc {
 
 droiddoc {
     name: "hidden-docs",
-    defaults: ["framework-docs-default"],
+    defaults: ["metalava-framework-docs-default"],
     proofread_file: "offline-sdk-docs-proofrerad.txt",
     args: framework_docs_args +
           " -referenceonly " +
@@ -1328,6 +1324,24 @@ doc_defaults {
         "android.test.mock",
     ],
     local_sourcepaths: frameworks_base_subdirs,
+    html_dirs: [
+        "docs/html",
+    ],
+    knowntags: [
+        "docs/knowntags.txt",
+        ":known-oj-tags",
+    ],
+    custom_template: "droiddoc-templates-sdk",
+    hdf: [
+        "dac true",
+        "sdk.codename O",
+        "sdk.preview.version 1",
+        "sdk.version 7.0",
+        "sdk.rel.id 1",
+        "sdk.preview 0",
+    ],
+    resourcesdir: "docs/html/reference/images",
+    resourcesoutdir: "reference/android/images",
     installable: false,
     metalava_enabled: true,
     metalava_annotations_enabled: true,
