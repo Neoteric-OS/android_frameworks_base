@@ -181,7 +181,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd)
                 .ipSecDeleteSecurityAssociation(
-                        eq(spiResp.resourceId),
+                        eq(0),
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
@@ -218,7 +218,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd)
                 .ipSecDeleteSecurityAssociation(
-                        eq(spiResp.resourceId),
+                        eq(0),
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
@@ -270,7 +270,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd)
                 .ipSecAddSecurityAssociation(
-                        eq(createTransformResp.resourceId),
+                        eq(0),
                         anyInt(),
                         anyString(),
                         anyString(),
@@ -305,7 +305,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd)
                 .ipSecAddSecurityAssociation(
-                        eq(createTransformResp.resourceId),
+                        eq(0),
                         anyInt(),
                         anyString(),
                         anyString(),
@@ -367,7 +367,7 @@ public class IpSecServiceParameterizedTest {
         mIpSecService.releaseSecurityParameterIndex(ipSecConfig.getSpiResourceId());
         verify(mMockNetd, times(0))
                 .ipSecDeleteSecurityAssociation(
-                        eq(createTransformResp.resourceId),
+                        eq(0),
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
@@ -389,7 +389,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd, times(1))
                 .ipSecDeleteSecurityAssociation(
-                        eq(createTransformResp.resourceId),
+                        eq(0),
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
@@ -443,7 +443,7 @@ public class IpSecServiceParameterizedTest {
 
         verify(mMockNetd)
                 .ipSecDeleteSecurityAssociation(
-                        eq(createTransformResp.resourceId),
+                        eq(0),
                         anyString(),
                         anyString(),
                         eq(TEST_SPI),
@@ -477,7 +477,7 @@ public class IpSecServiceParameterizedTest {
         verify(mMockNetd)
                 .ipSecApplyTransportModeTransform(
                         eq(pfd.getFileDescriptor()),
-                        eq(resourceId),
+                        eq(0),
                         eq(IpSecManager.DIRECTION_OUT),
                         anyString(),
                         anyString(),
