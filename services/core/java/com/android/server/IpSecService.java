@@ -612,11 +612,11 @@ public class IpSecService extends IIpSecService.Stub {
                 mSrvConfig
                         .getNetdInstance()
                         .ipSecDeleteSecurityAssociation(
-                                mResourceId,
+                                0,
                                 mConfig.getSourceAddress(),
                                 mConfig.getDestinationAddress(),
                                 spi,
-                                mConfig.getMarkValue(),
+                                0,
                                 mConfig.getMarkMask());
             } catch (RemoteException | ServiceSpecificException e) {
                 Log.e(TAG, "Failed to delete SA with ID: " + mResourceId, e);
@@ -679,7 +679,7 @@ public class IpSecService extends IIpSecService.Stub {
                     mSrvConfig
                             .getNetdInstance()
                             .ipSecDeleteSecurityAssociation(
-                                    mResourceId, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
+                                    0, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
                 Log.e(TAG, "Failed to delete SPI reservation with ID: " + mResourceId, e);
@@ -824,13 +824,13 @@ public class IpSecService extends IIpSecService.Stub {
                             0,
                             selAddrFamily,
                             IpSecManager.DIRECTION_OUT,
-                            mOkey,
+                            0,
                             0xffffffff);
                     netd.ipSecDeleteSecurityPolicy(
                             0,
                             selAddrFamily,
                             IpSecManager.DIRECTION_IN,
-                            mIkey,
+                            0,
                             0xffffffff);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
@@ -1096,7 +1096,7 @@ public class IpSecService extends IIpSecService.Stub {
             spi =
                     mSrvConfig
                             .getNetdInstance()
-                            .ipSecAllocateSpi(resourceId, "", destinationAddress, requestedSpi);
+                            .ipSecAllocateSpi(0, "", destinationAddress, requestedSpi);
             Log.d(TAG, "Allocated SPI " + spi);
             userRecord.mSpiRecords.put(
                     resourceId,
@@ -1291,7 +1291,7 @@ public class IpSecService extends IIpSecService.Stub {
                         localAddr,
                         remoteAddr,
                         0,
-                        okey,
+                        0,
                         0xffffffff);
                 netd.ipSecAddSecurityPolicy(
                         0, // Use 0 for reqId
@@ -1300,7 +1300,7 @@ public class IpSecService extends IIpSecService.Stub {
                         remoteAddr,
                         localAddr,
                         0,
-                        ikey,
+                        0,
                         0xffffffff);
             }
 
@@ -1532,13 +1532,13 @@ public class IpSecService extends IIpSecService.Stub {
         mSrvConfig
                 .getNetdInstance()
                 .ipSecAddSecurityAssociation(
-                        resourceId,
+                        0,
                         c.getMode(),
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
                         (c.getNetwork() != null) ? c.getNetwork().netId : 0,
                         spiRecord.getSpi(),
-                        c.getMarkValue(),
+                        0,
                         c.getMarkMask(),
                         (auth != null) ? auth.getName() : "",
                         (auth != null) ? auth.getKey() : new byte[] {},
@@ -1643,7 +1643,7 @@ public class IpSecService extends IIpSecService.Stub {
                 .getNetdInstance()
                 .ipSecApplyTransportModeTransform(
                         socket.getFileDescriptor(),
-                        resourceId,
+                        0,
                         direction,
                         c.getSourceAddress(),
                         c.getDestinationAddress(),
@@ -1723,7 +1723,7 @@ public class IpSecService extends IIpSecService.Stub {
                                     tunnelInterfaceInfo.getLocalAddress(),
                                     tunnelInterfaceInfo.getRemoteAddress(),
                                     transformInfo.getSpiRecord().getSpi(),
-                                    mark,
+                                    0,
                                     0xffffffff);
                 }
             }
