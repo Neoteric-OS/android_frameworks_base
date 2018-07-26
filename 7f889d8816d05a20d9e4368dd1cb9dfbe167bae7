@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae945d9_d7a826a2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-26T00:23:13Z",
+      "side": 1,
+      "message": "I\u0027d prefer that we call this something like DEFAULT_REQUEST_ID. It\u0027ll be easier to read and easier to change if we decide zero isn\u0027t the best number (which I suggest it isn\u0027t since it\u0027s probably the most likely number to be non-unique with other users of the API).",
+      "range": {
+        "startLine": 615,
+        "startChar": 32,
+        "endLine": 615,
+        "endChar": 33
+      },
+      "revId": "7f889d8816d05a20d9e4368dd1cb9dfbe167bae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
