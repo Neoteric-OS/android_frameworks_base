@@ -317,7 +317,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
     private volatile boolean mBandwidthControlEnabled;
     private volatile boolean mFirewallEnabled;
-    private volatile boolean mStrictEnabled;
 
     private boolean mMobileActivityFromRadio = false;
     private int mLastPowerStateFromRadio = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
@@ -641,13 +640,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
             SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
 
-            try {
-                mConnector.execute("strict", "enable");
-                mStrictEnabled = true;
-            } catch (NativeDaemonConnectorException e) {
-                Log.wtf(TAG, "Failed strict enable", e);
-            }
-
             setDataSaverModeEnabled(mDataSaverMode);
 
             int size = mActiveQuotas.size();
@@ -697,16 +689,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 for (int i = 0; i < uidAcceptOnQuota.size(); i++) {
                     setUidMeteredNetworkWhitelist(uidAcceptOnQuota.keyAt(i),
                             uidAcceptOnQuota.valueAt(i));
-                }
-            }
-
-            size = mUidCleartextPolicy.size();
-            if (size > 0) {
-                if (DBG) Slog.d(TAG, "Pushing " + size + " active UID cleartext policies");
-                final SparseIntArray local = mUidCleartextPolicy;
-                mUidCleartextPolicy = new SparseIntArray();
-                for (int i = 0; i < local.size(); i++) {
-                    setUidCleartextNetworkPolicy(local.keyAt(i), local.valueAt(i));
                 }
             }
 
@@ -1805,26 +1787,26 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     }
 
     private void applyUidCleartextNetworkPolicy(int uid, int policy) {
-        final String policyString;
+        final int policyValue;
         switch (policy) {
             case StrictMode.NETWORK_POLICY_ACCEPT:
-                policyString = "accept";
+                policyValue = INetd.PENALTY_POLICY_ACCEPT;
                 break;
             case StrictMode.NETWORK_POLICY_LOG:
-                policyString = "log";
+                policyValue = INetd.PENALTY_POLICY_LOG;
                 break;
             case StrictMode.NETWORK_POLICY_REJECT:
-                policyString = "reject";
+                policyValue = INetd.PENALTY_POLICY_REJECT;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown policy " + policy);
         }
 
         try {
-            mConnector.execute("strict", "set_uid_cleartext_policy", uid, policyString);
+            mNetdService.strictUidCleartextPenalty(uid, policyValue);
             mUidCleartextPolicy.put(uid, policy);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -1839,13 +1821,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             if (oldPolicy == policy) {
                 // This also ensures we won't needlessly apply an ACCEPT policy if we've just
                 // enabled strict and the underlying iptables rules are empty.
-                return;
-            }
-
-            if (!mStrictEnabled) {
-                // Module isn't enabled yet; stash the requested policy away to
-                // apply later once the daemon is connected.
-                mUidCleartextPolicy.put(uid, policy);
                 return;
             }
 
