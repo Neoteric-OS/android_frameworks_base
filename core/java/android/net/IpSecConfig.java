@@ -65,9 +65,9 @@ public final class IpSecConfig implements Parcelable {
     // An interval, in seconds between the NattKeepalive packets
     private int mNattKeepaliveInterval;
 
-    // XFRM mark and mask
-    private int mMarkValue;
-    private int mMarkMask;
+    // XFRM mark and mask; defaults to 0 (no mark/mask)
+    private int mMarkValue = 0;
+    private int mMarkMask = 0;
 
     /** Set the mode for this IPsec transform */
     public void setMode(int mode) {
@@ -125,10 +125,20 @@ public final class IpSecConfig implements Parcelable {
         mNattKeepaliveInterval = interval;
     }
 
+    /**
+     * Sets the mark value
+     *
+     * <p>WARNING: marks are not updated in kernel resources; use at your own risk
+     */
     public void setMarkValue(int mark) {
         mMarkValue = mark;
     }
 
+    /**
+     * Sets the mark mask
+     *
+     * <p>WARNING: marks are not updated in kernel resources; use at your own risk
+     */
     public void setMarkMask(int mask) {
         mMarkMask = mask;
     }
