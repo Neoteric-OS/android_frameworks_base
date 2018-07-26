@@ -1709,8 +1709,12 @@ public class IpSecService extends IIpSecService.Stub {
                         : tunnelInterfaceInfo.getIkey();
 
         try {
-            c.setMarkValue(mark);
-            c.setMarkMask(0xffffffff);
+            // TODO: enable this when UPDSA supports updating marks. Currently update does nothing
+            // with marks. Leave empty (defaulting to 0) to ensure the config matches the actual
+            // allocated resources in the kernel.
+            //
+            // c.setMarkValue(mark);
+            // c.setMarkMask(0xffffffff);
 
             if (direction == IpSecManager.DIRECTION_OUT) {
                 // Set output mark via underlying network (output only)
