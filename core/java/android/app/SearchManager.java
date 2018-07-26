@@ -17,6 +17,7 @@
 package android.app;
 
 import android.annotation.SystemService;
+import android.annotation.UnsupportedAppUsage;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -528,6 +529,7 @@ public class SearchManager
      * current search engine does not support voice search.
      * @hide
      */
+    @UnsupportedAppUsage
     public final static String DISABLE_VOICE_SEARCH
             = "android.search.DISABLE_VOICE_SEARCH";
 
@@ -543,8 +545,10 @@ public class SearchManager
     /* package */ OnDismissListener mDismissListener = null;
     /* package */ OnCancelListener mCancelListener = null;
 
+    @UnsupportedAppUsage
     private SearchDialog mSearchDialog;
 
+    @UnsupportedAppUsage
     /*package*/ SearchManager(Context context, Handler handler) throws ServiceNotFoundException {
         mContext = context;
         mHandler = handler;
@@ -607,6 +611,7 @@ public class SearchManager
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public void startSearch(String initialQuery,
                             boolean selectInitialQuery,
                             ComponentName launchActivity,
@@ -708,6 +713,7 @@ public class SearchManager
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public ComponentName getWebSearchActivity() {
         try {
             return mService.getWebSearchActivity();
@@ -766,6 +772,7 @@ public class SearchManager
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public boolean isVisible() {
         return mSearchDialog == null? false : mSearchDialog.isShowing();
     }
@@ -858,6 +865,7 @@ public class SearchManager
      *
      * @hide because SearchableInfo is not part of the API.
      */
+    @UnsupportedAppUsage
     public Cursor getSuggestions(SearchableInfo searchable, String query) {
         return getSuggestions(searchable, query, -1);
     }
@@ -873,6 +881,7 @@ public class SearchManager
      *
      * @hide because SearchableInfo is not part of the API.
      */
+    @UnsupportedAppUsage
     public Cursor getSuggestions(SearchableInfo searchable, String query, int limit) {
         if (searchable == null) {
             return null;
@@ -962,6 +971,7 @@ public class SearchManager
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public void launchAssist(Bundle args) {
         try {
             if (mService == null) {

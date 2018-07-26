@@ -16,6 +16,7 @@
 
 package android.app;
 
+import android.annotation.UnsupportedAppUsage;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -70,6 +71,7 @@ public class QueuedWork {
 
     /** Finishers {@link #addFinisher added} and not yet {@link #removeFinisher removed} */
     @GuardedBy("sLock")
+    @UnsupportedAppUsage
     private static final LinkedList<Runnable> sFinishers = new LinkedList<>();
 
     /** {@link #getHandler() Lazily} created handler */
@@ -121,6 +123,7 @@ public class QueuedWork {
      *
      * @param finisher The runnable to add as finisher
      */
+    @UnsupportedAppUsage
     public static void addFinisher(Runnable finisher) {
         synchronized (sLock) {
             sFinishers.add(finisher);
@@ -132,6 +135,7 @@ public class QueuedWork {
      *
      * @param finisher The runnable to remove.
      */
+    @UnsupportedAppUsage
     public static void removeFinisher(Runnable finisher) {
         synchronized (sLock) {
             sFinishers.remove(finisher);

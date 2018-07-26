@@ -16,6 +16,7 @@
 
 package android.app;
 
+import android.annotation.UnsupportedAppUsage;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,11 +25,15 @@ import android.os.Parcelable;
  * {@hide}
  */
 public class ResultInfo implements Parcelable {
+    @UnsupportedAppUsage
     public final String mResultWho;
+    @UnsupportedAppUsage
     public final int mRequestCode;
     public final int mResultCode;
+    @UnsupportedAppUsage
     public final Intent mData;
 
+    @UnsupportedAppUsage
     public ResultInfo(String resultWho, int requestCode, int resultCode,
             Intent data) {
         mResultWho = resultWho;
@@ -58,6 +63,7 @@ public class ResultInfo implements Parcelable {
         }
     }
 
+    @UnsupportedAppUsage
     public static final Parcelable.Creator<ResultInfo> CREATOR
             = new Parcelable.Creator<ResultInfo>() {
         public ResultInfo createFromParcel(Parcel in) {

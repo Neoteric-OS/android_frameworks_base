@@ -21,6 +21,7 @@ import android.annotation.CallSuper;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringRes;
+import android.annotation.UnsupportedAppUsage;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
@@ -258,6 +259,7 @@ import java.lang.reflect.InvocationTargetException;
  * the activity UI was in.
  */
 public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListener {
+    @UnsupportedAppUsage
     private static final ArrayMap<String, Class<?>> sClassMap =
             new ArrayMap<String, Class<?>>();
 
@@ -274,13 +276,16 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     int mState = INITIALIZING;
 
     // When instantiated from saved state, this is the saved state.
+    @UnsupportedAppUsage
     Bundle mSavedFragmentState;
     SparseArray<Parcelable> mSavedViewState;
 
     // Index into active fragment array.
+    @UnsupportedAppUsage
     int mIndex = -1;
 
     // Internal unique name for this fragment;
+    @UnsupportedAppUsage
     String mWho;
 
     // Construction arguments;
@@ -296,6 +301,7 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     int mTargetRequestCode;
 
     // True if the fragment is in the list of added fragments.
+    @UnsupportedAppUsage
     boolean mAdded;
 
     // If set this fragment is being removed from its activity.
@@ -320,12 +326,15 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     // The fragment manager we are associated with.  Set as soon as the
     // fragment is used in a transaction; cleared after it has been removed
     // from all transactions.
+    @UnsupportedAppUsage
     FragmentManagerImpl mFragmentManager;
 
     // Activity this fragment is attached to.
+    @UnsupportedAppUsage
     FragmentHostCallback mHost;
 
     // Private fragment manager for child fragments inside of this one.
+    @UnsupportedAppUsage
     FragmentManagerImpl mChildFragmentManager;
 
     // For use when restoring fragment state and descendant fragments are retained.
@@ -338,6 +347,7 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     // The optional identifier for this fragment -- either the container ID if it
     // was dynamically added to the view hierarchy, or the ID supplied in
     // layout.
+    @UnsupportedAppUsage
     int mFragmentId;
 
     // When a fragment is being dynamically added to the view hierarchy, this
@@ -375,6 +385,7 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     ViewGroup mContainer;
 
     // The View generated for this fragment.
+    @UnsupportedAppUsage
     View mView;
 
     // Whether this fragment should defer starting until after other fragments
@@ -385,6 +396,7 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     boolean mUserVisibleHint = true;
 
     LoaderManagerImpl mLoaderManager;
+    @UnsupportedAppUsage
     boolean mLoadersStarted;
     boolean mCheckedForLoaderManager;
 

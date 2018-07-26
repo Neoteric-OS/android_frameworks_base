@@ -19,6 +19,7 @@ package android.app;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IIntentReceiver;
@@ -269,6 +270,7 @@ public final class PendingIntent implements Parcelable {
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public static void setOnMarshaledListener(OnMarshaledListener listener) {
         sOnMarshaledListener.set(listener);
     }
@@ -357,6 +359,7 @@ public final class PendingIntent implements Parcelable {
      * Note that UserHandle.CURRENT will be interpreted at the time the
      * activity is started, not when the pending intent is created.
      */
+    @UnsupportedAppUsage
     public static PendingIntent getActivityAsUser(Context context, int requestCode,
             @NonNull Intent intent, int flags, Bundle options, UserHandle user) {
         String packageName = context.getPackageName();
@@ -553,6 +556,7 @@ public final class PendingIntent implements Parcelable {
      * Note that UserHandle.CURRENT will be interpreted at the time the
      * broadcast is sent, not when the pending intent is created.
      */
+    @UnsupportedAppUsage
     public static PendingIntent getBroadcastAsUser(Context context, int requestCode,
             Intent intent, int flags, UserHandle userHandle) {
         String packageName = context.getPackageName();
@@ -1001,6 +1005,7 @@ public final class PendingIntent implements Parcelable {
      * @hide
      * Check whether this PendingIntent will launch an Activity.
      */
+    @UnsupportedAppUsage
     public boolean isActivity() {
         try {
             return ActivityManager.getService()
@@ -1014,6 +1019,7 @@ public final class PendingIntent implements Parcelable {
      * @hide
      * Return the Intent of this PendingIntent.
      */
+    @UnsupportedAppUsage
     public Intent getIntent() {
         try {
             return ActivityManager.getService()
@@ -1027,6 +1033,7 @@ public final class PendingIntent implements Parcelable {
      * @hide
      * Return descriptive tag for this PendingIntent.
      */
+    @UnsupportedAppUsage
     public String getTag(String prefix) {
         try {
             return ActivityManager.getService()

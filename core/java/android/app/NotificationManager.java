@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.SdkConstant;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
+import android.annotation.UnsupportedAppUsage;
 import android.app.Notification.Builder;
 import android.content.ComponentName;
 import android.content.Context;
@@ -235,9 +236,11 @@ public class NotificationManager {
      */
     public static final int IMPORTANCE_MAX = 5;
 
+    @UnsupportedAppUsage
     private static INotificationManager sService;
 
     /** @hide */
+    @UnsupportedAppUsage
     static public INotificationManager getService()
     {
         if (sService != null) {
@@ -248,12 +251,14 @@ public class NotificationManager {
         return sService;
     }
 
+    @UnsupportedAppUsage
     /*package*/ NotificationManager(Context context, Handler handler)
     {
         mContext = context;
     }
 
     /** {@hide} */
+    @UnsupportedAppUsage
     public static NotificationManager from(Context context) {
         return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
@@ -292,6 +297,7 @@ public class NotificationManager {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public void notifyAsUser(String tag, int id, Notification notification, UserHandle user)
     {
         INotificationManager service = getService();
@@ -353,6 +359,7 @@ public class NotificationManager {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public void cancelAsUser(String tag, int id, UserHandle user)
     {
         INotificationManager service = getService();
@@ -564,6 +571,7 @@ public class NotificationManager {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public void setZenMode(int mode, Uri conditionId, String reason) {
         INotificationManager service = getService();
         try {
@@ -588,6 +596,7 @@ public class NotificationManager {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public ZenModeConfig getZenModeConfig() {
         INotificationManager service = getService();
         try {

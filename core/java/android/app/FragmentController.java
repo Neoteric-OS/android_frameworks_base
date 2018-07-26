@@ -17,6 +17,7 @@
 package android.app;
 
 import android.annotation.Nullable;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import java.util.List;
  * The methods provided by {@link FragmentController} are for that purpose.
  */
 public class FragmentController {
+    @UnsupportedAppUsage
     private final FragmentHostCallback<?> mHost;
 
     /**

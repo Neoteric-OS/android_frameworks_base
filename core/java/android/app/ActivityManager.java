@@ -24,6 +24,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
+import android.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -123,6 +124,7 @@ public class ActivityManager {
 
     private static int gMaxRecentTasks = -1;
 
+    @UnsupportedAppUsage
     private final Context mContext;
 
     private static volatile boolean sSystemReady = false;
@@ -428,6 +430,7 @@ public class ActivityManager {
      * for a startActivity operation.
      * @hide
      */
+    @UnsupportedAppUsage
     public static final int INTENT_SENDER_ACTIVITY = 2;
 
     /**
@@ -477,12 +480,15 @@ public class ActivityManager {
 
     /** @hide Process is hosting the current top activities.  Note that this covers
      * all activities that are visible to the user. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_TOP = 2;
 
     /** @hide Process is hosting a foreground service due to a system binding. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_BOUND_FOREGROUND_SERVICE = 3;
 
     /** @hide Process is hosting a foreground service. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_FOREGROUND_SERVICE = 4;
 
     /** @hide Same as {@link #PROCESS_STATE_TOP} but while device is sleeping. */
@@ -492,6 +498,7 @@ public class ActivityManager {
     public static final int PROCESS_STATE_IMPORTANT_FOREGROUND = 6;
 
     /** @hide Process is important to the user, but not something they are aware of. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_IMPORTANT_BACKGROUND = 7;
 
     /** @hide Process is in the background transient so we will try to keep running. */
@@ -507,21 +514,25 @@ public class ActivityManager {
     /** @hide Process is in the background running a service.  Unlike oom_adj, this level
      * is used for both the normal running in background state and the executing
      * operations state. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_SERVICE = 11;
 
     /** @hide Process is in the background running a receiver.   Note that from the
      * perspective of oom_adj receivers run at a higher foreground level, but for our
      * prioritization here that is not necessary and putting them below services means
      * many fewer changes in some process states as they receive broadcasts. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_RECEIVER = 12;
 
     /** @hide Process is in the background but hosts the home activity. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_HOME = 13;
 
     /** @hide Process is in the background but hosts the last shown activity. */
     public static final int PROCESS_STATE_LAST_ACTIVITY = 14;
 
     /** @hide Process is being cached for later use and contains activities. */
+    @UnsupportedAppUsage
     public static final int PROCESS_STATE_CACHED_ACTIVITY = 15;
 
     /** @hide Process is being cached for later use and is a client of another cached
@@ -600,6 +611,7 @@ public class ActivityManager {
 
     Point mAppTaskThumbnailSize;
 
+    @UnsupportedAppUsage
     /*package*/ ActivityManager(Context context, Handler handler) {
         mContext = context;
     }
@@ -1062,6 +1074,7 @@ public class ActivityManager {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     static public int staticGetMemoryClass() {
         // Really brain dead right now -- just take this from the configured
         // vm heap size, and assume it is in megabytes and thus ends with "m".
@@ -1109,6 +1122,7 @@ public class ActivityManager {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     public static boolean isLowRamDeviceStatic() {
         return RoSystemProperties.CONFIG_LOW_RAM ||
                 (Build.IS_DEBUGGABLE && DEVELOPMENT_FORCE_LOW_RAM);
@@ -1132,6 +1146,7 @@ public class ActivityManager {
      * (which tends to consume a lot more RAM).
      * @hide
      */
+    @UnsupportedAppUsage
     static public boolean isHighEndGfx() {
         return !isLowRamDeviceStatic() &&
                 !Resources.getSystem().getBoolean(com.android.internal.R.bool.config_avoidGfxAccel);
@@ -1141,6 +1156,7 @@ public class ActivityManager {
      * Return the maximum number of recents entries that we will maintain and show.
      * @hide
      */
+    @UnsupportedAppUsage
     static public int getMaxRecentTasksStatic() {
         if (gMaxRecentTasks < 0) {
             return gMaxRecentTasks = isLowRamDeviceStatic() ? 36 : 48;
@@ -1404,11 +1420,13 @@ public class ActivityManager {
         }
 
         /** @hide */
+        @UnsupportedAppUsage
         public Bitmap getInMemoryIcon() {
             return mIcon;
         }
 
         /** @hide */
+        @UnsupportedAppUsage
         public static Bitmap loadTaskDescriptionIcon(String iconFilename, int userId) {
             if (iconFilename != null) {
                 try {
@@ -1432,6 +1450,7 @@ public class ActivityManager {
          * @return The background color.
          * @hide
          */
+        @UnsupportedAppUsage
         public int getBackgroundColor() {
             return mColorBackground;
         }
@@ -1589,24 +1608,28 @@ public class ActivityManager {
          * The id of the ActivityStack this Task was on most recently.
          * @hide
          */
+        @UnsupportedAppUsage
         public int stackId;
 
         /**
          * The id of the user the task was running as.
          * @hide
          */
+        @UnsupportedAppUsage
         public int userId;
 
         /**
          * The first time this task was active.
          * @hide
          */
+        @UnsupportedAppUsage
         public long firstActiveTime;
 
         /**
          * The last time this task was active.
          * @hide
          */
+        @UnsupportedAppUsage
         public long lastActiveTime;
 
         /**
@@ -1625,6 +1648,7 @@ public class ActivityManager {
          *
          * @hide
          */
+        @UnsupportedAppUsage
         public int affiliatedTaskColor;
 
         /**
@@ -1654,12 +1678,14 @@ public class ActivityManager {
          * True if the task can go in the docked stack.
          * @hide
          */
+        @UnsupportedAppUsage
         public boolean supportsSplitScreenMultiWindow;
 
         /**
          * The resize mode of the task. See {@link ActivityInfo#resizeMode}.
          * @hide
          */
+        @UnsupportedAppUsage
         public int resizeMode;
 
         public RecentTaskInfo() {
@@ -2338,6 +2364,7 @@ public class ActivityManager {
         /**
          * @return The graphic buffer representing the screenshot.
          */
+        @UnsupportedAppUsage
         public GraphicBuffer getSnapshot() {
             return mSnapshot;
         }
@@ -2345,6 +2372,7 @@ public class ActivityManager {
         /**
          * @return The screen orientation the screenshot was taken in.
          */
+        @UnsupportedAppUsage
         public int getOrientation() {
             return mOrientation;
         }
@@ -2353,6 +2381,7 @@ public class ActivityManager {
          * @return The system/content insets on the snapshot. These can be clipped off in order to
          *         remove any areas behind system bars in the snapshot.
          */
+        @UnsupportedAppUsage
         public Rect getContentInsets() {
             return mContentInsets;
         }
@@ -2360,6 +2389,7 @@ public class ActivityManager {
         /**
          * @return Whether this snapshot is a down-sampled version of the full resolution.
          */
+        @UnsupportedAppUsage
         public boolean isReducedResolution() {
             return mReducedResolution;
         }
@@ -2367,6 +2397,7 @@ public class ActivityManager {
         /**
          * @return The scale this snapshot was taken in.
          */
+        @UnsupportedAppUsage
         public float getScale() {
             return mScale;
         }
@@ -2706,12 +2737,16 @@ public class ActivityManager {
         public boolean lowMemory;
 
         /** @hide */
+        @UnsupportedAppUsage
         public long hiddenAppThreshold;
         /** @hide */
+        @UnsupportedAppUsage
         public long secondaryServerThreshold;
         /** @hide */
+        @UnsupportedAppUsage
         public long visibleAppThreshold;
         /** @hide */
+        @UnsupportedAppUsage
         public long foregroundAppThreshold;
 
         public MemoryInfo() {
@@ -2781,17 +2816,28 @@ public class ActivityManager {
      * @hide
      */
     public static class StackInfo implements Parcelable {
+        @UnsupportedAppUsage
         public int stackId;
+        @UnsupportedAppUsage
         public Rect bounds = new Rect();
+        @UnsupportedAppUsage
         public int[] taskIds;
+        @UnsupportedAppUsage
         public String[] taskNames;
+        @UnsupportedAppUsage
         public Rect[] taskBounds;
+        @UnsupportedAppUsage
         public int[] taskUserIds;
+        @UnsupportedAppUsage
         public ComponentName topActivity;
+        @UnsupportedAppUsage
         public int displayId;
+        @UnsupportedAppUsage
         public int userId;
+        @UnsupportedAppUsage
         public boolean visible;
         // Index of the stack in the display's stack list, can be used for comparison of stack order
+        @UnsupportedAppUsage
         public int position;
 
         @Override
@@ -2874,6 +2920,7 @@ public class ActivityManager {
             readFromParcel(source);
         }
 
+        @UnsupportedAppUsage
         public String toString(String prefix) {
             StringBuilder sb = new StringBuilder(256);
             sb.append(prefix); sb.append("Stack id="); sb.append(stackId);
@@ -2909,6 +2956,7 @@ public class ActivityManager {
      */
     @RequiresPermission(anyOf={Manifest.permission.CLEAR_APP_USER_DATA,
             Manifest.permission.ACCESS_INSTANT_APPS})
+    @UnsupportedAppUsage
     public boolean clearApplicationUserData(String packageName, IPackageDataObserver observer) {
         try {
             return getService().clearApplicationUserData(packageName,
@@ -3127,6 +3175,7 @@ public class ActivityManager {
          * persistent system app.
          * @hide
          */
+        @UnsupportedAppUsage
         public static final int FLAG_PERSISTENT = 1<<1;
 
         /**
@@ -3134,6 +3183,7 @@ public class ActivityManager {
          * persistent system app.
          * @hide
          */
+        @UnsupportedAppUsage
         public static final int FLAG_HAS_ACTIVITIES = 1<<2;
 
         /**
@@ -3141,6 +3191,7 @@ public class ActivityManager {
          * {@link #FLAG_CANT_SAVE_STATE}.
          * @hide
          */
+        @UnsupportedAppUsage
         public int flags;
 
         /**
@@ -3285,6 +3336,7 @@ public class ActivityManager {
          * will be passed to a client, use {@link #procStateToImportanceForClient}.
          * @hide
          */
+        @UnsupportedAppUsage
         public static @Importance int procStateToImportance(int procState) {
             if (procState == PROCESS_STATE_NONEXISTENT) {
                 return IMPORTANCE_GONE;
@@ -3433,6 +3485,7 @@ public class ActivityManager {
          * Current process state, as per PROCESS_STATE_* constants.
          * @hide
          */
+        @UnsupportedAppUsage
         public int processState;
 
         public RunningAppProcessInfo() {
@@ -3779,6 +3832,7 @@ public class ActivityManager {
      * it allowing them to break other applications by stopping their
      * services, removing their alarms, etc.
      */
+    @UnsupportedAppUsage
     public void forceStopPackageAsUser(String packageName, int userId) {
         try {
             getService().forceStopPackage(packageName, userId);
@@ -3937,6 +3991,7 @@ public class ActivityManager {
     }*/
 
     /** @hide */
+    @UnsupportedAppUsage
     public static int checkComponentPermission(String permission, int uid,
             int owningUid, boolean exported) {
         // Root, system server get to do everything.
@@ -4044,6 +4099,7 @@ public class ActivityManager {
      * @param userid the user's id. Zero indicates the default user.
      * @hide
      */
+    @UnsupportedAppUsage
     public boolean switchUser(int userid) {
         try {
             return getService().switchUser(userid);
@@ -4087,6 +4143,7 @@ public class ActivityManager {
      * @param userId the user's id. Zero indicates the default user.
      * @hide
      */
+    @UnsupportedAppUsage
     public boolean isUserRunning(int userId) {
         try {
             return getService().isUserRunning(userId, 0);
@@ -4213,10 +4270,12 @@ public class ActivityManager {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public static IActivityManager getService() {
         return IActivityManagerSingleton.get();
     }
 
+    @UnsupportedAppUsage
     private static final Singleton<IActivityManager> IActivityManagerSingleton =
             new Singleton<IActivityManager>() {
                 @Override

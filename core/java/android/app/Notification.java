@@ -26,6 +26,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -798,6 +799,7 @@ public class Notification implements Parcelable
      */
     public String category;
 
+    @UnsupportedAppUsage
     private String mGroupKey;
 
     /**
@@ -843,6 +845,7 @@ public class Notification implements Parcelable
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public ArraySet<PendingIntent> allPendingIntents;
 
     /**
@@ -1136,9 +1139,12 @@ public class Notification implements Parcelable
      */
     public static final String EXTRA_FOREGROUND_APPS = "android.foregroundApps";
 
+    @UnsupportedAppUsage
     private Icon mSmallIcon;
+    @UnsupportedAppUsage
     private Icon mLargeIcon;
 
+    @UnsupportedAppUsage
     private String mChannelId;
     private long mTimeout;
 
@@ -1230,6 +1236,7 @@ public class Notification implements Parcelable
         private static final String EXTRA_DATA_ONLY_INPUTS = "android.extra.DATA_ONLY_INPUTS";
 
         private final Bundle mExtras;
+        @UnsupportedAppUsage
         private Icon mIcon;
         private final RemoteInput[] mRemoteInputs;
         private boolean mAllowGeneratedReplies = true;
@@ -1819,6 +1826,7 @@ public class Notification implements Parcelable
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public Notification(Context context, int icon, CharSequence tickerText, long when,
             CharSequence contentTitle, CharSequence contentText, Intent contentIntent)
     {
@@ -2644,6 +2652,7 @@ public class Notification implements Parcelable
      * Used when notifying to clean up legacy small icons.
      * @hide
      */
+    @UnsupportedAppUsage
     public void setSmallIcon(Icon icon) {
         mSmallIcon = icon;
     }
@@ -2660,6 +2669,7 @@ public class Notification implements Parcelable
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public boolean isGroupSummary() {
         return mGroupKey != null && (flags & FLAG_GROUP_SUMMARY) != 0;
     }
@@ -2667,6 +2677,7 @@ public class Notification implements Parcelable
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public boolean isGroupChild() {
         return mGroupKey != null && (flags & FLAG_GROUP_SUMMARY) == 0;
     }
@@ -2745,6 +2756,7 @@ public class Notification implements Parcelable
         private Notification mN;
         private Bundle mUserExtras = new Bundle();
         private Style mStyle;
+        @UnsupportedAppUsage
         private ArrayList<Action> mActions = new ArrayList<Action>(MAX_ACTION_BUTTONS);
         private ArrayList<String> mPersonList = new ArrayList<String>();
         private NotificationColorUtil mColorUtil;
@@ -4241,6 +4253,7 @@ public class Notification implements Parcelable
         /**
          * @hide
          */
+        @UnsupportedAppUsage
         public String loadHeaderAppName() {
             CharSequence name = null;
             final PackageManager pm = mContext.getPackageManager();
@@ -4547,6 +4560,7 @@ public class Notification implements Parcelable
          *
          * @hide
          */
+        @UnsupportedAppUsage
         public RemoteViews makePublicContentView() {
             return makePublicView(false /* ambient */);
         }
@@ -5050,6 +5064,7 @@ public class Notification implements Parcelable
             return clone;
         }
 
+        @UnsupportedAppUsage
         private int getBaseLayoutResource() {
             return R.layout.notification_template_material_base;
         }
@@ -6669,6 +6684,7 @@ public class Notification implements Parcelable
          * @hide
          */
         @Override
+        @UnsupportedAppUsage
         public Notification buildStyled(Notification wip) {
             super.buildStyled(wip);
             if (wip.category == null) {

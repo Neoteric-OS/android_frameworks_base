@@ -17,6 +17,7 @@
 package android.app;
 
 import android.annotation.NonNull;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.display.DisplayManager;
@@ -62,6 +63,7 @@ public class ActivityView extends ViewGroup {
     private final CloseGuard mGuard = CloseGuard.get();
     private boolean mOpened; // Protected by mGuard.
 
+    @UnsupportedAppUsage
     public ActivityView(Context context) {
         this(context, null /* attrs */);
     }
@@ -137,6 +139,7 @@ public class ActivityView extends ViewGroup {
      * @see StateCallback
      * @see #startActivity(PendingIntent)
      */
+    @UnsupportedAppUsage
     public void startActivity(@NonNull Intent intent) {
         final ActivityOptions options = prepareActivityOptions();
         getContext().startActivity(intent, options.toBundle());
@@ -157,6 +160,7 @@ public class ActivityView extends ViewGroup {
      * @see StateCallback
      * @see #startActivity(Intent)
      */
+    @UnsupportedAppUsage
     public void startActivity(@NonNull PendingIntent pendingIntent) {
         final ActivityOptions options = prepareActivityOptions();
         try {
@@ -190,6 +194,7 @@ public class ActivityView extends ViewGroup {
      *
      * @see StateCallback
      */
+    @UnsupportedAppUsage
     public void release() {
         if (mVirtualDisplay == null) {
             throw new IllegalStateException(
