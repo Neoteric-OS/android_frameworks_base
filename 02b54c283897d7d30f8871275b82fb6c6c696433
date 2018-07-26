@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c2a529_d9048ce9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-26T01:35:31Z",
+      "side": 1,
+      "message": "This is not a related change... if you can move it to a separate patchset. Also, as per discussion, I think that rather than cutting the mark functionality in the middle here, we should zero it out in the config and leave the logic. If we really want to do this then we ought to remove the logic wholesale (which I\u0027m reluctant to do). For now, maybe let\u0027s just set it to 0 in the config?",
+      "range": {
+        "startLine": 619,
+        "startChar": 31,
+        "endLine": 619,
+        "endChar": 33
+      },
+      "revId": "02b54c283897d7d30f8871275b82fb6c6c696433",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
