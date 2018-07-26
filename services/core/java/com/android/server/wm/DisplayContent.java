@@ -769,7 +769,7 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
         // appropriately arbitrary number. Eventually we would like to give SurfaceFlinger
         // layers the ability to match their parent sizes and be able to skip
         // such arbitrary size settings.
-        mSurfaceSize = Math.max(mBaseDisplayHeight, mBaseDisplayWidth) * 2;
+        mSurfaceSize = Math.max(mBaseDisplayHeight, mBaseDisplayWidth);
 
         final SurfaceControl.Builder b = mService.makeSurfaceBuilder(mSession)
                 .setSize(mSurfaceSize, mSurfaceSize)
