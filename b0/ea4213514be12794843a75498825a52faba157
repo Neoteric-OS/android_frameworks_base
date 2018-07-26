@@ -1,0 +1,8 @@
+Code-Review+2: Martijn Coenen <maco@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Olivier Gaillard <gaillard@google.com>
+Submitted-by: Olivier Gaillard <gaillard@google.com>
+Submitted-at: Thu, 26 Jul 2018 13:04:28 +0000
+Reviewed-on: https://android-review.googlesource.com/721416
+Project: platform/frameworks/base
+Branch: refs/heads/master
