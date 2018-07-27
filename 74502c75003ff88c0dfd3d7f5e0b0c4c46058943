@@ -22,6 +22,30 @@
       "revId": "74502c75003ff88c0dfd3d7f5e0b0c4c46058943",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d89b01_c793b9b2",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-07-27T14:15:55Z",
+      "side": 1,
+      "message": "WDYM? It\u0027s one of LOCAL_SRC_ALL (line 602)",
+      "parentUuid": "ca136a9f_3f52cdd2",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 671,
+        "endChar": 0
+      },
+      "revId": "74502c75003ff88c0dfd3d7f5e0b0c4c46058943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
