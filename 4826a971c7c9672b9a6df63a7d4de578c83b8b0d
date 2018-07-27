@@ -45,6 +45,54 @@
       "revId": "4826a971c7c9672b9a6df63a7d4de578c83b8b0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0236479_0848a516",
+        "filename": "core/java/android/net/http/SslCertificate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-07-27T13:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1132e1_ac918d16",
+      "range": {
+        "startLine": 250,
+        "startChar": 19,
+        "endLine": 250,
+        "endChar": 35
+      },
+      "revId": "4826a971c7c9672b9a6df63a7d4de578c83b8b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06f6c20c_4dc41f8c",
+        "filename": "core/java/android/net/http/SslCertificate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-07-27T13:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9326395e_92af19e3",
+      "range": {
+        "startLine": 250,
+        "startChar": 56,
+        "endLine": 250,
+        "endChar": 62
+      },
+      "revId": "4826a971c7c9672b9a6df63a7d4de578c83b8b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
