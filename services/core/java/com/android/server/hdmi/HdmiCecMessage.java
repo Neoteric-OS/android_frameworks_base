@@ -224,7 +224,7 @@ public final class HdmiCecMessage {
             case Constants.MESSAGE_SET_EXTERNAL_TIMER:
                 return "Set External Timer";
             case Constants.MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR:
-                return "Repot Short Audio Descriptor";
+                return "Report Short Audio Descriptor";
             case Constants.MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR:
                 return "Request Short Audio Descriptor";
             case Constants.MESSAGE_INITIATE_ARC:
