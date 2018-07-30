@@ -22,6 +22,30 @@
       "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608b7164_73127325",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-07-30T08:26:56Z",
+      "side": 1,
+      "message": "ConnectivityServiceTest fails badly for me. You might have to pass the --no-hidden-api-checks flag to runtest:\n\nruntest  --no-hidden-api-checks -x frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java\n\nShould work fine with atest on master.",
+      "parentUuid": "97d30900_95c8f023",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
