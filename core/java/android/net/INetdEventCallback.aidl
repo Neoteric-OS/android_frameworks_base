@@ -40,6 +40,20 @@ oneway interface INetdEventCallback {
             int uid);
 
     /**
+     * Represents adding or removing a DNS64 prefix.
+     * This method must not block or perform long-running operations.
+     *
+     * @param netId the ID of the network the prefix was performed on.
+     * @param added true if the DNS64 prefix was added, or false if the DNS64 prefix was removed.
+     *        There is only one prefix at a time for each netId. Before adding the new prefix,
+     *        previously-added prefix will be removed if any.
+     * @param prefixString the DNS64 prefix was performed on as a string literal.
+     * @param prefixLength the prefix length associated with this DNS64 prefix.
+     */
+    void onDns64PrefixEvent(int netId, boolean added, @utf8InCpp String prefixString,
+            int prefixLength);
+
+    /**
      * Represents a private DNS validation success or failure.
      * This method must not block or perform long-running operations.
      *
