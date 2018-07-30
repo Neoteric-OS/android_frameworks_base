@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d77da59b_d8549d2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-07-30T13:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "608b7164_73127325",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc76998_a6320b14",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe73a0b_77f1f6e9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-07-30T13:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc76998_a6320b14",
+      "range": {
+        "startLine": 1526,
+        "startChar": 94,
+        "endLine": 1526,
+        "endChar": 100
+      },
+      "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
