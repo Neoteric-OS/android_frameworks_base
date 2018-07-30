@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d30900_95c8f023",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-07-30T05:40:17Z",
+      "side": 1,
+      "message": "Is there an easy way to test an error case?\nI just want to make sure the re-throw path works as intended.\n\nAlso, please run this test:\n\nruntest -x frameworks/base/tests/net/java/com/android/server/NetworkManagementServiceTest.java\nruntest -x frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java\n\nI\u0027m not sure whether these tests cover the functionality that you\u0027re touching, but ConnectivityService calls into NetworkManagement.addIdleTimer().\n\nIf there\u0027s no test coverage and it\u0027s easy to add some, please do. If it\u0027s non-trivial, I guess we can go with manual testing for the time being.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "34faeaa38b17c431bc28cb5193188b13674e4175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
