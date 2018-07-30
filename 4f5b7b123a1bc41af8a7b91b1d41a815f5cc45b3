@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11253e0_78a1de6b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4031,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-07-30T15:17:48Z",
+      "side": 1,
+      "message": "This can be just \u0027app.userId\u0027, right?",
+      "range": {
+        "startLine": 4031,
+        "startChar": 47,
+        "endLine": 4031,
+        "endChar": 76
+      },
+      "revId": "4f5b7b123a1bc41af8a7b91b1d41a815f5cc45b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
