@@ -155,6 +155,13 @@ public class AccountManagerService
             publishBinderService(Context.ACCOUNT_SERVICE, mService);
         }
 
+        // MIUI ADD: START
+        @Override
+        public void onSwitchUser(int userHandle) {
+            mService.mContext.updateUserId(userHandle);
+        }
+        // END
+
         @Override
         public void onUnlockUser(int userHandle) {
             mService.onUnlockUser(userHandle);
