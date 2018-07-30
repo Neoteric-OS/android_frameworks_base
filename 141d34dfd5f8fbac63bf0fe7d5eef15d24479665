@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441ff848_c1a43c60",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1018687
+      },
+      "writtenOn": "2018-07-30T15:57:49Z",
+      "side": 1,
+      "message": "this should be in the Android namespace, not TCL.",
+      "range": {
+        "startLine": 2479,
+        "startChar": 57,
+        "endLine": 2479,
+        "endChar": 69
+      },
+      "revId": "141d34dfd5f8fbac63bf0fe7d5eef15d24479665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
