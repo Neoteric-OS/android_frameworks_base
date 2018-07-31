@@ -2002,10 +2002,11 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void setFirewallEnabled(boolean enabled) {
         enforceSystemUid();
         try {
-            mConnector.execute("firewall", "enable", enabled ? "whitelist" : "blacklist");
+            mNetdService.firewallSetFirewallType(
+                    enabled ? INetd.FIREWALL_WHITELIST : INetd.FIREWALL_BLACKLIST);
             mFirewallEnabled = enabled;
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -2019,11 +2020,11 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void setFirewallInterfaceRule(String iface, boolean allow) {
         enforceSystemUid();
         Preconditions.checkState(mFirewallEnabled);
-        final String rule = allow ? "allow" : "deny";
         try {
-            mConnector.execute("firewall", "set_interface_rule", iface, rule);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.firewallSetInterfaceRule(iface,
+                    allow ? INetd.FIREWALL_RULE_ALLOW : INetd.FIREWALL_RULE_DENY);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -2104,26 +2105,29 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 setFirewallChainState(chain, enable);
             }
 
-            final String operation = enable ? "enable_chain" : "disable_chain";
             final String chainName;
+            final int chainType;
             switch(chain) {
                 case FIREWALL_CHAIN_STANDBY:
                     chainName = FIREWALL_CHAIN_NAME_STANDBY;
+                    chainType = INetd.FIREWALL_CHAIN_STANDBY;
                     break;
                 case FIREWALL_CHAIN_DOZABLE:
                     chainName = FIREWALL_CHAIN_NAME_DOZABLE;
+                    chainType = INetd.FIREWALL_CHAIN_DOZABLE;
                     break;
                 case FIREWALL_CHAIN_POWERSAVE:
                     chainName = FIREWALL_CHAIN_NAME_POWERSAVE;
+                    chainType = INetd.FIREWALL_CHAIN_POWERSAVE;
                     break;
                 default:
                     throw new IllegalArgumentException("Bad child chain: " + chain);
             }
 
             try {
-                mConnector.execute("firewall", operation, chainName);
-            } catch (NativeDaemonConnectorException e) {
-                throw e.rethrowAsParcelableException();
+                mNetdService.firewallEnableChildChains(chainType, enable);
+            } catch (RemoteException | ServiceSpecificException e) {
+                throw new IllegalStateException(e);
             }
 
             // Close any sockets that were opened by the affected UIDs. This has to be done after
@@ -2209,11 +2213,12 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
     private void setFirewallUidRuleLocked(int chain, int uid, int rule) {
         if (updateFirewallUidRuleLocked(chain, uid, rule)) {
+            final int chainType = getFirewallChainType(chain);
+            final int ruleType = getFirewallRuleType(chain, rule);
             try {
-                mConnector.execute("firewall", "set_uid_rule", getFirewallChainName(chain), uid,
-                        getFirewallRuleName(chain, rule));
-            } catch (NativeDaemonConnectorException e) {
-                throw e.rethrowAsParcelableException();
+                mNetdService.firewallSetUidRule(chainType, uid, ruleType);
+            } catch (RemoteException | ServiceSpecificException e) {
+                throw new IllegalStateException(e);
             }
         }
     }
@@ -2279,16 +2284,34 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
-    public @NonNull String getFirewallChainName(int chain) {
+    public int getFirewallRuleType(int chain, int rule) {
+        int ruleType;
+        if (getFirewallType(chain) == FIREWALL_TYPE_WHITELIST) {
+            if (rule == NetworkPolicyManager.FIREWALL_RULE_ALLOW) {
+                ruleType = INetd.FIREWALL_RULE_ALLOW;
+            } else {
+                ruleType = INetd.FIREWALL_RULE_DENY;
+            }
+        } else { // Blacklist mode
+            if (rule == NetworkPolicyManager.FIREWALL_RULE_DENY) {
+                ruleType = INetd.FIREWALL_RULE_DENY;
+            } else {
+                ruleType = INetd.FIREWALL_RULE_ALLOW;
+            }
+        }
+        return ruleType;
+    }
+
+    public int getFirewallChainType(int chain) {
         switch (chain) {
             case FIREWALL_CHAIN_STANDBY:
-                return FIREWALL_CHAIN_NAME_STANDBY;
+                return INetd.FIREWALL_CHAIN_STANDBY;
             case FIREWALL_CHAIN_DOZABLE:
-                return FIREWALL_CHAIN_NAME_DOZABLE;
+                return INetd.FIREWALL_CHAIN_DOZABLE;
             case FIREWALL_CHAIN_POWERSAVE:
-                return FIREWALL_CHAIN_NAME_POWERSAVE;
+                return INetd.FIREWALL_CHAIN_POWERSAVE;
             case FIREWALL_CHAIN_NONE:
-                return FIREWALL_CHAIN_NAME_NONE;
+                return INetd.FIREWALL_CHAIN_NONE;
             default:
                 throw new IllegalArgumentException("Unknown chain:" + chain);
         }
