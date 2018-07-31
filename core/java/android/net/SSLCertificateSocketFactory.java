@@ -68,9 +68,13 @@ import javax.net.ssl.X509TrustManager;
  * use {@link InetAddress} or which return an unconnected socket, you MUST
  * verify the server's identity yourself to ensure a secure connection.</p>
  *
- * <p>One way to verify the server's identity is to use
+ * <p>The recommended way to verify the server's identity is to use
  * {@link HttpsURLConnection#getDefaultHostnameVerifier()} to get a
  * {@link HostnameVerifier} to verify the certificate hostname.
+ *
+ * <p>Note: Some methods on this class return connected sockets and some return
+ * unconnected sockets.  For the methods that return connected sockets, setting
+ * connection- or handshake-related properties on those sockets will have no effect.
  *
  * <p>On development devices, "setprop socket.relaxsslcheck yes" bypasses all
  * SSL certificate and hostname checks for testing purposes.  This setting
@@ -437,8 +441,9 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     /**
      * {@inheritDoc}
      *
-     * <p>This method verifies the peer's certificate hostname after connecting
-     * (unless created with {@link #getInsecure(int, SSLSessionCache)}).
+     * <p>This method returns a <i>connected</i> socket and verifies the peer's certificate
+     * hostname after connecting (unless created with {@link #getInsecure(int, SSLSessionCache)},
+     * in which case the socket is <i>not connected</i>).
      */
     @Override
     public Socket createSocket(Socket k, String host, int port, boolean close) throws IOException {
@@ -454,7 +459,7 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     }
 
     /**
-     * Creates a new socket which is not connected to any remote host.
+     * Creates a new socket which is <i>not connected</i> to any remote host.
      * You must use {@link Socket#connect} to connect the socket.
      *
      * <p class="caution"><b>Warning:</b> Hostname verification is not performed
@@ -473,6 +478,8 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>This method returns a socket that is <i>not connected</i>.
      *
      * <p class="caution"><b>Warning:</b> Hostname verification is not performed
      * with this method.  You MUST verify the server's identity after connecting
@@ -493,6 +500,8 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     /**
      * {@inheritDoc}
      *
+     * <p>This method returns a socket that is <i>not connected</i>.
+     *
      * <p class="caution"><b>Warning:</b> Hostname verification is not performed
      * with this method.  You MUST verify the server's identity after connecting
      * the socket to avoid man-in-the-middle attacks.</p>
@@ -510,8 +519,9 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     /**
      * {@inheritDoc}
      *
-     * <p>This method verifies the peer's certificate hostname after connecting
-     * (unless created with {@link #getInsecure(int, SSLSessionCache)}).
+     * <p>This method returns a <i>connected</i> socket and verifies the peer's certificate
+     * hostname after connecting (unless created with {@link #getInsecure(int, SSLSessionCache)},
+     * in which case the socket is <i>not connected</i>).
      */
     @Override
     public Socket createSocket(String host, int port, InetAddress localAddr, int localPort)
@@ -531,8 +541,9 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     /**
      * {@inheritDoc}
      *
-     * <p>This method verifies the peer's certificate hostname after connecting
-     * (unless created with {@link #getInsecure(int, SSLSessionCache)}).
+     * <p>This method returns a <i>connected</i> socket and verifies the peer's certificate
+     * hostname after connecting (unless created with {@link #getInsecure(int, SSLSessionCache)},
+     * in which case the socket is <i>not connected</i>).
      */
     @Override
     public Socket createSocket(String host, int port) throws IOException {
