@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb36bead_935ebf03",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-02T22:01:46Z",
+      "side": 1,
+      "message": "This overlaps with IMS_SIP_ALTERNATE_EMERGENCY_CALL",
+      "range": {
+        "startLine": 326,
+        "startChar": 45,
+        "endLine": 326,
+        "endChar": 48
+      },
+      "revId": "6562854634ba0e8647d951be664804de2c2622a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
