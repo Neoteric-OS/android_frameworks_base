@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d01facc5_69aabdd2",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-08-03T09:34:28Z",
+      "side": 1,
+      "message": "Would it make sense to use the Inetd constants everywhere and delete the ones in NetworkPolicyManager?\n\nIf we must keep using separate constants, let\u0027s move this switch to a function and call it both here and from setFirewallUidRuleLocked().\n\nFor the chain names, could we call getFirewallChainName() instead of repeating it here? Also, are these names only used for logging and debugging? If so, we could make the FIREWALL_CHAIN_NAME_* constants match exactly the names of the iptables chains. For instance, use \"fw_powersave\" instead of \"powersave\".",
+      "range": {
+        "startLine": 2110,
+        "startChar": 22,
+        "endLine": 2110,
+        "endChar": 31
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd863eb6_2e389a2f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-08-03T09:34:28Z",
+      "side": 1,
+      "message": "nit: space after switch",
+      "range": {
+        "startLine": 2111,
+        "startChar": 12,
+        "endLine": 2111,
+        "endChar": 25
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4e87b19_2f31ee0e",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
