@@ -22,6 +22,30 @@
       "revId": "60018e4dcfc4b7972039f240fa3eaf5eb64b6f2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdda053f_ce9a9c3f",
+        "filename": "config/hiddenapi-light-greylist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-08-03T11:00:42Z",
+      "side": 1,
+      "message": "I\u0027d rather do that as a follow up. This is meant to be a cherry-pick. We should have synced the lists before you started adding the into annotations.",
+      "parentUuid": "13429958_358a1a34",
+      "range": {
+        "startLine": 1836,
+        "startChar": 43,
+        "endLine": 1836,
+        "endChar": 62
+      },
+      "revId": "60018e4dcfc4b7972039f240fa3eaf5eb64b6f2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
