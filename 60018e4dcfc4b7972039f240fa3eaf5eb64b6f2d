@@ -46,6 +46,30 @@
       "revId": "60018e4dcfc4b7972039f240fa3eaf5eb64b6f2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d024540e_f7cb9f97",
+        "filename": "config/hiddenapi-light-greylist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-03T12:05:39Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "cdda053f_ce9a9c3f",
+      "range": {
+        "startLine": 1836,
+        "startChar": 43,
+        "endLine": 1836,
+        "endChar": 62
+      },
+      "revId": "60018e4dcfc4b7972039f240fa3eaf5eb64b6f2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
