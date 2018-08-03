@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e87b19_2f31ee0e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-08-03T08:08:12Z",
+      "side": 1,
+      "message": "I think this can go now.",
+      "range": {
+        "startLine": 2314,
+        "startChar": 0,
+        "endLine": 2314,
+        "endChar": 60
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
