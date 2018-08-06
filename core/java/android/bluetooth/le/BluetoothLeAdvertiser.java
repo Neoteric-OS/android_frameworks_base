@@ -417,6 +417,13 @@ public final class BluetoothLeAdvertiser {
             return;
         }
 
+        if (gatt == null) {
+            Log.e(TAG, "Bluetooth gatt is null");
+            postStartSetFailure(handler, callback,
+                    AdvertiseCallback.ADVERTISE_FAILED_INTERNAL_ERROR);
+            return;
+        }
+
         IAdvertisingSetCallback wrapped = wrap(callback, handler);
         if (mCallbackWrappers.putIfAbsent(callback, wrapped) != null) {
             throw new IllegalArgumentException(
