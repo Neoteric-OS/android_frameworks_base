@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d6ab087_4211536b",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-06T11:01:38Z",
+      "side": 1,
+      "message": "Idle speculation: I don\u0027t suppose there is any support for some sort of group here? In google internal revision control we do support groups but perhaps we can\u0027t do that in gerrit.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "603e45982c36455a180b2114377fc5aa21a640e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
