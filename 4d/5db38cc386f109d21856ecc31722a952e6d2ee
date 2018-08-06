@@ -1,0 +1,13 @@
+Verified+1: Elliott Hughes <enh@google.com>
+Verified+1: BingX Xu <bingx.xu@intel.com>
+Code-Review+2: Elliott Hughes <enh@google.com>
+Code-Review+1: BingX Xu <bingx.xu@intel.com>
+Code-Review+1: Sergii Piatakov <sergii.piatakov@globallogic.com>
+Code-Review+1: Tomasz Wasilczyk <twasilczyk@google.com>
+Autosubmit+1: Elliott Hughes <enh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 06 Aug 2018 18:04:47 +0000
+Reviewed-on: https://android-review.googlesource.com/565693
+Project: platform/frameworks/base
+Branch: refs/heads/master
