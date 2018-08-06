@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61ea51d_d232e2f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-06T10:51:07Z",
+      "side": 1,
+      "message": "We should probably run build/make/tools/checkowners.py .",
+      "revId": "573a5c79a6085159fd5d7757a5203a2f03e38b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
