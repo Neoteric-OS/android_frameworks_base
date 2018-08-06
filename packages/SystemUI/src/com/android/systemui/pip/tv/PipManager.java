@@ -29,6 +29,7 @@ import android.content.IntentFilter;
 import android.content.pm.ParceledListSlice;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
@@ -36,6 +37,7 @@ import android.media.session.PlaybackState;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -44,10 +46,12 @@ import android.view.IPinnedStackListener;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.pip.BasePipManager;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.recents.misc.SystemServicesProxy.TaskStackListener;
+import com.android.systemui.statusbar.policy.UserInfoController;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -668,9 +672,12 @@ public class PipManager implements BasePipManager {
             // Set state to STATE_PIP so we show it when the pinned stack animation ends.
             mState = STATE_PIP;
             mCurrentPipBounds = mPipBounds;
-            mMediaSessionManager.addOnActiveSessionsChangedListener(
-                    mActiveMediaSessionListener, null);
-            updateMediaController(mMediaSessionManager.getActiveSessions(null));
+
+            // The media session listener needs to be re-registered when switching users
+            UserInfoController userInfoController = Dependency.get(UserInfoController.class);
+            userInfoController.addCallback((String name, Drawable picture, String userAccount) ->
+                    registerSessionListenerForCurrentUser());
+
             for (int i = mListeners.size() - 1; i >= 0; i--) {
                 mListeners.get(i).onPipEntered();
             }
@@ -745,5 +752,15 @@ public class PipManager implements BasePipManager {
     @Override
     public void dump(PrintWriter pw) {
         // Do nothing
+    }
+    /**
+     * Re-registers the session listener for the current user.
+     */
+    private void registerSessionListenerForCurrentUser() {
+        mMediaSessionManager.removeOnActiveSessionsChangedListener(mActiveMediaSessionListener);
+        mMediaSessionManager.addOnActiveSessionsChangedListener(mActiveMediaSessionListener, null,
+                UserHandle.USER_CURRENT, null);
+        updateMediaController(mMediaSessionManager.getActiveSessionsForUser(null,
+                UserHandle.USER_CURRENT));
     }
 }
