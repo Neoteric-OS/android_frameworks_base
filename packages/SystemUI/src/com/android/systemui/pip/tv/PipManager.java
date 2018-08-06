@@ -116,7 +116,7 @@ public class PipManager implements BasePipManager {
     private List<Listener> mListeners = new ArrayList<>();
     private List<MediaListener> mMediaListeners = new ArrayList<>();
     private Rect mCurrentPipBounds;
-    private Rect mPipBounds;
+    private Rect mPipBounds = new Rect();
     private Rect mDefaultPipBounds = new Rect();
     private Rect mSettingsPipBounds;
     private Rect mMenuModePipBounds;
@@ -309,7 +309,7 @@ public class PipManager implements BasePipManager {
         // Reset the PIP bounds and apply. PIP bounds can be changed by two reasons.
         //   1. Configuration changed due to the language change (RTL <-> RTL)
         //   2. SystemUI restarts after the crash
-        mPipBounds = isSettingsShown() ? mSettingsPipBounds : mDefaultPipBounds;
+        mPipBounds.set(isSettingsShown() ? mSettingsPipBounds : mDefaultPipBounds);
         resizePinnedStack(getPinnedStackInfo() == null ? STATE_NO_PIP : STATE_PIP);
     }
 
@@ -656,7 +656,7 @@ public class PipManager implements BasePipManager {
             if (getState() == STATE_PIP) {
                 Rect bounds = isSettingsShown() ? mSettingsPipBounds : mDefaultPipBounds;
                 if (mPipBounds != bounds) {
-                    mPipBounds = bounds;
+                    mPipBounds.set(bounds);
                     resizePinnedStack(STATE_PIP);
                 }
             }
