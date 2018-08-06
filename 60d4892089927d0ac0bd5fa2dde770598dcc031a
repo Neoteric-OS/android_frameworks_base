@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3baa4032_2dcd7030",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-08-06T10:37:29Z",
+      "side": 1,
+      "message": "Yes, sorry for the typo.",
+      "parentUuid": "da0b3444_75c0c077",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "60d4892089927d0ac0bd5fa2dde770598dcc031a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad098930_2627ef6a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "60d4892089927d0ac0bd5fa2dde770598dcc031a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d610111e_eaf8a5f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-08-06T10:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad098930_2627ef6a",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "60d4892089927d0ac0bd5fa2dde770598dcc031a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
