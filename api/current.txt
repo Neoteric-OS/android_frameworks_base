@@ -26997,6 +26997,7 @@ package android.net {
     method public void onLosing(android.net.Network, int);
     method public void onLost(android.net.Network);
     method public void onUnavailable();
+    method public void onUpdateBlockedStatus(android.net.Network, boolean);
   }
 
   public static abstract interface ConnectivityManager.OnNetworkActiveListener {
@@ -27263,16 +27264,16 @@ package android.net {
 
   public class NetworkInfo implements android.os.Parcelable {
     method public int describeContents();
-    method public android.net.NetworkInfo.DetailedState getDetailedState();
+    method public deprecated android.net.NetworkInfo.DetailedState getDetailedState();
     method public java.lang.String getExtraInfo();
     method public deprecated java.lang.String getReason();
     method public deprecated android.net.NetworkInfo.State getState();
-    method public int getSubtype();
-    method public java.lang.String getSubtypeName();
+    method public deprecated int getSubtype();
+    method public deprecated java.lang.String getSubtypeName();
     method public deprecated int getType();
     method public deprecated java.lang.String getTypeName();
     method public deprecated boolean isAvailable();
-    method public boolean isConnected();
+    method public deprecated boolean isConnected();
     method public deprecated boolean isConnectedOrConnecting();
     method public deprecated boolean isFailover();
     method public deprecated boolean isRoaming();
