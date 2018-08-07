@@ -46,6 +46,21 @@ public abstract class NetworkPolicyManagerInternal {
     public abstract boolean isUidNetworkingBlocked(int uid, String ifname);
 
     /**
+     * Figure out if networking is blocked for a given set of conditions.
+     *
+     * This is useful when conditions are stale copies.
+     *
+     * @param uid The target uid.
+     * @param uidRules The uid rules which are obtained from NetworkPolicyManagerService.
+     * @param isNetworkMetered True if the network is metered.
+     * @param isBackgroundRestricted True if data saver is enabled.
+     *
+     * @return true if networking is blocked for the UID under the specified conditions.
+     */
+    public abstract boolean isUidNetworkingBlocked(int uid, int uidRules, boolean isNetworkMetered,
+            boolean isBackgroundRestricted);
+
+    /**
      * Informs that an appId has been added or removed from the temp-powersave-whitelist so that
      * that network rules for that appId can be updated.
      *

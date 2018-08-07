@@ -1236,6 +1236,7 @@ HPLcom/android/server/net/NetworkPolicyManagerInternal;->getSubscriptionOpportun
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->getSubscriptionPlan(Landroid/net/Network;)Landroid/telephony/SubscriptionPlan;
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->getSubscriptionPlan(Landroid/net/NetworkTemplate;)Landroid/telephony/SubscriptionPlan;
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->isUidNetworkingBlocked(ILjava/lang/String;)Z
+HPLcom/android/server/net/NetworkPolicyManagerInternal;->isUidNetworkingBlocked(IIZZ)Z
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->isUidRestrictedOnMeteredNetworks(I)Z
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->onAdminDataAvailable()V
 HPLcom/android/server/net/NetworkPolicyManagerInternal;->onTempPowerSaveWhitelistChange(IZ)V
@@ -1246,6 +1247,7 @@ HPLcom/android/server/net/NetworkPolicyManagerService$17;->handleMessage(Landroi
 HPLcom/android/server/net/NetworkPolicyManagerService$18;->handleMessage(Landroid/os/Message;)Z
 HPLcom/android/server/net/NetworkPolicyManagerService$4;->onUidStateChanged(IIJ)V
 HPLcom/android/server/net/NetworkPolicyManagerService$NetworkPolicyManagerInternalImpl;->isUidNetworkingBlocked(ILjava/lang/String;)Z
+HPLcom/android/server/net/NetworkPolicyManagerService$NetworkPolicyManagerInternalImpl;->isUidNetworkingBlocked(IIZZ)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->access$2100(Lcom/android/server/net/NetworkPolicyManagerService;)Landroid/os/RemoteCallbackList;
 HPLcom/android/server/net/NetworkPolicyManagerService;->access$2200(Lcom/android/server/net/NetworkPolicyManagerService;Landroid/net/INetworkPolicyListener;II)V
 HPLcom/android/server/net/NetworkPolicyManagerService;->access$2400(Lcom/android/server/net/NetworkPolicyManagerService;)Landroid/util/ArraySet;
@@ -1257,7 +1259,7 @@ HPLcom/android/server/net/NetworkPolicyManagerService;->hasInternetPermissions(I
 HPLcom/android/server/net/NetworkPolicyManagerService;->hasRule(II)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->isUidForegroundOnRestrictPowerUL(I)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->isUidIdle(I)Z
-HPLcom/android/server/net/NetworkPolicyManagerService;->isUidNetworkingBlockedInternal(IZ)Z
+HPLcom/android/server/net/NetworkPolicyManagerService;->isUidNetworkingBlockedInternal(IIZZ)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->isUidStateForeground(I)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->isUidValidForBlacklistRules(I)Z
 HPLcom/android/server/net/NetworkPolicyManagerService;->isWhitelistedBatterySaverUL(IZ)Z
