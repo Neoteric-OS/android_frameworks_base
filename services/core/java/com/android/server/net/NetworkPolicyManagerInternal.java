@@ -35,15 +35,22 @@ public abstract class NetworkPolicyManagerInternal {
     public abstract void resetUserState(int userId);
 
     /**
-     * @return true if the given uid is restricted from doing networking on metered networks.
-     */
-    public abstract boolean isUidRestrictedOnMeteredNetworks(int uid);
-
-    /**
      * @return true if networking is blocked on the given interface for the given uid according
      * to current networking policies.
      */
     public abstract boolean isUidNetworkingBlocked(int uid, String ifname);
+
+    /**
+     * @return true if networking is blocked on the given external conditions, useful when the
+     * conditions are stale copies.
+     *
+     * @param uid The target uid.
+     * @param uidRules The uid rules which may obtained from NetworkPolicyManagerService.
+     * @param isNetworkMetered True if the network is metered.
+     * @param isBackgroundRestricted True if data saver is enabled.
+     */
+    public abstract boolean isUidNetworkingBlocked(int uid, int uidRules, boolean isNetworkMetered,
+                                              boolean isBackgroundRestricted);
 
     /**
      * Informs that an appId has been added or removed from the temp-powersave-whitelist so that

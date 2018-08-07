@@ -199,7 +199,9 @@ public class NetworkInfo implements Parcelable {
      * Return a network-type-specific integer describing the subtype
      * of the network.
      * @return the network subtype
+     * @deprecated Use {@link android.telephony.TelephonyManager#getDataNetworkType} instead.
      */
+    @Deprecated
     public int getSubtype() {
         synchronized (this) {
             return mSubtype;

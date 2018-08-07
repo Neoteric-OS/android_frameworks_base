@@ -26997,6 +26997,7 @@ package android.net {
     method public void onLosing(android.net.Network, int);
     method public void onLost(android.net.Network);
     method public void onUnavailable();
+    method public void onUpdateBlockedStatus(android.net.Network, boolean);
   }
 
   public static abstract interface ConnectivityManager.OnNetworkActiveListener {
@@ -27267,7 +27268,7 @@ package android.net {
     method public java.lang.String getExtraInfo();
     method public deprecated java.lang.String getReason();
     method public deprecated android.net.NetworkInfo.State getState();
-    method public int getSubtype();
+    method public deprecated int getSubtype();
     method public java.lang.String getSubtypeName();
     method public deprecated int getType();
     method public deprecated java.lang.String getTypeName();
