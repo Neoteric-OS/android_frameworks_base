@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4609cec_567f074d",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-07T07:30:42Z",
+      "side": 1,
+      "message": "This function only accept 3 chain types FIREWALL_CHAIN_STANDBY, FIREWALL_CHAIN_DOZABLE, FIREWALL_CHAIN_POWERSAVE which is not the same as another function.\nShould we also need a function for it?",
+      "parentUuid": "d01facc5_69aabdd2",
+      "range": {
+        "startLine": 2110,
+        "startChar": 22,
+        "endLine": 2110,
+        "endChar": 31
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd863eb6_2e389a2f",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "25371cd1_6bafbf60",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-07T07:30:42Z",
+      "side": 1,
+      "message": "remove it",
+      "parentUuid": "bd863eb6_2e389a2f",
+      "range": {
+        "startLine": 2111,
+        "startChar": 12,
+        "endLine": 2111,
+        "endChar": 25
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4e87b19_2f31ee0e",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe08d6bd_da37cdda",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-07T07:30:42Z",
+      "side": 1,
+      "message": "modify it",
+      "parentUuid": "c4e87b19_2f31ee0e",
+      "range": {
+        "startLine": 2314,
+        "startChar": 0,
+        "endLine": 2314,
+        "endChar": 60
+      },
+      "revId": "9f32c1cd1d180a8964c443b1fd876f33247837a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
