@@ -1612,7 +1612,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // TODO: relocate this specific callback in Tethering.
             if (restrictBackground) {
                 log("onRestrictBackgroundChanged(true): disabling tethering");
-                mTethering.untetherAll();
+                try {
+                    mTethering.untetherAll();
+                } catch (SecurityException e) {
+                    loge("Error disabling tethering: " + e);
+                }
             }
         }
     };
