@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f01bf6_3a17d4c8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-08T18:04:26Z",
+      "side": 0,
+      "message": "Preupload hook required this to be removed. Doclava fails to build in goog/master if it\u0027s not present. Treehugger is more important than the preupload hook, so I\u0027m adding it back and ignoring the format checker. This is going to be a problem though for everyone that touches TelephonyManager.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "bb67bab55fb7fc8a94be7189fe8cbf910d4bbc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
