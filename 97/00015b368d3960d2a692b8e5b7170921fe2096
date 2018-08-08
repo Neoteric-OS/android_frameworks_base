@@ -1,0 +1,8 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Nick Kralevich <nnk@google.com>
+Verified+1: Makoto Onuki <omakoto@google.com>
+Submitted-by: Makoto Onuki <omakoto@google.com>
+Submitted-at: Wed, 08 Aug 2018 14:51:16 +0000
+Reviewed-on: https://android-review.googlesource.com/726571
+Project: platform/frameworks/base
+Branch: refs/heads/master
