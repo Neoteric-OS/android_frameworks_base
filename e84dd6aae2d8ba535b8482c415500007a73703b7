@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab608ea_e9541223",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T04:26:17Z",
+      "side": 1,
+      "message": "This variable is now unused, you can remove it",
+      "range": {
+        "startLine": 2109,
+        "startChar": 25,
+        "endLine": 2109,
+        "endChar": 34
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f32cb4a_af6f04aa",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T04:26:17Z",
+      "side": 1,
+      "message": "I suggest introducing a new function, getFirewallRuleType(chain), which will do the computation below",
+      "range": {
+        "startLine": 2218,
+        "startChar": 22,
+        "endLine": 2218,
+        "endChar": 30
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb57c77f_3c8df62f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T04:26:17Z",
+      "side": 1,
+      "message": "I don\u0027t think this builds ; you can\u0027t @NonNull a primitive type",
+      "range": {
+        "startLine": 2301,
+        "startChar": 12,
+        "endLine": 2301,
+        "endChar": 19
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
