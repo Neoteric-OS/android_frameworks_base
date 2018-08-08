@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba7656a2_920b6a4b",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-08T06:01:47Z",
+      "side": 1,
+      "message": "It is used in \n if (enable) {\n                if (DBG) Slog.d(TAG, \"Closing sockets after enabling chain \" + chainName);\n                closeSocketsForFirewallChainLocked(chain, chainName);\n            }",
+      "parentUuid": "2ab608ea_e9541223",
+      "range": {
+        "startLine": 2109,
+        "startChar": 25,
+        "endLine": 2109,
+        "endChar": 34
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f32cb4a_af6f04aa",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "052e5a6d_04d1c9a8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-08T06:01:47Z",
+      "side": 1,
+      "message": "Done.\nBy the way, I would like to know what situation we should implement new function to do the computation. Is there any strategy to follow up?",
+      "parentUuid": "0f32cb4a_af6f04aa",
+      "range": {
+        "startLine": 2218,
+        "startChar": 22,
+        "endLine": 2218,
+        "endChar": 30
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb57c77f_3c8df62f",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b99b080_7686dd70",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-08-08T06:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb57c77f_3c8df62f",
+      "range": {
+        "startLine": 2301,
+        "startChar": 12,
+        "endLine": 2301,
+        "endChar": 19
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
