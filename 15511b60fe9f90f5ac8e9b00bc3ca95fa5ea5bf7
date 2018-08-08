@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0335d52a_e6422372",
+        "filename": "services/net/java/android/net/dhcp/DhcpNakPacket.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T07:10:56Z",
+      "side": 1,
+      "message": "I don\u0027t understand the point of this compared to the old code. If the comment is correct, what was wrong with the previous implementation ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "15511b60fe9f90f5ac8e9b00bc3ca95fa5ea5bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd61335_789d6cf6",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T07:10:56Z",
+      "side": 1,
+      "message": "Would adding @NonNull be not sufficient ?",
+      "range": {
+        "startLine": 619,
+        "startChar": 12,
+        "endLine": 619,
+        "endChar": 23
+      },
+      "revId": "15511b60fe9f90f5ac8e9b00bc3ca95fa5ea5bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16dc3a40_7c1d381e",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T07:10:56Z",
+      "side": 1,
+      "message": "Style : 8 spaces continuation indent",
+      "range": {
+        "startLine": 1270,
+        "startChar": 12,
+        "endLine": 1270,
+        "endChar": 22
+      },
+      "revId": "15511b60fe9f90f5ac8e9b00bc3ca95fa5ea5bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
