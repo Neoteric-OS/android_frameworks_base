@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ad11d597_99f30f59",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:36:05Z",
+      "side": 1,
+      "message": "Indeed : my mistake. Thanks.",
+      "parentUuid": "ba7656a2_920b6a4b",
+      "range": {
+        "startLine": 2109,
+        "startChar": 25,
+        "endLine": 2109,
+        "endChar": 34
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f32cb4a_af6f04aa",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done.\nBy the way, I would like to know what situation we should implement new function to do the computation. Is there any strategy to follow up?",
       "parentUuid": "0f32cb4a_af6f04aa",
+      "range": {
+        "startLine": 2218,
+        "startChar": 22,
+        "endLine": 2218,
+        "endChar": 30
+      },
+      "revId": "e84dd6aae2d8ba535b8482c415500007a73703b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb6adf56_1249d76a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:36:05Z",
+      "side": 1,
+      "message": "There is nothing really set in stone ; we move things into a function when it helps readability is the general rule. In the practice, that means of course if the same logic is used multiple times you will generally write a function, but even if only used once, here are some of the guidelines I use :\n- if the computation seems generic enough to be reuseable\n- if you can give it a clear and unambiguous name that will help readability\n- if the details of the computation are not too relevant in the current function and distract from the main point of the function\n\nBecause in the end it\u0027s for readability you might sometimes have conflicting opinions between reviewers, but generally it\u0027s not too much of an issue.",
+      "parentUuid": "052e5a6d_04d1c9a8",
       "range": {
         "startLine": 2218,
         "startChar": 22,
