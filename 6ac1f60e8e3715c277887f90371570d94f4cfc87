@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c1a345_63aaa198",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1082514
+      },
+      "writtenOn": "2018-08-08T20:23:15Z",
+      "side": 1,
+      "message": "Hi. We have something like this internally but it didn\u0027t make AOSP master. How about just setting mNewSurfaceNeeded here?",
+      "range": {
+        "startLine": 1283,
+        "startChar": 0,
+        "endLine": 1283,
+        "endChar": 48
+      },
+      "revId": "6ac1f60e8e3715c277887f90371570d94f4cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
