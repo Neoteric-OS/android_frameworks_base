@@ -27579,6 +27579,7 @@ package android.net {
     method public boolean protect(java.net.Socket);
     method public boolean protect(java.net.DatagramSocket);
     method public boolean removeRoute(java.net.InetAddress, int);
+    method public boolean setMtu(int);
     method public boolean setUnderlyingNetworks(android.net.Network[]);
     field public static final java.lang.String SERVICE_INTERFACE = "android.net.VpnService";
     field public static final java.lang.String SERVICE_META_DATA_SUPPORTS_ALWAYS_ON = "android.net.VpnService.SUPPORTS_ALWAYS_ON";

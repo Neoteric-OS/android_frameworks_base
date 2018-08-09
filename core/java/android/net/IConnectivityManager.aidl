@@ -172,6 +172,7 @@ interface IConnectivityManager
     boolean removeVpnAddress(String address, int prefixLength);
     boolean addVpnRoute(String address, int prefixLength);
     boolean removeVpnRoute(String address, int prefixLength);
+    boolean setVpnMtu(int mtu);
     boolean setUnderlyingNetworksForVpn(in Network[] networks);
 
     void factoryReset();

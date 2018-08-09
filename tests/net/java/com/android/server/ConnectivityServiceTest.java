@@ -4386,6 +4386,39 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testVpnSetMtu() {
+        final int uid = Process.myUid();
+        final int testMtu = 1234;
+
+        final TestNetworkCallback vpnNetworkCallback = new TestNetworkCallback();
+        final NetworkRequest vpnNetworkRequest =
+                new NetworkRequest.Builder()
+                .removeCapability(NET_CAPABILITY_NOT_VPN)
+                .addTransportType(TRANSPORT_VPN)
+                .build();
+        NetworkCapabilities nc;
+        mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
+        vpnNetworkCallback.assertNoCallback();
+
+        final MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN);
+        mMockVpn.setNetworkAgent(vpnNetworkAgent);
+        mMockVpn.connect();
+        vpnNetworkAgent.connect(true /* validated */, false /* hasInternet */);
+
+        vpnNetworkCallback.expectAvailableThenValidatedCallbacks(vpnNetworkAgent);
+
+        // Set the MTU:
+        mService.setVpnMtu(testMtu);
+
+        CallbackInfo info =
+                vpnNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, vpnNetworkAgent);
+        LinkProperties lp = (LinkProperties) info.arg;
+        assertEquals(testMtu, lp.getMtu());
+
+        mMockVpn.disconnect();
+    }
+
+    @Test
     public void testVpnSetUnderlyingNetworks() {
         final int uid = Process.myUid();
 

@@ -366,6 +366,24 @@ public class VpnService extends Service {
         }
     }
 
+    /**
+     * Sets the VPN interface's MTU
+     *
+     * @return {@code true} on success.
+     * @throws IllegalArgumentException if the mtu is invalid.
+     */
+    public boolean setMtu(int mtu) {
+        if (mtu <= 0) {
+            throw new IllegalArgumentException("Bad mtu");
+        }
+
+        try {
+            return getService().setVpnMtu(mtu);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     private static void checkRoutePrefix(InetAddress address, int prefixLength) {
         int offset = prefixLength / 8;
         byte[] bytes = address.getAddress();

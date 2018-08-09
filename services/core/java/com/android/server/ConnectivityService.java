@@ -5698,6 +5698,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
+    public boolean setVpnMtu(int mtu) {
+        int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            return mVpns.get(user).setMtu(mtu);
+        }
+    }
+
+    @Override
     public boolean setUnderlyingNetworksForVpn(Network[] networks) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         final boolean success;

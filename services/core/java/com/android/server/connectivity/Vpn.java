@@ -860,7 +860,11 @@ public class Vpn {
         }
         lp.setDomains(buffer.toString().trim());
 
-        // TODO: Stop setting the MTU in jniCreate and set it here.
+        if (mConfig.mtu > 0) {
+            lp.setMtu(mConfig.mtu);
+        }
+
+        // TODO: Stop setting the MTU in jniCreate.
 
         return lp;
     }
@@ -1501,6 +1505,16 @@ public class Vpn {
 
         InetAddress parsed = InetAddress.parseNumericAddress(address);
         mConfig.routes.remove(new RouteInfo(new IpPrefix(parsed, prefixLength), null));
+        mNetworkAgent.sendLinkProperties(makeLinkProperties());
+        return true;
+    }
+
+    public synchronized boolean setMtu(int mtu) {
+        if (!isCallerEstablishedOwnerLocked()) {
+            return false;
+        }
+
+        mConfig.mtu = mtu;
         mNetworkAgent.sendLinkProperties(makeLinkProperties());
         return true;
     }
