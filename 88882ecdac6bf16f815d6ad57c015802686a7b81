@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f38c41a_b288237e",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-08-09T13:47:40Z",
+      "side": 1,
+      "message": "Does data change after this line? If so is that why the if (data) and if (!data) checks are not if-else instead?",
+      "range": {
+        "startLine": 338,
+        "startChar": 32,
+        "endLine": 338,
+        "endChar": 36
+      },
+      "revId": "88882ecdac6bf16f815d6ad57c015802686a7b81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
