@@ -1161,6 +1161,26 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         }
 
         private boolean bindService() {
+            int st = BluetoothAdapter.STATE_OFF;
+            try {
+                mBluetoothLock.readLock().lock();
+                if (mBluetooth != null) {
+                    st = mBluetooth.getState();
+                }
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Unable to call getState", e);
+                return false;
+            } finally {
+                mBluetoothLock.readLock().unlock();
+            }
+
+            if (!mEnable || st != BluetoothAdapter.STATE_ON) {
+                if (DBG) {
+                    Slog.d(TAG, "Unable to bindService while Bluetooth is disabled");
+                }
+                return false;
+            }
+
             if (mIntent != null && mService == null && doBind(mIntent, this, 0,
                     UserHandle.CURRENT_OR_SELF)) {
                 Message msg = mHandler.obtainMessage(MESSAGE_BIND_PROFILE_SERVICE);
