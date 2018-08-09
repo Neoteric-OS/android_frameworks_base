@@ -22,6 +22,30 @@
       "revId": "6ac1f60e8e3715c277887f90371570d94f4cfc87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c950b68_5cca792a",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2018-08-09T09:34:22Z",
+      "side": 1,
+      "message": "Hi, thanks for the info, setting \u0027mNewSurfaceNeeded\u0027 here also fixes the problem. I have been trying to reproduce problem, but so far thinks work fine.",
+      "parentUuid": "99c1a345_63aaa198",
+      "range": {
+        "startLine": 1283,
+        "startChar": 0,
+        "endLine": 1283,
+        "endChar": 48
+      },
+      "revId": "6ac1f60e8e3715c277887f90371570d94f4cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
