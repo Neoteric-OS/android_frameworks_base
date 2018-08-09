@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a8ac0f_231c1085",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-09T17:50:16Z",
+      "side": 1,
+      "message": "autogen starts here.",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963c684a_7f95b206",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-09T17:50:16Z",
+      "side": 1,
+      "message": "this is auto-generated code, please don\u0027t change it.  The annotations will simply vanish the next time we regenerate this part of the file.",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08ebf7e_b1afa771",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-09T17:50:16Z",
+      "side": 1,
+      "message": "How are we deciding when to apply these? This is a new P API, so it\u0027s really unlikely anyone\u0027s using this in the wild.  So I\u0027m worried some of our wackier framework code might be triggering as app usage.",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c1bf78_14eb9766",
+        "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2083,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-09T17:50:16Z",
+      "side": 1,
+      "message": "also autogen problems in this file.",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335f7703_2e4c7289",
+        "filename": "core/java/android/hardware/camera2/CaptureResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2407,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-09T17:50:16Z",
+      "side": 1,
+      "message": "also autogen problems in this file.",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
