@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dc5c542b_273dbed8",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1060513
+      },
+      "writtenOn": "2018-08-10T18:22:26Z",
+      "side": 1,
+      "message": "I think we handled that in ag/4026608 (and the corresponding bug is b/76163369)",
+      "parentUuid": "59712c84_d2037403",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
