@@ -46,6 +46,30 @@
       "revId": "c81f53f7f114962f757312ac884a279035fe0584",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b5f1cd_ce7ff639",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-08-10T18:18:41Z",
+      "side": 1,
+      "message": "Ahh thanks, that was the missing piece. Nice.",
+      "parentUuid": "4d9806ba_3c894116",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 69
+      },
+      "revId": "c81f53f7f114962f757312ac884a279035fe0584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
