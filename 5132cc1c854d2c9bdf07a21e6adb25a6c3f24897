@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "5d19f2eb_2a327c26",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-10T08:42:24Z",
+      "side": 1,
+      "message": "This was added to the greylist here:\nhttps://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/3789338/\n\nThere are no detected usages by apps from our data. So feel free to remove this from the greylist and fix the test.",
+      "parentUuid": "d08ebf7e_b1afa771",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
