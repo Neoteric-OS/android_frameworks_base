@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3151481_904e5aed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-08-10T18:16:09Z",
+      "side": 1,
+      "message": "It took me some time to understand this test, sorry about that. Do you consider this reasonable behaviour ? I don\u0027t, so let me know if you want this fixed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1772d3_6be56e8f",
+        "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-08-10T18:16:09Z",
+      "side": 1,
+      "message": "This confused me a little bit, because I initially thought the bug was triggered by reference equality or something like that.\n\nI think it would be clearer to users, if you did \n\nWorkSource ws1 \u003d new WorkSource(50, \"foo\");\nWorkSource ws2 \u003d new WorkSource(50, \"foo\");\n\nand removed this line instead.",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
