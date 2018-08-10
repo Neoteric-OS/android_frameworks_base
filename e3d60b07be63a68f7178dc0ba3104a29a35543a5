@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09f1b826_90266fc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-08-10T23:04:03Z",
+      "side": 1,
+      "message": "Personally I do not think this is intuitive. I would prefer either having it documented somewhere or have the logic be changed.",
+      "parentUuid": "e3151481_904e5aed",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec1772d3_6be56e8f",
         "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-10T18:16:09Z",
       "side": 1,
       "message": "This confused me a little bit, because I initially thought the bug was triggered by reference equality or something like that.\n\nI think it would be clearer to users, if you did \n\nWorkSource ws1 \u003d new WorkSource(50, \"foo\");\nWorkSource ws2 \u003d new WorkSource(50, \"foo\");\n\nand removed this line instead.",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab5824e_8a804e84",
+        "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-08-10T23:04:03Z",
+      "side": 1,
+      "message": "I tried running the test initialized as\nWorkSource ws1 \u003d new WorkSource(50, \"foo\");\nWorkSource ws2 \u003d new WorkSource(50, \"foo\");\nand the resulting ws1.size() after add,remove,add is 1, which does not cover this use case (reference equality).\n\nThe reason I wrote it this way was to reflect the use case we dealt with in RIL (aosp/722964).",
+      "parentUuid": "ec1772d3_6be56e8f",
       "range": {
         "startLine": 364,
         "startChar": 8,
