@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a60131e3_2110e9c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-08-10T18:10:54Z",
+      "side": 1,
+      "message": "I probably need to stare at this code a bit longer, but how will we catch the perpetrator with this change? If the other thread (prematurely closing it) has access to the raw fd we don\u0027t notice until it\u0027s too late, I think?\n\nChange LGTM otherwise, though I\u0027m also still trying to figure out why the test fails.",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 69
+      },
+      "revId": "c81f53f7f114962f757312ac884a279035fe0584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
