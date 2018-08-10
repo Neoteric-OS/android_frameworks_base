@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae56d365_f09c6a55",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-10T08:34:31Z",
+      "side": 1,
+      "message": "if the `addrs` argument is null ?\n\nNormally : a parameter (or type argument) is a type in \u003c\u003e parameterizing a class (hence parameterized type). An argument is something you pass to a method.\nI know usage is a lot less strict in practice, but if we can stick to this for correctness",
+      "range": {
+        "startLine": 581,
+        "startChar": 40,
+        "endLine": 581,
+        "endChar": 61
+      },
+      "revId": "458057d3356926365fb4f7068f7bfdf794c4d0f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
