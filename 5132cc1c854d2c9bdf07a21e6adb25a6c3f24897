@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "59712c84_d2037403",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2018-08-10T18:14:20Z",
+      "side": 1,
+      "message": "Ah, right - thanks for the reminder.  Yin-Chia, I believe we did fix all of the usages in that test, so we should be able to remove the annotations now?",
+      "parentUuid": "5d19f2eb_2a327c26",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
