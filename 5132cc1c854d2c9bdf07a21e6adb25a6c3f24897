@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "47e9f1a3_dcac1398",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1060513
+      },
+      "writtenOn": "2018-08-13T16:14:23Z",
+      "side": 1,
+      "message": "As I pointed out in b/76163369, I don\u0027t have tools to make sure apps other than ITS aren\u0027t using the greylisted APIs, so I left the removal to David.\nAlso, I thought you are going to revert this annotations since they are codegened?",
+      "parentUuid": "986978cd_838be6e2",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
