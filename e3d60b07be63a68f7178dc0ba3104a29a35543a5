@@ -117,6 +117,30 @@
       "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e189c9de_a388907f",
+        "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-08-13T19:35:45Z",
+      "side": 1,
+      "message": "I wrote test with two worksources to show how RIL clientId \u003d null bug was produced (regarding @shuoqs comment at aosp/722964) But I can change to only use one worksource..\n\n\u003e\u003eWhen read this way, doesn\u0027t the behaviour make sense ?\n\nI do not find this behavior intuitive - ws\u0027s size after add is 1, and ws\u0027s size after add\u0026remove\u0026add is 0.",
+      "parentUuid": "da2e5fba_9b0e6ba8",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
