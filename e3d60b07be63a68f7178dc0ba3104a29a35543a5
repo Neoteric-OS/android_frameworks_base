@@ -93,6 +93,30 @@
       "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2e5fba_9b0e6ba8",
+        "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-08-13T10:04:25Z",
+      "side": 1,
+      "message": "Actually, your test would be much clearer if written like so :\n\nWorkSource ws \u003d new WorkSource(50, \"foo\");\n\nws.add(ws);\nws.remove(ws);\nws.add(ws);\n\nassertEquals(0, ws.size());\n\nWhen read this way, doesn\u0027t the behaviour make sense ? After ws.remove(ws), the size of ws should be zero regardless of the original contents.",
+      "parentUuid": "8ab5824e_8a804e84",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
