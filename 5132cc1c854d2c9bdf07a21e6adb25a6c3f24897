@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "0a30d4fc_28fa97aa",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1060513
+      },
+      "writtenOn": "2018-08-13T16:24:17Z",
+      "side": 1,
+      "message": "We don\u0027t need to mark them as test API. I\u0027ve modify our test to use the public API.\nFrom our test (ITS) perspective, we can remove those keys from greylist. The problem is that I don\u0027t know will that break other apps you guys scanned before, so I hand back to bug back to David.\n(I\u0027ve done some local testing before to make sure our test remain passing if I removed those grey list entries)\nIf someone can tell me no other 3rd party apps are affected, I can upload the CL to remove the grey list entries.",
+      "parentUuid": "f07571f4_67df528c",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
