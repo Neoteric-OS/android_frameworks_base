@@ -1353,9 +1353,9 @@ public final class ViewRootImpl implements ViewParent,
                 mWindowStoppedCallbacks.get(i).windowStopped(stopped);
             }
 
-            if (mStopped) {
+            /*if (mStopped) {
                 mSurface.release();
-            }
+            }*/
         }
     }
 
