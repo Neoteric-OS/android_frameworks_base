@@ -66,5 +66,6 @@ public class Protocol {
     public static final int BASE_NETWORK_FACTORY                                    = 0x00083000;
     public static final int BASE_ETHERNET                                           = 0x00084000;
     public static final int BASE_LOWPAN                                             = 0x00085000;
+    public static final int BASE_DHCP_SERVER                                        = 0x00086000;
     //TODO: define all used protocols
 }
