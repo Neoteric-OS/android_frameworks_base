@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d317d5d2_0c32897e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-08-13T17:44:50Z",
+      "side": 1,
+      "message": "would be useful to add a cherrypick comment; something like:\n\n  (cherry picked from commit e5a3125c1c398fd96939ac3abff6c0a0b81b2d5d)",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "c69c424cdd0a7b54545b8d4fdbb31a6e347d28ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
