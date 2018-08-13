@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "f07571f4_67df528c",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-13T16:20:41Z",
+      "side": 1,
+      "message": "Removing the annotations from generated code being done in http://aosp/729223 (I thought I\u0027d sent for review before, sorry).\n\nSounds like these APIs should be made @TestApi. Currently, that effectively whitelists them (all apps can access), but we\u0027re planning work in Q that will limit them to just test code.",
+      "parentUuid": "47e9f1a3_dcac1398",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
