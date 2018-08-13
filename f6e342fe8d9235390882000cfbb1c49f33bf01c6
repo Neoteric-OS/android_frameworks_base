@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4603b03f_a12cdc3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T18:07:00Z",
+      "side": 1,
+      "message": "There was a bug where installing of packages is broken on AOSP. I\u0027ll re-test this when I get a chance to re-sync.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "f6e342fe8d9235390882000cfbb1c49f33bf01c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
