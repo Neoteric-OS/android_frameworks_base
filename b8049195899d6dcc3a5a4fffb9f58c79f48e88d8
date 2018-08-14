@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e109df68_e7dafb05",
+        "filename": "media/java/android/media/MediaHTTPService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-08-14T21:20:32Z",
+      "side": 1,
+      "message": "this import goes in the import block at l.19.",
+      "revId": "b8049195899d6dcc3a5a4fffb9f58c79f48e88d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
