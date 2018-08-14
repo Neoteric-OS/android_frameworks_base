@@ -57,7 +57,7 @@ def main():
     apk_path = (
             '%s/data/app/FrameworksServicesTests/FrameworksServicesTests.apk' %
             out_dir)
-    run('adb install -r -g "%s"' % apk_path)
+    run('adb install -t -r -g "%s"' % apk_path)
 
     print 'Running tests...'
     if len(sys.argv) != 1:
