@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b16e35ce_5148c61a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-08-14T21:21:39Z",
+      "side": 1,
+      "message": "can you point to the actual sample app you tested this with?",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "b8049195899d6dcc3a5a4fffb9f58c79f48e88d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e109df68_e7dafb05",
         "filename": "media/java/android/media/MediaHTTPService.java",
         "patchSetId": 1
