@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69f1d85_10a6ecea",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6331,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2018-08-14T16:44:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure this statement is always true here.",
+      "range": {
+        "startLine": 6331,
+        "startChar": 29,
+        "endLine": 6331,
+        "endChar": 45
+      },
+      "revId": "029030a8b0fbe11421b74c5bccd1b0e372c741c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
