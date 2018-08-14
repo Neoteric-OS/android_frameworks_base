@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1f08d0_cd22192d",
+        "filename": "media/java/android/media/MediaHTTPService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-08-14T22:03:51Z",
+      "side": 1,
+      "message": "imports are in alphabetical order, so this one goes to l.19",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "6c867e16d82f662667a44648ed6fe634383536b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
