@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "406ac8ca_0d15feb7",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-14T23:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f495300_dc007492",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b88f3e5_1ac670ab",
         "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "21c40cf7_85cefe2f",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-14T23:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b88f3e5_1ac670ab",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c9611c_56b5a1fe",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9669afbd_100ffd84",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-14T23:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c9611c_56b5a1fe",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
