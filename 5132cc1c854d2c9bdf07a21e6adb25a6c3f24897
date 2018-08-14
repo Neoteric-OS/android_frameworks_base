@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "cf321322_8baf690e",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3404,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-14T13:24:03Z",
+      "side": 1,
+      "message": "Looking at our data, the only things in this file that are used by any apps are constructors and method getNativeKey() in the Key inner class. Looks like all the generated stuff is unused, so you can remove it from the greylist.",
+      "parentUuid": "0a30d4fc_28fa97aa",
+      "revId": "5132cc1c854d2c9bdf07a21e6adb25a6c3f24897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c1bf78_14eb9766",
         "filename": "core/java/android/hardware/camera2/CaptureRequest.java",
         "patchSetId": 1
