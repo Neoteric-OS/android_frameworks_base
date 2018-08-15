@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0094bcb_270bda84",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-08-15T14:10:06Z",
+      "side": 1,
+      "message": "This one is @TestApi in master. I would try to keep them consistent",
+      "range": {
+        "startLine": 735,
+        "startChar": 5,
+        "endLine": 735,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711242f6_bc8eac04",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-08-15T14:10:06Z",
+      "side": 1,
+      "message": "This one is not on the light grey in master. That\u0027s weird...",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
