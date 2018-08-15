@@ -126,6 +126,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -988,54 +989,49 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     @Override
     public String[] listInterfaces() {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final ArrayList<String> result = new ArrayList<>();
         try {
-            return NativeDaemonEvent.filterMessageList(
-                    mConnector.executeForList("interface", "list"), InterfaceListResult);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceList(result);
+            return result.toArray(new String[result.size()]);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
     @Override
     public InterfaceConfiguration getInterfaceConfig(String iface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final ArrayList<String> result = new ArrayList<>();
 
-        final NativeDaemonEvent event;
         try {
-            event = mConnector.execute("interface", "getcfg", iface);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceGetCfg(iface, result);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
 
-        event.checkCode(InterfaceGetCfgResult);
-
-        // Rsp: 213 xx:xx:xx:xx:xx:xx yyy.yyy.yyy.yyy zzz flag1 flag2 flag3
-        final StringTokenizer st = new StringTokenizer(event.getMessage());
-
         InterfaceConfiguration cfg;
+        ListIterator<String> iter = result.listIterator();
         try {
             cfg = new InterfaceConfiguration();
-            cfg.setHardwareAddress(st.nextToken(" "));
+            cfg.setHardwareAddress(iter.next());
             InetAddress addr = null;
             int prefixLength = 0;
             try {
-                addr = NetworkUtils.numericToInetAddress(st.nextToken());
+                addr = NetworkUtils.numericToInetAddress(iter.next());
             } catch (IllegalArgumentException iae) {
                 Slog.e(TAG, "Failed to parse ipaddr", iae);
             }
-
             try {
-                prefixLength = Integer.parseInt(st.nextToken());
+                prefixLength = Integer.parseInt(iter.next());
             } catch (NumberFormatException nfe) {
                 Slog.e(TAG, "Failed to parse prefixLength", nfe);
             }
-
             cfg.setLinkAddress(new LinkAddress(addr, prefixLength));
-            while (st.hasMoreTokens()) {
-                cfg.setFlag(st.nextToken());
+            while(iter.hasNext()) {
+                cfg.setFlag(iter.next());
             }
         } catch (NoSuchElementException nsee) {
-            throw new IllegalStateException("Invalid response from daemon: " + event);
+            throw new IllegalStateException("Invalid response from binder");
         }
         return cfg;
     }
@@ -1043,22 +1039,22 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     @Override
     public void setInterfaceConfig(String iface, InterfaceConfiguration cfg) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final ArrayList<String> flags = new ArrayList<>();
         LinkAddress linkAddr = cfg.getLinkAddress();
         if (linkAddr == null || linkAddr.getAddress() == null) {
             throw new IllegalStateException("Null LinkAddress given");
         }
-
-        final Command cmd = new Command("interface", "setcfg", iface,
-                linkAddr.getAddress().getHostAddress(),
-                linkAddr.getPrefixLength());
         for (String flag : cfg.getFlags()) {
-            cmd.appendArg(flag);
+            flags.add(flag);
         }
 
         try {
-            mConnector.execute(cmd);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceSetCfg(iface,
+                    linkAddr.getAddress().getHostAddress(),
+                    linkAddr.getPrefixLength(),
+                    flags.toArray(new String[flags.size()]));
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -1082,10 +1078,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void setInterfaceIpv6PrivacyExtensions(String iface, boolean enable) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mConnector.execute(
-                    "interface", "ipv6privacyextensions", iface, enable ? "enable" : "disable");
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceSetIPv6PrivacyExtensions(iface, enable);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -1095,9 +1090,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void clearInterfaceAddresses(String iface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mConnector.execute("interface", "clearaddrs", iface);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceClearAddrs(iface);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -1105,9 +1100,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void enableIpv6(String iface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mConnector.execute("interface", "ipv6", iface, "enable");
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceSetEnableIPv6(iface, true);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -1124,9 +1119,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void disableIpv6(String iface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mConnector.execute("interface", "ipv6", iface, "disable");
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceSetEnableIPv6(iface, false);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -1202,11 +1197,10 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void setMtu(String iface, int mtu) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
-        final NativeDaemonEvent event;
         try {
-            event = mConnector.execute("interface", "setmtu", iface, mtu);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
+            mNetdService.interfaceSetMtu(iface, mtu);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
         }
     }
 
