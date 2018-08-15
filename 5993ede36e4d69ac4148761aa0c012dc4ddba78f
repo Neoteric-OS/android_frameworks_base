@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d48af5_b581af6d",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e105f9c_45af3326",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem efficient.",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a17f22_ba544d32",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "Hmm... what\u0027s this for?",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11dbe51_2c69b203",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "Remove empty line.",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66fc0ca_914c3d7a",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "We should probably only create new one if it doesn\u0027t exist. Otherwise if it\u0027s created twice, the previous registrants will be lost and onDestroy is never called.\n\nData service has the same problem..",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

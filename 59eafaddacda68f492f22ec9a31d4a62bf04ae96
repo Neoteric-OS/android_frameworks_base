@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "702f8f6b_79174f14",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "Sorry didn\u0027t raise it up earlier, but making it per APN type also seems to complicate things.\n\nBy making callback per apnTye, upon registration or WWAN (cellular) change, several callbacks will be sent out. Plus the registration is not done by per apnType but per slot, although updateQualifiedNetworks() is per apnType. \n\nI guess we need to evaluate which is the more common case: only one apnType will change at a time, or lists of several apnTypes always change together. If it\u0027s former, per apnTye makes sense; if latter, List\u003cQualifiedNetworks\u003e is better for both callback and updateQualifiedNetworks().",
+      "parentUuid": "21c40cf7_85cefe2f",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c9611c_56b5a1fe",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
         "patchSetId": 2

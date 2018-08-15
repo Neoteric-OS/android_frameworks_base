@@ -85,6 +85,30 @@
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73205863_9c0813a8",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-08-15T18:47:00Z",
+      "side": 1,
+      "message": "Jack can probably answer better.\n\nSeems to me there might be multiple registrants.\n\nAgree that we don\u0027t have a onRemoved() to the registrants upon deletion of updater, which is true for NetworkService and DataService. We assumed deletion will not really happen, although I\u0027m not sure if it\u0027s true. Or another question is upon onRemoved, what registrants should do..? It\u0027s something we can think about later.",
+      "parentUuid": "9c453aac_f295a63b",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 52
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
