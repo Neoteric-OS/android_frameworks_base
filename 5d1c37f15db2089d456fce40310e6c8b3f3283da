@@ -45,6 +45,46 @@
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16744f1a_b423dd03",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T17:35:33Z",
+      "side": 1,
+      "message": "nit space after break;",
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c453aac_f295a63b",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T17:35:33Z",
+      "side": 1,
+      "message": "As a high-level question, do we expect that multiple system components will register for this? If not, could we register the callbacks at the same time we create one for a slot (and implicitly deregister when we remove one for a slot)?\n\nThere\u0027s 2 parts to that:\n1) if it\u0027s a single-registrant then it\u0027s straightforward.\n2) if it\u0027s a multi-registrant, then the creation/deletion will need to be refcounted so that we don\u0027t have a separate registrant that isn\u0027t aware that the thing is going to be deleted unless we want to provide some sort of onRemoved() notification callback to the other registrants.",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 52
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
