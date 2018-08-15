@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec00a21_80924503",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T17:26:51Z",
+      "side": 1,
+      "message": "Everywhere that\u0027s using Slot probably needs to use logicalModemId, but we can go back and fix that once it\u0027s available.",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907105d1_079bc1d4",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T17:26:51Z",
+      "side": 1,
+      "message": "why do we need this (publicly)?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
