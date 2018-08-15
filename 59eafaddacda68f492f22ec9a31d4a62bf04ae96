@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "130dcbcb_6c99b9a7",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T23:35:53Z",
+      "side": 1,
+      "message": "@Malcolm... PDN selection is per APN. This is the same for both IWLAN in LTE and in 5G. Subscriptions have nothing to to with it since this is already within a subscription (not cross-subscription). Selecting a subscription happens at a higher level: if not, then someone messed up the design.",
+      "parentUuid": "e0ce973b_2f7af9ca",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c9611c_56b5a1fe",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
         "patchSetId": 2

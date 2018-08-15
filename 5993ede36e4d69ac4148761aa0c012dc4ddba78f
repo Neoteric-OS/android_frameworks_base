@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "40bd4725_c233d22e",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T23:35:53Z",
+      "side": 1,
+      "message": "Given that the number of APN types is very small, I suggest favoring readability over performance. Ideally you can achieve both with no compromise, but a performance solution that\u0027s hard to debug is not a good trade here. SparseArrays are specifically designed to be lightweight and useful in cases like this. A trivial alternative would be a jagged array. Since you know the total number of APN types up front, it\u0027s trivial to have an int[MAX_APN_TYPES][]. That also makes your looping semantics nice since you can just update any entries that are non-null. :-) I\u0027m not sure if that\u0027s actually faster or clearer, or whether it matters, but any sort of hash or other data structure that supports non-primitive keys will be slower (full stop, no exceptions) in this case and probably won\u0027t be easier to debug unless you choose a synchronous type that handles multithreading innately (but that might cause other bugs?)",
+      "parentUuid": "0c9457a9_164bb778",
+      "revId": "5993ede36e4d69ac4148761aa0c012dc4ddba78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a17f22_ba544d32",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 5

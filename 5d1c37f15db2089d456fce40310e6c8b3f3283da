@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cdf936b1_65783649",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T23:35:53Z",
+      "side": 1,
+      "message": "So it can\u0027t just be a protected class member or protected function? It\u0027s not a huge deal... it just seemed like a very prominent function for this.",
+      "parentUuid": "d9b188d8_4f289827",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16744f1a_b423dd03",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 4
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "really? The coding guideline also does not have a vertical space after break.\nhttps://google.github.io/styleguide/javaguide.html#s4.8.4-switch",
       "parentUuid": "16744f1a_b423dd03",
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5746e2d7_a7fb549a",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T23:35:53Z",
+      "side": 1,
+      "message": "That\u0027s not our style guide (we\u0027re Android), but the Android guide doesn\u0027t say anything specifically about it; however, the telephony code features a few very prominent and persistent cases of this:\nhttps://android.googlesource.com/platform/packages/services/Telephony/+/master/src/com/android/phone/PhoneInterfaceManager.java#472\n\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/master/src/java/com/android/internal/telephony/ServiceStateTracker.java#2684\n\nSadly, the telephony code is not 100% consistent, but in absence of a closing brace (which also creates some whitespace separation), I feel like it\u0027s done more-often-than-not... your call.",
+      "parentUuid": "bdf7d264_11ae5f60",
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -190,6 +232,30 @@
       "side": 1,
       "message": "It seems single registrant is good enough. In my design only access network manager (or we should name it controller/monitor) will bind to QNS and listen for access network changes.",
       "parentUuid": "73205863_9c0813a8",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 52
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "841afcfe_b15f6568",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-15T23:35:53Z",
+      "side": 1,
+      "message": "If that\u0027s the case, then I suggest we simplify. I love simple, and this stuff is already very complicated.",
+      "parentUuid": "571492f7_70816617",
       "range": {
         "startLine": 285,
         "startChar": 20,
