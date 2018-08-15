@@ -2698,6 +2698,13 @@ public class AppOpsManager {
     /**
      * @hide
      */
+    public static int getOpNum() {
+        return _NUM_OP;
+    }
+
+    /**
+     * @hide
+     */
     public static long maxTime(long[] times, int start, int end) {
         long time = 0;
         for (int i = start; i < end; i++) {
