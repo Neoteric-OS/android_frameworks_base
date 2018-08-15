@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "994f0648_e8574cbd",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-15T15:45:06Z",
+      "side": 1,
+      "message": "This CL is intended to be a pure refactoring - if we want to make this @TestApi, that should happen in a separate CL.",
+      "parentUuid": "b0094bcb_270bda84",
+      "range": {
+        "startLine": 735,
+        "startChar": 5,
+        "endLine": 735,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "711242f6_bc8eac04",
         "filename": "core/java/android/content/ContextWrapper.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-15T14:10:06Z",
       "side": 1,
       "message": "This one is not on the light grey in master. That\u0027s weird...",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5109a370_5f49ce4f",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-15T15:45:06Z",
+      "side": 1,
+      "message": "Maybe someone removed it. I\u0027ll look at the history.",
+      "parentUuid": "711242f6_bc8eac04",
       "range": {
         "startLine": 157,
         "startChar": 5,
