@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e0ce973b_2f7af9ca",
+        "filename": "telephony/java/android/telephony/data/IQualifiedNetworksServiceCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-15T22:56:10Z",
+      "side": 1,
+      "message": "Those are all very good points. I think changing to per APN type is fine because each of them are independent. The most important reason I decide to make this change is to reduce using another wrapper QualifiedNetworkList to wrap them. My plan is that if vendor only invokes onQualifiedNetworksChanged for one or two APN type, then we\u0027ll only determine where to route traffic for requests on those APN type. If onQualifiedNetworksChanged is never invoked for certain APN type, for example, default APN type, then we\u0027ll always route the request to the default bound data service (i.e. cellular data service). In today\u0027s case, probably only IMS, MMS APN are the APN types we care about.",
+      "parentUuid": "702f8f6b_79174f14",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "59eafaddacda68f492f22ec9a31d4a62bf04ae96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c9611c_56b5a1fe",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworks.java",
         "patchSetId": 2

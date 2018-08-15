@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "011a3282_a5013089",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-15T22:56:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ec00a21_80924503",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907105d1_079bc1d4",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d9b188d8_4f289827",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-15T22:56:10Z",
+      "side": 1,
+      "message": "It\u0027s for someone who extends NetworkAvailabilityUpdater to get slot index if they want. It can be protected but API council feels an exposed API should be public instead of protected.",
+      "parentUuid": "907105d1_079bc1d4",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16744f1a_b423dd03",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf7d264_11ae5f60",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-15T22:56:10Z",
+      "side": 1,
+      "message": "really? The coding guideline also does not have a vertical space after break.\nhttps://google.github.io/styleguide/javaguide.html#s4.8.4-switch",
+      "parentUuid": "16744f1a_b423dd03",
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +175,30 @@
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571492f7_70816617",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-15T22:56:10Z",
+      "side": 1,
+      "message": "It seems single registrant is good enough. In my design only access network manager (or we should name it controller/monitor) will bind to QNS and listen for access network changes.",
+      "parentUuid": "73205863_9c0813a8",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 52
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
