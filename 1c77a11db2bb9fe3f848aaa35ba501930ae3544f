@@ -189,6 +189,30 @@
       "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48fe2522_1742333c",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-16T16:07:48Z",
+      "side": 1,
+      "message": "As discussed, this is not present in master because it was never added; for some reason, it was removed in the cherry-pick:\nhttps://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/4283862/1..2/config/hiddenapi-light-greylist.txt\n\nI will re-add it in internal master.",
+      "parentUuid": "e51f58bb_a55c8f4d",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
