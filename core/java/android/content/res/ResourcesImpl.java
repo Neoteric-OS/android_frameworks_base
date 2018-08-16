@@ -1325,6 +1325,7 @@ public class ResourcesImpl {
                 @StyleableRes int[] attrs,
                 @AttrRes int defStyleAttr,
                 @StyleRes int defStyleRes) {
+            Trace.beginSection("obtainStyledAttributes");
             synchronized (mKey) {
                 final int len = attrs.length;
                 final TypedArray array = TypedArray.obtain(wrapper.getResources(), len);
@@ -1338,6 +1339,7 @@ public class ResourcesImpl {
                         array.mDataAddress, array.mIndicesAddress);
                 array.mTheme = wrapper;
                 array.mXml = parser;
+                Trace.endSection();
                 return array;
             }
         }

@@ -4792,6 +4792,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *        access the current theme, resources, etc.
      */
     public View(Context context) {
+        Trace.beginSection("View simple constructor");
         mContext = context;
         mResources = context != null ? context.getResources() : null;
         mViewFlags = SOUND_EFFECTS_ENABLED | HAPTIC_FEEDBACK_ENABLED | FOCUSABLE_AUTO;
@@ -4868,6 +4869,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             sCompatibilityDone = true;
         }
+        Trace.endSection();
     }
 
     /**
@@ -4946,6 +4948,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      */
     public View(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         this(context);
+        Trace.beginSection("View inflate constructor");
 
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, com.android.internal.R.styleable.View, defStyleAttr, defStyleRes);
@@ -5601,6 +5604,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         }
 
         computeOpaqueFlags();
+        Trace.endSection();
     }
 
     /**
