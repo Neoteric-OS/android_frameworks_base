@@ -93,6 +93,30 @@
       "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d741f8c_ba5b1958",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-16T09:35:43Z",
+      "side": 1,
+      "message": "Actually, isn\u0027t it expected that the lists diverge? Some teams only developer in internal master. The code will diverge from AOSP, so will the greylists. That\u0027s not a problem?",
+      "parentUuid": "5109a370_5f49ce4f",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
