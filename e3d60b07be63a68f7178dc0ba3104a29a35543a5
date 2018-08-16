@@ -141,6 +141,30 @@
       "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58497832_23ac5297",
+        "filename": "core/tests/coretests/src/android/os/WorkSourceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-08-16T21:17:22Z",
+      "side": 1,
+      "message": "Sorry for the delay, I was OOO. The behaviour *is* intuitive if you think of the semantics of the API call. If you think about it like :\n\nws.add(ws);\nws.remove(ws);\nws.add(ws);\n\nlike I said above, it\u0027s important to note that ws will *always* be empty after \"ws.remove(ws)\", regardless of its initial contents. It should then come as no surprise that the subsequent ws.add(ws) is still  of size 0. does that make sense ?\n\nAnyway, I think the moral of the story is that we should avoid adding and removing work sources from themselves :)",
+      "parentUuid": "e189c9de_a388907f",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "e3d60b07be63a68f7178dc0ba3104a29a35543a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
