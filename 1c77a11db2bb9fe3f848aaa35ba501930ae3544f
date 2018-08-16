@@ -165,6 +165,30 @@
       "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51f58bb_a55c8f4d",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-08-16T10:01:25Z",
+      "side": 1,
+      "message": "Also, if we really care about this, we need to build tooling to do the checks at scale, it shouldn\u0027t be too hard to do. Feel free to have a look at doing that.",
+      "parentUuid": "e6348b3f_f2814b40",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "1c77a11db2bb9fe3f848aaa35ba501930ae3544f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
