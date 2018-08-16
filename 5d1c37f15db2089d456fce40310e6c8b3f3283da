@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "49ed319b_a236789c",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-16T00:20:14Z",
+      "side": 1,
+      "message": "Right. In one of the previous review, all my protected exposed APIs were asked to change to public by tgunn@.",
+      "parentUuid": "cdf936b1_65783649",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16744f1a_b423dd03",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 4
@@ -167,6 +191,24 @@
       "side": 1,
       "message": "That\u0027s not our style guide (we\u0027re Android), but the Android guide doesn\u0027t say anything specifically about it; however, the telephony code features a few very prominent and persistent cases of this:\nhttps://android.googlesource.com/platform/packages/services/Telephony/+/master/src/com/android/phone/PhoneInterfaceManager.java#472\n\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/master/src/java/com/android/internal/telephony/ServiceStateTracker.java#2684\n\nSadly, the telephony code is not 100% consistent, but in absence of a closing brace (which also creates some whitespace separation), I feel like it\u0027s done more-often-than-not... your call.",
       "parentUuid": "bdf7d264_11ae5f60",
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "444f005b_7d362144",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-16T00:20:14Z",
+      "side": 1,
+      "message": "Android coding guideline says, \"Android follows standard Java coding conventions with the additional rules described below.\" Then the question is, what\u0027s the standard Java coding conventions? Is that the one from Oracle https://www.oracle.com/technetwork/java/codeconventions-150003.pdf? (Page 14)\n\nOr the one from Google?\n\nOracle\u0027s has a space, Google\u0027s does not.",
+      "parentUuid": "5746e2d7_a7fb549a",
       "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -256,6 +298,30 @@
       "side": 1,
       "message": "If that\u0027s the case, then I suggest we simplify. I love simple, and this stuff is already very complicated.",
       "parentUuid": "571492f7_70816617",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 52
+      },
+      "revId": "5d1c37f15db2089d456fce40310e6c8b3f3283da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1e008ca_452f63a9",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-16T00:20:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "841afcfe_b15f6568",
       "range": {
         "startLine": 285,
         "startChar": 20,
