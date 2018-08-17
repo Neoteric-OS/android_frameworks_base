@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a98123f_4b77ebd6",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-08-17T01:02:45Z",
+      "side": 1,
+      "message": "We didn\u0027t do these checks anywhere earlier. Even when CellLocation was created from CellIdentity in SST, we simply queried the value and used it as is. That shouldn\u0027t cause any issues, right?\n\nOr should CellLocation deal with MAX_VALUE?",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 54
+      },
+      "revId": "be2bc4107bcfeb734a764cffeccc8266123843ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f389fa_d5f36e78",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-08-17T01:02:45Z",
+      "side": 1,
+      "message": "-1 for GSM and 0 for LTE?",
+      "range": {
+        "startLine": 218,
+        "startChar": 18,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "be2bc4107bcfeb734a764cffeccc8266123843ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
