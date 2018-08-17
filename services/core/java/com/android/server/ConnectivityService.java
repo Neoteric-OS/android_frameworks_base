@@ -894,7 +894,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         registerPrivateDnsSettingsCallbacks();
     }
 
-    private Tethering makeTethering() {
+    @VisibleForTesting
+    protected Tethering makeTethering() {
         // TODO: Move other elements into @Overridden getters.
         final TetheringDependencies deps = new TetheringDependencies() {
             @Override
@@ -1602,7 +1603,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
+    @VisibleForTesting
+    protected final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
             // TODO: notify UID when it has requested targeted updates

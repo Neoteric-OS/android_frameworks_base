@@ -51,6 +51,10 @@ import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
+import static android.net.NetworkPolicyManager.RULE_ALLOW_METERED;
+import static android.net.NetworkPolicyManager.RULE_NONE;
+import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
+import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
 
 import static com.android.internal.util.TestUtils.waitForIdleHandler;
 import static com.android.internal.util.TestUtils.waitForIdleLooper;
@@ -62,6 +66,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -147,6 +152,7 @@ import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
@@ -219,6 +225,7 @@ public class ConnectivityServiceTest {
     @Mock DefaultNetworkMetrics mDefaultNetworkMetrics;
     @Mock INetworkManagementService mNetworkManagementService;
     @Mock INetworkStatsService mStatsService;
+    @Mock NetworkPolicyManagerInternal mNPMI;
 
     private ArgumentCaptor<String[]> mStringArrayCaptor = ArgumentCaptor.forClass(String[].class);
 
@@ -914,6 +921,7 @@ public class ConnectivityServiceTest {
         public WrappedMultinetworkPolicyTracker wrappedMultinetworkPolicyTracker;
         private WrappedNetworkMonitor mLastCreatedNetworkMonitor;
         private MockableSystemProperties mSystemProperties;
+        private Tethering mTethering;
 
         public WrappedConnectivityService(Context context, INetworkManagementService netManager,
                 INetworkStatsService statsService, INetworkPolicyManager policyManager,
@@ -930,6 +938,12 @@ public class ConnectivityServiceTest {
             when(mSystemProperties.getInt("net.tcp.default_init_rwnd", 0)).thenReturn(0);
             when(mSystemProperties.getBoolean("ro.radio.noril", false)).thenReturn(false);
             return mSystemProperties;
+        }
+
+        @Override
+        protected Tethering makeTethering() {
+            mTethering = mock(Tethering.class);
+            return mTethering;
         }
 
         @Override
@@ -1022,6 +1036,20 @@ public class ConnectivityServiceTest {
         public void waitForIdle() {
             waitForIdle(TIMEOUT_MS);
         }
+
+        public void setUidRulesChanged(int uidRules) {
+            try {
+                mPolicyListener.onUidRulesChanged(Process.myUid(), uidRules);
+            } catch (RemoteException ignored) {
+            }
+        }
+
+        public void  setRestrictBackgroundChanged(boolean restrictBackground) {
+            try {
+                mPolicyListener.onRestrictBackgroundChanged(restrictBackground);
+            } catch (RemoteException ignored) {
+            }
+        }
     }
 
     /**
@@ -1050,8 +1078,7 @@ public class ConnectivityServiceTest {
 
         mServiceContext = new MockContext(InstrumentationRegistry.getContext());
         LocalServices.removeServiceForTest(NetworkPolicyManagerInternal.class);
-        LocalServices.addService(
-                NetworkPolicyManagerInternal.class, mock(NetworkPolicyManagerInternal.class));
+        LocalServices.addService(NetworkPolicyManagerInternal.class, mNPMI);
         mService = new WrappedConnectivityService(mServiceContext,
                 mNetworkManagementService,
                 mStatsService,
@@ -1437,7 +1464,8 @@ public class ConnectivityServiceTest {
         RESUMED,
         LOSING,
         LOST,
-        UNAVAILABLE
+        UNAVAILABLE,
+        BLOCKED_STATUS
     }
 
     private static class CallbackInfo {
@@ -1518,6 +1546,11 @@ public class ConnectivityServiceTest {
             setLastCallback(CallbackState.LOST, network, null);
         }
 
+        @Override
+        public void onUpdateBlockedStatus(Network network, boolean blocked) {
+            setLastCallback(CallbackState.BLOCKED_STATUS, network, blocked);
+        }
+
         public Network getLastAvailableNetwork() {
             return mLastAvailableNetwork;
         }
@@ -1578,6 +1611,7 @@ public class ConnectivityServiceTest {
         // - onSuspended, iff the network was suspended when the callbacks fire.
         // - onCapabilitiesChanged.
         // - onLinkPropertiesChanged.
+        // - onUpdateBlockedStatus.
         //
         // @param agent the network to expect the callbacks on.
         // @param expectSuspended whether to expect a SUSPENDED callback.
@@ -1596,6 +1630,7 @@ public class ConnectivityServiceTest {
                 expectCapabilitiesWithout(NET_CAPABILITY_VALIDATED, agent, timeoutMs);
             }
             expectCallback(CallbackState.LINK_PROPERTIES, agent, timeoutMs);
+            expectCallback(CallbackState.BLOCKED_STATUS, agent, timeoutMs);
         }
 
         // Expects the available callbacks (validated), plus onSuspended.
@@ -1619,6 +1654,7 @@ public class ConnectivityServiceTest {
             expectCallback(CallbackState.AVAILABLE, agent, TEST_CALLBACK_TIMEOUT_MS);
             NetworkCapabilities nc1 = expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, agent);
             expectCallback(CallbackState.LINK_PROPERTIES, agent, TEST_CALLBACK_TIMEOUT_MS);
+            expectCallback(CallbackState.BLOCKED_STATUS, agent, TEST_CALLBACK_TIMEOUT_MS);
             NetworkCapabilities nc2 = expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, agent);
             assertEquals(nc1, nc2);
         }
@@ -1659,6 +1695,12 @@ public class ConnectivityServiceTest {
             CallbackInfo cbi = expectCallback(CallbackState.NETWORK_CAPABILITIES, agent);
             assertTrue("Received capabilities don't match expectations : " + cbi.arg,
                     fn.test((NetworkCapabilities) cbi.arg));
+        }
+
+        void expectBlockedStatusCallback(boolean expectBlocked, MockNetworkAgent agent) {
+            CallbackInfo cbi = expectCallback(CallbackState.BLOCKED_STATUS, agent);
+            boolean actualBlocked = (boolean) cbi.arg;
+            assertEquals(expectBlocked, actualBlocked);
         }
 
         void assertNoCallback() {
@@ -3264,6 +3306,7 @@ public class ConnectivityServiceTest {
         // pass timeout and validate that UNAVAILABLE is called
         networkCallback.expectCallback(CallbackState.UNAVAILABLE, null);
 
+
         // create a network satisfying request - validate that request not triggered
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connect(false);
@@ -3798,6 +3841,7 @@ public class ConnectivityServiceTest {
         networkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, networkAgent);
         CallbackInfo cbi = networkCallback.expectCallback(CallbackState.LINK_PROPERTIES,
                 networkAgent);
+        networkCallback.expectCallback(CallbackState.BLOCKED_STATUS, networkAgent);
         networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, networkAgent);
         networkCallback.assertNoCallback();
         checkDirectlyConnectedRoutes(cbi.arg, Arrays.asList(myIpv4Address),
@@ -4006,6 +4050,7 @@ public class ConnectivityServiceTest {
                 mCellNetworkAgent);
         CallbackInfo cbi = cellNetworkCallback.expectCallback(
                 CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
+        cellNetworkCallback.expectCallback(CallbackState.BLOCKED_STATUS, mCellNetworkAgent);
         cellNetworkCallback.assertNoCallback();
         assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
         assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
@@ -4064,6 +4109,7 @@ public class ConnectivityServiceTest {
                 mCellNetworkAgent);
         CallbackInfo cbi = cellNetworkCallback.expectCallback(
                 CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
+        cellNetworkCallback.expectCallback(CallbackState.BLOCKED_STATUS, mCellNetworkAgent);
         cellNetworkCallback.assertNoCallback();
         assertFalse(((LinkProperties)cbi.arg).isPrivateDnsActive());
         assertNull(((LinkProperties)cbi.arg).getPrivateDnsServerName());
@@ -4438,6 +4484,145 @@ public class ConnectivityServiceTest {
                 vpnNetworkAgent);
 
         mMockVpn.disconnect();
+    }
+
+    @Test
+    public void testNetworkBlockedStatus() {
+        final TestNetworkCallback cellNetworkCallback = new TestNetworkCallback();
+        final NetworkRequest cellRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_CELLULAR)
+                .build();
+        mCm.registerNetworkCallback(cellRequest, cellNetworkCallback);
+
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        // Assert the tests are not running as system UID. Simply ignore the condition that
+        // all processes running as system UID should not be restricted to use networks.
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_NONE), anyBoolean(),
+                anyBoolean())).thenReturn(false);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_METERED), eq(true),
+                anyBoolean())).thenReturn(true);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_ALL), anyBoolean(),
+                anyBoolean())).thenReturn(true);
+
+        mService.setUidRulesChanged(RULE_REJECT_ALL);
+        cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+
+        // Since it keeps in blocked status. ConnectivityService should cache it not to invoke the
+        // callback again.
+        mService.setUidRulesChanged(RULE_REJECT_METERED);
+        cellNetworkCallback.assertNoCallback();
+
+        mService.setUidRulesChanged(RULE_NONE);
+        cellNetworkCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+        reset(mNPMI);
+
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), anyInt(), eq(false), anyBoolean()))
+                .thenReturn(false);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_METERED), eq(true),
+                anyBoolean())).thenReturn(true);
+
+        // Network should become non-blocked status once the network changes into not-metered.
+        mService.setUidRulesChanged(RULE_REJECT_METERED);
+        cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+
+        // Verify that the network becomes blocked status is correct based on both UID rule and
+        // NOT_METERED capability change.
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_NOT_METERED);
+        cellNetworkCallback.expectCapabilitiesWith(NET_CAPABILITY_NOT_METERED, mCellNetworkAgent);
+        cellNetworkCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+        mCellNetworkAgent.removeCapability(NET_CAPABILITY_NOT_METERED);
+        cellNetworkCallback.expectCapabilitiesWithout(NET_CAPABILITY_NOT_METERED,
+                mCellNetworkAgent);
+        cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+        mService.setUidRulesChanged(RULE_ALLOW_METERED);
+        cellNetworkCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+
+        mService.setUidRulesChanged(RULE_NONE);
+        cellNetworkCallback.assertNoCallback();
+        reset(mNPMI);
+
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), anyInt(), anyBoolean(), eq(true)))
+                .thenReturn(true);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), anyInt(), anyBoolean(), eq(false)))
+                .thenReturn(false);
+
+        // Verify that the network becomes blocked status is correct based on BackgroundRestricted.
+        mService.setRestrictBackgroundChanged(true);
+        cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+        mService.setRestrictBackgroundChanged(true);
+        cellNetworkCallback.assertNoCallback();
+        mService.setRestrictBackgroundChanged(false);
+        cellNetworkCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+        cellNetworkCallback.assertNoCallback();
+        reset(mNPMI);
+
+        mCm.unregisterNetworkCallback(cellNetworkCallback);
+    }
+
+    @Test
+    public void testNetworkBlockedStatusBeforeAndAfterConnect() {
+        final TestNetworkCallback defaultCallback = new TestNetworkCallback();
+        mCm.registerDefaultNetworkCallback(defaultCallback);
+
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_NONE), anyBoolean(),
+                anyBoolean())).thenReturn(false);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_METERED), eq(true),
+                anyBoolean())).thenReturn(true);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_METERED), eq(false),
+                anyBoolean())).thenReturn(false);
+        when(mNPMI.isUidNetworkingBlocked(anyInt(), eq(RULE_REJECT_ALL), anyBoolean(),
+                anyBoolean())).thenReturn(true);
+
+        // No Networkcallbacks invoked before any network is acitive.
+        mService.setUidRulesChanged(RULE_REJECT_ALL);
+        mService.setUidRulesChanged(RULE_NONE);
+        mService.setUidRulesChanged(RULE_REJECT_METERED);
+        defaultCallback.assertNoCallback();
+
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        defaultCallback.expectCallback(CallbackState.AVAILABLE, mCellNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
+        defaultCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+        defaultCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mCellNetworkAgent);
+        defaultCallback.assertNoCallback();
+
+        // Allow to use networks after switch to NOT_METERED networks.
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.addCapability(NET_CAPABILITY_NOT_METERED);
+        mWiFiNetworkAgent.connect(true);
+        defaultCallback.expectCallback(CallbackState.AVAILABLE, mWiFiNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.LINK_PROPERTIES, mWiFiNetworkAgent);
+        defaultCallback.expectBlockedStatusCallback(false, mWiFiNetworkAgent);
+        defaultCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+
+        // Switch to METERED networks. It's restricted to use the networks.
+        mWiFiNetworkAgent.disconnect();
+        defaultCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.AVAILABLE, mCellNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
+        defaultCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
+
+        // Verify block state is not changed after switching to NOT_METERED networks.
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_NOT_METERED);
+        defaultCallback.expectCapabilitiesWith(NET_CAPABILITY_NOT_METERED, mCellNetworkAgent);
+        mService.setRestrictBackgroundChanged(true);
+        defaultCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+        mService.setRestrictBackgroundChanged(false);
+        defaultCallback.assertNoCallback();
+
+        mCellNetworkAgent.disconnect();
+        defaultCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
+        defaultCallback.assertNoCallback();
+
+        reset(mNPMI);
+        mCm.unregisterNetworkCallback(defaultCallback);
     }
 
     /**
