@@ -23,9 +23,12 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkPolicy.LIMIT_DISABLED;
 import static android.net.NetworkPolicy.SNOOZE_NEVER;
 import static android.net.NetworkPolicy.WARNING_DISABLED;
-import static android.net.NetworkPolicyManager.POLICY_ALLOW_METERED_BACKGROUND;
-import static android.net.NetworkPolicyManager.POLICY_NONE;
-import static android.net.NetworkPolicyManager.POLICY_REJECT_METERED_BACKGROUND;
+import static android.net.NetworkPolicyManager.RULE_ALLOW_ALL;
+import static android.net.NetworkPolicyManager.RULE_ALLOW_METERED;
+import static android.net.NetworkPolicyManager.RULE_NONE;
+import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
+import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
+import static android.net.NetworkPolicyManager.RULE_TEMPORARY_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.uidPoliciesToString;
 import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.SET_ALL;
@@ -135,10 +138,10 @@ import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsManagerInternal;
 
+import com.google.common.util.concurrent.AbstractFuture;
+
 import libcore.io.IoUtils;
 import libcore.io.Streams;
-
-import com.google.common.util.concurrent.AbstractFuture;
 
 import org.junit.After;
 import org.junit.Before;
@@ -270,6 +273,7 @@ public class NetworkPolicyManagerServiceTest {
     private static final int APP_ID_E = android.os.Process.FIRST_APPLICATION_UID + 23;
     private static final int APP_ID_F = android.os.Process.FIRST_APPLICATION_UID + 42;
 
+    private static final int SYSTEM_UID = android.os.Process.SYSTEM_UID;
     private static final int UID_A = UserHandle.getUid(USER_ID, APP_ID_A);
     private static final int UID_B = UserHandle.getUid(USER_ID, APP_ID_B);
     private static final int UID_C = UserHandle.getUid(USER_ID, APP_ID_C);
@@ -1640,6 +1644,74 @@ public class NetworkPolicyManagerServiceTest {
 
         assertNetworkPolicyEquals(DEFAULT_CYCLE_DAY, mDefaultWarningBytes, mDefaultLimitBytes,
                 true);
+    }
+
+    /**
+     * Exhaustively test isUidNetworkingBlocked to output the expected results based on external
+     * conditions.
+     */
+
+    @Test
+    public void testIsUidNetworkingBlocked() {
+        final NetworkPolicyManagerInternal internal = LocalServices
+                .getService(NetworkPolicyManagerInternal.class);
+
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_NONE, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_NONE, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_NONE, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_NONE, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_METERED, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_METERED, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(
+                SYSTEM_UID, RULE_TEMPORARY_ALLOW_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(
+                SYSTEM_UID, RULE_TEMPORARY_ALLOW_METERED, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(
+                SYSTEM_UID, RULE_TEMPORARY_ALLOW_METERED, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(
+                SYSTEM_UID, RULE_TEMPORARY_ALLOW_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_METERED, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_METERED, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_ALL, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_ALL, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_ALL, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_ALLOW_ALL, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_ALL, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_ALL, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_ALL, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(SYSTEM_UID, RULE_REJECT_ALL, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_NONE, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_NONE, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_NONE, true, false));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_NONE, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_METERED, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_METERED, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(
+                UID_A, RULE_TEMPORARY_ALLOW_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(
+                UID_A, RULE_TEMPORARY_ALLOW_METERED, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(
+                UID_A, RULE_TEMPORARY_ALLOW_METERED, true, false));
+        assertFalse(internal.isUidNetworkingBlocked(
+                UID_A, RULE_TEMPORARY_ALLOW_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_METERED, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_METERED, false, true));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_METERED, true, false));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_METERED, true, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_ALL, false, false));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_ALL, false, true));
+        assertFalse(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_ALL, true, false));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_ALLOW_ALL, true, true));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_ALL, false, false));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_ALL, false, true));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_ALL, true, false));
+        assertTrue(internal.isUidNetworkingBlocked(UID_A, RULE_REJECT_ALL, true, true));
     }
 
     private SubscriptionPlan buildMonthlyDataPlan(ZonedDateTime start, long limitBytes) {
