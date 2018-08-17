@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c50def91_c1fb6173",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-17T01:05:22Z",
+      "side": 1,
+      "message": "CellLocation uses -1 as its \"default\" value whereas CellIdentity uses Integer.MAX_VALUE. If the value is in-range it\u0027s the same in both cases, but the \"unset/unreported\" cases use these different values; hence I need to adjust them for backwards compatibility. PTAL at the defaults in CellLocation.",
+      "parentUuid": "0a98123f_4b77ebd6",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 54
+      },
+      "revId": "be2bc4107bcfeb734a764cffeccc8266123843ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f389fa_d5f36e78",
         "filename": "telephony/java/android/telephony/CellIdentityLte.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-17T01:02:45Z",
       "side": 1,
       "message": "-1 for GSM and 0 for LTE?",
+      "range": {
+        "startLine": 218,
+        "startChar": 18,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "be2bc4107bcfeb734a764cffeccc8266123843ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84667dc5_9f692da8",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-08-17T01:05:22Z",
+      "side": 1,
+      "message": "PTAL at the comment above the function which explains how this is done. It\u0027s for backwards compatibility.",
+      "parentUuid": "60f389fa_d5f36e78",
       "range": {
         "startLine": 218,
         "startChar": 18,
