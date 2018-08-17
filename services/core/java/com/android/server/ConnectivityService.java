@@ -232,7 +232,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private MockableSystemProperties mSystemProperties;
 
-    private Tethering mTethering;
+    @VisibleForTesting
+    protected Tethering mTethering;
 
     private final PermissionMonitor mPermissionMonitor;
 
@@ -1602,7 +1603,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
+    @VisibleForTesting
+    protected final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
             // TODO: notify UID when it has requested targeted updates
