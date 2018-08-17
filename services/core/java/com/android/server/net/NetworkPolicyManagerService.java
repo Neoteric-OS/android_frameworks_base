@@ -4786,19 +4786,29 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final long startTime = mStatLogger.getTime();
 
         mContext.enforceCallingOrSelfPermission(MANAGE_NETWORK_POLICY, TAG);
-        final boolean ret = isUidNetworkingBlockedInternal(uid, isNetworkMetered);
+        final int uidRules;
+        final boolean isBackgroundRestricted;
+        synchronized (mUidRulesFirstLock) {
+            uidRules = mUidRules.get(uid, RULE_NONE);
+            isBackgroundRestricted = mRestrictBackground;
+        }
+        final boolean ret = isUidNetworkingBlockedInternal(uid, uidRules, isNetworkMetered,
+                isBackgroundRestricted);
 
         mStatLogger.logDurationStat(Stats.IS_UID_NETWORKING_BLOCKED, startTime);
 
         return ret;
     }
 
-    private boolean isUidNetworkingBlockedInternal(int uid, boolean isNetworkMetered) {
-        final int uidRules;
-        final boolean isBackgroundRestricted;
-        synchronized (mUidRulesFirstLock) {
-            uidRules = mUidRules.get(uid, RULE_NONE);
-            isBackgroundRestricted = mRestrictBackground;
+    private boolean isSystem(int uid) {
+        return uid < Process.FIRST_APPLICATION_UID;
+    }
+
+    private boolean isUidNetworkingBlockedInternal(int uid, int uidRules, boolean isNetworkMetered,
+            boolean isBackgroundRestricted) {
+        // Networks are never blocked for system services
+        if (isSystem(uid)) {
+            return false;
         }
         if (hasRule(uidRules, RULE_REJECT_ALL)) {
             mLogger.networkBlocked(uid, NTWK_BLOCKED_POWER);
@@ -4844,22 +4854,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
 
         /**
-         * @return true if the given uid is restricted from doing networking on metered networks.
-         */
-        @Override
-        public boolean isUidRestrictedOnMeteredNetworks(int uid) {
-            final int uidRules;
-            final boolean isBackgroundRestricted;
-            synchronized (mUidRulesFirstLock) {
-                uidRules = mUidRules.get(uid, RULE_ALLOW_ALL);
-                isBackgroundRestricted = mRestrictBackground;
-            }
-            return isBackgroundRestricted
-                    && !hasRule(uidRules, RULE_ALLOW_METERED)
-                    && !hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED);
-        }
-
-        /**
          * @return true if networking is blocked on the given interface for the given uid according
          * to current networking policies.
          */
@@ -4871,11 +4865,32 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             synchronized (mNetworkPoliciesSecondLock) {
                 isNetworkMetered = mMeteredIfaces.contains(ifname);
             }
-            final boolean ret = isUidNetworkingBlockedInternal(uid, isNetworkMetered);
+            // Function of outer class was hidden by inner class, need to prefix the call.
+            final boolean ret = NetworkPolicyManagerService.this.isUidNetworkingBlocked(uid,
+                    isNetworkMetered);
 
             mStatLogger.logDurationStat(Stats.IS_UID_NETWORKING_BLOCKED, startTime);
 
             return ret;
+        }
+
+        /**
+         * Figure out if networking is blocked for a given set of conditions.
+         *
+         * This is useful when conditions are stale copies.
+         *
+         * @param uid The target uid.
+         * @param uidRules The uid rules which are obtained from NetworkPolicyManagerService.
+         * @param isNetworkMetered True if the network is metered.
+         * @param isBackgroundRestricted True if data saver is enabled.
+         *
+         * @return true if networking is blocked for the UID under the specified conditions.
+         */
+        @Override
+        public boolean isUidNetworkingBlocked(int uid, int uidRules, boolean isNetworkMetered,
+                boolean isBackgroundRestricted) {
+            return isUidNetworkingBlockedInternal(uid, uidRules, isNetworkMetered,
+                    isBackgroundRestricted);
         }
 
         @Override
