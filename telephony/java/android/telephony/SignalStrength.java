@@ -1317,12 +1317,16 @@ public class SignalStrength implements Parcelable {
         mUseOnlyRsrpForLteLevel = m.getBoolean("UseOnlyRsrpForLteLevel");
         mWcdmaDefaultSignalMeasurement = m.getString("WcdmaDefaultSignalMeasurement");
         ArrayList<Integer> lteRsrpThresholds = m.getIntegerArrayList("lteRsrpThresholds");
-        for (int i = 0; i < lteRsrpThresholds.size(); i++) {
-            mLteRsrpThresholds[i] = lteRsrpThresholds.get(i);
+        if (lteRsrpThresholds != null) {
+            for (int i = 0; i < lteRsrpThresholds.size(); i++) {
+                mLteRsrpThresholds[i] = lteRsrpThresholds.get(i);
+            }
         }
         ArrayList<Integer> wcdmaRscpThresholds = m.getIntegerArrayList("wcdmaRscpThresholds");
-        for (int i = 0; i < wcdmaRscpThresholds.size(); i++) {
-            mWcdmaRscpThresholds[i] = wcdmaRscpThresholds.get(i);
+        if (wcdmaRscpThresholds != null) {
+            for (int i = 0; i < wcdmaRscpThresholds.size(); i++) {
+                mWcdmaRscpThresholds[i] = wcdmaRscpThresholds.get(i);
+            }
         }
     }
 
