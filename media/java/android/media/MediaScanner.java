@@ -163,6 +163,8 @@ public class MediaScanner implements AutoCloseable {
     private static final String OEM_SOUNDS_DIR = Environment.getOemDirectory() + "/media/audio";
     private static final String PRODUCT_SOUNDS_DIR = Environment.getProductDirectory() + "/media/audio";
     private static String sLastInternalScanFingerprint;
+    private static boolean sIsScanning;
+    private static boolean sIsScanAborted;
 
     private static final String[] ID3_GENRES = {
         // ID3v1 Genres
@@ -602,6 +604,10 @@ public class MediaScanner implements AutoCloseable {
                 boolean isDirectory, boolean noMedia) {
             // This is the callback funtion from native codes.
             // Log.v(TAG, "scanFile: "+path);
+            if (isAborted()) {
+                Log.w(TAG, "scan was aborted");
+                throw new IllegalStateException("scan was aborted");
+            }
             doScanFile(path, null, lastModified, fileSize, isDirectory, false, noMedia);
         }
 
@@ -1385,8 +1391,32 @@ public class MediaScanner implements AutoCloseable {
         }
     }
 
+    private void setScanning(boolean scanning) {
+        synchronized (MediaScanner.class) {
+            if (!mVolumeName.equals("internal")) {
+                sIsScanning = scanning;
+                sIsScanAborted = false;
+            }
+        }
+    }
+
+    public static void abort() {
+        synchronized (MediaScanner.class) {
+            sIsScanAborted = true;
+        }
+    }
+
+    public static boolean isAborted() {
+        boolean ret = false;
+        synchronized (MediaScanner.class) {
+            ret = sIsScanAborted && sIsScanning;
+        }
+        return ret;
+    }
+
     public void scanDirectories(String[] directories) {
         try {
+            setScanning(true);
             long start = System.currentTimeMillis();
             prescan(null, true);
             long prescan = System.currentTimeMillis();
@@ -1425,6 +1455,7 @@ public class MediaScanner implements AutoCloseable {
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException in MediaScanner.scan()", e);
         } finally {
+            setScanning(false);
             releaseResources();
         }
     }
