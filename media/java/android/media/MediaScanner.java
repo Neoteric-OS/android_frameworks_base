@@ -66,6 +66,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -124,7 +125,8 @@ public class MediaScanner implements AutoCloseable {
         native_init();
     }
 
-    private final static String TAG = "MediaScanner";
+    private static final String TAG = "MediaScanner";
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     @UnsupportedAppUsage
     private static final String[] FILES_PRESCAN_PROJECTION = new String[] {
@@ -720,6 +722,7 @@ public class MediaScanner implements AutoCloseable {
             return result;
         }
 
+        @Override
         @UnsupportedAppUsage
         public void handleStringTag(String name, String value) {
             if (name.equalsIgnoreCase("title") || name.startsWith("title;")) {
@@ -782,10 +785,11 @@ public class MediaScanner implements AutoCloseable {
             if (output.equals(expected)) {
                 return true;
             } else {
-                Log.d(TAG, "'" + input + "' -> '" + output + "', expected '" + expected + "'");
+                Log.w(TAG, "'" + input + "' -> '" + output + "', expected '" + expected + "'");
                 return false;
             }
         }
+
         private void testGenreNameConverter() {
             convertGenreCode("2", "Country");
             convertGenreCode("(2)", "Country");
@@ -803,8 +807,7 @@ public class MediaScanner implements AutoCloseable {
             convertGenreCode("200) Foo", "200) Foo");
         }
 
-        public String getGenreName(String genreTagValue) {
-
+        private String getGenreName(String genreTagValue) {
             if (genreTagValue == null) {
                 return null;
             }
@@ -871,6 +874,7 @@ public class MediaScanner implements AutoCloseable {
             return false;
         }
 
+        @Override
         @UnsupportedAppUsage
         public void setMimeType(String mimeType) {
             if ("audio/mp4".equals(mMimeType) &&
@@ -1379,7 +1383,7 @@ public class MediaScanner implements AutoCloseable {
                 int numrows = mProvider.delete(mBaseUri,
                         MediaStore.MediaColumns._ID + " IN (" +
                         whereClause.toString() + ")", foo);
-                //Log.i("@@@@@@@@@", "rows deleted: " + numrows);
+                if (DEBUG) Log.i(TAG, "rows deleted: " + numrows);
                 whereClause.setLength(0);
                 whereArgs.clear();
             }
@@ -1407,6 +1411,7 @@ public class MediaScanner implements AutoCloseable {
     }
 
     public void scanDirectories(String[] directories) {
+        if (DEBUG) Log.d(TAG, "scanDirectories: " + Arrays.toString(directories));
         try {
             long start = System.currentTimeMillis();
             prescan(null, true);
@@ -1431,11 +1436,12 @@ public class MediaScanner implements AutoCloseable {
             postscan(directories);
             long end = System.currentTimeMillis();
 
-            if (false) {
-                Log.d(TAG, " prescan time: " + (prescan - start) + "ms\n");
-                Log.d(TAG, "    scan time: " + (scan - prescan) + "ms\n");
-                Log.d(TAG, "postscan time: " + (end - scan) + "ms\n");
-                Log.d(TAG, "   total time: " + (end - start) + "ms\n");
+            if (DEBUG) {
+                Log.i(TAG, "< SCAN > : " + Arrays.toString(directories));
+                Log.i(TAG, " prescan time: " + (prescan - start) + "ms");
+                Log.i(TAG, "    scan time: " + (scan - prescan) + "ms");
+                Log.i(TAG, "postscan time: " + (end - scan) + "ms");
+                Log.i(TAG, "   total time: " + (end - start) + "ms");
             }
         } catch (SQLException e) {
             // this might happen if the SD card is removed while the media scanner is running
@@ -1453,6 +1459,7 @@ public class MediaScanner implements AutoCloseable {
     // this function is used to scan a single file
     @UnsupportedAppUsage
     public Uri scanSingleFile(String path, String mimeType) {
+        if (DEBUG) Log.d(TAG, "scanSingleFile: " + path + "," + mimeType);
         try {
             prescan(path, true);
 
@@ -1568,6 +1575,7 @@ public class MediaScanner implements AutoCloseable {
     }
 
     public void scanMtpFile(String path, int objectHandle, int format) {
+        if (DEBUG) Log.d(TAG, "scanMtpFile: " + path + "," + objectHandle + "," + format);
         MediaFile.MediaFileType mediaFileType = MediaFile.getFileType(path);
         int fileType = (mediaFileType == null ? 0 : mediaFileType.fileType);
         File file = new File(path);
