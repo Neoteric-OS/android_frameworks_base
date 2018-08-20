@@ -1284,6 +1284,9 @@ public class MediaScanner implements AutoCloseable {
                 // with CursorWindow positioning.
                 long lastId = Long.MIN_VALUE;
                 Uri limitUri = mFilesUri.buildUpon().appendQueryParameter("limit", "1000").build();
+                if (filePath == null) {
+                    limitUri = limitUri.buildUpon().appendQueryParameter("prescan", mVolumeName).build();
+                }
 
                 while (true) {
                     selectionArgs[0] = "" + lastId;
