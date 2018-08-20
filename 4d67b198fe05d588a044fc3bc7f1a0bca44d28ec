@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c769c252_809a8cc1",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-20T21:56:33Z",
+      "side": 1,
+      "message": "for",
+      "range": {
+        "startLine": 127,
+        "startChar": 90,
+        "endLine": 127,
+        "endChar": 92
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4a5a4c_2c4f1ae6",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-20T21:56:33Z",
+      "side": 1,
+      "message": "What does this integer refer to?  Ie how does this identify a network?",
+      "range": {
+        "startLine": 131,
+        "startChar": 78,
+        "endLine": 131,
+        "endChar": 95
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3794eeda_8012e805",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-20T21:56:33Z",
+      "side": 1,
+      "message": "To clarify, does the system bind to the service one and call this method once for each active slot?\nWhat is the binding lifecycle?  Does the system bind, call this method for each active slot, and then unbind?  Or is the binding persistent?\nWhat happens if a slot becomes unavailable?  E.g. a sim is removed from that slot?",
+      "range": {
+        "startLine": 224,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 31
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bc1200_00665561",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-20T21:56:33Z",
+      "side": 1,
+      "message": "Should be slotIndex; we refer to it as such in TelephonyManager.",
+      "range": {
+        "startLine": 230,
+        "startChar": 84,
+        "endLine": 230,
+        "endChar": 90
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
