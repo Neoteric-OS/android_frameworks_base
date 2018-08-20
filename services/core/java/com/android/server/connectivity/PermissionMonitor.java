@@ -34,6 +34,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -155,9 +156,8 @@ public class PermissionMonitor {
     }
 
     @VisibleForTesting
-    boolean isPreinstalledSystemApp(PackageInfo app) {
-        int flags = app.applicationInfo != null ? app.applicationInfo.flags : 0;
-        return (flags & (FLAG_SYSTEM | FLAG_UPDATED_SYSTEM_APP)) != 0;
+    boolean isVendorApp(PackageInfo app) {
+        return app.applicationInfo != null ? app.applicationInfo.isVendor() : false;
     }
 
     @VisibleForTesting
@@ -177,7 +177,13 @@ public class PermissionMonitor {
     }
 
     private boolean hasRestrictedNetworkPermission(PackageInfo app) {
-        if (isPreinstalledSystemApp(app)) return true;
+        // TODO : remove this check in the future(b/31479477). All apps should just
+        // request the appropriate permission for their use case after android P.
+        if (app.applicationInfo != null
+                && app.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P
+                && isVendorApp(app)) {
+            return true;
+        }
         return hasPermission(app, CONNECTIVITY_INTERNAL)
                 || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
     }
@@ -186,13 +192,8 @@ public class PermissionMonitor {
         // This function defines what it means to hold the permission to use
         // background networks.
         return hasPermission(app, CHANGE_NETWORK_STATE)
-                || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS)
-                || hasPermission(app, CONNECTIVITY_INTERNAL)
                 || hasPermission(app, NETWORK_STACK)
-                // TODO : remove this check (b/31479477). Not all preinstalled apps should
-                // have access to background networks, they should just request the appropriate
-                // permission for their use case from the list above.
-                || isPreinstalledSystemApp(app);
+                || hasRestrictedNetworkPermission(app);
     }
 
     public boolean hasUseBackgroundNetworksPermission(int uid) {

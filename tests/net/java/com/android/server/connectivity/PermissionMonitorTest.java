@@ -21,7 +21,7 @@ import static android.Manifest.permission.CHANGE_WIFI_STATE;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.NETWORK_STACK;
-import static android.content.pm.ApplicationInfo.FLAG_SYSTEM;
+import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_VENDOR;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 
 import static org.junit.Assert.assertFalse;
@@ -34,6 +34,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -62,23 +63,26 @@ public class PermissionMonitorTest {
         mPermissionMonitor = new PermissionMonitor(mContext, null);
     }
 
-    private void expectPermission(String[] permissions, boolean preinstalled) throws Exception {
-        final PackageInfo packageInfo = packageInfoWithPermissions(permissions, preinstalled);
+    private void expectPermission(String[] permissions, String partition,
+            int targetSdkVersion) throws Exception {
+        final PackageInfo packageInfo = packageInfoWithPermissions(permissions, partition);
+        packageInfo.applicationInfo.targetSdkVersion = targetSdkVersion;
         when(mPackageManager.getPackageInfoAsUser(
                 eq(MOCK_PACKAGE_NAMES[0]), eq(GET_PERMISSIONS), anyInt())).thenReturn(packageInfo);
     }
 
-    private PackageInfo packageInfoWithPermissions(String[] permissions, boolean preinstalled) {
+    private PackageInfo packageInfoWithPermissions(String[] permissions, String partition) {
         final PackageInfo packageInfo = new PackageInfo();
         packageInfo.requestedPermissions = permissions;
         packageInfo.applicationInfo = new ApplicationInfo();
-        packageInfo.applicationInfo.flags = preinstalled ? FLAG_SYSTEM : 0;
+        packageInfo.applicationInfo.privateFlags =
+            partition.equals("vendor") ? PRIVATE_FLAG_VENDOR : 0;
         return packageInfo;
     }
 
     @Test
     public void testHasPermission() {
-        PackageInfo app = packageInfoWithPermissions(new String[] {}, false);
+        PackageInfo app = packageInfoWithPermissions(new String[] {}, "system");
         assertFalse(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertFalse(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
@@ -86,7 +90,7 @@ public class PermissionMonitorTest {
 
         app = packageInfoWithPermissions(new String[] {
                 CHANGE_NETWORK_STATE, NETWORK_STACK
-            }, false);
+            }, "system");
         assertTrue(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertTrue(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
@@ -94,7 +98,7 @@ public class PermissionMonitorTest {
 
         app = packageInfoWithPermissions(new String[] {
                 CONNECTIVITY_USE_RESTRICTED_NETWORKS, CONNECTIVITY_INTERNAL
-            }, false);
+            }, "system");
         assertFalse(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertFalse(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertTrue(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
@@ -102,35 +106,53 @@ public class PermissionMonitorTest {
     }
 
     @Test
-    public void testIsPreinstalledSystemApp() {
-        PackageInfo app = packageInfoWithPermissions(new String[] {}, false);
-        assertFalse(mPermissionMonitor.isPreinstalledSystemApp(app));
+    public void testIsVendorApp() {
+        PackageInfo app = packageInfoWithPermissions(new String[] {}, "system");
+        assertFalse(mPermissionMonitor.isVendorApp(app));
 
-        app = packageInfoWithPermissions(new String[] {}, true);
-        assertTrue(mPermissionMonitor.isPreinstalledSystemApp(app));
+        app = packageInfoWithPermissions(new String[] {}, "vendor");
+        assertTrue(mPermissionMonitor.isVendorApp(app));
     }
 
     @Test
     public void testHasUseBackgroundNetworksPermission() throws Exception {
-        expectPermission(new String[] { CHANGE_NETWORK_STATE }, false);
+        expectPermission(new String[] { CHANGE_NETWORK_STATE }, "system", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { NETWORK_STACK }, "system", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CONNECTIVITY_INTERNAL }, "system", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CONNECTIVITY_USE_RESTRICTED_NETWORKS },
+            "system", Build.VERSION_CODES.P);
         assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
 
-        expectPermission(new String[] { NETWORK_STACK, CONNECTIVITY_INTERNAL }, false);
+        expectPermission(new String[] { CHANGE_NETWORK_STATE }, "vendor", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { NETWORK_STACK }, "vendor", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CONNECTIVITY_INTERNAL }, "vendor", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CONNECTIVITY_USE_RESTRICTED_NETWORKS },
+            "vendor", Build.VERSION_CODES.P);
         assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
 
-        // TODO : make this false when b/31479477 is fixed
-        expectPermission(new String[] {}, true);
-        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
-        expectPermission(new String[] { CHANGE_WIFI_STATE }, true);
-        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
-
-        expectPermission(new String[] { NETWORK_STACK, CONNECTIVITY_INTERNAL }, true);
-        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
-
-        expectPermission(new String[] {}, false);
+        expectPermission(new String[] {}, "system", Build.VERSION_CODES.P);
         assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CHANGE_WIFI_STATE }, "system", Build.VERSION_CODES.P);
+        assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] {}, "vendor", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CHANGE_WIFI_STATE }, "vendor", Build.VERSION_CODES.P);
+        assertTrue(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
 
-        expectPermission(new String[] { CHANGE_WIFI_STATE }, false);
+        // TODO: update version when starting to enforce 1:1 mapping
+        expectPermission(new String[] {}, "system", Build.VERSION_CODES.P + 1);
+        assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CHANGE_WIFI_STATE }, "system", Build.VERSION_CODES.P + 1);
+        assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] {}, "vendor", Build.VERSION_CODES.P + 1);
+        assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
+        expectPermission(new String[] { CHANGE_WIFI_STATE }, "vendor", Build.VERSION_CODES.P + 1);
         assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID));
     }
 }
