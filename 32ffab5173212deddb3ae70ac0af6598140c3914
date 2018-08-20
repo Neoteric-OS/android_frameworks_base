@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da25d305_35521a08",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "remove this portion -- no longer needed",
+      "range": {
+        "startLine": 314,
+        "startChar": 3,
+        "endLine": 318,
+        "endChar": 99
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027e4105_ad6686fa",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "NOT_IMPLEMENTED",
+      "range": {
+        "startLine": 335,
+        "startChar": 41,
+        "endLine": 335,
+        "endChar": 44
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9481c8_31a52281",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "How is this different from ERROR_UNSPECIFIED?",
+      "range": {
+        "startLine": 341,
+        "startChar": 28,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d717661_dc353dbc",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "How is this different from LOW_BATTERY above?",
+      "range": {
+        "startLine": 343,
+        "startChar": 28,
+        "endLine": 343,
+        "endChar": 45
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5da9f3_ed41abff",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "For consistency, don\u0027t abbreviate this since all the other _AVAILABLE constants fully spell out \"available\"",
+      "range": {
+        "startLine": 344,
+        "startChar": 39,
+        "endLine": 344,
+        "endChar": 44
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ceae49_49735a99",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "DESTINATION",
+      "range": {
+        "startLine": 345,
+        "startChar": 40,
+        "endLine": 345,
+        "endChar": 49
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92b5b0b_0e2476e0",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "How is this different from NO_ANSWER_FROM_USER?",
+      "range": {
+        "startLine": 347,
+        "startChar": 28,
+        "endLine": 347,
+        "endChar": 56
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847efa3e_5d1b5f5c",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "The disconnect causes that are already in this file have javadoc attached them to explain what they mean. Please add similar documentation for these new values.",
+      "range": {
+        "startLine": 320,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 0
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27c029f_34671034",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "What\u0027s this used for?",
+      "range": {
+        "startLine": 389,
+        "startChar": 28,
+        "endLine": 389,
+        "endChar": 47
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2b008d_3a87a49f",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-08-20T22:49:37Z",
+      "side": 1,
+      "message": "Should be IMS_SIP_ALTERNATE_EMERGENCY_CALL",
+      "range": {
+        "startLine": 389,
+        "startChar": 50,
+        "endLine": 389,
+        "endChar": 76
+      },
+      "revId": "32ffab5173212deddb3ae70ac0af6598140c3914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
