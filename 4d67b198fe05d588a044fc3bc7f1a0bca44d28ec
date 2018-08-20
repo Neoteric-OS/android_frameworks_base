@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e38b4088_b8546008",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-20T23:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c769c252_809a8cc1",
+      "range": {
+        "startLine": 127,
+        "startChar": 90,
+        "endLine": 127,
+        "endChar": 92
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc4a5a4c_2c4f1ae6",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-20T21:56:33Z",
       "side": 1,
       "message": "What does this integer refer to?  Ie how does this identify a network?",
+      "range": {
+        "startLine": 131,
+        "startChar": 78,
+        "endLine": 131,
+        "endChar": 95
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46886699_d0ccf618",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-20T23:31:09Z",
+      "side": 1,
+      "message": "It\u0027s an array of AccessNetworkType, which is an access network type.",
+      "parentUuid": "dc4a5a4c_2c4f1ae6",
       "range": {
         "startLine": 131,
         "startChar": 78,
@@ -91,6 +139,30 @@
       "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59a6110_e925491d",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-20T23:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99bc1200_00665561",
+      "range": {
+        "startLine": 230,
+        "startChar": 84,
+        "endLine": 230,
+        "endChar": 90
+      },
+      "revId": "4d67b198fe05d588a044fc3bc7f1a0bca44d28ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
