@@ -22,6 +22,30 @@
       "revId": "6562854634ba0e8647d951be664804de2c2622a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036d3eb0_da6ae6bf",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-08-20T09:41:40Z",
+      "side": 1,
+      "message": "yes, wrong resolve conflicts",
+      "parentUuid": "fb36bead_935ebf03",
+      "range": {
+        "startLine": 326,
+        "startChar": 45,
+        "endLine": 326,
+        "endChar": 48
+      },
+      "revId": "6562854634ba0e8647d951be664804de2c2622a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
