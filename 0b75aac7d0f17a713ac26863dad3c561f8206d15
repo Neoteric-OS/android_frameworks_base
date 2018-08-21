@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e8b210_e367923e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2018-08-21T19:05:25Z",
+      "side": 1,
+      "message": "Please describe what has changed for HeadsetProfile.java. If the CL is about connect() and disconnect() methods, please describe the end state of these two methods after this refactor. Or maybe just \"Simply logic for connect and disconnect in HeadsetProfile\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "0b75aac7d0f17a713ac26863dad3c561f8206d15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
