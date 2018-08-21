@@ -456,7 +456,7 @@ public class NotificationManagerService extends SystemService {
     protected void readDefaultApprovedServices(int userId) {
         String defaultListenerAccess = getContext().getResources().getString(
                 com.android.internal.R.string.config_defaultListenerAccessPackages);
-        if (defaultListenerAccess != null) {
+        if (!TextUtils.isEmpty(defaultListenerAccess)) {
             for (String whitelisted :
                     defaultListenerAccess.split(ManagedServices.ENABLED_SERVICES_SEPARATOR)) {
                 // Gather all notification listener components for candidate pkgs.
