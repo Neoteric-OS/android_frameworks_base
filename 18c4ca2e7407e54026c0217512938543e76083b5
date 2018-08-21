@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cabc077_aa3e3ae3",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-21T21:53:00Z",
+      "side": 1,
+      "message": "Those constants could use an intdef which could be referenced here as well.",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf1903a_05204491",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-21T21:53:00Z",
+      "side": 1,
+      "message": "You should consider using the AutoCloseable interface here (see MbmsDownloadSession).  Its a way for implementors to specify close-out logic and cleanup without overloading the meaning of onDestroy.",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
