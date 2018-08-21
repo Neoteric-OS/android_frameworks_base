@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dab4fa0_56fcfc73",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-21T21:04:15Z",
+      "side": 1,
+      "message": "can we rename the intent to android.telephony.action.SECRET_CODE?",
+      "range": {
+        "startLine": 2479,
+        "startChar": 31,
+        "endLine": 2479,
+        "endChar": 42
+      },
+      "revId": "ee4938f4af2883826723fab8b30f7538be6eb3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
