@@ -117,45 +117,21 @@ public class HeadsetProfile implements LocalBluetoothProfile {
 
     public boolean connect(BluetoothDevice device) {
         if (mService == null) return false;
-        List<BluetoothDevice> sinks = mService.getConnectedDevices();
-        if (sinks != null) {
-            for (BluetoothDevice sink : sinks) {
-                Log.d(TAG,"Not disconnecting device = " + sink);
-            }
-        }
         return mService.connect(device);
     }
 
     public boolean disconnect(BluetoothDevice device) {
         if (mService == null) return false;
-        List<BluetoothDevice> deviceList = mService.getConnectedDevices();
-        if (!deviceList.isEmpty()) {
-            for (BluetoothDevice dev : deviceList) {
-                if (dev.equals(device)) {
-                    if (V) Log.d(TAG,"Downgrade priority as user" +
-                                        "is disconnecting the headset");
-                    // Downgrade priority as user is disconnecting the headset.
-                    if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON) {
-                        mService.setPriority(device, BluetoothProfile.PRIORITY_ON);
-                    }
-                    return mService.disconnect(device);
-                }
-            }
+        // Downgrade priority as user is disconnecting the headset.
+        if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON) {
+            mService.setPriority(device, BluetoothProfile.PRIORITY_ON);
         }
-        return false;
+        return mService.disconnect(device);
     }
 
     public int getConnectionStatus(BluetoothDevice device) {
         if (mService == null) return BluetoothProfile.STATE_DISCONNECTED;
-        List<BluetoothDevice> deviceList = mService.getConnectedDevices();
-        if (!deviceList.isEmpty()){
-            for (BluetoothDevice dev : deviceList) {
-                if (dev.equals(device)) {
-                    return mService.getConnectionState(device);
-                }
-            }
-        }
-        return BluetoothProfile.STATE_DISCONNECTED;
+        return mService.getConnectionState(device);
     }
 
     public boolean setActiveDevice(BluetoothDevice device) {
