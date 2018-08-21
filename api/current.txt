@@ -42574,6 +42574,7 @@ package android.telephony {
     field public static final java.lang.String ACTION_RESPOND_VIA_MESSAGE = "android.intent.action.RESPOND_VIA_MESSAGE";
     field public static final java.lang.String ACTION_SHOW_VOICEMAIL_NOTIFICATION = "android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION";
     field public static final java.lang.String ACTION_SUBSCRIPTION_CARRIER_IDENTITY_CHANGED = "android.telephony.action.SUBSCRIPTION_CARRIER_IDENTITY_CHANGED";
+    field public static final java.lang.String SECRET_CODE_ACTION = "android.telephony.action.SECRET_CODE";
     field public static final int APPTYPE_CSIM = 4; // 0x4
     field public static final int APPTYPE_ISIM = 5; // 0x5
     field public static final int APPTYPE_RUIM = 3; // 0x3
