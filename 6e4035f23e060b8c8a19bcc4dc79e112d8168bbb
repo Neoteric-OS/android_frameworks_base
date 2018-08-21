@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc5adad_f0aa4641",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-21T09:20:41Z",
+      "side": 1,
+      "message": "Can this race with an app adding a tethering restriction? If so, then I think we can get the following sequence of events:\n\n1. isTetheringSupported returns true.\n2. tethering goes from unrestricted to restricted\n3. untetherAll() crashes\n\nInstead of doing this, perhaps catch the exception that is thrown by untetherAll? What type is that exception, is it a SecurityException?",
+      "range": {
+        "startLine": 1583,
+        "startChar": 38,
+        "endLine": 1583,
+        "endChar": 58
+      },
+      "revId": "6e4035f23e060b8c8a19bcc4dc79e112d8168bbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
