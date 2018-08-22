@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b8f512a_d797109e",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-22T01:03:40Z",
+      "side": 1,
+      "message": "We tried it hard earlier but failed because it is a class name. You can\u0027t have an intdef having the same name.",
+      "parentUuid": "0cabc077_aa3e3ae3",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf1903a_05204491",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f002c1_0b493f1b",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-08-22T01:03:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf1903a_05204491",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
