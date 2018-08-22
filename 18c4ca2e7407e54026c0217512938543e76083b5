@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b95bb486_cadcca7a",
+        "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-08-22T14:37:29Z",
+      "side": 1,
+      "message": "The Intdef can be named something else?  Its something to consider.",
+      "parentUuid": "6b8f512a_d797109e",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "18c4ca2e7407e54026c0217512938543e76083b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf1903a_05204491",
         "filename": "telephony/java/android/telephony/data/QualifiedNetworksService.java",
         "patchSetId": 8
