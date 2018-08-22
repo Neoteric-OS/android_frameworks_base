@@ -22,6 +22,30 @@
       "revId": "414f7d431fdb6fb8601fe7c36f876122fde784d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2799a97_be444934",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T01:35:35Z",
+      "side": 1,
+      "message": "yes, how about broadcasting both old and new intent at the same time and add a TODO to remove the old intent later?",
+      "parentUuid": "2a12a6e1_91617d81",
+      "range": {
+        "startLine": 2478,
+        "startChar": 53,
+        "endLine": 2478,
+        "endChar": 89
+      },
+      "revId": "414f7d431fdb6fb8601fe7c36f876122fde784d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
