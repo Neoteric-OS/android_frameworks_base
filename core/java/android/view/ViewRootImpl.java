@@ -62,11 +62,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
@@ -108,6 +110,7 @@ import com.android.internal.os.SomeArgs;
 import com.android.internal.policy.PhoneFallbackEventHandler;
 import com.android.internal.util.Preconditions;
 import com.android.internal.view.BaseSurfaceHolder;
+import com.android.internal.view.IInputMethodManager;
 import com.android.internal.view.RootViewSurfaceTaker;
 import com.android.internal.view.SurfaceCallbackHelper;
 
@@ -4416,6 +4419,11 @@ public final class ViewRootImpl implements ViewParent,
         return false;
     }
 
+    private static IInputMethodManager getIInputMethodManager() {
+        IBinder b = ServiceManager.getService(Context.INPUT_METHOD_SERVICE);
+        return IInputMethodManager.Stub.asInterface(b);
+    }
+
     /**
      * Base class for implementing a stage in the chain of responsibility
      * for processing input events.
@@ -4443,6 +4451,7 @@ public final class ViewRootImpl implements ViewParent,
          * Delivers an event to be processed.
          */
         public final void deliver(QueuedInputEvent q) {
+            Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, getClass().getSimpleName(), (int)q.mEvent.getEventTime());
             if ((q.mFlags & QueuedInputEvent.FLAG_FINISHED) != 0) {
                 forward(q);
             } else if (shouldDropInputEvent(q)) {
@@ -4500,6 +4509,7 @@ public final class ViewRootImpl implements ViewParent,
             if (DEBUG_INPUT_STAGES) {
                 Log.v(mTag, "Done with " + getClass().getSimpleName() + ". " + q);
             }
+            Trace.asyncTraceEnd(Trace.TRACE_TAG_VIEW, getClass().getSimpleName(), (int)q.mEvent.getEventTime());
             if (mNext != null) {
                 mNext.deliver(q);
             } else {
@@ -4775,6 +4785,9 @@ public final class ViewRootImpl implements ViewParent,
 
         @Override
         protected int onProcess(QueuedInputEvent q) {
+            if(!isImeVis()) {
+                return FORWARD;
+            }
             if (mLastWasImTarget && !isInLocalFocusMode()) {
                 InputMethodManager imm = InputMethodManager.peekInstance();
                 if (imm != null) {
@@ -4802,6 +4815,17 @@ public final class ViewRootImpl implements ViewParent,
                 return;
             }
             forward(q);
+        }
+
+        private boolean isImeVis() {
+            IInputMethodManager iimm = getIInputMethodManager();
+            boolean imeVis = true;
+            try {
+                imeVis = iimm.isImeWindowVisible();
+            } catch (RemoteException e) {
+                Log.e(TAG, "Could not communicate with IInputMethodManager", e);
+            }
+            return imeVis;
         }
     }
 
@@ -7129,6 +7153,9 @@ public final class ViewRootImpl implements ViewParent,
         Trace.asyncTraceEnd(Trace.TRACE_TAG_VIEW, "deliverInputEvent",
                 q.mEvent.getSequenceNumber());
 
+        Trace.traceCounter(Trace.TRACE_TAG_VIEW, "finishInputEvent",
+                (int) (q.mEvent.getEventTime()));
+
         if (q.mReceiver != null) {
             boolean handled = (q.mFlags & QueuedInputEvent.FLAG_FINISHED_HANDLED) != 0;
             q.mReceiver.finishInputEvent(q.mEvent, handled);
@@ -7222,7 +7249,11 @@ public final class ViewRootImpl implements ViewParent,
 
         @Override
         public void onInputEvent(InputEvent event, int displayId) {
+            Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, "onInputEvent",
+                (int) event.getEventTime());
             enqueueInputEvent(event, this, 0, true);
+            Trace.asyncTraceEnd(Trace.TRACE_TAG_VIEW, "onInputEvent",
+                (int) event.getEventTime());
         }
 
         @Override
