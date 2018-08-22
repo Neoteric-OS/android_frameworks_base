@@ -1040,6 +1040,12 @@ framework_docs_args = "-android -manifest $(location core/res/AndroidManifest.xm
      "-federate SupportLib https://developer.android.com " +
      "-federationapi SupportLib $(location current/support-api.txt) "
 
+framework_docs_only_args = " -android -manifest $(location core/res/AndroidManifest.xml) " +
+     "-overview $(location core/java/overview.html) " +
+     // Federate Support Library references against local API file.
+     "-federate SupportLib https://developer.android.com " +
+     "-federationapi SupportLib $(location current/support-api.txt) "
+
 doc_defaults {
     name: "api-stubs-default",
     srcs: [
@@ -1161,12 +1167,63 @@ doc_defaults {
     ],
     arg_files: [
         "core/res/AndroidManifest.xml",
-        ":api-version-xml",
         "core/java/overview.html",
         ":current-support-api",
-        "api/current.txt",
+        // these two dependencies below are used to generate API level
+        // annotations in Metalava.
+        ":metalava-api-versions-android-jars",
+        ":metalava-sdk-android-jars",
     ],
     create_stubs: false,
+    metalava_enabled: true,
+    metalava_annotations_enabled: true,
+    metalava_previous_api: ":last-released-public-api",
+    metalava_merge_annotations_dirs: [
+        "metalava-manual",
+        "ojluni-annotated-stubs",
+    ],
+}
+
+metalava_framework_docs_args = "--manifest $(location core/res/AndroidManifest.xml) " +
+    "--hide-package com.android.okhttp " +
+    "--hide-package com.android.org.conscrypt --hide-package com.android.server " +
+    "--hide RequiresPermission " +
+    "--hide MissingPermission --hide BroadcastBehavior " +
+    "--hide HiddenSuperclass --hide DeprecationMismatch --hide UnavailableSymbol " +
+    "--hide SdkConstant --hide HiddenTypeParameter --hide Todo --hide Typo"
+
+doc_defaults {
+    name: "metalava-api-stubs-default",
+    srcs: [
+        ":opt-telephony-srcs",
+        ":opt-net-voip-srcs",
+        ":openjdk_javadoc_files",
+        ":non_openjdk_javadoc_files",
+        ":android_icu4j_src_files_for_docs",
+    ],
+    srcs_lib: "framework",
+    srcs_lib_whitelist_dirs: frameworks_base_subdirs,
+    srcs_lib_whitelist_pkgs: packages_to_document,
+    libs: [
+        "core-oj",
+        "core-libart",
+        "conscrypt",
+        "bouncycastle",
+        "okhttp",
+        "ext",
+        "framework",
+        "voip-common",
+        "android.test.mock",
+    ],
+    local_sourcepaths: frameworks_base_subdirs,
+    installable: false,
+    metalava_enabled: true,
+    metalava_annotations_enabled: true,
+    metalava_previous_api: ":last-released-public-api",
+    metalava_merge_annotations_dirs: [
+        "metalava-manual",
+        "ojluni-annotated-stubs",
+    ],
 }
 
 metalava_framework_docs_args = "--manifest $(location core/res/AndroidManifest.xml) " +
@@ -1214,7 +1271,8 @@ doc_defaults {
 droiddoc {
     name: "doc-comment-check-docs",
     defaults: ["framework-docs-default"],
-    args: framework_docs_args + " -referenceonly -parsecomments",
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args + " -referenceonly -parsecomments",
     installable: false,
 }
 
@@ -1225,9 +1283,11 @@ droiddoc {
         "android.whichdoc offline",
     ],
     proofread_file: "offline-sdk-docs-proofrerad.txt",
-    args: framework_docs_args + " -offlinemode -title \"Android SDK\"",
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args + " -offlinemode -title \"Android SDK\"",
     write_sdk_values: true,
     static_doc_index_redirect: "docs/docs-preview-index.html",
+    metalava_api_level_annotations_enabled: true,
 }
 
 droiddoc {
@@ -1237,7 +1297,8 @@ droiddoc {
         "android.whichdoc offline",
     ],
     proofread_file: "offline-sdk-referenceonly-docs-proofrerad.txt",
-    args: framework_docs_args + " -offlinemode -title \"Android SDK\" -referenceonly",
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args + " -offlinemode -title \"Android SDK\" -referenceonly",
     write_sdk_values: true,
     static_doc_index_redirect: "docs/docs-documentation-redirect.html",
     static_doc_properties: "docs/source.properties",
@@ -1250,9 +1311,10 @@ droiddoc {
         "android.whichdoc offline",
     ],
     proofread_file: "offline-system-sdk-referenceonly-docs-proofrerad.txt",
-    args: framework_docs_args + " -hide 101 -hide 104 -hide 108" +
-          " -showAnnotation android.annotation.SystemApi " +
-          " -offlinemode -title \"Android System SDK\" -referenceonly",
+    args: metalava_framework_docs_args + " --show-annotation android.annotation.SystemApi " +
+        " --generate-documentation " +
+        framework_docs_only_args  + " -hide 101 -hide 104 -hide 108" +
+        " -offlinemode -title \"Android System SDK\" -referenceonly",
     write_sdk_values: true,
     static_doc_index_redirect: "docs/docs-documentation-redirect.html",
     static_doc_properties: "docs/source.properties",
@@ -1266,7 +1328,8 @@ droiddoc {
         "android.hasSamples true",
     ],
     proofread_file: "online-sdk-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args  +
         " -toroot / -samplegroup Admin " +
         " -samplegroup Background " +
         " -samplegroup Connectivity " +
@@ -1282,6 +1345,7 @@ droiddoc {
         " -samplegroup UI " +
         " -samplegroup Views " +
         " -samplegroup Wearable -samplesdir development/samples/browseable ",
+    metalava_api_level_annotations_enabled: true,
 }
 
 droiddoc {
@@ -1292,9 +1356,10 @@ droiddoc {
         "android.hasSamples true",
     ],
     proofread_file: "online-system-api-sdk-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --show-annotation android.annotation.SystemApi " +
+        " --generate-documentation " +
+        framework_docs_only_args +
         " -referenceonly " +
-        " -showAnnotation android.annotation.SystemApi " +
         " -title \"Android SDK - Including system APIs.\" " +
         " -hide 101 " +
         " -hide 104 " +
@@ -1325,7 +1390,8 @@ droiddoc {
         "android.hasSamples true",
     ],
     proofread_file: "ds-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args +
         " -toroot / -samplegroup Admin " +
         " -samplegroup Background " +
         " -samplegroup Connectivity " +
@@ -1350,7 +1416,8 @@ droiddoc {
         "android.whichdoc online",
     ],
     proofread_file: "ds-static-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args +
           " -staticonly " +
           " -toroot / " +
           " -devsite " +
@@ -1364,7 +1431,8 @@ droiddoc {
         "android.whichdoc online",
     ],
     proofread_file: "ds-ref-navtree-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args +
           " -toroot / " +
           " -atLinksNavtree " +
           " -navtreeonly ",
@@ -1378,7 +1446,8 @@ droiddoc {
         "android.hasSamples true",
     ],
     proofread_file: "online-sdk-dev-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args +
         " -toroot / -samplegroup Admin " +
         " -samplegroup Background " +
         " -samplegroup Connectivity " +
@@ -1400,7 +1469,8 @@ droiddoc {
     name: "hidden-docs",
     defaults: ["framework-docs-default"],
     proofread_file: "hidden-docs-proofrerad.txt",
-    args: framework_docs_args +
+    args: metalava_framework_docs_args + " --generate-documentation " +
+        framework_docs_only_args +
           " -referenceonly " +
           " -title \"Android SDK - Including hidden APIs.\"",
 }
@@ -1512,6 +1582,7 @@ droiddoc {
             removed_api_file: "api/removed.txt",
         },
     },
+    metalava_api_level_annotations_enabled: true,
 }
 
 droiddoc {
