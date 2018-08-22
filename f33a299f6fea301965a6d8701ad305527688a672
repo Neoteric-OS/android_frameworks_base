@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7df6e98_dce73076",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T20:36:11Z",
+      "side": 1,
+      "message": "this is removed already :P",
+      "parentUuid": "5fb5ddab_bb9327a9",
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b0ab7b6_775897c3",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2018-08-22T20:20:39Z",
       "side": 1,
       "message": "Should we reference TelephonyManager#sendDialerSpecialCode? This is the public API to send this intent. and it requires the caller to be default dialer or has the carrier privilege permissions.",
+      "range": {
+        "startLine": 2465,
+        "startChar": 6,
+        "endLine": 2465,
+        "endChar": 15
+      },
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3cae09_c00c7c64",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T20:36:11Z",
+      "side": 1,
+      "message": "hmm it seems all the other broadcast intent action does not mention the sender API, so I think it\u0027s fine to keep the summary comment here. But I updated the information related to the permission request. SGTY?",
+      "parentUuid": "8b0ab7b6_775897c3",
       "range": {
         "startLine": 2465,
         "startChar": 6,
@@ -62,6 +104,30 @@
       "revId": "f33a299f6fea301965a6d8701ad305527688a672",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6503f742_53eff510",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T20:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9c1458_010aa930",
+      "range": {
+        "startLine": 2478,
+        "startChar": 45,
+        "endLine": 2478,
+        "endChar": 48
+      },
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
