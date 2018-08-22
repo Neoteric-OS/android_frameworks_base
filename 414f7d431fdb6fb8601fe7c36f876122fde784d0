@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a12a6e1_91617d81",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-08-22T00:19:27Z",
+      "side": 1,
+      "message": "If we just change this, it will break all existing apps expecting the old string.\n\nI understand the desire to change the string for consistency, but we\u0027ll either need to have a story around backwards-compatibility (i.e. broadcast both action, or choose the action based on the targetSdkVersion of the destination app), or we\u0027ll need to ask for an exception to keep this unchanged.",
+      "range": {
+        "startLine": 2478,
+        "startChar": 53,
+        "endLine": 2478,
+        "endChar": 89
+      },
+      "revId": "414f7d431fdb6fb8601fe7c36f876122fde784d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
