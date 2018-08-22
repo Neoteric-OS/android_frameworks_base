@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c89a3fbd_f25e1f35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110928
+      },
+      "writtenOn": "2018-08-22T16:16:56Z",
+      "side": 1,
+      "message": "Does the test cover new changes?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "ee1d52ab544b9042584c5d8ff03628e273edf065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2496f143_26b8adc9",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/HeadsetProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1110928
+      },
+      "writtenOn": "2018-08-22T16:16:56Z",
+      "side": 1,
+      "message": "Please wrap all if/else statements in a {} block, even if they are single line.",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "ee1d52ab544b9042584c5d8ff03628e273edf065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
