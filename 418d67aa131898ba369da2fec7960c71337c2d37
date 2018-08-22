@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4695831d_b69d7683",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T23:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3339d1b9_a9d7da9d",
+      "range": {
+        "startLine": 2468,
+        "startChar": 39,
+        "endLine": 2468,
+        "endChar": 45
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233bbada_54c8f371",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-22T21:45:23Z",
       "side": 1,
       "message": "I can\u0027t find this part, can you show me where do we requires control_incall_experience?",
+      "range": {
+        "startLine": 2476,
+        "startChar": 9,
+        "endLine": 2476,
+        "endChar": 97
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe052a5_696ff227",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T23:40:51Z",
+      "side": 1,
+      "message": "This line is actually added in my last change to move secret code here as you can see in Change-Id: I086a958cab93dcbc47103e5d0c7d91dba5aab412\nIt seems to be added automatically by merging sth called \"Add documentation for SECRET_CODE_ACTION according to API review process.\" in this change https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/3504700\n\nSo do you think it\u0027s better to just remove it or keep it here?",
+      "parentUuid": "233bbada_54c8f371",
       "range": {
         "startLine": 2476,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f854db7b_feeb0821",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T23:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb7346a_193cdb49",
+      "range": {
+        "startLine": 2479,
+        "startChar": 7,
+        "endLine": 2479,
+        "endChar": 63
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
