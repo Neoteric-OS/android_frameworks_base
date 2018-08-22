@@ -2482,6 +2482,19 @@ public class TelephonyManager {
             "android.telephony.action.SIM_APPLICATION_STATE_CHANGED";
 
     /**
+     * Broadcast Action: REFRESH (File Change Notification) command has been executed.
+     *
+     * <p class="note">Requires the READ_PRIVILEGED_PHONE_STATE permission.
+     *
+     * <p class="note">This is a protected intent that can only be sent by the system.
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_SIM_FILE_CHANGED =
+            "android.telephony.action.SIM_FILE_CHANGED";
+
+    /**
      * Broadcast Action: Status of the SIM slots on the device has changed.
      *
      * <p class="note">Requires the READ_PRIVILEGED_PHONE_STATE permission.
