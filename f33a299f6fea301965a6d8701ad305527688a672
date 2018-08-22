@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb5ddab_bb9327a9",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T20:20:39Z",
+      "side": 1,
+      "message": "remove the line?",
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0ab7b6_775897c3",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T20:20:39Z",
+      "side": 1,
+      "message": "Should we reference TelephonyManager#sendDialerSpecialCode? This is the public API to send this intent. and it requires the caller to be default dialer or has the carrier privilege permissions.",
+      "range": {
+        "startLine": 2465,
+        "startChar": 6,
+        "endLine": 2465,
+        "endChar": 15
+      },
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9c1458_010aa930",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T20:20:39Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 2478,
+        "startChar": 45,
+        "endLine": 2478,
+        "endChar": 48
+      },
+      "revId": "f33a299f6fea301965a6d8701ad305527688a672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
