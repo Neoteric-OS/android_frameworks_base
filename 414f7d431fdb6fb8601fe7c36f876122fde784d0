@@ -46,6 +46,30 @@
       "revId": "414f7d431fdb6fb8601fe7c36f876122fde784d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7703c00_8d6d3b23",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-22T16:52:25Z",
+      "side": 1,
+      "message": "I would agree to have both of them in TelephonyManager like:\n\n@SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)\npublic static final String SECRET_CODE \u003d \"android.telephony.action.SECRET_CODE\";\n\n// TODO: remove the old secret code intent after fully migrating to the new one.\n@Deprecated\n@SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)\npublic static final String SECRET_CODE_ACTION \u003d \"android.provider.Telephony.SECRET_CODE\";\n\nDoes it sounds right to you guys?",
+      "parentUuid": "a2799a97_be444934",
+      "range": {
+        "startLine": 2478,
+        "startChar": 53,
+        "endLine": 2478,
+        "endChar": 89
+      },
+      "revId": "414f7d431fdb6fb8601fe7c36f876122fde784d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
