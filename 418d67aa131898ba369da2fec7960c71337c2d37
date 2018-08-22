@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3339d1b9_a9d7da9d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T21:45:23Z",
+      "side": 1,
+      "message": "sender might be better? it requires the sender to be default dialer or has carrierPrivileged",
+      "range": {
+        "startLine": 2468,
+        "startChar": 39,
+        "endLine": 2468,
+        "endChar": 45
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233bbada_54c8f371",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T21:45:23Z",
+      "side": 1,
+      "message": "I can\u0027t find this part, can you show me where do we requires control_incall_experience?",
+      "range": {
+        "startLine": 2476,
+        "startChar": 9,
+        "endLine": 2476,
+        "endChar": 97
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb7346a_193cdb49",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-22T21:45:23Z",
+      "side": 1,
+      "message": "where is the code to send both old /new intent?",
+      "range": {
+        "startLine": 2479,
+        "startChar": 7,
+        "endLine": 2479,
+        "endChar": 63
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
