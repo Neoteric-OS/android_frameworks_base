@@ -22,6 +22,30 @@
       "revId": "1885805aac5091ed7b734524292b7d7a75e347bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc1909d2_464f61db",
+        "filename": "services/net/java/android/net/dhcp/DhcpNakPacket.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-23T08:16:41Z",
+      "side": 1,
+      "message": "mClientIp and mYourIp are set to INADDR_ANY, but the constructor does not have values for srcIp and destIp (those L3 fields are not defined for DhcpNakPacket).\nChanging the assignment here is effectively a no-op, since the fields were set to the same constant. But I find that using the constant directly is less confusing: mClientIp and mYourIp just happen to be empty so the assignment is correct, but I don\u0027t think it makes sense to use them to set destIp and srcIp.\n\nCould I change the comment to make the assignment more clear ? Or is there a good reason why mClientIp and mYourIp make more sense than using INADDR_ANY directly ?",
+      "parentUuid": "77d74b13_213a722e",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "1885805aac5091ed7b734524292b7d7a75e347bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
