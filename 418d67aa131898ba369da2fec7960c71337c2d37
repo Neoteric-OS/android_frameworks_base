@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6e72f016_4fe57a3e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-23T19:24:42Z",
+      "side": 1,
+      "message": "wait, I just want to know why you list this permission, do you see this permission is being enforced when sending or receiving the intent? you must find some thing before adding this permission right? I just don\u0027t want to miss anything in case this permission is really required :)",
+      "parentUuid": "3b1b8b0a_9ba19c25",
+      "range": {
+        "startLine": 2476,
+        "startChar": 9,
+        "endLine": 2476,
+        "endChar": 97
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb7346a_193cdb49",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 6
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "Added in patchset7 \"It is supposed to replace {@link Telephony#SECRET_CODE_ACTION} in the next Android version. Before that both of these two actions will be broadcast by {@link TelephonyManager#sendDialerSpecialCode}.\"",
       "parentUuid": "9bfcf004_5ab9f72f",
+      "range": {
+        "startLine": 2479,
+        "startChar": 7,
+        "endLine": 2479,
+        "endChar": 63
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77b544b9_fd0106ba",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-23T19:24:42Z",
+      "side": 1,
+      "message": "I mean the real code to send the intent not comment. https://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phone.java?rcl\u003de2681eec59243dea3e4938377c259831da89acca\u0026l\u003d2363",
+      "parentUuid": "4877a07b_7bd157b2",
       "range": {
         "startLine": 2479,
         "startChar": 7,
