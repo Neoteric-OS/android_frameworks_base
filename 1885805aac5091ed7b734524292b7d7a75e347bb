@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d74b13_213a722e",
+        "filename": "services/net/java/android/net/dhcp/DhcpNakPacket.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-23T08:00:54Z",
+      "side": 1,
+      "message": "I\u0027m confused about this part of the change.  The INADDR_ANYs in the DhcpNakPacket constructor would seem to result in mClientIp etc being set and so on here.  What\u0027s actually happening?",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "1885805aac5091ed7b734524292b7d7a75e347bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
