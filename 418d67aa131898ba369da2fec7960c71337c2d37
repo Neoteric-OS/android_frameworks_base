@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f72fbba5_c1558436",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-23T00:51:56Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/frameworks/base/+/624575/3/telephony/java/android/telephony/Telephony.java\n\nIts added by you :) do you remember any reasons to add this permission?",
+      "parentUuid": "fbe052a5_696ff227",
+      "range": {
+        "startLine": 2476,
+        "startChar": 9,
+        "endLine": 2476,
+        "endChar": 97
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb7346a_193cdb49",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 6
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "4bb7346a_193cdb49",
+      "range": {
+        "startLine": 2479,
+        "startChar": 7,
+        "endLine": 2479,
+        "endChar": 63
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bfcf004_5ab9f72f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-08-23T00:51:56Z",
+      "side": 1,
+      "message": "sorry, where is the sending part? still not see it in this CL",
+      "parentUuid": "f854db7b_feeb0821",
       "range": {
         "startLine": 2479,
         "startChar": 7,
