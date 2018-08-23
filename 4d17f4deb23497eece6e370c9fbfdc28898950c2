@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71109d8c_91b52e0b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-23T07:22:53Z",
+      "side": 1,
+      "message": "What I was hinting at earlier was that we should find a way for untetherAll() to *never* through a SecurityException in these circumstances.\n\nDoes that seem possible?",
+      "range": {
+        "startLine": 1617,
+        "startChar": 25,
+        "endLine": 1617,
+        "endChar": 42
+      },
+      "revId": "4d17f4deb23497eece6e370c9fbfdc28898950c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
