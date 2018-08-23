@@ -22,6 +22,30 @@
       "revId": "4d17f4deb23497eece6e370c9fbfdc28898950c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6acc4e_dcdf0da3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1349559
+      },
+      "writtenOn": "2018-08-23T08:31:34Z",
+      "side": 1,
+      "message": "As I wrote earlier, tetherable device implementation seems to returns the SecurityException\nregardless of Tethering On/Off request. (e.g. PanService.java, WifiServiceImpl.java)\n\nTherefore, calling untetherAll() while restricting itself conflicts with the policy of UserManager.DISALLOW_CONFIG_TETHERING\nand causes \"SecurityException: DISALLOW_CONFIG_TETHERING\", I think it is difficult to avoid it.\n\nThe UserManager policy checked in isTetheringSupported() is DISALLOW_CONFIG_TETHERING.\nI recognize this as a policy prohibiting the operation of Tethering itself.\n(I hope this policy is DisallowEnable_ instead of DisallowConfig_...)",
+      "parentUuid": "71109d8c_91b52e0b",
+      "range": {
+        "startLine": 1617,
+        "startChar": 25,
+        "endLine": 1617,
+        "endChar": 42
+      },
+      "revId": "4d17f4deb23497eece6e370c9fbfdc28898950c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
