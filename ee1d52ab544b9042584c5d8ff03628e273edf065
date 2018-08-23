@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f8d56c9_6e7cc0ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1322510
+      },
+      "writtenOn": "2018-08-23T06:53:06Z",
+      "side": 1,
+      "message": "This change only remove some redundant check logic for connect/disconnect. I just run simple test and pair headset to test it. I thank connect/disconnect headset from Settings UI is more proper. Thanks!",
+      "parentUuid": "c89a3fbd_f25e1f35",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "ee1d52ab544b9042584c5d8ff03628e273edf065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2496f143_26b8adc9",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/HeadsetProfile.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ee1d52ab544b9042584c5d8ff03628e273edf065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2234eaa9_41feb7bf",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/HeadsetProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1322510
+      },
+      "writtenOn": "2018-08-23T06:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2496f143_26b8adc9",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "ee1d52ab544b9042584c5d8ff03628e273edf065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
