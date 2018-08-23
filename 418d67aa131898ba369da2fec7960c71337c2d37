@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "3b1b8b0a_9ba19c25",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-23T17:00:11Z",
+      "side": 1,
+      "message": "I\u0027m really sorry for the confusing. It is added for API Review b/73392896, which asked to specify \"Document who can send and who can receive the broadcast. What are the security restrictions? The implication here is that there should be some. What are the wake-up semantics?\"\n\nIt is located in the AndroidManifest https://cs.corp.google.com/android/frameworks/base/core/res/AndroidManifest.xml?rcl\u003dd5796dd4f1cce3860241ab179e0bd07fbaf19864\u0026l\u003d1952\n\nI think we can remove this line since we\u0027ve already pointed out that it requires the sender has carrier privileges or is default dialer.",
+      "parentUuid": "f72fbba5_c1558436",
+      "range": {
+        "startLine": 2476,
+        "startChar": 9,
+        "endLine": 2476,
+        "endChar": 97
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb7346a_193cdb49",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 6
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "sorry, where is the sending part? still not see it in this CL",
       "parentUuid": "f854db7b_feeb0821",
+      "range": {
+        "startLine": 2479,
+        "startChar": 7,
+        "endLine": 2479,
+        "endChar": 63
+      },
+      "revId": "418d67aa131898ba369da2fec7960c71337c2d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4877a07b_7bd157b2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2018-08-23T17:00:11Z",
+      "side": 1,
+      "message": "Added in patchset7 \"It is supposed to replace {@link Telephony#SECRET_CODE_ACTION} in the next Android version. Before that both of these two actions will be broadcast by {@link TelephonyManager#sendDialerSpecialCode}.\"",
+      "parentUuid": "9bfcf004_5ab9f72f",
       "range": {
         "startLine": 2479,
         "startChar": 7,
