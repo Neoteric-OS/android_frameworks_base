@@ -52,6 +52,9 @@ public class BugreportStorageProvider extends FileSystemProvider {
     public boolean onCreate() {
         super.onCreate(DEFAULT_DOCUMENT_PROJECTION);
         mRoot = new File(getContext().getFilesDir(), "bugreports");
+        if (!mRoot.exists()) {
+            mRoot.mkdirs();
+        }
         return true;
     }
 
