@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6c67bf_9db84882",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2018-08-24T01:18:41Z",
+      "side": 1,
+      "message": "I cannot understand this.\n\nIf PipUI service isn\u0027t running per user, why do you send broadcast to each users?\nIsn\u0027t it enough to send broadcast only to the users which PipUI is running with?\n\nPlus, could you update the comment about user facing issue that this CL wants to address?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "22b3a4e80df99a04338aad54c18b18fa9fda7520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de09491_573f4d6a",
+        "filename": "services/core/java/com/android/server/media/MediaResourceMonitorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2018-08-24T01:18:41Z",
+      "side": 1,
+      "message": "Don\u0027t send broadcast to the background user that isn\u0027t running.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 78
+      },
+      "revId": "22b3a4e80df99a04338aad54c18b18fa9fda7520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
