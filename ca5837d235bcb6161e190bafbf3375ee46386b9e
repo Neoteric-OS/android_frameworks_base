@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c823bf44_9de59b62",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "We might be need to avoid unrelated changes according to Jean said.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 56
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3c3d3c_1e70129b",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "We might be need to avoid unrelated changes according to Jean said.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1709a097_4c295629",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3309,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "empty line?",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ff6ea7_655e80a5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3846,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "Can we use expectAvailableThenValidatedCallbacks instead?",
+      "range": {
+        "startLine": 3840,
+        "startChar": 8,
+        "endLine": 3846,
+        "endChar": 43
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826d5875_dbb6b44c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4592,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "Is this check redundant?",
+      "range": {
+        "startLine": 4592,
+        "startChar": 24,
+        "endLine": 4592,
+        "endChar": 43
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca96e83_31692eed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "switching",
+      "range": {
+        "startLine": 4594,
+        "startChar": 39,
+        "endLine": 4594,
+        "endChar": 45
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

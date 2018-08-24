@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65652966_ab9fc1dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4533,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-08-24T02:52:23Z",
+      "side": 1,
+      "message": "should be false since not metered is set.",
+      "range": {
+        "startLine": 4533,
+        "startChar": 28,
+        "endLine": 4533,
+        "endChar": 32
+      },
+      "revId": "96dc8bc5f2f14044f3dec3b01853362a27f207d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
