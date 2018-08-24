@@ -22,6 +22,30 @@
       "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56292e2_f7e7aae6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-24T09:44:23Z",
+      "side": 1,
+      "message": "It is used in onRestrictBackgroundChanged(). This is to prevent the permissions required to access WIFI/USB/BLUETOOTH services when calling untetherAll().",
+      "parentUuid": "ce608c25_0b19f36f",
+      "range": {
+        "startLine": 945,
+        "startChar": 12,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
