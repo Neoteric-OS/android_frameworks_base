@@ -1,0 +1,10 @@
+Code-Review+2: Andreas Gampe <agampe@google.com>
+Code-Review+2: Erik Kline <ek@google.com>
+Verified+1: Hugo Benichi <hugobenichi@google.com>
+Autosubmit+1: Hugo Benichi <hugobenichi@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 24 Aug 2018 09:18:37 +0000
+Reviewed-on: https://android-review.googlesource.com/720844
+Project: platform/frameworks/base
+Branch: refs/heads/master
