@@ -4727,7 +4727,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private String getNetworkPermission(NetworkCapabilities nc) {
+    private int getNetworkPermission(NetworkCapabilities nc) {
         // TODO: make these permission strings AIDL constants instead.
         if (!nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)) {
             return NetworkManagementService.PERMISSION_SYSTEM;
@@ -4735,7 +4735,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!nc.hasCapability(NET_CAPABILITY_FOREGROUND)) {
             return NetworkManagementService.PERMISSION_NETWORK;
         }
-        return null;
+        return NetworkManagementService.PERMISSION_NONE;
     }
 
     /**
@@ -4808,9 +4808,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (Objects.equals(nai.networkCapabilities, newNc)) return;
 
-        final String oldPermission = getNetworkPermission(nai.networkCapabilities);
-        final String newPermission = getNetworkPermission(newNc);
-        if (!Objects.equals(oldPermission, newPermission) && nai.created && !nai.isVPN()) {
+        final int oldPermission = getNetworkPermission(nai.networkCapabilities);
+        final int newPermission = getNetworkPermission(newNc);
+        if (oldPermission != newPermission && nai.created && !nai.isVPN()) {
             try {
                 mNetd.setNetworkPermission(nai.network.netId, newPermission);
             } catch (RemoteException e) {
