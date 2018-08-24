@@ -70,6 +70,30 @@
       "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f38c32b_d0e0525d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-24T13:04:38Z",
+      "side": 1,
+      "message": "Correct: Patch set 6.",
+      "parentUuid": "1c4ad5b6_e246d773",
+      "range": {
+        "startLine": 945,
+        "startChar": 12,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
