@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e89e6c2b_8cc5b7d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2018-08-24T02:31:19Z",
+      "side": 1,
+      "message": "\u003eIf PipUI service isn\u0027t running per user, why do you send broadcast to each users?\n\u003eIsn\u0027t it enough to send broadcast only to the users which PipUI is running with?\nPipUI is always running as system user(u0) even in restricted profile after below patch is committed.\nhttps://android.googlesource.com/platform/frameworks/base/+/853c99a083dc6a96694373c48f427e4d3466d4a9\n\nbut this broadcast is delivered to u10 process if current user is restricted profile.\nCurrent implementation is not enough to control Pip resource in restricted profile.\n\n\u003ePlus, could you update the comment about user facing issue that this CL wants to address?\nI updated the comment.",
+      "parentUuid": "5f6c67bf_9db84882",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "22b3a4e80df99a04338aad54c18b18fa9fda7520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3de09491_573f4d6a",
         "filename": "services/core/java/com/android/server/media/MediaResourceMonitorService.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-08-24T01:18:41Z",
       "side": 1,
       "message": "Don\u0027t send broadcast to the background user that isn\u0027t running.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 78
+      },
+      "revId": "22b3a4e80df99a04338aad54c18b18fa9fda7520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d9169c_a3b3659c",
+        "filename": "services/core/java/com/android/server/media/MediaResourceMonitorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2018-08-24T02:31:19Z",
+      "side": 1,
+      "message": "systemui(PipUI) process is running as system user(u0) in restricted profile.\nIs there any idea to deliver this intent to PipManager?",
+      "parentUuid": "3de09491_573f4d6a",
       "range": {
         "startLine": 66,
         "startChar": 0,
