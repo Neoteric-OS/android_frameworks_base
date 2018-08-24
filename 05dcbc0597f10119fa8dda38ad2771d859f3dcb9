@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce608c25_0b19f36f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-08-24T08:54:33Z",
+      "side": 1,
+      "message": "Do we really need this? You create a mock object but never use it.",
+      "range": {
+        "startLine": 945,
+        "startChar": 12,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
