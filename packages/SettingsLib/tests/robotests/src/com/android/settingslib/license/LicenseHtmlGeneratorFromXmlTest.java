@@ -117,7 +117,7 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToContentIdMap, contentIdToFileContentMap, new PrintWriter(output));
+                fileNameToContentIdMap, contentIdToFileContentMap, new PrintWriter(output), "");
         assertThat(output.toString()).isEqualTo(EXPECTED_HTML_STRING);
     }
 }
