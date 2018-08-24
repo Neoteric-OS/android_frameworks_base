@@ -1,0 +1,9 @@
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Autosubmit+1: Makoto Onuki <omakoto@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Makoto Onuki <omakoto@google.com>
+Submitted-by: Makoto Onuki <omakoto@google.com>
+Submitted-at: Fri, 24 Aug 2018 21:56:33 +0000
+Reviewed-on: https://android-review.googlesource.com/737537
+Project: platform/frameworks/base
+Branch: refs/heads/master
