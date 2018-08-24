@@ -211,7 +211,10 @@ public class CaptivePortalLoginActivity extends Activity {
     }
 
     private void done(Result result) {
-        if (isDone.getAndSet(true)) {
+        if (result == Result.DISMISSED && !isDone.get()) {
+            // Do not set isDone true if DISMISS & it's false
+            // because we don't call finishAndRemoveTask() in the case.
+        } else if (isDone.getAndSet(true)) {
             // isDone was already true: done() already called
             return;
         }
@@ -222,15 +225,19 @@ public class CaptivePortalLoginActivity extends Activity {
         switch (result) {
             case DISMISSED:
                 mCaptivePortal.reportCaptivePortalDismissed();
+                moveTaskToBack(true);
                 break;
             case UNWANTED:
                 mCaptivePortal.ignoreNetwork();
+                finishAndRemoveTask();
                 break;
             case WANTED_AS_IS:
                 mCaptivePortal.useNetwork();
+                finishAndRemoveTask();
                 break;
+            default:
+                finishAndRemoveTask();
         }
-        finishAndRemoveTask();
     }
 
     @Override
