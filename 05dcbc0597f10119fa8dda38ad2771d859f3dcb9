@@ -46,6 +46,30 @@
       "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4ad5b6_e246d773",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-24T13:02:07Z",
+      "side": 1,
+      "message": "Since mTethering might be used in the future, I made some changes in patch set 7 to mock mTethering in only the two testcases.\nMaybe there\u0027s a better way to handle this.",
+      "parentUuid": "c56292e2_f7e7aae6",
+      "range": {
+        "startLine": 945,
+        "startChar": 12,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "05dcbc0597f10119fa8dda38ad2771d859f3dcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
