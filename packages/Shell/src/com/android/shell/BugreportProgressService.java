@@ -88,6 +88,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
+import android.provider.DocumentsContract;
 import androidx.core.content.FileProvider;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -824,6 +825,9 @@ public class BugreportProgressService extends Service {
                     + " shareDescription is " + info.shareDescription);
         }
         info.finished = true;
+
+        mContext.getContentResolver().notifyChange(DocumentsContract.buildRootsUri(
+                           BugreportStorageProvider.AUTHORITY), null, false);
 
         // Stop running on foreground, otherwise share notification cannot be dismissed.
         stopForegroundWhenDone(id);

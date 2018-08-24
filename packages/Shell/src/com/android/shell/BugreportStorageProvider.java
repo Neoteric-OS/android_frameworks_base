@@ -33,7 +33,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class BugreportStorageProvider extends FileSystemProvider {
-    private static final String AUTHORITY = "com.android.shell.documents";
+    public static final String AUTHORITY = "com.android.shell.documents";
     private static final String DOC_ID_ROOT = "bugreport";
 
     private static final String[] DEFAULT_ROOT_PROJECTION = new String[]{
@@ -59,11 +59,13 @@ public class BugreportStorageProvider extends FileSystemProvider {
     public Cursor queryRoots(String[] projection) throws FileNotFoundException {
         final MatrixCursor result = new MatrixCursor(resolveRootProjection(projection));
         final RowBuilder row = result.newRow();
-        row.add(Root.COLUMN_ROOT_ID, DOC_ID_ROOT);
-        row.add(Root.COLUMN_FLAGS, Root.FLAG_LOCAL_ONLY);
-        row.add(Root.COLUMN_ICON, android.R.mipmap.sym_def_app_icon);
-        row.add(Root.COLUMN_TITLE, getContext().getString(R.string.bugreport_storage_title));
-        row.add(Root.COLUMN_DOCUMENT_ID, DOC_ID_ROOT);
+        if (mRoot.exists()) {
+            row.add(Root.COLUMN_ROOT_ID, DOC_ID_ROOT);
+            row.add(Root.COLUMN_FLAGS, Root.FLAG_LOCAL_ONLY);
+            row.add(Root.COLUMN_ICON, android.R.mipmap.sym_def_app_icon);
+            row.add(Root.COLUMN_TITLE, getContext().getString(R.string.bugreport_storage_title));
+            row.add(Root.COLUMN_DOCUMENT_ID, DOC_ID_ROOT);
+        }
         return result;
     }
 
