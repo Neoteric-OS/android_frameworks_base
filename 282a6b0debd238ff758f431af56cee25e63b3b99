@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b391e929_429bebdd",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-27T08:57:49Z",
+      "side": 1,
+      "message": "Idea : do you think it might serve as documentation to mark this with the transient modifier ? I tried to look up usages of this in the platform and it\u0027s vanishingly small, but it does sound quite intuitive to me that stuff that\u0027s not parceled is marked transient.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 11
+      },
+      "revId": "282a6b0debd238ff758f431af56cee25e63b3b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1a2cfc_7db2eb18",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-27T08:57:49Z",
+      "side": 1,
+      "message": "Because Network objects are passed and used left and right I think having this method is dangerous. I would recommend having mBypassPrivateDns be final, and have a method like\n\n  public Network getPrivateDnsBypassingCopy();\n\n...or something. I think this would be less error prone, and there are already fine examples of this in this patch where you have to make a defensive copy and failing to do so would result in an un-noticeable disaster.",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 35
+      },
+      "revId": "282a6b0debd238ff758f431af56cee25e63b3b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
