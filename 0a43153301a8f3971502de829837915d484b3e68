@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e591235_37774b1a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-27T10:42:18Z",
+      "side": 1,
+      "message": "I think you can remove this annotation. It\u0027s a new method so there should be no unsupported app usage.",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "0a43153301a8f3971502de829837915d484b3e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aef8f99_620cb33e",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-27T10:42:18Z",
+      "side": 1,
+      "message": "Let\u0027s remove this now",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 35
+      },
+      "revId": "0a43153301a8f3971502de829837915d484b3e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
