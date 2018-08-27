@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36dec4fa_3af32605",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-27T09:23:07Z",
+      "side": 1,
+      "message": "Done (albeit on the actual variable that was added in a different CL; this one is now gone).",
+      "parentUuid": "b391e929_429bebdd",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 11
+      },
+      "revId": "282a6b0debd238ff758f431af56cee25e63b3b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1a2cfc_7db2eb18",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "282a6b0debd238ff758f431af56cee25e63b3b99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af69aec_e3866daf",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-27T09:23:07Z",
+      "side": 1,
+      "message": "Done\n\nThis has somewhat expanded the CL, but I\u0027m working through the build breaks...",
+      "parentUuid": "ba1a2cfc_7db2eb18",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 35
+      },
+      "revId": "282a6b0debd238ff758f431af56cee25e63b3b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
