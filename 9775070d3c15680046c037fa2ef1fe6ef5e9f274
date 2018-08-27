@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a3d4fac_41059445",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-27T09:19:29Z",
+      "side": 1,
+      "message": "Is it a good idea to have these two AIDL interfaces be coupled like this? Should we copy the EVENT_DNS64_* constants from INetdEventListener into this interface?\n\nOr: if all we need to support are NAT64 prefixes being added and removed, then maybe change this from an EVENT_DNS64_* constant to just a boolean that indicates whether the prefix was added and removed?",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 47,
+        "endChar": 94
+      },
+      "revId": "9775070d3c15680046c037fa2ef1fe6ef5e9f274",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209e18a8_8f970694",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-27T09:19:29Z",
+      "side": 1,
+      "message": "Limit lines to 100 characters.",
+      "range": {
+        "startLine": 219,
+        "startChar": 99,
+        "endLine": 219,
+        "endChar": 112
+      },
+      "revId": "9775070d3c15680046c037fa2ef1fe6ef5e9f274",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
