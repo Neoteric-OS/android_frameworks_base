@@ -45,6 +45,30 @@
       "revId": "0a43153301a8f3971502de829837915d484b3e68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce65c1c9_db2c7f9f",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-27T10:43:27Z",
+      "side": 1,
+      "message": "Sorry, you\u0027ve already done this. Please disregard.",
+      "parentUuid": "9aef8f99_620cb33e",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 35
+      },
+      "revId": "0a43153301a8f3971502de829837915d484b3e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
