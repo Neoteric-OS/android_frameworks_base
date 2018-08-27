@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de42648d_ffec31b2",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-27T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e591235_37774b1a",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "0a43153301a8f3971502de829837915d484b3e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aef8f99_620cb33e",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Sorry, you\u0027ve already done this. Please disregard.",
       "parentUuid": "9aef8f99_620cb33e",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 35
+      },
+      "revId": "0a43153301a8f3971502de829837915d484b3e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f5bb609_fe5ec60f",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-27T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce65c1c9_db2c7f9f",
       "range": {
         "startLine": 162,
         "startChar": 16,
