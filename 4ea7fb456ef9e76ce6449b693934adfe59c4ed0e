@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d6d31b4_bb03990b",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-08-27T18:24:55Z",
+      "side": 1,
+      "message": "If all you need is a single bit, should we just add that?  Which other bits do you need?",
+      "range": {
+        "startLine": 397,
+        "startChar": 32,
+        "endLine": 397,
+        "endChar": 58
+      },
+      "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
