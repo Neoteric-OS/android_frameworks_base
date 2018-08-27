@@ -22,6 +22,30 @@
       "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c79c3d1_c81d844a",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-08-27T18:27:57Z",
+      "side": 1,
+      "message": "not sure what other bits apps might need in the future.\n\ninstead of adding new APIs for each bit, I thought it would be easier to just return the whole value to the caller thru this API and let the caller pick out the bits they need..",
+      "parentUuid": "3d6d31b4_bb03990b",
+      "range": {
+        "startLine": 397,
+        "startChar": 32,
+        "endLine": 397,
+        "endChar": 58
+      },
+      "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
