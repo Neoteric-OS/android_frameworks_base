@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2018 Sony Mobile Communications Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are licensed under the License.
  */
 
 package android.os;
@@ -2419,7 +2423,7 @@ public abstract class BatteryStats implements Parcelable {
 
     public static final IntToString[] HISTORY_EVENT_INT_FORMATTERS = new IntToString[] {
             sUidToString, sUidToString, sUidToString, sUidToString, sUidToString, sUidToString,
-            sUidToString, sUidToString, sUidToString, sUidToString, sUidToString, sUidToString,
+            sUidToString, sUidToString, sUidToString, sUidToString, sUidToString, sIntToString,
             sUidToString, sUidToString, sUidToString, sUidToString, sUidToString, sUidToString,
             sUidToString, sUidToString, sUidToString, sIntToString
     };
