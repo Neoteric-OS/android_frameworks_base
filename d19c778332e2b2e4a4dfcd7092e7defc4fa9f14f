@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ef3400_5e3270fb",
+        "filename": "core/res/res/values/public.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2880,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-08-28T14:40:24Z",
+      "side": 1,
+      "message": "don\u0027t define here; define under the \u003cpublic-group\u003e section below",
+      "range": {
+        "startLine": 2878,
+        "startChar": 0,
+        "endLine": 2880,
+        "endChar": 0
+      },
+      "revId": "d19c778332e2b2e4a4dfcd7092e7defc4fa9f14f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e51649_55200d92",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21999,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-08-28T14:40:24Z",
+      "side": 1,
+      "message": "be aware ... any apk can define this value and remove themselves from hidden api checks here\n\nconsider adding some logic to PackageManagerService.applyPolicy to unset this value for any APK that isn\u0027t a system package\n\nor, just call ai.isAllowedToUseHiddenApis() which already takes the system-ness of the APK into account",
+      "range": {
+        "startLine": 21999,
+        "startChar": 45,
+        "endLine": 21999,
+        "endChar": 61
+      },
+      "revId": "d19c778332e2b2e4a4dfcd7092e7defc4fa9f14f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
