@@ -46,6 +46,30 @@
       "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bd24a3_4e3b4237",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1126163
+      },
+      "writtenOn": "2018-08-28T23:31:27Z",
+      "side": 1,
+      "message": "At this point in time I believe the Uploading Feature is the only one that we have seen that was needed, but the Notification Feature and Browsing Feature would also be beneficial to expose.",
+      "parentUuid": "6c79c3d1_c81d844a",
+      "range": {
+        "startLine": 397,
+        "startChar": 32,
+        "endLine": 397,
+        "endChar": 58
+      },
+      "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
