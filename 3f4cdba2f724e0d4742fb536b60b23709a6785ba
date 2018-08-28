@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ead41f_854b93a1",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-28T01:50:33Z",
+      "side": 1,
+      "message": "Since this is not setting a flag anymore, I think the rest of the comment can be deleted too",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "3f4cdba2f724e0d4742fb536b60b23709a6785ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
