@@ -1152,9 +1152,7 @@ public class SubscriptionManager {
      * Get slotIndex associated with the subscription.
      * @return slotIndex as a positive integer or a negative value if an error either
      * SIM_NOT_INSERTED or < 0 if an invalid slot index
-     * @hide
      */
-    @UnsupportedAppUsage
     public static int getSlotIndex(int subId) {
         if (!isValidSubscriptionId(subId)) {
             if (DBG) {
