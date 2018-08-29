@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2902cb1_d67372e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-08-29T04:45:06Z",
+      "side": 1,
+      "message": "Could you provide references for those ratings?",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "ea66186692b1a575f0e42162f0551712e2b6ea62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
