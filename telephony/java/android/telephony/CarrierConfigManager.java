@@ -83,11 +83,32 @@ public class CarrierConfigManager {
 
    /**
     * Boolean indicating if the "Call barring" item is visible in the Call Settings menu.
-    * true means visible. false means gone.
-    * @hide
+    * If true, the "Call Barring" menu will be visible. If false, the menu will be gone.
+    *
+    * Disabled by default.
     */
     public static final String KEY_CALL_BARRING_VISIBILITY_BOOL =
             "call_barring_visibility_bool";
+
+    /**
+     * Flag indicating whether or not changing the call barring password via the "Call Barring"
+     * settings menu is supported. If true, the option will be visible in the "Call
+     * Barring" settings menu. If false, the option will not be visible.
+     *
+     * Enabled by default.
+     */
+    public static final String KEY_CALL_BARRING_SUPPORTS_PASSWORD_CHANGE_BOOL =
+            "call_barring_supports_password_change_bool";
+
+    /**
+     * Flag indicating whether or not deactivating all call barring features via the "Call Barring"
+     * settings menu is supported. If true, the option will be visible in the "Call
+     * Barring" settings menu. If false, the option will not be visible.
+     *
+     * Enabled by default.
+     */
+    public static final String KEY_CALL_BARRING_SUPPORTS_DEACTIVATE_ALL_BOOL =
+            "call_barring_supports_deactivate_all_bool";
 
     /**
      * Flag indicating whether the Phone app should ignore EVENT_SIM_NETWORK_LOCKED
@@ -2085,6 +2106,8 @@ public class CarrierConfigManager {
 
         sDefaults.putBoolean(KEY_CARRIER_VOLTE_PROVISIONED_BOOL, false);
         sDefaults.putBoolean(KEY_CALL_BARRING_VISIBILITY_BOOL, false);
+        sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_PASSWORD_CHANGE_BOOL, true);
+        sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_DEACTIVATE_ALL_BOOL, true);
         sDefaults.putBoolean(KEY_IGNORE_SIM_NETWORK_LOCKED_EVENTS_BOOL, false);
         sDefaults.putBoolean(KEY_MDN_IS_ADDITIONAL_VOICEMAIL_NUMBER_BOOL, false);
         sDefaults.putBoolean(KEY_OPERATOR_SELECTION_EXPAND_BOOL, true);
