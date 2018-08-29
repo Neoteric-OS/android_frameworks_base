@@ -1150,13 +1150,14 @@ public class SubscriptionManager {
 
     /**
      * Get slotIndex associated with the subscription.
-     * @return slotIndex as a positive integer or a negative value if an error either
-     * SIM_NOT_INSERTED or < 0 if an invalid slot index
-     * @hide
+     * @param subscriptionId the unique SubscriptionInfo index in database
+     * @return slotIndex as a positive integer or a negative value
+     * either {@link #SIM_NOT_INSERTED} if sim is not inserted,
+     * or {@link #INVALID_SIM_SLOT_INDEX} if the supplied subscriptionId is
+     * invalid or it doesn't have an associated slot index.
      */
-    @UnsupportedAppUsage
-    public static int getSlotIndex(int subId) {
-        if (!isValidSubscriptionId(subId)) {
+    public static int getSlotIndex(int subscriptionId) {
+        if (!isValidSubscriptionId(subscriptionId)) {
             if (DBG) {
                 logd("[getSlotIndex]- fail");
             }
@@ -1167,7 +1168,7 @@ public class SubscriptionManager {
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                result = iSub.getSlotIndex(subId);
+                result = iSub.getSlotIndex(subscriptionId);
             }
         } catch (RemoteException ex) {
             // ignore it
