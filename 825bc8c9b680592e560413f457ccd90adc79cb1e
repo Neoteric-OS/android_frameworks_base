@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6212b6db_8e5d62d0",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-08-29T18:51:19Z",
+      "side": 1,
+      "message": "You could static import android.os.Process.SYSTEM_UID",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 72
+      },
+      "revId": "825bc8c9b680592e560413f457ccd90adc79cb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1422569_8f726062",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1676,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-08-29T18:51:19Z",
+      "side": 1,
+      "message": "Thanks for adding these tests.\n\nI think there\u0027s scope for improving the readability of these tests. Could you divide these into different sections may be:\n\nint[] rules \u003d {\n    NONE,\n    ALLOW_METERED,\n    TEMPORARY_ALLOW_METERED,\n    ...\n};\n\n// Metered data, Data saver on\nint[] expectedBlockedStates \u003d {\n    true, // NONE\n    false, // ALLOW_METERED\n    false, // TEMPORARY_ALLOW_METERED\n    ...\n}\nverifyNetworkBlockedState(true /* metered */, true /* backgroundRestricted */, rules, expectedBlockedStates)\n\n// Metered data, Data saver off\n...\n\n\nprivate void verifyNetworkBlockedState(boolean metered, boolean backgroundRestricted, int[] rules,\n     boolean[] expectedBlockedStateForRules) {   \n  for (rule : rules) {\n     assertEquals({print uid, rules[i], metered, backgroundRestricted}, expectedBlockedStateForRules[i], \n         isUidNetworkingBlocked(uid, rules[i], metered, backgroundRestricted));\n  }\n}",
+      "range": {
+        "startLine": 1660,
+        "startChar": 0,
+        "endLine": 1676,
+        "endChar": 16
+      },
+      "revId": "825bc8c9b680592e560413f457ccd90adc79cb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17de41e9_a46d39df",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-08-29T18:51:19Z",
+      "side": 1,
+      "message": "https://source.android.com/setup/contribute/code-style#treat-acronyms-as-words",
+      "range": {
+        "startLine": 228,
+        "startChar": 39,
+        "endLine": 228,
+        "endChar": 44
+      },
+      "revId": "825bc8c9b680592e560413f457ccd90adc79cb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f22d0676_84c88125",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
