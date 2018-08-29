@@ -70,6 +70,30 @@
       "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c5ffb5_83301d0e",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-08-29T18:40:55Z",
+      "side": 1,
+      "message": "it is probably sufficient if this method exposes 3 bits, only, for now.\n     Uploading, Notification and Browsing Features",
+      "parentUuid": "95bd24a3_4e3b4237",
+      "range": {
+        "startLine": 397,
+        "startChar": 32,
+        "endLine": 397,
+        "endChar": 58
+      },
+      "revId": "4ea7fb456ef9e76ce6449b693934adfe59c4ed0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
