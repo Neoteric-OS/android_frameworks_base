@@ -114,7 +114,6 @@ Landroid/os/RegistrantList;->remove(Landroid/os/Handler;)V
 Landroid/os/RegistrantList;->removeCleared()V
 Landroid/os/RemoteException;->rethrowFromSystemServer()Ljava/lang/RuntimeException;
 Landroid/os/ServiceSpecificException;->errorCode:I
-Landroid/os/storage/StorageEventListener;-><init>()V
 Landroid/os/SystemProperties;->reportSyspropChanged()V
 Landroid/os/SystemService;->start(Ljava/lang/String;)V
 Landroid/os/SystemService;->stop(Ljava/lang/String;)V

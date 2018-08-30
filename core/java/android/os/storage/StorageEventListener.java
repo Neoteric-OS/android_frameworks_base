@@ -21,6 +21,7 @@ import android.annotation.UnsupportedAppUsage;
 /**
  * Used for receiving notifications from the StorageManager
  * 
+ @UnsupportedAppUsage
  * @hide
  */
 public class StorageEventListener {
