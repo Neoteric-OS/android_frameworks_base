@@ -133,6 +133,8 @@ public class DhcpLease {
     @Override
     public String toString() {
         return String.format("clientId: %s, hwAddr: %s, netAddr: %s, expTime: %d, hostname: %s",
-                clientIdToString(mClientId), mHwAddr.toString(), mNetAddr, mExpTime, mHostname);
+                clientIdToString(mClientId), mHwAddr.toString(),
+                (mNetAddr == null) ? null : mNetAddr.getHostAddress(),
+                mExpTime, mHostname);
     }
 }
