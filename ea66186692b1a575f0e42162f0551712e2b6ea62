@@ -22,6 +22,30 @@
       "revId": "ea66186692b1a575f0e42162f0551712e2b6ea62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfd4e1c_2ddf950c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2018-08-30T00:35:41Z",
+      "side": 1,
+      "message": "Please refer to attached a excel file(Android_Q_Requests_TV_Content_Ratings.xlsx) in bugnizer(112835405).\nIf you need more information, pls kindly let me know.",
+      "parentUuid": "b2902cb1_d67372e2",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "ea66186692b1a575f0e42162f0551712e2b6ea62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
