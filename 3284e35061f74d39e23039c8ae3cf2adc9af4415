@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e6f2aa_09ed4862",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2018-08-30T18:20:29Z",
+      "side": 1,
+      "message": "The bug here is that this should be \n{@link #KEY_CARRIER_DEFAULT_WFC_IMS_MODE_INT}\n\nThis incorrect javadoc didn\u0027t matter before since the method was @hide and didn\u0027t get included by javadoc.",
+      "revId": "3284e35061f74d39e23039c8ae3cf2adc9af4415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
