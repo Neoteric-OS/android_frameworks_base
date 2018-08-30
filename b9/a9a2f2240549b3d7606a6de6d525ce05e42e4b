@@ -1,0 +1,8 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Chris Wren <cwren@google.com>
+Verified+1: Shaotang Li <shaotangli@google.com>
+Submitted-by: Shaotang Li <shaotangli@google.com>
+Submitted-at: Thu, 30 Aug 2018 02:24:21 +0000
+Reviewed-on: https://android-review.googlesource.com/741082
+Project: platform/frameworks/base
+Branch: refs/heads/master
