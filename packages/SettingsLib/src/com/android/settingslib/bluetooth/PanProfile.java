@@ -34,7 +34,6 @@ import java.util.List;
  */
 public class PanProfile implements LocalBluetoothProfile {
     private static final String TAG = "PanProfile";
-    private static boolean V = true;
 
     private BluetoothPan mService;
     private boolean mIsProfileReady;
@@ -54,13 +53,13 @@ public class PanProfile implements LocalBluetoothProfile {
             implements BluetoothProfile.ServiceListener {
 
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
-            if (V) Log.d(TAG,"Bluetooth service connected");
+            Log.d(TAG,"Bluetooth service connected");
             mService = (BluetoothPan) proxy;
             mIsProfileReady=true;
         }
 
         public void onServiceDisconnected(int profile) {
-            if (V) Log.d(TAG,"Bluetooth service disconnected");
+            Log.d(TAG,"Bluetooth service disconnected");
             mIsProfileReady=false;
         }
     }
@@ -89,18 +88,16 @@ public class PanProfile implements LocalBluetoothProfile {
     }
 
     public boolean connect(BluetoothDevice device) {
-        if (mService == null) return false;
-        List<BluetoothDevice> sinks = mService.getConnectedDevices();
-        if (sinks != null) {
-            for (BluetoothDevice sink : sinks) {
-                mService.disconnect(sink);
-            }
+        if (mService == null) {
+            return false;
         }
         return mService.connect(device);
     }
 
     public boolean disconnect(BluetoothDevice device) {
-        if (mService == null) return false;
+        if (mService == null) {
+            return false;
+        }
         return mService.disconnect(device);
     }
 
@@ -175,7 +172,7 @@ public class PanProfile implements LocalBluetoothProfile {
     }
 
     protected void finalize() {
-        if (V) Log.d(TAG, "finalize()");
+        Log.d(TAG, "finalize()");
         if (mService != null) {
             try {
                 BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.PAN, mService);
