@@ -46,6 +46,30 @@
       "revId": "ea66186692b1a575f0e42162f0551712e2b6ea62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9522f0_3e037f0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2018-08-30T00:46:30Z",
+      "side": 1,
+      "message": "NZ_TV - TRANSMISSION RULES FOR THE DVB-T (Terrestrial) NETWORK For New Zealand Free to Air Digital Broadcasting Version 2.1\nZA_TV - SANS 10352 IDTV Committee Draft.pdf\nTH_TV - 1-ร่างประกาศ-เรื่อง-มาตรฐานเทคนิคสำหรับเครื่องรับDTV_PH.pdf\nDTMB - GY/T 230-2008 数字广播信息范\nSpecification of service information for digital television broadcasting",
+      "parentUuid": "3bfd4e1c_2ddf950c",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "ea66186692b1a575f0e42162f0551712e2b6ea62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
