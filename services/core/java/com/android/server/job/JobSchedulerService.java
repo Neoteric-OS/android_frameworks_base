@@ -1652,7 +1652,7 @@ public class JobSchedulerService extends com.android.server.SystemService
                 }
                 maybeRunPendingJobsLocked();
                 // Don't remove JOB_EXPIRED in case one came along while processing the queue.
-                removeMessages(MSG_CHECK_JOB);
+                if(message.what == MSG_CHECK_JOB) removeMessages(MSG_CHECK_JOB);
             }
         }
     }
