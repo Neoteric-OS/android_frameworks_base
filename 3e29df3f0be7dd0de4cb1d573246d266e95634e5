@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bcb507f1_efcfc9a6",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-08-31T22:06:37Z",
+      "side": 1,
+      "message": "Yep.  My mistake.  Sorry about that.  Let\u0027s remove it for consistency.",
+      "parentUuid": "bf291899_14346a65",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 7
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbfc3f16_b52f37b5",
         "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
         "patchSetId": 4
