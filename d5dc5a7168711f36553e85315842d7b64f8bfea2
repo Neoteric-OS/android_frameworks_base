@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a557afc_7072c58c",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-08-31T01:40:16Z",
+      "side": 0,
+      "message": "Today, hasKernelSupport is true on every device that passes CTS, right? Therefore I think we can just delete hasKernelSupport, period.",
+      "range": {
+        "startLine": 625,
+        "startChar": 22,
+        "endLine": 625,
+        "endChar": 38
+      },
+      "revId": "d5dc5a7168711f36553e85315842d7b64f8bfea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
