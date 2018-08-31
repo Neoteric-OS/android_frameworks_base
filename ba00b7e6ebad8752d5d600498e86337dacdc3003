@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41547f04_4b95cf6a",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-31T03:17:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45b39a51_f3cc6d1f",
+      "range": {
+        "startLine": 1661,
+        "startChar": 8,
+        "endLine": 1661,
+        "endChar": 42
+      },
+      "revId": "ba00b7e6ebad8752d5d600498e86337dacdc3003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962c19d9_ac7c8df8",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "ba00b7e6ebad8752d5d600498e86337dacdc3003",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d6d691_5bba7c3d",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-31T03:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962c19d9_ac7c8df8",
+      "range": {
+        "startLine": 1709,
+        "startChar": 26,
+        "endLine": 1709,
+        "endChar": 76
+      },
+      "revId": "ba00b7e6ebad8752d5d600498e86337dacdc3003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

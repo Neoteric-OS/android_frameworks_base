@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7f55f3_ea618276",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-08-31T03:17:59Z",
+      "side": 1,
+      "message": "will fix this nit.",
+      "range": {
+        "startLine": 1713,
+        "startChar": 38,
+        "endLine": 1713,
+        "endChar": 39
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
