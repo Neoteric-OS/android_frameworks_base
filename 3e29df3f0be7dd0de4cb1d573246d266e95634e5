@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762d0641_6f3ad5a6",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-08-31T21:28:33Z",
+      "side": 1,
+      "message": "I think you need @hide to hide it.\n\nThere\u0027s a way to build and check that the public API wasn\u0027t changed...  I\u0027d recommend running that to make sure.",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 7
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfc3f16_b52f37b5",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-08-31T21:28:33Z",
+      "side": 1,
+      "message": "Is this constant already defined somewhere?",
+      "range": {
+        "startLine": 411,
+        "startChar": 25,
+        "endLine": 411,
+        "endChar": 29
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b200f39_e6c65a97",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-08-31T21:28:33Z",
+      "side": 1,
+      "message": "-1 on error?  I like the idea of being able to tell an error apart from \"unsupported\"",
+      "range": {
+        "startLine": 422,
+        "startChar": 15,
+        "endLine": 422,
+        "endChar": 16
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
