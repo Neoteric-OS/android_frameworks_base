@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf291899_14346a65",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-08-31T21:58:19Z",
+      "side": 1,
+      "message": "added @hide.\n\nBut this file is hidden and no other public function in this file has @hide on it.\ndon\u0027t you think it looks odd to have @hide on only this function.",
+      "parentUuid": "762d0641_6f3ad5a6",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 7
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbfc3f16_b52f37b5",
         "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71ecbec8_e350d3a6",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-08-31T21:58:19Z",
+      "side": 1,
+      "message": "no, it is not.\nthis is a bit mask to extract just the 3rd bit from the SupportedFeatures field.",
+      "parentUuid": "dbfc3f16_b52f37b5",
+      "range": {
+        "startLine": 411,
+        "startChar": 25,
+        "endLine": 411,
+        "endChar": 29
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b200f39_e6c65a97",
         "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37105db4_dd81d197",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-08-31T21:58:19Z",
+      "side": 1,
+      "message": "good idea. fixed it",
+      "parentUuid": "7b200f39_e6c65a97",
+      "range": {
+        "startLine": 422,
+        "startChar": 15,
+        "endLine": 422,
+        "endChar": 16
+      },
+      "revId": "3e29df3f0be7dd0de4cb1d573246d266e95634e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
