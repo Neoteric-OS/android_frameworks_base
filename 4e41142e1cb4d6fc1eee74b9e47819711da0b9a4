@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f065062_0f3be475",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarSignalPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2018-08-31T20:20:49Z",
+      "side": 1,
+      "message": "Enabling tuner listner for blacklist trigger this path, and since it was missing I had to add it ( matches SignalClusterView )",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "4e41142e1cb4d6fc1eee74b9e47819711da0b9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
