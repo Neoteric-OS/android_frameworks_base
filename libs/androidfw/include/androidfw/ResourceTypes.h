@@ -1352,6 +1352,18 @@ struct ResTable_typeSpec
     uint32_t entryCount;
 
     enum : uint32_t {
+        // Additional flag indicating an entry is overlayable by apks in the product partition.
+        // Added in Android-Q.
+        SPEC_OVERLAYABLE_PRODUCT = 0x08000000u,
+
+        // Additional flag indicating an entry is overlayable by apks in the product services
+        // partition. Added in Android-Q.
+        SPEC_OVERLAYABLE_PRODUCT_SERVICES = 0x10000000u,
+
+        // Additional flag indicating an entry is overlayable by apks in the vendor partition.
+        // Added in Android-Q.
+        SPEC_OVERLAYABLE_VENDOR = 0x20000000u,
+
         // Additional flag indicating an entry is public.
         SPEC_PUBLIC = 0x40000000u,
 

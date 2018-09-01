@@ -30,6 +30,7 @@
 namespace android {
 
 class LoadedIdmap;
+class AssetManager2OverlayTest;
 
 // Holds an APK.
 class ApkAssets {
@@ -68,7 +69,7 @@ class ApkAssets {
   bool ForEachFile(const std::string& path,
                    const std::function<void(const StringPiece&, FileType)>& f) const;
 
-  inline const std::string& GetPath() const {
+  const std::string& GetPath() const {
     return path_;
   }
 
@@ -93,10 +94,12 @@ class ApkAssets {
   using ZipArchivePtr = std::unique_ptr<void, void(*)(void*)>;
 
   ZipArchivePtr zip_handle_;
-  const std::string path_;
+  std::string path_;
   std::unique_ptr<Asset> resources_asset_;
   std::unique_ptr<Asset> idmap_asset_;
   std::unique_ptr<const LoadedArsc> loaded_arsc_;
+
+  friend AssetManager2OverlayTest;
 };
 
 }  // namespace android

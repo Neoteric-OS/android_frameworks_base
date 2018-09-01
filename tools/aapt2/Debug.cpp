@@ -306,9 +306,23 @@ void Debug::PrintTable(const ResourceTable& table, const DebugPrintTableOptions&
             break;
         }
 
-        if (entry->overlayable) {
-          printer->Print(" OVERLAYABLE");
-        }
+        /*if (entry->overlayable) {
+          const auto& policies = entry->overlayable.value().policies;
+          for (size_t i=0; i<policies.size(); i++) {
+            printer->Print((i == 0) ? " " : "|");
+            switch (policies[i]) {
+              case Overlayable::Policy::kProduct:
+                printer->Print("OVERLAYABLE");
+                break;
+              case Overlayable::Policy::kProductServices:
+                printer->Print("OVERLAYABLE_PRODUCT");
+                break;
+              case Overlayable::Policy::kVendor:
+                printer->Print("OVERLAYABLE_VENDOR");
+                break;
+            }
+          }
+        } */
 
         printer->Println();
 

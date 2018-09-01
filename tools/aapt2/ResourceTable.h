@@ -59,6 +59,14 @@ struct AllowNew {
 
 // The policy dictating whether an entry is overlayable at runtime by RROs.
 struct Overlayable {
+  enum class Policy {
+    kNone,
+    kProduct,
+    kProductServices,
+    kVendor,
+  };
+
+  Policy policy = Policy::kNone;
   Source source;
   std::string comment;
 };
@@ -96,7 +104,7 @@ class ResourceEntry {
 
   Maybe<AllowNew> allow_new;
 
-  Maybe<Overlayable> overlayable;
+  std::vector<Overlayable> overlayable_declarations;
 
   // The resource's values for each configuration.
   std::vector<std::unique_ptr<ResourceConfigValue>> values;
@@ -216,10 +224,10 @@ class ResourceTable {
   bool SetVisibilityWithIdMangled(const ResourceNameRef& name, const Visibility& visibility,
                                   const ResourceId& res_id, IDiagnostics* diag);
 
-  bool SetOverlayable(const ResourceNameRef& name, const Overlayable& overlayable,
-                      IDiagnostics* diag);
-  bool SetOverlayableMangled(const ResourceNameRef& name, const Overlayable& overlayable,
-                             IDiagnostics* diag);
+  bool AddOverlayable(const ResourceNameRef &name, const Overlayable &overlayable,
+                      IDiagnostics *diag);
+  bool AddOverlayableMangled(const ResourceNameRef &name, const Overlayable &overlayable,
+                             IDiagnostics *diag);
 
   bool SetAllowNew(const ResourceNameRef& name, const AllowNew& allow_new, IDiagnostics* diag);
   bool SetAllowNewMangled(const ResourceNameRef& name, const AllowNew& allow_new,
@@ -292,8 +300,8 @@ class ResourceTable {
   bool SetAllowNewImpl(const ResourceNameRef& name, const AllowNew& allow_new,
                        NameValidator name_validator, IDiagnostics* diag);
 
-  bool SetOverlayableImpl(const ResourceNameRef& name, const Overlayable& overlayable,
-                          NameValidator name_validator, IDiagnostics* diag);
+  bool AddOverlayableImpl(const ResourceNameRef &name, const Overlayable &overlayable,
+                          NameValidator name_validator, IDiagnostics *diag);
 
   bool SetSymbolStateImpl(const ResourceNameRef& name, const ResourceId& res_id,
                           const Visibility& symbol, NameValidator name_validator,

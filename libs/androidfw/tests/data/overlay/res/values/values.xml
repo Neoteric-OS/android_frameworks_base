@@ -22,4 +22,6 @@
     </integer-array>
     <public type="animator" name="unoverlaid" id="0x7fff0000" />
     <item type="animator" name="unoverlaid">@null</item>
+    <integer name="integer_product">1</integer>
+    <integer name="integer_product_services_vendor">1</integer>
 </resources>

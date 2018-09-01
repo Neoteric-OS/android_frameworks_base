@@ -57,6 +57,8 @@ struct R {
       ref1 = 0x7f040002,
       ref2 = 0x7f040003,
       deep_ref = 0x7f040004,
+      integer_product = 0x7f040005,
+      integer_product_services_vendor = 0x7f040006,
 
       // From feature
       number3 = 0x80030000,

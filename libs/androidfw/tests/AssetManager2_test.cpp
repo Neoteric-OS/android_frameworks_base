@@ -18,6 +18,8 @@
 #include "androidfw/AssetManager.h"
 
 #include "android-base/logging.h"
+#include "android-base/test_utils.h"
+#include "android-base/file.h"
 
 #include "TestHelpers.h"
 #include "androidfw/ResourceUtils.h"
@@ -578,6 +580,172 @@ TEST_F(AssetManager2Test, OpenDirFromManyApks) {
 
   EXPECT_THAT(asset_dir->getFileName(2), Eq(String8("subdir")));
   EXPECT_THAT(asset_dir->getFileType(2), Eq(FileType::kFileTypeDirectory));
+}
+
+class AssetManager2OverlayTest : public ::testing::Test {
+ public:
+  void SetUp() override {
+    std::string contents;
+    ResTable target_table;
+    const std::string target_path = GetTestDataPath() + "/basic/basic.apk";
+    ASSERT_TRUE(ReadFileFromZipToString(target_path, "resources.arsc", &contents));
+    ASSERT_THAT(target_table.add(contents.data(), contents.size(), 0, true /*copyData*/),
+                Eq(NO_ERROR));
+
+    ResTable overlay_table;
+    const std::string overlay_path = GetTestDataPath() + "/overlay/overlay.apk";
+    ASSERT_TRUE(ReadFileFromZipToString(overlay_path, "resources.arsc", &contents));
+    ASSERT_THAT(overlay_table.add(contents.data(), contents.size(), 0, true /*copyData*/),
+                Eq(NO_ERROR));
+
+    // Create an idmap from the overlay apk
+    util::unique_cptr<void> idmap_data;
+    void* temp_data;
+    size_t idmap_len;
+    ASSERT_THAT(target_table.createIdmap(overlay_table, 0u, 0u, target_path.c_str(),
+                                         overlay_path.c_str(), &temp_data, &idmap_len),
+                Eq(NO_ERROR));
+    idmap_data.reset(temp_data);
+
+    TemporaryFile tf;
+    ASSERT_TRUE(base::WriteFully(tf.fd, idmap_data.get(), idmap_len));
+    close(tf.fd);
+
+    // Open something so that the destructor of TemporaryFile closes a valid fd.
+    tf.fd = open("/dev/null", O_WRONLY);
+
+    // Overlay contained in a non-policy partition
+    no_policy_overlay_assets_ = ApkAssets::LoadOverlay(tf.path);
+    ASSERT_THAT(no_policy_overlay_assets_, NotNull());
+    const_cast<ApkAssets*>(no_policy_overlay_assets_.get())->path_
+      = "/data/resource-cache/random@NoTargetPolicy.apk@idmap";
+
+    // Overlay contained in the vendor partition
+    product_overlay_assets_ = ApkAssets::LoadOverlay(tf.path);
+    ASSERT_THAT(product_overlay_assets_, NotNull());
+    const_cast<ApkAssets*>(product_overlay_assets_.get())->path_
+      = "/data/resource-cache/product@overlay@Product.apkk@idmap";
+
+    // Overlay contained in the vendor partition
+    product_services_overlay_assets_ = ApkAssets::LoadOverlay(tf.path);
+    ASSERT_THAT(product_services_overlay_assets_, NotNull());
+    const_cast<ApkAssets*>(product_services_overlay_assets_.get())->path_
+      = "/data/resource-cache/product_services@overlay@ProductServices.apkk@idmap";
+
+    // Overlay contained in the vendor partition
+    vendor_overlay_assets_ = ApkAssets::LoadOverlay(tf.path);
+    ASSERT_THAT(vendor_overlay_assets_, NotNull());
+    const_cast<ApkAssets*>(vendor_overlay_assets_.get())->path_
+      = "/data/resource-cache/vendor@overlay@VendorOverlay.apkk@idmap";
+
+    basic_assets_ = ApkAssets::Load(GetTestDataPath() + "/basic/basic.apk");
+    ASSERT_NE(nullptr, basic_assets_);
+  }
+
+ protected:
+  std::unique_ptr<const ApkAssets> basic_assets_;
+  std::unique_ptr<const ApkAssets> no_policy_overlay_assets_;
+  std::unique_ptr<const ApkAssets> product_overlay_assets_;
+  std::unique_ptr<const ApkAssets> product_services_overlay_assets_;
+  std::unique_ptr<const ApkAssets> vendor_overlay_assets_;
+};
+
+TEST_F(AssetManager2OverlayTest, GetOverlayWithNoPolicyResource) {
+  AssetManager2 assetmanager;
+  Res_value value;
+  ResTable_config selected_config;
+  uint32_t flags;
+
+  /** No policy */
+  assetmanager.SetApkAssets({basic_assets_.get(), no_policy_overlay_assets_.get()});
+  ApkAssetsCookie cookie = assetmanager.GetResource(basic::R::string::test2, false /*may_be_bag*/,
+                                                    0 /*density_override*/, &value,
+                                                    &selected_config, &flags);
+  // Came from the overlay apk asset
+  EXPECT_EQ(1, cookie);
+
+  // The value is the one from the overlay
+  EXPECT_EQ(Res_value::TYPE_STRING, value.dataType);
+  EXPECT_EQ(0, value.data);
+  const ResStringPool* pool = assetmanager.GetStringPoolForCookie(cookie);
+  ASSERT_NE(pool, nullptr);
+  EXPECT_EQ(pool->string8ObjectAt(value.data), "test2-overlay");
+
+  /** Product */
+  assetmanager.SetApkAssets({basic_assets_.get(), product_overlay_assets_.get()});
+  cookie = assetmanager.GetResource(basic::R::string::test2, false /*may_be_bag*/,
+                                    0 /*density_override*/, &value, &selected_config, &flags);
+  // Came from the overlay apk asset
+  EXPECT_EQ(1, cookie);
+
+  // The value is the one from the overlay
+  EXPECT_EQ(Res_value::TYPE_STRING, value.dataType);
+  EXPECT_EQ(0, value.data);
+  pool = assetmanager.GetStringPoolForCookie(cookie);
+  ASSERT_NE(pool, nullptr);
+  EXPECT_EQ(pool->string8ObjectAt(value.data), "test2-overlay");
+}
+
+TEST_F(AssetManager2OverlayTest, GetOverlayWithPolicyResource) {
+  AssetManager2 assetmanager;
+  Res_value value;
+  ResTable_config selected_config;
+  uint32_t flags;
+
+  /** Product */
+  assetmanager.SetApkAssets({basic_assets_.get(), product_overlay_assets_.get()});
+  ApkAssetsCookie cookie =
+    assetmanager.GetResource(basic::R::integer::integer_product, false /*may_be_bag*/,
+                             0 /*density_override*/, &value, &selected_config, &flags);
+  // Came from the overlay apk asset
+  EXPECT_EQ(1, cookie);
+
+  // The value is the one from the overlay
+  EXPECT_EQ(Res_value::TYPE_INT_DEC, value.dataType);
+  EXPECT_EQ(1, value.data);
+
+  /** Product Services */
+  assetmanager.SetApkAssets({basic_assets_.get(), product_services_overlay_assets_.get()});
+  cookie = assetmanager.GetResource(basic::R::integer::integer_product_services_vendor,
+                                    false /*may_be_bag*/, 0 /*density_override*/, &value,
+                                    &selected_config, &flags);
+  // Came from the overlay apk asset
+  EXPECT_EQ(1, cookie);
+
+  // The value is the one from the overlay
+  EXPECT_EQ(Res_value::TYPE_INT_DEC, value.dataType);
+  EXPECT_EQ(1, value.data);
+
+  /** Vendor */
+  assetmanager.SetApkAssets({basic_assets_.get(), vendor_overlay_assets_.get()});
+  cookie = assetmanager.GetResource(basic::R::integer::integer_product_services_vendor,
+                                    false /*may_be_bag*/, 0 /*density_override*/, &value,
+                                    &selected_config, &flags);
+  // Came from the overlay apk asset
+  EXPECT_EQ(1, cookie);
+
+  // The value is the one from the overlay
+  EXPECT_EQ(Res_value::TYPE_INT_DEC, value.dataType);
+  EXPECT_EQ(1, value.data);
+}
+
+TEST_F(AssetManager2OverlayTest, DoNotGetOverlayWithWrongPolicyResource) {
+  AssetManager2 assetmanager;
+  Res_value value;
+  ResTable_config selected_config;
+  uint32_t flags;
+
+  assetmanager.SetApkAssets({basic_assets_.get(), no_policy_overlay_assets_.get()});
+  ApkAssetsCookie cookie =
+    assetmanager.GetResource(basic::R::integer::integer_product_services_vendor,
+                             false /*may_be_bag*/, 0 /*density_override*/, &value, &selected_config,
+                             &flags);
+  // Came from the base apk asset
+  EXPECT_EQ(0, cookie);
+
+  // The value is the one from the base
+  EXPECT_EQ(Res_value::TYPE_INT_DEC, value.dataType);
+  EXPECT_EQ(0, value.data);
 }
 
 }  // namespace android

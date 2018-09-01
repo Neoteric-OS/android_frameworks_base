@@ -98,7 +98,7 @@ struct ParsedResource {
   ResourceId id;
   Visibility::Level visibility_level = Visibility::Level::kUndefined;
   bool allow_new = false;
-  bool overlayable = false;
+  std::vector<Overlayable::Policy> overlayable_policies;
 
   std::string comment;
   std::unique_ptr<Value> value;
@@ -132,11 +132,12 @@ static bool AddResourcesToTable(ResourceTable* table, IDiagnostics* diag, Parsed
     }
   }
 
-  if (res->overlayable) {
+  for (auto& policy : res->overlayable_policies) {
     Overlayable overlayable;
+    overlayable.policy = policy;
     overlayable.source = res->source;
     overlayable.comment = res->comment;
-    if (!table->SetOverlayable(res->name, overlayable, diag)) {
+    if (!table->AddOverlayable(res->name, overlayable, diag)) {
       return false;
     }
   }
@@ -1019,16 +1020,31 @@ bool ResourceParser::ParseOverlayable(xml::XmlPullParser* parser, ParsedResource
                 << "ignoring configuration '" << out_resource->config << "' for <overlayable> tag");
   }
 
+  // Parse the policy dictating overlay partition requirements
+  bool error = false;
+  std::vector<Overlayable::Policy > policies;
   if (Maybe<StringPiece> maybe_policy = xml::FindNonEmptyAttribute(parser, "policy")) {
-    const StringPiece& policy = maybe_policy.value();
-    if (policy != "system") {
-      diag_->Error(DiagMessage(out_resource->source)
-                   << "<overlayable> has invalid policy '" << policy << "'");
-      return false;
+    for (StringPiece part : util::Tokenize(maybe_policy.value(), '|')) {
+      StringPiece trimmed_part = util::TrimWhitespace(part);
+      if (trimmed_part == "product") {
+        policies.push_back(Overlayable::Policy::kProduct);
+      } else if (trimmed_part == "product_services") {
+        policies.push_back(Overlayable::Policy::kProductServices);
+      } else if (trimmed_part == "vendor") {
+        policies.push_back(Overlayable::Policy::kVendor);
+      } else {
+        diag_->Error(DiagMessage(out_resource->source)
+                       << "<overlayable> has unsupported policy '" << trimmed_part << "'");
+        error = true;
+      }
     }
   }
 
-  bool error = false;
+  // Use the default policy if none are parsed
+  if (policies.empty()) {
+    policies.push_back(Overlayable::Policy::kNone);
+  }
+
   const size_t depth = parser->depth();
   while (xml::XmlPullParser::NextChildNode(parser, depth)) {
     if (parser->event() != xml::XmlPullParser::Event::kStartElement) {
@@ -1069,7 +1085,10 @@ bool ResourceParser::ParseOverlayable(xml::XmlPullParser* parser, ParsedResource
       child_resource.name.type = *type;
       child_resource.name.entry = maybe_name.value().to_string();
       child_resource.source = item_source;
-      child_resource.overlayable = true;
+      child_resource.overlayable_policies = policies;
+      if (options_.visibility) {
+        child_resource.visibility_level = options_.visibility.value();
+      }
       out_resource->child_resources.push_back(std::move(child_resource));
 
       xml::XmlPullParser::SkipCurrentElement(parser);

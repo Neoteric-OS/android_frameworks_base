@@ -56,6 +56,12 @@
     <integer name="deep_ref_8">@integer/deep_ref_9</integer>
     <integer name="deep_ref_9">100</integer>
 
+    <public type="integer" name="integer_product" id="0x7f040005" />
+    <integer name="integer_product">0</integer>
+
+    <public type="integer" name="integer_product_services_vendor" id="0x7f040006" />
+    <integer name="integer_product_services_vendor">0</integer>
+
     <public type="style" name="Theme1" id="0x7f050000" />
     <style name="Theme1">
         <item name="com.android.basic:attr1">100</item>
@@ -77,6 +83,14 @@
     <overlayable>
         <item type="string" name="test2" />
         <item type="array" name="integerArray1" />
+    </overlayable>
+
+    <overlayable policy="product">
+        <item type="integer" name="integer_product" />
+    </overlayable>
+
+    <overlayable policy="product_services|vendor">
+        <item type="integer" name="integer_product_services_vendor" />
     </overlayable>
 
     <item name="high_ref" type="id">@id/middle_ref</item>

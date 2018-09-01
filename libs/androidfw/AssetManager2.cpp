@@ -24,6 +24,7 @@
 
 #include "android-base/logging.h"
 #include "android-base/stringprintf.h"
+#include "android-base/strings.h"
 #include "utils/ByteOrder.h"
 #include "utils/Trace.h"
 
@@ -36,6 +37,10 @@
 #include "androidfw/ResourceUtils.h"
 
 namespace android {
+
+const char* kProductIdmapPrefix = "/data/resource-cache/product@";
+const char* kProductServicesIdmapPrefix = "/data/resource-cache/product_services@";
+const char* kVendorIdmapPrefix = "/data/resource-cache/vendor@";
 
 struct FindEntryResult {
   // A pointer to the resource table entry for this resource.
@@ -363,6 +368,10 @@ ApkAssetsCookie AssetManager2::FindEntry(uint32_t resid, uint16_t density_overri
     }
 
     uint16_t local_entry_idx = entry_idx;
+    uint32_t local_type_flags = type_spec->GetFlagsForEntryIndex(local_entry_idx);
+
+    // If the package is an overlay, then even configurations that are the same MUST be chosen.
+    const bool package_is_overlay = loaded_package->IsOverlay();
 
     // If there is an IDMAP supplied with this package, translate the entry ID.
     if (type_spec->idmap_entries != nullptr) {
@@ -374,8 +383,34 @@ ApkAssetsCookie AssetManager2::FindEntry(uint32_t resid, uint16_t density_overri
 
     type_flags |= type_spec->GetFlagsForEntryIndex(local_entry_idx);
 
-    // If the package is an overlay, then even configurations that are the same MUST be chosen.
-    const bool package_is_overlay = loaded_package->IsOverlay();
+    // Check that the overlay path matches the overlayable policy of the resource.
+    if (package_is_overlay) {
+      if (cookie == kInvalidCookie) {
+        continue;
+      }
+
+      bool overlay_policy = false;
+      bool overlay_matches_policy = false;
+      std::string idmap_path = apk_assets_[cookie]->GetPath();
+      if (type_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT) {
+        overlay_policy = true;
+        overlay_matches_policy |= android::base::StartsWith(idmap_path, kProductIdmapPrefix);
+      }
+      if (type_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES) {
+        overlay_policy = true;
+        overlay_matches_policy |= android::base::StartsWith(idmap_path,
+                                                            kProductServicesIdmapPrefix);
+      }
+      if (type_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR) {
+        overlay_policy = true;
+        overlay_matches_policy |= android::base::StartsWith(idmap_path, kVendorIdmapPrefix);
+      }
+
+      if (overlay_policy && !overlay_matches_policy) {
+        // The entry has an overlayable policy but the id map path does not match the policy
+        continue;
+      }
+    }
 
     const FilteredConfigGroup& filtered_group = loaded_package_impl.filtered_configs_[type_idx];
     if (use_fast_path) {

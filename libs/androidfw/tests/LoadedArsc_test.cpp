@@ -231,7 +231,7 @@ class MockLoadedIdmap : public LoadedIdmap {
     entry_header = util::unique_cptr<IdmapEntry_header>(
         (IdmapEntry_header*)::malloc(sizeof(IdmapEntry_header) + sizeof(uint32_t)));
     entry_header->target_type_id = 0x03;
-    entry_header->overlay_type_id = 0x02;
+    entry_header->overlay_type_id = 0x03;
     entry_header->entry_id_offset = 1;
     entry_header->entry_count = 1;
     entry_header->entries[0] = 0x00000000u;

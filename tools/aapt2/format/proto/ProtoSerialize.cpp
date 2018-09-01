@@ -308,11 +308,26 @@ void SerializeTableToPb(const ResourceTable& table, pb::ResourceTable* out_table
           pb_allow_new->set_comment(entry->allow_new.value().comment);
         }
 
-        if (entry->overlayable) {
-          pb::Overlayable* pb_overlayable = pb_entry->mutable_overlayable();
-          SerializeSourceToPb(entry->overlayable.value().source, &source_pool,
+        for (const Overlayable& overlayable : entry->overlayable_declarations) {
+          pb::Overlayable* pb_overlayable = pb_entry->add_overlayable();
+          switch (overlayable.policy) {
+            case Overlayable::Policy::kNone:
+              pb_overlayable->set_policy(pb::Overlayable::NONE);
+              break;
+            case Overlayable::Policy::kProduct:
+              pb_overlayable->set_policy(pb::Overlayable::PRODUCT);
+              break;
+            case Overlayable::Policy::kProductServices:
+              pb_overlayable->set_policy(pb::Overlayable::PRODUCT_SERVICES);
+              break;
+            case Overlayable::Policy::kVendor:
+              pb_overlayable->set_policy(pb::Overlayable::VENDOR);
+              break;
+          }
+
+          SerializeSourceToPb(overlayable.source, &source_pool,
                               pb_overlayable->mutable_source());
-          pb_overlayable->set_comment(entry->overlayable.value().comment);
+          pb_overlayable->set_comment(overlayable.comment);
         }
 
         for (const std::unique_ptr<ResourceConfigValue>& config_value : entry->values) {

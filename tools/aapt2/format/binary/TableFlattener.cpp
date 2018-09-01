@@ -447,9 +447,29 @@ class PackageFlattener {
         config_masks[entry->id.value()] |= util::HostToDevice32(ResTable_typeSpec::SPEC_PUBLIC);
       }
 
-      if (entry->overlayable) {
-        config_masks[entry->id.value()] |=
-            util::HostToDevice32(ResTable_typeSpec::SPEC_OVERLAYABLE);
+      for (auto& overlayable : entry->overlayable_declarations) {
+        switch (overlayable.policy) {
+          // Non overlay policy
+          case Overlayable::Policy::kNone:
+            config_masks[entry->id.value()] |=
+              util::HostToDevice32(ResTable_typeSpec::SPEC_OVERLAYABLE);
+            break;
+          // Product overlays
+          case Overlayable::Policy::kProduct:
+            config_masks[entry->id.value()] |=
+              util::HostToDevice32(ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT);
+            break;
+          // Product services overlays
+          case Overlayable::Policy::kProductServices:
+            config_masks[entry->id.value()] |=
+              util::HostToDevice32(ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES);
+            break;
+          // Vendor overlays
+          case Overlayable::Policy::kVendor:
+            config_masks[entry->id.value()] |=
+              util::HostToDevice32(ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR);
+            break;
+        }
       }
 
       const size_t config_count = entry->values.size();

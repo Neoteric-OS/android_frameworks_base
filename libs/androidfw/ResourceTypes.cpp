@@ -7110,7 +7110,10 @@ status_t ResTable::createIdmap(const ResTable& overlay,
             // Now that we know this is being overlaid, check if it can be, and emit a warning if
             // it can't.
             if ((dtohl(typeConfigs->typeSpecFlags[entryIndex]) &
-                    ResTable_typeSpec::SPEC_OVERLAYABLE) == 0) {
+                    (ResTable_typeSpec::SPEC_OVERLAYABLE
+                     |  ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT
+                     |  ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES
+                     |  ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR)) == 0) {
                 forcedOverlayCount++;
             }
 

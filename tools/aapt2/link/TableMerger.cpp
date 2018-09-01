@@ -124,17 +124,20 @@ static bool MergeEntry(IAaptContext* context, const Source& src, bool overlay,
     dst_entry->allow_new = std::move(src_entry->allow_new);
   }
 
-  if (src_entry->overlayable) {
-    if (dst_entry->overlayable && !overlay) {
-      context->GetDiagnostics()->Error(DiagMessage(src_entry->overlayable.value().source)
-                                       << "duplicate overlayable declaration for resource '"
-                                       << src_entry->name << "'");
-      context->GetDiagnostics()->Error(DiagMessage(dst_entry->overlayable.value().source)
-                                       << "previous declaration here");
-      return false;
+  for (auto& src_overlayable : src_entry->overlayable_declarations) {
+    for (auto& dst_overlayable : dst_entry->overlayable_declarations) {
+      if (src_overlayable.policy == dst_overlayable.policy) {
+        context->GetDiagnostics()->Error(DiagMessage(src_overlayable.source)
+                                           << "duplicate overlayable declaration for resource '"
+                                           << src_entry->name << "'");
+        context->GetDiagnostics()->Error(DiagMessage(dst_overlayable.source)
+                                           << "previous declaration here");
+        return false;
+      }
     }
-    dst_entry->overlayable = std::move(src_entry->overlayable);
   }
+  dst_entry->overlayable_declarations = std::move(src_entry->overlayable_declarations);
+
   return true;
 }
 

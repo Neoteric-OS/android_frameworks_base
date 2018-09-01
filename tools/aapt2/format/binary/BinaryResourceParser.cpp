@@ -308,6 +308,13 @@ bool BinaryResourceParser::ParseTypeSpec(const ResourceTablePackage* package,
   return true;
 }
 
+static bool HasOverlayFlag(const uint32_t& type_spec_flags) {
+  return (type_spec_flags & (ResTable_typeSpec::SPEC_OVERLAYABLE
+                            | ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT
+                            | ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES
+                            | ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR)) != 0;
+}
+
 bool BinaryResourceParser::ParseType(const ResourceTablePackage* package,
                                      const ResChunk_header* chunk) {
   if (type_pool_.getError() != NO_ERROR) {
@@ -381,8 +388,7 @@ bool BinaryResourceParser::ParseType(const ResourceTablePackage* package,
     }
 
     const uint32_t type_spec_flags = entry_type_spec_flags_[res_id];
-    if ((entry->flags & ResTable_entry::FLAG_PUBLIC) != 0 ||
-        (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE) != 0) {
+    if ((entry->flags & ResTable_entry::FLAG_PUBLIC) != 0 || HasOverlayFlag(type_spec_flags)) {
       if (entry->flags & ResTable_entry::FLAG_PUBLIC) {
         Visibility visibility;
         visibility.level = Visibility::Level::kPublic;
@@ -393,9 +399,29 @@ bool BinaryResourceParser::ParseType(const ResourceTablePackage* package,
       }
 
       if (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE) {
-        Overlayable overlayable;
-        overlayable.source = source_.WithLine(0);
-        if (!table_->SetOverlayableMangled(name, overlayable, diag_)) {
+        Overlayable overlayable{Overlayable::Policy::kNone, source_.WithLine(0)};
+        if (!table_->AddOverlayableMangled(name, overlayable, diag_)) {
+          return false;
+        }
+      }
+
+      if (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT) {
+        Overlayable overlayable{Overlayable::Policy::kProduct, source_.WithLine(0)};
+        if (!table_->AddOverlayableMangled(name, overlayable, diag_)) {
+          return false;
+        }
+      }
+
+      if (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES) {
+        Overlayable overlayable{Overlayable::Policy::kProductServices, source_.WithLine(0)};
+        if (!table_->AddOverlayableMangled(name, overlayable, diag_)) {
+          return false;
+        }
+      }
+
+      if (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR) {
+        Overlayable overlayable{Overlayable::Policy::kVendor, source_.WithLine(0)};
+        if (!table_->AddOverlayableMangled(name, overlayable, diag_)) {
           return false;
         }
       }

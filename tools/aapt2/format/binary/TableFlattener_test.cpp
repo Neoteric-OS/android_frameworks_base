@@ -574,20 +574,55 @@ TEST_F(TableFlattenerTest, FlattenOverlayable) {
       test::ResourceTableBuilder()
           .SetPackageId("com.app.test", 0x7f)
           .AddSimple("com.app.test:integer/overlayable", ResourceId(0x7f020000))
+          .AddSimple("com.app.test:integer/vendor_overlayable", ResourceId(0x7f020001))
+          .AddSimple("com.app.test:integer/system_overlayable", ResourceId(0x7f020002))
           .Build();
 
-  ASSERT_TRUE(table->SetOverlayable(test::ParseNameOrDie("com.app.test:integer/overlayable"),
+  // Default overlay
+  ASSERT_TRUE(table->AddOverlayable(test::ParseNameOrDie("com.app.test:integer/overlayable"),
                                     Overlayable{}, test::GetDiagnostics()));
+
+  // Vendor partition specific overlay
+  ASSERT_TRUE(table->AddOverlayable(test::ParseNameOrDie("com.app.test:integer/vendor_overlayable"),
+                                    Overlayable{Overlayable::Policy::kVendor},
+                                    test::GetDiagnostics()));
+
+  // Multiple partition specific overlay
+  ASSERT_TRUE(table->AddOverlayable(test::ParseNameOrDie("com.app.test:integer/system_overlayable"),
+                                    Overlayable{Overlayable::Policy::kProduct},
+                                    test::GetDiagnostics()));
+  ASSERT_TRUE(table->AddOverlayable(test::ParseNameOrDie("com.app.test:integer/system_overlayable"),
+                                    Overlayable{Overlayable::Policy::kVendor},
+                                    test::GetDiagnostics()));
+  ASSERT_TRUE(table->AddOverlayable(test::ParseNameOrDie("com.app.test:integer/system_overlayable"),
+                                    Overlayable{Overlayable::Policy::kProductServices},
+                                    test::GetDiagnostics()));
 
   ResTable res_table;
   ASSERT_TRUE(Flatten(context_.get(), {}, table.get(), &res_table));
 
-  const StringPiece16 overlayable_name(u"com.app.test:integer/overlayable");
   uint32_t spec_flags = 0u;
-  ASSERT_THAT(res_table.identifierForName(overlayable_name.data(), overlayable_name.size(), nullptr,
-                                          0u, nullptr, 0u, &spec_flags),
-              Gt(0u));
+  const StringPiece16 overlayable_name(u"com.app.test:integer/overlayable");
+  ASSERT_THAT(res_table.identifierForName(overlayable_name.data(),
+                                          overlayable_name.size(), nullptr, 0u, nullptr, 0u,
+                                          &spec_flags), Gt(0u));
   EXPECT_TRUE(spec_flags & android::ResTable_typeSpec::SPEC_OVERLAYABLE);
+
+  const StringPiece16 vendor_overlayable_name(u"com.app.test:integer/vendor_overlayable");
+  uint32_t vendor_spec_flags = 0u;
+  ASSERT_THAT(res_table.identifierForName(vendor_overlayable_name.data(),
+                                          vendor_overlayable_name.size(), nullptr, 0u, nullptr, 0u,
+                                          &vendor_spec_flags), Gt(0u));
+  EXPECT_TRUE(vendor_spec_flags & android::ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR);
+
+  const StringPiece16 system_overlayable_name(u"com.app.test:integer/system_overlayable");
+  uint32_t system_spec_flags = 0u;
+  ASSERT_THAT(res_table.identifierForName(system_overlayable_name.data(),
+                                          system_overlayable_name.size(), nullptr, 0u, nullptr, 0u,
+                                          &system_spec_flags), Gt(0u));
+  EXPECT_TRUE(system_spec_flags & android::ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT);
+  EXPECT_TRUE(system_spec_flags & android::ResTable_typeSpec::SPEC_OVERLAYABLE_PRODUCT_SERVICES);
+  EXPECT_TRUE(system_spec_flags & android::ResTable_typeSpec::SPEC_OVERLAYABLE_VENDOR);
 }
 
 }  // namespace aapt
