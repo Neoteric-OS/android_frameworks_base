@@ -180,6 +180,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1945,7 +1946,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void dumpNetworkDiagnostics(IndentingPrintWriter pw) {
         final List<NetworkDiagnostics> netDiags = new ArrayList<NetworkDiagnostics>();
         final long DIAG_TIME_MS = 5000;
-        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+        for (NetworkAgentInfo nai : networksSortedById()) {
             // Start gathering diagnostic information.
             netDiags.add(new NetworkDiagnostics(
                     nai.network,
@@ -1991,7 +1992,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         pw.println("Current Networks:");
         pw.increaseIndent();
-        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+        for (NetworkAgentInfo nai : networksSortedById()) {
             pw.println(nai.toString());
             pw.increaseIndent();
             pw.println(String.format(
@@ -2016,7 +2017,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         pw.println("Network Requests:");
         pw.increaseIndent();
-        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
+        for (NetworkRequestInfo nri : requestsSortedById()) {
             pw.println(nri.toString());
         }
         pw.println();
@@ -2071,6 +2072,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mWakelockLogs.reverseDump(fd, pw, args);
             pw.decreaseIndent();
         }
+    }
+
+    /**
+     * Return an array of all current NetworkAgentInfos sorted by network id.
+     */
+    private NetworkAgentInfo[] networksSortedById() {
+        Collection<NetworkAgentInfo> values = mNetworkAgentInfos.values();
+        NetworkAgentInfo[] networks = new NetworkAgentInfo[values.size()];
+        values.toArray(networks);
+        Arrays.sort(networks, Comparator.comparingInt(nai -> nai.network.netId));
+        return networks;
+    }
+
+    /**
+     * Return an array of all current NetworkRequest sorted by request id.
+     */
+    private NetworkRequestInfo[] requestsSortedById() {
+        Collection<NetworkRequestInfo> values = mNetworkRequests.values();
+        NetworkRequestInfo[] requests = new NetworkRequestInfo[values.size()];
+        requests = values.toArray(requests);
+        Arrays.sort(requests, Comparator.comparingInt(nri -> nri.request.requestId));
+        return requests;
     }
 
     private boolean isLiveNetworkAgent(NetworkAgentInfo nai, int what) {
@@ -2864,7 +2887,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println("User setting:      " + description);
         pw.println("Network overrides:");
         pw.increaseIndent();
-        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+        for (NetworkAgentInfo nai : networksSortedById()) {
             if (nai.avoidUnvalidated) {
                 pw.println(nai.name());
             }
