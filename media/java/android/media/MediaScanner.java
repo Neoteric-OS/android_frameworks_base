@@ -512,6 +512,9 @@ public class MediaScanner implements AutoCloseable {
         private boolean mScanSuccess;
         private int mWidth;
         private int mHeight;
+        private int mColorStandard;
+        private int mColorTransfer;
+        private int mColorRange;
 
         public MyMediaScannerClient() {
             mDateFormatter = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
@@ -591,6 +594,9 @@ public class MediaScanner implements AutoCloseable {
             mCompilation = 0;
             mWidth = 0;
             mHeight = 0;
+            mColorStandard = -1;
+            mColorTransfer = -1;
+            mColorRange = -1;
 
             return entry;
         }
@@ -759,6 +765,12 @@ public class MediaScanner implements AutoCloseable {
                 mWidth = parseSubstring(value, 0, 0);
             } else if (name.equalsIgnoreCase("height")) {
                 mHeight = parseSubstring(value, 0, 0);
+            } else if (name.equalsIgnoreCase("colorstandard")) {
+                mColorStandard = parseSubstring(value, 0, -1);
+            } else if (name.equalsIgnoreCase("colortransfer")) {
+                mColorTransfer = parseSubstring(value, 0, -1);
+            } else if (name.equalsIgnoreCase("colorrange")) {
+                mColorRange = parseSubstring(value, 0, -1);
             } else {
                 //Log.v(TAG, "unknown tag: " + name + " (" + mProcessGenres + ")");
             }
@@ -907,6 +919,15 @@ public class MediaScanner implements AutoCloseable {
                     }
                     if (mDate > 0) {
                         map.put(Video.Media.DATE_TAKEN, mDate);
+                    }
+                    if (mColorStandard >= 0) {
+                        map.put(Video.Media.COLOR_STANDARD, mColorStandard);
+                    }
+                    if (mColorTransfer >= 0) {
+                        map.put(Video.Media.COLOR_TRANSFER, mColorTransfer);
+                    }
+                    if (mColorRange >= 0) {
+                        map.put(Video.Media.COLOR_RANGE, mColorRange);
                     }
                 } else if (MediaFile.isImageFileType(mFileType)) {
                     // FIXME - add DESCRIPTION
