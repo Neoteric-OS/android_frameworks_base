@@ -1,0 +1,12 @@
+Autosubmit+1: Dianne Hackborn <hackbod@android.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Code-Review+1: Sangtae Ji <st.ji@samsung.com>
+Verified+1: Dianne Hackborn <hackbod@android.com>
+Verified+1: Sangtae Ji <st.ji@samsung.com>
+API-Review+1: Dianne Hackborn <hackbod@android.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 03 Sep 2018 20:25:28 +0000
+Reviewed-on: https://android-review.googlesource.com/718709
+Project: platform/frameworks/base
+Branch: refs/heads/master
