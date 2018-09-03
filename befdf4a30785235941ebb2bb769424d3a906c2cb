@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2731d2f_9741baa0",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-03T05:31:51Z",
+      "side": 1,
+      "message": "Please make this final ; if you return this at the end it\u0027s the only guarantee you have you won\u0027t miss/double apply a case. Alternatively you can just remove this and return in each branch.",
+      "range": {
+        "startLine": 2288,
+        "startChar": 8,
+        "endLine": 2288,
+        "endChar": 11
+      },
+      "revId": "befdf4a30785235941ebb2bb769424d3a906c2cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
