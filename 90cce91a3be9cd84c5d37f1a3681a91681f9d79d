@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5658089b_1fec21e3",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-04T05:58:34Z",
+      "side": 1,
+      "message": "Per discussion with Jean, perhaps we can just change the order of operations here?\n\n1. Register callback.\n2. Get network capabilities. If this returns null, that will call finishAndRemoveTask().\n3. Call mCm.bindProcessToNetwork(mNetwork);\n4. Call mCm.setProcessDefaultNetworkForHostResolution(ResolvUtil.getNetworkWithUseLocalNameserversFlag(mNetwork));\n\nPutting #1 before #2 will reduce the chances of a race where the network disconnects right after the app is started but before the callback is registered. But it does not close the window for that race completely. If this race occurs, then the captive portal app will stay on the screen even though wifi is disconnected.",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
