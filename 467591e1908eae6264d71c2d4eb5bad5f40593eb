@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9f38dd8_78a4e3f9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-04T09:09:19Z",
+      "side": 1,
+      "message": "Can you add a TODO to delete this code and have netd unconditionally enable bandwidth control at startup time?",
+      "range": {
+        "startLine": 627,
+        "startChar": 12,
+        "endLine": 627,
+        "endChar": 54
+      },
+      "revId": "467591e1908eae6264d71c2d4eb5bad5f40593eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
