@@ -16,6 +16,24 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f32eab_8915e4dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-04T17:26:16Z",
+      "side": 1,
+      "message": "Thanks. How would I go about doing that?\n\nThe processor only output CSV, so this should be safe, and combining the output easy.",
+      "parentUuid": "14e86d24_348a66df",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
