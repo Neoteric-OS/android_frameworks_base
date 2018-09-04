@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e86d24_348a66df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-09-04T16:36:37Z",
+      "side": 1,
+      "message": "The new target will be built for m checkbuild, so can still cause build breakages.\n\nIf necessary, and as long as the annotation processor does not generate any java apis, we could enable running the processor on the individual shards.  Your scripts would be responsible for combining the output files from each shard though.",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
