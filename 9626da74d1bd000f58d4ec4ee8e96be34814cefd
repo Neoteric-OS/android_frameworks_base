@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "684d9d6c_31d57e8e",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1711,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "You can just make that a vanilla boolean and it will be unboxed transparently",
+      "range": {
+        "startLine": 1711,
+        "startChar": 18,
+        "endLine": 1711,
+        "endChar": 25
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c7f55f3_ea618276",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 8
@@ -18,6 +41,121 @@
         "startChar": 38,
         "endLine": 1713,
         "endChar": 39
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6adccac_704a7ed1",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "This sounds needlessly complex. Why not just define this as a helper function rather than an instance of Function ?\n\n  private void formatBlockedStateError(uid) {\n    return String.format(\n            \"Unexpected BlockedState: (uid\u003d%d, rule\u003d%s, metered\u003d%b, backgroundRestricted\u003d%b)\",\n            uid, uidRulesToString(rule), metered, backgroundRestricted);\n  }\n\n  private void verifyNetworkBlockedState(...) {\n    ...\n    for (pair : ...) {\n      assertEquals(formatBlockedStateError(UID_A, rule, metered, backgroundRestricted),\n              expectedResult,\n              npmi.isUidNetworkingBlocked(UID_A, rule, metered, backgroundRestricted));\n    }\n\nI don\u0027t think the closure saves you anything here.",
+      "range": {
+        "startLine": 1713,
+        "startChar": 38,
+        "endLine": 1713,
+        "endChar": 46
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb18b21_b0dac49d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "This is really great and looking almost complete. Because what\u0027s scary in this I think we may want to be more exhaustive on all the edges that should and should not trigger a callback, though.\n\nThe moving parts are :\n- The rules (NONE, REJECT_METERED, REJECT_ALL)\n- The meteredness\n- Data saver\n\nI think we want to check each edge of this – that is, try all possible combinations of change.\nnone false false → none false true\nnone false false → none true false\nnone false false → metered false false\nnone false false → all false false\nn f t → n f f\nn f t → n t t\nn f t → m f t\nn f t → a f t\nn t f → n t t, n f f, m t f, a t f\nn t t → n t f, n f t, m t t, a t t\nm f f → m f t, m t f, n f f, a f f\n...\n\nWhat that gives us is a helper function that takes the three initial inputs and the three final inputs, and a bool that tells whether the callback should be called.\n\nThen, another function that lists all pairs of triplets with the correct behavior. Maybe this one can be generated if the logic is simple enough (but I doubt it is), or maybe part of it could be.\n\nFinally, we should also test all possible combinations at network connection time to make sure the initial blocked status callback always has the right value.",
+      "range": {
+        "startLine": 4567,
+        "startChar": 3,
+        "endLine": 4567,
+        "endChar": 5
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea455f6_b428f341",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4586,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "active",
+      "range": {
+        "startLine": 4586,
+        "startChar": 61,
+        "endLine": 4586,
+        "endChar": 68
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf172d39_00e66f26",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "If I understand correctly what triggers this is the change to NOT_METERED, not the change to setRestrictBackground. In which case, we should have this line above the setRestrictBackground line, and here a assertNoCallback.\n\n...but see the comment below, which makes this moot.",
+      "range": {
+        "startLine": 4612,
+        "startChar": 24,
+        "endLine": 4612,
+        "endChar": 51
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca935d0_6dd553aa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4621,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T08:46:24Z",
+      "side": 1,
+      "message": "As above, the missing part here is completeness ; we need to also test the default callback when the default network changes back and forth from metered under both restricted and non restricted conditions, as well as under REJECT_METERED and NONE and REJECT_ALL rules ; and changes to the restricted bit under both metered and non-metered conditions as well as all rules ; and change to rules under all restricted or non-restricted / metered or non-metered combinations.\n\nOf course the tests in changing the default network that you have here are also extremely important.",
+      "range": {
+        "startLine": 4621,
+        "startChar": 4,
+        "endLine": 4621,
+        "endChar": 5
       },
       "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
