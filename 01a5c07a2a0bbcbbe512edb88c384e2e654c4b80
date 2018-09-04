@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef498e6c_eb9db40c",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-04T21:50:53Z",
+      "side": 1,
+      "message": "Not added by me. This is present internally.",
+      "range": {
+        "startLine": 1089,
+        "startChar": 6,
+        "endLine": 1091,
+        "endChar": 7
+      },
+      "revId": "01a5c07a2a0bbcbbe512edb88c384e2e654c4b80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
