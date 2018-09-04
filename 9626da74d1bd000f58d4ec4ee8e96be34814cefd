@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "33a61562_b225a426",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T23:36:53Z",
+      "side": 1,
+      "message": "Sorry, I realized overnight that what I\u0027m asking for should be separate.\n\nSure, given the nature of this change, I think we should have exhaustive coverage for all edges of the graph. But the tests as you have written them right now are more natural, and they also provide coverage for an interaction that my suggestion does not : some sort of continuity (what I suggest essentially requires a reset before every edge, so if we have a problem with state, it will miss it for sure).\n\nTherefore : I think we should submit your tests almost as is first (please just address the comments in lines 4586 and 4612). Then we should *also* add the exhaustive tests I have been describing here and in line 4621, in a separate change.\n\nAccordingly I am marking this comment (and the one in l.4621) as already resolved since they are not things to change in this patch, rather things to add in a separate patch.",
+      "parentUuid": "abb18b21_b0dac49d",
+      "range": {
+        "startLine": 4567,
+        "startChar": 3,
+        "endLine": 4567,
+        "endChar": 5
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea455f6_b428f341",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 8
@@ -184,6 +208,30 @@
       "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920036aa_d503c66d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4621,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T23:36:53Z",
+      "side": 1,
+      "message": "Marking resolved as described in reply comment to l.4567",
+      "parentUuid": "4ca935d0_6dd553aa",
+      "range": {
+        "startLine": 4621,
+        "startChar": 4,
+        "endLine": 4621,
+        "endChar": 5
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
