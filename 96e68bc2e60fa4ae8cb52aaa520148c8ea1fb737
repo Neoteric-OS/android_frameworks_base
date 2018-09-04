@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8741094e_d0d7131a",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-09-04T15:22:52Z",
+      "side": 1,
+      "message": "looks like this should be done here as well so we don\u0027t have the same mistake you found here, I will do this in a separate CL.",
+      "range": {
+        "startLine": 1034,
+        "startChar": 19,
+        "endLine": 1034,
+        "endChar": 26
+      },
+      "revId": "96e68bc2e60fa4ae8cb52aaa520148c8ea1fb737",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
