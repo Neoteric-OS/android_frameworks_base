@@ -52,6 +52,24 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644d50d4_deed286d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-04T17:42:16Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll cc myself on that bug.",
+      "parentUuid": "317b8ffa_21d8269a",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
