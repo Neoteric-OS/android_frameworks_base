@@ -34,6 +34,24 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317b8ffa_21d8269a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-09-04T17:27:50Z",
+      "side": 1,
+      "message": "We\u0027ll need to implement b/77284273 first, so you should probably start with this approach.",
+      "parentUuid": "86f32eab_8915e4dc",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
