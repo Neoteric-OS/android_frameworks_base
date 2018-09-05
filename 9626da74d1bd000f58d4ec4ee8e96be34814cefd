@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92845551_c52f5e43",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-05T06:52:25Z",
+      "side": 1,
+      "message": "I did something similar in patch 5, which makeTethering() returns a mocked Tethering object.\nWhat I concerned about is that mTethering would always be a mocked object in every testcase. If someday someone writes a testcase which needs to use mTethering, it returns mocked one.",
+      "parentUuid": "2e03d573_98ebb070",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 13
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "684d9d6c_31d57e8e",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 8
