@@ -343,10 +343,17 @@ public class SystemConfig {
 
         // Iterate over the files in the directory and scan .xml files
         File platformFile = null;
+        File odmFile = null;
+        String sku = SystemProperties.get("ro.boot.product.hardware.sku");
         for (File f : libraryDir.listFiles()) {
             // We'll read platform.xml last
             if (f.getPath().endsWith("etc/permissions/platform.xml")) {
                 platformFile = f;
+                continue;
+            }
+            //read odm permssion to override features
+            if (f.getPath().endsWith(sku + ".xml")) {
+                odmFile = f;
                 continue;
             }
 
@@ -358,13 +365,17 @@ public class SystemConfig {
                 Slog.w(TAG, "Permissions library file " + f + " cannot be read");
                 continue;
             }
-
+            // Read odm permissions last so it will take precedence
             readPermissionsFromXml(f, permissionFlag);
         }
 
         // Read platform permissions last so it will take precedence
         if (platformFile != null) {
             readPermissionsFromXml(platformFile, permissionFlag);
+        }
+        // Read oem permissions last so it will take precedence
+        if (odmFile != null) {
+           readPermissionsFromXml(odmFile, permissionFlag);
         }
     }
 
