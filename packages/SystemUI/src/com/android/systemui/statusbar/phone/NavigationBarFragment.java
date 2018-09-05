@@ -345,6 +345,7 @@ public class NavigationBarFragment extends Fragment implements Callbacks {
             pw.println("null");
         } else {
             mNavigationBarView.dump(fd, pw, args);
+            mNavigationBarView.getViewRootImpl().dump("NavigationBarView:", fd, pw, args);
         }
     }
 

@@ -425,6 +425,9 @@ public class StatusBarWindowManager implements RemoteInputController.Callback, D
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("StatusBarWindowManager state:");
         pw.println(mCurrentState);
+        if (mStatusBarView != null && mStatusBarView.getViewRootImpl() != null) {
+            mStatusBarView.getViewRootImpl().dump("StatusBarView:", fd, pw, args);
+        }
     }
 
     public boolean isShowingWallpaper() {
