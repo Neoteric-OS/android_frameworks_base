@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ffef1fa7_52708429",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-05T09:45:40Z",
+      "side": 1,
+      "message": "I think that\u0027s fine though. In the context of ConnectivityServiceTests, we should never want to touch the real tethering code. If we ever do it should be easy enough at that time to change the code to install the mock only when necessary.\n\nAlso (you don\u0027t have to do it in this change but) mTethering really should be final anyway.",
+      "parentUuid": "92845551_c52f5e43",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 13
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "684d9d6c_31d57e8e",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 8
