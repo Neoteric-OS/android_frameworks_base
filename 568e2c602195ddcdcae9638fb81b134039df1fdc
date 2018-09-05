@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca19eac_84b43fbc",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-09-05T19:28:40Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 1661,
+        "startChar": 8,
+        "endLine": 1661,
+        "endChar": 16
+      },
+      "revId": "568e2c602195ddcdcae9638fb81b134039df1fdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
