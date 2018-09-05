@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6235c6e4_e32a1f72",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-09-05T01:51:47Z",
+      "side": 1,
+      "message": "Oh yes, Function can\u0027t be used, we need BiFunction for moving outside. I couldn\u0027t recall BiFunction at that point, so that\u0027s why I just said we need to use one of the other functional interfaces.",
+      "parentUuid": "f2c33afe_9c9f922f",
+      "range": {
+        "startLine": 1713,
+        "startChar": 38,
+        "endLine": 1713,
+        "endChar": 46
+      },
+      "revId": "9626da74d1bd000f58d4ec4ee8e96be34814cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abb18b21_b0dac49d",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 8
