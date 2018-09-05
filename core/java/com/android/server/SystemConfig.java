@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.os.storage.StorageManager;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -343,10 +344,16 @@ public class SystemConfig {
 
         // Iterate over the files in the directory and scan .xml files
         File platformFile = null;
+        File odmFile = null;
+        String sku = SystemProperties.get("ro.boot.product.hardware.sku");
         for (File f : libraryDir.listFiles()) {
             // We'll read platform.xml last
             if (f.getPath().endsWith("etc/permissions/platform.xml")) {
                 platformFile = f;
+                continue;
+            }
+            if (f.getPath().endsWith(sku + ".xml")) {
+                odmFile = f;
                 continue;
             }
 
@@ -358,10 +365,12 @@ public class SystemConfig {
                 Slog.w(TAG, "Permissions library file " + f + " cannot be read");
                 continue;
             }
-
+            // Read odm permissions last so it will take precedence
             readPermissionsFromXml(f, permissionFlag);
         }
-
+        if (odmFile != null) {
+           readPermissionsFromXml(odmFile, permissionFlag);
+        }
         // Read platform permissions last so it will take precedence
         if (platformFile != null) {
             readPermissionsFromXml(platformFile, permissionFlag);
