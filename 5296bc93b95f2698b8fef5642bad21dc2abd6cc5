@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9643e4c3_2534e155",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "644d50d4_deed286d",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02afd15c_175fb737",
         "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/SignatureBuilder.java",
         "patchSetId": 4
@@ -87,6 +105,24 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb8cb1c_29c0064c",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/SignatureBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02afd15c_175fb737",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "2c562cc9_95e59e65",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/SignatureBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe5dfa7_1fa63791",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d10182a_f6a38796",
         "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
         "patchSetId": 4
@@ -127,6 +187,24 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282c12b8_1ff0c851",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d10182a_f6a38796",
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "c3285e1a_a2721b0b",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec849d9e_afa2b8c6",
+      "range": {
+        "startLine": 33,
+        "startChar": 35,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e67e160_cabd0a4f",
         "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
         "patchSetId": 4
@@ -176,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "9f94bf19_80090099",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e67e160_cabd0a4f",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 96
+      },
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16be59e_7f05f8d7",
         "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
         "patchSetId": 4
@@ -196,6 +322,30 @@
       "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c82367_38ebb339",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/UnsupportedAppUsageProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-05T12:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16be59e_7f05f8d7",
+      "range": {
+        "startLine": 70,
+        "startChar": 43,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "5296bc93b95f2698b8fef5642bad21dc2abd6cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
