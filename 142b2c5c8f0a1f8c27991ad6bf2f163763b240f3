@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a301945_5b77767b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "I would rename this to\n\nisActiveSourceMenuActivated",
+      "range": {
+        "startLine": 1924,
+        "startChar": 36,
+        "endLine": 1924,
+        "endChar": 51
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c18ce6_bd4197af",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "Unable to send menu request because local tv device not available",
+      "range": {
+        "startLine": 1584,
+        "startChar": 37,
+        "endLine": 1584,
+        "endChar": 66
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0b2cce_1e60d11f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "isActiveSourceMenuActivated",
+      "range": {
+        "startLine": 1593,
+        "startChar": 23,
+        "endLine": 1593,
+        "endChar": 35
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2921ac_cb53c3af",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "if we use a boolean here then we should name this\nupdateMenuActivate(boolean isMenuActivated)\n\nif you use the then method or variable name menuState then in should be an @IntDef matching the constants.",
+      "range": {
+        "startLine": 45,
+        "startChar": 37,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f687bcf_0eb525ac",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 115,
+        "startChar": 43,
+        "endLine": 115,
+        "endChar": 81
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c12a79_4339b4f0",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 123,
+        "startChar": 42,
+        "endLine": 123,
+        "endChar": 79
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94b5c9c_b2d859a5",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 77
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7be23d0_51243e9a",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "on timeout we should call mCallback.updateMenuState(false)",
+      "range": {
+        "startLine": 141,
+        "startChar": 46,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "142b2c5c8f0a1f8c27991ad6bf2f163763b240f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

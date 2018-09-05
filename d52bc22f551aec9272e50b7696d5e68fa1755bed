@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "948bd01c_8edda8d9",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-09-05T15:29:13Z",
+      "side": 1,
+      "message": "keyReceiverAddress does check isValid, but will still return  Constants.ADDR_INVALID, so you still need to check.\n\nFurthermore, it also looks for activePath, but the spec says it should only send this request to the active source.",
+      "parentUuid": "0ea5582f_b5f19d06",
+      "range": {
+        "startLine": 1902,
+        "startChar": 63,
+        "endLine": 1902,
+        "endChar": 85
+      },
+      "revId": "d52bc22f551aec9272e50b7696d5e68fa1755bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9250b66c_e0ee893b",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 12
