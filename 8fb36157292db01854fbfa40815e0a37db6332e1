@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e7f00f3_2e89263d",
+        "filename": "tools/processors/unsupportedappusage/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-06T16:42:32Z",
+      "side": 1,
+      "message": "the deps are pulled in (for non-Java9) by specifying use_tools_jar below - should the fix be in the build system instead?\n\n(I know not about the build system, so I\u0027ll trust your judgement here :) )",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "8fb36157292db01854fbfa40815e0a37db6332e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
