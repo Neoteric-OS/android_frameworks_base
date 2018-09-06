@@ -69,6 +69,9 @@ public final class IpSecConfig implements Parcelable {
     private int mMarkValue;
     private int mMarkMask;
 
+    // XFRM interface id
+    private int mXfrmInterfaceId;
+
     /** Set the mode for this IPsec transform */
     public void setMode(int mode) {
         mMode = mode;
@@ -133,6 +136,10 @@ public final class IpSecConfig implements Parcelable {
         mMarkMask = mask;
     }
 
+    public void setXfrmInterfaceId(int xfrmInterfaceId) {
+        mXfrmInterfaceId = xfrmInterfaceId;
+    }
+
     // Transport or Tunnel
     public int getMode() {
         return mMode;
@@ -190,6 +197,10 @@ public final class IpSecConfig implements Parcelable {
         return mMarkMask;
     }
 
+    public int getXfrmInterfaceId() {
+        return mXfrmInterfaceId;
+    }
+
     // Parcelable Methods
 
     @Override
@@ -213,6 +224,7 @@ public final class IpSecConfig implements Parcelable {
         out.writeInt(mNattKeepaliveInterval);
         out.writeInt(mMarkValue);
         out.writeInt(mMarkMask);
+        out.writeInt(mXfrmInterfaceId);
     }
 
     @VisibleForTesting
@@ -235,6 +247,7 @@ public final class IpSecConfig implements Parcelable {
         mNattKeepaliveInterval = c.mNattKeepaliveInterval;
         mMarkValue = c.mMarkValue;
         mMarkMask = c.mMarkMask;
+        mXfrmInterfaceId = c.mXfrmInterfaceId;
     }
 
     private IpSecConfig(Parcel in) {
@@ -255,6 +268,7 @@ public final class IpSecConfig implements Parcelable {
         mNattKeepaliveInterval = in.readInt();
         mMarkValue = in.readInt();
         mMarkMask = in.readInt();
+        mXfrmInterfaceId = in.readInt();
     }
 
     @Override
@@ -289,6 +303,8 @@ public final class IpSecConfig implements Parcelable {
                 .append(mMarkValue)
                 .append(", mMarkMask=")
                 .append(mMarkMask)
+                .append(", mXfrmInterfaceId=")
+                .append(mXfrmInterfaceId)
                 .append("}");
 
         return strBuilder.toString();
@@ -320,10 +336,10 @@ public final class IpSecConfig implements Parcelable {
                 && lhs.mNattKeepaliveInterval == rhs.mNattKeepaliveInterval
                 && lhs.mSpiResourceId == rhs.mSpiResourceId
                 && IpSecAlgorithm.equals(lhs.mEncryption, rhs.mEncryption)
-                && IpSecAlgorithm.equals(
-                        lhs.mAuthenticatedEncryption, rhs.mAuthenticatedEncryption)
+                && IpSecAlgorithm.equals(lhs.mAuthenticatedEncryption, rhs.mAuthenticatedEncryption)
                 && IpSecAlgorithm.equals(lhs.mAuthentication, rhs.mAuthentication)
                 && lhs.mMarkValue == rhs.mMarkValue
-                && lhs.mMarkMask == rhs.mMarkMask);
+                && lhs.mMarkMask == rhs.mMarkMask
+                && lhs.mXfrmInterfaceId == rhs.mXfrmInterfaceId);
     }
 }
