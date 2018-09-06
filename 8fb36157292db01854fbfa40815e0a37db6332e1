@@ -22,6 +22,30 @@
       "revId": "8fb36157292db01854fbfa40815e0a37db6332e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5bd4fa_0e0f05d3",
+        "filename": "tools/processors/unsupportedappusage/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-09-06T16:52:37Z",
+      "side": 1,
+      "message": "tools.jar doesn\u0027t exist in OpenJDK 9. I\u0027m not even sure whether use_tools_jar has any effect (all Android code is compiled using the OpenJDK 9 toolchain, but it might be that we\u0027re still pulling in the OpenJDK 8 tools.jar when targeting 1.8, which is currently the default).\n\nAnyway, my thinking is that use_tools_jar should probably not add these implicitly because targets shouldn\u0027t generally be using these non-APIs in the first place (although TBH I don\u0027t know what the recommended replacement is in this particular case) so it seems like a *good* think if targets need to explicitly request those packages that they still need for now.\n\nAdding Colin to this CL in case he has an opinion.",
+      "parentUuid": "5e7f00f3_2e89263d",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "8fb36157292db01854fbfa40815e0a37db6332e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
