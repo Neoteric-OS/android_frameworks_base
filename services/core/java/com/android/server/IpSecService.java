@@ -616,8 +616,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 mConfig.getSourceAddress(),
                                 mConfig.getDestinationAddress(),
                                 spi,
-                                mConfig.getMarkValue(),
-                                mConfig.getMarkMask());
+                                0,
+                                mConfig.getMarkMask(),
+                                mConfig.getXfrmInterfaceId());
             } catch (RemoteException | ServiceSpecificException e) {
                 Log.e(TAG, "Failed to delete SA with ID: " + mResourceId, e);
             }
@@ -679,7 +680,7 @@ public class IpSecService extends IIpSecService.Stub {
                     mSrvConfig
                             .getNetdInstance()
                             .ipSecDeleteSecurityAssociation(
-                                    uid, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
+                                    uid, mSourceAddress, mDestinationAddress, mSpi, 0, 0, 0);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
                 Log.e(TAG, "Failed to delete SPI reservation with ID: " + mResourceId, e);
@@ -791,6 +792,8 @@ public class IpSecService extends IIpSecService.Stub {
         private final int mIkey;
         private final int mOkey;
 
+        private final int mIfId;
+
         TunnelInterfaceRecord(
                 int resourceId,
                 String interfaceName,
@@ -798,7 +801,8 @@ public class IpSecService extends IIpSecService.Stub {
                 String localAddr,
                 String remoteAddr,
                 int ikey,
-                int okey) {
+                int okey,
+                int intfId) {
             super(resourceId);
 
             mInterfaceName = interfaceName;
@@ -807,6 +811,7 @@ public class IpSecService extends IIpSecService.Stub {
             mRemoteAddress = remoteAddr;
             mIkey = ikey;
             mOkey = okey;
+            mIfId = intfId;
         }
 
         /** always guarded by IpSecService#this */
@@ -817,7 +822,7 @@ public class IpSecService extends IIpSecService.Stub {
             //       Delete global policies
             try {
                 final INetd netd = mSrvConfig.getNetdInstance();
-                netd.removeVirtualTunnelInterface(mInterfaceName);
+                netd.ipSecRemoveTunnelInterface(mInterfaceName);
 
                 for (int selAddrFamily : ADDRESS_FAMILIES) {
                     netd.ipSecDeleteSecurityPolicy(
@@ -825,13 +830,15 @@ public class IpSecService extends IIpSecService.Stub {
                             selAddrFamily,
                             IpSecManager.DIRECTION_OUT,
                             mOkey,
-                            0xffffffff);
+                            0xffffffff,
+                            mIfId);
                     netd.ipSecDeleteSecurityPolicy(
                             uid,
                             selAddrFamily,
                             IpSecManager.DIRECTION_IN,
                             mIkey,
-                            0xffffffff);
+                            0xffffffff,
+                            mIfId);
                 }
             } catch (ServiceSpecificException | RemoteException e) {
                 Log.e(
@@ -871,6 +878,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         public int getOkey() {
             return mOkey;
+        }
+
+        public int getIfId() {
+            return mIfId;
         }
 
         @Override
@@ -1282,7 +1293,7 @@ public class IpSecService extends IIpSecService.Stub {
             //       Add inbound/outbound global policies
             //              (use reqid = 0)
             final INetd netd = mSrvConfig.getNetdInstance();
-            netd.addVirtualTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey);
+            netd.ipSecAddTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey, resourceId);
 
             for (int selAddrFamily : ADDRESS_FAMILIES) {
                 // Always send down correct local/remote addresses for template.
@@ -1294,7 +1305,8 @@ public class IpSecService extends IIpSecService.Stub {
                         remoteAddr,
                         0,
                         okey,
-                        0xffffffff);
+                        0xffffffff,
+                        resourceId);
                 netd.ipSecAddSecurityPolicy(
                         callerUid,
                         selAddrFamily,
@@ -1303,7 +1315,8 @@ public class IpSecService extends IIpSecService.Stub {
                         localAddr,
                         0,
                         ikey,
-                        0xffffffff);
+                        0xffffffff,
+                        resourceId);
             }
 
             userRecord.mTunnelInterfaceRecords.put(
@@ -1316,7 +1329,8 @@ public class IpSecService extends IIpSecService.Stub {
                                     localAddr,
                                     remoteAddr,
                                     ikey,
-                                    okey),
+                                    okey,
+                                    resourceId),
                             binder));
             return new IpSecTunnelInterfaceResponse(IpSecManager.Status.OK, resourceId, intfName);
         } catch (RemoteException e) {
@@ -1549,7 +1563,8 @@ public class IpSecService extends IIpSecService.Stub {
                         (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                         encapType,
                         encapLocalPort,
-                        encapRemotePort);
+                        encapRemotePort,
+                        c.getXfrmInterfaceId());
     }
 
     /**
@@ -1705,27 +1720,31 @@ public class IpSecService extends IIpSecService.Stub {
                         : tunnelInterfaceInfo.getIkey();
 
         try {
+            int spi = 0;
             c.setMarkValue(mark);
             c.setMarkMask(0xffffffff);
+            c.setXfrmInterfaceId(tunnelInterfaceInfo.getIfId());
 
             if (direction == IpSecManager.DIRECTION_OUT) {
                 // Set output mark via underlying network (output only)
                 c.setNetwork(tunnelInterfaceInfo.getUnderlyingNetwork());
+                spi = transformInfo.getSpiRecord().getSpi();
+            }
 
-                // If outbound, also add SPI to the policy.
-                for (int selAddrFamily : ADDRESS_FAMILIES) {
-                    mSrvConfig
-                            .getNetdInstance()
-                            .ipSecUpdateSecurityPolicy(
-                                    callingUid,
-                                    selAddrFamily,
-                                    direction,
-                                    tunnelInterfaceInfo.getLocalAddress(),
-                                    tunnelInterfaceInfo.getRemoteAddress(),
-                                    transformInfo.getSpiRecord().getSpi(),
-                                    mark,
-                                    0xffffffff);
-                }
+            // Always update the policy with the relevant XFRM_IF_ID
+            for (int selAddrFamily : ADDRESS_FAMILIES) {
+                mSrvConfig
+                        .getNetdInstance()
+                        .ipSecUpdateSecurityPolicy(
+                                callingUid,
+                                selAddrFamily,
+                                direction,
+                                tunnelInterfaceInfo.getLocalAddress(),
+                                tunnelInterfaceInfo.getRemoteAddress(),
+                                spi, // If outbound, also add SPI to the policy.
+                                mark,
+                                0xffffffff,
+                                c.getXfrmInterfaceId());
             }
 
             // Update SA with tunnel mark (ikey or okey based on direction)
