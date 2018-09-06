@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e72aacfd_7309a3b5",
+        "filename": "tools/processors/unsupportedappusage/src/android/processor/unsupportedappusage/SignatureBuilder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-09-06T16:13:27Z",
+      "side": 1,
+      "message": "This is not a public API and therefore not visible by default under OpenJDK 9, so this is breaking the continuous build with -target 1.9.\n\nIt also appears that this import is unused?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "bad89e5e5b171a71e42d7c738ec97a39747e4318",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
