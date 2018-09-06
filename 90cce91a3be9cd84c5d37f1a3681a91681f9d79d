@@ -22,6 +22,30 @@
       "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b56175_513ecb98",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-09-06T02:23:32Z",
+      "side": 1,
+      "message": "I understand and we think #1 should be after #2 because registerNetworkCallback() refers to TransportType which depends on NetworkCapabilities.\n\nDo you agree ?\n\nNow, we could verify with the below order then we can upload next patch set of the below order soon.\na. Get network capabilities. If this returns null, that will call finishAndRemoveTask().\nb. Register callback.\nc. Call mCm.bindProcessToNetwork(mNetwork);\nd. Call mCm.setProcessDefaultNetworkForHostResolution(ResolvUtil.getNetworkWithUseLocalNameserversFlag(mNetwork));",
+      "parentUuid": "5658089b_1fec21e3",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
