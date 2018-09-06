@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10b1af9c_1b58edb2",
+        "filename": "tests/Overlays/README",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-06T16:26:36Z",
+      "side": 1,
+      "message": "not necessary; you can pass \"-g\" to \u0027adb install\u0027 and that will auto grant all requested permissions",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "98e685e98cbc088a7a429d4118401070da545dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
