@@ -46,6 +46,30 @@
       "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50e9846_239ca9cd",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-06T08:54:21Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to specify the transport type when registering the callback. The \"if (mNetwork.equals(lostNetwork))\" check will ensure that the only callbacks that are processed are the ones for mNetwork.",
+      "parentUuid": "17b56175_513ecb98",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
