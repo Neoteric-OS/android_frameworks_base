@@ -34,6 +34,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
@@ -946,6 +947,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @Override
             public NetworkRequest getDefaultNetworkRequest() {
                 return mDefaultRequest;
+            }
+            @Override
+            public boolean isCellularDefaultInternet() {
+                NetworkAgentInfo nai = getDefaultNetwork();
+                Log.w("EntitlementManager", "getDefaultNetwork: " + nai);
+                if (nai != null && nai.networkCapabilities != null) {
+                    NetworkCapabilities nc = nai.networkCapabilities;
+                    if (nc.hasTransport(TRANSPORT_CELLULAR)
+                            && nc.hasCapability(NET_CAPABILITY_NOT_VPN)) {
+                        return true;
+                    }
+                }
+                return false;
             }
         };
         return new Tethering(mContext, mNMS, mStatsService, mPolicyManager,

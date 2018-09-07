@@ -16,36 +16,32 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.ConnectivityManager.getNetworkTypeName;
-import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
+import static android.net.ConnectivityManager.TYPE_NONE;
+import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Process;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.IpPrefix;
-import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
-import android.net.util.NetworkConstants;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
+import android.os.Handler;
+import android.os.Process;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -94,10 +90,12 @@ public class UpstreamNetworkMonitor {
     private final HashMap<Network, NetworkState> mNetworkMap = new HashMap<>();
     private HashSet<IpPrefix> mLocalPrefixes;
     private ConnectivityManager mCM;
+    private EntitlementManager mEntitleMgr;
     private NetworkCallback mListenAllCallback;
     private NetworkCallback mDefaultNetworkCallback;
     private NetworkCallback mMobileNetworkCallback;
     private boolean mDunRequired;
+    private boolean mIsMobilePrefered;
     // The current system default network (not really used yet).
     private Network mDefaultInternetNetwork;
     // The current upstream network used for tethering.
@@ -119,13 +117,14 @@ public class UpstreamNetworkMonitor {
         mCM = cm;
     }
 
-    public void start(NetworkRequest defaultNetworkRequest) {
+    public void start(NetworkRequest defaultNetworkRequest, EntitlementManager entitle) {
         stop();
 
         final NetworkRequest listenAllRequest = new NetworkRequest.Builder()
                 .clearCapabilities().build();
         mListenAllCallback = new UpstreamNetworkCallback(CALLBACK_LISTEN_ALL);
         cm().registerNetworkCallback(listenAllRequest, mListenAllCallback, mHandler);
+        mEntitleMgr = entitle;
 
         if (defaultNetworkRequest != null) {
             // This is not really a "request", just a way of tracking the system default network.
@@ -151,6 +150,7 @@ public class UpstreamNetworkMonitor {
 
         mTetheringUpstreamNetwork = null;
         mNetworkMap.clear();
+        mEntitleMgr = null;
     }
 
     public void updateMobileRequiresDun(boolean dunRequired) {
@@ -167,11 +167,19 @@ public class UpstreamNetworkMonitor {
     }
 
     public void registerMobileNetworkRequest() {
+        if (!isMobileUpstreamPermitted()) {
+            if (mMobileNetworkCallback != null) {
+                mLog.e("releaseMobileNetworkRequest() due to not permitted");
+                releaseMobileNetworkRequest();
+            } else {
+                mLog.e("registerMobileNetworkRequest() is not permitted");
+            }
+            return;
+        }
         if (mMobileNetworkCallback != null) {
             mLog.e("registerMobileNetworkRequest() already registered");
             return;
         }
-
         // The following use of the legacy type system cannot be removed until
         // after upstream selection no longer finds networks by legacy type.
         // See also http://b/34364553 .
@@ -205,11 +213,9 @@ public class UpstreamNetworkMonitor {
     // becomes available and useful we (a) file a request to keep it up as
     // necessary and (b) change all upstream tracking state accordingly (by
     // passing LinkProperties up to Tethering).
-    //
-    // Next TODO: return NetworkState instead of just the type.
     public NetworkState selectPreferredUpstreamType(Iterable<Integer> preferredTypes) {
         final TypeStatePair typeStatePair = findFirstAvailableUpstreamByType(
-                mNetworkMap.values(), preferredTypes);
+                mNetworkMap.values(), preferredTypes, isMobileUpstreamPermitted());
 
         mLog.log("preferred upstream type: " + getNetworkTypeName(typeStatePair.type));
 
@@ -220,13 +226,15 @@ public class UpstreamNetworkMonitor {
                 registerMobileNetworkRequest();
                 break;
             case TYPE_NONE:
-                break;
+                //If mobile data is not approved for upstream connection
+                // we should release mobile network request
+                if (isMobileUpstreamPermitted()) break;
             default:
                 /* If we've found an active upstream connection that's not DUN/HIPRI
                  * we should stop any outstanding DUN/HIPRI requests.
                  *
-                 * If we found NONE we don't want to do this as we want any previous
-                 * requests to keep trying to bring up something we can use.
+                 * If we found NONE and mobile upstream is permitted we don't want to do this
+                 * as we want any previous requests to keep trying to bring up something we can use.
                  */
                 releaseMobileNetworkRequest();
                 break;
@@ -240,9 +248,11 @@ public class UpstreamNetworkMonitor {
         final NetworkState dfltState = (mDefaultInternetNetwork != null)
                 ? mNetworkMap.get(mDefaultInternetNetwork)
                 : null;
-        if (!mDunRequired) return dfltState;
-
         if (isNetworkUsableAndNotCellular(dfltState)) return dfltState;
+
+        if (!isMobileUpstreamPermitted()) return null;
+
+        if (!mDunRequired) return dfltState;
 
         // Find a DUN network. Note that code in Tethering causes a DUN request
         // to be filed, but this might be moved into this class in future.
@@ -257,6 +267,21 @@ public class UpstreamNetworkMonitor {
         return (Set<IpPrefix>) mLocalPrefixes.clone();
     }
 
+    private boolean isMobileUpstreamPermitted() {
+        if (mEntitleMgr != null) {
+            return mEntitleMgr.isMobileUpstreamPermitted();
+        } else {
+            return true;
+        }
+    }
+
+    private void defaultCellularInternetTracking(NetworkCapabilities nc) {
+        if (mEntitleMgr != null) {
+            boolean DfltCellularUp =  isCellular(nc);
+            mEntitleMgr.setCellularDefaultInternetUp(DfltCellularUp);
+        }
+    }
+
     private void handleAvailable(Network network) {
         if (mNetworkMap.containsKey(network)) return;
 
@@ -265,7 +290,10 @@ public class UpstreamNetworkMonitor {
     }
 
     private void handleNetCap(int callbackType, Network network, NetworkCapabilities newNc) {
-        if (callbackType == CALLBACK_DEFAULT_INTERNET) mDefaultInternetNetwork = network;
+        if (callbackType == CALLBACK_DEFAULT_INTERNET) {
+            mDefaultInternetNetwork = network;
+            defaultCellularInternetTracking(newNc);
+        }
 
         final NetworkState prev = mNetworkMap.get(network);
         if (prev == null || newNc.equals(prev.networkCapabilities)) {
@@ -330,6 +358,7 @@ public class UpstreamNetworkMonitor {
     private void handleLost(int callbackType, Network network) {
         if (network.equals(mDefaultInternetNetwork)) {
             mDefaultInternetNetwork = null;
+            defaultCellularInternetTracking(null);
             // There are few TODOs within ConnectivityService's rematching code
             // pertaining to spurious onLost() notifications.
             //
@@ -447,7 +476,8 @@ public class UpstreamNetworkMonitor {
     }
 
     private static TypeStatePair findFirstAvailableUpstreamByType(
-            Iterable<NetworkState> netStates, Iterable<Integer> preferredTypes) {
+            Iterable<NetworkState> netStates, Iterable<Integer> preferredTypes,
+            boolean isMobilePermitted) {
         final TypeStatePair result = new TypeStatePair();
 
         for (int type : preferredTypes) {
@@ -459,6 +489,10 @@ public class UpstreamNetworkMonitor {
                        ConnectivityManager.getNetworkTypeName(type));
                 continue;
             }
+            if (!isMobilePermitted && isCellular(nc)) {
+                continue;
+            }
+
             nc.setSingleUid(Process.myUid());
 
             for (NetworkState value : netStates) {
