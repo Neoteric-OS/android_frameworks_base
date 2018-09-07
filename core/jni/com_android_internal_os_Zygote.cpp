@@ -78,6 +78,7 @@ using android::base::GetBoolProperty;
                               append(StringPrintf(__VA_ARGS__))
 
 static pid_t gSystemServerPid = 0;
+static struct sigaction gSystemServerOriginalTermAction;
 
 static const char kZygoteClassName[] = "com/android/internal/os/Zygote";
 static jclass gZygoteClass;
@@ -97,6 +98,73 @@ static void RuntimeAbort(JNIEnv* env, int line, const char* msg) {
   std::ostringstream oss;
   oss << __FILE__ << ":" << line << ": " << msg;
   env->FatalError(oss.str().c_str());
+}
+
+static void DoSysRq() {
+  int fd = TEMP_FAILURE_RETRY(open("/proc/sysrq-trigger", O_WRONLY));
+  if (fd >= 0) {
+    int result=0;
+    if ((result = TEMP_FAILURE_RETRY(write(fd, "c", 1)) != 1)) {
+      ALOGD("Sysrq-trigger is set, crash triggerred");
+    }
+    close(fd);
+  }
+}
+
+static std::string GetProcessName(pid_t pid)
+{
+  std::string process_name = "<unknown>";
+
+  if (pid != -1) {
+    android::base::ReadFileToString(android::base::StringPrintf("/proc/%d/cmdline", pid), &process_name);
+
+    // replace '\0' to space
+    std::replace(process_name.begin(), process_name.end(), '\0', ' ');
+    
+    // strip path
+    std::string::size_type pos = process_name.find_last_of("/");
+    if (pos != std::string::npos) {
+      process_name = process_name.substr(pos+1);
+    }
+
+    // remove head space
+    process_name.erase(process_name.begin(), std::find_if(process_name.begin(), process_name.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+
+    // remove tail space
+    process_name.erase(std::find_if(process_name.rbegin(), process_name.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), process_name.end());
+  }
+
+  return process_name;
+}
+
+static void SigTermHookForSystemServer(int sig, siginfo_t *info, void *v)
+{
+  if (info != NULL) {
+    ALOGE("System server was killed by pid %d, code %d.\n",
+                info->si_pid, info->si_code);
+  } else {
+    ALOGE("System server was killed.\n");
+  }
+
+  std::string terminator_process_name = GetProcessName(info->si_pid);
+
+  // Not trigger SysRq if the terminator is init.
+  // Because init is the teminator on normal shutdown.
+  if (terminator_process_name != "init") {
+    bool triggerSysRq = android::base::GetBoolProperty("persist.sys.triggerSysRqToEnhanceDebug", false);
+    if(triggerSysRq) {
+      ALOGI("Trigger SysRq because System server was killed.\n");
+      DoSysRq();
+    }
+  }
+
+  // Recover to default behavior
+  sigaction(sig, &gSystemServerOriginalTermAction, NULL);
+  raise(sig);
 }
 
 // This signal handler is for zygote mode, since the zygote must reap its children
@@ -926,6 +994,14 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
                        permittedCapabilities, effectiveCapabilities,
                        MOUNT_EXTERNAL_DEFAULT, NULL, NULL, true,
                        false, NULL, NULL);
+
+      // Override action for SIGTERM to hook.
+      struct sigaction action;
+      sigemptyset(&action.sa_mask);
+      action.sa_sigaction = SigTermHookForSystemServer;
+      action.sa_flags = SA_SIGINFO;
+      sigaction(SIGTERM, &action, &gSystemServerOriginalTermAction);
+
   } else if (pid > 0) {
       // The zygote process checks whether the child process has died or not.
       ALOGI("System server process %d has been created", pid);
