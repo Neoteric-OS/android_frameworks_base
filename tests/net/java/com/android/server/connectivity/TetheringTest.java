@@ -103,6 +103,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
+import com.android.server.connectivity.tethering.EntitlementManager;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
 import com.android.server.connectivity.tethering.OffloadHardwareInterface;
 import com.android.server.connectivity.tethering.TetheringDependencies;
@@ -496,7 +497,8 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_LOCAL_ONLY);
         verifyNoMoreInteractions(mWifiManager);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_ACTIVE_LOCAL_ONLY);
-        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class));
+        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class),
+                any(EntitlementManager.class));
         // TODO: Figure out why this isn't exactly once, for sendTetherStateChangedBroadcast().
         assertTrue(1 <= mTetheringDependencies.isTetheringSupportedCalls);
 
@@ -730,7 +732,8 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_TETHERED);
         verifyNoMoreInteractions(mWifiManager);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_ACTIVE_TETHER);
-        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class));
+        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class),
+                any(EntitlementManager.class));
         // In tethering mode, in the default configuration, an explicit request
         // for a mobile network is also made.
         verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
@@ -901,7 +904,6 @@ public class TetheringTest {
         userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
-
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
     // already operating tethering mode interface.
