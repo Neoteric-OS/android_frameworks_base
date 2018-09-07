@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf72431f_2f989aa7",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2018-09-07T23:43:13Z",
+      "side": 1,
+      "message": "nit: mention the name? it\u0027s not obvious to figure out whom, even by looking at the logs",
+      "range": {
+        "startLine": 981,
+        "startChar": 61,
+        "endLine": 981,
+        "endChar": 72
+      },
+      "revId": "523b682c969b0087c340ddd7628c3fe1962bba80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
