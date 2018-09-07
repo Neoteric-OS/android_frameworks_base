@@ -892,7 +892,6 @@ public class TetheringTest {
                 expectedInteractionsWithShowNotification);
     }
 
-
     // TODO: Test that a request for hotspot mode doesn't interfere with an
     // already operating tethering mode interface.
 }
