@@ -15301,6 +15301,16 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         addErrorToDropBox(eventType, r, processName, null, null, null, null, null, crashInfo);
 
+        boolean triggerSysRq = SystemProperties
+                                .getBoolean("persist.sys.triggerSysRqToEnhanceDebug", false);
+        if (triggerSysRq) {
+            // tirigger sysrq if crashed process would be system server
+            if (r == null || r.pid == MY_PID) {
+                Slog.i(TAG, "Trigger SysRq because System Server crashed");
+                Watchdog.doSysRq('c');
+            }
+        }
+
         mAppErrors.crashApplication(r, crashInfo);
     }
 
