@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cac1909_b9fc7aeb",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T05:00:06Z",
+      "side": 1,
+      "message": "While you\u0027re at it: silberst has left the wifi team so should be removed. Replace with etancohen?",
+      "range": {
+        "startLine": 1,
+        "startChar": 62,
+        "endLine": 1,
+        "endChar": 81
+      },
+      "revId": "304116fbc2fd11588e55a8b40187ae4fadc1e7e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc21197a_841df1de",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T05:00:06Z",
+      "side": 1,
+      "message": "ek@ is leaving the team, replace with jchalard",
+      "range": {
+        "startLine": 2,
+        "startChar": 74,
+        "endLine": 2,
+        "endChar": 87
+      },
+      "revId": "304116fbc2fd11588e55a8b40187ae4fadc1e7e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fa1471_c97ea7f6",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T05:00:06Z",
+      "side": 1,
+      "message": "quiche has left the team too. Replace with etancohen?",
+      "range": {
+        "startLine": 3,
+        "startChar": 21,
+        "endLine": 3,
+        "endChar": 59
+      },
+      "revId": "304116fbc2fd11588e55a8b40187ae4fadc1e7e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f97b9b_9b26d1c8",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T05:00:06Z",
+      "side": 1,
+      "message": "Replace with satk and jchalard.",
+      "range": {
+        "startLine": 4,
+        "startChar": 18,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "304116fbc2fd11588e55a8b40187ae4fadc1e7e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
