@@ -118,6 +118,30 @@
       "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8303267_4385d750",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-09-07T02:01:10Z",
+      "side": 1,
+      "message": "I see, and agree.\nThank you for your clarification.\nWe will remove line158-160 and and work for the order what you recommend at first.",
+      "parentUuid": "2b8fb438_7ab80e5b",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
