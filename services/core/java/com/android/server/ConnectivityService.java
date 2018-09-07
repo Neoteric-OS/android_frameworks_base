@@ -947,6 +947,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             public NetworkRequest getDefaultNetworkRequest() {
                 return mDefaultRequest;
             }
+            @Override
+            public boolean isCellularDefaultInternet() {
+                NetworkAgentInfo nai = getDefaultNetwork();
+                if (DBG) Log.d("EntitlementManager", "getDefaultNetwork: " + nai);
+                if (nai != null && nai.networkCapabilities != null) {
+                    NetworkCapabilities nc = nai.networkCapabilities;
+                    if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                            && nc.hasCapability(NET_CAPABILITY_NOT_VPN)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         };
         return new Tethering(mContext, mNMS, mStatsService, mPolicyManager,
                 IoThread.get().getLooper(), new MockableSystemProperties(),
