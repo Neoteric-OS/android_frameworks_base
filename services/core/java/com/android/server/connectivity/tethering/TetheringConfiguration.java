@@ -30,6 +30,7 @@ import static com.android.internal.R.array.config_tether_upstream_types;
 import static com.android.internal.R.array.config_tether_usb_regexs;
 import static com.android.internal.R.array.config_tether_wifi_regexs;
 import static com.android.internal.R.bool.config_tether_upstream_automatic;
+import static com.android.internal.R.integer.config_mobile_hotspot_provision_check_period;
 import static com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui;
 
 import android.content.ContentResolver;
@@ -100,6 +101,7 @@ public class TetheringConfiguration {
 
     public final String[] provisioningApp;
     public final String provisioningAppNoUi;
+    public final int provisioningCheckPeriod;
 
     public final int subId;
 
@@ -129,6 +131,8 @@ public class TetheringConfiguration {
 
         provisioningApp = getResourceStringArray(res, config_mobile_hotspot_provision_app);
         provisioningAppNoUi = getProvisioningAppNoUi(res);
+        provisioningCheckPeriod = getResourceInteger(res,
+                config_mobile_hotspot_provision_check_period);
 
         configLog.log(toString());
     }
@@ -326,6 +330,14 @@ public class TetheringConfiguration {
             return (strArray != null) ? strArray : EMPTY_STRING_ARRAY;
         } catch (Resources.NotFoundException e404) {
             return EMPTY_STRING_ARRAY;
+        }
+    }
+
+    private static int getResourceInteger(Resources res, int resId) {
+        try {
+            return res.getInteger(resId);
+        } catch (Resources.NotFoundException e404) {
+            return 0;
         }
     }
 
