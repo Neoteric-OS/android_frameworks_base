@@ -60,8 +60,12 @@ public class TetheringDependencies {
         return null;
     }
 
-    public EntitlementManager getEntitlementManager(Context ctx, SharedLog log,
-            MockableSystemProperties systemProperties) {
-        return new EntitlementManager(ctx, log, systemProperties);
+    public EntitlementManager getEntitlementManager(Context ctx, StateMachine target,
+            SharedLog log, int what, MockableSystemProperties systemProperties) {
+        return new EntitlementManager(ctx, target, log, what, systemProperties);
+    }
+
+    public boolean isCellularDefaultInternet() {
+        return false;
     }
 }
