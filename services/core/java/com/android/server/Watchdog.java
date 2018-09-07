@@ -529,6 +529,13 @@ public class Watchdog extends Thread {
                 dropboxThread.join(2000);  // wait up to 2 seconds for it to return.
             } catch (InterruptedException ignored) {}
 
+            boolean triggerSysRq = SystemProperties
+                                        .getBoolean("persist.sys.triggerSysRqToEnhanceDebug", false);
+            if (triggerSysRq) {
+                Slog.i(TAG, "Trigger SysRq because System Server caused watchdog.");
+                doSysRq('c');
+            }
+
             IActivityController controller;
             synchronized (this) {
                 controller = mController;
@@ -570,7 +577,7 @@ public class Watchdog extends Thread {
         }
     }
 
-    private void doSysRq(char c) {
+    public static void doSysRq(char c) {
         try {
             FileWriter sysrq_trigger = new FileWriter("/proc/sysrq-trigger");
             sysrq_trigger.write(c);

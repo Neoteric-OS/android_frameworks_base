@@ -1054,6 +1054,16 @@ class AppErrors {
         mService.addErrorToDropBox("anr", app, app.processName, activity, parent, annotation,
                 cpuInfo, tracesFile, null);
 
+        boolean triggerSysRq = SystemProperties
+                                .getBoolean("persist.sys.triggerSysRqToEnhanceDebug", false);
+        if (triggerSysRq) {
+            // tirigger sysrq if crashed process would be system server
+            if (app == null || app.pid == MY_PID) {
+                Slog.i(TAG, "Trigger SysRq because System Server caused ANR.");
+                Watchdog.doSysRq('c');
+            }
+        }
+
         if (mService.mController != null) {
             try {
                 // 0 == show dialog, 1 = keep waiting, -1 = kill process immediately
