@@ -94,6 +94,30 @@
       "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8fb438_7ab80e5b",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T01:58:58Z",
+      "side": 1,
+      "message": "Yes. If we get an onLost() for a different transport, or a different network, we\u0027ll just ignore it because the network doesn\u0027t match mNetwork.",
+      "parentUuid": "9f540955_7725bd15",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "90cce91a3be9cd84c5d37f1a3681a91681f9d79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
