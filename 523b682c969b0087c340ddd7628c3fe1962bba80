@@ -22,6 +22,30 @@
       "revId": "523b682c969b0087c340ddd7628c3fe1962bba80",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82926bfe_06557f9c",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2018-09-08T00:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf72431f_2f989aa7",
+      "range": {
+        "startLine": 981,
+        "startChar": 61,
+        "endLine": 981,
+        "endChar": 72
+      },
+      "revId": "523b682c969b0087c340ddd7628c3fe1962bba80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
