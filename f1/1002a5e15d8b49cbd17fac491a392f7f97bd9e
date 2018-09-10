@@ -1,0 +1,10 @@
+Autosubmit+1: Tri Vo <trong@google.com>
+Verified+1: Hung-ying Tyan <tyanh@google.com>
+Code-Review+2: Hung-ying Tyan <tyanh@google.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 10 Sep 2018 11:24:33 +0000
+Reviewed-on: https://android-review.googlesource.com/746528
+Project: platform/frameworks/base
+Branch: refs/heads/pie-gsi
