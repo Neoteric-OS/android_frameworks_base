@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1326ca4_489dacea",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2018-09-10T21:13:34Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be a boolean?",
+      "range": {
+        "startLine": 405,
+        "startChar": 11,
+        "endLine": 405,
+        "endChar": 14
+      },
+      "revId": "2e6932f78ff6a78eaa1cc589db441cf23800014a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fea59f_18737341",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2018-09-10T21:13:34Z",
+      "side": 1,
+      "message": "should be a named constant\n\nshould also combine line 411 \u0026 412",
+      "range": {
+        "startLine": 412,
+        "startChar": 25,
+        "endLine": 412,
+        "endChar": 29
+      },
+      "revId": "2e6932f78ff6a78eaa1cc589db441cf23800014a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333001a9_e95fd698",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2018-09-10T21:13:34Z",
+      "side": 1,
+      "message": "this log does not match the behavior in the function, it does not return 0.",
+      "range": {
+        "startLine": 420,
+        "startChar": 12,
+        "endLine": 421,
+        "endChar": 98
+      },
+      "revId": "2e6932f78ff6a78eaa1cc589db441cf23800014a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
