@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d910d38_ae0e3d9a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/DataUsageController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1110928
+      },
+      "writtenOn": "2018-09-10T18:11:11Z",
+      "side": 1,
+      "message": "unnecessary parenthesis",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "1ad5d180c8ec4505fc7719f84c6bfc7dd2cc315a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
