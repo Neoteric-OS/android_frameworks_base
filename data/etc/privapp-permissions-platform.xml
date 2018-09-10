@@ -405,4 +405,9 @@ applications that come with the platform
         <permission name="android.permission.CONTROL_VPN"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.android.sdksetup">
+        <permission name="android.permission.BACKUP"/>
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
 </permissions>
