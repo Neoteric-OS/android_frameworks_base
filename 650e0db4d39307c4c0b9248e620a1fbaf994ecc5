@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "624a7152_c05d7792",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1352508
+      },
+      "writtenOn": "2018-09-11T05:53:44Z",
+      "side": 1,
+      "message": "BT Reference Phone",
+      "parentUuid": "b4ceb209_b5c1401b",
+      "range": {
+        "startLine": 7,
+        "startChar": 61,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "650e0db4d39307c4c0b9248e620a1fbaf994ecc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ad7992_dab2cb8f",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
         "patchSetId": 1
@@ -68,6 +92,54 @@
       "revId": "650e0db4d39307c4c0b9248e620a1fbaf994ecc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac93f84_fde37a72",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1352508
+      },
+      "writtenOn": "2018-09-11T05:53:44Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "6ef4a725_301280a3",
+      "range": {
+        "startLine": 1192,
+        "startChar": 8,
+        "endLine": 1195,
+        "endChar": 10
+      },
+      "revId": "650e0db4d39307c4c0b9248e620a1fbaf994ecc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434e5fcf_c1810048",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1352508
+      },
+      "writtenOn": "2018-09-11T05:53:44Z",
+      "side": 1,
+      "message": "This is the scenario for IVI devices where it will be able to connect.",
+      "parentUuid": "d2ad7992_dab2cb8f",
+      "range": {
+        "startLine": 1195,
+        "startChar": 19,
+        "endLine": 1195,
+        "endChar": 55
+      },
+      "revId": "650e0db4d39307c4c0b9248e620a1fbaf994ecc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
