@@ -1828,6 +1828,17 @@ public class SubscriptionManager {
     }
 
     /**
+     * Checks if the supplied subscription ID corresponds to an active subscription.
+     *
+     * @param subscriptionId the subscription ID.
+     * @return true if the supplied subscription ID corresponds to an active subscription;
+     * false otherwise.
+     */
+    public boolean isActiveSubscriptionId(int subscriptionId) {
+        return isActiveSubId(subscriptionId);
+    }
+
+    /**
      * @return true if the sub ID is active. i.e. The sub ID corresponds to a known subscription
      * and the SIM providing the subscription is present in a slot and in "LOADED" state.
      * @hide
