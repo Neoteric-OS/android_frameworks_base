@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018e0901_2688671a",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-11T10:56:42Z",
+      "side": 0,
+      "message": "can we keep this? (I don\u0027t think it has any effect yet, but would be nice to have it worked as expected)",
+      "range": {
+        "startLine": 356,
+        "startChar": 11,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "60ff003a9d988ba7459906b131fa5718b80dc093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
