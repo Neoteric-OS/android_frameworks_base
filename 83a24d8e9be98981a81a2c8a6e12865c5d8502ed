@@ -22,6 +22,30 @@
       "revId": "83a24d8e9be98981a81a2c8a6e12865c5d8502ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bb8000_5c506c80",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2018-09-11T16:49:41Z",
+      "side": 1,
+      "message": "Yes, owners of all matched per-file rules are included for a CL.\nAt line 3, etancohen@ is added to Protocol* owners, and lorenzo@ is still an owner.",
+      "parentUuid": "f34bc095_e08f5e4f",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "83a24d8e9be98981a81a2c8a6e12865c5d8502ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
