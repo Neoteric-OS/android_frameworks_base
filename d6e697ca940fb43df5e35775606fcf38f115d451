@@ -16,6 +16,24 @@
       "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146248b2_7a386a89",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-09-11T18:17:03Z",
+      "side": 1,
+      "message": "I see. I can do the renaming as a later patch. Then if we call this as doc_stubs, do you think for \"droiddoc\" target, should we call it as \"doc_docs\"? Or we can still use \"droid\" as prefix, like \"droid_docs\" and \"droid_stubs\".",
+      "parentUuid": "1a809393_0b28dab1",
+      "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
