@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a809393_0b28dab1",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-09-11T18:00:09Z",
+      "side": 1,
+      "message": "Maybe a separate change, but it would be good to keep these namespaced the way cc_* and java_* module types are.  I want to use that as an indicator for grouping the module types together in go/Android.bp.\n\nMaybe call this one doc_stubs?",
+      "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
