@@ -46,6 +46,30 @@
       "revId": "60ff003a9d988ba7459906b131fa5718b80dc093",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8af121d2_5d221723",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-09-11T11:38:56Z",
+      "side": 0,
+      "message": "Hmm, yeah, I can make a CL that keeps this, but maybe easier to wait until we revert^2",
+      "parentUuid": "c4eb4a80_34d55baf",
+      "range": {
+        "startLine": 356,
+        "startChar": 11,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "60ff003a9d988ba7459906b131fa5718b80dc093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
