@@ -22,6 +22,30 @@
       "revId": "60ff003a9d988ba7459906b131fa5718b80dc093",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4eb4a80_34d55baf",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-11T10:57:18Z",
+      "side": 0,
+      "message": "I realise probably not as you\u0027re also reverting he hiddenapi tool changes.",
+      "parentUuid": "018e0901_2688671a",
+      "range": {
+        "startLine": 356,
+        "startChar": 11,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "60ff003a9d988ba7459906b131fa5718b80dc093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
