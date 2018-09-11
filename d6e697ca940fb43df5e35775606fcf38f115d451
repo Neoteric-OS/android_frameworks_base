@@ -34,6 +34,24 @@
       "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f51553_f48bcf41",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-09-11T18:18:37Z",
+      "side": 1,
+      "message": "Or we can also use \"java_\" as prefix, like \"java_docs\" or \"java_stubs\" since they these target are processing java source files only.",
+      "parentUuid": "146248b2_7a386a89",
+      "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
