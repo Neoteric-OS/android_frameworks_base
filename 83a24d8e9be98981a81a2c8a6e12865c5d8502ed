@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f34bc095_e08f5e4f",
+        "filename": "core/java/com/android/internal/util/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-11T08:11:44Z",
+      "side": 1,
+      "message": "Is it OK to have Protocol* both here and in the line above, with different owners in the two lines?",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "83a24d8e9be98981a81a2c8a6e12865c5d8502ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
