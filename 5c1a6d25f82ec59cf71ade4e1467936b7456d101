@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a04e639_cef419a9",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-11T05:03:22Z",
+      "side": 1,
+      "message": "Can you confirm that this eventually calls onDestroy? Otherwise we\u0027ll leak mNetworkCallback.",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 34
+      },
+      "revId": "5c1a6d25f82ec59cf71ade4e1467936b7456d101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
