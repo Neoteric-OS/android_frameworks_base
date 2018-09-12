@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c3a0b25_652e9b09",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-12T08:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95133136_1c5dc080",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 41
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc93ab04_6acae763",
         "filename": "services/net/java/android/net/ip/IpServer.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d89de5e3_a3c49dba",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-12T08:46:35Z",
+      "side": 1,
+      "message": "I have been noodling on this since I wrote that comment; thanks for raising this.\n\nThe multi-IpClient work for WifiStateMachine made it clear that having this argument passed as part of the signature would have greatly helped making a single callback usable my all WiFi IpClient instances.\n\nI\u0027m inclined to agree with you, and I\u0027ve removed all my |who|-denigrating text.",
+      "parentUuid": "fc93ab04_6acae763",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 56
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0185cb68_2ac24941",
         "filename": "tests/net/java/android/net/ip/IpServerTest.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6414bf_0df62703",
+        "filename": "tests/net/java/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-12T08:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0185cb68_2ac24941",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
