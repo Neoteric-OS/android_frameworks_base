@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8f8344_f2a46aee",
+        "filename": "data/keyboards/Vendor_054c_Product_0268.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-12T18:31:48Z",
+      "side": 1,
+      "message": "nit: stray new line",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986e38f9_f86dd271",
+        "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8111.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-12T18:31:48Z",
+      "side": 1,
+      "message": "Please add comments here (and in other files) to make them all consistent (see Vendor_054c_Product_05c4_Version_8000.kl)",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f5c033_d2e03929",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4_Version_8000.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-12T18:31:48Z",
+      "side": 1,
+      "message": "Please add a comment here:\n\n# In kernel versions \u003e\u003d 4.10, the touchpad is a separate input device,\n# so the touchpad button click will not be covered by this layout.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
