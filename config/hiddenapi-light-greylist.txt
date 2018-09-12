@@ -2481,7 +2481,6 @@ Ljava/lang/Class;->dexClassDefIndex:I
 Ljava/lang/Class;->getDeclaredMethodsUnchecked(Z)[Ljava/lang/reflect/Method;
 Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;Z)Ljava/lang/reflect/Method;
 Ljava/lang/Class;->ifTable:[Ljava/lang/Object;
-Ljava/lang/Class;->name:Ljava/lang/String;
 Ljava/lang/Class;->objectSize:I
 Ljava/lang/Class;->status:I
 Ljava/lang/ClassLoader;->parent:Ljava/lang/ClassLoader;
