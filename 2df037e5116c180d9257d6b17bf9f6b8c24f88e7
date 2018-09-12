@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95133136_1c5dc080",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-12T07:22:47Z",
+      "side": 1,
+      "message": "Let me paraphrase Ken Thompson and say\n\"I\u0027d spell ipServ with an e\" (and an er at the end)",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 41
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc93ab04_6acae763",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-12T07:22:47Z",
+      "side": 1,
+      "message": "I question whether it\u0027s actually appropriate to remove it. I understand it\u0027s not needed, but is it costly ? Or in better terms : are either of the following statements true ?\n- It\u0027s expensive to pass this argument [e.g. because it gets marshalled]\n- It\u0027s undesirable to pass this argument [e.g. because synchronous methods on the IpServer instance should not be called in the callback]\n\nIf neither, then my experience is that it\u0027s a lot easier to use if you do pass this argument. Sure, you could, say, embark it when you create your instance of a Callback, but having it passed relieves the implementor from that responsibility.",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 56
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0185cb68_2ac24941",
+        "filename": "tests/net/java/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-12T07:22:47Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "2df037e5116c180d9257d6b17bf9f6b8c24f88e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
