@@ -52,6 +52,24 @@
       "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63d5424_ddf91860",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-09-12T17:57:19Z",
+      "side": 1,
+      "message": "Hi Colin, what do you think for this comment?",
+      "parentUuid": "18f51553_f48bcf41",
+      "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
