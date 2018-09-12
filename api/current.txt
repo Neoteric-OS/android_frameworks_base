@@ -42639,6 +42639,7 @@ package android.telephony {
     method public java.util.List<android.telephony.SubscriptionPlan> getSubscriptionPlans(int);
     method public boolean isActiveSubscriptionId(int);
     method public boolean isNetworkRoaming(int);
+    method public static boolean isUsableSubscriptionId(int);
     method public static boolean isValidSubscriptionId(int);
     method public void removeOnOpportunisticSubscriptionsChangedListener(android.telephony.SubscriptionManager.OnOpportunisticSubscriptionsChangedListener);
     method public void removeOnSubscriptionsChangedListener(android.telephony.SubscriptionManager.OnSubscriptionsChangedListener);

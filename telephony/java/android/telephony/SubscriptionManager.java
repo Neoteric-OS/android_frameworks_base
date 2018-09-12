@@ -1601,6 +1601,16 @@ public class SubscriptionManager {
     }
 
     /**
+     * Check if the value of the subscription ID is usable to represent a subscription.
+     *
+     * @param subscriptionId the subscription ID
+     * @return true if the subscription ID is usable to represent a subscription; false otherwise.
+     */
+    public static boolean isUsableSubscriptionId(int subscriptionId) {
+        return isUsableSubIdValue(subscriptionId);
+    }
+
+    /**
      * @return true if subId is an usable subId value else false. A
      * usable subId means its neither a INVALID_SUBSCRIPTION_ID nor a DEFAULT_SUB_ID.
      * @hide
