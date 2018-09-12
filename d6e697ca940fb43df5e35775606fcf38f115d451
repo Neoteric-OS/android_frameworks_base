@@ -70,6 +70,24 @@
       "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42ea1df_538fc461",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-09-12T18:03:15Z",
+      "side": 1,
+      "message": "Lets sit down and map out all of the different module types to see what fits best.",
+      "parentUuid": "e63d5424_ddf91860",
+      "revId": "d6e697ca940fb43df5e35775606fcf38f115d451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
