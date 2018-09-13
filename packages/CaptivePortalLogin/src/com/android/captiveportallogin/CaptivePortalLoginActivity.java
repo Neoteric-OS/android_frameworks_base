@@ -20,8 +20,10 @@ import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_PROBE_SPEC;
 import static android.net.captiveportal.CaptivePortalProbeSpec.HTTP_LOCATION_HEADER_NAME;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoadedApk;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.CaptivePortal;
@@ -33,6 +35,7 @@ import android.net.NetworkRequest;
 import android.net.Proxy;
 import android.net.Uri;
 import android.net.captiveportal.CaptivePortalProbeSpec;
+import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
@@ -42,8 +45,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.util.TypedValue;
 import android.util.SparseArray;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,8 +56,8 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -276,6 +280,13 @@ public class CaptivePortalLoginActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        final WebView webview = (WebView) findViewById(R.id.webview);
+        if (webview != null) {
+            webview.stopLoading();
+            webview.setWebViewClient(null);
+            webview.setWebChromeClient(null);
+            webview.destroy();
+        }
         if (mNetworkCallback != null) {
             // mNetworkCallback is not null if mUrl is not null.
             mCm.unregisterNetworkCallback(mNetworkCallback);
@@ -460,19 +471,7 @@ public class CaptivePortalLoginActivity extends Activity {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            final URL url = makeURL(error.getUrl());
-            final String host = host(url);
-            Log.d(TAG, String.format("SSL error: %s, url: %s, certificate: %s",
-                    sslErrorName(error), sanitizeURL(url), error.getCertificate()));
-            if (url == null || !Objects.equals(host, mHostname)) {
-                // Ignore ssl errors for resources coming from a different hostname than the page
-                // that we are currently loading, and only cancel the request.
-                handler.cancel();
-                return;
-            }
-            logMetricsEvent(MetricsEvent.CAPTIVE_PORTAL_LOGIN_ACTIVITY_SSL_ERROR);
-            final String sslErrorPage = makeSslErrorPage();
-            view.loadDataWithBaseURL(INTERNAL_ASSETS, sslErrorPage, "text/HTML", "UTF-8", null);
+            showSslAlertDialog(view, handler, error);
         }
 
         private String makeSslErrorPage() {
@@ -535,6 +534,62 @@ public class CaptivePortalLoginActivity extends Activity {
             }
             return false;
         }
+
+        private void showSslAlertDialog(WebView view, SslErrorHandler handler, SslError error) {
+            final LayoutInflater factory = LayoutInflater.from(CaptivePortalLoginActivity.this);
+            final View sslWarningView = factory.inflate(R.layout.ssl_warning, null);
+
+            // Set error message type
+            setViewErrorMessageType(sslWarningView, error);
+
+            // Set Security certificate
+            setViewSecurityCertificate(sslWarningView, error);
+
+            // Set Page info
+            setViewPageInfo(error.getUrl(), sslWarningView, view);
+            AlertDialog sslAlertDialog = new AlertDialog.Builder(CaptivePortalLoginActivity.this)
+                    .setTitle(R.string.ssl_security_warning_title)
+                    .setView(sslWarningView)
+                    .setPositiveButton(R.string.ok, (DialogInterface dialog, int whichButton) -> {
+                        handler.cancel();
+                        final String html = makeSslErrorPage();
+                        view.loadDataWithBaseURL(INTERNAL_ASSETS, html, "text/HTML", "UTF-8",
+                            null);
+                    })
+                    .setOnCancelListener((DialogInterface dialogInterface) -> finishAndRemoveTask())
+                    .create();
+            sslAlertDialog.show();
+        }
+
+        private void setViewErrorMessageType(View sslWarningView, SslError error) {
+            TextView textView = sslWarningView.findViewById(R.id.ssl_error_type);
+            textView.setText(sslErrorName(error));
+        }
+
+        private void setViewSecurityCertificate(View sslWarningView, SslError error) {
+            SslCertificate cert = error.getCertificate();
+
+            View certificateView = cert.inflateCertificateView(CaptivePortalLoginActivity.this);
+            final LinearLayout placeholder = (LinearLayout) certificateView
+                    .findViewById(com.android.internal.R.id.placeholder);
+            LayoutInflater factory = LayoutInflater.from(CaptivePortalLoginActivity.this);
+
+            TextView textView = (TextView) factory.inflate(
+                    R.layout.ssl_error_msg, placeholder, false);
+            textView.setText(sslErrorMessage(error));
+            placeholder.addView(textView);
+
+            LinearLayout certificateLayout = sslWarningView.findViewById(R.id.certificate_layout);
+            certificateLayout.addView(certificateView);
+        }
+
+        void setViewPageInfo(final String urlOnError, View sslWarningView, WebView view) {
+            String url = urlOnError == null ? "" : urlOnError;
+            String title = view.getTitle() == null ? "" : view.getTitle();
+
+            ((TextView) sslWarningView.findViewById(R.id.title)).setText(title);
+            ((TextView) sslWarningView.findViewById(R.id.address)).setText(url);
+        }
     }
 
     private class MyWebChromeClient extends WebChromeClient {
@@ -586,5 +641,19 @@ public class CaptivePortalLoginActivity extends Activity {
 
     private static String sslErrorName(SslError error) {
         return SSL_ERRORS.get(error.getPrimaryError(), "UNKNOWN");
+    }
+
+    private static final SparseArray<Integer> SSL_ERROR_MSGS = new SparseArray<>();
+    static {
+        SSL_ERROR_MSGS.put(SslError.SSL_NOTYETVALID,  R.string.ssl_error_not_yet_valid);
+        SSL_ERROR_MSGS.put(SslError.SSL_EXPIRED,      R.string.ssl_error_expired);
+        SSL_ERROR_MSGS.put(SslError.SSL_IDMISMATCH,   R.string.ssl_error_mismatch);
+        SSL_ERROR_MSGS.put(SslError.SSL_UNTRUSTED,    R.string.ssl_error_untrusted);
+        SSL_ERROR_MSGS.put(SslError.SSL_DATE_INVALID, R.string.ssl_error_date_invalid);
+        SSL_ERROR_MSGS.put(SslError.SSL_INVALID,      R.string.ssl_error_invalid);
+    }
+
+    private static Integer sslErrorMessage(SslError error) {
+        return SSL_ERROR_MSGS.get(error.getPrimaryError(), R.string.ssl_error_unknown);
     }
 }
