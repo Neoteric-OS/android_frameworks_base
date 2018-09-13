@@ -333,11 +333,8 @@ public class VpnService extends Service {
      * <p>Used by the system to know the actual networks that carry traffic for apps affected by
      * this VPN in order to present this information to the user (e.g., via status bar icons).
      *
-     * <p>This method only needs to be called if the VPN has explicitly bound its underlying
-     * communications channels &mdash; such as the socket(s) passed to {@link #protect(int)} &mdash;
-     * to a {@code Network} using APIs such as {@link Network#bindSocket(Socket)} or
-     * {@link Network#bindSocket(DatagramSocket)}. The VPN should call this method every time
-     * the set of {@code Network}s it is using changes.
+     * <p>For a VPN to appear unmetered, it MUST declare a non-empty list of underlying networks,
+     * the first of which must have {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED} set.
      *
      * <p>{@code networks} is one of the following:
      * <ul>
