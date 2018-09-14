@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e06b1b6_dafed61c",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-09-14T17:10:04Z",
+      "side": 1,
+      "message": "Hmm, i was thinking that such a change would only happen in the Q+ timeframe, but based on the VPN meteredness reports, it affects P (and OC-MR1) devices. I was thinking that it\u0027s currently incorrect at the moment, and we should correct P (and maybe OC-MR1?) documentation.",
+      "parentUuid": "bf840924_c66ded7f",
+      "range": {
+        "startLine": 336,
+        "startChar": 44,
+        "endLine": 336,
+        "endChar": 48
+      },
+      "revId": "0c9d7c447fd64994335d347aaf3acd3c333b646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "859a6f99_52f6eb05",
         "filename": "core/java/android/net/VpnService.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-09-14T08:00:31Z",
       "side": 1,
       "message": "I\u0027m not sure this is true. I think they must all have NOT_METERED, not just the first one. If it is really true, then we should probably fix it. :)",
+      "range": {
+        "startLine": 337,
+        "startChar": 7,
+        "endLine": 337,
+        "endChar": 25
+      },
+      "revId": "0c9d7c447fd64994335d347aaf3acd3c333b646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e2013e_8d0e12db",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-09-14T17:10:04Z",
+      "side": 1,
+      "message": "From a casual read, it appears to take the first underlying network\u0027s NetworkState:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/ConnectivityService.java#1071\n\nAnd then it returns that state\u0027s network capabilities:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/ConnectivityService.java#1458\n\nThe last time I took a look at this was while resolving OC-MR1 meteredness bugs, and discussing with jsharkey@, he mentioned that we hadn\u0027t reached a final decision on the VPN meteredness policies. I assume that changed?",
+      "parentUuid": "859a6f99_52f6eb05",
       "range": {
         "startLine": 337,
         "startChar": 7,
