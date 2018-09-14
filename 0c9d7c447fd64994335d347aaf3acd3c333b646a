@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf840924_c66ded7f",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-14T08:00:31Z",
+      "side": 1,
+      "message": "Have we considered removing this burden from VPN apps? If we plan to do this in the near future, then perhaps we shouldn\u0027t document this limitation.",
+      "range": {
+        "startLine": 336,
+        "startChar": 44,
+        "endLine": 336,
+        "endChar": 48
+      },
+      "revId": "0c9d7c447fd64994335d347aaf3acd3c333b646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859a6f99_52f6eb05",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-14T08:00:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is true. I think they must all have NOT_METERED, not just the first one. If it is really true, then we should probably fix it. :)",
+      "range": {
+        "startLine": 337,
+        "startChar": 7,
+        "endLine": 337,
+        "endChar": 25
+      },
+      "revId": "0c9d7c447fd64994335d347aaf3acd3c333b646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
