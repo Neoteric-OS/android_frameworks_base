@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf151142_a7b5e67b",
+        "filename": "services/core/java/com/android/server/NewNetworkTimeUpdateService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-14T07:51:05Z",
+      "side": 1,
+      "message": "Can you get rid of this boilerplate and simplify the code by using a WakeupMessage instead of calling AlarmManager directly?",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 0
+      },
+      "revId": "0f7d97155a68050ca7aae557a21ee536398b7f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2985c4ff_f04df453",
+        "filename": "services/core/java/com/android/server/OldNetworkTimeUpdateService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-14T07:51:05Z",
+      "side": 1,
+      "message": "Ditto, can you use WakeupMessage here?",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 0
+      },
+      "revId": "0f7d97155a68050ca7aae557a21ee536398b7f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7803bf3e_f5bc20a6",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-14T07:51:05Z",
+      "side": 1,
+      "message": "Nit: I wonder if you still need this now that you\u0027re calling forceUpdate inline. Perhaps not worth finding out, if the cost of doing so is making this test flaky.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 0,
+        "endLine": 1288,
+        "endChar": 51
+      },
+      "revId": "0f7d97155a68050ca7aae557a21ee536398b7f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
