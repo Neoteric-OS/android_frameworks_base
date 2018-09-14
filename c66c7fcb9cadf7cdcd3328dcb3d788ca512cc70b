@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d5743c_8b218903",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-14T02:57:33Z",
+      "side": 1,
+      "message": "The prefix as a string contains the /prefixLegnth already.  Should this just be the base IP address of the prefix?",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 80
+      },
+      "revId": "c66c7fcb9cadf7cdcd3328dcb3d788ca512cc70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
