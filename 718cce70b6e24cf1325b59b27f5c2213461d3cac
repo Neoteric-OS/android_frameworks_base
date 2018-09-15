@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "071fd4d6_d86ce8a4",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126163
+      },
+      "writtenOn": "2018-09-15T00:15:16Z",
+      "side": 1,
+      "message": "I concur with Zach that it should be a named constant especially since it isn\u0027t entirely obvious  what 0x08 means. And as mentioned combine the bit mask check with the previous line.",
+      "range": {
+        "startLine": 412,
+        "startChar": 25,
+        "endLine": 412,
+        "endChar": 29
+      },
+      "revId": "718cce70b6e24cf1325b59b27f5c2213461d3cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
