@@ -22,6 +22,30 @@
       "revId": "718cce70b6e24cf1325b59b27f5c2213461d3cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8bfec2_d0fa1684",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-09-16T04:18:30Z",
+      "side": 1,
+      "message": "can you point me to a coding convention that says it must be a constant?\nseems like it is a preference but I don\u0027t find such java coding convention (in google3 code even)\n\nas for the meaning of the mask, Javadoc comments on *this* method, 3-4 lines above this line explains all one needs to know, IMO.",
+      "parentUuid": "071fd4d6_d86ce8a4",
+      "range": {
+        "startLine": 412,
+        "startChar": 25,
+        "endLine": 412,
+        "endChar": 29
+      },
+      "revId": "718cce70b6e24cf1325b59b27f5c2213461d3cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
