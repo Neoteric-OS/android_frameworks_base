@@ -119,6 +119,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private final Handler mHandler;
     private final SettingsObserver mSettingsObserver;
 
+    private boolean mDataDisabledIcon;
+
     // Save the previous STATUS_HISTORY_SIZE states for logging.
     private final String[] mMobileStatusHistory = new String[STATUS_HISTORY_SIZE];
     // Where to copy the next state into.
@@ -697,7 +699,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mCurrentState.roaming = isRoaming();
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled() && !mConfig.alwaysShowDataRatIcon) {
+        } else if (isDataDisabled() && mDataDisabledIcon) {
             if (mSubscriptionInfo.getSubscriptionId() != mDefaults.getDefaultDataSubId()) {
                 mCurrentState.iconGroup = TelephonyIcons.NOT_DEFAULT_DATA;
             } else {
@@ -1050,6 +1052,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             mResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_FOURG_ICON),
                     false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DATA_DISABLED_ICON),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -1058,6 +1063,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         }
 
         void updateSettings() {
+            updateDataDisabledIcon();
             notifyUpdate();
         }
 
@@ -1069,7 +1075,18 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DATA_DISABLED_ICON))) {
+                updateDataDisabledIcon();
+            }
             notifyUpdate();
         }
+    }
+
+    private void updateDataDisabledIcon() {
+        mDataDisabledIcon = Settings.System.getIntForUser(
+                mResolver,
+                Settings.System.DATA_DISABLED_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
     }
 }

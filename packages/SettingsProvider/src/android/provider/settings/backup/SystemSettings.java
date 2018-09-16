@@ -104,5 +104,6 @@ public class SystemSettings {
         Settings.System.IMMERSIVE_GESTURES,
         Settings.System.FULLSCREEN_GESTURES,
 	Settings.System.NAVIGATION_BAR_IME_SPACE,
+        Settings.System.DATA_DISABLED_ICON,
     };
 }
