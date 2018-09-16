@@ -122,6 +122,7 @@ public class SystemSettings {
 	Settings.System.NAVIGATION_BAR_IME_SPACE,
         Settings.System.MEDIA_ARTWORK_BLUR_ENABLED,
         Settings.System.MEDIA_ARTWORK_BLUR_RADIUS,
-        Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD
+        Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
+        Settings.System.DATA_DISABLED_ICON,
     };
 }

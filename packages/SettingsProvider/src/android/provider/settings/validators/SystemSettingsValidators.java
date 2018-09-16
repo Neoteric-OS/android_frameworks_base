@@ -275,5 +275,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_ENABLED, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.MEDIA_ARTWORK_BLUR_RADIUS, new InclusiveFloatRangeValidator(5f, 125f));
         VALIDATORS.put(System.HEADS_UP_NOTIFICATIONS_THRESHOLD, new InclusiveIntegerRangeValidator(1, 5));
+        VALIDATORS.put(System.DATA_DISABLED_ICON, BOOLEAN_VALIDATOR);
     }
 }
