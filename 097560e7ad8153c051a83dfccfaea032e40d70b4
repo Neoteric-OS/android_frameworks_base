@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5f7c059_2e149735",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1126163
+      },
+      "writtenOn": "2018-09-17T17:27:38Z",
+      "side": 1,
+      "message": "other profiles with the boolean return value are titled like isUploadingSupported.",
+      "range": {
+        "startLine": 407,
+        "startChar": 15,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "097560e7ad8153c051a83dfccfaea032e40d70b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d2dcafe_8fabe114",
         "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
         "patchSetId": 9
