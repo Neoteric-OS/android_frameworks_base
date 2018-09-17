@@ -31,7 +31,7 @@
 namespace android {
 namespace uirenderer {
 
-static constexpr android::DisplayInfo sDummyDisplay {
+static constexpr android::DisplayInfo sDummyDisplay(
         1080,   // w
         1920,   // h
         320.0,  // xdpi
@@ -41,8 +41,8 @@ static constexpr android::DisplayInfo sDummyDisplay {
         0,      // orientation
         false,  // secure?
         0,      // appVsyncOffset
-        0,      // presentationDeadline
-};
+        0       // presentationDeadline
+);
 
 static DeviceInfo* sDeviceInfo = nullptr;
 static std::once_flag sInitializedFlag;
