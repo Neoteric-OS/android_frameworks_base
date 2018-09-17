@@ -202,6 +202,7 @@ package android {
     field public static final java.lang.String WRITE_GSERVICES = "android.permission.WRITE_GSERVICES";
     field public static final java.lang.String WRITE_MEDIA_STORAGE = "android.permission.WRITE_MEDIA_STORAGE";
     field public static final java.lang.String WRITE_SECURE_SETTINGS = "android.permission.WRITE_SECURE_SETTINGS";
+    field public static final java.lang.String ZRAM = "android.permission.ZRAM";
   }
 
   public static final class R.array {
@@ -4019,6 +4020,15 @@ package android.os {
     method public int getAttributionUid();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.os.WorkSource.WorkChain> CREATOR;
+  }
+
+  public class ZRAM {
+    ctor public ZRAM();
+    method public int hotAdd(int);
+    method public boolean hotRemove(int);
+    method public boolean open(int);
+    method public int read(int, byte[]);
+    method public boolean write(int, byte[]);
   }
 
 }
