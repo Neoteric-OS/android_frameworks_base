@@ -32820,6 +32820,37 @@ package android.os {
     method public abstract android.os.IBinder asBinder();
   }
 
+  public abstract interface IZRAMService implements android.os.IInterface {
+    method public abstract void close(int) throws android.os.RemoteException;
+    method public abstract int hotAdd(int) throws android.os.RemoteException;
+    method public abstract boolean hotRemove(int) throws android.os.RemoteException;
+    method public abstract boolean open(int) throws android.os.RemoteException;
+    method public abstract int read(int, byte[]) throws android.os.RemoteException;
+    method public abstract boolean write(int, byte[]) throws android.os.RemoteException;
+  }
+
+  public static class IZRAMService.Default implements android.os.IZRAMService {
+    ctor public IZRAMService.Default();
+    method public android.os.IBinder asBinder();
+    method public void close(int) throws android.os.RemoteException;
+    method public int hotAdd(int) throws android.os.RemoteException;
+    method public boolean hotRemove(int) throws android.os.RemoteException;
+    method public boolean open(int) throws android.os.RemoteException;
+    method public int read(int, byte[]) throws android.os.RemoteException;
+    method public boolean write(int, byte[]) throws android.os.RemoteException;
+  }
+
+  public static abstract class IZRAMService.Stub extends android.os.Binder implements android.os.IZRAMService {
+    ctor public IZRAMService.Stub();
+    method public android.os.IBinder asBinder();
+    method public static android.os.IZRAMService asInterface(android.os.IBinder);
+    method public static android.os.IZRAMService getDefaultImpl();
+    method public static java.lang.String getDefaultTransactionName(int);
+    method public java.lang.String getTransactionName(int);
+    method public boolean onTransact(int, android.os.Parcel, android.os.Parcel, int) throws android.os.RemoteException;
+    method public static boolean setDefaultImpl(android.os.IZRAMService);
+  }
+
   public final class LocaleList implements android.os.Parcelable {
     ctor public LocaleList(java.util.Locale...);
     method public int describeContents();
