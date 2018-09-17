@@ -1658,6 +1658,11 @@
     <!-- ================================== -->
     <eat-comment />
 
+    <!-- @SystemApi Allows an application to manage zram
+         @hide -->
+    <permission android:name="android.permission.ZRAM"
+        android:protectionLevel="signature|privileged" />
+
     <!-- @SystemApi Allows an application to manage preferences and permissions for USB devices
          @hide -->
     <permission android:name="android.permission.MANAGE_USB"
