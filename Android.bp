@@ -1236,7 +1236,7 @@ stubs_defaults {
     previous_api: ":last-released-public-api",
     merge_annotations_dirs: [
         "metalava-manual",
-        "ojluni-annotated-stubs",
+        "ojluni-annotated-sdk-stubs",
     ],
 }
 
