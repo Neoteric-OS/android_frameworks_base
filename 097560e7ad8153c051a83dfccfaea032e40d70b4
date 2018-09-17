@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d2dcafe_8fabe114",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2018-09-17T17:14:31Z",
+      "side": 1,
+      "message": "Offline discussion with Joe.\nthis method should probably return a boolean.\n\nsince the caller can\u0027t do anything with \"-1\" return value, why return such value.\nsp, this method could be lot more readable or usable if it just returned boolean.",
+      "revId": "097560e7ad8153c051a83dfccfaea032e40d70b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
