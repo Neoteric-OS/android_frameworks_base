@@ -81,6 +81,24 @@
       "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10457a50_8f5fe4e1",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-18T00:28:27Z",
+      "side": 1,
+      "message": "And I\u0027ll make sure the IPv4 tests cover this.",
+      "parentUuid": "a49aae8f_362c73fa",
+      "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
