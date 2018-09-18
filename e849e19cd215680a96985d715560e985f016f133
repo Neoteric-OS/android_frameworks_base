@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd25dc7_77f557cc",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-18T13:12:56Z",
+      "side": 1,
+      "message": "This is not specific to mobile networks, right? I\u0027d just say:\n\n    /**\n     * Set to disable 464xlat. This means the device will treat the network as IPv6-only and\n     * will not attempt to detect a NAT64 via RFC 7050 DNS lookups.\n     */",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 76
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
