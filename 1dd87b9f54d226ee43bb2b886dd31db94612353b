@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f5fa634_aa91bb6f",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-18T00:24:50Z",
+      "side": 1,
+      "message": "Deleted",
+      "parentUuid": "fbdfb7b5_a516856e",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 5
+      },
+      "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6877458e_8884d8e9",
         "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49aae8f_362c73fa",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-18T00:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6877458e_8884d8e9",
+      "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
