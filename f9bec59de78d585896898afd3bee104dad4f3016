@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "637b5d64_67f36795",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-18T22:50:53Z",
+      "side": 1,
+      "message": "I rewrote these tests to use the same code for AF_INET and AF_INET6 sockets. I think it\u0027s a lot cleaner, and provides better test coverage.",
+      "range": {
+        "startLine": 199,
+        "startChar": 16,
+        "endLine": 199,
+        "endChar": 41
+      },
+      "revId": "f9bec59de78d585896898afd3bee104dad4f3016",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
