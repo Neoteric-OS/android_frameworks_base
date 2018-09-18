@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbdfb7b5_a516856e",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-18T00:16:09Z",
+      "side": 1,
+      "message": "Can you use com.android.internal.util.HexDump?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 5
+      },
+      "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6877458e_8884d8e9",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-18T00:16:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be AF_INET instead? We\u0027ve already tried AF_INET6 above. We should have test coverage for this codepath.",
+      "revId": "1dd87b9f54d226ee43bb2b886dd31db94612353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
