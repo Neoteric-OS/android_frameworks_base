@@ -14,15 +14,13 @@
 // limitations under the License.
 //
 
-droiddoc {
+droidstubs {
     name: "com.android.media.remotedisplay.stubs-gen-docs",
     srcs: [
         "java/**/*.java",
     ],
-    args: " -hide 111 -hide 113 -hide 125 -hide 126 -hide 127 -hide 128 " +
-          " -stubpackages com.android.media.remotedisplay " +
-          " -nodocs ",
-    custom_template: "droiddoc-templates-sdk",
+    args: " --hide 111 --hide 113 --hide 125 --hide 126 --hide 127 --hide 128 " +
+          " --stub-packages com.android.media.remotedisplay ",
     installable: false,
 }
 
