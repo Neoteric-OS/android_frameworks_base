@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5eb4a2_0e296ba9",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-09-19T00:03:44Z",
+      "side": 1,
+      "message": "I think we\u0027d want to only install this hook when the system property is enabled.",
+      "range": {
+        "startLine": 998,
+        "startChar": 0,
+        "endLine": 998,
+        "endChar": 45
+      },
+      "revId": "b200a068d186c9d1fd6b300d3e947c6c38602458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
