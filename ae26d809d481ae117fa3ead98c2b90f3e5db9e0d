@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4608b6_db9fb6c6",
+        "filename": "core/java/com/android/internal/content/FileSystemProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-09-19T21:02:49Z",
+      "side": 1,
+      "message": "The bug this is fixing belongs to the bug report provider. I\u0027d either override this method in bug report provider to check the root before calling super.queryChildDocuments, or I\u0027d update bug report provider to create the root folder when it is enabled.\n\nAdditionally, I think the right thing to do here in this method, when the root is not present, is it to throw a FileNotFoundException.",
+      "revId": "ae26d809d481ae117fa3ead98c2b90f3e5db9e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
