@@ -13,6 +13,9 @@ cc_library_static {
     cflags: [
         "-Wall",
         "-Werror",
+
+        // Have clang emit complete debug_info.
+        "-fstandalone-debug",
     ],
 
     shared_libs: ["libbinder"],

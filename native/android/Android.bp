@@ -27,6 +27,9 @@ cc_defaults {
         "-Werror",
         "-Wunused",
         "-Wunreachable-code",
+
+        // Have clang emit complete debug_info.
+        "-fstandalone-debug",
     ],
 }
 
