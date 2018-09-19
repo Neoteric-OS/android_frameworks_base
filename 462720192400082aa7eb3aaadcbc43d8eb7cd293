@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7eb9a52d_a87acb73",
+        "filename": "data/keyboards/Vendor_054c_Product_0268.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-19T22:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e8f8344_f2a46aee",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "986e38f9_f86dd271",
         "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8111.kl",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2646da46_c1441f65",
+        "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8111.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-19T22:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "986e38f9_f86dd271",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f5c033_d2e03929",
         "filename": "data/keyboards/Vendor_054c_Product_05c4_Version_8000.kl",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d124f97d_bdefbf2b",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4_Version_8000.kl",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-19T22:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f5c033_d2e03929",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "462720192400082aa7eb3aaadcbc43d8eb7cd293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

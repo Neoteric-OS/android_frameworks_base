@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efb50c97_b120ce6a",
+        "filename": "data/keyboards/Vendor_054c_Product_0268.kl",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2018-09-19T22:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a154bf61_7ee08e64",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "a4039fbefd0dd5958e574d2b6e9eb3593cbff330",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d9fa0d_07a82f81",
         "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8000.kl",
         "patchSetId": 9
