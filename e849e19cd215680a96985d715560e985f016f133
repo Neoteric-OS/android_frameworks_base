@@ -46,6 +46,29 @@
       "revId": "e849e19cd215680a96985d715560e985f016f133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f11065_ee13259e",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-19T04:16:16Z",
+      "side": 1,
+      "message": "Usually we prefer members with positive meanings (in this case \"enable464xlat\"), because that\u0027s easier to reason about in negative expressions.\n(\"if enabled\" is easier to understand that \"if not disabled\", especially in complex subexpressions)",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
