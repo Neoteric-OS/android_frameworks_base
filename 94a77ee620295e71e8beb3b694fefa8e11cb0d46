@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015ee944_270f7012",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-19T08:37:02Z",
+      "side": 1,
+      "message": "How about DEFAULT_FALLBACK_HTTPS_URL to align with names used for the HTTP fallback URLs ?\n\n\"Default\" with the other constants indicates that they can be overridden through a global setting. We should probably support this for the fallback HTTPS URL too. How about creating a CAPTIVE_PORTAL_FALLBACK_HTTPS_URL setting and adding a getCaptivePortalFallbackHttpsUrl() method ?\nI\u0027d also consider supporting a comma-separated list of URLs and reusing logic in makeCaptivePortalFallbackUrls() and nextFallbackUrl(). This would avoid future issues that could lead to the current situation with HTTP fallback URLs, where we have two CAPTIVE_PORTAL_FALLBACK_URL and CAPTIVE_PORTAL_OTHER_FALLBACK_URLS settings.",
+      "range": {
+        "startLine": 107,
+        "startChar": 32,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "94a77ee620295e71e8beb3b694fefa8e11cb0d46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1364cd66_71ce7e84",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-19T08:37:02Z",
+      "side": 1,
+      "message": "Since you are using the latch as a member field in ProbeThread, I think this can be moved to a local variable declared just before using it.",
+      "range": {
+        "startLine": 1170,
+        "startChar": 29,
+        "endLine": 1170,
+        "endChar": 34
+      },
+      "revId": "94a77ee620295e71e8beb3b694fefa8e11cb0d46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fbfc59_75cf73c0",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-19T08:37:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be a member field. Logic could be similar to what\u0027s done with HTTP fallback URLs.",
+      "range": {
+        "startLine": 1171,
+        "startChar": 18,
+        "endLine": 1171,
+        "endChar": 29
+      },
+      "revId": "94a77ee620295e71e8beb3b694fefa8e11cb0d46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e74025_18f254b6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-19T08:37:02Z",
+      "side": 1,
+      "message": "Nit: to match local style in the file, no line breaks around such declarations (see line 1226 before patch for example).",
+      "range": {
+        "startLine": 1233,
+        "startChar": 12,
+        "endLine": 1233,
+        "endChar": 66
+      },
+      "revId": "94a77ee620295e71e8beb3b694fefa8e11cb0d46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c790a246_235b1bb4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-19T08:37:02Z",
+      "side": 1,
+      "message": "This could delay the fallback probe by 3s for users that do not need a fallback HTTPS URL. I think that you could instead do the same thing that is done with the main HTTPS and HTTP URL, using the fallback HTTPS and HTTP URLs (sending the probes in parallel, factoring out code to reuse it in both cases).\n\nWith this change it\u0027s possible that captive portals that have https://*.gstatic.com whitelisted (through SNI) won\u0027t be detected anymore and will break.\nOne future improvement we have considered is to unvalidate a network if the HTTPS probe went through first (and the network was validated), but the HTTP probe returned shortly after and saw a portal. Reusing the same code for the main HTTP/HTTPS and fallback HTTP/HTTPS checks could allow us to also easily implement that same logic for the fallback HTTP/HTTPS checks, and resolve the above issue where https://*.gstatic.com is whitelisted.",
+      "range": {
+        "startLine": 1239,
+        "startChar": 25,
+        "endLine": 1239,
+        "endChar": 30
+      },
+      "revId": "94a77ee620295e71e8beb3b694fefa8e11cb0d46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
