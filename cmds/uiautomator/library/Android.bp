@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-droiddoc {
+droidstubs {
     name: "uiautomator-stubs-docs",
     srcs: [
         "core-src/**/*.java",
@@ -23,13 +23,22 @@ droiddoc {
         "junit",
         "android.test.base",
     ],
-    custom_template: "droiddoc-templates-sdk",
     installable: false,
-    args: "-stubpackages com.android.uiautomator.core:" +
+    args: "--stub-packages com.android.uiautomator.core:" +
           "com.android.uiautomator.testrunner",
     api_tag_name: "UIAUTOMATOR",
     api_filename: "uiautomator_api.txt",
     removed_api_filename: "uiautomator_removed_api.txt",
+    check_api: {
+        current: {
+            api_file: "current.txt",
+            removed_api_file: "removed.txt",
+        },
+        last_released: {
+            api_file: ":uiautomator-last-released-public-api",
+            removed_api_file: "removed.txt",
+        },
+    },
 }
 
 java_library_static {
