@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9795bd73_858c3da8",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-09-19T05:27:03Z",
+      "side": 1,
+      "message": "I see, should I move this comment in line 133 for submission?",
+      "parentUuid": "a5e8a58c_56a4a2a7",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "5c1a6d25f82ec59cf71ade4e1467936b7456d101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a04e639_cef419a9",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 2
