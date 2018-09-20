@@ -17,11 +17,16 @@
 cc_library_host_static {
     name: "libviewcompiler",
     srcs: [
+        "dex_builder.cc",
         "java_lang_builder.cc",
         "util.cc",
     ],
     static_libs: [
         "libbase"
+    ],
+    shared_libs: [
+        "libdexfile",
+        "slicer",
     ]
 }
 
@@ -36,14 +41,23 @@ cc_binary_host {
         "libgflags",
         "libviewcompiler",
     ],
+    shared_libs: [
+        "libdexfile",
+        "slicer",
+    ]
 }
 
 cc_test_host {
     name: "view-compiler-tests",
     srcs: [
+        "dex_builder_test.cc",
         "util_test.cc",
     ],
     static_libs: [
         "libviewcompiler",
+    ],
+    shared_libs: [
+        "libdexfile",
+        "slicer",
     ]
 }
