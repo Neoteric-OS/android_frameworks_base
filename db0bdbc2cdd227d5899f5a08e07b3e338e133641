@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e488f33_b5c47b18",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "TIMEOUT_MS to make clear this is milliseconds",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36d5c11_76260771",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "style : s \u003d",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 199,
+        "endChar": 29
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f198869_be05965b",
+        "filename": "services/net/java/android/net/netlink/StructInetDiagReqV2.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "still tabs here",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bf20a0_1d9ae8c3",
+        "filename": "services/net/java/android/net/netlink/StructInetDiagSockId.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "here too",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaffe10_9ebca452",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "While I appreciate the thought I\u0027m a bit concerned about this. The fact that you need this means by essence this will be flaky right ? Can\u0027t we catch an exception and retry if the chosen port happens to be taken ?",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff622ee1_a136c5fd",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-20T07:08:27Z",
+      "side": 1,
+      "message": "_UDP ? Isn\u0027t that reversed with line 192 ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 32,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
