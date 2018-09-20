@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0524e44c_d4271b0d",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-09-20T22:46:47Z",
+      "side": 1,
+      "message": "nit: extras",
+      "range": {
+        "startLine": 343,
+        "startChar": 41,
+        "endLine": 343,
+        "endChar": 46
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa9359a_ec598119",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-09-20T22:46:47Z",
+      "side": 1,
+      "message": "nit static",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 11
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba73dd2_6c44a947",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-09-20T22:46:47Z",
+      "side": 1,
+      "message": "nit, personally I\u0027m a fan of switch() statements in situations like this.",
+      "range": {
+        "startLine": 352,
+        "startChar": 12,
+        "endLine": 352,
+        "endChar": 15
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
