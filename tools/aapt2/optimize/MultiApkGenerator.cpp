@@ -374,4 +374,8 @@ void MultiApkGenerator::AddScreens(const ConfigDescription& config, xml::Element
   }
 }
 
+MultiApkGenerator::~MultiApkGenerator() {
+
+}
+
 }  // namespace aapt

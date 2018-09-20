@@ -49,6 +49,7 @@ class MultiApkGenerator {
    */
   bool FromBaseApk(const MultiApkGeneratorOptions& options);
 
+  virtual ~MultiApkGenerator();
  protected:
   virtual std::unique_ptr<ResourceTable> FilterTable(IAaptContext* context,
                                                      const configuration::OutputArtifact& artifact,
