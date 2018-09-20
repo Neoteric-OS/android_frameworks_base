@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3df01523_246213ed",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e488f33_b5c47b18",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c36d5c11_76260771",
         "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f142fad_1bbccd5f",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c36d5c11_76260771",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 199,
+        "endChar": 29
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e40d521_e5264565",
+        "filename": "services/net/java/android/net/netlink/StructInetDiagReqV2.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "These are just copy-pasted directly from the kernel. :/",
+      "parentUuid": "7f198869_be05965b",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bf20a0_1d9ae8c3",
         "filename": "services/net/java/android/net/netlink/StructInetDiagSockId.java",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c0f80337_3dad6213",
+        "filename": "services/net/java/android/net/netlink/StructInetDiagSockId.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bf20a0_1d9ae8c3",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baaffe10_9ebca452",
         "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2018-09-20T07:08:27Z",
       "side": 1,
       "message": "While I appreciate the thought I\u0027m a bit concerned about this. The fact that you need this means by essence this will be flaky right ? Can\u0027t we catch an exception and retry if the chosen port happens to be taken ?",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600746ef_a2dca5d9",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "This was suggested by Lorenzo here: https://android-review.googlesource.com/c/platform/frameworks/base/+/758918/1/tests/net/java/android/net/netlink/InetDiagSocketTest.java#77",
+      "parentUuid": "baaffe10_9ebca452",
       "range": {
         "startLine": 165,
         "startChar": 16,
@@ -137,6 +257,30 @@
       "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad50fd96_dcc40c09",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2018-09-20T14:31:20Z",
+      "side": 1,
+      "message": "This is intentionally reversed in order to fail.",
+      "parentUuid": "ff622ee1_a136c5fd",
+      "range": {
+        "startLine": 180,
+        "startChar": 32,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "db0bdbc2cdd227d5899f5a08e07b3e338e133641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
