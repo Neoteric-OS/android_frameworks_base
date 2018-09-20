@@ -22,6 +22,30 @@
       "revId": "c66c7fcb9cadf7cdcd3328dcb3d788ca512cc70b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0791810_fda44b43",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-09-20T07:30:26Z",
+      "side": 1,
+      "message": "From aosp/725873 patchset 17, this is a base IP address of the prefix now.\nhttps://android-review.googlesource.com/c/platform/system/netd/+/725873/17/server/dns/Dns64Configuration.cpp#197",
+      "parentUuid": "a3d5743c_8b218903",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 80
+      },
+      "revId": "c66c7fcb9cadf7cdcd3328dcb3d788ca512cc70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
