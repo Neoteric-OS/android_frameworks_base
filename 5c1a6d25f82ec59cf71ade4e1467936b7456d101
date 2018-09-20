@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0be75fa6_8be069f9",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-09-20T05:24:55Z",
+      "side": 1,
+      "message": "As we discussed, I mentioned 2 comment(for onLost and Network is null)\nPlease see the new Patch Set 3(line 136, 142)\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/739561/3/packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+      "parentUuid": "53fc329a_3b774564",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "5c1a6d25f82ec59cf71ade4e1467936b7456d101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a04e639_cef419a9",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 2
