@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "700638e7_ae25aa91",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "Nit: unused?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81929a28_948de1e7",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "Nit: unused?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708cacb7_b3cbd5c0",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "Rename to NativeConnection or PosixConnection since it uses the native/Posix APIs as opposed to the Java APIs? Note that we should try to test both.",
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e2b33e_e462a480",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "Nit: shouldn\u0027t this be \"0.0.0.0\" instead of localhost? Also elsewhere.",
+      "range": {
+        "startLine": 107,
+        "startChar": 47,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a84fb2a_8af0642d",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "It looks like we\u0027re not testing the case of an AF_INET6 socket connecting to an IPv4 destination. This is actually the most common case in use today because all Java sockets are AF_INET6 and most devices are still IPv4-only.",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 100
+      },
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5234962_6f222ed8",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-21T10:22:53Z",
+      "side": 1,
+      "message": "Nit: in cases like this where one test method does the work of many testcases, I\u0027ve found it useful to format a specific error message as a string. Something like:\n\n    String msg \u003d \"Unexpectedly \" +\n            (expectSuccess ? \"failed to find \" : \"found \") +\n            (protocol \u003d\u003d IPPROTO_TCP ? \"TCP\" : \"UDP\") +\n            \" connection from: \" + local + \" to: \" + remote + \");\n    assertEquals(msg, ...);",
+      "revId": "0ac2c0945b00d7716319bc5aa86ce0b249f14cea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
