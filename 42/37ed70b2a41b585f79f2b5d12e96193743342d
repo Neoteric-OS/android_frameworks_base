@@ -1,0 +1,12 @@
+Verified+1: Takayuki Hoshi <hoshi@google.com>
+Verified+1: Arty Ho <arty.ho@mstarsemi.com>
+Code-Review+1: Takayuki Hoshi <hoshi@google.com>
+Code-Review+1: Dongwon Kang <dwkang@google.com>
+Code-Review+1: Amy Zhang <amyjojo@google.com>
+Code-Review+2: nchalko <nchalko@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Takayuki Hoshi <hoshi@google.com>
+Submitted-at: Fri, 21 Sep 2018 06:24:20 +0000
+Reviewed-on: https://android-review.googlesource.com/678861
+Project: platform/frameworks/base
+Branch: refs/heads/master
