@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "71f0b7ae_61913c43",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-09-21T06:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa9359a_ec598119",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 11
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9804eacf_28d7f7c0",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-09-21T06:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0524e44c_d4271b0d",
+      "range": {
+        "startLine": 343,
+        "startChar": 41,
+        "endLine": 343,
+        "endChar": 46
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba73dd2_6c44a947",
         "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccd23d5_2d79db68",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-09-21T06:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba73dd2_6c44a947",
+      "range": {
+        "startLine": 352,
+        "startChar": 12,
+        "endLine": 352,
+        "endChar": 15
+      },
+      "revId": "b5c56178f9fd486560f146eb5f602b153ddb4fb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
