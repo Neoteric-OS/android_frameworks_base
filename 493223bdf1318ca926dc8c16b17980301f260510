@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44ea2311_bf3b42d1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-21T17:19:28Z",
+      "side": 1,
+      "message": "You can return null now instead of worrying about maintaining the code.  Removed means it doesn\u0027t work any more.",
+      "range": {
+        "startLine": 1586,
+        "startChar": 8,
+        "endLine": 1589,
+        "endChar": 28
+      },
+      "revId": "493223bdf1318ca926dc8c16b17980301f260510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
