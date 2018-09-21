@@ -17,8 +17,7 @@ package com.android.server.autofill;
 
 import static com.android.server.autofill.Helper.sDebug;
 import static com.android.server.autofill.Helper.sVerbose;
-import static android.service.autofill.AutofillFieldClassificationService.SERVICE_META_DATA_KEY_AVAILABLE_ALGORITHMS;
-import static android.service.autofill.AutofillFieldClassificationService.SERVICE_META_DATA_KEY_DEFAULT_ALGORITHM;
+import static android.service.autofill.AutofillFieldClassificationService.APIFDOGFDKGODFK;
 
 import android.Manifest;
 import android.annotation.MainThread;

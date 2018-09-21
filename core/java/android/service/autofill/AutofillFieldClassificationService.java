@@ -65,13 +65,19 @@ public abstract class AutofillFieldClassificationService extends Service {
     /**
      * Manifest metadata key for the resource string containing the name of the default field
      * classification algorithm.
+     *
+     * @deprecated Don't uses.
      */
+    @Deprecated
     public static final String SERVICE_META_DATA_KEY_DEFAULT_ALGORITHM =
             "android.autofill.field_classification.default_algorithm";
     /**
      * Manifest metadata key for the resource string array containing the names of all field
      * classification algorithms provided by the service.
+     *
+     * @deprecated Don't uses
      */
+    @Deprecated
     public static final String SERVICE_META_DATA_KEY_AVAILABLE_ALGORITHMS =
             "android.autofill.field_classification.available_algorithms";
 
