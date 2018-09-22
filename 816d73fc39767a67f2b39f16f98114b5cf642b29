@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "239b127c_9d00b084",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-09-22T00:21:39Z",
+      "side": 1,
+      "message": "Can you make this android-api-council@ instead of a specific engineer?",
+      "range": {
+        "startLine": 1289,
+        "startChar": 24,
+        "endLine": 1289,
+        "endChar": 32
+      },
+      "revId": "816d73fc39767a67f2b39f16f98114b5cf642b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
