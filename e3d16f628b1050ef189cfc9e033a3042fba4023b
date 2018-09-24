@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce8591d0_37bc391c",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "nit: i would just call it \u0027idmap\u0027. yes, it\u0027s @hide, but, alas, people will still hardcode the string.",
+      "range": {
+        "startLine": 4205,
+        "startChar": 48,
+        "endLine": 4205,
+        "endChar": 55
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01b1a42_fa393de9",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "move to androidfw/Util.cpp ?",
+      "range": {
+        "startLine": 222,
+        "startChar": 12,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52aa1955_8dd720de",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "use OVERLAY_DIR\n\n[and, actually, we probably should deprecate OVERLAY_DIR in favour of VENDOR_OVERLAY_DIR]",
+      "range": {
+        "startLine": 310,
+        "startChar": 9,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc9ab52_a2f9f5a5",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "please add both PRODUCT_OVERLAY_DIR and PRODUCT_SERVICES_OVERLAY_DIR",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 316,
+        "endChar": 22
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8bab55_594bdffe",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "this seems like a round-about way of getting the contents of a file. i would either:\n1) just include the contents in the stdout of idmap2\n2) give idmap2 the name of the file to write to",
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf6f0e3_b57141b8",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "nit: @NonNull",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d6a7b4_bf126667",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-09-24T21:17:45Z",
+      "side": 1,
+      "message": "surround w/ \"if (DEBUG_IDMAP) { }\"",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 19
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
