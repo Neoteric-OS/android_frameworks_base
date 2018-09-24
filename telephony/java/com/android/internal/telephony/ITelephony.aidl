@@ -38,10 +38,12 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyHistogram;
 import android.telephony.VisualVoicemailSmsFilterSettings;
+import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsConfig;
 import android.telephony.ims.aidl.IImsMmTelFeature;
 import android.telephony.ims.aidl.IImsRcsFeature;
 import android.telephony.ims.aidl.IImsRegistration;
+import android.telephony.ims.aidl.IImsRegistrationCallback;
 import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.telephony.CellNetworkScanResult;
 import com.android.internal.telephony.OperatorInfo;
@@ -1477,4 +1479,41 @@ interface ITelephony {
      * Return the network selection mode on the subscription with id {@code subId}.
      */
      int getNetworkSelectionMode(int subId);
+
+     // IMS specific AIDL commands, see ImsMmTelManager.java
+     oneway void addImsRegistrationCallback(int subId, IImsRegistrationCallback c,
+             String callingPackage);
+     oneway void removeImsRegistrationCallback(int subId, IImsRegistrationCallback c,
+             String callingPackage);
+     oneway void addMmTelCapabilityCallback(int subId, IImsCapabilityCallback c,
+             String callingPackage);
+     oneway void removeMmTelCapabilityCallback(int subId, IImsCapabilityCallback c,
+             String callingPackage);
+     boolean isImsEnhanced4gLteSettingEnabled(int subId, String CallingPackage);
+     void setImsEnhanced4gLteModeSetting(int subId, boolean isEnabled);
+     boolean isVoLteCapable(int subId);
+     boolean isVoLteAvailable(int subId);
+     boolean isVoLteProvisioned(int subId, String callingPackage);
+     void setVoLteProvisioningState(int subId, boolean isProvisioned);
+     boolean isVtCapable(int subId);
+     boolean isVtAvailable(int subId);
+     boolean isVtUserSettingEnabled(int subId, String callingPackage);
+     void setVtUserSetting(int subId, boolean isEnabled);
+     boolean isVtProvisioned(int subId, String callingPackage);
+     void setVtProvisioningState(int subId, boolean isProvisioned);
+     boolean isVoWiFiProvisioned(int subId, String callingPackage);
+     void setVoWiFiProvisioningState(int subId, boolean isProvisioned);
+     boolean isVoWiFiCapable(int subId);
+     boolean isVoWiFiAvailable(int subId);
+     boolean isVoWiFiUserSettingEnabled(int subId, String callingPackage);
+     void setVoWiFiUserSetting(int subId, boolean isEnabled);
+     boolean isVoWiFiRoamingUserSettingEnabled(int subId, String callingPackage);
+     void setVoWiFiRoamingUserSetting(int subId, boolean isEnabled);
+     void setVoWiFiNonPersistent(int subId, boolean isCapable, int mode);
+     int getVoWiFiModeUserSetting(int subId, String callingPackage);
+     void setVoWiFiModeUserSetting(int subId, int mode);
+     int getVoWiFiRoamingModeUserSetting(int subId, String callingPackage);
+     void setVoWiFiRoamingModeUserSetting(int subId, int mode);
+     void setRttCapabilityEnabled(int subId, boolean isEnabled);
+     boolean isTtyOverVoLteEnabled(int subId);
 }

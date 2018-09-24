@@ -23,14 +23,17 @@ import android.telephony.ims.stub.ImsFeatureConfiguration;
 import android.telephony.ims.ImsReasonInfo;
 
 /**
- * See ImsRegistrationImplBase.Callback for more information.
+ * See {@link ImsManager#RegistrationCallback} for more information.
  *
  * {@hide}
  */
 oneway interface IImsRegistrationCallback {
+   // Start callbacks sent from ImsRegistrationImplBase
    void onRegistered(int imsRadioTech);
    void onRegistering(int imsRadioTech);
    void onDeregistered(in ImsReasonInfo info);
    void onTechnologyChangeFailed(int imsRadioTech, in ImsReasonInfo info);
    void onSubscriberAssociatedUriChanged(in Uri[] uris);
+   // Start callbacks sent from Telephony to ImsManager.
+   void onSubscriptionRemoved(int subId);
 }

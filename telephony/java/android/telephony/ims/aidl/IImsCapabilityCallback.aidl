@@ -21,7 +21,10 @@ package android.telephony.ims.aidl;
  * {@hide}
  */
 oneway interface IImsCapabilityCallback {
+    // Start callbacks from ImsFeature
     void onQueryCapabilityConfiguration(int capability, int radioTech, boolean enabled);
     void onChangeCapabilityConfigurationError(int capability, int radioTech, int reason);
     void onCapabilitiesStatusChanged(int config);
+    // Start callbacks from Telephony to ImsManager
+    void onSubscriptionRemoved(int subId);
 }
