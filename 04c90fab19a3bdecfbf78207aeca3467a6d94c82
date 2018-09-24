@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2da6c91_b3783ce4",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-09-24T22:03:39Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to have a separate method for a per-subid icon. The StatusHints object is set on a per-call basis already, so it\u0027d make more sense to add a subId field into the object, have Telephony set it, and have getIcon() return the correct icon by default. This would also mean that Dialer wouldn\u0027t need to make any changes to their code.",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

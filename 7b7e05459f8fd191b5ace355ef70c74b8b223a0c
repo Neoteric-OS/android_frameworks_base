@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbfc954c_755e44d9",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-09-24T22:03:39Z",
+      "side": 0,
+      "message": "Why\u0027s this stuff being removed?",
+      "range": {
+        "startLine": 1701,
+        "startChar": 6,
+        "endLine": 1704,
+        "endChar": 88
+      },
+      "revId": "7b7e05459f8fd191b5ace355ef70c74b8b223a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
