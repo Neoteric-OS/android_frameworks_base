@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91825bdb_c5496f17",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2018-09-25T04:26:38Z",
+      "side": 1,
+      "message": "missing import android.os.SystemProperties; above?\n\nCan you build pass with this change?",
+      "range": {
+        "startLine": 347,
+        "startChar": 21,
+        "endLine": 347,
+        "endChar": 37
+      },
+      "revId": "231002650dd6c14660df933d765f44138e85dbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
