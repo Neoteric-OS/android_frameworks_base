@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "5f17bbd0_05a22b74",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-09-25T15:20:40Z",
+      "side": 1,
+      "message": "This handler isn\u0027t async-signal-safe, is it?",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 38
+      },
+      "revId": "b200a068d186c9d1fd6b300d3e947c6c38602458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f5eb4a2_0e296ba9",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 3
