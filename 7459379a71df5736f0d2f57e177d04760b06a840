@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9a9d1d_0ce05706",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-09-25T17:16:33Z",
+      "side": 1,
+      "message": "Rather than creating the root explicitly, I think the shell can notify that roots have changed when a bug report has been created.\n\nFelipe says it is already sending BUGREPORT_FINISHED event.",
+      "revId": "7459379a71df5736f0d2f57e177d04760b06a840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6eb30e_74c87fe3",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-09-25T17:16:33Z",
+      "side": 1,
+      "message": "Guard this with if (mRoot.exists()). So it returns empty cursor if root doesn\u0027t exist.",
+      "revId": "7459379a71df5736f0d2f57e177d04760b06a840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
