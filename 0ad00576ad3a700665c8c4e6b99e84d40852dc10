@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89890dd4_17ffd570",
+        "filename": "services/core/java/com/android/server/audio/PlaybackActivityMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-09-25T14:58:16Z",
+      "side": 1,
+      "message": "mHandler",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 16
+      },
+      "revId": "0ad00576ad3a700665c8c4e6b99e84d40852dc10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
