@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1206d64a_d559720c",
+        "filename": "packages/Shell/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-09-26T20:40:31Z",
+      "side": 1,
+      "message": "no-parent?",
+      "revId": "2762d34e0afe96fe50c3b9cdf2ab5ac0d49e8e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
