@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e5f1d75_9983ba2a",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T15:30:04Z",
+      "side": 1,
+      "message": "Uuugh, yes, of course.",
+      "parentUuid": "c0c5b981_29102e6a",
+      "range": {
+        "startLine": 331,
+        "startChar": 27,
+        "endLine": 331,
+        "endChar": 46
+      },
+      "revId": "c3e3c7d9cfac552629d51ba8da7a42e340ec8717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e2fba66_8588ac25",
         "filename": "libs/androidfw/AssetManager.cpp",
         "patchSetId": 4
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "yes",
       "parentUuid": "0e2fba66_8588ac25",
+      "range": {
+        "startLine": 77,
+        "startChar": 58,
+        "endLine": 77,
+        "endChar": 83
+      },
+      "revId": "c3e3c7d9cfac552629d51ba8da7a42e340ec8717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5021dd7_fa8ca7ff",
+        "filename": "libs/androidfw/AssetManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T15:30:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "795cc52c_1cd34c07",
       "range": {
         "startLine": 77,
         "startChar": 58,
