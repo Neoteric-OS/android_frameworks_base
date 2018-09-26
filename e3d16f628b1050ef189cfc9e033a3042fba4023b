@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8633661b_862656ba",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "It makes sense, if nothing else for consistency with the other constants here. However, this means changing the SELinux rules as well. Because \u0027idmap\u0027 already exists as an entity in the SELinux world we can\u0027t reuse the name without clashes or by removing /system/bin/idmap. Similar issues with \u0027idmap2\u0027.\n\nOK to keep OVERLAY_SERVICE as is?",
+      "parentUuid": "ce8591d0_37bc391c",
+      "range": {
+        "startLine": 4205,
+        "startChar": 48,
+        "endLine": 4205,
+        "endChar": 55
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b01b1a42_fa393de9",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-09-24T21:17:45Z",
       "side": 1,
       "message": "move to androidfw/Util.cpp ?",
+      "range": {
+        "startLine": 222,
+        "startChar": 12,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1000d0_fd362735",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "Agree. Basically the same code is used (and duplicated) by idmap2\u0027s Idmap2BinaryTests.cpp, so I\u0027ll put a common implementation in libandroidfw but in a new, separate CL and make it part of the idmap2-prerequisites topic.",
+      "parentUuid": "b01b1a42_fa393de9",
       "range": {
         "startLine": 222,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "13404fc2_bff78263",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "Done: because of the limited number of clients, I renamed OVERLAY_DIR -\u003e VENDOR_OVERLAY_DIR instead of deprecating the OVERLAY_DIR and adding a new constant.",
+      "parentUuid": "52aa1955_8dd720de",
+      "range": {
+        "startLine": 310,
+        "startChar": 9,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cc9ab52_a2f9f5a5",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6af695bd_574eac75",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cc9ab52_a2f9f5a5",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 316,
+        "endChar": 22
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac8bab55_594bdffe",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 3
@@ -105,6 +201,24 @@
       "writtenOn": "2018-09-24T21:17:45Z",
       "side": 1,
       "message": "this seems like a round-about way of getting the contents of a file. i would either:\n1) just include the contents in the stdout of idmap2\n2) give idmap2 the name of the file to write to",
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c929a2_37761f69",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "idmap2 already does option 1).\n\nThis is about transforming std::string into std::vector\u003cstd::string\u003e based on newlines. The alternative to std::getline is to use an ostream_iterator to split the string, as in this example: https://en.cppreference.com/w/cpp/iterator/ostream_iterator",
+      "parentUuid": "ac8bab55_594bdffe",
       "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6dd208ad_25984578",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddf6f0e3_b57141b8",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d6a7b4_bf126667",
         "filename": "services/core/java/com/android/server/om/IdmapManager.java",
         "patchSetId": 3
@@ -154,6 +292,30 @@
       "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf58ad6_266d72d5",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-26T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d6a7b4_bf126667",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 19
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
