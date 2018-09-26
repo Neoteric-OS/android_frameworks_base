@@ -16,6 +16,24 @@
       "revId": "c1e5d8c87f06c97a6ba3028de801f8dd06b194a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6695c7_52a625e2",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-09-26T22:02:56Z",
+      "side": 1,
+      "message": "Hmm, there\u0027s more stuff, like tests, Screenshooter.java, etc.\n\nI think this is fine - the uploader can always \u0027repo upload --no-verify\u0027 to bypass the check in exceptional cases like this.\n\nIn fact, what about the times where we\u0027re working on something that cannot be done on AOSP yet (for example, because it depend on framework changes made privately)? We would still need to bypass the check, right?",
+      "parentUuid": "a82b2bed_3b6bf179",
+      "revId": "c1e5d8c87f06c97a6ba3028de801f8dd06b194a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
