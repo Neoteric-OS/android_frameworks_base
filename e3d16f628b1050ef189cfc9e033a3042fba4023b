@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "fd23ff36_1d8bb0d4",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-27T09:29:57Z",
+      "side": 1,
+      "message": "FYI, to make this work I had to change the code in three places (will be part of new patch sets):\n\n- frameworks/base/.../Context.java (so clients know \"what number to dial\" when connecting to the service via the service manager)\n- frameworks/base/.../Idmap2Service.h (to publish the service under the correct name)\n- system/sepolicy/private/service_contexts (to bind the service name \"idmap\" to the idmap2d binary)\n\nFor future reference, this is the SELinux violation you trigger if you omit the change in system/sepolicy:\n\n  09-27 11:01:53.855  1484  1484 E SELinux : avc:  denied  { add } for service\u003didmap pid\u003d6553 uid\u003d1000 scontext\u003du:r:idmap2d:s0 tcontext\u003du:object_r:default_android_service:s0 tclass\u003dservice_manager permissive\u003d0",
+      "parentUuid": "2381968c_ec309ec3",
+      "range": {
+        "startLine": 4205,
+        "startChar": 48,
+        "endLine": 4205,
+        "endChar": 55
+      },
+      "revId": "e3d16f628b1050ef189cfc9e033a3042fba4023b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b01b1a42_fa393de9",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 3
