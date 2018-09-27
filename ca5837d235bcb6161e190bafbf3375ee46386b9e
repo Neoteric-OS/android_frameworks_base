@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c955cdfd_b72cc8ff",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "Note that this makes this field package-private, which means any class in com.android.server can access it call its methods. I don\u0027t know if there\u0027s a way around this though.",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c823bf44_9de59b62",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 2
@@ -46,6 +63,69 @@
       "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4716786b_e3dfcc53",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "Nit: it might have been simpler to do:\n\n    import static android.os.Process.SYSTEM_UID;",
+      "range": {
+        "startLine": 279,
+        "startChar": 40,
+        "endLine": 279,
+        "endChar": 41
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee01be7_f6e6959d",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "Nit: for readability, suggest adding a comment that reminds the reader of what the two booleans mean without having to look at the method definition.",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3cd19a_2fe187fd",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "Nit: this long series of assertions is not very easy to read, and the error messages aren\u0027t easy to interpret, either. (they\u0027ll just be \"was: true; expected: false; good luck figuring out what that means\"). Suggest:\n\n    private void checkUidNetworkingBlocked(bool expectBlocked, int uid, int rules, bool X, bool Y) {\n        String msg \u003d String.format(\"uid\u003d%d rule\u003d%d X\u003d%b X\u003d%b: expected %s, got %s\",\n                uid, rules, X, Y,\n                (expectBlocked ? \"BLOCKED\" : \"UNBLOCKED\"),\n                (expectBlocked ? \"UNBLOCKED : BLOCKED\");\n    }\n\nOptionally, the following might also improve readability (maybe, and assuming it works):\n\n    final boolean BLOCKED \u003d true;\n    final boolean UNBLOCKED \u003d false;  // Or use an enum, which has automatic toString methods.\n\n    class TestCase {\n        int a;\n        int b;\n        int c;\n        bool d;\n        bool e;\n        public TestCase(int a, int b, int c, bool, d, bool e) {\n            this.a \u003d a;\n            this.b \u003d b;\n            this.c \u003d c;\n            this.d \u003d d;\n            this.e \u003d e;\n       }\n    }\n\n    TestCase[] testCases \u003d new TestCase[]{\n        new TestCase(UNBLOCKED, SYSTEM_UID, RULE_NONE, true, true).\n        ...\n    };",
+      "range": {
+        "startLine": 1663,
+        "startChar": 8,
+        "endLine": 1663,
+        "endChar": 19
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
@@ -199,6 +279,52 @@
       "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c629c26b_48af880c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4501,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "Where is this assertion? Should we do an explicit assert() on the value of Process.myUid()?",
+      "range": {
+        "startLine": 4501,
+        "startChar": 11,
+        "endLine": 4501,
+        "endChar": 58
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904fdca8_c99304e8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4503,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-27T02:38:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure I\u0027m reading this right, but ISTM that we\u0027re mocking out the code that calculates whether something is blocked. If that\u0027s true, then does that mean that if we introduce a bug into isUidNetworkingBlocked, then this test won\u0027t fail?\n\nIt looks like the version of isUidNetworkingBlocked that we\u0027re using here is the 4-arg version which is effectively a static function that uses no NPMS state. So can we use that function directly?",
+      "range": {
+        "startLine": 4503,
+        "startChar": 19,
+        "endLine": 4503,
+        "endChar": 41
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
