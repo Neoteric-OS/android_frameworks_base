@@ -3511,4 +3511,16 @@
 
     <!-- Pre-scale volume at volume step 3 for Absolute Volume -->
     <fraction name="config_prescaleAbsoluteVolume_index3">85%</fraction>
+
+    <!-- Country code conversion table for the time zone acquisition -->
+    <!-- Array of "[MCCMNC],[Converted country code]" -->
+    <string-array translatable="false" name="config_convert_iso_country_code">
+        <item>"310032,gu"</item> <!-- IT&E Overseas Inc. -->
+        <item>"310140,gu"</item> <!-- Teleguam Holdings LLC -->
+        <item>"310370,gu"</item> <!-- DOCOMO PACIFIC INC. (Guam) -->
+        <item>"310470,gu"</item> <!-- DOCOMO PACIFIC INC. (Guam) -->
+        <item>"310480,gu"</item> <!-- Choice Phone LLC -->
+        <item>"310110,mp"</item> <!-- PTI Pacifica, Inc. -->
+    </string-array>
+
 </resources>
