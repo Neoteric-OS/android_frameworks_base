@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c560aa4_33944f0c",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-27T02:31:16Z",
+      "side": 1,
+      "message": "However I can\u0027t just remove the null check since I\u0027d get a NPE when unboxing mMtu to compare with 0; I could use (mMtu \u003d\u003d null || mMtu !\u003d 0) but that doesn\u0027t look very good.\nI could also have a addTlvIfNonZero() method, but I\u0027d be adding some duplicate code. Do you have other options in mind ?",
+      "parentUuid": "2533938a_4c94b174",
+      "range": {
+        "startLine": 722,
+        "startChar": 12,
+        "endLine": 722,
+        "endChar": 18
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237c6cdc_788f59c6",
         "filename": "services/net/java/android/net/dhcp/DhcpServer.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15e53d7_bf23ca02",
+        "filename": "services/net/java/android/net/dhcp/DhcpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-27T02:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237c6cdc_788f59c6",
+      "range": {
+        "startLine": 358,
+        "startChar": 37,
+        "endLine": 358,
+        "endChar": 53
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cd36e4a1_95853f9d",
+        "filename": "tests/net/java/android/net/dhcp/DhcpPacketTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-27T02:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a418fb_420ddc9b",
+      "range": {
+        "startLine": 1034,
+        "startChar": 11,
+        "endLine": 1034,
+        "endChar": 19
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0c92639_2c32c444",
         "filename": "tests/net/java/android/net/dhcp/DhcpServerTest.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e278fb6e_1dcc7f66",
+        "filename": "tests/net/java/android/net/dhcp/DhcpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-09-27T02:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c92639_2c32c444",
+      "range": {
+        "startLine": 103,
+        "startChar": 53,
+        "endLine": 103,
+        "endChar": 54
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
