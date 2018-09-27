@@ -17,6 +17,7 @@
 package android.net.util;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
@@ -92,10 +93,14 @@ public class SharedLog {
     }
 
     /**
-     * Log an error due to an exception, with the exception stacktrace.
+     * Log an error due to an exception, with the exception stacktrace if provided.
      */
-    public void e(@NonNull String msg, @NonNull Throwable e) {
-        Log.e(mTag, record(Category.ERROR, msg + ": " + e.getMessage()), e);
+    public void e(@NonNull String msg, @Nullable Throwable exception) {
+        if (exception == null) {
+            e(msg);
+            return;
+        }
+        Log.e(mTag, record(Category.ERROR, msg + ": " + exception.getMessage()), exception);
     }
 
     public void i(String msg) {
