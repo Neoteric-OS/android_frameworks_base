@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42992db7_a030d969",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-09-28T13:55:34Z",
+      "side": 1,
+      "message": "nit: 8-space hanging indent, not alignment",
+      "revId": "b1dde83e964de8cb869253cd2402b76d8fbd2e46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
