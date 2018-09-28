@@ -1,0 +1,1016 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a397b295_0e09649b",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment, nor the name of the variable. What does this represent ? A number of callers ? A UID ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfd9cea_ccd3b9e2",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "If this comment is accurate then the method is misnamed. Can this be called to signal that the interface is not idle any more ? If it can, then this comment needs to be reworded. If not, what purpose does the boolean argument serve ?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd572b7_207ab2b5",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Style : remove this space",
+      "range": {
+        "startLine": 34,
+        "startChar": 84,
+        "endLine": 34,
+        "endChar": 85
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce05af8a_708a29de",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "reached (here and below)",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b678c25_6d91df86",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8978670_32a8aca8",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Style : only one space",
+      "range": {
+        "startLine": 42,
+        "startChar": 44,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c6f4b2_6eeece64",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "have been",
+      "range": {
+        "startLine": 45,
+        "startChar": 40,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1b34e4_4573438c",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "\"on an interface.\" or \"on a specific interface.\". Likewise for all similar comments below",
+      "range": {
+        "startLine": 45,
+        "startChar": 50,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872d26ef_3cfe734a",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment on the format. Is this a host name ? Is this a dot- or colon-separated representation of the IP address ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc8f82a_b1163a64",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Let\u0027s add a hint of the unit in this argument name. For example if it\u0027s milliseconds let\u0027s call this lifetimeMs.",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b37c9c9_7a6a0ab4",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 54,
+        "startChar": 34,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12511bb0_c83d9142",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "the name of the interface that changed addresses.",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f50565_1883359c",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "an interface has been",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9a3d17_abad601e",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "the name of the added interface.",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 50
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd38cd75_13c14d60",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "an interface has been",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65374a36_0c1c5d6b",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "the name of the removed interface.",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f41488e_811cc8a9",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 62
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b20e8c_058b872e",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "the name of the interface that changed status.",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5b09c4_64d99bc8",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 92,
+        "startChar": 65,
+        "endLine": 92,
+        "endChar": 67
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f656641_ceb4f48f",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "the name of the interface whose link status has changed.",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 51
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08111a2_d0643cc3",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 100,
+        "startChar": 38,
+        "endLine": 100,
+        "endChar": 40
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bc7048_5b8d52de",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Does this include adds ? If it does, then \"true for add/update, false for remove\"",
+      "range": {
+        "startLine": 102,
+        "startChar": 31,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae827c2_74c0d356",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "I think we need some consistency here in tense. Right now there are three different conventions in this file :\n\n- A noun describing what is concerned (e.g. onInterfaceDnsServerEvent)\n- A present tense verb (e.g. onInterfaceRemoveEvent, onRouteChangeEvent)\n- A past tense verb (e.g. onInterfaceChangedEvent)\n\nI think either convention is fine, but we should have consistency. Looking only at this file, because this is events sent by netd to listeners to warn them that something did happen, I would favor the past tense, but it also depends on what other aidl files in the vicinity does – a quick look at the directory, especially INetworkManagementEventObserver also tends to advocate for past tenses.\n\nWhat do you think ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 22
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedfd00c_7ee34c22",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment ; where is the verb ?",
+      "range": {
+        "startLine": 110,
+        "startChar": 18,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eba8438_69a707d7",
+        "filename": "core/java/com/android/server/net/BaseNetdUnsolicitedEventCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "style : no space",
+      "range": {
+        "startLine": 30,
+        "startChar": 39,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d25b9ac_8222997a",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Is there a reason to make this short ? If there isn\u0027t I\u0027d spell it out \"netd_unsolicited_event_listener\". If there is, then maybe \"netd_ue_listener\" ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 47,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7dd43a_85cd8712",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Why do we need to guard a constant ? Are there any writers to this array ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd2c7a9_33e7ef8c",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "So if I understand correctly this represents the identity of who is allowed to access this. Maybe then we should name this ALLOWED_CALLBACK_REGISTRAR_IDENTITIES or something similar ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4174feeb_31530094",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Piece of Android lore for you : http://go/synchronized-this-considered-harmful",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56794205_06114b9f",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "I think this should be final. There is code writing to it, but not to the variable, only to the contents of the array.\n\nAlso if this is final, it can be its own guard, which is much better than guarding on \"this\".",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74143494_20cdf528",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "This will not add a callback, it will overwrite any existing one. It\u0027s fine, but then you normally call this \"setNetdUnsolicitedEventCallback\" instead of \"add\" because \"add\" suggests you can have multiple of them set for each type.",
+      "range": {
+        "startLine": 59,
+        "startChar": 32,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf62390_a2fc6d90",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "There is an expectation mismatch here. It\u0027s a bit difficult to explain, but I\u0027ll try to be as clear as I can.\n\nThere is an ALLOWED_CALLBACK_TYPES array which lists the allowable caller types. Each type is an integer. This code here behaves as if the literal values of the types do not matter.\nHowever, code in line 65 and 74 use the caller type as an index directly.\n\nWhat this means is : you code depends on an unstated assumption that the literal values of the types must be equal to their index in the array (otherwise, IndexOutOfBoundException), making the contents of the array redundant, and tripping readers of the isValidCallerType method who should think the type values are irrelevant.\n\nI think there are two ways to solve this. Either way is fine.\n\n1. Consider that the types have to be the index, sequential starting from 0.\n→ In this case, replace the ALLOWED_CALLBACK_TYPES array with a simple MAX_CALLBACK_TYPE integer, and simplify this method to \"return callerType \u003c\u003d MAX_CALLBACK_TYPE;\"\n2. Consider the types to be symbolic and their value to not matter.\n→ In this case you would rename this method to \"getCallerIndexFromType\" or something, have it return -1 if it\u0027s not found, and return the index if it is found. Then lines 65 and 74 would use the return value of this method instead.",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 58
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951c7971_f7af5d8d",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Style : no space",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5869e165_312eac5e",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Style : single space",
+      "range": {
+        "startLine": 103,
+        "startChar": 65,
+        "endLine": 103,
+        "endChar": 66
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b863065_8f6172de",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "private ? final ?",
+      "range": {
+        "startLine": 241,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 39
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b02dfc_5aa10eec",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Style : no space",
+      "range": {
+        "startLine": 425,
+        "startChar": 43,
+        "endLine": 425,
+        "endChar": 44
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7169f2e6_c9b1866b",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "final long timestampNanos;",
+      "range": {
+        "startLine": 426,
+        "startChar": 12,
+        "endLine": 426,
+        "endChar": 36
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d20c2cf_26e3395f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "Intuitively I\u0027d write this if (timestamp \u003c\u003d 0) because a negative timestamp does not make any sense anyway",
+      "range": {
+        "startLine": 427,
+        "startChar": 16,
+        "endLine": 427,
+        "endChar": 30
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477998e7_9b003bca",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "parseInt ? This needs to be documented then. The string needs to represent an int, and otherwise NumberFormatException. Alternatively, the name can be an int.",
+      "range": {
+        "startLine": 432,
+        "startChar": 49,
+        "endLine": 432,
+        "endChar": 57
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c800ace_3b2d185d",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 451,
+        "startChar": 12,
+        "endLine": 451,
+        "endChar": 23
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa20018_ec86c682",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "final and join with initialization.\n\n(please note that omitting final on local variables like this does have actual adverse consequences on performance, on top of readability ; you should probably get in the habit of making things final as often as reasonable)",
+      "range": {
+        "startLine": 490,
+        "startChar": 16,
+        "endLine": 490,
+        "endChar": 49
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823667ce_130ad1cc",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 492,
+        "startChar": 16,
+        "endLine": 492,
+        "endChar": 25
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe3e78b_1e684262",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "s/Error/Exception in/",
+      "range": {
+        "startLine": 505,
+        "startChar": 30,
+        "endLine": 505,
+        "endChar": 35
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd6e9e0_b38640cc",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T09:57:16Z",
+      "side": 1,
+      "message": "This can\u0027t happen if the member is final, because the member is initialized in the constructor to a rhs that can\u0027t return null. Make the member final and remove this test.\n\n(if the member is not final, then this could be null if run on another thread than the constructor)",
+      "range": {
+        "startLine": 511,
+        "startChar": 12,
+        "endLine": 511,
+        "endChar": 33
+      },
+      "revId": "9e23ce88d162c943c470f66c616aeb4973e7c308",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
