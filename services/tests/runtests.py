@@ -19,11 +19,10 @@ import subprocess
 import sys
 
 INSTRUMENTED_PACKAGE_RUNNER = ('com.android.frameworks.servicestests/'
-                               'android.support.test.runner.AndroidJUnitRunner')
+                               'androidx.test.runner.AndroidJUnitRunner')
 
 PACKAGE_WHITELIST = (
-    'android.net',
-    'com.android.server.connectivity',
+    "com.android.server",
 )
 
 COLOR_RED = '\033[0;31m'
@@ -37,7 +36,10 @@ def run(shell_command, echo=True):
                 COLOR_NONE)
     return subprocess.check_call(shell_command, shell=True)
 
-
+# usage:
+#    ./frameworks/base/services/tests/runtests.py : run tests in com.android.server
+#    ./frameworks/base/services/tests/runtests.py -e package [pacakge name, e.g. com.android.server]
+#    ./frameworks/base/services/tests/runtests.py -e class [class name, e.g. com.android.server.MountServiceTests]
 def main():
     build_top = os.environ.get('ANDROID_BUILD_TOP', None)
     out_dir = os.environ.get('OUT', None)
@@ -57,7 +59,7 @@ def main():
     apk_path = (
             '%s/data/app/FrameworksServicesTests/FrameworksServicesTests.apk' %
             out_dir)
-    run('adb install -r -g "%s"' % apk_path)
+    run('adb install -t -r -g "%s"' % apk_path)
 
     print 'Running tests...'
     if len(sys.argv) != 1:
