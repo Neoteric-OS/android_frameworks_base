@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37dabd5b_a20639da",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "Yes, it might be possible. CS uses NetworkPolicyManager#registerListener() to register mPolicyListener. If we mock the NetworkPolicyManager then mPolicyListener (even though it\u0027s private) can be fetched from CS.\n\nIn ConnectivityServiceTest:\n\n  private INetworkPolicyListener mPolicyListener;\n  @Mock INetworkPolicyManager mNpm;\n\n  @Before\n  public void setUp() {\n      ...\n      doAnswer(new Answer\u003cVoid\u003e() {\n          public Void answer(InvocationOnMock invocation) {\n              mPolicyListener \u003d (INetworkPolicyListener) invocation.getArguments()[0];\n          }\n      }).when(mNpm).registerListener(any());\n      mService \u003d new WrappedConnectivityService(mServiceContext,\n                  mNetworkManagementService,\n                  mStatsService,\n                  mNpm,\n                  mock(IpConnectivityLog.class));\n  }",
+      "parentUuid": "c955cdfd_b72cc8ff",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c823bf44_9de59b62",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 2
@@ -89,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0d75e8fe_b08a6d73",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "It\u0027s done in the later patch set.",
+      "parentUuid": "4716786b_e3dfcc53",
+      "range": {
+        "startLine": 279,
+        "startChar": 40,
+        "endLine": 279,
+        "endChar": 41
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee01be7_f6e6959d",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 2
@@ -103,6 +145,24 @@
       "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7833e4b6_eba72541",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "It\u0027s done in the later patch set.",
+      "parentUuid": "bee01be7_f6e6959d",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -126,6 +186,30 @@
       "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9f2174_1f7ec91a",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "It\u0027s done in the later patch set.",
+      "parentUuid": "4e3cd19a_2fe187fd",
+      "range": {
+        "startLine": 1663,
+        "startChar": 8,
+        "endLine": 1663,
+        "endChar": 19
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "2ed55bb3_162506f3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4501,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "If we can directly use the logic in NPMS methods without mocking it, we don\u0027t the assertion as isUidNetworkingBlockedInternal() has handled it.",
+      "parentUuid": "c629c26b_48af880c",
+      "range": {
+        "startLine": 4501,
+        "startChar": 11,
+        "endLine": 4501,
+        "endChar": 58
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "904fdca8_c99304e8",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -316,6 +424,30 @@
       "writtenOn": "2018-09-27T02:38:14Z",
       "side": 1,
       "message": "I\u0027m not sure I\u0027m reading this right, but ISTM that we\u0027re mocking out the code that calculates whether something is blocked. If that\u0027s true, then does that mean that if we introduce a bug into isUidNetworkingBlocked, then this test won\u0027t fail?\n\nIt looks like the version of isUidNetworkingBlocked that we\u0027re using here is the 4-arg version which is effectively a static function that uses no NPMS state. So can we use that function directly?",
+      "range": {
+        "startLine": 4503,
+        "startChar": 19,
+        "endLine": 4503,
+        "endChar": 41
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98064248_02ec794c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4503,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-09-28T11:53:56Z",
+      "side": 1,
+      "message": "My understanding is that: In ConnectivityServiceTest, NetworkPolicyManagerInternal is mocked because there is no NPMS accessible for ConnectivityServiceTest. If we want to use the real methods in NPMS, like isUidNetworkingBlocked(), we have to new NPMS in ConnectivityServiceTest#setup() before WrappedConnectivityService is constructed.\nNot sure if it\u0027s doable or if there\u0027s other better ways to do.",
+      "parentUuid": "904fdca8_c99304e8",
       "range": {
         "startLine": 4503,
         "startChar": 19,
