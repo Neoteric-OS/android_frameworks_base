@@ -28,6 +28,7 @@
 #include <nativehelper/ScopedUtfChars.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
+#include <cutils/qtaguid.h>
 
 #include "android-base/unique_fd.h"
 #include "bpf/BpfNetworkStats.h"
@@ -213,10 +214,22 @@ static jlong getUidStat(JNIEnv* env, jclass clazz, jint uid, jint type, jboolean
     }
 }
 
+static jint tagSocket(JNIEnv* env, jclass clazz, jobject fileDescriptor, jint tag, jint uid) {
+  int userFd = jniGetFDFromFileDescriptor(env, fileDescriptor);
+
+  int res = qtaguid_tagSocket(userFd, tag, uid);
+  if (res < 0) {
+    return (jint)-errno;
+  }
+  return (jint)res;
+}
+
+
 static const JNINativeMethod gMethods[] = {
     {"nativeGetTotalStat", "(IZ)J", (void*) getTotalStat},
     {"nativeGetIfaceStat", "(Ljava/lang/String;IZ)J", (void*) getIfaceStat},
     {"nativeGetUidStat", "(IIZ)J", (void*) getUidStat},
+    {"nativeTagSocket", "(Ljava/io/FileDescriptor;II)I", (void*)tagSocket},
 };
 
 int register_android_server_net_NetworkStatsService(JNIEnv* env) {

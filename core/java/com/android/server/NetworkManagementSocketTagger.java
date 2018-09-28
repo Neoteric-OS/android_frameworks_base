@@ -16,6 +16,11 @@
 
 package com.android.server;
 
+import android.content.Context;
+import android.net.INetworkStatsService;
+import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemProperties;
 import android.util.Log;
@@ -24,6 +29,7 @@ import android.util.Slog;
 import dalvik.system.SocketTagger;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.net.SocketException;
 
 /**
@@ -46,6 +52,16 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
             return new SocketTags();
         }
     };
+
+    private static INetworkStatsService sStatsService;
+
+    private synchronized static INetworkStatsService getStatsService() {
+        if (sStatsService == null) {
+            sStatsService = INetworkStatsService.Stub.asInterface(
+                    ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        }
+        return sStatsService;
+    }
 
     public static void install() {
         SocketTagger.set(new NetworkManagementSocketTagger());
@@ -87,8 +103,27 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
 
     private void tagSocketFd(FileDescriptor fd, int tag, int uid) {
         if (tag == -1 && uid == -1) return;
-
+        int myUid = android.os.Process.myUid();
         if (SystemProperties.getBoolean(PROP_QTAGUID_ENABLED, false)) {
+            // If the process passed in a uid that is not -1, not the uid it self, that means it may
+            // want to attribute traffic to another process. Need to pass down to NetworStatsService
+            // to check the permission except it is system_server itself.
+            if (uid != -1 && myUid != uid && myUid != android.os.Process.SYSTEM_UID) {
+                try {
+                    ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(fd);
+                    if (getStatsService().tagSocket(pfd, tag, uid) < 0) {
+                        Log.i(TAG, "Process does not have permission to tag" +
+                         "other uid on socket");
+                    }
+                    pfd.close();
+                } catch (RemoteException e) {
+                    throw e.rethrowFromSystemServer();
+                } catch (IOException e) {
+                    Log.i(TAG, "dup socket fd failed");
+                }
+                return;
+            }
+
             final int errno = native_tagSocketFd(fd, tag, uid);
             if (errno < 0) {
                 Log.i(TAG, "tagSocketFd(" + fd.getInt$() + ", "
