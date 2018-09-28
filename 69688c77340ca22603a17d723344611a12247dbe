@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14077eba_cfa9455f",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-09-28T08:27:50Z",
+      "side": 1,
+      "message": "FYI: Because it\u0027s so generic, libandroidfw\u0027s version of ExecuteBinary doesn\u0027t call capset, setgid and setuid as is done for idmap in NativeVerifySystemIdmaps (see https://android-review.googlesource.com/c/platform/frameworks/base/+/740257/5/core/jni/android_util_AssetManager.cpp#119). However, I added the capset, setgid and setuid as part of commit 48d22323ce3 back in Feb 2014, before we had SELinux which should provide a better and more holistic security anyway, so I don\u0027t think we need capset and friends anymore.",
+      "range": {
+        "startLine": 250,
+        "startChar": 22,
+        "endLine": 250,
+        "endChar": 35
+      },
+      "revId": "69688c77340ca22603a17d723344611a12247dbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
