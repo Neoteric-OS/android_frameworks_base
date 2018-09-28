@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
 import android.os.ResultReceiver;
+import android.os.WorkSource;
 import android.net.NetworkStats;
 import android.net.Uri;
 import android.service.carrier.CarrierIdentifier;
@@ -503,9 +504,21 @@ interface ITelephony {
     int getLteOnCdmaModeForSubscriber(int subId, String callingPackage);
 
     /**
-     * Returns the all observed cell information of the device.
+     * Returns all observed cell information of the device.
      */
-    List<CellInfo> getAllCellInfo(String callingPkg);
+    List<CellInfo> getAllCellInfo(String callingPkg, int targetSdk);
+
+    /**
+     * Request all observed cell information of the device to be reported via PhoneStateListener.
+     */
+    void requestCellInfoUpdate(String callingPkg);
+
+    /**
+     * Request all observed cell information of the device to be reported via PhoneStateListener.
+     *
+     * @param workSource the requestor to whom the power consumption for this should be attributed.
+     */
+    void requestCellInfoUpdateWithWorkSource(String callingPkg, in WorkSource ws);
 
     /**
      * Sets minimum time in milli-seconds between onCellInfoChanged
