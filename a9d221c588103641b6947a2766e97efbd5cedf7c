@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "41347728_ecf89af8",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T13:44:06Z",
+      "side": 1,
+      "message": "There is always the option of changing mMtu from a Short to a short. It does look to me like this class is treating them as equivalent, though I understand that morally they aren\u0027t. RFC2132 also says the minimum legal value for this field is 68, so I\u0027m not sure why you special case 0 (instead of, say, \u003e\u003d 68).\n\nBut I don\u0027t have a strong opinion either way.",
+      "parentUuid": "0c560aa4_33944f0c",
+      "range": {
+        "startLine": 722,
+        "startChar": 12,
+        "endLine": 722,
+        "endChar": 18
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237c6cdc_788f59c6",
         "filename": "services/net/java/android/net/dhcp/DhcpServer.java",
         "patchSetId": 2
