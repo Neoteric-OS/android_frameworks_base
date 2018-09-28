@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66397ae2_e8bf0226",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-28T06:22:37Z",
+      "side": 1,
+      "message": "Per in-person discussion: consider either:\n\n1. Remove this parameter, and just saying that this call notifies the framework of the current DNS64 prefix. That makes this interface easier to understand. But Nat464Xlat.java might need to keep state about the current prefix (maybe in LinkProperties?).\n\n2. Keep this parameter, but in the docstring, explicitly provide a guarantee that there is only one prefix at a time: if a prefix is added, it replaces the previously-added prefix. If you do this, perhaps we can simplify Nat464Xlat.java, because it can then say \"if added is true, start clatd with this prefix; else, stop clatd\". But you need to ensure that netd doesn\u0027t send two adds in a row.",
+      "range": {
+        "startLine": 51,
+        "startChar": 39,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "ec39028c47ff92b1d100e2fed2a71034ce833aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
