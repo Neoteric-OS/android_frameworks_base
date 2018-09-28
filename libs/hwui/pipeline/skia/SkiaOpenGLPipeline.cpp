@@ -66,6 +66,11 @@ bool SkiaOpenGLPipeline::draw(const Frame& frame, const SkRect& screenDirty, con
                               const BakedOpRenderer::LightInfo& lightInfo,
                               const std::vector<sp<RenderNode>>& renderNodes,
                               FrameInfoVisualizer* profiler) {
+    if (!mEglManager.isSurfaceValid(mEglSurface)) {
+        ALOGW("give up drawing on abandoned surface<%p>", (void*)mEglSurface);
+        return false;
+    }
+
     mEglManager.damageFrame(frame, dirty);
 
     // setup surface for fbo0

@@ -33,6 +33,7 @@
 #include <EGL/eglext.h>
 #include <GrContextOptions.h>
 #include <gl/GrGLInterface.h>
+#include <system/window.h>
 
 #ifdef HWUI_GLES_WRAP_ENABLED
 #include "debug/GlesDriver.h"
@@ -324,9 +325,19 @@ EGLSurface EglManager::createSurface(EGLNativeWindowType window, bool wideColorG
 
     EGLSurface surface = eglCreateWindowSurface(
             mEglDisplay, wideColorGamut ? mEglConfigWideGamut : mEglConfig, window, attribs);
-    LOG_ALWAYS_FATAL_IF(surface == EGL_NO_SURFACE,
-                        "Failed to create EGLSurface for window %p, eglErr = %s", (void*)window,
-                        eglErrorString());
+    // Catch error in case surface is disconnected.
+    if (surface == EGL_NO_SURFACE) {
+        int dummy;
+        int isSurfaceInvalid = window->query(window, NATIVE_WINDOW_HEIGHT, &dummy) != 0 ? 1 : 0;
+        if (isSurfaceInvalid) {
+            ALOGW("Surface might be disconnected!, surface<%p>", (void*)window);
+            return surface;
+        } else {
+            LOG_ALWAYS_FATAL_IF(surface == EGL_NO_SURFACE,
+                    "Failed to create EGLSurface for window %p, eglErr = %s",
+                    (void*) window, eglErrorString());
+        }
+    }
 
     if (mSwapBehavior != SwapBehavior::Preserved) {
         LOG_ALWAYS_FATAL_IF(eglSurfaceAttrib(mEglDisplay, surface, EGL_SWAP_BEHAVIOR,
@@ -404,7 +415,9 @@ EGLint EglManager::queryBufferAge(EGLSurface surface) {
 
 Frame EglManager::beginFrame(EGLSurface surface) {
     LOG_ALWAYS_FATAL_IF(surface == EGL_NO_SURFACE, "Tried to beginFrame on EGL_NO_SURFACE!");
-    makeCurrent(surface);
+    // Just pass dummy to makeCurrent to get a warning in case surface is disconnected
+    EGLint dummy = 0;
+    makeCurrent(surface, &dummy);
     Frame frame;
     frame.mSurface = surface;
     eglQuerySurface(mEglDisplay, surface, EGL_WIDTH, &frame.mWidth);
@@ -445,7 +458,9 @@ bool EglManager::swapBuffers(const Frame& frame, const SkRect& screenDirty) {
     if (CC_LIKELY(err == EGL_SUCCESS)) {
         return true;
     }
-    if (err == EGL_BAD_SURFACE || err == EGL_BAD_NATIVE_WINDOW) {
+    // Just EGL_BAD_SURFACE and EGL_BAD_NATIVE_WINDOW is not sufficient.
+    // EGL_BAD_ALLOC is ignored - a light-weight version of isSurfaceValid() call.
+    if (err == EGL_BAD_SURFACE || err == EGL_BAD_NATIVE_WINDOW || err == EGL_BAD_ALLOC) {
         // For some reason our surface was destroyed out from under us
         // This really shouldn't happen, but if it does we can recover easily
         // by just not trying to use the surface anymore
@@ -483,6 +498,17 @@ bool EglManager::setPreserveBuffer(EGLSurface surface, bool preserve) {
     }
 
     return preserved;
+}
+
+bool EglManager::isSurfaceValid(EGLSurface surface) {
+    /*TIME_LOG_CALL();
+    int isSurfaceInvalid = 0;
+    EGLBoolean success = eglQuerySurface(mEglDisplay, surface, EGL_IS_INVALID_EXT,
+            &isSurfaceInvalid);
+    if (isSurfaceInvalid || !success) {
+        return false;
+    }*/
+    return true;
 }
 
 } /* namespace renderthread */
