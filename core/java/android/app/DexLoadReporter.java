@@ -124,7 +124,8 @@ import java.util.Set;
         try {
             ActivityThread.getPackageManager().notifyDexLoad(
                     packageName, classLoadersNames, classPaths,
-                    VMRuntime.getRuntime().vmInstructionSet());
+                    VMRuntime.getRuntime().vmInstructionSet(),
+                    /* canOptimize= */ true);
         } catch (RemoteException re) {
             Slog.e(TAG, "Failed to notify PM about dex load for package " + packageName, re);
         }

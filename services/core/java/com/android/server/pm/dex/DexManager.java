@@ -143,22 +143,24 @@ public class DexManager {
      * Notify about dex files loads.
      * Note that this method is invoked when apps load dex files and it should
      * return as fast as possible.
+     * If {@code canOptimize} is true the dex files found in the first class path will be recorded
+     * in the usage file.
      *
      * @param loadingAppInfo the package performing the load
      * @param classLoadersNames the names of the class loaders present in the loading chain. The
      *    list encodes the class loader chain in the natural order. The first class loader has
-     *    the second one as its parent and so on. The dex files present in the class path of the
-     *    first class loader will be recorded in the usage file.
+     *    the second one as its parent and so on. Class loaders not instances of
+     *    BaseDexClassLoader are omitted.
      * @param classPaths the class paths corresponding to the class loaders names from
      *     {@param classLoadersNames}. The the first element corresponds to the first class loader
      *     and so on. A classpath is represented as a list of dex files separated by
      *     {@code File.pathSeparator}.
-     *     The dex files found in the first class path will be recorded in the usage file.
      * @param loaderIsa the ISA of the app loading the dex files
      * @param loaderUserId the user id which runs the code loading the dex files
+     * @param canOptimize whether the dex files are eligible for background optimization
      */
     public void notifyDexLoad(ApplicationInfo loadingAppInfo, List<String> classLoadersNames,
-            List<String> classPaths, String loaderIsa, int loaderUserId) {
+            List<String> classPaths, String loaderIsa, int loaderUserId, boolean canOptimize) {
         try {
             notifyDexLoadInternal(loadingAppInfo, classLoadersNames, classPaths, loaderIsa,
                     loaderUserId);

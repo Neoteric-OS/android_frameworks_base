@@ -470,17 +470,17 @@ interface IPackageManager {
      * @param loadingPackageName the name of the package who performs the load
      * @param classLoadersNames the names of the class loaders present in the loading chain. The
      *    list encodes the class loader chain in the natural order. The first class loader has
-     *    the second one as its parent and so on. The dex files present in the class path of the
-     *    first class loader will be recorded in the usage file.
+     *    the second one as its parent and so on. Class loaders not instances of
+     *	  BaseDexClassLoader are omitted.
      * @param classPaths the class paths corresponding to the class loaders names from
      *     {@param classLoadersNames}. The the first element corresponds to the first class loader
      *     and so on. A classpath is represented as a list of dex files separated by
      *     {@code File.pathSeparator}.
-     *     The dex files found in the first class path will be recorded in the usage file.
      * @param loaderIsa the ISA of the loader process
+     * @param canOptimize whether the dex files are eligible for background optimization
      */
     oneway void notifyDexLoad(String loadingPackageName, in List<String> classLoadersNames,
-            in List<String> classPaths, String loaderIsa);
+            in List<String> classPaths, String loaderIsa, boolean canOptimize);
 
     /**
      * Register an application dex module with the package manager.

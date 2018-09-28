@@ -524,7 +524,7 @@ public class DexManagerTests {
     private void notifyDexLoad(TestData testData, List<String> classLoader, List<String> classPaths,
             int loaderUserId) {
         mDexManager.notifyDexLoad(testData.mPackageInfo.applicationInfo, classLoader, classPaths,
-                testData.mLoaderIsa, loaderUserId);
+                testData.mLoaderIsa, loaderUserId, true);
     }
 
     private PackageUseInfo getPackageUseInfo(TestData testData) {
