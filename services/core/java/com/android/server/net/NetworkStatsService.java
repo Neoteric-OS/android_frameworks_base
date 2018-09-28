@@ -107,6 +107,7 @@ import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -955,6 +956,22 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private boolean checkBpfStatsEnable() {
         return mUseBpfTrafficStats;
+    }
+
+    @Override
+    public int tagSocketToUid(ParcelFileDescriptor pfd, int tag, int uid) {
+        int ret = -1;
+        if (mContext.checkCallingPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) ==
+            PackageManager.PERMISSION_GRANTED) {
+            ret = nativeTagSocketToUid(pfd.getFileDescriptor(), tag, uid);
+        }
+        try {
+            pfd.close();
+        } catch (IOException e) {
+            Slog.w(TAG, "Closed duplicate socket fd failed");
+            ret = -1;
+        }
+        return ret;
     }
 
     /**
@@ -1829,4 +1846,5 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static native long nativeGetTotalStat(int type, boolean useBpfStats);
     private static native long nativeGetIfaceStat(String iface, int type, boolean useBpfStats);
     private static native long nativeGetUidStat(int uid, int type, boolean useBpfStats);
+    private static native int nativeTagSocketToUid(FileDescriptor fd, int uid, int tag);
 }

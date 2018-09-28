@@ -24,6 +24,7 @@ import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.os.IBinder;
 import android.os.Messenger;
+import android.os.ParcelFileDescriptor;
 
 /** {@hide} */
 interface INetworkStatsService {
@@ -78,4 +79,6 @@ interface INetworkStatsService {
     /** Get the total network stats information since boot */
     long getTotalStats(int type);
 
+    /** Check if the calling process have permission UPDATE_DEVICE_STATS */
+    int tagSocketToUid(in ParcelFileDescriptor pfd, int tag, int uid);
 }
