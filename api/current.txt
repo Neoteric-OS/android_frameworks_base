@@ -42771,6 +42771,7 @@ package android.telephony {
     method public boolean isVoicemailVibrationEnabled(android.telecom.PhoneAccountHandle);
     method public boolean isWorldPhone();
     method public void listen(android.telephony.PhoneStateListener, int);
+    method public void requestCellInfoUpdate();
     method public android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, java.util.concurrent.Executor, android.telephony.TelephonyScanManager.NetworkScanCallback);
     method public void sendDialerSpecialCode(java.lang.String);
     method public java.lang.String sendEnvelopeWithStatus(java.lang.String);
