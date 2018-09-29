@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b70b18_69b38322",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsRegistrationImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-09-29T00:28:15Z",
+      "side": 1,
+      "message": "Mark the overriden methods with @Override",
+      "range": {
+        "startLine": 83,
+        "startChar": 32,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "9001c0eb53a73b30964b0769dd73fbf81ef5baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
