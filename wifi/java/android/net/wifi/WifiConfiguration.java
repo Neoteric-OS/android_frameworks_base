@@ -53,7 +53,7 @@ public class WifiConfiguration implements Parcelable {
     /**
      * Current Version of the Backup Serializer.
     */
-    private static final int BACKUP_VERSION = 2;
+    private static final int BACKUP_VERSION = 3;
     /** {@hide} */
     public static final String ssidVarName = "ssid";
     /** {@hide} */
@@ -2258,6 +2258,7 @@ public class WifiConfiguration implements Parcelable {
         BackupUtils.writeString(out, SSID);
         out.writeInt(apBand);
         out.writeInt(apChannel);
+        out.writeBoolean(hiddenSSID);
         BackupUtils.writeString(out, preSharedKey);
         out.writeInt(getAuthType());
         return baos.toByteArray();
@@ -2275,11 +2276,12 @@ public class WifiConfiguration implements Parcelable {
             throw new BackupUtils.BadVersionException("Unknown Backup Serialization Version");
         }
 
-        if (version == 1) return null; // Version 1 is a bad dataset.
+        if (version != BACKUP_VERSION) return null; // Old version is a bad dataset.
 
         config.SSID = BackupUtils.readString(in);
         config.apBand = in.readInt();
         config.apChannel = in.readInt();
+        config.hiddenSSID = in.readBoolean();
         config.preSharedKey = BackupUtils.readString(in);
         config.allowedKeyManagement.set(in.readInt());
         return config;
