@@ -16,9 +16,11 @@ package com.android.systemui.statusbar;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -36,8 +38,8 @@ import com.android.systemui.statusbar.policy.NetworkController.IconState;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+import com.android.systemui.util.CarrierConfigTracker;
 
-import java.util.List;
 
 /** Shows the operator name */
 public class OperatorNameView extends TextView implements DemoModeCommandReceiver, DarkReceiver,
@@ -46,6 +48,7 @@ public class OperatorNameView extends TextView implements DemoModeCommandReceive
     private static final String KEY_SHOW_OPERATOR_NAME = "show_operator_name";
 
     private KeyguardUpdateMonitor mKeyguardUpdateMonitor;
+    private CarrierConfigTracker mCarrierConfigTracker;
     private boolean mDemoMode;
 
     private final KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
@@ -72,6 +75,7 @@ public class OperatorNameView extends TextView implements DemoModeCommandReceive
         super.onAttachedToWindow();
         mKeyguardUpdateMonitor = Dependency.get(KeyguardUpdateMonitor.class);
         mKeyguardUpdateMonitor.registerCallback(mCallback);
+        mCarrierConfigTracker = Dependency.get(CarrierConfigTracker.class);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         Dependency.get(NetworkController.class).addCallback(this);
         Dependency.get(TunerService.class).addTunable(this, KEY_SHOW_OPERATOR_NAME);
@@ -136,22 +140,35 @@ public class OperatorNameView extends TextView implements DemoModeCommandReceive
     }
 
     private void updateText() {
-        CharSequence displayText = null;
-        List<SubscriptionInfo> subs = mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(false);
-        final int N = subs.size();
-        for (int i = 0; i < N; i++) {
-            int subId = subs.get(i).getSubscriptionId();
-            int simState = mKeyguardUpdateMonitor.getSimState(subId);
-            CharSequence carrierName = subs.get(i).getCarrierName();
-            if (!TextUtils.isEmpty(carrierName) && simState == TelephonyManager.SIM_STATE_READY) {
-                ServiceState ss = mKeyguardUpdateMonitor.getServiceState(subId);
-                if (ss != null && ss.getState() == ServiceState.STATE_IN_SERVICE) {
-                    displayText = carrierName;
-                    break;
+        // Do the binder calls in background
+        AsyncTask<Void, Void, CharSequence> task =
+                new AsyncTask<Void, Void, CharSequence>() {
+            @Override
+            protected CharSequence doInBackground(Void... args) {
+                CharSequence displayText = null;
+                int defaultDataSubId = SubscriptionManager.getDefaultDataSubscriptionId();
+                int simState = mKeyguardUpdateMonitor.getSimState(defaultDataSubId);
+                final SubscriptionInfo subInfo = mKeyguardUpdateMonitor
+                        .getSubscriptionInfoForSubId(defaultDataSubId);
+                CharSequence carrierName = null;
+                if (subInfo != null && mCarrierConfigTracker
+                        .getShowOperatorNameInStatusBarConfig(defaultDataSubId)) {
+                    carrierName = subInfo.getCarrierName();
                 }
+                if (!TextUtils.isEmpty(carrierName)
+                        && simState == TelephonyManager.SIM_STATE_READY) {
+                    ServiceState ss = mKeyguardUpdateMonitor.getServiceState(defaultDataSubId);
+                    if (ss != null && ss.getState() == ServiceState.STATE_IN_SERVICE) {
+                        displayText = carrierName;
+                    }
+                }
+                return displayText;
             }
-        }
-
-        setText(displayText);
+            @Override
+            protected void onPostExecute(CharSequence displayText) {
+                setText(displayText);
+            }
+        };
+        task.execute();
     }
 }
