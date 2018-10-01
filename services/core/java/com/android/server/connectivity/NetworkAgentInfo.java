@@ -16,9 +16,21 @@
 
 package com.android.server.connectivity;
 
-import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static com.android.server.ConnectivityService.EVENT_NETWORK_TESTED;
+import static com.android.server.ConnectivityService.EVENT_PRIVATE_DNS_CONFIG_RESOLVED;
+import static com.android.server.ConnectivityService.EVENT_PROVISIONING_NOTIFICATION;
 
+import android.annotation.Nullable;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.ResolveInfo;
+import android.content.pm.ServiceInfo;
+import android.net.IConnectivityAppConnector;
+import android.net.INetworkMonitor;
+import android.net.INetworkMonitorCallback;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -26,8 +38,11 @@ import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
+import android.net.PrivateDnsConfig;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.INetworkManagementService;
+import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -37,11 +52,10 @@ import android.util.SparseArray;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
-import com.android.server.connectivity.NetworkMonitor;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -118,6 +132,11 @@ import java.util.TreeSet;
 // not, ConnectivityService disconnects the NetworkAgent's AsyncChannel.
 public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
+    private static final int CMD_DEFAULT = 0;
+    private static final int CMD_LAUNCH_CAPTIVE_PORTAL_APP = 1;
+    private static final int CMD_FORCE_REEVALUATION = 2;
+    private static final int CMD_NOTIFY_PRIVDNS_CHANGED = 3;
+
     public NetworkInfo networkInfo;
     // This Network object should always be used if possible, so as to encourage reuse of the
     // enclosed socket factory and connection pool.  Avoid creating other Network objects.
@@ -126,7 +145,6 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public LinkProperties linkProperties;
     // This should only be modified via ConnectivityService.updateCapabilities().
     public NetworkCapabilities networkCapabilities;
-    public final NetworkMonitor networkMonitor;
     public final NetworkMisc networkMisc;
     // Indicates if netd has been told to create this Network. From this point on the appropriate
     // routing rules are setup and routes are added so packets can begin flowing over the Network.
@@ -239,15 +257,75 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Used by ConnectivityService to keep track of 464xlat.
     public Nat464Xlat clatd;
 
+    private final NetworkRequest defaultRequest;
+    private IConnectivityAppConnector appConnector;
+    private INetworkMonitor networkMonitor;
+    private final ArrayList<Message> pendingMonitorMessages = new ArrayList<>();
+
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
     private final ConnectivityService mConnService;
+    private final INetworkMonitorCallback mNetworkMonitorCallback;
     private final Context mContext;
     private final Handler mHandler;
 
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            appConnector = IConnectivityAppConnector.Stub.asInterface(service);
+            try {
+                appConnector.startNetworkMonitor(network, defaultRequest, mNetworkMonitorCallback);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error starting NetworkMonitor");
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            appConnector = null;
+            networkMonitor = null;
+        }
+    };
+
+    private class NetworkMonitorCallback extends INetworkMonitorCallback.Stub {
+        @Override
+        public void onNetworkMonitorCreated(IBinder networkMonitor) {
+            mHandler.post(() -> NetworkAgentInfo.this.networkMonitor =
+                            INetworkMonitor.Stub.asInterface(networkMonitor));
+        }
+
+        @Override
+        public void notifyNetworkTested(int testResult, @Nullable String redirectUrl) {
+            mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_TESTED,
+                    testResult, network.netId, redirectUrl));
+        }
+
+        @Override
+        public void notifyPrivateDnsConfigResolved(PrivateDnsConfig config) {
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PRIVATE_DNS_CONFIG_RESOLVED,
+                    0, network.netId, config));
+        }
+
+        @Override
+        public void showProvisioningNotification(PendingIntent intent) {
+            // TODO: 1 -> constant
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PROVISIONING_NOTIFICATION,
+                    1, network.netId, intent));
+        }
+
+        @Override
+        public void hideProvisioningNotification() {
+            // TODO: 0 -> constant
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PROVISIONING_NOTIFICATION, 0, network.netId));
+        }
+    }
+
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context, Handler handler,
-            NetworkMisc misc, NetworkRequest defaultRequest, ConnectivityService connService) {
+            NetworkMisc misc, NetworkRequest defaultReq, ConnectivityService connService) {
         this.messenger = messenger;
         asyncChannel = ac;
         network = net;
@@ -258,8 +336,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         mConnService = connService;
         mContext = context;
         mHandler = handler;
-        networkMonitor = mConnService.createNetworkMonitor(context, handler, this, defaultRequest);
         networkMisc = misc;
+        defaultRequest = defaultReq;
+        mNetworkMonitorCallback = new NetworkMonitorCallback();
     }
 
     public ConnectivityService connService() {
@@ -272,6 +351,73 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public Network network() {
         return network;
+    }
+
+    public void startNetworkMonitor() {
+        // final Intent intent = new Intent("com.android.server.connectivity.START_NETWORK_MONITOR");
+        final Intent intent = new Intent(IConnectivityAppConnector.class.getName());
+
+        //*
+        List<ResolveInfo> matches = mContext.getPackageManager().queryIntentServices(intent, 0);
+        if (matches.size() != 1) {
+            Log.e(TAG, "Invalid number of NetworkMonitor matches: " + matches.size());
+            return;
+        }
+
+        final ServiceInfo svcInfo = matches.get(0).serviceInfo;
+        intent.setComponent(new ComponentName(
+                svcInfo.applicationInfo.packageName,
+                svcInfo.name));
+        //*/
+        /*
+        final ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
+        intent.setComponent(comp);
+        //*/
+
+        // if (comp == null || !mContext.bindServiceAsUser(intent, mServiceConnection,
+        if (!mContext.bindServiceAsUser(intent, mServiceConnection,
+                Context.BIND_AUTO_CREATE, mHandler, mContext.getUser())) {
+            Log.e(TAG, "Could not bind to NetworkMonitor service with " + intent);
+        }
+    }
+
+    private void sendOrQueueNetworkMonitorMessage(Message message) {
+        if (networkMonitor == null) {
+            pendingMonitorMessages.add(message);
+        } else {
+            sendNetworkMonitorMessage(networkMonitor, message);
+        }
+    }
+
+    private static void sendNetworkMonitorMessage(INetworkMonitor monitor, Message message) {
+        try {
+            switch (message.what) {
+                case CMD_LAUNCH_CAPTIVE_PORTAL_APP:
+                    monitor.launchCaptivePortalApp();
+                    break;
+                case CMD_FORCE_REEVALUATION:
+                    monitor.forceReevaluation(message.arg1);
+                    break;
+                case CMD_NOTIFY_PRIVDNS_CHANGED:
+                    monitor.notifyPrivateDnsChanged((PrivateDnsConfig) message.obj);
+                    break;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error sending NetworkMonitor message: " + message, e);
+        }
+    }
+
+    public void launchCaptivePortalApp() {
+        // TODO: is this the right way to create the messages ?
+        sendOrQueueNetworkMonitorMessage(mHandler.obtainMessage(CMD_LAUNCH_CAPTIVE_PORTAL_APP));
+    }
+
+    public void forceNetworkMonitorReevaluation(int uid) {
+        sendOrQueueNetworkMonitorMessage(mHandler.obtainMessage(CMD_FORCE_REEVALUATION, uid));
+    }
+
+    public void notifyPrivateDnsSettingsChanged(PrivateDnsConfig config) {
+        sendOrQueueNetworkMonitorMessage(mHandler.obtainMessage(CMD_FORCE_REEVALUATION, config));
     }
 
     // Functions for manipulating the requests satisfied by this network.

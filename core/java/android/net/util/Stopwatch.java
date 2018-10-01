@@ -16,12 +16,12 @@
 
 package android.net.util;
 
+import android.annotation.SystemApi;
 import android.os.SystemClock;
 
 
-/**
- * @hide
- */
+/** @hide */
+@SystemApi
 public class Stopwatch {
     private long mStartTimeMs;
     private long mStopTimeMs;

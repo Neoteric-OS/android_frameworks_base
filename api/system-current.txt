@@ -3126,6 +3126,22 @@ package android.net {
     field public static final java.lang.String EXTRA_PACKAGE_NAME = "packageName";
   }
 
+  public class PrivateDnsConfig implements android.os.Parcelable {
+    ctor public PrivateDnsConfig();
+    ctor public PrivateDnsConfig(boolean);
+    ctor public PrivateDnsConfig(String, java.net.InetAddress[]);
+    ctor public PrivateDnsConfig(android.net.PrivateDnsConfig);
+    ctor protected PrivateDnsConfig(android.os.Parcel);
+    field public final boolean useTls;
+    field public final String hostname;
+    field public final java.net.InetAddress[] ips;
+    method public boolean inStrictMode();
+    method public java.lang.String toString();
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final public static final android.os.Parcelable.Creator<android.net.PrivateDnsConfig> CREATOR;
+  }
+
   public class RssiCurve implements android.os.Parcelable {
     ctor public RssiCurve(int, int, byte[]);
     ctor public RssiCurve(int, int, byte[], int);
@@ -3190,6 +3206,19 @@ package android.net.http {
     method public boolean isSameTrustConfiguration(java.lang.String, java.lang.String);
   }
 
+}
+
+package android.net.util {
+  public class Stopwatch {
+    ctor public Stopwatch();
+    method public boolean isStarted();
+    method public boolean isStopped();
+    method public boolean isRunning();
+    method public android.net.util.Stopwatch start();
+    method public long stop();
+    method public long lap();
+    method public void reset();
+  }
 }
 
 package android.net.wifi {

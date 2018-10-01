@@ -114,6 +114,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkUtils;
+import android.net.PrivateDnsConfig;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.UidRange;
@@ -147,7 +148,6 @@ import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.server.connectivity.DefaultNetworkMetrics;
-import com.android.server.connectivity.DnsManager;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
@@ -4000,9 +4000,9 @@ public class ConnectivityServiceTest {
         final String[] TLS_SERVERS = new String[]{ TLS_SERVER6 };
         final Handler h = mCellNetworkAgent.getWrappedNetworkMonitor().connectivityHandler;
         h.sendMessage(h.obtainMessage(
-                NetworkMonitor.EVENT_PRIVATE_DNS_CONFIG_RESOLVED, 0,
+                ConnectivityService.EVENT_PRIVATE_DNS_CONFIG_RESOLVED, 0,
                 mCellNetworkAgent.getNetwork().netId,
-                new DnsManager.PrivateDnsConfig(TLS_SPECIFIER, TLS_IPS)));
+                new PrivateDnsConfig(TLS_SPECIFIER, TLS_IPS)));
         waitForIdle();
         verify(mNetworkManagementService, atLeastOnce()).setDnsConfigurationForNetwork(
                 anyInt(), mStringArrayCaptor.capture(), any(), any(),
