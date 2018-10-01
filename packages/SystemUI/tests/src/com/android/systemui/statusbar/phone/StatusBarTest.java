@@ -267,6 +267,7 @@ public class StatusBarTest extends SysuiTestCase {
     @Mock private SystemStatusAnimationScheduler mAnimationScheduler;
     @Mock private StatusBarLocationPublisher mLocationPublisher;
     @Mock private StatusBarIconController mIconController;
+    @Mock private CarrierConfigTracker mCarrierConfigTracker;
     @Mock private LockscreenShadeTransitionController mLockscreenTransitionController;
     @Mock private FeatureFlags mFeatureFlags;
     @Mock private WallpaperManager mWallpaperManager;

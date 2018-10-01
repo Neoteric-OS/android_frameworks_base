@@ -20,6 +20,7 @@ import android.annotation.NonNull;
 import android.os.Bundle;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.view.View;
 
@@ -30,7 +31,9 @@ import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.statusbar.connectivity.IconState;
 import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.connectivity.SignalCallback;
+import com.android.systemui.statusbar.phone.fragment.CollapsedStatusBarFragment;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.util.ViewController;
 
 import java.util.ArrayList;
@@ -47,19 +50,22 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
     private final TunerService mTunerService;
     private final TelephonyManager mTelephonyManager;
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
+    private final CarrierConfigTracker mCarrierConfigTracker;
 
     private OperatorNameViewController(OperatorNameView view,
             DarkIconDispatcher darkIconDispatcher,
             NetworkController networkController,
             TunerService tunerService,
             TelephonyManager telephonyManager,
-            KeyguardUpdateMonitor keyguardUpdateMonitor) {
+            KeyguardUpdateMonitor keyguardUpdateMonitor,
+            CarrierConfigTracker carrierConfigTracker) {
         super(view);
         mDarkIconDispatcher = darkIconDispatcher;
         mNetworkController = networkController;
         mTunerService = tunerService;
         mTelephonyManager = telephonyManager;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
+        mCarrierConfigTracker = carrierConfigTracker;
     }
 
     @Override
@@ -79,8 +85,22 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
     }
 
     private void update() {
-        mView.update(mTunerService.getValue(KEY_SHOW_OPERATOR_NAME, 1) != 0,
-                mTelephonyManager.isDataCapable(), getSubInfos());
+        SubInfo defaultSubInfo = getDefaultSubInfo();
+        boolean showOperatorName =
+                mCarrierConfigTracker
+                        .getShowOperatorNameInStatusBarConfig(defaultSubInfo.getSubId())
+                        && (mTunerService.getValue(KEY_SHOW_OPERATOR_NAME, 1) != 0);
+        mView.update(showOperatorName, mTelephonyManager.isDataCapable(), getDefaultSubInfo());
+    }
+
+    private SubInfo getDefaultSubInfo() {
+        int defaultSubId = SubscriptionManager.getDefaultDataSubscriptionId();
+        SubscriptionInfo sI = mKeyguardUpdateMonitor.getSubscriptionInfoForSubId(defaultSubId);
+        return new SubInfo(
+                sI.getSubscriptionId(),
+                sI.getCarrierName(),
+                mKeyguardUpdateMonitor.getSimState(defaultSubId),
+                mKeyguardUpdateMonitor.getServiceState(defaultSubId));
     }
 
     private List<SubInfo> getSubInfos() {
@@ -91,6 +111,7 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
         for (SubscriptionInfo subscriptionInfo : subscritionInfos) {
             int subId = subscriptionInfo.getSubscriptionId();
             result.add(new SubInfo(
+                    subscriptionInfo.getSubscriptionId(),
                     subscriptionInfo.getCarrierName(),
                     mKeyguardUpdateMonitor.getSimState(subId),
                     mKeyguardUpdateMonitor.getServiceState(subId)));
@@ -106,22 +127,32 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
         private final TunerService mTunerService;
         private final TelephonyManager mTelephonyManager;
         private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
+        private final CarrierConfigTracker mCarrierConfigTracker;
 
         @Inject
-        public Factory(DarkIconDispatcher darkIconDispatcher, NetworkController networkController,
-                TunerService tunerService, TelephonyManager telephonyManager,
-                KeyguardUpdateMonitor keyguardUpdateMonitor) {
+        public Factory(DarkIconDispatcher darkIconDispatcher,
+                NetworkController networkController,
+                TunerService tunerService,
+                TelephonyManager telephonyManager,
+                KeyguardUpdateMonitor keyguardUpdateMonitor,
+                CarrierConfigTracker carrierConfigTracker) {
             mDarkIconDispatcher = darkIconDispatcher;
             mNetworkController = networkController;
             mTunerService = tunerService;
             mTelephonyManager = telephonyManager;
             mKeyguardUpdateMonitor = keyguardUpdateMonitor;
+            mCarrierConfigTracker = carrierConfigTracker;
         }
 
         /** Create an {@link OperatorNameViewController}. */
         public OperatorNameViewController create(OperatorNameView view) {
-            return new OperatorNameViewController(view, mDarkIconDispatcher, mNetworkController,
-                    mTunerService, mTelephonyManager, mKeyguardUpdateMonitor);
+            return new OperatorNameViewController(view,
+                    mDarkIconDispatcher,
+                    mNetworkController,
+                    mTunerService,
+                    mTelephonyManager,
+                    mKeyguardUpdateMonitor,
+                    mCarrierConfigTracker);
         }
     }
 
@@ -152,7 +183,7 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
             new KeyguardUpdateMonitorCallback() {
         @Override
         public void onRefreshCarrierInfo() {
-            mView.updateText(getSubInfos());
+            mView.updateText(getDefaultSubInfo());
         }
     };
 
@@ -176,15 +207,24 @@ public class OperatorNameViewController extends ViewController<OperatorNameView>
     };
 
     static class SubInfo {
+        private final int mSubId;
         private final CharSequence mCarrierName;
         private final int mSimState;
         private final ServiceState mServiceState;
 
-        private SubInfo(CharSequence carrierName,
-                int simState, ServiceState serviceState) {
+        private SubInfo(
+                int subId,
+                CharSequence carrierName,
+                int simState,
+                ServiceState serviceState) {
+            mSubId = subId;
             mCarrierName = carrierName;
             mSimState = simState;
             mServiceState = serviceState;
+        }
+
+        int getSubId() {
+            return mSubId;
         }
 
         boolean simReady() {

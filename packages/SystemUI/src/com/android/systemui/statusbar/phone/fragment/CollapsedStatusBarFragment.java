@@ -65,6 +65,9 @@ import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallListener;
 import com.android.systemui.statusbar.phone.panelstate.PanelExpansionStateManager;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.CarrierConfigTracker;
+import com.android.systemui.util.CarrierConfigTracker.CarrierConfigChangedListener;
+import com.android.systemui.util.CarrierConfigTracker.DefaultDataSubscriptionChangedListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -112,6 +115,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private final NotificationIconAreaController mNotificationIconAreaController;
     private final PanelExpansionStateManager mPanelExpansionStateManager;
     private final StatusBarIconController mStatusBarIconController;
+    private final CarrierConfigTracker mCarrierConfigTracker;
     private final StatusBarHideIconsForBouncerManager mStatusBarHideIconsForBouncerManager;
 
     private List<String> mBlockedIcons = new ArrayList<>();
@@ -131,6 +135,29 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     };
     private OperatorNameViewController mOperatorNameViewController;
 
+    private final CarrierConfigChangedListener mCarrierConfigCallback =
+            new CarrierConfigChangedListener() {
+                @Override
+                public void onCarrierConfigChanged() {
+                    if (mOperatorNameViewController == null) {
+                        initOperatorName();
+                    } else {
+                        // Already initialized, KeyguardUpdateMonitorCallback will handle the update
+                    }
+                }
+            };
+
+    private final DefaultDataSubscriptionChangedListener mDefaultDataListener =
+            new DefaultDataSubscriptionChangedListener() {
+                @Override
+                public void onDefaultSubscriptionChanged(int subId) {
+                    if (mOperatorNameViewController == null) {
+                        initOperatorName();
+                    }
+                }
+            };
+
+
     @Inject
     public CollapsedStatusBarFragment(
             StatusBarFragmentComponent.Factory statusBarFragmentComponentFactory,
@@ -147,6 +174,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             NetworkController networkController,
             StatusBarStateController statusBarStateController,
             CommandQueue commandQueue,
+            CarrierConfigTracker carrierConfigTracker,
             CollapsedStatusBarFragmentLogger collapsedStatusBarFragmentLogger,
             OperatorNameViewController.Factory operatorNameViewControllerFactory
     ) {
@@ -164,6 +192,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mNetworkController = networkController;
         mStatusBarStateController = statusBarStateController;
         mCommandQueue = commandQueue;
+        mCarrierConfigTracker = carrierConfigTracker;
         mCollapsedStatusBarFragmentLogger = collapsedStatusBarFragmentLogger;
         mOperatorNameViewControllerFactory = operatorNameViewControllerFactory;
     }
@@ -204,6 +233,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initOperatorName();
         initNotificationIconArea();
         mAnimationScheduler.addCallback(this);
+        mCarrierConfigTracker.addCallback(mCarrierConfigCallback);
+        mCarrierConfigTracker.addDefaultDataSubscriptionChangedListener(mDefaultDataListener);
     }
 
     @Override
@@ -238,6 +269,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
+        mCarrierConfigTracker.removeCallback(mCarrierConfigCallback);
+        mCarrierConfigTracker.removeDataSubscriptionChangedListener(mDefaultDataListener);
     }
 
     /** Initializes views related to the notification icon area. */
@@ -534,11 +567,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void initOperatorName() {
-        if (getResources().getBoolean(R.bool.config_showOperatorNameInStatusBar)) {
+        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+        if (mCarrierConfigTracker.getShowOperatorNameInStatusBarConfig(subId)) {
             ViewStub stub = mStatusBar.findViewById(R.id.operator_name);
             mOperatorNameViewController =
                     mOperatorNameViewControllerFactory.create((OperatorNameView) stub.inflate());
             mOperatorNameViewController.init();
+            // This view should not be visible on lock-screen
+            if (mKeyguardStateController.isShowing()) {
+                hideOperatorName(false);
+            }
         }
     }
 
