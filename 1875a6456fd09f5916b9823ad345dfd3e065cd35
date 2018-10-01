@@ -34,6 +34,24 @@
       "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bf2cf76_c2709c99",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-10-01T17:19:29Z",
+      "side": 1,
+      "message": "The root is visible if the folder exists. Whether or not it has children is not a consideration in visibility of the root.",
+      "parentUuid": "7ede7894_17889e78",
+      "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
