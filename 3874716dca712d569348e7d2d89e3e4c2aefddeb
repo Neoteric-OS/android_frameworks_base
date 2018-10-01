@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d68635_5dc3f540",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2018-10-01T21:57:50Z",
+      "side": 1,
+      "message": "Missing a check for the possibility of \u0027lpVisualizer\u0027 managed pointer to be null.\n\nAlso, since \u0027setVisualizer\u0027 returns the old sp\u003cVisualizer\u003e, it would make sense to reorganize this code like follows:\n\nsp\u003cVisualizer\u003e lpVisualizer \u003d setVisualizer(env, thiz, nullptr);\nif (lpVisualizer \u003d\u003d 0) {\n    return;\n}\nlpVisualizer-\u003erelease();",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 51
+      },
+      "revId": "3874716dca712d569348e7d2d89e3e4c2aefddeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
