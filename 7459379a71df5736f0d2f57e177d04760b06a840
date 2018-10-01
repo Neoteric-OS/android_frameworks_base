@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59c1f59e_d3b09ea6",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1342365
+      },
+      "writtenOn": "2018-10-01T13:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af9a9d1d_0ce05706",
+      "revId": "7459379a71df5736f0d2f57e177d04760b06a840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc6eb30e_74c87fe3",
         "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7459379a71df5736f0d2f57e177d04760b06a840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ae64a8_884b0655",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1342365
+      },
+      "writtenOn": "2018-10-01T13:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc6eb30e_74c87fe3",
+      "revId": "7459379a71df5736f0d2f57e177d04760b06a840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
