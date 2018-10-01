@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1fc7fb12_bd979ca2",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-10-01T02:14:23Z",
+      "side": 1,
+      "message": "Changing it to a short would be a good option, although if I want to keep consistency I might want to also change the other members (mLeaseTime, mT1, mT2, mMaxMessageSize etc) - I\u0027ll keep it nullable for now though, to keep the change simple.\nGood point about 0 vs. \u003e\u003d 68: changed to check that the value is greater than that.",
+      "parentUuid": "41347728_ecf89af8",
+      "range": {
+        "startLine": 722,
+        "startChar": 12,
+        "endLine": 722,
+        "endChar": 18
+      },
+      "revId": "a9d221c588103641b6947a2766e97efbd5cedf7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "237c6cdc_788f59c6",
         "filename": "services/net/java/android/net/dhcp/DhcpServer.java",
         "patchSetId": 2
