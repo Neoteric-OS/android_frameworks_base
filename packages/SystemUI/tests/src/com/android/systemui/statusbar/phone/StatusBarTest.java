@@ -146,6 +146,7 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
+import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.time.FakeSystemClock;
 import com.android.systemui.volume.VolumeComponent;
@@ -270,6 +271,7 @@ public class StatusBarTest extends SysuiTestCase {
     @Mock private SystemStatusAnimationScheduler mAnimationScheduler;
     @Mock private StatusBarLocationPublisher mLocationPublisher;
     @Mock private StatusBarIconController mIconController;
+    @Mock private CarrierConfigTracker mCarrierConfigTracker;
     @Mock private LockscreenShadeTransitionController mLockscreenTransitionController;
     @Mock private FeatureFlags mFeatureFlags;
     @Mock private IWallpaperManager mWallpaperManager;
@@ -444,6 +446,7 @@ public class StatusBarTest extends SysuiTestCase {
                 mAnimationScheduler,
                 mLocationPublisher,
                 mIconController,
+                mCarrierConfigTracker,
                 mLockscreenTransitionController,
                 mFeatureFlags,
                 mKeyguardUnlockAnimationController,

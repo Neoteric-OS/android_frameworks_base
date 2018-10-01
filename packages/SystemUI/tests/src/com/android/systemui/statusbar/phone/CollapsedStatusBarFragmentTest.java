@@ -38,12 +38,13 @@ import androidx.test.filters.SmallTest;
 import com.android.systemui.R;
 import com.android.systemui.SysuiBaseFragmentTest;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.CommandQueue;
+import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
 import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.util.CarrierConfigTracker;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -69,6 +70,7 @@ public class CollapsedStatusBarFragmentTest extends SysuiBaseFragmentTest {
 
     private final StatusBar mStatusBar = mock(StatusBar.class);
     private final CommandQueue mCommandQueue = mock(CommandQueue.class);
+    private final CarrierConfigTracker mCarrierConfigTracker = mock(CarrierConfigTracker.class);
 
     public CollapsedStatusBarFragmentTest() {
         super(CollapsedStatusBarFragment.class);
@@ -249,7 +251,8 @@ public class CollapsedStatusBarFragmentTest extends SysuiBaseFragmentTest {
                 mNetworkController,
                 mStatusBarStateController,
                 mStatusBar,
-                mCommandQueue);
+                mCommandQueue,
+                mCarrierConfigTracker);
     }
 
     private void setUpNotificationIconAreaController() {
