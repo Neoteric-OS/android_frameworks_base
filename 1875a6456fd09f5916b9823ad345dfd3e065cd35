@@ -16,6 +16,24 @@
       "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ede7894_17889e78",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-10-01T16:19:09Z",
+      "side": 1,
+      "message": "Would the \"Bugreports\" root be not visible anymore if the /bugreports directory is empty?\n\nIf so, I\u0027m not sure this is a good idea, because it would not be clear for the user if there\u0027s no bugreport or if somehow the provider is not enabled (for example, because the user didn\u0027t set the proper preferences on Settings -\u003e Developer Options).\n\nPersonally, I\u0027d prefer to always shows that provider, even if empty - that would avoid this type of doubt (and it happens often, when people file bugs).",
+      "parentUuid": "dd2ff873_dfceef85",
+      "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
