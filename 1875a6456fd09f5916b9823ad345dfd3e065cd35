@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd2ff873_dfceef85",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-10-01T14:36:07Z",
+      "side": 1,
+      "message": "I think this is a good improvement. Thanks!\n\nFood for thought: Even this is only a partial fix. The \"bugreports\" folder is visible in internal storage, meaning a user can delete it at whim. So even if we guard showing the root here and listen for bug reports being created, we\u0027re not listening for the folder being deleted. We can save that issue for another day. It\u0027s basically a hazard of exposing a root that is actually a folder visible in another root.",
+      "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
