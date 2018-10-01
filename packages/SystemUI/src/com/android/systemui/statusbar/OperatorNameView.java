@@ -17,9 +17,13 @@ package com.android.systemui.statusbar;
 import android.content.Context;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.telephony.CarrierConfigManager;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -38,7 +42,6 @@ import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import java.util.List;
 
 public class OperatorNameView extends TextView implements DemoMode, DarkReceiver,
         SignalCallback, Tunable {
@@ -133,22 +136,42 @@ public class OperatorNameView extends TextView implements DemoMode, DarkReceiver
     }
 
     private void updateText() {
-        CharSequence displayText = null;
-        List<SubscriptionInfo> subs = mKeyguardUpdateMonitor.getFilteredSubscriptionInfo(false);
-        final int N = subs.size();
-        for (int i = 0; i < N; i++) {
-            int subId = subs.get(i).getSubscriptionId();
-            int simState = mKeyguardUpdateMonitor.getSimState(subId);
-            CharSequence carrierName = subs.get(i).getCarrierName();
-            if (!TextUtils.isEmpty(carrierName) && simState == TelephonyManager.SIM_STATE_READY) {
-                ServiceState ss = mKeyguardUpdateMonitor.getServiceState(subId);
-                if (ss != null && ss.getState() == ServiceState.STATE_IN_SERVICE) {
-                    displayText = carrierName;
-                    break;
-                }
-            }
+        final CarrierConfigManager configMgr = getContext()
+                .getSystemService(CarrierConfigManager.class);
+        if (configMgr == null) {
+            return;
         }
 
-        setText(displayText);
+        // Do the binder calls in background
+        AsyncTask<Void, Void, CharSequence> task =
+                new AsyncTask<Void, Void, CharSequence>() {
+            @Override
+            protected CharSequence doInBackground(Void... args) {
+                CharSequence displayText = null;
+                int defaultDataSubId = SubscriptionManager.getDefaultDataSubscriptionId();
+                int simState = mKeyguardUpdateMonitor.getSimState(defaultDataSubId);
+                final SubscriptionInfo subInfo = mKeyguardUpdateMonitor
+                        .getSubscriptionInfoForSubId(defaultDataSubId);
+                final PersistableBundle bundle = configMgr.getConfigForSubId(defaultDataSubId);
+                CharSequence carrierName = null;
+                if (subInfo != null && bundle != null && bundle.getBoolean(
+                        CarrierConfigManager.KEY_SHOW_OPERATOR_NAME_IN_STATUSBAR_BOOL)) {
+                    carrierName = subInfo.getCarrierName();
+                }
+                if (!TextUtils.isEmpty(carrierName)
+                        && simState == TelephonyManager.SIM_STATE_READY) {
+                    ServiceState ss = mKeyguardUpdateMonitor.getServiceState(defaultDataSubId);
+                    if (ss != null && ss.getState() == ServiceState.STATE_IN_SERVICE) {
+                        displayText = carrierName;
+                    }
+                }
+                return displayText;
+            }
+            @Override
+            protected void onPostExecute(CharSequence displayText) {
+                setText(displayText);
+            }
+        };
+        task.execute();
     }
 }
