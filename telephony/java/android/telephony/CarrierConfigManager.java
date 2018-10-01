@@ -1202,6 +1202,13 @@ public class CarrierConfigManager {
             "always_show_data_rat_icon_bool";
 
     /**
+     * Boolean indicating if operator name should be shown in the status bar
+     * @hide
+     */
+    public static final String KEY_SHOW_OPERATOR_NAME_IN_STATUSBAR_BOOL =
+            "show_operator_name_in_statusbar_bool";
+
+    /**
      * Boolean to decide whether to show precise call failed cause to user
      * @hide
      */
@@ -2466,6 +2473,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SHOW_PRECISE_FAILED_CAUSE_BOOL, false);
         sDefaults.putBoolean(KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_OPERATOR_NAME_IN_STATUSBAR_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_CONFIG_APPLIED_BOOL, false);
         sDefaults.putBoolean(KEY_CHECK_PRICING_WITH_CARRIER_FOR_DATA_ROAMING_BOOL, false);
         sDefaults.putIntArray(KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY,

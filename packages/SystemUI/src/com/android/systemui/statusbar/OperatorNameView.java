@@ -18,9 +18,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.telephony.CarrierConfigManager;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -135,12 +138,22 @@ public class OperatorNameView extends TextView implements DemoMode, DarkReceiver
 
     private void updateText() {
         CharSequence displayText = null;
+        final CarrierConfigManager configMgr = (CarrierConfigManager) getContext()
+                .getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configMgr == null) return;
         List<SubscriptionInfo> subs = mKeyguardUpdateMonitor.getSubscriptionInfo(false);
         final int N = subs.size();
         for (int i = 0; i < N; i++) {
             int subId = subs.get(i).getSubscriptionId();
+            // Only apply the operator name for the default data SIM
+            if (subId != SubscriptionManager.getDefaultDataSubscriptionId()) continue;
             State simState = mKeyguardUpdateMonitor.getSimState(subId);
-            CharSequence carrierName = subs.get(i).getCarrierName();
+            PersistableBundle b = configMgr.getConfigForSubId(subId);
+            CharSequence carrierName = null;
+            if (b != null && b.getBoolean(
+                    CarrierConfigManager.KEY_SHOW_OPERATOR_NAME_IN_STATUSBAR_BOOL)) {
+                carrierName = subs.get(i).getCarrierName();
+            }
             if (!TextUtils.isEmpty(carrierName) && simState == State.READY) {
                 ServiceState ss = mKeyguardUpdateMonitor.getServiceState(subId);
                 if (ss != null && ss.getState() == ServiceState.STATE_IN_SERVICE) {
