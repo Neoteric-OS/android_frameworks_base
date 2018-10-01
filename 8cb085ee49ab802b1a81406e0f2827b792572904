@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "780e0a19_0d98956d",
+        "filename": "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1353088
+      },
+      "writtenOn": "2018-10-01T17:03:49Z",
+      "side": 1,
+      "message": "Do you actually want to throw away all the previous backup data or just augment it?\n\n\nThis line was here because there was something fundamentally wrong with this version of the backup.\nIf you are augmenting the backup data, you should do something like:\n\n\n\nconfig.apChannel \u003d in.readInt();\nif (version \u003d\u003d 3) {\n  config.hiddenSsid \u003d in.readBoolean();\n}\nconfig.preSharedKey \u003d BackupUtils.readString(in);\n\nAlso it\u0027s preferable to add the new data at the end so that it\u0027s not confusing (and the code to parse can be cleaner, and it naturally maintains a version history)",
+      "range": {
+        "startLine": 2279,
+        "startChar": 8,
+        "endLine": 2279,
+        "endChar": 84
+      },
+      "revId": "8cb085ee49ab802b1a81406e0f2827b792572904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
