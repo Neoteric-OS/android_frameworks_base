@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,6 +62,8 @@ public class LocalBluetoothProfileManagerTest {
     private BluetoothDevice mDevice;
     @Mock
     private CachedBluetoothDevice mCachedBluetoothDevice;
+    @Mock
+    private CachedBluetoothDevice mHearingAidOtherDevice;
 
     private Context mContext;
     private LocalBluetoothProfileManager mProfileManager;
@@ -196,6 +199,31 @@ public class LocalBluetoothProfileManagerTest {
 
         verify(mEventManager).dispatchProfileConnectionStateChanged(mCachedBluetoothDevice,
                 BluetoothProfile.STATE_CONNECTED, BluetoothProfile.HEARING_AID);
+    }
+
+    /**
+     * Verify BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED with uuid intent will dispatch to
+     * refresh both sides devices.
+     */
+    @Test
+    public void stateChangedHandler_receiveHAPConnectionStateChanged_shouldRefreshBothSides() {
+        ArrayList<Integer> supportProfiles = new ArrayList<>();
+        supportProfiles.add(BluetoothProfile.HEARING_AID);
+        when(mAdapter.getSupportedProfiles()).thenReturn(supportProfiles);
+        when(mDeviceManager.getHearingAidOtherDevice(mCachedBluetoothDevice, 0))
+            .thenReturn(mHearingAidOtherDevice);
+
+        mProfileManager = new LocalBluetoothProfileManager(mContext, mAdapter, mDeviceManager,
+                mEventManager);
+        mIntent = new Intent(BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
+        mIntent.putExtra(BluetoothDevice.EXTRA_DEVICE, mDevice);
+        mIntent.putExtra(BluetoothProfile.EXTRA_PREVIOUS_STATE, BluetoothProfile.STATE_CONNECTING);
+        mIntent.putExtra(BluetoothProfile.EXTRA_STATE, BluetoothProfile.STATE_CONNECTED);
+
+        mContext.sendBroadcast(mIntent);
+
+        verify(mCachedBluetoothDevice).refresh();
+        verify(mHearingAidOtherDevice).refresh();
     }
 
     /**
