@@ -163,7 +163,7 @@ public class DexManager {
             List<String> classPaths, String loaderIsa, int loaderUserId, boolean canOptimize) {
         try {
             notifyDexLoadInternal(loadingAppInfo, classLoadersNames, classPaths, loaderIsa,
-                    loaderUserId);
+                    loaderUserId, canOptimize);
         } catch (Exception e) {
             Slog.w(TAG, "Exception while notifying dex load for package " +
                     loadingAppInfo.packageName, e);
@@ -172,7 +172,7 @@ public class DexManager {
 
     private void notifyDexLoadInternal(ApplicationInfo loadingAppInfo,
             List<String> classLoaderNames, List<String> classPaths, String loaderIsa,
-            int loaderUserId) {
+            int loaderUserId, boolean canOptimize) {
         if (classLoaderNames.size() != classPaths.size()) {
             Slog.wtf(TAG, "Bad call to noitfyDexLoad: args have different size");
             return;
@@ -184,6 +184,11 @@ public class DexManager {
         if (!PackageManagerServiceUtils.checkISA(loaderIsa)) {
             Slog.w(TAG, "Loading dex files " + classPaths + " in unsupported ISA: " +
                     loaderIsa + "?");
+            return;
+        }
+        if (!canOptimize) {
+            // TODO(b/111336847) Pass to DexLogger anyway
+            Slog.i(TAG, "Ignoring notifyDexLoad call with canOptimize=false");
             return;
         }
 

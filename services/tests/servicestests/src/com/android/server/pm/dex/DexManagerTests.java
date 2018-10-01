@@ -167,6 +167,14 @@ public class DexManagerTests {
     }
 
     @Test
+    public void testNotifySecondaryNotOptimizable() {
+        List<String> fooSecondaries = mFooUser0.getSecondaryDexPaths();
+        notifyDexLoad(mFooUser0, fooSecondaries, mUser0, /*canOptimize*/false);
+
+        assertNoUseInfo(mFooUser0);
+    }
+
+    @Test
     public void testNotifySequence() {
         // Foo loads its own secondary files.
         List<String> fooSecondaries = mFooUser0.getSecondaryDexPaths();
@@ -513,18 +521,24 @@ public class DexManagerTests {
             assertEquals(codePath, isUsedByOtherApps, pui.isUsedByOtherApps(codePath));
         }
     }
+
     private void notifyDexLoad(TestData testData, List<String> dexPaths, int loaderUserId) {
+        // Assume canOptimize is true
+        notifyDexLoad(testData, dexPaths, loaderUserId, true);
+    }
+
+    private void notifyDexLoad(TestData testData, List<String> dexPaths, int loaderUserId, boolean canOptimize) {
         // By default, assume a single class loader in the chain.
         // This makes writing tests much easier.
         List<String> classLoaders = Arrays.asList(testData.mClassLoader);
         List<String> classPaths = Arrays.asList(String.join(File.pathSeparator, dexPaths));
-        notifyDexLoad(testData, classLoaders, classPaths, loaderUserId);
+        notifyDexLoad(testData, classLoaders, classPaths, loaderUserId, canOptimize);
     }
 
     private void notifyDexLoad(TestData testData, List<String> classLoader, List<String> classPaths,
-            int loaderUserId) {
+            int loaderUserId, boolean canOptimize) {
         mDexManager.notifyDexLoad(testData.mPackageInfo.applicationInfo, classLoader, classPaths,
-                testData.mLoaderIsa, loaderUserId, true);
+                testData.mLoaderIsa, loaderUserId, canOptimize);
     }
 
     private PackageUseInfo getPackageUseInfo(TestData testData) {

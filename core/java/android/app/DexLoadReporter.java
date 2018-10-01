@@ -87,7 +87,8 @@ import java.util.Set;
     }
 
     @Override
-    public void report(List<BaseDexClassLoader> classLoadersChain, List<String> classPaths) {
+    public void report(List<BaseDexClassLoader> classLoadersChain, List<String> classPaths,
+            boolean noUnknownLoaders) {
         if (classLoadersChain.size() != classPaths.size()) {
             Slog.wtf(TAG, "Bad call to DexLoadReporter: argument size mismatch");
             return;
@@ -105,16 +106,23 @@ import java.util.Set;
             return;
         }
 
+        // Background optimization is only possible if we know the implementation of all the class
+        // loaders on the chain.
+        boolean canOptimize = !noUnknownLoaders;
+
         // Notify the package manager about the dex loads unconditionally.
         // The load might be for either a primary or secondary dex file.
-        notifyPackageManager(classLoadersChain, classPaths);
-        // Check for secondary dex files and register them for profiling if possible.
-        // Note that we only register the dex paths belonging to the first class loader.
-        registerSecondaryDexForProfiling(dexPathsForRegistration);
+        notifyPackageManager(classLoadersChain, classPaths, canOptimize);
+
+        if (canOptimize) {
+            // Check for secondary dex files and register them for profiling if possible.
+            // Note that we only register the dex paths belonging to the first class loader.
+            registerSecondaryDexForProfiling(dexPathsForRegistration);
+        }
     }
 
     private void notifyPackageManager(List<BaseDexClassLoader> classLoadersChain,
-            List<String> classPaths) {
+            List<String> classPaths, boolean canOptimize) {
         // Get the class loader names for the binder call.
         List<String> classLoadersNames = new ArrayList<>(classPaths.size());
         for (BaseDexClassLoader bdc : classLoadersChain) {
@@ -124,8 +132,7 @@ import java.util.Set;
         try {
             ActivityThread.getPackageManager().notifyDexLoad(
                     packageName, classLoadersNames, classPaths,
-                    VMRuntime.getRuntime().vmInstructionSet(),
-                    /* canOptimize= */ true);
+                    VMRuntime.getRuntime().vmInstructionSet(), canOptimize);
         } catch (RemoteException re) {
             Slog.e(TAG, "Failed to notify PM about dex load for package " + packageName, re);
         }
