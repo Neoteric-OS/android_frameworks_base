@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4aecf0d_b5a8ba71",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-01T17:54:12Z",
+      "side": 1,
+      "message": "Sounds weird. Also this looks same as get voice roaming. I looked at the spec, but it doesn\u0027t look like the spec for network roaming.",
+      "range": {
+        "startLine": 554,
+        "startChar": 31,
+        "endLine": 554,
+        "endChar": 52
+      },
+      "revId": "9b09fedcd29f7b4e3e40fcf7ecb8b874707a9fb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
