@@ -130,6 +130,7 @@ import com.android.systemui.telephony.TelephonyListenerManager;
 import com.android.systemui.tracing.ProtoTracer;
 import com.android.systemui.tuner.TunablePadding.TunablePaddingService;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.util.DeviceConfigProxy;
 import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.util.leak.LeakDetector;
@@ -364,6 +365,7 @@ public class Dependency {
     @Inject Lazy<UiEventLogger> mUiEventLogger;
     @Inject Lazy<FeatureFlags> mFeatureFlagsLazy;
     @Inject Lazy<StatusBarContentInsetsProvider> mContentInsetsProviderLazy;
+    @Inject Lazy<CarrierConfigTracker> mCarrierConfigTracker;
 
     @Inject
     public Dependency() {
@@ -581,6 +583,7 @@ public class Dependency {
         mProviders.put(UiEventLogger.class, mUiEventLogger::get);
         mProviders.put(FeatureFlags.class, mFeatureFlagsLazy::get);
         mProviders.put(StatusBarContentInsetsProvider.class, mContentInsetsProviderLazy::get);
+        mProviders.put(CarrierConfigTracker.class, mCarrierConfigTracker::get);
 
         Dependency.setInstance(this);
     }

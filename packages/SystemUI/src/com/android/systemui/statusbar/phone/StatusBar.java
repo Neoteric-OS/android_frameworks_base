@@ -244,6 +244,7 @@ import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
+import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.volume.VolumeComponent;
 import com.android.systemui.wmshell.BubblesManager;
 import com.android.wm.shell.bubbles.Bubbles;
@@ -442,6 +443,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final SystemStatusAnimationScheduler mAnimationScheduler;
     private final StatusBarLocationPublisher mStatusBarLocationPublisher;
     private final StatusBarIconController mStatusBarIconController;
+    private final CarrierConfigTracker mCarrierConfigTracker;
 
     // expanded notifications
     // the sliding/resizing panel within the notification window
@@ -805,6 +807,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             SystemStatusAnimationScheduler animationScheduler,
             StatusBarLocationPublisher locationPublisher,
             StatusBarIconController statusBarIconController,
+            CarrierConfigTracker carrierConfigTracker,
             LockscreenShadeTransitionController lockscreenShadeTransitionController,
             FeatureFlags featureFlags,
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
@@ -892,6 +895,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mAnimationScheduler = animationScheduler;
         mStatusBarLocationPublisher = locationPublisher;
         mStatusBarIconController = statusBarIconController;
+        mCarrierConfigTracker = carrierConfigTracker;
         mFeatureFlags = featureFlags;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mUnlockedScreenOffAnimationController = unlockedScreenOffAnimationController;
@@ -1199,8 +1203,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                                 mNetworkController,
                                 mStatusBarStateController,
                                 this,
-                                mCommandQueue
-                        ),
+                                mCommandQueue,
+                                mCarrierConfigTracker),
                         CollapsedStatusBarFragment.TAG)
                 .commit();
 
