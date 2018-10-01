@@ -20,8 +20,15 @@ import static android.app.StatusBarManager.DISABLE_SYSTEM_INFO;
 
 import android.annotation.Nullable;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionManager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
 
+import com.android.internal.telephony.TelephonyIntents;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -75,6 +83,21 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     };
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED.equals(action)
+                    || TelephonyIntents.ACTION_DEFAULT_DATA_SUBSCRIPTION_CHANGED.equals(action)) {
+                if (mOperatorNameFrame == null) {
+                    initOperatorName();
+                } else {
+                    // Already initialized, KeyguardUpdateMonitorCallback will handle the update
+                }
+            }
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +132,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(TelephonyIntents.ACTION_DEFAULT_DATA_SUBSCRIPTION_CHANGED);
+        filter.addAction(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
+        getContext().registerReceiver(mReceiver, filter);
     }
 
     @Override
@@ -140,6 +167,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
+        getContext().unregisterReceiver(mReceiver);
     }
 
     public void initNotificationIconArea(NotificationIconAreaController
@@ -368,9 +396,19 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void initOperatorName() {
-        if (getResources().getBoolean(R.bool.config_showOperatorNameInStatusBar)) {
+        final CarrierConfigManager configMgr = (CarrierConfigManager) getContext()
+                .getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configMgr == null) return;
+        PersistableBundle b = configMgr.getConfigForSubId(SubscriptionManager
+                .getDefaultDataSubscriptionId());
+        if (b != null && b.getBoolean(CarrierConfigManager
+                .KEY_SHOW_OPERATOR_NAME_IN_STATUSBAR_BOOL)) {
             ViewStub stub = mStatusBar.findViewById(R.id.operator_name);
             mOperatorNameFrame = stub.inflate();
+            // This view should not be visible on lock-screen
+            if (mKeyguardMonitor.isShowing()) {
+                hideOperatorName(false);
+            }
         }
     }
 
