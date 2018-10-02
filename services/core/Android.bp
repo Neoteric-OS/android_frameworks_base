@@ -21,7 +21,12 @@ java_library_static {
         "java/com/android/server/am/EventLogTags.logtags",
     ],
 
+    no_standard_libs: true,
+    system_modules: "core-system-modules",
     libs: [
+        "framework",
+	"core-oj",
+	"core-libart",
         "services.net",
         "android.hardware.light-V2.0-java",
         "android.hardware.power-V1.0-java",

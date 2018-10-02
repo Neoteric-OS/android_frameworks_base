@@ -1,4 +1,12 @@
 java_library_static {
     name: "services.net",
     srcs: ["java/**/*.java"],
+
+    no_standard_libs: true,
+    libs: [
+      "core-oj",
+      "core-libart",
+      "framework",
+    ],
+    system_modules: "core-system-modules",
 }

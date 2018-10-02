@@ -666,13 +666,16 @@ java_defaults {
         "core/java/android/content/pm/OrgApacheHttpLegacyUpdater.java",
     ],
 
-    no_framework_libs: true,
+    no_standard_libs: true,
     libs: [
+        "core-oj",
+        "core-libart",
         "conscrypt",
         "okhttp",
         "bouncycastle",
         "ext",
     ],
+    system_modules: "core-system-modules",
 
     static_libs: [
         "framework-protos",
@@ -720,6 +723,7 @@ java_library {
     annotation_processor_classes: [
         "android.processor.unsupportedappusage.UsedByAppsProcessor",
     ],
+    sdk_version: "9",
 }
 
 // A host library including just UnsupportedAppUsage.java so that the annotation
