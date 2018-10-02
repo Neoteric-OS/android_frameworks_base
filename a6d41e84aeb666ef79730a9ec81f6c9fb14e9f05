@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea616b1a_0b741fba",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32831,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-02T12:09:55Z",
+      "side": 1,
+      "message": "We never expose AIDL interfaces directly to apps. You need a wrapper class (i.e. ZRamManager) that encapsulates this.\n\nAnd this deserves the review from the API council.",
+      "range": {
+        "startLine": 32823,
+        "startChar": 0,
+        "endLine": 32831,
+        "endChar": 0
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ca3bf1_7f1ea9b3",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32852,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-02T12:09:55Z",
+      "side": 1,
+      "message": "These aren\u0027t for apps to use.",
+      "range": {
+        "startLine": 32832,
+        "startChar": 0,
+        "endLine": 32852,
+        "endChar": 3
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ee29af_ecbb8fdb",
+        "filename": "core/java/android/os/IZRAMService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-02T12:09:55Z",
+      "side": 1,
+      "message": "Add /** @hide */ to hide this AIDL interface to apps.",
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b52828e_cccad97d",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-02T12:09:55Z",
+      "side": 1,
+      "message": "why not signature or privileged? normal isn\u0027t protecting anything. It is grantable to anyone.",
+      "range": {
+        "startLine": 1664,
+        "startChar": 32,
+        "endLine": 1664,
+        "endChar": 41
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
