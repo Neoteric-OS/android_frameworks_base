@@ -17,9 +17,13 @@
 package com.android.server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -29,6 +33,7 @@ import static org.mockito.Mockito.when;
 
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
@@ -37,7 +42,9 @@ import android.net.IpSecSpiResponse;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecTunnelInterfaceResponse;
 import android.net.LinkAddress;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
@@ -54,6 +61,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.ArgumentCaptor;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest
@@ -96,13 +104,17 @@ public class IpSecServiceParameterizedTest {
     };
 
     AppOpsManager mMockAppOps = mock(AppOpsManager.class);
+    ConnectivityManager mMockCm = mock(ConnectivityManager.class);
 
-    MockContext mMockContext = new MockContext() {
+    MockContext mMockContext =
+            new MockContext() {
         @Override
         public Object getSystemService(String name) {
-            switch(name) {
+                    switch (name) {
                 case Context.APP_OPS_SERVICE:
                     return mMockAppOps;
+                case Context.CONNECTIVITY_SERVICE:
+                    return mMockCm;
                 default:
                     return null;
             }
@@ -120,6 +132,7 @@ public class IpSecServiceParameterizedTest {
     INetd mMockNetd;
     IpSecService.IpSecServiceConfiguration mMockIpSecSrvConfig;
     IpSecService mIpSecService;
+    NetworkManagementService mMockNmService;
     Network fakeNetwork = new Network(0xAB);
     int mUid = Os.getuid();
 
@@ -141,7 +154,8 @@ public class IpSecServiceParameterizedTest {
     public void setUp() throws Exception {
         mMockNetd = mock(INetd.class);
         mMockIpSecSrvConfig = mock(IpSecService.IpSecServiceConfiguration.class);
-        mIpSecService = new IpSecService(mMockContext, mMockIpSecSrvConfig);
+        mMockNmService = mock(NetworkManagementService.class);
+        mIpSecService = new IpSecService(mMockContext, mMockNmService, mMockIpSecSrvConfig);
 
         // Injecting mock netd
         when(mMockIpSecSrvConfig.getNetdInstance()).thenReturn(mMockNetd);
@@ -592,6 +606,58 @@ public class IpSecServiceParameterizedTest {
                             eq(mLocalInnerAddress.getAddress().getHostAddress()),
                             eq(mLocalInnerAddress.getPrefixLength()));
             mIpSecService.deleteTunnelInterface(createTunnelResp.resourceId, pkgName);
+        }
+    }
+
+    @Test
+    public void testCreateDestroyNetworkForTunnelInterface() throws Exception {
+        for (String pkgName : new String[] {"blessedPackage"}) {
+            IpSecTunnelInterfaceResponse createTunnelResp =
+                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, pkgName);
+            mIpSecService.addAddressToTunnelInterface(
+                    createTunnelResp.resourceId, mLocalInnerAddress, pkgName);
+
+            // Register and verify network agent
+            mIpSecService.registerTunnelNetworkAgent(createTunnelResp.resourceId, pkgName);
+            ArgumentCaptor<LinkProperties> lpCaptor = ArgumentCaptor.forClass(LinkProperties.class);
+            ArgumentCaptor<NetworkCapabilities> ncCaptor =
+                    ArgumentCaptor.forClass(NetworkCapabilities.class);
+            verify(mMockCm, times(1))
+                    .registerNetworkAgent(
+                            anyObject(),
+                            anyObject(),
+                            lpCaptor.capture(),
+                            ncCaptor.capture(),
+                            anyInt(),
+                            anyObject());
+
+            // Verify the inner address was passed though to the network agent properly
+            assertTrue(
+                    lpCaptor.getValue().getAddresses().contains(mLocalInnerAddress.getAddress()));
+
+            // Verify we created a very limited network that would be useless otherwise
+            NetworkCapabilities nc = ncCaptor.getValue();
+            assertFalse(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET));
+            assertFalse(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED));
+            assertFalse(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_FOREGROUND));
+            assertFalse(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED));
+            assertFalse(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN));
+
+            // Get record, ensure network agent stored correctly
+            IpSecService.UserRecord userRecord =
+                    mIpSecService.mUserResourceTracker.getUserRecord(mUid);
+            IpSecService.TunnelInterfaceRecord tunnelRecord =
+                    userRecord
+                            .mTunnelInterfaceRecords
+                            .getRefcountedResourceOrThrow(createTunnelResp.resourceId)
+                            .getResource();
+            assertNotNull(tunnelRecord.mNetworkAgent);
+
+            // Check to make sure deletion of tunnel interface tears down network, discards
+            // networkAgent
+            // Holding a reference to the tunnelRecord allows us to check even after invalidation
+            mIpSecService.deleteTunnelInterface(createTunnelResp.resourceId, pkgName);
+            assertNull(tunnelRecord.mNetworkAgent);
         }
     }
 

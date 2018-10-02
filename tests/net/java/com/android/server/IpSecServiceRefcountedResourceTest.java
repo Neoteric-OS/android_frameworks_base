@@ -59,7 +59,7 @@ public class IpSecServiceRefcountedResourceTest {
     public void setUp() throws Exception {
         mMockContext = mock(Context.class);
         mMockIpSecSrvConfig = mock(IpSecService.IpSecServiceConfiguration.class);
-        mIpSecService = new IpSecService(mMockContext, mMockIpSecSrvConfig);
+        mIpSecService = new IpSecService(mMockContext, null, mMockIpSecSrvConfig);
     }
 
     private void assertResourceState(

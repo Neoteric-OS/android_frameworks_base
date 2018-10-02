@@ -27,8 +27,10 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 import android.annotation.NonNull;
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.IIpSecService;
 import android.net.INetd;
+import android.net.IpPrefix;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
@@ -38,11 +40,19 @@ import android.net.IpSecTransformResponse;
 import android.net.IpSecTunnelInterfaceResponse;
 import android.net.IpSecUdpEncapResponse;
 import android.net.LinkAddress;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkAgent;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkUtils;
+import android.net.RouteInfo;
 import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -67,7 +77,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import libcore.io.IoUtils;
 
@@ -85,6 +97,7 @@ import libcore.io.IoUtils;
 public class IpSecService extends IIpSecService.Stub {
     private static final String TAG = "IpSecService";
     private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
+    private static final String NETWORK_TYPE = "IPSEC";
 
     private static final String NETD_SERVICE_NAME = "netd";
     private static final int[] ADDRESS_FAMILIES =
@@ -107,6 +120,9 @@ public class IpSecService extends IIpSecService.Stub {
 
     /* Binder context for this service */
     private final Context mContext;
+
+    private final Handler mHandler;
+    private final NetworkManagementService mNmService;
 
     /**
      * The next non-repeating global ID for tracking resources between users, this service, and
@@ -474,7 +490,8 @@ public class IpSecService extends IIpSecService.Stub {
      *
      * <p>This class associates kernel resources with the UID that owns and controls them.
      */
-    private abstract class OwnedResourceRecord implements IResource {
+    @VisibleForTesting
+    abstract class OwnedResourceRecord implements IResource {
         final int pid;
         final int uid;
         protected final int mResourceId;
@@ -781,7 +798,8 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private final class TunnelInterfaceRecord extends OwnedResourceRecord {
+    @VisibleForTesting
+    final class TunnelInterfaceRecord extends OwnedResourceRecord {
         private final String mInterfaceName;
         private final Network mUnderlyingNetwork;
 
@@ -789,10 +807,15 @@ public class IpSecService extends IIpSecService.Stub {
         private final String mLocalAddress;
         private final String mRemoteAddress;
 
+        private final Set<LinkAddress> mLinkAddresses = new HashSet<>();
+
         private final int mIkey;
         private final int mOkey;
 
         private final int mIfId;
+        private NetworkInfo mNetworkInfo;
+
+        @VisibleForTesting NetworkAgent mNetworkAgent;
 
         TunnelInterfaceRecord(
                 int resourceId,
@@ -814,6 +837,15 @@ public class IpSecService extends IIpSecService.Stub {
             mIfId = intfId;
         }
 
+        private void networkAgentShutdown() {
+            if (mNetworkAgent != null) {
+                mNetworkInfo.setDetailedState(DetailedState.DISCONNECTED, null, null);
+                mNetworkInfo.setIsAvailable(false);
+                mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+                mNetworkAgent = null;
+            }
+        }
+
         /** always guarded by IpSecService#this */
         @Override
         public void freeUnderlyingResources() {
@@ -821,6 +853,8 @@ public class IpSecService extends IIpSecService.Stub {
             //       Teardown VTI
             //       Delete global policies
             try {
+                networkAgentShutdown();
+
                 final INetd netd = mSrvConfig.getNetdInstance();
                 netd.ipSecRemoveTunnelInterface(mInterfaceName);
 
@@ -980,12 +1014,13 @@ public class IpSecService extends IIpSecService.Stub {
      *
      * @param context Binder context for this service
      */
-    private IpSecService(Context context) {
-        this(context, IpSecServiceConfiguration.GETSRVINSTANCE);
+    private IpSecService(Context context, NetworkManagementService nmService) {
+        this(context, nmService, IpSecServiceConfiguration.GETSRVINSTANCE);
     }
 
-    static IpSecService create(Context context) throws InterruptedException {
-        final IpSecService service = new IpSecService(context);
+    static IpSecService create(Context context, NetworkManagementService nmService)
+            throws InterruptedException {
+        final IpSecService service = new IpSecService(context, nmService);
         service.connectNativeNetdService();
         return service;
     }
@@ -999,9 +1034,11 @@ public class IpSecService extends IIpSecService.Stub {
 
     /** @hide */
     @VisibleForTesting
-    public IpSecService(Context context, IpSecServiceConfiguration config) {
+    public IpSecService(
+            Context context, NetworkManagementService nmService, IpSecServiceConfiguration config) {
         this(
                 context,
+                nmService,
                 config,
                 (fd, uid) -> {
                     try {
@@ -1016,10 +1053,19 @@ public class IpSecService extends IIpSecService.Stub {
     /** @hide */
     @VisibleForTesting
     public IpSecService(
-            Context context, IpSecServiceConfiguration config, UidFdTagger uidFdTagger) {
+            Context context,
+            NetworkManagementService nmService,
+            IpSecServiceConfiguration config,
+            UidFdTagger uidFdTagger) {
         mContext = context;
+        mNmService = nmService;
         mSrvConfig = config;
         mUidFdTagger = uidFdTagger;
+
+        // Start handler threads in case NetworkAgents need it.
+        HandlerThread handlerThread = new HandlerThread("IpSecServiceHandlerThread");
+        handlerThread.start();
+        mHandler = new Handler(handlerThread.getLooper());
     }
 
     public void systemReady() {
@@ -1373,6 +1419,8 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+
+        tunnelInterfaceInfo.mLinkAddresses.add(localAddr);
     }
 
     /**
@@ -1401,6 +1449,87 @@ public class IpSecService extends IIpSecService.Stub {
                             localAddr.getPrefixLength());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
+        }
+
+        tunnelInterfaceInfo.mLinkAddresses.remove(localAddr);
+    }
+
+    /** Registers a network agent for the given tunnel with restricted permissions */
+    @Override
+    public synchronized void registerTunnelNetworkAgent(int resourceId, String callingPackage)
+            throws RemoteException {
+        enforceTunnelPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(resourceId);
+
+        if (tunnelInterfaceInfo.mNetworkAgent != null) {
+            return; // Already have one active.
+        }
+
+        tunnelInterfaceInfo.mNetworkInfo =
+                new NetworkInfo(ConnectivityManager.TYPE_VPN, 0, NETWORK_TYPE, "");
+        tunnelInterfaceInfo.mNetworkInfo.setDetailedState(DetailedState.CONNECTED, null, null);
+        tunnelInterfaceInfo.mNetworkInfo.setIsAvailable(true);
+
+        NetworkCapabilities nc = new NetworkCapabilities();
+        nc.clearAll(); // Remove default capabilities.
+        nc.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
+        nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
+        nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        nc.setSingleUid(Binder.getCallingUid());
+        nc.setLinkUpstreamBandwidthKbps(1);
+        nc.setLinkDownstreamBandwidthKbps(1);
+
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(tunnelInterfaceInfo.mInterfaceName);
+        for (LinkAddress linkAddr : tunnelInterfaceInfo.mLinkAddresses) {
+            lp.addLinkAddress(linkAddr);
+    }
+
+        // Add test-only routes to non-globally routable address spaces
+        RouteInfo route =
+                new RouteInfo(
+                        new IpPrefix(InetAddress.parseNumericAddress("10.10.10.10"), 32),
+                        null,
+                        tunnelInterfaceInfo.mInterfaceName);
+        lp.addRoute(route);
+        route =
+                new RouteInfo(
+                        new IpPrefix(InetAddress.parseNumericAddress("fd00:db8:ffff::1"), 128),
+                        null,
+                        tunnelInterfaceInfo.mInterfaceName);
+        lp.addRoute(route);
+
+        // Registration of networkAgent must be done with clean calling identity
+        long binderId = Binder.clearCallingIdentity();
+        try {
+            if (mNmService != null) {
+                mNmService.setInterfaceUp(tunnelInterfaceInfo.mInterfaceName);
+            }
+
+            tunnelInterfaceInfo.mNetworkAgent =
+                    new NetworkAgent(
+                            mHandler.getLooper(),
+                            mContext,
+                            NETWORK_TYPE,
+                            tunnelInterfaceInfo.mNetworkInfo,
+                            nc,
+                            lp,
+                            0) {
+                public void unwanted() {
+                    if (this == tunnelInterfaceInfo.mNetworkAgent) {
+                        tunnelInterfaceInfo.networkAgentShutdown();
+                    } else if (tunnelInterfaceInfo.mNetworkAgent != null) {
+                        Log.d(TAG, "Unrecognized networkAgent. Ignoring");
+                            } // Otherwise, we've already called stop.
+                }
+            };
+        } finally {
+            Binder.restoreCallingIdentity(binderId);
         }
     }
 

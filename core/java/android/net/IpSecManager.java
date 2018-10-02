@@ -779,6 +779,22 @@ public final class IpSecManager {
             }
         }
 
+        /**
+         * Registers a network agent for this tunnel, with an extremely limited set of capabilities
+         *
+         * @hide
+         */
+        @VisibleForTesting
+        public void registerNetworkAgent() throws IOException {
+            try {
+                mService.registerTunnelNetworkAgent(mResourceId, mOpPackageName);
+            } catch (ServiceSpecificException e) {
+                throw rethrowCheckedExceptionFromServiceSpecificException(e);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
         private IpSecTunnelInterface(@NonNull Context ctx, @NonNull IIpSecService service,
                 @NonNull InetAddress localAddress, @NonNull InetAddress remoteAddress,
                 @NonNull Network underlyingNetwork)
