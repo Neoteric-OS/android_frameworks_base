@@ -22,6 +22,29 @@
       "revId": "ec39028c47ff92b1d100e2fed2a71034ce833aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3df49a_c71f7925",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-10-02T03:24:29Z",
+      "side": 1,
+      "message": "Shall we systematically use @utf8InCpp in new code? It seems String16 is annoying to use.",
+      "range": {
+        "startLine": 51,
+        "startChar": 54,
+        "endLine": 51,
+        "endChar": 60
+      },
+      "revId": "ec39028c47ff92b1d100e2fed2a71034ce833aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
