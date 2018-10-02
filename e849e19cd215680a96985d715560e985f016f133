@@ -141,6 +141,30 @@
       "revId": "e849e19cd215680a96985d715560e985f016f133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fc9a13_bcb11673",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-02T06:26:06Z",
+      "side": 1,
+      "message": "Considering your arguments, I don\u0027t have a strong preference on the name. If we don\u0027t like having an initializer, then I\u0027m happy with either \"skip\" or \"disable.",
+      "parentUuid": "53a2c4e3_46026191",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
