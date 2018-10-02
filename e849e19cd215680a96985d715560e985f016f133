@@ -93,6 +93,30 @@
       "revId": "e849e19cd215680a96985d715560e985f016f133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66523c8f_a9c588a6",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-02T02:04:24Z",
+      "side": 1,
+      "message": "FWIW I\u0027d also prefer this to be false by default. In most cases we do not want to disable 464xlat. I don\u0027t feel strongly about this though. If we don\u0027t like the word \"disable\", then maybe \"skip\"?",
+      "parentUuid": "a1822ff7_99642dcd",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
