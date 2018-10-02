@@ -117,6 +117,30 @@
       "revId": "e849e19cd215680a96985d715560e985f016f133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a2c4e3_46026191",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-02T02:53:40Z",
+      "side": 1,
+      "message": "As I try to investigate the better name but no best name...\n+1 for \"skip464xlat\".\n\nCan I start to work with \"skip464xlat\" ?",
+      "parentUuid": "66523c8f_a9c588a6",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
