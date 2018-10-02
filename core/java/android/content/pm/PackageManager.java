@@ -687,6 +687,7 @@ public abstract class PackageManager {
             INSTALL_FORCE_SDK,
             INSTALL_FULL_APP,
             INSTALL_ALLOCATE_AGGRESSIVE,
+            INSTALL_ADOPTABLE_VOLUME,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface InstallFlags {}
@@ -837,6 +838,14 @@ public abstract class PackageManager {
      * @hide
      */
     public static final int INSTALL_VIRTUAL_PRELOAD = 0x00010000;
+
+    /**
+     * Flag parameter for {@link #installPackage} to indicate that this package
+     * must be installed to adoptable storage.
+     *
+     * @hide
+     */
+    public static final int INSTALL_ADOPTABLE_VOLUME = 0x00020000;
 
     /** @hide */
     @IntDef(flag = true, prefix = { "DONT_KILL_APP" }, value = {

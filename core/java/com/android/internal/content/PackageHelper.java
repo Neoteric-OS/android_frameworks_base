@@ -57,6 +57,7 @@ public class PackageHelper {
     public static final int RECOMMEND_INSTALL_INTERNAL = 1;
     public static final int RECOMMEND_INSTALL_EXTERNAL = 2;
     public static final int RECOMMEND_INSTALL_EPHEMERAL = 3;
+    public static final int RECOMMEND_INSTALL_ADOPTABLE = 4;
     public static final int RECOMMEND_FAILED_INSUFFICIENT_STORAGE = -1;
     public static final int RECOMMEND_FAILED_INVALID_APK = -2;
     public static final int RECOMMEND_FAILED_INVALID_LOCATION = -3;
@@ -263,6 +264,22 @@ public class PackageHelper {
                 translateAllocateFlags(params.installFlags)));
     }
 
+    public static boolean fitsOnAdoptable(Context context, SessionParams params) throws IOException {
+        final StorageManager storage = context.getSystemService(StorageManager.class);
+        VolumeInfo adoptable = null;
+        for (VolumeInfo vol : storage.getWritablePrivateVolumes()) {
+            if (vol.getType() == VolumeInfo.TYPE_PRIVATE
+                    && !VolumeInfo.ID_PRIVATE_INTERNAL.equals(vol.getId())) {
+                adoptable = vol;
+                break;
+            }
+        }
+        if(adoptable == null) return false;
+        final UUID target = storage.getUuidForPath(Environment.getDataDirectory(adoptable.getFsUuid()));
+        return (params.sizeBytes <= storage.getAllocatableBytes(target,
+                translateAllocateFlags(params.installFlags)));
+    }
+
     public static boolean fitsOnExternal(Context context, SessionParams params) {
         final StorageManager storage = context.getSystemService(StorageManager.class);
         final StorageVolume primary = storage.getPrimaryVolume();
@@ -306,6 +323,9 @@ public class PackageHelper {
             prefer = RECOMMEND_INSTALL_INTERNAL;
             ephemeral = true;
             checkBoth = false;
+        } else if ((params.installFlags & PackageManager.INSTALL_ADOPTABLE_VOLUME) != 0) {
+            prefer = RECOMMEND_INSTALL_ADOPTABLE;
+            checkBoth = false;
         } else if ((params.installFlags & PackageManager.INSTALL_INTERNAL) != 0) {
             prefer = RECOMMEND_INSTALL_INTERNAL;
             checkBoth = false;
@@ -346,6 +366,11 @@ public class PackageHelper {
             fitsOnExternal = fitsOnExternal(context, params);
         }
 
+        boolean fitsOnAdoptbale = false;
+        if(prefer == RECOMMEND_INSTALL_ADOPTABLE) {
+            fitsOnAdoptbale = fitsOnAdoptable(context, params);
+        }
+
         if (prefer == RECOMMEND_INSTALL_INTERNAL) {
             // The ephemeral case will either fit and return EPHEMERAL, or will not fit
             // and will fall through to return INSUFFICIENT_STORAGE
@@ -353,6 +378,10 @@ public class PackageHelper {
                 return (ephemeral)
                         ? PackageHelper.RECOMMEND_INSTALL_EPHEMERAL
                         : PackageHelper.RECOMMEND_INSTALL_INTERNAL;
+            }
+        } else if (prefer == RECOMMEND_INSTALL_ADOPTABLE) {
+            if (fitsOnAdoptbale) {
+                return PackageHelper.RECOMMEND_INSTALL_INTERNAL;
             }
         } else if (prefer == RECOMMEND_INSTALL_EXTERNAL) {
             if (fitsOnExternal) {

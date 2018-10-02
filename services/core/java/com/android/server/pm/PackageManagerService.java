@@ -23057,6 +23057,7 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
             final String dataAppName = codeFile.getName();
             move = new MoveInfo(moveId, currentVolumeUuid, volumeUuid, packageName,
                     dataAppName, appId, seinfo, targetSdkVersion);
+            if (volumeUuid != null) installFlags |= PackageManager.INSTALL_ADOPTABLE_VOLUME;
         } else {
             move = null;
         }
