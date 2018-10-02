@@ -182,6 +182,8 @@ import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -245,14 +247,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private KeyStore mKeyStore;
 
     @VisibleForTesting
-    @GuardedBy("mVpns")
+    @GuardedBy("mVpnsLock")
     protected final SparseArray<Vpn> mVpns = new SparseArray<>();
+    protected final ReadWriteLock mVpnsLock = new ReentrantReadWriteLock();
 
     // TODO: investigate if mLockdownEnabled can be removed and replaced everywhere by
     // a direct call to LockdownVpnTracker.isEnabled().
-    @GuardedBy("mVpns")
+    @GuardedBy("mVpnsLock")
     private boolean mLockdownEnabled;
-    @GuardedBy("mVpns")
+    @GuardedBy("mVpnsLock")
     private LockdownVpnTracker mLockdownTracker;
 
     final private Context mContext;
@@ -1713,11 +1716,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private Intent makeGeneralIntent(NetworkInfo info, String bcastType) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             if (mLockdownTracker != null) {
                 info = new NetworkInfo(info);
                 mLockdownTracker.augmentNetworkInfo(info);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
 
         Intent intent = new Intent(bcastType);
@@ -3558,7 +3564,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             int userId) {
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             Vpn vpn = mVpns.get(userId);
             if (vpn != null) {
@@ -3566,6 +3573,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             } else {
                 return false;
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3586,11 +3595,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void setVpnPackageAuthorization(String packageName, int userId, boolean authorized) {
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(userId);
             if (vpn != null) {
                 vpn.setPackageAuthorization(packageName, authorized);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3604,9 +3616,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public ParcelFileDescriptor establishVpn(VpnConfig config) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             return mVpns.get(user).establish(config);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3621,9 +3636,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (egress == null) {
             throw new IllegalStateException("Missing active network connection");
         }
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             mVpns.get(user).startLegacyVpn(profile, mKeyStore, egress);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3636,8 +3654,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public LegacyVpnInfo getLegacyVpnInfo(int userId) {
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             return mVpns.get(userId).getLegacyVpnInfo();
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3648,7 +3669,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public VpnInfo[] getAllVpnInfo() {
         enforceConnectivityInternalPermission();
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             if (mLockdownEnabled) {
                 return new VpnInfo[0];
             }
@@ -3661,6 +3683,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
             return infoList.toArray(new VpnInfo[infoList.size()]);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3700,13 +3724,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public VpnConfig getVpnConfig(int userId) {
         enforceCrossUserPermission(userId);
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(userId);
             if (vpn != null) {
                 return vpn.getVpnConfig();
             } else {
                 return null;
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3722,11 +3749,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * TODO : Fix this and call updateCapabilities inline to remove out-of-order events.
      */
     private void updateAllVpnsCapabilities() {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             for (int i = 0; i < mVpns.size(); i++) {
                 final Vpn vpn = mVpns.valueAt(i);
                 vpn.updateCapabilities();
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3737,7 +3767,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             // Tear down existing lockdown if profile was removed
             mLockdownEnabled = LockdownVpnTracker.isEnabled();
             if (mLockdownEnabled) {
@@ -3764,6 +3795,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             } else {
                 setLockdownTracker(null);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
 
         return true;
@@ -3773,7 +3806,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * Internally set new {@link LockdownVpnTracker}, shutting down any existing
      * {@link LockdownVpnTracker}. Can be {@code null} to disable lockdown.
      */
-    @GuardedBy("mVpns")
+    @GuardedBy("mVpnsLock")
     private void setLockdownTracker(LockdownVpnTracker tracker) {
         // Shutdown any existing tracker
         final LockdownVpnTracker existing = mLockdownTracker;
@@ -3788,7 +3821,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    @GuardedBy("mVpns")
+    @GuardedBy("mVpnsLock")
     private void throwIfLockdownEnabled() {
         if (mLockdownEnabled) {
             throw new IllegalStateException("Unavailable in lockdown mode");
@@ -3803,7 +3836,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *         was no always-on VPN to start. {@code false} otherwise.
      */
     private boolean startAlwaysOnVpn(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(userId);
             if (vpn == null) {
                 // Shouldn't happen as all code paths that point here should have checked the Vpn
@@ -3813,6 +3847,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
 
             return vpn.startAlwaysOnVpn();
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3821,13 +3857,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceSettingsPermission();
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(userId);
             if (vpn == null) {
                 Slog.w(TAG, "User " + userId + " has no Vpn configuration");
                 return false;
             }
             return vpn.isAlwaysOnPackageSupported(packageName);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -3836,7 +3875,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceConnectivityInternalPermission();
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             // Can't set always-on VPN if legacy VPN is already in lockdown mode.
             if (LockdownVpnTracker.isEnabled()) {
                 return false;
@@ -3854,6 +3894,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 vpn.setAlwaysOnPackage(null, false);
                 return false;
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
         return true;
     }
@@ -3863,13 +3905,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceConnectivityInternalPermission();
         enforceCrossUserPermission(userId);
 
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(userId);
             if (vpn == null) {
                 Slog.w(TAG, "User " + userId + " has no Vpn configuration");
                 return null;
             }
             return vpn.getAlwaysOnPackage();
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -4009,7 +4054,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void onUserStart(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.writeLock().lock();
+        try {
             Vpn userVpn = mVpns.get(userId);
             if (userVpn != null) {
                 loge("Starting user already has a VPN");
@@ -4020,11 +4066,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
                 updateLockdownVpn();
             }
+        } finally {
+            mVpnsLock.writeLock().unlock();
         }
     }
 
     private void onUserStop(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.writeLock().lock();
+        try {
             Vpn userVpn = mVpns.get(userId);
             if (userVpn == null) {
                 loge("Stopped user has no VPN");
@@ -4032,37 +4081,48 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             userVpn.onUserStopped();
             mVpns.delete(userId);
+        } finally {
+            mVpnsLock.writeLock().unlock();
         }
     }
 
     private void onUserAdded(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserAdded(userId);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
     private void onUserRemoved(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserRemoved(userId);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
     private void onUserUnlocked(int userId) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             // User present may be sent because of an unlock, which might mean an unlocked keystore.
             if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
                 updateLockdownVpn();
             } else {
                 startAlwaysOnVpn(userId);
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -5451,7 +5511,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void notifyLockdownVpn(NetworkAgentInfo nai) {
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             if (mLockdownTracker != null) {
                 if (nai != null && nai.isVPN()) {
                     mLockdownTracker.onVpnStateChanged(nai.networkInfo);
@@ -5459,6 +5520,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     mLockdownTracker.onNetworkInfoChanged();
                 }
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -5710,18 +5773,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public boolean addVpnAddress(String address, int prefixLength) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             return mVpns.get(user).addAddress(address, prefixLength);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
     @Override
     public boolean removeVpnAddress(String address, int prefixLength) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             return mVpns.get(user).removeAddress(address, prefixLength);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
     }
 
@@ -5729,9 +5798,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public boolean setUnderlyingNetworksForVpn(Network[] networks) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         final boolean success;
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             throwIfLockdownEnabled();
             success = mVpns.get(user).setUnderlyingNetworks(networks);
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
         if (success) {
             mHandler.post(() -> notifyIfacesChangedForNetworkStats());
@@ -5941,13 +6013,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         final int uid = Binder.getCallingUid();
         final int user = UserHandle.getUserId(uid);
-        synchronized (mVpns) {
+        mVpnsLock.readLock().lock();
+        try {
             Vpn vpn = mVpns.get(user);
             try {
                 if (vpn.getVpnInfo().ownerUid == uid) return vpn;
             } catch (NullPointerException e) {
                 /* vpn is null, or VPN is not connected and getVpnInfo() is null. */
             }
+        } finally {
+            mVpnsLock.readLock().unlock();
         }
         throw new SecurityException("App must either be an active VPN or have the NETWORK_STACK "
                 + "permission");
