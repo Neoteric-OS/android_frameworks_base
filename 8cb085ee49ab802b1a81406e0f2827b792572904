@@ -22,6 +22,30 @@
       "revId": "8cb085ee49ab802b1a81406e0f2827b792572904",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e797b071_57cebef8",
+        "filename": "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-10-02T01:28:56Z",
+      "side": 1,
+      "message": "\u003eThis line was here because there was something fundamentally wrong with this version of the backup.\nThanks for your comment. This is what I wanted to know, I was wondering why version 1 of backup is thrown away.\n\nI will fix it.",
+      "parentUuid": "780e0a19_0d98956d",
+      "range": {
+        "startLine": 2279,
+        "startChar": 8,
+        "endLine": 2279,
+        "endChar": 84
+      },
+      "revId": "8cb085ee49ab802b1a81406e0f2827b792572904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
