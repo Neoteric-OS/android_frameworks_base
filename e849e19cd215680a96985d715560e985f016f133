@@ -69,6 +69,30 @@
       "revId": "e849e19cd215680a96985d715560e985f016f133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1822ff7_99642dcd",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-02T01:59:31Z",
+      "side": 1,
+      "message": "Actually, the reason why I use \"disable\" is that I want to initialize this flag as false to follow the other parameters in NetworkMisc which has no initialization and this android clat should be worked by default.\n\nIf we use \"enable\", I need to clearly set as \"true\" when NewtorkMisc is initialized.\nI feel it might make mis-initialization when newly NetworkMisc is created.\n\nDo you agree to use \"disable\" ?\nOr should I change to enable like the below in line 71?\n\u003d\u003d\npublic boolean enable464xlat \u003d true;\n\u003d\u003d",
+      "parentUuid": "f9f11065_ee13259e",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "e849e19cd215680a96985d715560e985f016f133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
