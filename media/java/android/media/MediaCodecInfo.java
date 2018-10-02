@@ -19,6 +19,7 @@ package android.media;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UnsupportedAppUsage;
+import android.os.SystemProperties;
 import android.util.Log;
 import android.util.Pair;
 import android.util.Range;
@@ -1013,7 +1014,11 @@ public final class MediaCodecInfo {
             mBitrateRange = Range.create(0, Integer.MAX_VALUE);
             mMaxInputChannelCount = MAX_INPUT_CHANNEL_COUNT;
             // mBitrateRange = Range.create(1, 320000);
-            mSampleRateRanges = new Range[] { Range.create(8000, 96000) };
+            final int mixSamplingRate = SystemProperties.
+                getInt("ro.mediacodec.min_sampling_rate", 8000);
+            final int maxSamplingRate = SystemProperties.
+                getInt("ro.mediacodec.max_sampling_rate", 96000);
+            mSampleRateRanges = new Range[] { Range.create(mixSamplingRate, maxSamplingRate) };
             mSampleRates = null;
         }
 
