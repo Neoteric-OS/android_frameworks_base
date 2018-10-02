@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.AccessNetworkConstants.AccessNetworkType;
+import android.telephony.NetworkRegistrationState.Domain;
 import android.text.TextUtils;
 
 import java.lang.annotation.Retention;
@@ -1595,7 +1596,7 @@ public class ServiceState implements Parcelable {
     /**
      * Get all of the available network registration states.
      *
-     * @return List of registration states
+     * @return List of network registration states
      * @hide
      */
     @SystemApi
@@ -1606,14 +1607,30 @@ public class ServiceState implements Parcelable {
     }
 
     /**
-     * Get the network registration states with given transport type.
+     * Get the network registration states from transport type.
      *
      * @param transportType The transport type. See {@link AccessNetworkConstants.TransportType}
-     * @return List of registration states.
+     * @return List of network registration states.
+     * @hide
+     *
+     * @deprecated Use {@link #getNetworkRegistrationStatesFromTransportType(int)}
+     */
+    @Deprecated
+    @SystemApi
+    public List<NetworkRegistrationState> getNetworkRegistrationStates(int transportType) {
+        return getNetworkRegistrationStatesFromTransportType(transportType);
+    }
+
+    /**
+     * Get the network registration states from transport type.
+     *
+     * @param transportType The transport type. See {@link AccessNetworkConstants.TransportType}
+     * @return List of network registration states.
      * @hide
      */
     @SystemApi
-    public List<NetworkRegistrationState> getNetworkRegistrationStates(int transportType) {
+    public List<NetworkRegistrationState> getNetworkRegistrationStatesFromTransportType(
+            int transportType) {
         List<NetworkRegistrationState> list = new ArrayList<>();
 
         synchronized (mNetworkRegistrationStates) {
@@ -1628,16 +1645,60 @@ public class ServiceState implements Parcelable {
     }
 
     /**
-     * Get the network registration states with given transport type and domain.
+     * Get the network registration states from network domain.
+     *
+     * @param domain The network domain. Must be {@link NetworkRegistrationState#DOMAIN_CS} or
+     * {@link NetworkRegistrationState#DOMAIN_PS}.
+     * @return List of network registration states.
+     * @hide
+     */
+    @SystemApi
+    public List<NetworkRegistrationState> getNetworkRegistrationStatesFromDomain(
+            int domain) {
+        List<NetworkRegistrationState> list = new ArrayList<>();
+
+        synchronized (mNetworkRegistrationStates) {
+            for (NetworkRegistrationState networkRegistrationState : mNetworkRegistrationStates) {
+                if (networkRegistrationState.getDomain() == domain) {
+                    list.add(networkRegistrationState);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Get the network registration state from transport type and network domain.
      *
      * @param domain The network domain. Must be {@link NetworkRegistrationState#DOMAIN_CS} or
      * {@link NetworkRegistrationState#DOMAIN_PS}.
      * @param transportType The transport type. See {@link AccessNetworkConstants.TransportType}
      * @return The matching NetworkRegistrationState.
      * @hide
+     *
+     * @deprecated Use {@link #getNetworkRegistrationState(int, int)}
+     */
+    @Deprecated
+    @SystemApi
+    public NetworkRegistrationState getNetworkRegistrationStates(@Domain int domain,
+                                                                 int transportType) {
+        return getNetworkRegistrationState(domain, transportType);
+    }
+
+    /**
+     * Get the network registration state from transport type and network domain.
+     *
+     * @param domain The network domain. Must be {@link NetworkRegistrationState#DOMAIN_CS} or
+     * {@link NetworkRegistrationState#DOMAIN_PS}.
+     * @param transportType The transport type. See {@link AccessNetworkConstants.TransportType}
+     * @return The matching NetworkRegistrationState.
+     * @hide
+     *
      */
     @SystemApi
-    public NetworkRegistrationState getNetworkRegistrationStates(int domain, int transportType) {
+    public NetworkRegistrationState getNetworkRegistrationState(@Domain int domain,
+                                                                int transportType) {
         synchronized (mNetworkRegistrationStates) {
             for (NetworkRegistrationState networkRegistrationState : mNetworkRegistrationStates) {
                 if (networkRegistrationState.getTransportType() == transportType
@@ -1669,5 +1730,4 @@ public class ServiceState implements Parcelable {
             mNetworkRegistrationStates.add(regState);
         }
     }
-
 }
