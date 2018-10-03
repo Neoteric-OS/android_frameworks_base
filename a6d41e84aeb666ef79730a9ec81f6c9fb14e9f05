@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dbe9ac6_56a9e99c",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32831,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2018-10-03T04:59:31Z",
+      "side": 1,
+      "message": "Fixed. Do you have any idea about how to apply for the API council. Does it start with a CL or there\u0027s a dedicated portal to submit the application?",
+      "parentUuid": "ea616b1a_0b741fba",
+      "range": {
+        "startLine": 32823,
+        "startChar": 0,
+        "endLine": 32831,
+        "endChar": 0
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11ca3bf1_7f1ea9b3",
         "filename": "api/current.txt",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-02T12:09:55Z",
       "side": 1,
       "message": "These aren\u0027t for apps to use.",
+      "range": {
+        "startLine": 32832,
+        "startChar": 0,
+        "endLine": 32852,
+        "endChar": 3
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33f2dad_dbf0e797",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32852,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2018-10-03T04:59:31Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "11ca3bf1_7f1ea9b3",
       "range": {
         "startLine": 32832,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "4fc9731d_8ca86ead",
+        "filename": "core/java/android/os/IZRAMService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2018-10-03T04:59:31Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "34ee29af_ecbb8fdb",
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b52828e_cccad97d",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2018-10-02T12:09:55Z",
       "side": 1,
       "message": "why not signature or privileged? normal isn\u0027t protecting anything. It is grantable to anyone.",
+      "range": {
+        "startLine": 1664,
+        "startChar": 32,
+        "endLine": 1664,
+        "endChar": 41
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2136083f_d16c63f2",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2018-10-03T04:59:31Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "1b52828e_cccad97d",
       "range": {
         "startLine": 1664,
         "startChar": 32,
