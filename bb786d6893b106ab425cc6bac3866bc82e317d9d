@@ -22,6 +22,30 @@
       "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101f9258_2cffc47a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-03T11:12:33Z",
+      "side": 1,
+      "message": "I\u0027ll side with lorenzo\u0027s idea in patchset#2 if we can directly call NetworkPolicyManagerInternal.isUidNetworkingBlocked. And I think it is feasible, because I just made it public static and got build pass locally.\n\nThe reason is that: \n1. I think the CS doesn\u0027t really care about the correctness of the return value of isUidNetworkingBlocked, where CS cares is the behavior when state transition. And the correctness is also ensured by NPMS test. So in CS test here, we just need a tool to simulate most of the cases of the state transitions, which isUidNetworkingBlocked is the best one. The role of isUidNetworkingBlocked served here is nothing but only an utility function just like System.getCurrentMillis().\n2. It really saves a lot of hand-written works as well as redundant efforts to maintain these answers correct both in NPMS test and CS test.\n\nIf it is NOT feasible, then I\u0027ll prefer jean\u0027s 1st proposal due to it improves readability and maintainability a lot.",
+      "parentUuid": "0150b310_63f655e6",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 45
+      },
+      "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
