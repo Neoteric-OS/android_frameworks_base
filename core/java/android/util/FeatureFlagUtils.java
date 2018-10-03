@@ -34,6 +34,14 @@ public class FeatureFlagUtils {
     public static final String FFLAG_PREFIX = "sys.fflag.";
     public static final String FFLAG_OVERRIDE_PREFIX = FFLAG_PREFIX + "override.";
     public static final String PERSIST_PREFIX = "persist." + FFLAG_OVERRIDE_PREFIX;
+    /**
+     * When {@code true}, an IMS conference which drops to a single participant will be transformed
+     * into a single party standalone call.
+     * When {@code false}, IMS conferences with a single participant will still appear as a
+     * conference.
+     */
+    public static final String STANDALONE_IMS_CALL_EMULATION =
+            "settings_standalone_ims_call_emulation";
     public static final String HEARING_AID_SETTINGS = "settings_bluetooth_hearing_aid";
     public static final String SAFETY_HUB = "settings_safety_hub";
 
@@ -43,6 +51,7 @@ public class FeatureFlagUtils {
         DEFAULT_FLAGS.put("settings_battery_display_app_list", "false");
         DEFAULT_FLAGS.put("settings_zone_picker_v2", "true");
         DEFAULT_FLAGS.put("settings_about_phone_v2", "true");
+        DEFAULT_FLAGS.put(STANDALONE_IMS_CALL_EMULATION, "true");
         DEFAULT_FLAGS.put("settings_bluetooth_while_driving", "false");
         DEFAULT_FLAGS.put("settings_data_usage_v2", "true");
         DEFAULT_FLAGS.put("settings_audio_switcher", "true");
