@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef53a2f_7af6a3ae",
+        "filename": "core/java/android/os/ZRAMManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-03T07:32:33Z",
+      "side": 1,
+      "message": "Which app is supposed to use this class? If it is an unbundled one, you need to mark these with @SystemApi, then will be required to update system-current.txt.",
+      "revId": "b3cab8f35a06a5d26a06ce20cd5a0005400fa90c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11284ba6_49fac761",
+        "filename": "services/core/java/com/android/server/ZRAMService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-03T07:32:33Z",
+      "side": 1,
+      "message": "make these are private?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "b3cab8f35a06a5d26a06ce20cd5a0005400fa90c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369e76af_37a86b6d",
+        "filename": "services/core/java/com/android/server/ZRAMService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-03T07:32:33Z",
+      "side": 1,
+      "message": "why not private?",
+      "revId": "b3cab8f35a06a5d26a06ce20cd5a0005400fa90c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e087bd53_5b811f52",
+        "filename": "services/core/java/com/android/server/ZRAMService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-03T07:32:33Z",
+      "side": 1,
+      "message": "this block isn\u0027t formatted well. (e.g. space after \u0027(\u0027 )",
+      "revId": "b3cab8f35a06a5d26a06ce20cd5a0005400fa90c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
