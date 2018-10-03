@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78de5f6_92d8cc35",
+        "filename": "startop/iorap/tests/src/com/google/android/startop/iorap/IIorapIntegrationTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-03T21:51:52Z",
+      "side": 1,
+      "message": "Query/no changes needed: For my own edification, why is there an extra I in front of Iorap in a lot of cases?",
+      "revId": "e36524f9a456a11c6e460aec2a23b1bb06bdef8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
