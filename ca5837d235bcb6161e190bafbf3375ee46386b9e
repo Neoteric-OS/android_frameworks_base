@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "266c60f7_558e2a8f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4503,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-03T03:35:26Z",
+      "side": 1,
+      "message": "I argue the way the test is built right now is the Right way. The reason for that is, this is a unit test for ConnectivityService, and we expect ConnectivityService to behave according to what the callbacks are telling it. In any case, there is a need for such a test because there is a concrete risk that the CS logic gets broken down the line and it\u0027s plenty big to warrant such tests separately from the logic in NPMS.\n\nTesting that NPMS is sending the correct callbacks to its clients should motivate a separate, different unit test, and these already exist in NPMSTest.\n\nAs for checking the interactions, that\u0027s the job of integration/end-to-end tests, and I think CTS are a good tool for that.\n\nSo all in all, I think it\u0027s good the way Mike wrote the tests. These tests are fulfilling the role I think they should serve.",
+      "parentUuid": "98064248_02ec794c",
+      "range": {
+        "startLine": 4503,
+        "startChar": 19,
+        "endLine": 4503,
+        "endChar": 41
+      },
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "826d5875_dbb6b44c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2

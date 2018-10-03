@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0150b310_63f655e6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-03T03:35:26Z",
+      "side": 1,
+      "message": "I find this quite difficult to follow, though the comments make it possible so I\u0027m happy with the current code if you disagree that my proposals improve readability.\n\nHow about some structure that lists everything line by line ?\nIt will be a much larger chunk of text, but it would also be easier to parse visually.\n\n  private static final class BlockedStatusTestSpec {\n    public final int rule;\n    public final boolean metered;\n    public final boolean restricted;\n    public final boolean expectedBlockStatus;\n    public BlockedStatusTestSpec(int rule, boolean metered, boolean restricted, boolean result) {\n      ...\n    }\n  }\n\n  final BlockedStatusTestSpec[] testList \u003d new NetworkBlockedStatusTestSpec[] {\n    //  Test spec :           rule name,                    metered, restricted \u003d\u003e result\n    new BlockedStatusTestSpec(RULE_NONE,                    false,   false,        true),\n    new BlockedStatusTestSpec(RULE_ALLOW_METERED,           false,   false,        false),\n    new BlockedStatusTestSpec(RULE_TEMPORARY_ALLOW_METERED, false,   false,        false),\n    ...\n    new BlockedStatusTestSpec(RULE_REJECT_METERED,          true,    false,        true),\n    ...\n  };\n\n  for (BlockedStatusTestSpec spec : testList) {\n    when(...(Process.myUid(), spec.rule, spec.metered, spec.restricted)).thenReturn(spec.expectedBlockStatus);\n  }\n\n\n\nIf that\u0027s too big (because it will be big), maybe we can factorize only some of it, for example :\n\n  private static final class BlockedStatusTestSpec {\n    public final int rule;\n    public final boolean expectedBlockNonMeteredNonRestricted;\n    public final boolean expectedBlockNonMeteredRestricted;\n    public final boolean expectedBlockMeteredNonRestricted;\n    public final boolean expectedBlockMeteredRestricted;\n    public BlockedStatusTestSpec(int rule, boolean nmnr, boolean nmr, boolean mnr, boolean mr) {\n      ...\n    }\n  }\n\n  final BlockedStatusTestSpec[] testList \u003d new NetworkBlockedStatusTestSpec[] {\n    //  Test spec :           rule name \u003d\u003e result if unmetered \u0026 unrestricted,\n    //                                     result if unmetered \u0026 restricted,\n    //                                     result if metered \u0026 unrestricted,\n    //                                     result if metered \u0026 restricted\n    new BlockedStatusTestSpec(RULE_NONE,                    false, false, false, true),\n    new BlockedStatusTestSpec(RULE_ALLOW_METERED,           false, false, false, false),\n    new BlockedStatusTestSpec(RULE_TEMPORARY_ALLOW_METERED, false, false, false, false),\n    ...\n  }\n\n  for (BlockedStatusTestSpec spec : testList) {\n    when(...(Process.myUid(), spec.rule, false /* metered */, false /* restricted */))\n            .thenReturn(spec.expectedBlockNonMeteredNonRestricted);\n    when(...(Process.myUid(), spec.rule, false /* metered */, true /* restricted */))\n            .thenReturn(spec.expectedBlockNonMeteredRestricted);\n    when(...(Process.myUid(), spec.rule, true /* metered */, false /* restricted */))\n            .thenReturn(spec.expectedBlockMeteredNonRestricted);\n    when(...(Process.myUid(), spec.rule, true /* metered */, true /* restricted */))\n            .thenReturn(spec.expectedBlockMeteredRestricted);\n  }\n\n\nYour code is more compact, but I think both the solutions above are a bit easier to digest. What do you think ?\n\n+lorenzo@, +junyulai@, do you have any thoughts on this ? Can you think of advantages or drawbacks of the current code vs some of my proposals that we missed ?",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 45
+      },
+      "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
