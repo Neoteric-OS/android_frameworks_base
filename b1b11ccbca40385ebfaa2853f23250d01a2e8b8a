@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fdc8e7_4313247f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-03T03:59:47Z",
+      "side": 1,
+      "message": "So now this in only used in the debug log and as an argument to closeSocketsForFirewallChainLocked. In turn closeSocketsForFirewallChainLocked is only using this for a debug log, and can deduce it trivially from its other argument.\n\nLet\u0027s remove this chainName here, and deduplicate the switch by removing it below and replacing it with\n\n  final int chain \u003d getFirewallChainType(chain);\n\nThen extract the name-deciding switch to a method and call that private String getFirewallChainName(int). Move the log in line 2138 to closeSocketsForFirewallChainLocked, inlining the call :\n\n  if (DBG) Slog.d(TAG, \"Closing sockets after enabling chain \" + getFirewallChainName(chain));\n\nSure, if DBG and exception we do this trivial amount of work twice. I don\u0027t think this holds a candle to the readability and safety improvements.",
+      "range": {
+        "startLine": 2108,
+        "startChar": 25,
+        "endLine": 2108,
+        "endChar": 34
+      },
+      "revId": "b1b11ccbca40385ebfaa2853f23250d01a2e8b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
