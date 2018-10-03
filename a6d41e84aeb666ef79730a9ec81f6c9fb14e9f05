@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15a9a1f4_236a1707",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32831,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-03T05:10:04Z",
+      "side": 1,
+      "message": "go/android-api-council is the portal where the process is explained.",
+      "parentUuid": "8dbe9ac6_56a9e99c",
+      "range": {
+        "startLine": 32823,
+        "startChar": 0,
+        "endLine": 32831,
+        "endChar": 0
+      },
+      "revId": "a6d41e84aeb666ef79730a9ec81f6c9fb14e9f05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11ca3bf1_7f1ea9b3",
         "filename": "api/current.txt",
         "patchSetId": 2
