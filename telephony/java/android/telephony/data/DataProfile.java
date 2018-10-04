@@ -68,17 +68,12 @@ public final class DataProfile implements Parcelable {
 
     private final int mMtu;
 
-    private final String mMvnoType;
-
-    private final String mMvnoMatchData;
-
     private final boolean mModemCognitive;
 
     public DataProfile(int profileId, String apn, String protocol, int authType,
                 String userName, String password, int type, int maxConnsTime, int maxConns,
                 int waitTime, boolean enabled, int supportedApnTypesBitmap, String roamingProtocol,
-                int bearerBitmap, int mtu, String mvnoType, String mvnoMatchData,
-                boolean modemCognitive) {
+                int bearerBitmap, int mtu, boolean modemCognitive) {
 
         this.mProfileId = profileId;
         this.mApn = apn;
@@ -100,8 +95,6 @@ public final class DataProfile implements Parcelable {
         this.mRoamingProtocol = roamingProtocol;
         this.mBearerBitmap = bearerBitmap;
         this.mMtu = mtu;
-        this.mMvnoType = mvnoType;
-        this.mMvnoMatchData = mvnoMatchData;
         this.mModemCognitive = modemCognitive;
     }
 
@@ -121,8 +114,6 @@ public final class DataProfile implements Parcelable {
         mRoamingProtocol = source.readString();
         mBearerBitmap = source.readInt();
         mMtu = source.readInt();
-        mMvnoType = source.readString();
-        mMvnoMatchData = source.readString();
         mModemCognitive = source.readBoolean();
     }
 
@@ -207,19 +198,6 @@ public final class DataProfile implements Parcelable {
     public int getMtu() { return mMtu; }
 
     /**
-     * @return The MVNO type: possible values are "imsi", "gid", "spn".
-     */
-    public String getMvnoType() { return mMvnoType; }
-
-    /**
-     * @return The MVNO match data. For example,
-     * SPN: A MOBILE, BEN NL, ...
-     * IMSI: 302720x94, 2060188, ...
-     * GID: 4E, 33, ...
-     */
-    public String getMvnoMatchData() { return mMvnoMatchData; }
-
-    /**
      * @return True if the data profile was sent to the modem through setDataProfile earlier.
      */
     public boolean isModemCognitive() { return mModemCognitive; }
@@ -237,7 +215,7 @@ public final class DataProfile implements Parcelable {
                 + "/" + mType + "/" + mMaxConnsTime
                 + "/" + mMaxConns + "/" + mWaitTime + "/" + mEnabled + "/"
                 + mSupportedApnTypesBitmap + "/" + mRoamingProtocol + "/" + mBearerBitmap + "/"
-                + mMtu + "/" + mMvnoType + "/" + mMvnoMatchData + "/" + mModemCognitive;
+                + mMtu + "/" + mModemCognitive;
     }
 
     @Override
@@ -263,8 +241,6 @@ public final class DataProfile implements Parcelable {
         dest.writeString(mRoamingProtocol);
         dest.writeInt(mBearerBitmap);
         dest.writeInt(mMtu);
-        dest.writeString(mMvnoType);
-        dest.writeString(mMvnoMatchData);
         dest.writeBoolean(mModemCognitive);
     }
 
