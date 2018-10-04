@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e2d2c6_4e16c7cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-04T08:47:25Z",
+      "side": 1,
+      "message": "Please indicate that this CL only teaches aapt2 to parse the \u003cpolicy\u003e tags, but postpones encoding the data in the resource blob to a later CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffb6cc1_6248cae3",
+        "filename": "tools/aapt2/Debug.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-04T08:47:25Z",
+      "side": 1,
+      "message": "Pad \u003d and \u003c with spaces.",
+      "range": {
+        "startLine": 309,
+        "startChar": 20,
+        "endLine": 309,
+        "endChar": 27
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3796d597_8537aba5",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-04T08:47:25Z",
+      "side": 1,
+      "message": "We should also support \"public\", maybe \"oem\" and \"odm\". Also, maybe \"signature\" depending on what we decide on with regards to \u003coverlayable protectionLeveL\u003d\"normal|signature\"\u003e.",
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ac77ac_256e0ae1",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-04T08:47:25Z",
+      "side": 1,
+      "message": "Unnecessary blank line.",
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626ca1da_e7d7da22",
+        "filename": "tools/aapt2/ResourceParser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-04T08:47:25Z",
+      "side": 1,
+      "message": "Change to const reference to avoid copying the vector when calling ParseOverlayableWithPolicy.",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 66
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
