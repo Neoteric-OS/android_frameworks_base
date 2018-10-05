@@ -23,9 +23,6 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 
-import static com.android.server.connectivity.tethering.TetheringConfiguration.DUN_NOT_REQUIRED;
-import static com.android.server.connectivity.tethering.TetheringConfiguration.DUN_REQUIRED;
-import static com.android.server.connectivity.tethering.TetheringConfiguration.DUN_UNSPECIFIED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -44,25 +41,26 @@ import android.test.mock.MockContentResolver;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
 
-import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class TetheringConfigurationTest {
     private final SharedLog mLog = new SharedLog("TetheringConfigurationTest");
+    private static final boolean DUN_REQUIRED = true;
     @Mock private Context mContext;
     @Mock private TelephonyManager mTelephonyManager;
     @Mock private Resources mResources;
     private MockContentResolver mContentResolver;
     private Context mMockContext;
-    private boolean mHasTelephonyManager;
 
     private class MockContext extends BroadcastInterceptingContext {
         MockContext(Context base) {
@@ -75,7 +73,7 @@ public class TetheringConfigurationTest {
         @Override
         public Object getSystemService(String name) {
             if (Context.TELEPHONY_SERVICE.equals(name)) {
-                return mHasTelephonyManager ? mTelephonyManager : null;
+                return mTelephonyManager;
             }
             return super.getSystemService(name);
         }
@@ -106,66 +104,66 @@ public class TetheringConfigurationTest {
 
     @Test
     public void testDunFromTelephonyManagerMeansDun() {
-        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
-                .thenReturn(new int[]{TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI});
-        mHasTelephonyManager = true;
+        final ArrayList<TetheringConfiguration> cfgArray = new ArrayList<TetheringConfiguration>();
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_REQUIRED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
-        assertTrue(cfg.isDunRequired);
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
-        assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
-        assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_HIPRI));
-        // Just to prove we haven't clobbered Wi-Fi:
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_WIFI));
+        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
+            .thenReturn(new int[]{TYPE_WIFI});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
+        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
+            .thenReturn(new int[]{TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
+        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
+            .thenReturn(new int[]{TYPE_WIFI, TYPE_MOBILE_DUN});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
+
+        for (TetheringConfiguration cfg : cfgArray) {
+            assertTrue(cfg.isDunRequired);
+            assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
+            assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
+            assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_HIPRI));
+            // Just to prove we haven't clobbered Wi-Fi:
+            assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_WIFI));
+        }
     }
 
     @Test
     public void testDunNotRequiredFromTelephonyManagerMeansNoDun() {
+        final ArrayList<TetheringConfiguration> cfgArray = new ArrayList<TetheringConfiguration>();
+        when(mTelephonyManager.getTetherApnRequired()).thenReturn(!DUN_REQUIRED);
+
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
-                .thenReturn(new int[]{TYPE_MOBILE_DUN, TYPE_WIFI});
-        mHasTelephonyManager = true;
-        when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_NOT_REQUIRED);
-
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
-        assertFalse(cfg.isDunRequired);
-        assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_HIPRI));
-        // Just to prove we haven't clobbered Wi-Fi:
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_WIFI));
-    }
-
-    @Test
-    public void testDunFromUpstreamConfigMeansDun() {
+            .thenReturn(new int[]{TYPE_WIFI});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
-                .thenReturn(new int[]{TYPE_MOBILE_DUN, TYPE_WIFI});
-        mHasTelephonyManager = false;
-        when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
+            .thenReturn(new int[]{TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
+        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
+            .thenReturn(new int[]{TYPE_WIFI, TYPE_MOBILE_DUN});
+        cfgArray.add(new TetheringConfiguration(mMockContext, mLog));
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
-        assertTrue(cfg.isDunRequired);
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
-        // Just to prove we haven't clobbered Wi-Fi:
-        assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_WIFI));
-        // Check that we have not added new cellular interface types
-        assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
-        assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_HIPRI));
+        for (TetheringConfiguration cfg : cfgArray) {
+            assertFalse(cfg.isDunRequired);
+            assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
+            assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
+            assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_HIPRI));
+            // Just to prove we haven't clobbered Wi-Fi:
+            assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_WIFI));
+        }
     }
 
     @Test
     public void testNoDefinedUpstreamTypesAddsEthernet() {
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
                 .thenReturn(new int[]{});
-        mHasTelephonyManager = false;
-        when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
+        when(mTelephonyManager.getTetherApnRequired()).thenReturn(!DUN_REQUIRED);
 
         final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();
         assertTrue(upstreamIterator.hasNext());
         assertEquals(TYPE_ETHERNET, upstreamIterator.next().intValue());
         // The following is because the code always adds some kind of mobile
-        // upstream, be it DUN or, in this case where we use DUN_UNSPECIFIED,
+        // upstream, be it DUN or, in this case where DUN is NOT required,
         // both vanilla and hipri mobile types.
         assertTrue(upstreamIterator.hasNext());
         assertEquals(TYPE_MOBILE, upstreamIterator.next().intValue());
@@ -178,8 +176,7 @@ public class TetheringConfigurationTest {
     public void testDefinedUpstreamTypesSansEthernetAddsEthernet() {
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
                 .thenReturn(new int[]{TYPE_WIFI, TYPE_MOBILE_HIPRI});
-        mHasTelephonyManager = false;
-        when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
+        when(mTelephonyManager.getTetherApnRequired()).thenReturn(!DUN_REQUIRED);
 
         final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();
@@ -196,8 +193,7 @@ public class TetheringConfigurationTest {
     public void testDefinedUpstreamTypesWithEthernetDoesNotAddEthernet() {
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
                 .thenReturn(new int[]{TYPE_WIFI, TYPE_ETHERNET, TYPE_MOBILE_HIPRI});
-        mHasTelephonyManager = false;
-        when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
+        when(mTelephonyManager.getTetherApnRequired()).thenReturn(!DUN_REQUIRED);
 
         final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();

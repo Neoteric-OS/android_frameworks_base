@@ -292,8 +292,8 @@ public class Tethering extends BaseNetworkObserver {
     }
 
     private void maybeUpdateConfiguration() {
-        final int dunCheck = TetheringConfiguration.checkDunRequired(mContext);
-        if (dunCheck == mConfig.dunCheck) return;
+        boolean dunCheck = TetheringConfiguration.checkDunRequired(mContext);
+        if (dunCheck == mConfig.isDunRequired) return;
         updateConfiguration();
     }
 
@@ -1063,10 +1063,12 @@ public class Tethering extends BaseNetworkObserver {
     public boolean hasTetherableConfiguration() {
         final TetheringConfiguration cfg = mConfig;
         final boolean hasDownstreamConfiguration =
-                (cfg.tetherableUsbRegexs.length != 0) ||
-                (cfg.tetherableWifiRegexs.length != 0) ||
-                (cfg.tetherableBluetoothRegexs.length != 0);
-        final boolean hasUpstreamConfiguration = !cfg.preferredUpstreamIfaceTypes.isEmpty();
+                (cfg.tetherableUsbRegexs.length != 0)
+                || (cfg.tetherableWifiRegexs.length != 0)
+                || (cfg.tetherableBluetoothRegexs.length != 0);
+        final boolean hasUpstreamConfiguration =
+                !cfg.preferredUpstreamIfaceTypes.isEmpty()
+                || cfg.chooseUpstreamAutomatically;
 
         return hasDownstreamConfiguration && hasUpstreamConfiguration;
     }

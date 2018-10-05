@@ -378,8 +378,8 @@
                    Values must be from NetworkCapabilities#NET_CAPABILITIES_* constants.
                [IP config] Optional. If empty or not specified - DHCP will be used, otherwise
                    use the following format to specify static IP configuration:
-		       ip=<ip-address/mask> gateway=<ip-address> dns=<comma-sep-ip-addresses>
-                       domains=<comma-sep-domains> 
+                       ip=<ip-address/mask> gateway=<ip-address> dns=<comma-sep-ip-addresses>
+                       domains=<comma-sep-domains>
          -->
     <string-array translatable="false" name="config_ethernet_interfaces">
         <!--
@@ -469,22 +469,15 @@
              - the return value of TelephonyManager.getTetherApnRequired()
                determines how the array is further modified:
 
-                   * DUN_REQUIRED
+                   * TRUE (DUN REQUIRED)
                      TYPE_MOBILE is removed (if present)
                      TYPE_MOBILE_HIPRI is removed (if present)
                      TYPE_MOBILE_DUN is appended (if not already present)
 
-                   * DUN_NOT_REQUIRED
+                   * FALSE (DUN NOT REQUIRED)
                      TYPE_MOBILE_DUN is removed (if present)
-                     TYPE_MOBILE is appended (if not already present)
-                     TYPE_MOBILE_HIPRI is appended (if not already present)
-
-                   * DUN_UNSPECIFIED
-                     if any of TYPE_MOBILE{,_DUN,_HIPRI} are present:
-                         change nothing
-                     else:
-                         TYPE_MOBILE is appended
-                         TYPE_MOBILE_HIPRI is appended
+                     TYPE_MOBILE is appended (if any of TYPE_MOBILE{_HIPRI} are not present)
+                     TYPE_MOBILE_HIPRI is appended (if any of TYPE_MOBILE{_HIPRI} are not present)
 
          For other changes applied to this list, now and in the future, see
          com.android.server.connectivity.tethering.TetheringConfiguration.
