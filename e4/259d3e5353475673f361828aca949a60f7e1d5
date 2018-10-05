@@ -1,0 +1,8 @@
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Yan Yan <evitayan@google.com>
+Submitted-by: Yan Yan <evitayan@google.com>
+Submitted-at: Fri, 05 Oct 2018 17:38:40 +0000
+Reviewed-on: https://android-review.googlesource.com/647859
+Project: platform/frameworks/base
+Branch: refs/heads/master
