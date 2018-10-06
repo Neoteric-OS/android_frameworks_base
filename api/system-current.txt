@@ -5239,6 +5239,7 @@ package android.telephony {
 
   public class TelephonyManager {
     method public deprecated void call(java.lang.String, java.lang.String);
+    method public void carrierActionSetMeteredApnsEnabled(boolean);
     method public int checkCarrierPrivilegesForPackage(java.lang.String);
     method public int checkCarrierPrivilegesForPackageAnyPhone(java.lang.String);
     method public void dial(java.lang.String);

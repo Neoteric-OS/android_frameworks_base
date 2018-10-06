@@ -8251,16 +8251,24 @@ public class TelephonyManager {
 
     /**
      * Action set from carrier signalling broadcast receivers to enable/disable metered apns
-     * Permissions android.Manifest.permission.MODIFY_PHONE_STATE is required
-     * @param subId the subscription ID that this action applies to.
+     *
+     * <p>If this object has been created with {@link #createForSubscriptionId}, applies to the
+     * given subId. Otherwise, applies to {@link SubscriptionManager#getDefaultDataSubscriptionId()}
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}.
+     *
      * @param enabled control enable or disable metered apns.
      * @hide
      */
-    public void carrierActionSetMeteredApnsEnabled(int subId, boolean enabled) {
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void carrierActionSetMeteredApnsEnabled(boolean enabled) {
         try {
             ITelephony service = getITelephony();
             if (service != null) {
-                service.carrierActionSetMeteredApnsEnabled(subId, enabled);
+                service.carrierActionSetMeteredApnsEnabled(
+                        getSubId(SubscriptionManager.getDefaultDataSubscriptionId()), enabled);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling ITelephony#carrierActionSetMeteredApnsEnabled", e);

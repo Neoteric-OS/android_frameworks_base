@@ -102,7 +102,8 @@ public class CarrierActionUtils {
                 SubscriptionManager.getDefaultVoiceSubscriptionId());
         logd("onDisableAllMeteredApns subId: " + subId);
         final TelephonyManager telephonyMgr = context.getSystemService(TelephonyManager.class);
-        telephonyMgr.carrierActionSetMeteredApnsEnabled(subId, !ENABLE);
+        telephonyMgr.createForSubscriptionId(subId)
+                .carrierActionSetMeteredApnsEnabled(!ENABLE);
     }
 
     private static void onEnableAllMeteredApns(Intent intent, Context context) {
@@ -110,7 +111,9 @@ public class CarrierActionUtils {
                 SubscriptionManager.getDefaultVoiceSubscriptionId());
         logd("onEnableAllMeteredApns subId: " + subId);
         final TelephonyManager telephonyMgr = context.getSystemService(TelephonyManager.class);
-        telephonyMgr.carrierActionSetMeteredApnsEnabled(subId, ENABLE);
+
+        telephonyMgr.createForSubscriptionId(subId)
+                .carrierActionSetMeteredApnsEnabled(ENABLE);
     }
 
     private static void onEnableDefaultURLHandler(Context context) {
