@@ -22,6 +22,30 @@
       "revId": "9800088ff14096344598434019fd2f4f676f310f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82defb1e_3b4538a0",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T17:11:51Z",
+      "side": 1,
+      "message": "Actually we still need to support v1.0~1.2 HIDL data profile, which requires these field, so no change is needed in this layer.\n\nI already have the CL for data profile changes, you can abandon this CL for now.",
+      "parentUuid": "f4327f34_59bca375",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "9800088ff14096344598434019fd2f4f676f310f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
