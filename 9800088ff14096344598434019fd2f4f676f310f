@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4327f34_59bca375",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-08T04:03:31Z",
+      "side": 1,
+      "message": "DataProfile is a system API, you can\u0027t directly change the signature of a system/public. Maybe deprecate the old constructor, getMvnoType(), getMvnoMatchData() and start a new constructor without mvnoType?",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "9800088ff14096344598434019fd2f4f676f310f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
