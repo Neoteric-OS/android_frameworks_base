@@ -22,6 +22,30 @@
       "revId": "3874716dca712d569348e7d2d89e3e4c2aefddeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddac7aaa_2deaa866",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1143570
+      },
+      "writtenOn": "2018-10-08T10:36:14Z",
+      "side": 1,
+      "message": "Hi MikHail,\n   You are right, I have modified it according to your advice. Thanks!",
+      "parentUuid": "11d68635_5dc3f540",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 51
+      },
+      "revId": "3874716dca712d569348e7d2d89e3e4c2aefddeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
