@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b088f85e_432a449b",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3917,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T23:22:20Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 3917,
+        "startChar": 5,
+        "endLine": 3917,
+        "endChar": 18
+      },
+      "revId": "7dc6ebc08303289f4f6e83309c7d6b865f175bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd36a60_8343d934",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T23:22:20Z",
+      "side": 1,
+      "message": "copyFrom(ssFromBundle)? Better make sure every fields are copied.",
+      "range": {
+        "startLine": 1175,
+        "startChar": 0,
+        "endLine": 1198,
+        "endChar": 85
+      },
+      "revId": "7dc6ebc08303289f4f6e83309c7d6b865f175bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
