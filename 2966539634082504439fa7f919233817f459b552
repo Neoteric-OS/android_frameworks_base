@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd28e9d_b6e2c8e5",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T18:45:25Z",
+      "side": 0,
+      "message": "Looks like this extra is already system API? Can we just use the value of getDataRoamingFromRegistration() here?",
+      "range": {
+        "startLine": 1222,
+        "startChar": 22,
+        "endLine": 1222,
+        "endChar": 51
+      },
+      "revId": "2966539634082504439fa7f919233817f459b552",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

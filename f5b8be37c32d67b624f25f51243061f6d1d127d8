@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ac8e18_dee252d6",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3917,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T18:45:25Z",
+      "side": 1,
+      "message": "We should provide alternative solution here.",
+      "range": {
+        "startLine": 3917,
+        "startChar": 7,
+        "endLine": 3917,
+        "endChar": 18
+      },
+      "revId": "f5b8be37c32d67b624f25f51243061f6d1d127d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000bc187_476cc1d8",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-08T18:45:25Z",
+      "side": 1,
+      "message": "Try putting the entire ServiceState into the extra. For the existing extras which are already system APIs, should just leave them there.",
+      "range": {
+        "startLine": 1172,
+        "startChar": 0,
+        "endLine": 1231,
+        "endChar": 5
+      },
+      "revId": "f5b8be37c32d67b624f25f51243061f6d1d127d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
