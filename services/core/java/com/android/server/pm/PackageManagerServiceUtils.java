@@ -60,7 +60,6 @@ import android.util.proto.ProtoOutputStream;
 import dalvik.system.VMRuntime;
 
 import libcore.io.IoUtils;
-import libcore.io.Libcore;
 import libcore.io.Streams;
 
 import java.io.BufferedReader;
