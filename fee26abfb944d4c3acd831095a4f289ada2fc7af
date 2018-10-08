@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831cfeda_33d7c630",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-08T09:35:38Z",
+      "side": 1,
+      "message": "Nits: I found it confuses me that getGlobalProxy actually get global proxy.\nBut getDefaultProxy gives me global proxy or default proxy if default proxy is enabled.\nAre we able to rename them in future, and use 3 clear get/set functions to access it?",
+      "range": {
+        "startLine": 129,
+        "startChar": 21,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "fee26abfb944d4c3acd831095a4f289ada2fc7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
