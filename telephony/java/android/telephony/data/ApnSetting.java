@@ -257,7 +257,7 @@ public class ApnSetting implements Parcelable {
 
     private final int mProfileId;
 
-    private final boolean mModemCognitive;
+    private final boolean mPersistent;
     private final int mMaxConns;
     private final int mWaitTime;
     private final int mMaxConnsTime;
@@ -290,13 +290,13 @@ public class ApnSetting implements Parcelable {
     }
 
     /**
-     * Returns if the APN setting is to be set in modem.
+     * Returns if the APN setting is persistent on the modem.
      *
      * @return is the APN setting to be set in modem
      * @hide
      */
-    public boolean getModemCognitive() {
-        return mModemCognitive;
+    public boolean isPersistent() {
+        return mPersistent;
     }
 
     /**
@@ -616,7 +616,7 @@ public class ApnSetting implements Parcelable {
         this.mCarrierEnabled = builder.mCarrierEnabled;
         this.mNetworkTypeBitmask = builder.mNetworkTypeBitmask;
         this.mProfileId = builder.mProfileId;
-        this.mModemCognitive = builder.mModemCognitive;
+        this.mPersistent = builder.mModemCognitive;
         this.mMaxConns = builder.mMaxConns;
         this.mWaitTime = builder.mWaitTime;
         this.mMaxConnsTime = builder.mMaxConnsTime;
@@ -737,11 +737,11 @@ public class ApnSetting implements Parcelable {
     /** @hide */
     public static ApnSetting makeApnSetting(ApnSetting apn) {
         return makeApnSetting(apn.mId, apn.mOperatorNumeric, apn.mEntryName, apn.mApnName,
-            apn.mProxyAddress, apn.mProxyPort, apn.mMmsc, apn.mMmsProxyAddress,
-            apn.mMmsProxyPort, apn.mUser, apn.mPassword, apn.mAuthType, apn.mApnTypeBitmask,
-            apn.mProtocol, apn.mRoamingProtocol, apn.mCarrierEnabled, apn.mNetworkTypeBitmask,
-            apn.mProfileId, apn.mModemCognitive, apn.mMaxConns, apn.mWaitTime,
-            apn.mMaxConnsTime, apn.mMtu, apn.mMvnoType, apn.mMvnoMatchData, apn.mApnSetId);
+                apn.mProxyAddress, apn.mProxyPort, apn.mMmsc, apn.mMmsProxyAddress,
+                apn.mMmsProxyPort, apn.mUser, apn.mPassword, apn.mAuthType, apn.mApnTypeBitmask,
+                apn.mProtocol, apn.mRoamingProtocol, apn.mCarrierEnabled, apn.mNetworkTypeBitmask,
+                apn.mProfileId, apn.mPersistent, apn.mMaxConns, apn.mWaitTime,
+                apn.mMaxConnsTime, apn.mMtu, apn.mMvnoType, apn.mMvnoMatchData, apn.mApnSetId);
     }
 
     /**
@@ -947,7 +947,7 @@ public class ApnSetting implements Parcelable {
         sb.append(", ").append(PROTOCOL_INT_MAP.get(mRoamingProtocol));
         sb.append(", ").append(mCarrierEnabled);
         sb.append(", ").append(mProfileId);
-        sb.append(", ").append(mModemCognitive);
+        sb.append(", ").append(mPersistent);
         sb.append(", ").append(mMaxConns);
         sb.append(", ").append(mWaitTime);
         sb.append(", ").append(mMaxConnsTime);
@@ -1022,31 +1022,31 @@ public class ApnSetting implements Parcelable {
         ApnSetting other = (ApnSetting) o;
 
         return mEntryName.equals(other.mEntryName)
-            && Objects.equals(mId, other.mId)
-            && Objects.equals(mOperatorNumeric, other.mOperatorNumeric)
-            && Objects.equals(mApnName, other.mApnName)
-            && Objects.equals(mProxyAddress, other.mProxyAddress)
-            && Objects.equals(mMmsc, other.mMmsc)
-            && Objects.equals(mMmsProxyAddress, other.mMmsProxyAddress)
-            && Objects.equals(mMmsProxyPort, other.mMmsProxyPort)
-            && Objects.equals(mProxyPort, other.mProxyPort)
-            && Objects.equals(mUser, other.mUser)
-            && Objects.equals(mPassword, other.mPassword)
-            && Objects.equals(mAuthType, other.mAuthType)
-            && Objects.equals(mApnTypeBitmask, other.mApnTypeBitmask)
-            && Objects.equals(mProtocol, other.mProtocol)
-            && Objects.equals(mRoamingProtocol, other.mRoamingProtocol)
-            && Objects.equals(mCarrierEnabled, other.mCarrierEnabled)
-            && Objects.equals(mProfileId, other.mProfileId)
-            && Objects.equals(mModemCognitive, other.mModemCognitive)
-            && Objects.equals(mMaxConns, other.mMaxConns)
-            && Objects.equals(mWaitTime, other.mWaitTime)
-            && Objects.equals(mMaxConnsTime, other.mMaxConnsTime)
-            && Objects.equals(mMtu, other.mMtu)
-            && Objects.equals(mMvnoType, other.mMvnoType)
-            && Objects.equals(mMvnoMatchData, other.mMvnoMatchData)
-            && Objects.equals(mNetworkTypeBitmask, other.mNetworkTypeBitmask)
-            && Objects.equals(mApnSetId, other.mApnSetId);
+                && Objects.equals(mId, other.mId)
+                && Objects.equals(mOperatorNumeric, other.mOperatorNumeric)
+                && Objects.equals(mApnName, other.mApnName)
+                && Objects.equals(mProxyAddress, other.mProxyAddress)
+                && Objects.equals(mMmsc, other.mMmsc)
+                && Objects.equals(mMmsProxyAddress, other.mMmsProxyAddress)
+                && Objects.equals(mMmsProxyPort, other.mMmsProxyPort)
+                && Objects.equals(mProxyPort, other.mProxyPort)
+                && Objects.equals(mUser, other.mUser)
+                && Objects.equals(mPassword, other.mPassword)
+                && Objects.equals(mAuthType, other.mAuthType)
+                && Objects.equals(mApnTypeBitmask, other.mApnTypeBitmask)
+                && Objects.equals(mProtocol, other.mProtocol)
+                && Objects.equals(mRoamingProtocol, other.mRoamingProtocol)
+                && Objects.equals(mCarrierEnabled, other.mCarrierEnabled)
+                && Objects.equals(mProfileId, other.mProfileId)
+                && Objects.equals(mPersistent, other.mPersistent)
+                && Objects.equals(mMaxConns, other.mMaxConns)
+                && Objects.equals(mWaitTime, other.mWaitTime)
+                && Objects.equals(mMaxConnsTime, other.mMaxConnsTime)
+                && Objects.equals(mMtu, other.mMtu)
+                && Objects.equals(mMvnoType, other.mMvnoType)
+                && Objects.equals(mMvnoMatchData, other.mMvnoMatchData)
+                && Objects.equals(mNetworkTypeBitmask, other.mNetworkTypeBitmask)
+                && Objects.equals(mApnSetId, other.mApnSetId);
     }
 
     /**
@@ -1069,29 +1069,29 @@ public class ApnSetting implements Parcelable {
         ApnSetting other = (ApnSetting) o;
 
         return mEntryName.equals(other.mEntryName)
-            && Objects.equals(mOperatorNumeric, other.mOperatorNumeric)
-            && Objects.equals(mApnName, other.mApnName)
-            && Objects.equals(mProxyAddress, other.mProxyAddress)
-            && Objects.equals(mMmsc, other.mMmsc)
-            && Objects.equals(mMmsProxyAddress, other.mMmsProxyAddress)
-            && Objects.equals(mMmsProxyPort, other.mMmsProxyPort)
-            && Objects.equals(mProxyPort, other.mProxyPort)
-            && Objects.equals(mUser, other.mUser)
-            && Objects.equals(mPassword, other.mPassword)
-            && Objects.equals(mAuthType, other.mAuthType)
-            && Objects.equals(mApnTypeBitmask, other.mApnTypeBitmask)
-            && (isDataRoaming || Objects.equals(mProtocol, other.mProtocol))
-            && (!isDataRoaming || Objects.equals(mRoamingProtocol, other.mRoamingProtocol))
-            && Objects.equals(mCarrierEnabled, other.mCarrierEnabled)
-            && Objects.equals(mProfileId, other.mProfileId)
-            && Objects.equals(mModemCognitive, other.mModemCognitive)
-            && Objects.equals(mMaxConns, other.mMaxConns)
-            && Objects.equals(mWaitTime, other.mWaitTime)
-            && Objects.equals(mMaxConnsTime, other.mMaxConnsTime)
-            && Objects.equals(mMtu, other.mMtu)
-            && Objects.equals(mMvnoType, other.mMvnoType)
-            && Objects.equals(mMvnoMatchData, other.mMvnoMatchData)
-            && Objects.equals(mApnSetId, other.mApnSetId);
+                && Objects.equals(mOperatorNumeric, other.mOperatorNumeric)
+                && Objects.equals(mApnName, other.mApnName)
+                && Objects.equals(mProxyAddress, other.mProxyAddress)
+                && Objects.equals(mMmsc, other.mMmsc)
+                && Objects.equals(mMmsProxyAddress, other.mMmsProxyAddress)
+                && Objects.equals(mMmsProxyPort, other.mMmsProxyPort)
+                && Objects.equals(mProxyPort, other.mProxyPort)
+                && Objects.equals(mUser, other.mUser)
+                && Objects.equals(mPassword, other.mPassword)
+                && Objects.equals(mAuthType, other.mAuthType)
+                && Objects.equals(mApnTypeBitmask, other.mApnTypeBitmask)
+                && (isDataRoaming || Objects.equals(mProtocol, other.mProtocol))
+                && (!isDataRoaming || Objects.equals(mRoamingProtocol, other.mRoamingProtocol))
+                && Objects.equals(mCarrierEnabled, other.mCarrierEnabled)
+                && Objects.equals(mProfileId, other.mProfileId)
+                && Objects.equals(mPersistent, other.mPersistent)
+                && Objects.equals(mMaxConns, other.mMaxConns)
+                && Objects.equals(mWaitTime, other.mWaitTime)
+                && Objects.equals(mMaxConnsTime, other.mMaxConnsTime)
+                && Objects.equals(mMtu, other.mMtu)
+                && Objects.equals(mMvnoType, other.mMvnoType)
+                && Objects.equals(mMvnoMatchData, other.mMvnoMatchData)
+                && Objects.equals(mApnSetId, other.mApnSetId);
     }
 
     /**

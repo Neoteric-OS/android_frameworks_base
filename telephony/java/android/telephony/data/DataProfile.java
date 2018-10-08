@@ -68,17 +68,29 @@ public final class DataProfile implements Parcelable {
 
     private final int mMtu;
 
-    private final String mMvnoType;
+    private final boolean mPersistent;
 
-    private final String mMvnoMatchData;
+    private final boolean mPreferred;
 
-    private final boolean mModemCognitive;
-
+    /**
+     * @deprecated Use {@link #DataProfile(int, String, String, int, String, String, int, int, int,
+     * int, boolean, int, String, int, int, boolean, boolean)}
+     */
+    @Deprecated
     public DataProfile(int profileId, String apn, String protocol, int authType,
-                String userName, String password, int type, int maxConnsTime, int maxConns,
-                int waitTime, boolean enabled, int supportedApnTypesBitmap, String roamingProtocol,
-                int bearerBitmap, int mtu, String mvnoType, String mvnoMatchData,
-                boolean modemCognitive) {
+                       String userName, String password, int type, int maxConnsTime, int maxConns,
+                       int waitTime, boolean enabled, int supportedApnTypesBitmap,
+                       String roamingProtocol, int bearerBitmap, int mtu, String mvnoType,
+                       String mvnoMatchData, boolean persistent) {
+        this(profileId, apn, protocol, authType, userName, password, type, maxConnsTime, maxConns,
+                waitTime, enabled, supportedApnTypesBitmap, roamingProtocol, bearerBitmap, mtu,
+                persistent, false);
+    }
+
+    public DataProfile(int profileId, String apn, String protocol, int authType, String userName,
+                       String password, int type, int maxConnsTime, int maxConns, int waitTime,
+                       boolean enabled, int supportedApnTypesBitmap, String roamingProtocol,
+                       int bearerBitmap, int mtu, boolean persistent, boolean preferred) {
 
         this.mProfileId = profileId;
         this.mApn = apn;
@@ -100,9 +112,8 @@ public final class DataProfile implements Parcelable {
         this.mRoamingProtocol = roamingProtocol;
         this.mBearerBitmap = bearerBitmap;
         this.mMtu = mtu;
-        this.mMvnoType = mvnoType;
-        this.mMvnoMatchData = mvnoMatchData;
-        this.mModemCognitive = modemCognitive;
+        this.mPersistent = persistent;
+        this.mPreferred = preferred;
     }
 
     public DataProfile(Parcel source) {
@@ -121,9 +132,8 @@ public final class DataProfile implements Parcelable {
         mRoamingProtocol = source.readString();
         mBearerBitmap = source.readInt();
         mMtu = source.readInt();
-        mMvnoType = source.readString();
-        mMvnoMatchData = source.readString();
-        mModemCognitive = source.readBoolean();
+        mPersistent = source.readBoolean();
+        mPreferred = source.readBoolean();
     }
 
     /**
@@ -208,21 +218,47 @@ public final class DataProfile implements Parcelable {
 
     /**
      * @return The MVNO type: possible values are "imsi", "gid", "spn".
+     *
+     * @deprecated Do not call this anymore. Due to the refactoring when carrier id was introduced,
+     * this information becomes not available anymore. We are pretty confident that this
+     * field is not used at all at the modem layer, hence break the backward compatibility.
      */
-    public String getMvnoType() { return mMvnoType; }
+    @Deprecated
+    public String getMvnoType() { return ""; }
 
     /**
      * @return The MVNO match data. For example,
      * SPN: A MOBILE, BEN NL, ...
      * IMSI: 302720x94, 2060188, ...
      * GID: 4E, 33, ...
+     *
+     * @deprecated Do not call this anymore. Due to the refactoring when carrier id was introduced,
+     * this information becomes not available anymore. We are pretty confident that this
+     * field is not used at all at the modem layer, hence break the backward compatibility.
      */
-    public String getMvnoMatchData() { return mMvnoMatchData; }
+    @Deprecated
+    public String getMvnoMatchData() { return ""; }
 
     /**
-     * @return True if the data profile was sent to the modem through setDataProfile earlier.
+     * @return If true, modem must persist this data profile. If the same data profile has already
+     * existed, this data profile must overwrite it.
+     *
+     * @deprecated Use {@link #isPersistent()}
      */
-    public boolean isModemCognitive() { return mModemCognitive; }
+    @Deprecated
+    public boolean isModemCognitive() { return isPersistent(); }
+
+    /**
+     * @return If true, modem must persist this data profile. If the same data profile has already
+     * existed, this data profile must overwrite it.
+     */
+    public boolean isPersistent() { return mPersistent; }
+
+    /**
+     * @return True if this data profile was used to bring up the last default (i.e internet) data
+     * connection successfully.
+     */
+    public boolean isPreferred() { return  mPreferred; }
 
     @Override
     public int describeContents() {
@@ -237,7 +273,7 @@ public final class DataProfile implements Parcelable {
                 + "/" + mType + "/" + mMaxConnsTime
                 + "/" + mMaxConns + "/" + mWaitTime + "/" + mEnabled + "/"
                 + mSupportedApnTypesBitmap + "/" + mRoamingProtocol + "/" + mBearerBitmap + "/"
-                + mMtu + "/" + mMvnoType + "/" + mMvnoMatchData + "/" + mModemCognitive;
+                + mMtu + "/" + mPersistent + "/" + mPreferred;
     }
 
     @Override
@@ -263,9 +299,8 @@ public final class DataProfile implements Parcelable {
         dest.writeString(mRoamingProtocol);
         dest.writeInt(mBearerBitmap);
         dest.writeInt(mMtu);
-        dest.writeString(mMvnoType);
-        dest.writeString(mMvnoMatchData);
-        dest.writeBoolean(mModemCognitive);
+        dest.writeBoolean(mPersistent);
+        dest.writeBoolean(mPreferred);
     }
 
     public static final Parcelable.Creator<DataProfile> CREATOR =
