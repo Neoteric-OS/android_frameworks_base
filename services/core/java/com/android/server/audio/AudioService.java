@@ -4649,20 +4649,15 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    @Override
-    public void setHearingAidDeviceConnectionState(BluetoothDevice device, int state)
-    {
-        Log.i(TAG, "setBluetoothHearingAidDeviceConnectionState");
-
-        setBluetoothHearingAidDeviceConnectionState(
-                device, state,  false /* suppressNoisyIntent */, AudioSystem.DEVICE_NONE);
-    }
-
     public int setBluetoothHearingAidDeviceConnectionState(
             BluetoothDevice device, int state, boolean suppressNoisyIntent,
             int musicDevice)
     {
         int delay;
+        mDeviceLogger.log((new AudioEventLogger.StringEvent(
+                "setHearingAidDeviceConnectionState state=" + state
+                            + " addr=" + device.getAddress()
+                            + " supprNoisy=" + suppressNoisyIntent)).printLog(TAG));
         synchronized (mConnectedDevices) {
             if (!suppressNoisyIntent) {
                 int intState = (state == BluetoothHearingAid.STATE_CONNECTED) ? 1 : 0;
@@ -5837,6 +5832,7 @@ public class AudioService extends IAudioService.Stub
                                    address));
         sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
                 AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0, null, 0);
+        setCurrentAudioRouteNameIfPossible(name);
     }
 
     private void onSendBecomingNoisyIntent() {
@@ -5853,7 +5849,7 @@ public class AudioService extends IAudioService.Stub
         mConnectedDevices.remove(
                 makeDeviceListKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, address));
         // Remove A2DP routes as well
-        setCurrentAudioRouteName(null);
+        setCurrentAudioRouteNameIfPossible(null);
     }
 
     // must be called synchronized on mConnectedDevices
@@ -5914,6 +5910,7 @@ public class AudioService extends IAudioService.Stub
                                    address));
         sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
                 AudioSystem.DEVICE_OUT_HEARING_AID, 0, null, 0);
+        setCurrentAudioRouteNameIfPossible(name);
     }
 
     // must be called synchronized on mConnectedDevices
@@ -5923,7 +5920,7 @@ public class AudioService extends IAudioService.Stub
         mConnectedDevices.remove(
                 makeDeviceListKey(AudioSystem.DEVICE_OUT_HEARING_AID, address));
         // Remove Hearing Aid routes as well
-        setCurrentAudioRouteName(null);
+        setCurrentAudioRouteNameIfPossible(null);
     }
 
     // must be called synchronized on mConnectedDevices
@@ -5967,7 +5964,6 @@ public class AudioService extends IAudioService.Stub
                 } else {
                     makeA2dpDeviceUnavailableNow(address);
                 }
-                setCurrentAudioRouteName(null);
             } else if (!isConnected && state == BluetoothProfile.STATE_CONNECTED) {
                 if (btDevice.isBluetoothDock()) {
                     // this could be a reconnection after a transient disconnection
@@ -5991,7 +5987,6 @@ public class AudioService extends IAudioService.Stub
                 }
                 makeA2dpDeviceAvailable(address, btDevice.getName(),
                         "onSetA2dpSinkConnectionState");
-                setCurrentAudioRouteName(btDevice.getAliasName());
             }
         }
     }
@@ -6043,23 +6038,33 @@ public class AudioService extends IAudioService.Stub
 
             if (isConnected && state != BluetoothProfile.STATE_CONNECTED) {
                 makeHearingAidDeviceUnavailable(address);
-                setCurrentAudioRouteName(null);
             } else if (!isConnected && state == BluetoothProfile.STATE_CONNECTED) {
                 makeHearingAidDeviceAvailable(address, btDevice.getName(),
                         "onSetHearingAidConnectionState");
-                setCurrentAudioRouteName(btDevice.getAliasName());
             }
         }
     }
 
-    private void setCurrentAudioRouteName(String name){
+    private void setCurrentAudioRouteNameIfPossible(String name) {
         synchronized (mCurAudioRoutes) {
             if (!TextUtils.equals(mCurAudioRoutes.bluetoothName, name)) {
-                mCurAudioRoutes.bluetoothName = name;
-                sendMsg(mAudioHandler, MSG_REPORT_NEW_ROUTES,
-                        SENDMSG_NOOP, 0, 0, null, 0);
+                if (name != null || !isCurrentDeviceConnected()) {
+                    mCurAudioRoutes.bluetoothName = name;
+                    sendMsg(mAudioHandler, MSG_REPORT_NEW_ROUTES,
+                            SENDMSG_NOOP, 0, 0, null, 0);
+                }
             }
         }
+    }
+
+    private boolean isCurrentDeviceConnected() {
+        for (int i = 0; i < mConnectedDevices.size(); i++) {
+            DeviceListSpec deviceSpec = mConnectedDevices.valueAt(i);
+            if (TextUtils.equals(deviceSpec.mDeviceName, mCurAudioRoutes.bluetoothName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void onBluetoothA2dpDeviceConfigChange(BluetoothDevice btDevice)
