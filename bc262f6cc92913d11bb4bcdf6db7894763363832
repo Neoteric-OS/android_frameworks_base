@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0e55fa_7a5fbca7",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-09T22:01:14Z",
+      "side": 1,
+      "message": "should we keep mMvnotype and mMvnoData around and keep returning mMvnoType? This dataProfile is just a wrapper class, so there is no backward compatibility to break. Callers can keep using the old constructor and get MvnoData and MvnoType. But internally Dctracker simply pass null to mvno \u0026 mvno_data.",
+      "range": {
+        "startLine": 227,
+        "startChar": 34,
+        "endLine": 227,
+        "endChar": 44
+      },
+      "revId": "bc262f6cc92913d11bb4bcdf6db7894763363832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
