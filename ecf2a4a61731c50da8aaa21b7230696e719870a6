@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0fba2b67_66740fae",
+        "filename": "startop/iorap/TEST_MAPPING",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1083173
+      },
+      "writtenOn": "2018-10-09T23:32:44Z",
+      "side": 1,
+      "message": "Presubmit automatically runs in postsubmit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d37257b4_966bf14e",
         "filename": "startop/iorap/tests/AndroidTest.xml",
         "patchSetId": 1
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Why would it be 0 already? I thought the tests were supposed to be hermetic.",
       "parentUuid": "d37257b4_966bf14e",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb521d3_0f62d272",
+        "filename": "startop/iorap/tests/AndroidTest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1083173
+      },
+      "writtenOn": "2018-10-09T23:32:44Z",
+      "side": 1,
+      "message": "Test *should* be hermetic, unfortunately Android has had a poor history of testing and there is no guarantees that everyone\u0027s tests behave properly.\n\n\nTo try and fight against the lack of hermetic tests, we have been playing whack-a-mole and adding \"checkers\" to detect bad device states:\nhttps://cs.corp.google.com/android/tools/tradefederation/core/src/com/android/tradefed/suite/checker/?dr\u003dCSs\u0026g\u003d0\n\n\nYou could create one for this check and add it to the test or the complete test mapping run:\nhttps://cs.corp.google.com/android/tools/tradefederation/core/res/config/suite/test_mapping_suite.xml?q\u003dtest_mapping\u0026sq\u003dpackage:%5Eandroid$\u0026dr\u003dC\u0026l\u003d16",
+      "parentUuid": "4ef1e17f_81e61373",
       "range": {
         "startLine": 30,
         "startChar": 0,
