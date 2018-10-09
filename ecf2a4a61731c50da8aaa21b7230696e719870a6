@@ -93,6 +93,30 @@
       "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd2ba87_418a0920",
+        "filename": "startop/iorap/tests/AndroidTest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-09T23:39:36Z",
+      "side": 1,
+      "message": "If I\u0027m understanding correctly, the default state should be whatever we get normally after reboot (i.e. \u0027setenforce is never already 0\u0027). And if it\u0027s not that, then some other tests didn\u0027t properly restore it?",
+      "parentUuid": "3eb521d3_0f62d272",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
