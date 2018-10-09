@@ -46,6 +46,30 @@
       "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d797853a_c21ff554",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-09T13:34:16Z",
+      "side": 1,
+      "message": "Actually, the static method cannot be mocked until dexmaker 2.16.1 with explicit code change.\nhttps://moltmann.github.io/dexmaker/com/android/dx/mockito/inline/extended/ExtendedMockito.html\nThat implies, after we make NetworkPolicyManagerInternal.isUidNetworkingBlocked static, CS will apply its logic automatically regardless of the mocked NPMS instance, so we could remove these mock code.\nIs that ok?",
+      "parentUuid": "101f9258_2cffc47a",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 45
+      },
+      "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
