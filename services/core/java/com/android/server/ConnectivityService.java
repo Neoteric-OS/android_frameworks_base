@@ -1660,6 +1660,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 "ConnectivityService");
     }
 
+    private void enforceAnyPermissionOf(String... permissions) {
+        for (String permission : permissions) {
+            if (mContext.checkCallingOrSelfPermission(permission) == PERMISSION_GRANTED) {
+                return;
+            }
+        }
+        throw new SecurityException(
+            "requires one of the " + String.join(", ", permissions) + " permissions");
+    }
+
     private void enforceInternetPermission() {
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.INTERNET,
@@ -1702,6 +1712,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.CONNECTIVITY_INTERNAL,
                 "ConnectivityService");
+    }
+
+    private void enforceNetworkSettingsOrSetup() {
+        enforceAnyPermissionOf(
+            android.Manifest.permission.NETWORK_SETTINGS,
+            android.Manifest.permission.NETWORK_SETUP_WIZARD);
     }
 
     private boolean checkNetworkStackPermission() {
