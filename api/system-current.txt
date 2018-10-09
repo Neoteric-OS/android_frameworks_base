@@ -6130,10 +6130,6 @@ package android.telephony.ims.feature {
     field public static final int STATE_UNAVAILABLE = 0; // 0x0
   }
 
-  public static class ImsFeature.Capabilities {
-    field protected int mCapabilities;
-  }
-
   protected static class ImsFeature.CapabilityCallbackProxy {
     method public void onChangeCapabilityConfigurationError(int, int, int);
   }
@@ -6162,7 +6158,7 @@ package android.telephony.ims.feature {
   }
 
   public static class MmTelFeature.MmTelCapabilities {
-    ctor public MmTelFeature.MmTelCapabilities(android.telephony.ims.feature.ImsFeature.Capabilities);
+    ctor public MmTelFeature.MmTelCapabilities();
     ctor public MmTelFeature.MmTelCapabilities(int);
     method public final void addCapabilities(int);
     method public final boolean isCapable(int);

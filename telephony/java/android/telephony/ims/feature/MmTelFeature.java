@@ -222,21 +222,30 @@ public class MmTelFeature extends ImsFeature {
      * This MmTelFeature can then return the status of each of these capabilities (enabled or not)
      * by sending a {@link #notifyCapabilitiesStatusChanged} callback to the framework. The current
      * status can also be queried using {@link #queryCapabilityStatus()}.
+     * @see #isCapable(int)
      */
     public static class MmTelCapabilities extends Capabilities {
 
         /**
-         * @hide
+         * Create a new empty {@link MmTelCapabilities} instance.
+         * @see #addCapabilities(int)
+         * @see #removeCapabilities(int)
          */
         @VisibleForTesting
         public MmTelCapabilities() {
             super();
         }
 
+        /**@hide*/
         public MmTelCapabilities(Capabilities c) {
             mCapabilities = c.mCapabilities;
         }
 
+        /**
+         * Create a new {@MmTelCapabilities} instance with the provided capabilities.
+         * @param capabilities The capabilities that are supported for MmTel in the form of a
+         *         bitfield.
+         */
         public MmTelCapabilities(int capabilities) {
             mCapabilities = capabilities;
         }
