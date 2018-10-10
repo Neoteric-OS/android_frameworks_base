@@ -157,9 +157,11 @@ public final class ProcessList {
     // LMK_TARGET <minfree> <minkillprio> ... (up to 6 pairs)
     // LMK_PROCPRIO <pid> <uid> <prio>
     // LMK_PROCREMOVE <pid>
+    // LMK_PROCPURGE
     static final byte LMK_TARGET = 0;
     static final byte LMK_PROCPRIO = 1;
     static final byte LMK_PROCREMOVE = 2;
+    static final byte LMK_PROCPURGE = 3;
 
     // These are the various interesting memory levels that we will give to
     // the OOM killer.  Note that the OOM killer only supports 6 slots, so we
@@ -808,6 +810,22 @@ public final class ProcessList {
         return true;
     }
 
+    private static void writeLmkdCommand(ByteBuffer buf) {
+        try {
+            sLmkdOutputStream.write(buf.array(), 0, buf.position());
+            return;
+        } catch (IOException ex) {
+            Slog.w(TAG, "Error writing to lowmemorykiller socket");
+
+            try {
+                sLmkdSocket.close();
+            } catch (IOException ex2) {
+            }
+
+            sLmkdSocket = null;
+        }
+    }
+
     private static void writeLmkd(ByteBuffer buf) {
 
         for (int i = 0; i < 3; i++) {
@@ -819,21 +837,17 @@ public final class ProcessList {
                         }
                         continue;
                     }
+
+                    // Purge any previously registered pids
+                    ByteBuffer purge_buf = ByteBuffer.allocate(4);
+                    purge_buf.putInt(LMK_PROCPURGE);
+                    writeLmkdCommand(purge_buf);
+                    if (sLmkdSocket == null) {
+                        // Write failed, skip the rest and retry */
+                        continue;
+                    }
             }
-
-            try {
-                sLmkdOutputStream.write(buf.array(), 0, buf.position());
-                return;
-            } catch (IOException ex) {
-                Slog.w(TAG, "Error writing to lowmemorykiller socket");
-
-                try {
-                    sLmkdSocket.close();
-                } catch (IOException ex2) {
-                }
-
-                sLmkdSocket = null;
-            }
+            writeLmkdCommand(buf);
         }
     }
 }
