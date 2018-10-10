@@ -70,6 +70,30 @@
       "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f21bcba_3446e110",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-10T06:29:07Z",
+      "side": 1,
+      "message": "After re-reading this, I think you\u0027re right. After this method is static, depending on its implementation is probably completely okay.\n\nThe advantage is that the code becomes a lot simpler, and its version of isUidNetworkingBlocked is the real one so it\u0027s a lot less burden on future implementors to understand what\u0027s going on in this test. Also as Lorenzo points out, if a bug is introduced in the static function then this test breaks, so it provides additional coverage at essentially zero cost.\n\nThe drawback is that it is less well isolated : in a strict purity sense, it\u0027s cleaner to have this test not depend on the implementation of isUidNetworkingBlocked, which would have its own tests, and we\u0027d also have end-to-end tests. That would be super nice, but very costly for little return in this small part of the code. And in a real sense, the only concrete drawback is the risk of two bugs compensating each other in those two parts of the code.\n\nI believe the drawback is minimal (very unlikely to happen), and the advantages of using the function directly are large, and the cost difference is large too. So let\u0027s use it directly.",
+      "parentUuid": "d797853a_c21ff554",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 45
+      },
+      "revId": "bb786d6893b106ab425cc6bac3866bc82e317d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
