@@ -117,6 +117,30 @@
       "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492cfc45_4abf2a2b",
+        "filename": "startop/iorap/tests/AndroidTest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-10-10T18:35:48Z",
+      "side": 1,
+      "message": "Well it depends. Some devices have sepolicy off by default (especially during bringup). Someone else might setenforce 0 in order to get a change they have working and then run your test.\n\nOne possible option would be to add an option to atest \u0027option name\u003d\"permissive\" value\u003d\"true\"\u0027, but I don\u0027t know how to do that.",
+      "parentUuid": "6cd2ba87_418a0920",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
