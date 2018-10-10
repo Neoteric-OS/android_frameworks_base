@@ -141,6 +141,30 @@
       "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004740ec_90759c82",
+        "filename": "startop/iorap/tests/AndroidTest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-10T20:14:37Z",
+      "side": 1,
+      "message": "sbasi, I thought you said the device is rebooted in between tests? Wouldn\u0027t that be good enough to address smoreland\u0027s concern?",
+      "parentUuid": "492cfc45_4abf2a2b",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
