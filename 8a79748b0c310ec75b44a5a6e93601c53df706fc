@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e078d5e_afe26035",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 5414,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-10-10T21:18:00Z",
+      "side": 0,
+      "message": "these APIs were all @hide in P, so I think it\u0027s okay to remove/rename them.",
+      "range": {
+        "startLine": 5394,
+        "startChar": 0,
+        "endLine": 5414,
+        "endChar": 45
+      },
+      "revId": "8a79748b0c310ec75b44a5a6e93601c53df706fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
