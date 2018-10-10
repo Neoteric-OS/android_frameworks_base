@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c45360_63ce76b7",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-10T17:51:09Z",
+      "side": 1,
+      "message": "nit: using {@code}? The language is quite confusing, overwrite the same data profile?",
+      "range": {
+        "startLine": 189,
+        "startChar": 18,
+        "endLine": 189,
+        "endChar": 23
+      },
+      "revId": "7fa6835f7626dd375c35b41bb9572a7b1d20b510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5515a4be_096b6a03",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-10T17:51:09Z",
+      "side": 1,
+      "message": "nit: using {@code }?",
+      "range": {
+        "startLine": 195,
+        "startChar": 15,
+        "endLine": 195,
+        "endChar": 19
+      },
+      "revId": "7fa6835f7626dd375c35b41bb9572a7b1d20b510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
