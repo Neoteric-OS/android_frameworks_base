@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b9ebf6b_20db211d",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3953,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-11T20:57:55Z",
+      "side": 1,
+      "message": "originally, we deprecate ACTION_SERVICE_STATE to use ServiceStateTable due to the background check restriction. However, it seems framework team don\u0027t like servicestateTable solution, so framework explicitly allow the ACTION_SERVICE_STATE to wakeup apps from background :( However, we still marked service state broadcast to be deprecated even though its still functional.\n\nFor my CL, I am adding this extra simply for the data roaming refactor. Given we still have this intent deprecated, I will just have this one marked hidden.\n\nFor the naming, I am following the rest of extras e.g,EXTRA_VOICE_ROAMING_TYPE, EXTRA_LTE_EARFCN_RSRP_BOOST. Do you think I should change this one or just keep it consistent with others? let me know",
+      "parentUuid": "84aba6c9_c63351de",
+      "range": {
+        "startLine": 3953,
+        "startChar": 54,
+        "endLine": 3953,
+        "endChar": 66
+      },
+      "revId": "85da006d658822b35c80b16f6ff952ff7f8b9034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ca9a93e_476bf680",
         "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
         "patchSetId": 4
