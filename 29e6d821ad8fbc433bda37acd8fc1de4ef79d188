@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "540ca114_9195a17a",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-10-11T15:46:15Z",
+      "side": 1,
+      "message": "hide: extra space",
+      "revId": "29e6d821ad8fbc433bda37acd8fc1de4ef79d188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432196c_91989b74",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-10-11T15:46:15Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 12
+      },
+      "revId": "29e6d821ad8fbc433bda37acd8fc1de4ef79d188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670c2ffd_604400d7",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-10-11T15:46:15Z",
+      "side": 1,
+      "message": "It\u0027s not clear what those variables mean, I just \"learned\" it when reading the .h comment - could you please add some javadocs here?",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "29e6d821ad8fbc433bda37acd8fc1de4ef79d188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
