@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57c2e77_798c2930",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-10-11T16:18:24Z",
+      "side": 1,
+      "message": "This looks good, I am going to look for a standard way to do this for all of android.",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 75
+      },
+      "revId": "ec0aac9c8b7278f516e5c6709f6c760b2bb1316e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b428df_0bb545f1",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-10-11T16:18:24Z",
+      "side": 1,
+      "message": "Can you use org.unicode.cldr.util.Iso639Data.toBiblio3",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 59
+      },
+      "revId": "ec0aac9c8b7278f516e5c6709f6c760b2bb1316e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
