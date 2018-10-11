@@ -102,6 +102,29 @@
       "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbea980b_45ca73b0",
+        "filename": "tools/aapt2/link/TableMerger.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1006469
+      },
+      "writtenOn": "2018-10-11T13:44:43Z",
+      "side": 1,
+      "message": "This will overwrite the entry in the merged table on every .flat file which is not how it used to work. Wrapping it in\n\n if (src_entry-\u003eoverlayable_declarations.size() \u003e 0) {\n    ...\n }\n\nprevents this. To verify that something like this is needed, check frameworks/base/libs/androidfw/tests/data/basic/basic.apk and if string/test2 is assigned OVERLAYABLE. string/test2 is part of values, values-de and values-fr. The .flat files happen to be merged in the order values-de, values and values-fr; values will correctly set overlayable_declarations, but values-fr will incorrectly reset it to an empty vector.\n\nNote: the overlay argument to MergeEntry is now unused. This feels wrong.",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 87
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
