@@ -70,6 +70,125 @@
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "106ad950_adf19f36",
+        "filename": "startop/tools/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "`const auto\u0026` maybe?",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f38c554_bb067761",
+        "filename": "startop/tools/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6004e3e6_f5247764",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "Suggestion: I generally like to make section headers visually distinct by using block comments.",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4d3f86_c8325485",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "Grammar/spelling: \"they are freed when\"",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9969cf_ff67c436",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "It seems weird to have an instance of a class as a member of class.  Could these be moved into the enclosing namespace, or perhaps put in a Type namespace inside of that?",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea3507e_4ba959b7",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "This can be conflated with the object-oriented notion of Prototype.  Is it consistent with other Dex terminology?  Could it be re-named to FunctionSignature?",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10348ab1_a39af142",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-11T21:42:00Z",
+      "side": 1,
+      "message": "Suggestion: The `using` keyword can do a lot of different things.  I find `typedef` to be clearer when making type aliases.",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
