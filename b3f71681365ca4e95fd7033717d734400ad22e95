@@ -46,6 +46,30 @@
       "revId": "b3f71681365ca4e95fd7033717d734400ad22e95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ba84a2_e956ce5b",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-10-11T16:12:34Z",
+      "side": 1,
+      "message": "yes, coming soon",
+      "parentUuid": "e4f70cc8_c51c6199",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "b3f71681365ca4e95fd7033717d734400ad22e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
