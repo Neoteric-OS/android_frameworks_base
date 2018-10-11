@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b6f86f_10aca25d",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-10-11T22:00:28Z",
+      "side": 1,
+      "message": "This is causing hidl_test_java to fail. registerAsServiceInternal is calling interfaceChain on this proxy. The error that this prints is this:\n10-11 21:39:48.362  2812  2812 E hw-Parcel: Buffer length 37 does not match expected size 1.\n\n\"android.hardware.tests.baz@1.0::IBaz\\0\" is of length 37.",
+      "range": {
+        "startLine": 272,
+        "startChar": 1,
+        "endLine": 274,
+        "endChar": 84
+      },
+      "revId": "8321ea542cdc3e32fd3dd176604d98429304668e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
