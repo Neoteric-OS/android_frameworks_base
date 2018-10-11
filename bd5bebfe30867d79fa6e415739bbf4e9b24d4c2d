@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0810f05b_e7795a72",
+        "filename": "startop/tools/view_compiler/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-11T21:03:57Z",
+      "side": 1,
+      "message": "You can just put this into startop/ , startop/tools sounds like something we\u0027d use purely for development (not shipped on device)",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
