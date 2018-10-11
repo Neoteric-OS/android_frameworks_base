@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3365d562_a6d4f2d4",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3953,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-11T22:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cdf40e8_036f83c6",
+      "range": {
+        "startLine": 3953,
+        "startChar": 54,
+        "endLine": 3953,
+        "endChar": 66
+      },
+      "revId": "85da006d658822b35c80b16f6ff952ff7f8b9034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca9a93e_476bf680",
         "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
         "patchSetId": 4
