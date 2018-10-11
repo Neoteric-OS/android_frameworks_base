@@ -34,6 +34,24 @@
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32ca9689_f5192e50",
+        "filename": "startop/tools/view_compiler/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-11T21:22:36Z",
+      "side": 1,
+      "message": "The CL to do the renaming is at http://aosp/787428",
+      "parentUuid": "727dafaa_2411faff",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
