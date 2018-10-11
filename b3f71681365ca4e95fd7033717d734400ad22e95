@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a44721_dcdb64e2",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-10-11T16:08:10Z",
+      "side": 1,
+      "message": "how are these supposed to be used in Java ? they\u0027re private final but have no getters so perhaps in a different change ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "b3f71681365ca4e95fd7033717d734400ad22e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
