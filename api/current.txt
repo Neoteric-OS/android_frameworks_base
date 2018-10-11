@@ -42615,6 +42615,7 @@ package android.telephony {
     method public int getParentSubId();
     method public int getSimSlotIndex();
     method public int getSubscriptionId();
+    method public int getSubscriptionType();
     method public boolean isEmbedded();
     method public boolean isOpportunistic();
     method public void writeToParcel(android.os.Parcel, int);
@@ -42639,6 +42640,7 @@ package android.telephony {
     method public static int[] getSubscriptionIds(int);
     method public java.util.List<android.telephony.SubscriptionPlan> getSubscriptionPlans(int);
     method public boolean isActiveSubscriptionId(int);
+    method public int getSubscriptionTypeForSubscriptionId(int);
     method public boolean isNetworkRoaming(int);
     method public static boolean isUsableSubscriptionId(int);
     method public static boolean isValidSubscriptionId(int);
@@ -42657,6 +42659,9 @@ package android.telephony {
     field public static final int DEFAULT_SUBSCRIPTION_ID = 2147483647; // 0x7fffffff
     field public static final java.lang.String EXTRA_SUBSCRIPTION_INDEX = "android.telephony.extra.SUBSCRIPTION_INDEX";
     field public static final int INVALID_SUBSCRIPTION_ID = -1; // 0xffffffff
+    field public static final int SIM_NOT_INSERTED = -3; // 0xfffffffd
+    field public static final int SUBSCRIPTION_TYPE_LOCAL_SIM = 0; // 0x0
+    field public static final int SUBSCRIPTION_TYPE_REMOTE_SIM = 1; // 0x1
   }
 
   public static class SubscriptionManager.OnOpportunisticSubscriptionsChangedListener {

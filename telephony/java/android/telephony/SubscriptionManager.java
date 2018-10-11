@@ -123,7 +123,9 @@ public class SubscriptionManager {
     public static final String UNIQUE_KEY_SUBSCRIPTION_ID = "_id";
 
     /**
-     * TelephonyProvider column name for SIM ICC Identifier
+     * TelephonyProvider column name for a unique identifier for the subscription within the
+     * specific subscription type. For example, it contains SIM ICC Identifier subscriptions
+     * on Local SIMs. and Mac-address for Remote-SIM Subscriptions for Bluetooth devices.
      * <P>Type: TEXT (String)</P>
      */
     /** @hide */
@@ -139,6 +141,27 @@ public class SubscriptionManager {
     /** SIM is not inserted */
     /** @hide */
     public static final int SIM_NOT_INSERTED = -1;
+
+    /**
+     * The slot-index for Bluetooth Remote-SIM subscriptions
+     * @hide
+     */
+    public static final int SLOT_INDEX_FOR_REMOTE_SIM_SUB = INVALID_SIM_SLOT_INDEX;
+
+    /**
+     * TelephonyProvider column name Subscription-type.
+     * <P>Type: INTEGER (int)</P> {@link #SUBSCRIPTION_TYPE_LOCAL_SIM} for Local-SIM Subscriptions,
+     * {@link #SUBSCRIPTION_TYPE_REMOTE_SIM} for Remote-SIM Subscriptions.
+     * Default value is 0.
+     */
+    /** @hide */
+    public static final String SUBSCRIPTION_TYPE = "subscription_type";
+
+    /** This constant is to designate a subscription as a Local-SIM Subscription. */
+    public static final int SUBSCRIPTION_TYPE_LOCAL_SIM = 0;
+
+    /** This constant is to designate a subscription as a Remote-SIM Subscription. */
+    public static final int SUBSCRIPTION_TYPE_REMOTE_SIM = 1;
 
     /**
      * TelephonyProvider column name for user displayed name.
@@ -931,7 +954,7 @@ public class SubscriptionManager {
     }
 
     /**
-     * Get the SubscriptionInfo(s) of the currently inserted SIM(s). The records will be sorted
+     * Get the SubscriptionInfo(s) of the currently active SIM(s). The records will be sorted
      * by {@link SubscriptionInfo#getSimSlotIndex} then by {@link SubscriptionInfo#getSubscriptionId}.
      *
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
@@ -1163,21 +1186,84 @@ public class SubscriptionManager {
             logd("[addSubscriptionInfoRecord]- invalid slotIndex");
         }
 
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                // FIXME: This returns 1 on success, 0 on error should should we return it?
-                iSub.addSubInfoRecord(iccId, slotIndex);
-            } else {
-                logd("[addSubscriptionInfoRecord]- ISub service is null");
-            }
-        } catch (RemoteException ex) {
-            // ignore it
-        }
+        addSubscriptionInfoRecord(iccId, null, slotIndex, SUBSCRIPTION_TYPE_LOCAL_SIM);
 
         // FIXME: Always returns null?
         return null;
 
+    }
+
+    /**
+     * Add a new SubscriptionInfo to SubscriptionInfo database if needed
+     * @param uniqueId This is the unique identifier for the subscription within the
+     *                 specific subscription type.
+     * @param displayName human-readable name of the device the subscription corresponds to.
+     * @param slotIndex the slot assigned to this subscription. It is ignored for subscriptionType
+     *                  of {@link #SUBSCRIPTION_TYPE_REMOTE_SIM}.
+     * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
+     * @hide
+     */
+    public void addSubscriptionInfoRecord(String uniqueId, String displayName, int slotIndex,
+            int subscriptionType) {
+        if (VDBG) {
+            logd("[addSubscriptionInfoRecord]+ uniqueId:" + uniqueId
+                    + ", displayName:" + displayName + ", slotIndex:" + slotIndex
+                    + ", subscriptionType: " + subscriptionType);
+        }
+        if (uniqueId == null) {
+            Log.e(LOG_TAG, "[addSubscriptionInfoRecord]- uniqueId is null");
+            return;
+        }
+
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub == null) {
+                Log.e(LOG_TAG, "[addSubscriptionInfoRecord]- ISub service is null");
+                return;
+            }
+            int result = iSub.addSubInfo(uniqueId, displayName, slotIndex, subscriptionType);
+            if (result < 0) {
+                Log.e(LOG_TAG, "Adding of subscription didn't succeed: error = " + result);
+            } else {
+                logd("successfully added new subscription");
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+    }
+
+    /**
+     * Remove SubscriptionInfo record from the SubscriptionInfo database
+     * @param uniqueId This is the unique identifier for the subscription within the specific
+     *                 subscription type.
+     * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
+     * @hide
+     */
+    public void removeSubscriptionInfoRecord(String uniqueId, int subscriptionType) {
+        if (VDBG) {
+            logd("[removeSubscriptionInfoRecord]+ uniqueId:" + uniqueId
+                    + ", subscriptionType: " + subscriptionType);
+        }
+        if (uniqueId == null) {
+            Log.e(LOG_TAG, "[addSubscriptionInfoRecord]- uniqueId is null");
+            return;
+        }
+
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub == null) {
+                Log.e(LOG_TAG, "[removeSubscriptionInfoRecord]- ISub service is null");
+                return;
+            }
+            int result = iSub.removeSubInfo(uniqueId, subscriptionType);
+            if (result < 0) {
+                Log.e(LOG_TAG, "Removal of subscription didn't succeed: error = " + result);
+            } else {
+                logd("successfully removed subscription");
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
     }
 
     /**
@@ -2245,6 +2331,48 @@ public class SubscriptionManager {
         if (VDBG) logd("[setParentSubId]+ parentSubId:" + parentSubId + " subId:" + subId);
         return setSubscriptionPropertyHelper(subId, "parentSubId",
                 (iSub)-> iSub.setParentSubId(parentSubId, subId));
+    }
+
+    /**
+     * Get The type of subscription represented by the given subscription id.
+     * <p>
+     *    There are different types of SIM subscriptions:
+     *    <ul>
+     *      <li>Local SIM subscriptions: Subscriptions corresponding to physical SIMs, eSIMs.
+     *      <li>Remote-SIM subscriptions: Subscriptions corresponding to the SIMs in the phones
+     *          connected via any connectivity mechanism, for example Bluetooth.
+     *    </ul>
+     * </p>
+     *
+     *  @param subId the subscription id.
+     *  @return The type of subscription in the given slot-index.
+     *          Returns {@link #SUBSCRIPTION_TYPE_LOCAL_SIM} for Local SIMs,
+     *          {@link #SUBSCRIPTION_TYPE_REMOTE_SIM} for Remote-SIMs.
+     *          -1 if subId is invalid.
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public int getSubscriptionTypeForSubscriptionId(int subId) {
+        if (VDBG) logd("[getSubscriptionTypeForSubscriptionId]+ subId=" + subId);
+        if (!isValidSubscriptionId(subId)) {
+            if (DBG) {
+                logd("[getSubscriptionTypeForSubscriptionId]- invalid subId");
+            }
+            return -1;
+        }
+
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        SubscriptionInfo subInfo = null;
+
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub != null) {
+                subInfo = iSub.getActiveSubscriptionInfo(subId, pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        return (subInfo == null) ? -1 : subInfo.getSubscriptionType();
     }
 
     private interface CallISubMethodHelper {

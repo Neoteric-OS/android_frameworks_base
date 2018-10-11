@@ -148,6 +148,11 @@ public class SubscriptionInfo implements Parcelable {
     private int mParentSubId;
 
     /**
+     * Type of subscription
+     */
+    private int mSubscriptionType;
+
+    /**
      * @hide
      */
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
@@ -156,7 +161,8 @@ public class SubscriptionInfo implements Parcelable {
             @Nullable UiccAccessRule[] accessRules, String cardId) {
         this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
                 roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardId,
-                false, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                false, SubscriptionManager.INVALID_SUBSCRIPTION_ID,
+                SubscriptionManager.SUBSCRIPTION_TYPE_LOCAL_SIM);
     }
 
     /**
@@ -166,7 +172,7 @@ public class SubscriptionInfo implements Parcelable {
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
             @Nullable UiccAccessRule[] accessRules, String cardId, boolean isOpportunistic,
-            int parentSubId) {
+            int parentSubId, int subType) {
         this.mId = id;
         this.mIccId = iccId;
         this.mSimSlotIndex = simSlotIndex;
@@ -185,6 +191,7 @@ public class SubscriptionInfo implements Parcelable {
         this.mCardId = cardId;
         this.mIsOpportunistic = isOpportunistic;
         this.mParentSubId = parentSubId;
+        this.mSubscriptionType = subType;
     }
 
     /**
@@ -401,6 +408,16 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     * This method returns the type of a subscription. It can be
+     * {@link SubscriptionManager#SUBSCRIPTION_TYPE_LOCAL_SIM} or
+     * {@link SubscriptionManager#SUBSCRIPTION_TYPE_REMOTE_SIM}.
+     * @return the type of subscription
+     */
+    public int getSubscriptionType() {
+        return mSubscriptionType;
+    }
+
+    /**
      * Checks whether the app with the given context is authorized to manage this subscription
      * according to its metadata. Only supported for embedded subscriptions (if {@link #isEmbedded}
      * returns true).
@@ -494,10 +511,11 @@ public class SubscriptionInfo implements Parcelable {
             String cardId = source.readString();
             boolean isOpportunistic = source.readBoolean();
             int parentSubId = source.readInt();
+            int subType = source.readInt();
 
             return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
                     nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
-                    isEmbedded, accessRules, cardId, isOpportunistic, parentSubId);
+                    isEmbedded, accessRules, cardId, isOpportunistic, parentSubId, subType);
         }
 
         @Override
@@ -526,6 +544,7 @@ public class SubscriptionInfo implements Parcelable {
         dest.writeString(mCardId);
         dest.writeBoolean(mIsOpportunistic);
         dest.writeInt(mParentSubId);
+        dest.writeInt(mSubscriptionType);
     }
 
     @Override
@@ -559,7 +578,8 @@ public class SubscriptionInfo implements Parcelable {
                 + " mnc " + mMnc + "mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
                 + " accessRules " + Arrays.toString(mAccessRules)
                 + " cardId=" + cardIdToPrint + " isOpportunistic " + mIsOpportunistic
-                + " parentSubId=" + mParentSubId + "}";
+                + " parentSubId=" + mParentSubId
+                + " subscriptionType=" + mSubscriptionType + "}";
     }
 
     @Override
