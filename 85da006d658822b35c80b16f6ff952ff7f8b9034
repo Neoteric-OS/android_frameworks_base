@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84aba6c9_c63351de",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3953,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-11T18:11:35Z",
+      "side": 1,
+      "message": "Should be something like:\nandroid.intent.extra.SERVICE_STATE\n\nAlso, ACTION_SERVICE_STATE itself is deprecated, so why are we introducing new functionality to that deprecated intent?  I thought android.provider.Telephony.ServiceStateTable was the way service state data was supposed to be communicated now?",
+      "range": {
+        "startLine": 3953,
+        "startChar": 54,
+        "endLine": 3953,
+        "endChar": 66
+      },
+      "revId": "85da006d658822b35c80b16f6ff952ff7f8b9034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca9a93e_476bf680",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-11T18:11:35Z",
+      "side": 1,
+      "message": "Should this be @ServiceState.RoamingType?",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 13
+      },
+      "revId": "85da006d658822b35c80b16f6ff952ff7f8b9034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
