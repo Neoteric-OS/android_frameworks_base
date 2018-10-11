@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1038741e_db40f8d3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-10-11T07:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37dabd5b_a20639da",
+      "revId": "ca5837d235bcb6161e190bafbf3375ee46386b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c823bf44_9de59b62",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 2
