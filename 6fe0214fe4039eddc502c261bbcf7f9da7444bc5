@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7cc2030_6bb21bd7",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Add @GuardedBy(\"mLock\")",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9557ade_ebf9d4e2",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized for both this and \"other\"",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a41eb9_637e0f95",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc00619c_d4e0ee71",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c2c919_9c259874",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8e51c8_89b72f3b",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5345100_15f46d7e",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b206eb86_649b7d69",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94c770b_0ee291d7",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9491a379_f05c7cb1",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e9d1d1_e6c64763",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Need to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d475ade5_652351ea",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Next four lines need to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688d3eda_73fb84eb",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "In the Android platform we usually have only lock per file called mLock and then everything in this file get synchronized on it. It would be nice if you would follow this scheme.",
+      "range": {
+        "startLine": 546,
+        "startChar": 22,
+        "endLine": 546,
+        "endChar": 34
+      },
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8811160_d21326fe",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be syncronized",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e8d129_b2a43225",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionsState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-10-12T18:07:18Z",
+      "side": 1,
+      "message": "Needs to be in synchronized block",
+      "revId": "6fe0214fe4039eddc502c261bbcf7f9da7444bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
