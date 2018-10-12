@@ -375,6 +375,13 @@ public final class NotificationRecord {
         }
     }
 
+    void dump(ProtoOutputStream proto, long fieldId, boolean redact, int state) {
+        final long token = proto.start(fieldId);
+        dump(proto,redact);
+        proto.write(NotificationRecordProto.STATE, state);
+        proto.end(token);
+    }
+
     String formatRemoteViews(RemoteViews rv) {
         if (rv == null) return "null";
         return String.format("%s/0x%08x (%d bytes): %s",
