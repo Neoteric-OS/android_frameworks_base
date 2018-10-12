@@ -21,6 +21,7 @@ import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NA
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 
@@ -162,6 +163,7 @@ public final class ProcessList {
     static final byte LMK_PROCPRIO = 1;
     static final byte LMK_PROCREMOVE = 2;
     static final byte LMK_PROCPURGE = 3;
+    static final byte LMK_GETKILLCNT = 4;
 
     // These are the various interesting memory levels that we will give to
     // the OOM killer.  Note that the OOM killer only supports 6 slots, so we
@@ -192,7 +194,9 @@ public final class ProcessList {
     private boolean mHaveDisplaySize;
 
     private static LocalSocket sLmkdSocket;
+    private static Object sLmkdSocketLock = new Object();
     private static OutputStream sLmkdOutputStream;
+    private static InputStream sLmkdInputStream;
 
     ProcessList() {
         MemInfoReader minfo = new MemInfoReader();
@@ -299,7 +303,7 @@ public final class ProcessList {
                 buf.putInt(mOomAdj[i]);
             }
 
-            writeLmkd(buf);
+            writeLmkd(buf, null);
             SystemProperties.set("sys.sysctl.extra_free_kbytes", Integer.toString(reserve));
         }
         // GB: 2048,3072,4096,6144,7168,8192
@@ -772,7 +776,7 @@ public final class ProcessList {
         buf.putInt(pid);
         buf.putInt(uid);
         buf.putInt(amt);
-        writeLmkd(buf);
+        writeLmkd(buf, null);
         long now = SystemClock.elapsedRealtime();
         if ((now-start) > 250) {
             Slog.w("ActivityManager", "SLOW OOM ADJ: " + (now-start) + "ms for pid " + pid
@@ -791,7 +795,27 @@ public final class ProcessList {
         ByteBuffer buf = ByteBuffer.allocate(4 * 2);
         buf.putInt(LMK_PROCREMOVE);
         buf.putInt(pid);
-        writeLmkd(buf);
+        writeLmkd(buf, null);
+    }
+
+    /*
+     * {@hide}
+     */
+    public static final Integer getLmkdKillCount(int min_oom_adj, int max_oom_adj) {
+        ByteBuffer buf = ByteBuffer.allocate(4 * 3);
+        ByteBuffer repl = ByteBuffer.allocate(4 * 2);
+        buf.putInt(LMK_GETKILLCNT);
+        buf.putInt(min_oom_adj);
+        buf.putInt(max_oom_adj);
+        if (writeLmkd(buf, repl)) {
+            int i = repl.getInt();
+            if (i != LMK_GETKILLCNT) {
+                Slog.e("ActivityManager", "Failed to get kill count, code mismatch");
+                return null;
+            }
+            return new Integer(repl.getInt());
+        }
+        return null;
     }
 
     private static boolean openLmkdSocket() {
@@ -801,6 +825,7 @@ public final class ProcessList {
                 new LocalSocketAddress("lmkd",
                         LocalSocketAddress.Namespace.RESERVED));
             sLmkdOutputStream = sLmkdSocket.getOutputStream();
+            sLmkdInputStream = sLmkdSocket.getInputStream();
         } catch (IOException ex) {
             Slog.w(TAG, "lowmemorykiller daemon socket open failed");
             sLmkdSocket = null;
@@ -828,29 +853,53 @@ public final class ProcessList {
         return true;
     }
 
-    private static void writeLmkd(ByteBuffer buf) {
-
-        for (int i = 0; i < 3; i++) {
-            if (sLmkdSocket == null) {
-                if (openLmkdSocket() == false) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ie) {
-                    }
-                    continue;
-                }
-
-                // Purge any previously registered pids
-                ByteBuffer purge_buf = ByteBuffer.allocate(4);
-                purge_buf.putInt(LMK_PROCPURGE);
-                if (writeLmkdCommand(purge_buf) == false) {
-                    // Write failed, skip the rest and retry
-                    continue;
-                }
+    // Never call directly, use readLmkd() instead
+    private static boolean readLmkdReply(ByteBuffer buf) {
+        int len;
+        try {
+            len = sLmkdInputStream.read(buf.array(), 0, buf.array().length);
+            if (len == buf.array().length) {
+                return true;
             }
-            if (writeLmkdCommand(buf)) {
-                return;
+        } catch (IOException ex) {
+            Slog.w(TAG, "Error reading from lowmemorykiller socket");
+        }
+
+        try {
+            sLmkdSocket.close();
+        } catch (IOException ex2) {
+        }
+
+        sLmkdSocket = null;
+        return false;
+    }
+
+    private static boolean writeLmkd(ByteBuffer buf, ByteBuffer repl) {
+        synchronized (sLmkdSocketLock) {
+            for (int i = 0; i < 3; i++) {
+                if (sLmkdSocket == null) {
+                    if (openLmkdSocket() == false) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ie) {
+                        }
+                        continue;
+                    }
+
+                    // Purge any previously registered pids
+                    ByteBuffer purge_buf = ByteBuffer.allocate(4);
+                    purge_buf.putInt(LMK_PROCPURGE);
+                    if (writeLmkdCommand(purge_buf) == false) {
+                        // Write failed, skip the rest and retry
+                        continue;
+                    }
+                }
+                if (writeLmkdCommand(buf) && (repl == null || readLmkdReply(repl))) {
+                    return true;
+                }
             }
         }
+        return false;
     }
+
 }

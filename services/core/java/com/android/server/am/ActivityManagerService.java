@@ -16106,6 +16106,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                 synchronized (this) {
                     dumpOomLocked(fd, pw, args, opti, true);
                 }
+            } else if ("lmk".equals(cmd)) {
+                synchronized (this) {
+                    dumpLmkLocked(pw);
+                }
             } else if ("permissions".equals(cmd) || "perm".equals(cmd)) {
                 synchronized (this) {
                     dumpPermissionsLocked(fd, pw, args, opti, true, null);
@@ -16287,6 +16291,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                     pw.println("-------------------------------------------------------------------------------");
                 }
                 dumpProcessesLocked(fd, pw, args, opti, dumpAll, dumpPackage, dumpAppId);
+                pw.println();
+                if (dumpAll) {
+                    pw.println("-------------------------------------------------------------------------------");
+                }
+                dumpLmkLocked(pw);
             }
 
         } else {
@@ -16368,6 +16377,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                     pw.println("-------------------------------------------------------------------------------");
                 }
                 dumpProcessesLocked(fd, pw, args, opti, dumpAll, dumpPackage, dumpAppId);
+                pw.println();
+                if (dumpAll) {
+                    pw.println("-------------------------------------------------------------------------------");
+                }
+                dumpLmkLocked(pw);
             }
         }
         Binder.restoreCallingIdentity(origId);
@@ -17473,6 +17487,37 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (mHeavyWeightProcess != null) {
             pw.println("  mHeavyWeightProcess: " + mHeavyWeightProcess);
         }
+
+        return true;
+    }
+
+    private boolean reportLmkKillAt(PrintWriter pw, int oom_adj) {
+        Integer cnt = ProcessList.getLmkdKillCount(oom_adj, ProcessList.UNKNOWN_ADJ);
+        if (cnt != null) {
+            pw.println("    kills at or above oom_adj " + oom_adj + ": " + cnt);
+            return true;
+        }
+        return false;
+    }
+
+    boolean dumpLmkLocked(PrintWriter pw) {
+        pw.println("ACTIVITY MANAGER LMK KILLS (dumpsys activity lmk)");
+        Integer cnt = ProcessList.getLmkdKillCount(ProcessList.UNKNOWN_ADJ,
+                ProcessList.UNKNOWN_ADJ);
+        if (cnt != null) {
+            pw.println("  Total number of kills: " + cnt);
+        }
+        reportLmkKillAt(pw, ProcessList.CACHED_APP_MAX_ADJ);
+        reportLmkKillAt(pw, ProcessList.CACHED_APP_MIN_ADJ);
+        reportLmkKillAt(pw, ProcessList.SERVICE_B_ADJ);
+        reportLmkKillAt(pw, ProcessList.PREVIOUS_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.HOME_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.SERVICE_ADJ);
+        reportLmkKillAt(pw, ProcessList.HEAVY_WEIGHT_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.BACKUP_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.PERCEPTIBLE_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.VISIBLE_APP_ADJ);
+        reportLmkKillAt(pw, ProcessList.FOREGROUND_APP_ADJ);
 
         return true;
     }
