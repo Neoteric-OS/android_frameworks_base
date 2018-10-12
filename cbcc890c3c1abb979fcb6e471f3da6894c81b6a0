@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b30c4b70_1798b107",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3235,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-12T10:21:56Z",
+      "side": 1,
+      "message": "Since it might print multiple packages here, should we use \"Names\" instead of \"Name\"?",
+      "range": {
+        "startLine": 3235,
+        "startChar": 17,
+        "endLine": 3235,
+        "endChar": 38
+      },
+      "revId": "cbcc890c3c1abb979fcb6e471f3da6894c81b6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3caa64_1da20aca",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3236,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-12T10:21:56Z",
+      "side": 1,
+      "message": "Do we need try catch here?",
+      "range": {
+        "startLine": 3236,
+        "startChar": 57,
+        "endLine": 3236,
+        "endChar": 74
+      },
+      "revId": "cbcc890c3c1abb979fcb6e471f3da6894c81b6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a67047c_379ff288",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3236,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-12T10:21:56Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 3236,
+        "startChar": 8,
+        "endLine": 3236,
+        "endChar": 14
+      },
+      "revId": "cbcc890c3c1abb979fcb6e471f3da6894c81b6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adf0e2c_4d0be754",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3239,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-12T10:21:56Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 3239,
+        "startChar": 17,
+        "endLine": 3239,
+        "endChar": 23
+      },
+      "revId": "cbcc890c3c1abb979fcb6e471f3da6894c81b6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
