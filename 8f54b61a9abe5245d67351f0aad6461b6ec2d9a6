@@ -22,6 +22,30 @@
       "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3f0631_2bcbb212",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-12T07:25:08Z",
+      "side": 1,
+      "message": "No, but we failed Nat464XlatTest then we added to avoid the failure.\n\u003d\u003d\nError in testRequiresClat(com.android.server.connectivity.Nat464XlatTest):\njava.lang.NullPointerException: Attempt to read from field \u0027boolean android.net.NetworkMisc.skip464xlat\u0027 on a null object reference\n\u003d\u003d",
+      "parentUuid": "f0655625_fb68b768",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
