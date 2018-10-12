@@ -22,6 +22,30 @@
       "revId": "72c325645b03b46a56ca703e4ae3716cc850aa88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e4b2fe_5a0100a4",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-12T17:25:07Z",
+      "side": 1,
+      "message": "I agree. I was hoping we\u0027d be able to just generate everything directly and patch up as needed for labels and such. Unfortunately, I don\u0027t think that\u0027s going to be very workable. Another case where this comes up is that parameters seem to be given the registers after the local ones, and since we don\u0027t know how many registers will be needed up front we\u0027ll have to patch up parameter references after the fact as well. Given that, I think it\u0027ll be easier to have an intermediate representation.\n\nI\u0027m working on a follow-up CL that adds the ability to take in references as parameters and refer to those, which will include an intermediate instruction representation. Do you mind if I wait to introduce the instruction representation until that CL?",
+      "parentUuid": "a8fdc4a8_6826409f",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "72c325645b03b46a56ca703e4ae3716cc850aa88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
