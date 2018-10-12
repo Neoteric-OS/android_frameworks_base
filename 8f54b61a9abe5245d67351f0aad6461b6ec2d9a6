@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0655625_fb68b768",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-12T07:19:10Z",
+      "side": 1,
+      "message": "Can nai.networkMisc ever be null? If not, remove this if.",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
