@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2694376e_426d88e0",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-10-12T18:06:14Z",
+      "side": 1,
+      "message": "Could this logic be moved into KeystoreService?",
+      "revId": "a13597a09d016b4febff82c960e596ff22b02e4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
