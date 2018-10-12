@@ -70,6 +70,30 @@
       "revId": "b3f71681365ca4e95fd7033717d734400ad22e95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51a2a790_9798ac67",
+        "filename": "core/java/android/os/DumpstateOptions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-10-12T13:27:28Z",
+      "side": 1,
+      "message": "OK, I was a little concerned that this will result in a new warning in the build, but maybe not because the fields are used in a non-trivial manner.",
+      "parentUuid": "03ba84a2_e956ce5b",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "b3f71681365ca4e95fd7033717d734400ad22e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
