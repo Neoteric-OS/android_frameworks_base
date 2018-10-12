@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8fdc4a8_6826409f",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-10-12T00:40:09Z",
+      "side": 1,
+      "message": "Maybe worth having IR nodes to facilitate things like jumps and lables?",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "72c325645b03b46a56ca703e4ae3716cc850aa88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
