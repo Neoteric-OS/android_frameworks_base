@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e817eabc_da3a12f3",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-10-12T18:10:52Z",
+      "side": 1,
+      "message": "CL description says you are removing importKey. Looks like it was just rewritten? Is it just not accessible from the AIDL?",
+      "revId": "a5e072132e07021700216ab1e6f128b77c7e0b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4627422_f7474d04",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-10-12T18:10:52Z",
+      "side": 1,
+      "message": "legacy",
+      "revId": "a5e072132e07021700216ab1e6f128b77c7e0b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
