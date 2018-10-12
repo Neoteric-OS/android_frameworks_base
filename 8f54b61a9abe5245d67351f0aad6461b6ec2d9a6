@@ -46,6 +46,30 @@
       "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0716ce81_ebe6f94d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-12T07:30:38Z",
+      "side": 1,
+      "message": "I see. In that case I think the right thing to do would be to fix the test, not change the production code.",
+      "parentUuid": "1c3f0631_2bcbb212",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
