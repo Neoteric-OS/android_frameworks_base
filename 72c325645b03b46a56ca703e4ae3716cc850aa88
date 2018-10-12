@@ -46,6 +46,30 @@
       "revId": "72c325645b03b46a56ca703e4ae3716cc850aa88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb30217e_2e19e53b",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-12T17:26:51Z",
+      "side": 1,
+      "message": "Here\u0027s the WIP followup CL, if you\u0027re curious: http://aosp/787818",
+      "parentUuid": "33e4b2fe_5a0100a4",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "72c325645b03b46a56ca703e4ae3716cc850aa88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
