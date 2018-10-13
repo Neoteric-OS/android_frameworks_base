@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d92b71_936319c7",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-13T07:18:51Z",
+      "side": 1,
+      "message": "nit: The naming is a little not intuitive to me. Positive naming(DO_) stands for false and negative one(DONT_) stands for true. Perhaps we could name the definition aligned with the function?\ne.g. SET_PAC_URL for true; NOT_SET_PAC_URL for false)\n\nＷhat do you think about this?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 58
+      },
+      "revId": "b5e49706fae9c62e50bc207483d32786593c73fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
