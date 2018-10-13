@@ -5280,7 +5280,7 @@ package android.telephony {
     method public boolean isVideoCallingEnabled();
     method public deprecated boolean isVisualVoicemailEnabled(android.telecom.PhoneAccountHandle);
     method public boolean needsOtaServiceProvisioning();
-    method public void requestCellInfoUpdate(android.os.WorkSource);
+    method public void requestCellInfoUpdate(android.telephony.TelephonyManager.CellInfoCallback, java.util.concurrent.Executor, android.os.WorkSource);
     method public int setAllowedCarriers(int, java.util.List<android.service.carrier.CarrierIdentifier>);
     method public void setDataActivationState(int);
     method public deprecated void setDataEnabled(int, boolean);
