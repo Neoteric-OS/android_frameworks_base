@@ -42636,8 +42636,8 @@ package android.telephony {
     method public static int getDefaultSmsSubscriptionId();
     method public static int getDefaultSubscriptionId();
     method public static int getDefaultVoiceSubscriptionId();
-    method public static int[] getSubscriptionIds(int);
     method public java.util.List<android.telephony.SubscriptionInfo> getOpportunisticSubscriptions(int);
+    method public static int[] getSubscriptionIds(int);
     method public java.util.List<android.telephony.SubscriptionPlan> getSubscriptionPlans(int);
     method public boolean isActiveSubscriptionId(int);
     method public boolean isNetworkRoaming(int);
@@ -42771,7 +42771,7 @@ package android.telephony {
     method public boolean isVoicemailVibrationEnabled(android.telecom.PhoneAccountHandle);
     method public boolean isWorldPhone();
     method public void listen(android.telephony.PhoneStateListener, int);
-    method public void requestCellInfoUpdate();
+    method public void requestCellInfoUpdate(android.telephony.TelephonyManager.CellInfoCallback, java.util.concurrent.Executor);
     method public android.telephony.NetworkScan requestNetworkScan(android.telephony.NetworkScanRequest, java.util.concurrent.Executor, android.telephony.TelephonyScanManager.NetworkScanCallback);
     method public void sendDialerSpecialCode(java.lang.String);
     method public java.lang.String sendEnvelopeWithStatus(java.lang.String);
@@ -42870,6 +42870,9 @@ package android.telephony {
     field public static final int USSD_RETURN_FAILURE = -1; // 0xffffffff
     field public static final java.lang.String VVM_TYPE_CVVM = "vvm_type_cvvm";
     field public static final java.lang.String VVM_TYPE_OMTP = "vvm_type_omtp";
+  }
+
+  public static abstract class TelephonyManager.CellInfoCallback {
   }
 
   public static abstract class TelephonyManager.UssdResponseCallback {

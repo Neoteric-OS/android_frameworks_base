@@ -21,6 +21,7 @@ import static android.content.Context.TELECOM_SERVICE;
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
@@ -41,6 +42,7 @@ import android.net.NetworkStats;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.BatteryStats;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -4615,10 +4617,10 @@ public class TelephonyManager {
      * Requests all available cell information from all radios on the device including the
      * camped/registered, serving, and neighboring cells.
      *
-     * <p>Apps targeting {@link Build.VERSION_CODES.Q Android Q} or higher will no longer trigger
-     * a refresh of CellInfo by invoking this API. Instead they will receive the latest cached
-     * results. Apps targeting {@link Build.VERSION_CODES.Q Android Q} or higher that wish to
-     * request updated CellInfo should call
+     * <p>Apps targeting {@link android.os.Build.VERSION_CODES#Q Android Q} or higher will no
+     * longer trigger a refresh of CellInfo by invoking this API. Instead they will receive the
+     * latest cached results. Apps targeting {@link android.os.Build.VERSION_CODES#Q Android Q} or
+     * higher that wish to request updated CellInfo should call
      * {android.telephony.TelephonyManager#requestCellInfoUpdate requestCellInfoUpdate()} and
      * listen for responses via {@link android.telephony.PhoneStateListener#onCellInfoChanged
      * onCellInfoChanged()}.
@@ -4634,8 +4636,8 @@ public class TelephonyManager {
      * methods may return true, indicating that the cell is being used or would be used for
      * signaling communication if necessary.
      *
-     * <p>Beginning with {@link Build.VERSION_CODES.Q Android Q}, if this API results in a change
-     * of the cached CellInfo, that change will be reported via
+     * <p>Beginning with {@link android.os.Build.VERSION_CODES#Q Android Q},
+     * if this API results in a change of the cached CellInfo, that change will be reported via
      * {@link android.telephony.PhoneStateListener#onCellInfoChanged onCellInfoChanged()}.
      *
      * <p>This method returns valid data for on devices with
@@ -4665,6 +4667,38 @@ public class TelephonyManager {
     }
 
     /**
+     * Callback for providing asynchronous {@link CellInfo} on request
+     * @hide
+     */
+    public static abstract class CellInfoCallback {
+
+        private Executor mExecutor;
+        private ICellInfoCallback.Stub mBinderCallback = new ICellInfoCallback.Stub() {
+            @Override
+            public void resultCellInfo(List<CellInfo> cellInfo) {
+                Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                        () -> onCellInfo(cellInfo)));
+            }
+        };
+
+        /**
+         * Response to
+         * {@link android.telephony.TelephonyManager#requestCellInfoUpdate requestCellInfoUpdate()}.
+         *
+         * <p>Invoked when there is a response to
+         * {@link android.telephony.TelephonyManager#requestCellInfoUpdate requestCellInfoUpdate()}
+         * to provide a list of {@link CellInfo}. If no {@link CellInfo} is available then an empty
+         * list will be returned to complete the request.
+         *
+         * @param cellInfo a list of {@link CellInfo} or an empty list.
+         *
+         * {@see android.telephony.TelephonyManager#getAllCellInfo getAllCellInfo()}
+         */
+        public void onCellInfo(List<CellInfo> cellInfo) {
+        }
+    };
+
+    /**
      * Requests all available cell information from all radios on the device including the
      * camped/registered, serving, and neighboring cells.
      *
@@ -4673,11 +4707,15 @@ public class TelephonyManager {
      * for each active subscription.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-    public void requestCellInfoUpdate() {
+    public void requestCellInfoUpdate(@NonNull CellInfoCallback cb, @NonNull Executor e) {
         try {
+
             ITelephony telephony = getITelephony();
             if (telephony == null) return;
-            telephony.requestCellInfoUpdate(getOpPackageName());
+            // range checking
+            cb.mExecutor = e;
+            telephony.requestCellInfoUpdate(cb.mBinderCallback, getOpPackageName());
+
         } catch (RemoteException ex) {
         }
     }
@@ -4696,11 +4734,13 @@ public class TelephonyManager {
     @SystemApi
     @RequiresPermission(allOf = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
             android.Manifest.permission.MODIFY_PHONE_STATE})
-    public void requestCellInfoUpdate(WorkSource workSource) {
+    public void requestCellInfoUpdate(
+            @NonNull CellInfoCallback cb, @NonNull Executor e, @NonNull WorkSource workSource) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null) return;
-            telephony.requestCellInfoUpdateWithWorkSource(getOpPackageName(), workSource);
+            telephony.requestCellInfoUpdateWithWorkSource(
+                    cb.mBinderCallback, getOpPackageName(), workSource);
         } catch (RemoteException ex) {
         }
     }

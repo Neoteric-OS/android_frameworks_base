@@ -31,6 +31,7 @@ import android.telecom.PhoneAccountHandle;
 import android.telephony.CellInfo;
 import android.telephony.ClientRequestStats;
 import android.telephony.IccOpenLogicalChannelResponse;
+import android.telephony.ICellInfoCallback;
 import android.telephony.ModemActivityInfo;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.NetworkScanRequest;
@@ -511,14 +512,15 @@ interface ITelephony {
     /**
      * Request all observed cell information of the device to be reported via PhoneStateListener.
      */
-    void requestCellInfoUpdate(String callingPkg);
+    void requestCellInfoUpdate(ICellInfoCallback cb, String callingPkg);
 
     /**
      * Request all observed cell information of the device to be reported via PhoneStateListener.
      *
      * @param workSource the requestor to whom the power consumption for this should be attributed.
      */
-    void requestCellInfoUpdateWithWorkSource(String callingPkg, in WorkSource ws);
+    void requestCellInfoUpdateWithWorkSource(
+            ICellInfoCallback cb, String callingPkg, in WorkSource ws);
 
     /**
      * Sets minimum time in milli-seconds between onCellInfoChanged
