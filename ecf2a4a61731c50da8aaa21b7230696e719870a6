@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "729cea7e_2a28e8dd",
+        "filename": "startop/iorap/TEST_MAPPING",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-15T21:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fba2b67_66740fae",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d37257b4_966bf14e",
         "filename": "startop/iorap/tests/AndroidTest.xml",
         "patchSetId": 1
@@ -189,6 +213,30 @@
       "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b7fafe_d08d3238",
+        "filename": "startop/iorap/tests/AndroidTest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-15T21:29:54Z",
+      "side": 1,
+      "message": "Swap to using new tradefed selinux disabling preparer that sbasi@ kindly wrote.\n\nhttps://android-review.googlesource.com/c/platform/tools/tradefederation/+/787276",
+      "parentUuid": "ee4d9ac3_747968bb",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "ecf2a4a61731c50da8aaa21b7230696e719870a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
