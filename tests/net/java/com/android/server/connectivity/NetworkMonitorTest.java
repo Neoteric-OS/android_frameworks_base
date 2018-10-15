@@ -40,6 +40,7 @@ import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -64,6 +65,7 @@ import javax.net.ssl.SSLHandshakeException;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class NetworkMonitorTest {
+    private static final int TIMEOUT_MS = 200;
     private static final String LOCATION_HEADER = "location";
 
     private @Mock Context mContext;
@@ -145,12 +147,18 @@ public class NetworkMonitorTest {
                 mContext, mHandler, mAgent, mRequest, mLogger, mDependencies);
     }
 
+    CaptivePortalProbeResult makeDetectionProbe() {
+        final NetworkMonitor monitor = makeMonitor();
+        monitor.startDetectionThread();
+        SystemClock.sleep(TIMEOUT_MS);
+        return monitor.getLastPortalProbeResult();
+    }
+
     @Test
     public void testIsCaptivePortal_HttpProbeIsPortal() throws IOException {
         setSslException(mHttpsConnection);
         setPortal302(mHttpConnection);
-
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeDetectionProbe());
     }
 
     @Test
@@ -158,7 +166,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpsConnection, 204);
         setStatus(mHttpConnection, 500);
 
-        assertNotPortal(makeMonitor().isCaptivePortal());
+        assertNotPortal(makeDetectionProbe());
     }
 
     @Test
@@ -168,7 +176,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 204);
         setStatus(mFallbackConnection, 500);
 
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeDetectionProbe());
     }
 
     @Test
@@ -177,7 +185,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setPortal302(mFallbackConnection);
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeDetectionProbe());
     }
 
     @Test
@@ -187,7 +195,7 @@ public class NetworkMonitorTest {
         setStatus(mFallbackConnection, 204);
 
         // Fallback probe did not see portal, HTTPS failed -> inconclusive
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeDetectionProbe());
     }
 
     @Test
@@ -205,14 +213,16 @@ public class NetworkMonitorTest {
         when(mRandom.nextInt()).thenReturn(2);
 
         final NetworkMonitor monitor = makeMonitor();
-
+        monitor.startDetectionThread();
+        SystemClock.sleep(TIMEOUT_MS);
         // First check always uses the first fallback URL: inconclusive
-        assertFailed(monitor.isCaptivePortal());
+        assertFailed(monitor.getLastPortalProbeResult());
         verify(mFallbackConnection, times(1)).getResponseCode();
         verify(mOtherFallbackConnection, never()).getResponseCode();
-
+        monitor.startDetectionThread();
+        SystemClock.sleep(TIMEOUT_MS);
         // Second check uses the URL chosen by Random
-        assertPortal(monitor.isCaptivePortal());
+        assertPortal(monitor.getLastPortalProbeResult());
         verify(mOtherFallbackConnection, times(1)).getResponseCode();
     }
 
@@ -222,7 +232,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setStatus(mFallbackConnection, 404);
 
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeDetectionProbe());
         verify(mFallbackConnection, times(1)).getResponseCode();
         verify(mOtherFallbackConnection, never()).getResponseCode();
     }
@@ -236,7 +246,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setPortal302(mOtherFallbackConnection);
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeDetectionProbe());
         verify(mOtherFallbackConnection, times(1)).getResponseCode();
         verify(mFallbackConnection, never()).getResponseCode();
     }
@@ -259,7 +269,7 @@ public class NetworkMonitorTest {
         set302(mOtherFallbackConnection, "https://www.google.com/test?q=3");
 
         // HTTPS failed, fallback spec did not see a portal -> inconclusive
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeDetectionProbe());
         verify(mOtherFallbackConnection, times(1)).getResponseCode();
         verify(mFallbackConnection, never()).getResponseCode();
     }
@@ -269,7 +279,7 @@ public class NetworkMonitorTest {
         setupFallbackSpec();
         set302(mOtherFallbackConnection, "http://login.portal.example.com");
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeDetectionProbe());
     }
 
     private void setFallbackUrl(String url) {

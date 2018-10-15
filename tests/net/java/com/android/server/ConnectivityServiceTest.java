@@ -886,9 +886,12 @@ public class ConnectivityServiceTest {
         }
 
         @Override
-        protected CaptivePortalProbeResult isCaptivePortal() {
-            if (!mIsCaptivePortalCheckEnabled) { return new CaptivePortalProbeResult(204); }
-            return new CaptivePortalProbeResult(gen204ProbeResult, gen204ProbeRedirectUrl, null);
+        protected void sendProbeResult(CaptivePortalProbeResult result) {
+            Message msg = Message.obtain();
+            msg.what = NetworkMonitor.CMD_PROBE_COMPLETE;
+            msg.obj = (!mIsCaptivePortalCheckEnabled) ? new CaptivePortalProbeResult(204)
+                : new CaptivePortalProbeResult(gen204ProbeResult, gen204ProbeRedirectUrl, null);
+            sendMessage(msg);
         }
     }
 
