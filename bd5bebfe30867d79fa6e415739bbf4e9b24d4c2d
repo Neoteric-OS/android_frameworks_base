@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "7f66458f_64af4ed6",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fb6f5d_1e7e92a5",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ea3507e_4ba959b7",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
