@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf1e806_9c2ced41",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-15T15:17:58Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 314,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 13
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dca307e_9308402e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-15T15:17:58Z",
+      "side": 1,
+      "message": "do we need to catch and handle InterruptedException inside the thread?\ne.g. http://tw.gitbook.net/java/lang/thread_interrupt.html",
+      "range": {
+        "startLine": 689,
+        "startChar": 33,
+        "endLine": 689,
+        "endChar": 42
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04990173_e8713662",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-15T15:17:58Z",
+      "side": 1,
+      "message": "It looks like this function is only used in test case.\nCould we move it to NetworkMonitorTest and declare it only in extended class?\ne.g. WrappedConnectivityService\nhttps://cs.corp.google.com/android/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java?q\u003dConnectivityServiceTest\u0026dr\u003dCSs\u0026l\u003d914",
+      "range": {
+        "startLine": 1463,
+        "startChar": 39,
+        "endLine": 1463,
+        "endChar": 63
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02b80f5_3356c532",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-15T15:17:58Z",
+      "side": 1,
+      "message": "How about this?\nmsg.obj \u003d mIsCaptivePortalCheckEnabled ? new CaptivePortalProbeResult(gen204ProbeResult, gen204ProbeRedirectUrl, null): new CaptivePortalProbeResult(204);",
+      "range": {
+        "startLine": 892,
+        "startChar": 12,
+        "endLine": 893,
+        "endChar": 96
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
