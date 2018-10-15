@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b8cffe_3a672436",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3159,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-15T14:31:49Z",
+      "side": 0,
+      "message": "Why mMultipathPolicyTracker\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000.start() is also removed? Should we provide alternative point to start it or we plan to remove it?",
+      "range": {
+        "startLine": 3159,
+        "startChar": 20,
+        "endLine": 3159,
+        "endChar": 52
+      },
+      "revId": "69c487332ebb0e469b1126b6c904a3bdc967192d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
