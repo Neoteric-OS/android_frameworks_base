@@ -70,9 +70,8 @@ public class PacManager {
     private static final long MAX_PAC_SIZE = 20 * 1000 * 1000;
 
     // Return values for #setCurrentProxyScriptUrl
-    enum ToSendOrNotToSendBrodcast {
-        DONT_SEND_BROADCAST, DO_SEND_BROADCAST
-    }
+    public static final boolean DONT_SEND_BROADCAST = false;
+    public static final boolean DO_SEND_BROADCAST = true;
 
     private String mCurrentPac;
     @GuardedBy("mProxyLock")
@@ -176,11 +175,11 @@ public class PacManager {
      * @param proxy Proxy information that is about to be broadcast.
      * @return Returns whether the broadcast should be sent : either DO_ or DONT_SEND_BROADCAST
      */
-    synchronized ToSendOrNotToSendBrodcast setCurrentProxyScriptUrl(ProxyInfo proxy) {
+    synchronized boolean setCurrentProxyScriptUrl(ProxyInfo proxy) {
         if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
             if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) {
                 // Allow to send broadcast, nothing to do.
-                return ToSendOrNotToSendBrodcast.DO_SEND_BROADCAST;
+                return DO_SEND_BROADCAST;
             }
             mPacUrl = proxy.getPacFileUrl();
             mCurrentDelay = DELAY_1;
@@ -188,7 +187,7 @@ public class PacManager {
             mHasDownloaded = false;
             getAlarmManager().cancel(mPacRefreshIntent);
             bind();
-            return ToSendOrNotToSendBrodcast.DONT_SEND_BROADCAST;
+            return DONT_SEND_BROADCAST;
         } else {
             getAlarmManager().cancel(mPacRefreshIntent);
             synchronized (mProxyLock) {
@@ -204,7 +203,7 @@ public class PacManager {
                     }
                 }
             }
-            return ToSendOrNotToSendBrodcast.DO_SEND_BROADCAST;
+            return DO_SEND_BROADCAST;
         }
     }
 

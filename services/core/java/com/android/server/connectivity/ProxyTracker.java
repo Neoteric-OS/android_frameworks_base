@@ -209,7 +209,7 @@ public class ProxyTracker {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ? defaultProxy : new ProxyInfo("", 0, "");
         if (mPacManager.setCurrentProxyScriptUrl(proxyInfo) ==
-                PacManager.ToSendOrNotToSendBrodcast.DONT_SEND_BROADCAST) {
+                PacManager.DONT_SEND_BROADCAST) {
             return;
         }
         if (DBG) Slog.d(TAG, "sending Proxy Broadcast for " + proxyInfo);
