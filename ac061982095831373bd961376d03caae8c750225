@@ -22,6 +22,30 @@
       "revId": "ac061982095831373bd961376d03caae8c750225",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af77687a_455173a2",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-15T07:54:10Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "5439d146_2ddb9e83",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "ac061982095831373bd961376d03caae8c750225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
