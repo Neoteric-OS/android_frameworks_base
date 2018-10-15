@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ed789182_d081667b",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T18:54:56Z",
+      "side": 1,
+      "message": "Done. I changed it to a comment in the style of the \"Instruction builder methods\" block below.",
+      "parentUuid": "6004e3e6_f5247764",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a4d3f86_c8325485",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
@@ -141,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a00b4a9d_d8cf254b",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T18:54:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4d3f86_c8325485",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f9969cf_ff67c436",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
@@ -152,6 +188,24 @@
       "writtenOn": "2018-10-11T21:42:00Z",
       "side": 1,
       "message": "It seems weird to have an instance of a class as a member of class.  Could these be moved into the enclosing namespace, or perhaps put in a Type namespace inside of that?",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f172d2f3_4b05c822",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T18:54:56Z",
+      "side": 1,
+      "message": "Eventually this is going to have a static method that creates new type descriptors from a class name [1]. The idea I\u0027m going for is that you can do TypeDescriptor::INT, TypeDescriptor::VOID, TypeDescriptor::FromClass(\"classname\"), etc. I\u0027d like to keep all of the \"constructors\" in the same named scope, and TypeDescriptor seems as good as creating a new Type namespace to me.\n\n[1]: http://aosp/c/platform/frameworks/base/+/787818/1/startop/view_compiler/dex_builder.h#60",
+      "parentUuid": "2f9969cf_ff67c436",
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -175,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "01bdc665_1a31589d",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T18:54:56Z",
+      "side": 1,
+      "message": "The existing code and documentation all works with proto or prototype. For example: https://source.android.com/devices/tech/dalvik/dex-format#proto-id-item\n\nI personally like Signature better, but here I think Prototype is better due to its consistency with existing usage. Since C++ and the Java Language are not prototype OO languages, I don\u0027t think the confusion is as big of a concern here.",
+      "parentUuid": "0ea3507e_4ba959b7",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10348ab1_a39af142",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
@@ -189,6 +261,24 @@
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e173e6c9_4599c0f1",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T18:54:56Z",
+      "side": 1,
+      "message": "This may be an appeal to a random arbitrary authority, but it seems like using is now the preferred way to do these things: http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rt-using",
+      "parentUuid": "10348ab1_a39af142",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
