@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f8d314c_cf0db049",
+        "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-15T09:02:17Z",
+      "side": 1,
+      "message": "Is this necessary? Does it imply that proxyInfoEqual(a,b) is not equivalent to proxyInfoEqual(b,a)?",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 81
+      },
+      "revId": "5315ba333775995567a9ec11cfef671da816d664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
