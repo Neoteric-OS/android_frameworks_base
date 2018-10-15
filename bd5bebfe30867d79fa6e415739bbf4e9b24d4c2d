@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "e3fb6f5d_1e7e92a5",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-15T22:21:45Z",
+      "side": 1,
+      "message": "That\u0027s even better.",
+      "parentUuid": "74769e6b_c63bcb22",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ea3507e_4ba959b7",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
