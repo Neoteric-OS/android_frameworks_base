@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "74769e6b_c63bcb22",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-15T22:15:33Z",
+      "side": 1,
+      "message": "What about making these `static const TypeDescriptor Int();` instead? That way we\u0027d have naming consistency between Int() and FromClass(), or whatever the class one gets called.",
+      "parentUuid": "8dc5b70e_3eec537d",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ea3507e_4ba959b7",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
