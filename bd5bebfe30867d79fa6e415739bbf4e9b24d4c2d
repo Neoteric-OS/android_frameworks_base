@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "8dc5b70e_3eec537d",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-15T22:07:59Z",
+      "side": 1,
+      "message": "My preference would still be to put these in a separate namespace, as I think it would make the code easier to read.  That is just my opinion though, and the code is more than fine the way it is.",
+      "parentUuid": "f172d2f3_4b05c822",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ea3507e_4ba959b7",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "748b4bf5_4e1a6f07",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-15T22:07:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01bdc665_1a31589d",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10348ab1_a39af142",
         "filename": "startop/tools/view_compiler/dex_builder.h",
         "patchSetId": 4
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "This may be an appeal to a random arbitrary authority, but it seems like using is now the preferred way to do these things: http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rt-using",
       "parentUuid": "10348ab1_a39af142",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e914e0fd_fa20e44c",
+        "filename": "startop/tools/view_compiler/dex_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-15T22:07:59Z",
+      "side": 1,
+      "message": "Works for me.",
+      "parentUuid": "e173e6c9_4599c0f1",
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
