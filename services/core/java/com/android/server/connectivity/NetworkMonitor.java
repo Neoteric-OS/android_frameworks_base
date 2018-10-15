@@ -227,6 +227,12 @@ public class NetworkMonitor extends StateMachine {
     public static final int EVENT_PRIVATE_DNS_CONFIG_RESOLVED = BASE + 14;
     private static final int CMD_EVALUATE_PRIVATE_DNS = BASE + 15;
 
+    /**
+     * Message to self indicating captive portal detection is completed.
+     * obj = CaptivePortalProbeResult for detection result;
+     */
+    public static final int CMD_PROBE_COMPLETE = BASE + 16;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
     private static final int MAX_REEVALUATE_DELAY_MS = 10*60*1000;
@@ -290,19 +296,23 @@ public class NetworkMonitor extends StateMachine {
     private final State mEvaluatingState = new EvaluatingState();
     private final State mCaptivePortalState = new CaptivePortalState();
     private final State mEvaluatingPrivateDnsState = new EvaluatingPrivateDnsState();
-
+    private final State mWaitForProbeCompletionState = new WaitForProbeCompletionState();
     private CustomIntentReceiver mLaunchCaptivePortalAppBroadcastReceiver = null;
 
     private final LocalLog validationLogs = new LocalLog(NUM_VALIDATION_LOG_LINES);
 
     private final Stopwatch mEvaluationTimer = new Stopwatch();
 
-    // This variable is set before transitioning to the mCaptivePortalState.
     private CaptivePortalProbeResult mLastPortalProbeResult = CaptivePortalProbeResult.FAILED;
 
     // Random generator to select fallback URL index
     private final Random mRandom;
     private int mNextFallbackUrlIndex = 0;
+
+    private int mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
+    private int mAttempts = 0;
+    @VisibleForTesting
+    protected CaptivePortalDetectionThread mDetectionThread = null;
 
     public NetworkMonitor(Context context, Handler handler, NetworkAgentInfo networkAgentInfo,
             NetworkRequest defaultRequest) {
@@ -335,6 +345,7 @@ public class NetworkMonitor extends StateMachine {
         addState(mMaybeNotifyState, mDefaultState);
             addState(mEvaluatingState, mMaybeNotifyState);
             addState(mCaptivePortalState, mMaybeNotifyState);
+        addState(mWaitForProbeCompletionState, mEvaluatingState);
         addState(mEvaluatingPrivateDnsState, mDefaultState);
         addState(mValidatedState, mDefaultState);
         setInitialState(mDefaultState);
@@ -579,12 +590,86 @@ public class NetworkMonitor extends StateMachine {
         }
     }
 
+    @VisibleForTesting
+    protected void sendProbeResult(CaptivePortalProbeResult result) {
+        mLastPortalProbeResult = result;
+        Message msg = Message.obtain();
+        msg.what = CMD_PROBE_COMPLETE;
+        msg.obj = result;
+        sendMessage(msg);
+    }
+
+    private class CaptivePortalDetectionThread extends Thread {
+        @Override
+        public void run() {
+            if (!mIsCaptivePortalCheckEnabled) {
+                validationLog("Validation disabled.");
+                sendProbeResult(CaptivePortalProbeResult.SUCCESS);
+                return;
+            }
+
+            URL pacUrl = null;
+            URL httpsUrl = mCaptivePortalHttpsUrl;
+            URL httpUrl = mCaptivePortalHttpUrl;
+
+            // On networks with a PAC instead of fetching a URL that should result in a 204
+            // response, we instead simply fetch the PAC script.  This is done for a few reasons:
+            // 1. At present our PAC code does not yet handle multiple PACs on multiple networks
+            //    until something like https://android-review.googlesource.com/#/c/115180/ lands.
+            //    Network.openConnection() will ignore network-specific PACs and instead fetch
+            //    using NO_PROXY.  If a PAC is in place, the only fetch we know will succeed with
+            //    NO_PROXY is the fetch of the PAC itself.
+            // 2. To proxy the generate_204 fetch through a PAC would require a number of things
+            //    happen before the fetch can commence, namely:
+            //        a) the PAC script be fetched
+            //        b) a PAC script resolver service be fired up and resolve the captive portal
+            //           server.
+            //    Network validation could be delayed until these prerequisities are satisifed or
+            //    could simply be left to race them.  Neither is an optimal solution.
+            // 3. PAC scripts are sometimes used to block or restrict Internet access and may in
+            //    fact block fetching of the generate_204 URL which would lead to false negative
+            //    results for network validation.
+            final ProxyInfo proxyInfo = mNetworkAgentInfo.linkProperties.getHttpProxy();
+            if (proxyInfo != null && !Uri.EMPTY.equals(proxyInfo.getPacFileUrl())) {
+                pacUrl = makeURL(proxyInfo.getPacFileUrl().toString());
+                if (pacUrl == null) {
+                    sendProbeResult(CaptivePortalProbeResult.FAILED);
+                    return;
+                }
+            }
+
+            if ((pacUrl == null) && (httpUrl == null || httpsUrl == null)) {
+                sendProbeResult(CaptivePortalProbeResult.FAILED);
+                return;
+            }
+
+            long startTime = SystemClock.elapsedRealtime();
+            final CaptivePortalProbeResult result;
+            if (pacUrl != null) {
+                result = sendDnsAndHttpProbes(null, pacUrl, ValidationProbeEvent.PROBE_PAC);
+            } else if (mUseHttps) {
+                result = sendParallelHttpProbes(proxyInfo, httpsUrl, httpUrl);
+            } else {
+                result = sendDnsAndHttpProbes(proxyInfo, httpUrl, ValidationProbeEvent.PROBE_HTTP);
+            }
+
+            long endTime = SystemClock.elapsedRealtime();
+            sendNetworkConditionsBroadcast(true /* response received */,
+                    result.isPortal() /* isCaptivePortal */,
+                    startTime, endTime);
+
+            log("CaptivePortalDetectionThread: isSuccessful()=" + result.isSuccessful() +
+                    " isPortal()=" + result.isPortal() +
+                    " RedirectUrl=" + result.redirectUrl +
+                    " Time=" + (endTime-startTime) + "ms");
+
+            sendProbeResult(result);
+        }
+    }
+
     // Being in the EvaluatingState State indicates the Network is being evaluated for internet
     // connectivity, or that the user has indicated that this network is unwanted.
     private class EvaluatingState extends State {
-        private int mReevaluateDelayMs;
-        private int mAttempts;
-
         @Override
         public void enter() {
             // If we have already started to track time spent in EvaluatingState
@@ -600,6 +685,10 @@ public class NetworkMonitor extends StateMachine {
             }
             mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
             mAttempts = 0;
+            if (mDetectionThread != null) {
+                mDetectionThread.interrupt();
+            }
+            mDetectionThread = null;
         }
 
         @Override
@@ -631,35 +720,13 @@ public class NetworkMonitor extends StateMachine {
                         return HANDLED;
                     }
                     mAttempts++;
-                    // Note: This call to isCaptivePortal() could take up to a minute. Resolving the
-                    // server's IP addresses could hit the DNS timeout, and attempting connections
-                    // to each of the server's several IP addresses (currently one IPv4 and one
-                    // IPv6) could each take SOCKET_TIMEOUT_MS.  During this time this StateMachine
-                    // will be unresponsive. isCaptivePortal() could be executed on another Thread
-                    // if this is found to cause problems.
-                    CaptivePortalProbeResult probeResult = isCaptivePortal();
-                    if (probeResult.isSuccessful()) {
-                        // Transit EvaluatingPrivateDnsState to get to Validated
-                        // state (even if no Private DNS validation required).
-                        transitionTo(mEvaluatingPrivateDnsState);
-                    } else if (probeResult.isPortal()) {
-                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
-                        mLastPortalProbeResult = probeResult;
-                        transitionTo(mCaptivePortalState);
-                    } else {
-                        final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
-                        sendMessageDelayed(msg, mReevaluateDelayMs);
-                        logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
-                        if (mAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
-                            // Don't continue to blame UID forever.
-                            TrafficStats.clearThreadStatsUid();
-                        }
-                        mReevaluateDelayMs *= 2;
-                        if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
-                            mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
-                        }
+
+                    if (mDetectionThread != null) {
+                        mDetectionThread.interrupt();
+                        mDetectionThread = null;
                     }
+                    startDetectionThread();
+                    transitionTo(mWaitForProbeCompletionState);
                     return HANDLED;
                 case CMD_FORCE_REEVALUATION:
                     // Before IGNORE_REEVALUATE_ATTEMPTS attempts are made,
@@ -675,6 +742,12 @@ public class NetworkMonitor extends StateMachine {
         public void exit() {
             TrafficStats.clearThreadStatsUid();
         }
+    }
+
+    @VisibleForTesting
+    protected void startDetectionThread() {
+        mDetectionThread = new CaptivePortalDetectionThread();
+        mDetectionThread.start();
     }
 
     // BroadcastReceiver that waits for a particular Intent and then posts a message.
@@ -852,6 +925,43 @@ public class NetworkMonitor extends StateMachine {
         }
     }
 
+    private class WaitForProbeCompletionState extends State {
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                case CMD_PROBE_COMPLETE:
+                    final CaptivePortalProbeResult probeResult =
+                            (CaptivePortalProbeResult) message.obj;
+
+                    if (probeResult.isSuccessful()) {
+                        // Transit EvaluatingPrivateDnsState to get to Validated
+                        // state (even if no Private DNS validation required).
+                        transitionTo(mEvaluatingPrivateDnsState);
+                    } else if (probeResult.isPortal()) {
+                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
+                        transitionTo(mCaptivePortalState);
+                    } else {
+                        final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+                        sendMessageDelayed(msg, mReevaluateDelayMs);
+                        logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
+                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
+                        if (mAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
+                            // Don't continue to blame UID forever.
+                            TrafficStats.clearThreadStatsUid();
+                        }
+                        mReevaluateDelayMs *= 2;
+                        if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
+                            mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
+                        }
+                    }
+                    mDetectionThread = null;
+                    return HANDLED;
+                default:
+                    return NOT_HANDLED;
+            }
+        }
+    }
+
     // Limits the list of IP addresses returned by getAllByName or tried by openConnection to at
     // most one per address family. This ensures we only wait up to 20 seconds for TCP connections
     // to complete, regardless of how many IP addresses a host has.
@@ -972,71 +1082,6 @@ public class NetworkMonitor extends StateMachine {
         // Randomly change spec without memory. Also randomize the first attempt.
         final int idx = Math.abs(mRandom.nextInt()) % mCaptivePortalFallbackSpecs.length;
         return mCaptivePortalFallbackSpecs[idx];
-    }
-
-    @VisibleForTesting
-    protected CaptivePortalProbeResult isCaptivePortal() {
-        if (!mIsCaptivePortalCheckEnabled) {
-            validationLog("Validation disabled.");
-            return CaptivePortalProbeResult.SUCCESS;
-        }
-
-        URL pacUrl = null;
-        URL httpsUrl = mCaptivePortalHttpsUrl;
-        URL httpUrl = mCaptivePortalHttpUrl;
-
-        // On networks with a PAC instead of fetching a URL that should result in a 204
-        // response, we instead simply fetch the PAC script.  This is done for a few reasons:
-        // 1. At present our PAC code does not yet handle multiple PACs on multiple networks
-        //    until something like https://android-review.googlesource.com/#/c/115180/ lands.
-        //    Network.openConnection() will ignore network-specific PACs and instead fetch
-        //    using NO_PROXY.  If a PAC is in place, the only fetch we know will succeed with
-        //    NO_PROXY is the fetch of the PAC itself.
-        // 2. To proxy the generate_204 fetch through a PAC would require a number of things
-        //    happen before the fetch can commence, namely:
-        //        a) the PAC script be fetched
-        //        b) a PAC script resolver service be fired up and resolve the captive portal
-        //           server.
-        //    Network validation could be delayed until these prerequisities are satisifed or
-        //    could simply be left to race them.  Neither is an optimal solution.
-        // 3. PAC scripts are sometimes used to block or restrict Internet access and may in
-        //    fact block fetching of the generate_204 URL which would lead to false negative
-        //    results for network validation.
-        final ProxyInfo proxyInfo = mNetworkAgentInfo.linkProperties.getHttpProxy();
-        if (proxyInfo != null && !Uri.EMPTY.equals(proxyInfo.getPacFileUrl())) {
-            pacUrl = makeURL(proxyInfo.getPacFileUrl().toString());
-            if (pacUrl == null) {
-                return CaptivePortalProbeResult.FAILED;
-            }
-        }
-
-        if ((pacUrl == null) && (httpUrl == null || httpsUrl == null)) {
-            return CaptivePortalProbeResult.FAILED;
-        }
-
-        long startTime = SystemClock.elapsedRealtime();
-
-        final CaptivePortalProbeResult result;
-        if (pacUrl != null) {
-            result = sendDnsAndHttpProbes(null, pacUrl, ValidationProbeEvent.PROBE_PAC);
-        } else if (mUseHttps) {
-            result = sendParallelHttpProbes(proxyInfo, httpsUrl, httpUrl);
-        } else {
-            result = sendDnsAndHttpProbes(proxyInfo, httpUrl, ValidationProbeEvent.PROBE_HTTP);
-        }
-
-        long endTime = SystemClock.elapsedRealtime();
-
-        sendNetworkConditionsBroadcast(true /* response received */,
-                result.isPortal() /* isCaptivePortal */,
-                startTime, endTime);
-
-        log("isCaptivePortal: isSuccessful()=" + result.isSuccessful() +
-                " isPortal()=" + result.isPortal() +
-                " RedirectUrl=" + result.redirectUrl +
-                " StartTime=" + startTime + " EndTime=" + endTime);
-
-        return result;
     }
 
     /**
@@ -1412,5 +1457,10 @@ public class NetworkMonitor extends StateMachine {
         }
 
         public static final Dependencies DEFAULT = new Dependencies();
+    }
+
+    @VisibleForTesting
+    protected CaptivePortalProbeResult getLastPortalProbeResult() {
+        return mLastPortalProbeResult;
     }
 }
