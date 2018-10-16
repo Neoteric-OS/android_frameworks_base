@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "042e09a2_e4fad334",
+        "filename": "startop/tools/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-16T15:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106ad950_adf19f36",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f38c554_bb067761",
         "filename": "startop/tools/view_compiler/dex_builder.cc",
         "patchSetId": 4
@@ -104,6 +122,24 @@
       "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c473b4d_0fb9918c",
+        "filename": "startop/tools/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-10-16T15:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f38c554_bb067761",
+      "revId": "bd5bebfe30867d79fa6e415739bbf4e9b24d4c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
