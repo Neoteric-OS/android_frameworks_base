@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a887e3d_c129d97a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-16T13:19:33Z",
+      "side": 1,
+      "message": "The done() method can be called concurrently on different threads. With this in, it\u0027s now possible that the thread that tests for the presence of the portal calls done(DISMISSED) and before it\u0027s through the menu options \"use as is\" is selected. In this case this is going to call both moveTaskToBack() and finishAndRemoveTask(), with bad results.\n\nWorse yet, when the user comes back to the captive portal, with any page load start or end, the captive portal app will try to validate the network again (and probably will succeed), which will move the captive portal app to the back of the stack again, to the user\u0027s surprise.\n\nWhat is it you are trying to avoid with this test ?",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
