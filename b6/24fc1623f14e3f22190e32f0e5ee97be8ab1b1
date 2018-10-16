@@ -1,0 +1,11 @@
+Verified+1: Igor Murashkin <iam@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Igor Murashkin <iam@google.com>
+Code-Review+1: Dan Shi <dshi@google.com>
+Code-Review+1: Simran Basi <sbasi@google.com>
+Code-Review+2: Mathieu Chartier <mathieuc@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 16 Oct 2018 22:21:32 +0000
+Reviewed-on: https://android-review.googlesource.com/783840
+Project: platform/frameworks/base
+Branch: refs/heads/master
