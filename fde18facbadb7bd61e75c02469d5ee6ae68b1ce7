@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dcea562_dbae3342",
+        "filename": "api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 5421,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-16T21:35:33Z",
+      "side": 0,
+      "message": "Need to @deprecate these versus just removing them.",
+      "range": {
+        "startLine": 5399,
+        "startChar": 4,
+        "endLine": 5421,
+        "endChar": 104
+      },
+      "revId": "fde18facbadb7bd61e75c02469d5ee6ae68b1ce7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

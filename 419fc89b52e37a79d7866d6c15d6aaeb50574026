@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96ca29c7_18d0cbeb",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-16T21:35:33Z",
+      "side": 0,
+      "message": "These were added in P, correct?  We unfortunately need to go through the usual @deprecate cycle to get rid of them. :(",
+      "range": {
+        "startLine": 167,
+        "startChar": 3,
+        "endLine": 174,
+        "endChar": 50
+      },
+      "revId": "419fc89b52e37a79d7866d6c15d6aaeb50574026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5806ac32_aa6d15be",
+        "filename": "telephony/java/android/telephony/data/DataProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-16T21:35:33Z",
+      "side": 0,
+      "message": "These were added in P, correct?  We unfortunately need to go through the usual @deprecate cycle to get rid of them. :(",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 225,
+        "endChar": 65
+      },
+      "revId": "419fc89b52e37a79d7866d6c15d6aaeb50574026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
