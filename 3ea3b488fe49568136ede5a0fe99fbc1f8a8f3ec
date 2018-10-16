@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "031b22ad_79c528fa",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-16T10:59:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2bf1e806_9c2ced41",
+      "range": {
+        "startLine": 314,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 13
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d043de52_e1b6f04b",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b9ad5a54_94d8c56b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-16T10:59:36Z",
+      "side": 1,
+      "message": "Ok, but it will violate current precheck. Suppose the precheck unable to identify such case.",
+      "parentUuid": "d043de52_e1b6f04b",
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dca307e_9308402e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2018-10-15T15:17:58Z",
       "side": 1,
       "message": "do we need to catch and handle InterruptedException inside the thread?\ne.g. http://tw.gitbook.net/java/lang/thread_interrupt.html",
+      "range": {
+        "startLine": 689,
+        "startChar": 33,
+        "endLine": 689,
+        "endChar": 42
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4c9ccd_13014f96",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-16T10:59:36Z",
+      "side": 1,
+      "message": "There is no sleep() or wait() in body. Thus, interruptedException is never thrown in body. We cannot catch that. It will be a compiler error.",
+      "parentUuid": "1dca307e_9308402e",
       "range": {
         "startLine": 689,
         "startChar": 33,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "20579a99_9d39315e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-16T10:59:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04990173_e8713662",
+      "range": {
+        "startLine": 1463,
+        "startChar": 39,
+        "endLine": 1463,
+        "endChar": 63
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a02b80f5_3356c532",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c2a8e7_23946a9a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-16T10:59:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a02b80f5_3356c532",
+      "range": {
+        "startLine": 892,
+        "startChar": 12,
+        "endLine": 893,
+        "endChar": 96
+      },
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
