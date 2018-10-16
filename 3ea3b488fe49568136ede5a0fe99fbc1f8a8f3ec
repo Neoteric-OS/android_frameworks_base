@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "d043de52_e1b6f04b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-10-16T03:04:08Z",
+      "side": 1,
+      "message": "Should this addState, use indentation to show hierarchy as below ??\n        addState(mMaybeNotifyState, mDefaultState);\n            addState(mEvaluatingState, mMaybeNotifyState);\n                addState(mWaitForProbeCompletionState, mEvaluatingState);\n            addState(mCaptivePortalState, mMaybeNotifyState);",
+      "revId": "3ea3b488fe49568136ede5a0fe99fbc1f8a8f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dca307e_9308402e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 4
