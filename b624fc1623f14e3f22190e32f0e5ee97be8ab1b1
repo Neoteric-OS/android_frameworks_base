@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1f2da4_f95ab651",
+        "filename": "startop/iorap/TEST_MAPPING",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1088076
+      },
+      "writtenOn": "2018-10-16T22:13:28Z",
+      "side": 1,
+      "message": "remove the extra line",
+      "revId": "b624fc1623f14e3f22190e32f0e5ee97be8ab1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
