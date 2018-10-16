@@ -46,6 +46,30 @@
       "revId": "b5e49706fae9c62e50bc207483d32786593c73fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66356cb6_5aea1b1d",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-16T10:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eec874e_686ac253",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 58
+      },
+      "revId": "b5e49706fae9c62e50bc207483d32786593c73fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
