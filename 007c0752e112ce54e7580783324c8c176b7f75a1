@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "654a3ca9_f7b4878f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-16T14:30:52Z",
+      "side": 1,
+      "message": "Can/should this be a member of EvaluatingState or WaitForProbeCompletionState instead of a member of NetworkMonitor?",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 65
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65da0283_ae8cba47",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-16T14:30:52Z",
+      "side": 1,
+      "message": "Looks like most of this function is the same code we used to have in isCaptivePortal. Instead of moving the code from there to here, did you consider just calling the function from here?",
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341bb1c2_cd4c5909",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-16T14:30:52Z",
+      "side": 1,
+      "message": "I think this is a change in behaviour. Previously, CMD_REEVALUATE would wait for an existing probe to complete. But now we stop the current detection thread and start it again. Any reason you changed this?\n\nI think it would be possible to keep the existing behaviour by only keeping the thread alive in WaitForProbeCompletionState. You\u0027d start the thread in enter(), and stop in exit(). (Using enter and exit helps ensure that all codepaths in and out of the state will start or stop the thread). In WaitForProbeCompletionState you could defer all messages. I think this would be have pretty much the same as it does today.\n\nThen, in the future, you could make WaitForProbeCompletionState process some messages while it\u0027s running. That way, when NetworkMonitor needs to do things that are unrelated to probing, it can still do them.",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 727,
+        "endChar": 21
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7ba967d_321fc630",
         "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 6
@@ -18,6 +81,29 @@
         "startChar": 37,
         "endLine": 153,
         "endChar": 55
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1715756f_e9ab8052",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-16T14:30:52Z",
+      "side": 1,
+      "message": "Nit: sleeping slows down the tests and can cause it to be flaky if the device is busy and doesn\u0027t finish the operation in time.\n\nDid you consider using a CountDownLatch or ConditionVariable to avoid sleeping? That would require ensuring that when sendProbeResult is called, we count down the latch. Not sure how to do that with a spy. But perhaps you do this by making the test a bit more realistic. You could create a very simple handler that only knows how to process the CMD_PROBE_COMPLETE method. When it sees that message, it would count down the latch. Then you could pass that handler into makeMonitor().\n\nI think you need to create a looper for that to work, but there are examples of that in several tests.",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 38
       },
       "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
