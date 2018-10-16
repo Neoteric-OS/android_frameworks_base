@@ -26,7 +26,7 @@ import android.net.INetdEventCallback;
  */
 public class BaseNetdEventCallback extends INetdEventCallback.Stub {
     @Override
-    public void onDnsEvent(String hostname, String[] ipAddresses,
+    public void onDnsEvent(int netId, int returnCode, String hostname, String[] ipAddresses,
             int ipAddressesCount, long timestamp, int uid) {
         // default no-op
     }

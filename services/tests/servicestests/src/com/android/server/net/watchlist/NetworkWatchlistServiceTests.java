@@ -52,6 +52,7 @@ import java.util.concurrent.TimeUnit;
 public class NetworkWatchlistServiceTests {
 
     private static final long NETWOR_EVENT_TIMEOUT_SEC = 1;
+    private static final int TEST_NETID = 100;
     private static final String TEST_HOST = "testhost.com";
     private static final String TEST_IP = "7.6.8.9";
     private static final String[] TEST_IPS =
@@ -180,7 +181,8 @@ public class NetworkWatchlistServiceTests {
                     }
                 };
         mWatchlistService.mNetworkWatchlistHandler = testDnsHandler;
-        connectivityMetrics.callback.onDnsEvent(TEST_HOST, TEST_IPS, TEST_IPS.length, 123L, 456);
+        connectivityMetrics.callback.onDnsEvent(TEST_NETID, 0, TEST_HOST, TEST_IPS,
+                TEST_IPS.length, 123L, 456);
         if (!testDnsLatch.await(NETWOR_EVENT_TIMEOUT_SEC, TimeUnit.SECONDS)) {
             fail("Timed out waiting for network event");
         }
