@@ -41,6 +41,7 @@ import android.net.NetworkStats;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.BatteryStats;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -60,12 +61,14 @@ import android.telephony.ims.aidl.IImsMmTelFeature;
 import android.telephony.ims.aidl.IImsRcsFeature;
 import android.telephony.ims.aidl.IImsRegistration;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telecom.ITelecomService;
 import com.android.internal.telephony.CellNetworkScanResult;
+import com.android.internal.telephony.IAns;
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.ITelephonyRegistry;
@@ -228,7 +231,8 @@ public class TelephonyManager {
 
     /** @hide
     /* @deprecated - use getSystemService as described above */
-    @UnsupportedAppUsage
+    @Deprecated
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static TelephonyManager getDefault() {
         return sInstance;
     }
@@ -317,7 +321,7 @@ public class TelephonyManager {
     }
 
     /** {@hide} */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static TelephonyManager from(Context context) {
         return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
@@ -1877,7 +1881,7 @@ public class TelephonyManager {
      * @param subId
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getNetworkOperatorName(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getTelephonyProperty(phoneId, TelephonyProperties.PROPERTY_OPERATOR_ALPHA, "");
@@ -1905,7 +1909,7 @@ public class TelephonyManager {
      * @param subId
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getNetworkOperator(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getNetworkOperatorForPhone(phoneId);
@@ -2229,7 +2233,7 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public int getDataNetworkType(int subId) {
         try{
             ITelephony telephony = getITelephony();
@@ -2265,7 +2269,7 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public int getVoiceNetworkType(int subId) {
         try{
             ITelephony telephony = getITelephony();
@@ -2418,39 +2422,46 @@ public class TelephonyManager {
      *
      * These are the ordinal value of IccCardConstants.State.
      */
-    public static final int SIM_STATE_UNKNOWN = 0;
+
+    public static final int SIM_STATE_UNKNOWN = TelephonyProtoEnums.SIM_STATE_UNKNOWN;  // 0
     /** SIM card state: no SIM card is available in the device */
-    public static final int SIM_STATE_ABSENT = 1;
+    public static final int SIM_STATE_ABSENT = TelephonyProtoEnums.SIM_STATE_ABSENT;  // 1
     /** SIM card state: Locked: requires the user's SIM PIN to unlock */
-    public static final int SIM_STATE_PIN_REQUIRED = 2;
+    public static final int SIM_STATE_PIN_REQUIRED =
+            TelephonyProtoEnums.SIM_STATE_PIN_REQUIRED;  // 2
     /** SIM card state: Locked: requires the user's SIM PUK to unlock */
-    public static final int SIM_STATE_PUK_REQUIRED = 3;
+    public static final int SIM_STATE_PUK_REQUIRED =
+            TelephonyProtoEnums.SIM_STATE_PUK_REQUIRED;  // 3
     /** SIM card state: Locked: requires a network PIN to unlock */
-    public static final int SIM_STATE_NETWORK_LOCKED = 4;
+    public static final int SIM_STATE_NETWORK_LOCKED =
+            TelephonyProtoEnums.SIM_STATE_NETWORK_LOCKED;  // 4
     /** SIM card state: Ready */
-    public static final int SIM_STATE_READY = 5;
+    public static final int SIM_STATE_READY = TelephonyProtoEnums.SIM_STATE_READY;  // 5
     /** SIM card state: SIM Card is NOT READY */
-    public static final int SIM_STATE_NOT_READY = 6;
+    public static final int SIM_STATE_NOT_READY = TelephonyProtoEnums.SIM_STATE_NOT_READY;  // 6
     /** SIM card state: SIM Card Error, permanently disabled */
-    public static final int SIM_STATE_PERM_DISABLED = 7;
+    public static final int SIM_STATE_PERM_DISABLED =
+            TelephonyProtoEnums.SIM_STATE_PERM_DISABLED;  // 7
     /** SIM card state: SIM Card Error, present but faulty */
-    public static final int SIM_STATE_CARD_IO_ERROR = 8;
+    public static final int SIM_STATE_CARD_IO_ERROR =
+            TelephonyProtoEnums.SIM_STATE_CARD_IO_ERROR;  // 8
     /** SIM card state: SIM Card restricted, present but not usable due to
      * carrier restrictions.
      */
-    public static final int SIM_STATE_CARD_RESTRICTED = 9;
+    public static final int SIM_STATE_CARD_RESTRICTED =
+            TelephonyProtoEnums.SIM_STATE_CARD_RESTRICTED;  // 9
     /**
      * SIM card state: Loaded: SIM card applications have been loaded
      * @hide
      */
     @SystemApi
-    public static final int SIM_STATE_LOADED = 10;
+    public static final int SIM_STATE_LOADED = TelephonyProtoEnums.SIM_STATE_LOADED;  // 10
     /**
      * SIM card state: SIM Card is present
      * @hide
      */
     @SystemApi
-    public static final int SIM_STATE_PRESENT = 11;
+    public static final int SIM_STATE_PRESENT = TelephonyProtoEnums.SIM_STATE_PRESENT;  // 11
 
     /**
      * Extra included in {@link #ACTION_SIM_CARD_STATE_CHANGED} and
@@ -2741,7 +2752,7 @@ public class TelephonyManager {
      * @param subId for which SimOperator is returned
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimOperator(int subId) {
         return getSimOperatorNumeric(subId);
     }
@@ -2755,7 +2766,7 @@ public class TelephonyManager {
      * @see #getSimState
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimOperatorNumeric() {
         int subId = mSubId;
         if (!SubscriptionManager.isUsableSubIdValue(subId)) {
@@ -2784,7 +2795,7 @@ public class TelephonyManager {
      * @param subId for which SimOperator is returned
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimOperatorNumeric(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getSimOperatorNumericForPhone(phoneId);
@@ -2798,7 +2809,7 @@ public class TelephonyManager {
      * @param phoneId for which SimOperator is returned
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimOperatorNumericForPhone(int phoneId) {
         return getTelephonyProperty(phoneId,
                 TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC, "");
@@ -2825,7 +2836,7 @@ public class TelephonyManager {
      * @param subId for which SimOperatorName is returned
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimOperatorName(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getSimOperatorNameForPhone(phoneId);
@@ -2855,7 +2866,7 @@ public class TelephonyManager {
      * @param subId for which SimCountryIso is returned
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSimCountryIso(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getSimCountryIsoForPhone(phoneId);
@@ -3045,7 +3056,7 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSubscriberId(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
@@ -3430,7 +3441,7 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getMsisdn(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
@@ -4396,7 +4407,7 @@ public class TelephonyManager {
    /**
     * @hide
     */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
@@ -4410,6 +4421,10 @@ public class TelephonyManager {
 
     private ITelephonyRegistry getTelephonyRegistry() {
         return ITelephonyRegistry.Stub.asInterface(ServiceManager.getService("telephony.registry"));
+    }
+
+    private IAns getIAns() {
+        return IAns.Stub.asInterface(ServiceManager.getService("ians"));
     }
 
     //
@@ -5374,7 +5389,7 @@ public class TelephonyManager {
     @UnsupportedAppUsage
     public static String getTelephonyProperty(String property, String defaultVal) {
         String propVal = SystemProperties.get(property);
-        return propVal == null ? defaultVal : propVal;
+        return TextUtils.isEmpty(propVal) ? defaultVal : propVal;
     }
 
     /** @hide */
@@ -7917,7 +7932,7 @@ public class TelephonyManager {
      * either READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE to retrieve the information.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public ServiceState getServiceStateForSubscriber(int subId) {
         try {
             ITelephony service = getITelephony();
@@ -8603,7 +8618,6 @@ public class TelephonyManager {
         return UNKNOWN_CARRIER_ID_LIST_VERSION;
     }
 
-
     /**
      * How many modems can have simultaneous data connections.
      * @hide
@@ -8620,5 +8634,63 @@ public class TelephonyManager {
             // This could happen if binder process crashes.
         }
         return 0;
+    }
+
+    /**
+     * Enable or disable AlternativeNetworkService.
+     *
+     * This method should be called to enable or disable
+     * AlternativeNetwork service on the device.
+     *
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     *
+     * @param enable enable(True) or disable(False)
+     * @return returns true if successfully set.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public boolean setAlternativeNetworkState(boolean enable) {
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        boolean ret = false;
+        try {
+            IAns iAlternativeNetworkService = getIAns();
+            if (iAlternativeNetworkService != null) {
+                ret = iAlternativeNetworkService.setEnable(enable, pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "enableAlternativeNetwork RemoteException", ex);
+        }
+
+        return ret;
+    }
+
+    /**
+     * is AlternativeNetworkService enabled
+     *
+     * This method should be called to determine if the AlternativeNetworkService is
+     * enabled
+     *
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public boolean isAlternativeNetworkEnabled() {
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        boolean isEnabled = false;
+
+        try {
+            IAns iAlternativeNetworkService = getIAns();
+            if (iAlternativeNetworkService != null) {
+                isEnabled = iAlternativeNetworkService.isEnabled(pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "enableAlternativeNetwork RemoteException", ex);
+        }
+
+        return isEnabled;
     }
 }

@@ -32,15 +32,18 @@ import android.annotation.SystemService;
 import android.annotation.UnsupportedAppUsage;
 import android.app.BroadcastOptions;
 import android.app.PendingIntent;
+import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.net.INetworkPolicyManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -114,6 +117,52 @@ public class SubscriptionManager {
     /** @hide */
     @UnsupportedAppUsage
     public static final Uri CONTENT_URI = Uri.parse("content://telephony/siminfo");
+
+
+    /**
+     * Generates a content {@link Uri} used to receive updates on simInfo change
+     * on the given subscriptionId
+     * @param subscriptionId the subscriptionId to receive updates on
+     * @return the Uri used to observe carrier identity changes
+     * @hide
+     */
+    public static Uri getUriForSubscriptionId(int subscriptionId) {
+        return Uri.withAppendedPath(CONTENT_URI, String.valueOf(subscriptionId));
+    }
+
+    /**
+     * A content {@link Uri} used to receive updates on wfc enabled user setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription wfc enabled {@link SubscriptionManager#WFC_IMS_ENABLED}
+     * while your app is running. You can also use a {@link JobService} to ensure your app
+     * is notified of changes to the {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri WFC_ENABLED_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc");
+
+    /**
+     * A content {@link Uri} used to receive updates on enhanced 4g user setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription enhanced 4G enabled {@link SubscriptionManager#ENHANCED_4G_MODE_ENABLED}
+     * while your app is running. You can also use a {@link JobService} to ensure your app
+     * is notified of changes to the {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri ENHANCED_4G_ENABLED_CONTENT_URI = Uri.withAppendedPath(
+            CONTENT_URI, "enhanced_4g");
+
 
     /**
      * TelephonyProvider unique key column name is the subscription id.
@@ -1320,7 +1369,7 @@ public class SubscriptionManager {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static int getPhoneId(int subId) {
         if (!isValidSubscriptionId(subId)) {
             if (DBG) {
@@ -1602,7 +1651,7 @@ public class SubscriptionManager {
      * Check if the subscription ID is usable.
      *
      * A usable subscription ID has a valid value except some special values such as
-     * {@link DEFAULT_SUBSCRIPTION_ID}. It can be used for subscription functions.
+     * {@link #DEFAULT_SUBSCRIPTION_ID}. It can be used for subscription functions.
      *
      * @param subscriptionId the subscription ID
      * @return {@code true} if the subscription ID is usable; {@code false} otherwise.
@@ -1616,7 +1665,7 @@ public class SubscriptionManager {
      * usable subId means its neither a INVALID_SUBSCRIPTION_ID nor a DEFAULT_SUB_ID.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static boolean isUsableSubIdValue(int subId) {
         return subId >= MIN_SUBSCRIPTION_ID_VALUE && subId <= MAX_SUBSCRIPTION_ID_VALUE;
     }
@@ -1634,7 +1683,7 @@ public class SubscriptionManager {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static void putPhoneIdAndSubIdExtra(Intent intent, int phoneId) {
         int[] subIds = SubscriptionManager.getSubId(phoneId);
         if (subIds != null && subIds.length > 0) {
@@ -2178,20 +2227,21 @@ public class SubscriptionManager {
     }
 
     /**
-     * Get User downloaded Profiles.
+     * Get opportunistic data Profiles.
      *
-     *  Provide all available user downloaded profile on the phone.
-     *  @param slotId on which phone the switch will operate on
+     *  Provide all available user downloaded profiles on phone which are used only for
+     *  opportunistic data.
+     *  @param slotIndex slot on which the profiles are queried from.
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    List<SubscriptionInfo> getOpportunisticSubscriptions(int slotId) {
+    public List<SubscriptionInfo> getOpportunisticSubscriptions(int slotIndex) {
         String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
         List<SubscriptionInfo> subInfoList = null;
 
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                subInfoList = iSub.getOpportunisticSubscriptions(slotId, pkgForDebug);
+                subInfoList = iSub.getOpportunisticSubscriptions(slotIndex, pkgForDebug);
             }
         } catch (RemoteException ex) {
             // ignore it
