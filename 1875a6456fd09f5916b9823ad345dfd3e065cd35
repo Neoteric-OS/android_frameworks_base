@@ -52,6 +52,24 @@
       "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9dd66bf_5e5ace7f",
+        "filename": "packages/Shell/src/com/android/shell/BugreportStorageProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1342365
+      },
+      "writtenOn": "2018-10-17T07:47:39Z",
+      "side": 1,
+      "message": "HI Felipe and Steve, \n\nWe\u0027ve modified this patch as suggested above, and can you review it again? Thanks.",
+      "parentUuid": "7bf2cf76_c2709c99",
+      "revId": "1875a6456fd09f5916b9823ad345dfd3e065cd35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
