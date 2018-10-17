@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88faaad0_38a85d09",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12202,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2018-10-17T17:45:29Z",
+      "side": 1,
+      "message": "As a side note: moving forward these annotations are not sustainable since the primitive tooling which generate the profile will just rewrite the file.",
+      "range": {
+        "startLine": 12202,
+        "startChar": 51,
+        "endLine": 12202,
+        "endChar": 61
+      },
+      "revId": "22f69489dbfce64fa3737496ab28254216f7ba46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
