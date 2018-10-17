@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647eafd0_f04154e1",
+        "filename": "core/java/com/android/internal/content/FileSystemProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1086769
+      },
+      "writtenOn": "2018-10-17T20:55:07Z",
+      "side": 1,
+      "message": "Don\u0027t omit curlies. Not permitted in Google style.",
+      "revId": "25a8f3d0ddbaaab6ae68ccd7b8112e1ffba8374e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
