@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c23d8e0_b93f656b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-17T04:51:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "654a3ca9_f7b4878f",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 65
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65da0283_ae8cba47",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ba54ac16_fa6eeee8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-17T04:51:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65da0283_ae8cba47",
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "341bb1c2_cd4c5909",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2018-10-16T14:30:52Z",
       "side": 1,
       "message": "I think this is a change in behaviour. Previously, CMD_REEVALUATE would wait for an existing probe to complete. But now we stop the current detection thread and start it again. Any reason you changed this?\n\nI think it would be possible to keep the existing behaviour by only keeping the thread alive in WaitForProbeCompletionState. You\u0027d start the thread in enter(), and stop in exit(). (Using enter and exit helps ensure that all codepaths in and out of the state will start or stop the thread). In WaitForProbeCompletionState you could defer all messages. I think this would be have pretty much the same as it does today.\n\nThen, in the future, you could make WaitForProbeCompletionState process some messages while it\u0027s running. That way, when NetworkMonitor needs to do things that are unrelated to probing, it can still do them.",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 727,
+        "endChar": 21
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93314365_c11e63b4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-17T04:51:26Z",
+      "side": 1,
+      "message": "I add an interrupt mechanism here because I consider that we may receive other events and may need to interrupt the current process, such as CMD_FORCE_REEVALUATION. WaitForProbeCompletionState in current implementation only handle the CMD_PROBE_COMPLETE and leave all other event to the parent state. CMD_FORCE_REEVALUATION will be handled in DefaultState and cause the state transition to evaluating state. it may need to defer the message in WaitForProbeCompletionState to keep current behaviour.\n\nTo further think about it, CMD_FORCE_REEVALUATION may not need to be considered because the it should only be applied if app report different validation status with NetworkMonitor. \n1. If the NetworkMonitor is validated and reevaluate due to data stall, app also reports bad network. The processing probe should already cover it and not need to restart the process.\n2. If the NetworkMonitor is not validated yet, only app reports good network will be processed. However, the validation should also get positive result.\n\nControl thread in enter() and exit() looks simpler and better. I will update it accordingly.",
+      "parentUuid": "341bb1c2_cd4c5909",
       "range": {
         "startLine": 724,
         "startChar": 0,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0e82aa3b_e1c0397e",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-17T04:51:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7ba967d_321fc630",
+      "range": {
+        "startLine": 153,
+        "startChar": 37,
+        "endLine": 153,
+        "endChar": 55
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1715756f_e9ab8052",
         "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9248039_8a6d22c1",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-17T04:51:26Z",
+      "side": 1,
+      "message": "Ack. I will replace the design to avoid sleeping.",
+      "parentUuid": "1715756f_e9ab8052",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 38
+      },
+      "revId": "007c0752e112ce54e7580783324c8c176b7f75a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
