@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b98d9eb3_24798a6f",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-17T23:27:49Z",
+      "side": 1,
+      "message": "what does this mean?",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 81
+      },
+      "revId": "c8c440c2be0c34ba5b67537885631e9fedc622ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea18e5e_b527d8b6",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-17T23:27:49Z",
+      "side": 1,
+      "message": "how about \"was received from the modem\"",
+      "range": {
+        "startLine": 149,
+        "startChar": 46,
+        "endLine": 149,
+        "endChar": 69
+      },
+      "revId": "c8c440c2be0c34ba5b67537885631e9fedc622ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
