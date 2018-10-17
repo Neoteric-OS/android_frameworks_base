@@ -22,6 +22,30 @@
       "revId": "22f69489dbfce64fa3737496ab28254216f7ba46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca86b4f_728ff845",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12202,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-17T18:08:04Z",
+      "side": 1,
+      "message": "This is here so that it shows up in the diff for a new file.",
+      "parentUuid": "88faaad0_38a85d09",
+      "range": {
+        "startLine": 12202,
+        "startChar": 51,
+        "endLine": 12202,
+        "endChar": 61
+      },
+      "revId": "22f69489dbfce64fa3737496ab28254216f7ba46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
