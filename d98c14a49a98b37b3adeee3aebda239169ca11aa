@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4cfbb3_a6b7874b",
+        "filename": "services/core/java/com/android/server/ZRAMService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1014807
+      },
+      "writtenOn": "2018-10-17T10:05:16Z",
+      "side": 1,
+      "message": "Seems unnecessary.  `PrintWriter.println(int)` can do the same thing.",
+      "range": {
+        "startLine": 82,
+        "startChar": 27,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "d98c14a49a98b37b3adeee3aebda239169ca11aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
