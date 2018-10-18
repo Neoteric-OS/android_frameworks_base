@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "dbb47144_ce54f40f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T10:21:01Z",
+      "side": 1,
+      "message": "It\u0027s really non-obvious that this cannot happen. Can we add a comment to help us understand this? Something like:\n\n  // Currently, it\u0027s not possible to exit this state without mThread having terminated.\n  // Therefore, this state can never get CMD_PROBE_COMPLETE from a stale thread that is\n  // not mThread.\n  // TODO: as soon as it\u0027s possible to exit this state without mThread having terminated,\n  // ensure that CMD_PROBE_COMPLETE from stale threads are ignored. This could be\n  // done via a sequence number, or by changing mThread to a class that has a stopped\n  // volatile boolean or AtomicBoolean.",
+      "parentUuid": "e4831ba6_f95068f4",
+      "range": {
+        "startLine": 849,
+        "startChar": 16,
+        "endLine": 849,
+        "endChar": 40
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab7c98d6_caa6ba77",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -320,6 +344,30 @@
       "side": 1,
       "message": "I could add the interrupt and stop it but it may not happen in current flow. The reason is similar to comment for the CMD_PROBE_COMPLETE. Thread should be already not alive if we able to exit the WaitForProbeCompletionState.",
       "parentUuid": "b03ca1ac_9d73e05c",
+      "range": {
+        "startLine": 890,
+        "startChar": 12,
+        "endLine": 890,
+        "endChar": 27
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08f14a7_ae80463c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T10:21:01Z",
+      "side": 1,
+      "message": "Per discussion over IM: I think you\u0027re probably right that this cannot happen. I think it\u0027s a bit brittle, because correctness depends on a number of invariants of the code outside this state. So if we make a simple change code outside this state, the code in this state could become incorrect without us noticing.\n\nSo I think we should at least have a comment here that says something like:\n\n  // If we get here, the probe started in enter() is guaranteed to have completed, because\n  // in this state, all messages except CMD_PROBE_COMPLETE and CMD_REEVALUATE\n  // are deferred. CMD_REEVALUATE cannot be in the queue, because it is only ever sent in\n  // EvaluatingState#enter, and we reach this state by processing it. Therefore there is\n  // no need to stop the thread.",
+      "parentUuid": "8cdd6d2f_720cb209",
       "range": {
         "startLine": 890,
         "startChar": 12,
