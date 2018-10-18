@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e34cbaf3_0a9bb8cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74e2d2c6_4e16c7cd",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ffb6cc1_6248cae3",
         "filename": "tools/aapt2/Debug.cpp",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a8e4d64e_6adc9a17",
+        "filename": "tools/aapt2/Debug.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ffb6cc1_6248cae3",
+      "range": {
+        "startLine": 309,
+        "startChar": 20,
+        "endLine": 309,
+        "endChar": 27
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3796d597_8537aba5",
         "filename": "tools/aapt2/ResourceParser.cpp",
         "patchSetId": 7
@@ -59,6 +107,24 @@
       "writtenOn": "2018-10-04T08:47:25Z",
       "side": 1,
       "message": "We should also support \"public\", maybe \"oem\" and \"odm\". Also, maybe \"signature\" depending on what we decide on with regards to \u003coverlayable protectionLeveL\u003d\"normal|signature\"\u003e.",
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6825a53_4aa81a99",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "I think we should wait to add the ones not immediately necessary until we know we need them.",
+      "parentUuid": "3796d597_8537aba5",
       "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cba61e_7f987d48",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ac77ac_256e0ae1",
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "08c7fe88_348f02fc",
+        "filename": "tools/aapt2/ResourceParser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626ca1da_e7d7da22",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 66
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbea980b_45ca73b0",
         "filename": "tools/aapt2/link/TableMerger.cpp",
         "patchSetId": 7
@@ -125,6 +233,30 @@
       "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e484228_bfd6cd09",
+        "filename": "tools/aapt2/link/TableMerger.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-10-18T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbea980b_45ca73b0",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 87
+      },
+      "revId": "32088e281b818e7a93d6098eeac846eb848f90f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
