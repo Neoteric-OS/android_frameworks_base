@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab7c98d6_caa6ba77",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-18T08:46:28Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "range": {
+        "startLine": 878,
+        "startChar": 23,
+        "endLine": 878,
+        "endChar": 25
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd28dac_d44ed9fe",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-18T08:46:28Z",
+      "side": 1,
+      "message": "Capital at the start, period at the end.",
+      "range": {
+        "startLine": 878,
+        "startChar": 83,
+        "endLine": 878,
+        "endChar": 84
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46a2275_0bb864bf",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-18T08:46:28Z",
+      "side": 1,
+      "message": "The same as above.",
+      "range": {
+        "startLine": 882,
+        "startChar": 27,
+        "endLine": 882,
+        "endChar": 28
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
