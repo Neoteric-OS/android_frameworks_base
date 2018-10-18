@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf35a6c_cc6000de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-10-18T15:36:55Z",
+      "side": 1,
+      "message": "I assume you tested it manually. Could you list all the test scenarios you performed?",
+      "revId": "895f3ec770dbf655685f97049b0c0d7aa2b7fcde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
