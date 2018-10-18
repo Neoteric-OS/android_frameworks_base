@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f9bfc04d_7afeb92e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T08:59:35Z",
+      "side": 1,
+      "message": "(Nit: the boolean might make it easier to stop the thread. If the thread consists of multiple slow operations (e.g., a DNS lookup, followed by another DNS lookup, followed by...) then between each of these slow operations, the code could check the boolean, and return early if the boolean was false.)",
+      "parentUuid": "72819bcc_58b9e27c",
+      "range": {
+        "startLine": 849,
+        "startChar": 16,
+        "endLine": 849,
+        "endChar": 40
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab7c98d6_caa6ba77",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
