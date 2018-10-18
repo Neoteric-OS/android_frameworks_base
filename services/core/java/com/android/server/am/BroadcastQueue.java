@@ -46,6 +46,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+import java.lang.NullPointerException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.util.EventLog;
@@ -814,6 +815,8 @@ public final class BroadcastQueue {
                     return false;
                 }
             } catch (RemoteException e) {
+                return false;
+            } catch (NullPointerException e) {
                 return false;
             }
         }
