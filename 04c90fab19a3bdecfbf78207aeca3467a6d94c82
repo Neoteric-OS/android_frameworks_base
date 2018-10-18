@@ -22,6 +22,30 @@
       "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac522c6d_d4897d93",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-10-18T09:05:04Z",
+      "side": 1,
+      "message": "Dialer app uses StatusHints#getIcon and calls Icon#loadDrawable. \n\nDrawable icon \u003d statusHints.getIcon().loadDrawable(context);\n\nIn my understanding, we can\u0027t create Icon object from Drawable object because Drawable is a abstract class and which does not contain resource ID field. Icon object is a drawable description and must have resource ID field.\n\nSo, we need to use StatusHints#getIcon that returns drawable object but it has @Deprecated now. Can we remove @Deprecated and move these implementations into the method?",
+      "parentUuid": "d2da6c91_b3783ce4",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
