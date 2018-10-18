@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07fe3d9c_ee145602",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a03af084_48f38760",
+      "range": {
+        "startLine": 299,
+        "startChar": 59,
+        "endLine": 299,
+        "endChar": 86
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72819bcc_58b9e27c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -59,6 +83,30 @@
       "writtenOn": "2018-10-18T08:59:35Z",
       "side": 1,
       "message": "(Nit: the boolean might make it easier to stop the thread. If the thread consists of multiple slow operations (e.g., a DNS lookup, followed by another DNS lookup, followed by...) then between each of these slow operations, the code could check the boolean, and return early if the boolean was false.)",
+      "parentUuid": "72819bcc_58b9e27c",
+      "range": {
+        "startLine": 849,
+        "startChar": 16,
+        "endLine": 849,
+        "endChar": 40
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4831ba6_f95068f4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "Thanks for reviewing. \n\nI\u0027ve considered about this. All the other messages will be deferred except CMD_REEVALUATE. That is, to say, NetworkMonitor will stop and wait until we get the CMD_PROBE_COMPLETE which is quite similar to previous behavior. And CMD_REEVALUATE is currently sent when \n1. The validation fail(which is triggered after CMD_PROBE_COMPLETE).\n2. The enter() of EvaluatingState\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000. \nSince the state will not leave EvaluatingState\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000, it should not have change to re-enter EvaluatingState\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000. \n\nThus, this condition should not happen in current design. Of course, the the sequence is updated in the future. It might happen.",
       "parentUuid": "72819bcc_58b9e27c",
       "range": {
         "startLine": 849,
@@ -118,6 +166,54 @@
     },
     {
       "key": {
+        "uuid": "b7ec7bba_8b726a1d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab7c98d6_caa6ba77",
+      "range": {
+        "startLine": 878,
+        "startChar": 23,
+        "endLine": 878,
+        "endChar": 25
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c8f19ab_ef20a0bd",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afd28dac_d44ed9fe",
+      "range": {
+        "startLine": 878,
+        "startChar": 83,
+        "endLine": 878,
+        "endChar": 84
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b46a2275_0bb864bf",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "5e774e42_8387d80e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b46a2275_0bb864bf",
+      "range": {
+        "startLine": 882,
+        "startChar": 27,
+        "endLine": 882,
+        "endChar": 28
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03ca1ac_9d73e05c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -152,6 +272,30 @@
       "writtenOn": "2018-10-18T08:53:20Z",
       "side": 1,
       "message": "What if the thread is already running here? Should we interrupt and stop it?",
+      "range": {
+        "startLine": 890,
+        "startChar": 12,
+        "endLine": 890,
+        "endChar": 27
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdd6d2f_720cb209",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-18T09:38:43Z",
+      "side": 1,
+      "message": "I could add the interrupt and stop it but it may not happen in current flow. The reason is similar to comment for the CMD_PROBE_COMPLETE. Thread should be already not alive if we able to exit the WaitForProbeCompletionState.",
+      "parentUuid": "b03ca1ac_9d73e05c",
       "range": {
         "startLine": 890,
         "startChar": 12,
