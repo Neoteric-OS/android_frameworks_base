@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "72819bcc_58b9e27c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T08:53:20Z",
+      "side": 1,
+      "message": "Is it possible that we this CMD_PROBE_COMPLETE is stale? Example:\n\n 1. We start a probe, and it hangs on a DNS lookup.\n 2. For some reason, we go to another state (can this happen?).\n 3. We come back into this state, and start a probe.\n 4. The probe in #1 completes.\n\nIn #4, I think we should ignore the probe because it\u0027s not the latest. I can think of a couple of ways to do this.\n\na) Keeping a sequence number somewhere in this file that increases every time a probe is sent. We\u0027d out that sequence number in the CMD_PROBE_COMPLETE message, and ignore the CMD_PROBE_COMPLETE if the sequence number is not the current sequence number.\n\nb) Change the probe thread from a Thread into a very simple class that has a Thread and a volatile boolean (or AtomicBoolean) that indicates whether that probe is still active. When we start the probe we set the boolean to true. We then make the CMD_PROBE_COMPLETE pass this object in msg.obj. When in exit() we interrupt and stop the probe, we set the boolean to false. When we process the CMD_PROBE_COMPLETE message, we ignore it if the boolean is false.\n\nc) Use the thread\u0027s interrupted indicator instead of the above boolean. That seems a bit harder to read and a bit more brittle but I think it might work too.",
+      "range": {
+        "startLine": 849,
+        "startChar": 16,
+        "endLine": 849,
+        "endChar": 40
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab7c98d6_caa6ba77",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -64,6 +87,29 @@
         "startChar": 27,
         "endLine": 882,
         "endChar": 28
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03ca1ac_9d73e05c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T08:53:20Z",
+      "side": 1,
+      "message": "What if the thread is already running here? Should we interrupt and stop it?",
+      "range": {
+        "startLine": 890,
+        "startChar": 12,
+        "endLine": 890,
+        "endChar": 27
       },
       "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
