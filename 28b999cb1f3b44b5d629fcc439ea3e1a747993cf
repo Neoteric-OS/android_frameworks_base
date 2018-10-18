@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec006bff_4b169062",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-18T06:08:45Z",
+      "side": 1,
+      "message": "Optional :\nI think this may be more readable written as\n\n        ArgumentCaptor\u003cINetworkPolicyListener\u003e policyListenerCaptor \u003d\n                ArgumentCaptor.forClass(INetworkPolicyListener.class);\n        verify(mNpm).registerListener(policyListenerCaptor.capture());\n        mPolicyListener \u003d policyListenerCaptor.getValue();\n\n(and you\u0027d need to write it after you\u0027ve instantiated mService)\nWhat do you think ?",
+      "range": {
+        "startLine": 1086,
+        "startChar": 0,
+        "endLine": 1092,
+        "endChar": 0
+      },
+      "revId": "28b999cb1f3b44b5d629fcc439ea3e1a747993cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
