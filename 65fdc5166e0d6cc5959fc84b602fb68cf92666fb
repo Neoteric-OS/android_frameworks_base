@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a03af084_48f38760",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T08:55:01Z",
+      "side": 1,
+      "message": "This is not really WaitForProbeCompletionState since it also *starts* the probe. ProbingState? SendingProbeState?",
+      "range": {
+        "startLine": 299,
+        "startChar": 59,
+        "endLine": 299,
+        "endChar": 86
+      },
+      "revId": "65fdc5166e0d6cc5959fc84b602fb68cf92666fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72819bcc_58b9e27c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
