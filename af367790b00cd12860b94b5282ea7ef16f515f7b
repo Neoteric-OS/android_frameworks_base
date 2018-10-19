@@ -22,6 +22,30 @@
       "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bdf471_9865863d",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-19T10:21:38Z",
+      "side": 1,
+      "message": "Chalard, thank you for the comment.\nActually, we haven\u0027t see the problem on both cases.(i.e. 1) call both moveTaskToBack() and finishAndRemoveTask(), with bad results. 2) will move the captive portal app to the back of the stack again )\n\nBut we understand we need more investigation for both case and other scenario.",
+      "parentUuid": "4a887e3d_c129d97a",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
