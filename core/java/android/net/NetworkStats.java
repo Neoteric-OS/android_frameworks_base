@@ -816,9 +816,10 @@ public class NetworkStats implements Parcelable {
      * @param baseTraffic Traffic on the base interfaces. Will be mutated.
      * @param stackedTraffic Stats with traffic stacked on top of our ifaces. Will also be mutated.
      * @param stackedIfaces Mapping ipv6if -> ipv4if interface where traffic is counted on both.
+     * @param useBpfStats True if eBPF is supported.
      */
     public static void apply464xlatAdjustments(NetworkStats baseTraffic,
-            NetworkStats stackedTraffic, Map<String, String> stackedIfaces) {
+            NetworkStats stackedTraffic, Map<String, String> stackedIfaces, boolean useBpfStats) {
         // Total 464xlat traffic to subtract from uid 0 on all base interfaces.
         // stackedIfaces may grow afterwards, but NetworkStats will just be resized automatically.
         final NetworkStats adjustments = new NetworkStats(0, stackedIfaces.size());
@@ -836,13 +837,18 @@ public class NetworkStats implements Parcelable {
             if (baseIface == null) {
                 continue;
             }
-            // Subtract any 464lat traffic seen for the root UID on the current base interface.
-            adjust.iface = baseIface;
-            adjust.rxBytes = -(entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
-            adjust.txBytes = -(entry.txBytes + entry.txPackets * IPV4V6_HEADER_DELTA);
-            adjust.rxPackets = -entry.rxPackets;
-            adjust.txPackets = -entry.txPackets;
-            adjustments.combineValues(adjust);
+
+            if (!useBpfStats) {
+                // If xt_qtaguid is used, subtract any 464lat traffic seen for the root UID on the
+                // current base interface. For eBPF, the per uid stats is collected after packet is
+                // leaving ip layer, so the adjustment on root uid is unnecessary.
+                adjust.iface = baseIface;
+                adjust.rxBytes = -(entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
+                adjust.txBytes = -(entry.txBytes + entry.txPackets * IPV4V6_HEADER_DELTA);
+                adjust.rxPackets = -entry.rxPackets;
+                adjust.txPackets = -entry.txPackets;
+                adjustments.combineValues(adjust);
+            }
 
             // For 464xlat traffic, xt_qtaguid only counts the bytes of the native IPv4 packet sent
             // on the stacked interface with prefix "v4-" and drops the IPv6 header size after
@@ -864,8 +870,8 @@ public class NetworkStats implements Parcelable {
      * base and stacked traffic.
      * @param stackedIfaces Mapping ipv6if -> ipv4if interface where traffic is counted on both.
      */
-    public void apply464xlatAdjustments(Map<String, String> stackedIfaces) {
-        apply464xlatAdjustments(this, this, stackedIfaces);
+    public void apply464xlatAdjustments(Map<String, String> stackedIfaces, boolean useBpfStats) {
+        apply464xlatAdjustments(this, this, stackedIfaces, useBpfStats);
     }
 
     /**
