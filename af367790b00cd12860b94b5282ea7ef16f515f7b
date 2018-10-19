@@ -70,6 +70,30 @@
       "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd467ffc_2096a1a5",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-19T11:31:53Z",
+      "side": 1,
+      "message": "It is the below test cases.\n1. Device connects to AP with portal site.\n2. User successfully log in the AP and the default page of AP is shown. (e.g. log-out page)\n3. User tries to log out via other Browzer(e.g. Chrome).\n4. The notification for the login to AP again is shown.\n5. User cannot see the log in page and log-out page is shown.\n\nIf we set isDone as true when DISMISS case,\nIn step 2, done(DISMISS) and isDone becomes true.\nThen not call finish() then onCreate will be called in next time even if done(UNWANTED) is called when Wi-Fi disconnected due to the below check.\n\u003d\u003d\n214    if (isDone.getAndSet(true)) {\n\u003d\u003d\n\nWe avoid the case here.",
+      "parentUuid": "5a36b7f7_a4e5bfbc",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
