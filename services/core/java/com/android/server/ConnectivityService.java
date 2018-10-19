@@ -472,6 +472,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     public static final int EVENT_PROVISIONING_NOTIFICATION = 43;
 
+    // Handle Wi-Fi validation updates.
+    private static final int EVENT_WIFI_VALID_UPDATE = 44;
+
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
@@ -549,6 +552,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private long mLastWakeLockAcquireTimestamp = 0;
 
     private final IpConnectivityLog mMetricsLog;
+
+    private static final int WIFI_VALID_DEFAULT = 1;
+    private boolean mIsWifiAlwaysValid;
 
     @GuardedBy("mBandwidthRequests")
     private final SparseArray<Integer> mBandwidthRequests = new SparseArray(10);
@@ -808,6 +814,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
 
+        mIsWifiAlwaysValid = toBool(Settings.System.getInt(context.getContentResolver(),
+                Settings.System.WIFI_VALID_ENABLE, WIFI_VALID_DEFAULT));
+
         mContext = checkNotNull(context, "missing Context");
         mNMS = checkNotNull(netManager, "missing INetworkManagementService");
         mStatsService = checkNotNull(statsService, "missing INetworkStatsService");
@@ -1057,6 +1066,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mSettingsObserver.observe(
                 Settings.Global.getUriFor(Settings.Global.WIFI_ALWAYS_REQUESTED),
                 EVENT_CONFIGURE_ALWAYS_ON_NETWORKS);
+
+        // Watch for whether or not to let Wi-Fi is always valid.
+        mSettingsObserver.observe(
+                Settings.System.getUriFor(Settings.System.WIFI_VALID_ENABLE),
+                EVENT_WIFI_VALID_UPDATE);
     }
 
     private void registerPrivateDnsSettingsCallbacks() {
@@ -2696,6 +2710,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
     }
 
+    private void handleWifiValidationUpdate() {
+        mIsWifiAlwaysValid = toBool(Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.WIFI_VALID_ENABLE, WIFI_VALID_DEFAULT));
+        Log.d(TAG, "handleWifiValidationUpdate, enable = " + mIsWifiAlwaysValid);
+    }
+
     private void updateLingerState(NetworkAgentInfo nai, long now) {
         // 1. Update the linger timer. If it's changed, reschedule or cancel the alarm.
         // 2. If the network was lingering and there are now requests, unlinger it.
@@ -3416,6 +3436,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_DATA_SAVER_CHANGED:
                     handleRestrictBackgroundChanged(toBool(msg.arg1));
+                    break;
+                case EVENT_WIFI_VALID_UPDATE:
+                    handleWifiValidationUpdate();
                     break;
             }
         }
@@ -5935,6 +5958,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final int oldScore = nai.getCurrentScore();
+
         nai.setCurrentScore(score);
 
         rematchAllNetworksAndRequests(nai, oldScore);
