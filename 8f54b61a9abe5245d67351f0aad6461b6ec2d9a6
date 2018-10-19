@@ -70,6 +70,30 @@
       "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d412ecd7_54bfec3a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-19T01:41:45Z",
+      "side": 1,
+      "message": "We deeply investigate again, we should add this null check because there is null case as follow.\nWe want to keep this check.\n\u003d\u003d\n    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,\n            NetworkCapabilities nc, LinkProperties lp, int score) {\n        this(looper, context, logTag, ni, nc, lp, score, null); # here\n    }\n    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,\n            NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {\n\u003d\u003d\n\nReference :\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/net/NetworkAgent.java#195",
+      "parentUuid": "0716ce81_ebe6f94d",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "8f54b61a9abe5245d67351f0aad6461b6ec2d9a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
