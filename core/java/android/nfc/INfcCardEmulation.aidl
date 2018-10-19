@@ -30,7 +30,7 @@ interface INfcCardEmulation
     boolean isDefaultServiceForAid(int userHandle, in ComponentName service, String aid);
     boolean setDefaultServiceForCategory(int userHandle, in ComponentName service, String category);
     boolean setDefaultForNextTap(int userHandle, in ComponentName service);
-    boolean registerAidGroupForService(int userHandle, in ComponentName service, in AidGroup aidGroup);
+    boolean registerAidGroupForService(int userHandle, in ComponentName service, in AidGroup aidGroup, String offHostSecureElement);
     AidGroup getAidGroupForService(int userHandle, in ComponentName service, String category);
     boolean removeAidGroupForService(int userHandle, in ComponentName service, String category);
     List<ApduServiceInfo> getServices(int userHandle, in String category);
