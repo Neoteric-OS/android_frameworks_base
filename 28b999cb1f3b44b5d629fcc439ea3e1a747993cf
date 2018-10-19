@@ -22,6 +22,30 @@
       "revId": "28b999cb1f3b44b5d629fcc439ea3e1a747993cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e01bc8_785b403c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2018-10-19T04:39:31Z",
+      "side": 1,
+      "message": "Yes, that\u0027s more straightforward.\nI am in trouble with flashing aosp into marlin, will update this part after the problem solved.",
+      "parentUuid": "ec006bff_4b169062",
+      "range": {
+        "startLine": 1086,
+        "startChar": 0,
+        "endLine": 1092,
+        "endChar": 0
+      },
+      "revId": "28b999cb1f3b44b5d629fcc439ea3e1a747993cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
