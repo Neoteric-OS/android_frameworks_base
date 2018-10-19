@@ -46,6 +46,30 @@
       "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a36b7f7_a4e5bfbc",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-19T10:39:24Z",
+      "side": 1,
+      "message": "This is massively unlikely to happen at any given test because the window for it to happen is typically about 15ms, but the reason this code was put it is because in the field, with hundreds of thousands of occurrences, this does happen to real users occasionally.\n\nCan you tell me what it is you are trying to avoid with this test ?",
+      "parentUuid": "86bdf471_9865863d",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
