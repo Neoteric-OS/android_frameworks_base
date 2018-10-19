@@ -69,6 +69,7 @@ import android.net.NetworkStats;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.util.NetdService;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
@@ -1738,9 +1739,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void setAllowOnlyVpnForUids(boolean add, UidRange[] uidRanges)
             throws ServiceSpecificException {
         mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
-
         try {
-            mNetdService.networkRejectNonSecureVpn(add, uidRanges);
+            mNetdService.networkRejectNonSecureVpn(add, UidRange.toParcelArray(uidRanges));
         } catch (ServiceSpecificException e) {
             Log.w(TAG, "setAllowOnlyVpnForUids(" + add + ", " + Arrays.toString(uidRanges) + ")"
                     + ": netd command failed", e);
@@ -1909,7 +1909,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
         try {
-            mNetdService.networkAddUidRanges(netId, ranges);
+            mNetdService.networkAddUidRanges(netId, UidRange.toParcelArray(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1919,7 +1919,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void removeVpnUidRanges(int netId, UidRange[] ranges) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mNetdService.networkRemoveUidRanges(netId, ranges);
+            mNetdService.networkRemoveUidRanges(netId, UidRange.toParcelArray(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -2012,7 +2012,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         try {
-            mNetdService.socketDestroy(ranges, exemptUids);
+            mNetdService.socketDestroy(UidRange.toParcelArray(ranges), exemptUids);
         } catch(RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error closing sockets after enabling chain " + chainName + ": " + e);
         }

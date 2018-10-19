@@ -42,6 +42,27 @@ public final class UidRange implements Parcelable {
         return new UidRange(userId * PER_USER_RANGE, (userId + 1) * PER_USER_RANGE - 1);
     }
 
+    /**
+     * Converts UidRange to UidRangeParcel.
+     */
+    public UidRangeParcel toParcel() {
+        UidRangeParcel uidRangeParcel = new UidRangeParcel();
+        uidRangeParcel.mStart = start;
+        uidRangeParcel.mStop = stop;
+        return uidRangeParcel;
+    }
+
+    /**
+     * Converts given UidRange array to UidRangeParcel array.
+     */
+    public static UidRangeParcel[] toParcelArray(UidRange[] uidRanges) {
+        UidRangeParcel[] t = new UidRangeParcel[uidRanges.length];
+        for (int i = 0; i < uidRanges.length; i++) {
+            t[i] = uidRanges[i].toParcel();
+        }
+        return t;
+    }
+
     public int getStartUser() {
         return start / PER_USER_RANGE;
     }
