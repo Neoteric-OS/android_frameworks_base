@@ -29096,6 +29096,7 @@ package android.nfc.cardemulation {
     method public boolean isDefaultServiceForAid(android.content.ComponentName, java.lang.String);
     method public boolean isDefaultServiceForCategory(android.content.ComponentName, java.lang.String);
     method public boolean registerAidsForService(android.content.ComponentName, java.lang.String, java.util.List<java.lang.String>);
+    method public boolean registerAidsForService(android.content.ComponentName, java.lang.String, java.util.List<java.lang.String>, java.lang.String);
     method public boolean removeAidsForService(android.content.ComponentName, java.lang.String);
     method public boolean setPreferredService(android.app.Activity, android.content.ComponentName);
     method public boolean supportsAidPrefixRegistration();

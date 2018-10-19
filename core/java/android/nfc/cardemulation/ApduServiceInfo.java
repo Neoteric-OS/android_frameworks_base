@@ -18,11 +18,10 @@ package android.nfc.cardemulation;
 
 import android.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
@@ -30,7 +29,6 @@ import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.ResultReceiver;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Xml;
@@ -69,6 +67,12 @@ public final class ApduServiceInfo implements Parcelable {
     final boolean mOnHost;
 
     /**
+     * Offhost reader name.
+     * eg: SIM, eSE etc
+     */
+    String mOffHostName;
+
+    /**
      * Mapping from category to static AID group
      */
     @UnsupportedAppUsage
@@ -104,7 +108,7 @@ public final class ApduServiceInfo implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
-    public ApduServiceInfo(ResolveInfo info, boolean onHost, String description,
+    public ApduServiceInfo(ResolveInfo info, String offHost, String description,
             ArrayList<AidGroup> staticAidGroups, ArrayList<AidGroup> dynamicAidGroups,
             boolean requiresUnlock, int bannerResource, int uid,
             String settingsActivityName) {
@@ -112,7 +116,8 @@ public final class ApduServiceInfo implements Parcelable {
         this.mDescription = description;
         this.mStaticAidGroups = new HashMap<String, AidGroup>();
         this.mDynamicAidGroups = new HashMap<String, AidGroup>();
-        this.mOnHost = onHost;
+        this.mOffHostName = offHost;
+        this.mOnHost = (offHost == null);
         this.mRequiresDeviceUnlock = requiresUnlock;
         for (AidGroup aidGroup : staticAidGroups) {
             this.mStaticAidGroups.put(aidGroup.category, aidGroup);
@@ -174,6 +179,7 @@ public final class ApduServiceInfo implements Parcelable {
                         com.android.internal.R.styleable.HostApduService_apduServiceBanner, -1);
                 mSettingsActivityName = sa.getString(
                         com.android.internal.R.styleable.HostApduService_settingsActivity);
+                mOffHostName = null;
                 sa.recycle();
             } else {
                 TypedArray sa = res.obtainAttributes(attrs,
@@ -186,6 +192,8 @@ public final class ApduServiceInfo implements Parcelable {
                         com.android.internal.R.styleable.OffHostApduService_apduServiceBanner, -1);
                 mSettingsActivityName = sa.getString(
                         com.android.internal.R.styleable.HostApduService_settingsActivity);
+                mOffHostName = sa.getString(
+                        com.android.internal.R.styleable.OffHostApduService_secureElementName);
                 sa.recycle();
             }
 
@@ -287,6 +295,10 @@ public final class ApduServiceInfo implements Parcelable {
     public ComponentName getComponent() {
         return new ComponentName(mService.serviceInfo.packageName,
                 mService.serviceInfo.name);
+    }
+
+    public String getOffHostSecureElement() {
+        return mOffHostName;
     }
 
     /**
@@ -404,6 +416,10 @@ public final class ApduServiceInfo implements Parcelable {
         mDynamicAidGroups.put(aidGroup.getCategory(), aidGroup);
     }
 
+    public void setOffHostSecureElement(String offHost) {
+        mOffHostName = offHost;
+    }
+
     public CharSequence loadLabel(PackageManager pm) {
         return mService.loadLabel(pm);
     }
@@ -481,6 +497,7 @@ public final class ApduServiceInfo implements Parcelable {
         mService.writeToParcel(dest, flags);
         dest.writeString(mDescription);
         dest.writeInt(mOnHost ? 1 : 0);
+        dest.writeString(mOffHostName);
         dest.writeInt(mStaticAidGroups.size());
         if (mStaticAidGroups.size() > 0) {
             dest.writeTypedList(new ArrayList<AidGroup>(mStaticAidGroups.values()));
@@ -503,6 +520,7 @@ public final class ApduServiceInfo implements Parcelable {
             ResolveInfo info = ResolveInfo.CREATOR.createFromParcel(source);
             String description = source.readString();
             boolean onHost = source.readInt() != 0;
+            String offHostName = source.readString();
             ArrayList<AidGroup> staticAidGroups = new ArrayList<AidGroup>();
             int numStaticGroups = source.readInt();
             if (numStaticGroups > 0) {
@@ -517,7 +535,7 @@ public final class ApduServiceInfo implements Parcelable {
             int bannerResource = source.readInt();
             int uid = source.readInt();
             String settingsActivityName = source.readString();
-            return new ApduServiceInfo(info, onHost, description, staticAidGroups,
+            return new ApduServiceInfo(info, offHostName, description, staticAidGroups,
                     dynamicAidGroups, requiresUnlock, bannerResource, uid,
                     settingsActivityName);
         }

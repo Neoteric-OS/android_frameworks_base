@@ -27,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.nfc.INfcCardEmulation;
 import android.nfc.NfcAdapter;
 import android.os.RemoteException;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
@@ -326,7 +325,8 @@ public final class CardEmulation {
             List<String> aids) {
         AidGroup aidGroup = new AidGroup(aids, category);
         try {
-            return sService.registerAidGroupForService(mContext.getUserId(), service, aidGroup);
+            return sService.registerAidGroupForService(mContext.getUserId(), service, aidGroup,
+                                                       null);
         } catch (RemoteException e) {
             // Try one more time
             recoverService();
@@ -336,7 +336,65 @@ public final class CardEmulation {
             }
             try {
                 return sService.registerAidGroupForService(mContext.getUserId(), service,
-                        aidGroup);
+                        aidGroup, null);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Registers a list of AIDs for a specific category for the
+     * specified service on the specified off host Secure Element.
+     *
+     * <p>If a list of AIDs for that category was previously
+     * registered for this service (either statically
+     * through the manifest, or dynamically by using this API),
+     * that list of AIDs will be replaced with this one.
+     *
+     * <p>Note that you can only register AIDs for a service that
+     * is running under the same UID as the caller of this API. Typically
+     * this means you need to call this from the same
+     * package as the service itself, though UIDs can also
+     * be shared between packages using shared UIDs.
+     *
+     * <p>Registeration will be successful only if the Secure Element
+     * exists on the device.
+     *
+     * @param service The component name of the service
+     * @param category The category of AIDs to be registered
+     * @param aids A list containing the AIDs to be registered
+     * @param offHostSecureElement Secure Element to register the AID to
+     * @return whether the registration was successful.
+     */
+    public boolean registerAidsForService(ComponentName service, String category,
+            List<String> aids, String offHostSecureElement) {
+        boolean validSecureElement = false;
+
+        NfcAdapter adapter = NfcAdapter.getDefaultAdapter(mContext);
+        if (adapter == null) {
+            return false;
+        }
+        List<String> validSE = adapter.getSupportedOffHostSecureElements();
+        if (!validSE.contains(offHostSecureElement)) {
+            return false;
+        }
+
+        AidGroup aidGroup = new AidGroup(aids, category);
+        try {
+            return sService.registerAidGroupForService(mContext.getUserId(), service, aidGroup,
+                offHostSecureElement);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.registerAidGroupForService(mContext.getUserId(), service,
+                        aidGroup, offHostSecureElement);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to reach CardEmulationService.");
                 return false;
