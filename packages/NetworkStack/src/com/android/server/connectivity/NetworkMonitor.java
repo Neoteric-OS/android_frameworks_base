@@ -300,7 +300,6 @@ public class NetworkMonitor extends StateMachine {
     private final Random mRandom;
     private int mNextFallbackUrlIndex = 0;
 
-
     private int mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
     private int mEvaluateAttempts = 0;
     private volatile int mProbeToken = 0;
@@ -310,6 +309,7 @@ public class NetworkMonitor extends StateMachine {
     private final int mDataStallEvaluationType;
     private final DnsStallDetector mDnsStallDetector;
     private long mLastProbeTime;
+    protected boolean mIsWifiAlwaysValid;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             NetworkRequest defaultRequest, SharedLog validationLog) {
@@ -375,6 +375,8 @@ public class NetworkMonitor extends StateMachine {
         mLinkProperties = new LinkProperties();
         mNetworkCapabilities = new NetworkCapabilities();
         mNetworkCapabilities.clearAll();
+
+        mIsWifiAlwaysValid = getWifiValidationSettings();
     }
 
     /**
@@ -533,6 +535,10 @@ public class NetworkMonitor extends StateMachine {
             switch (message.what) {
                 case CMD_NETWORK_CONNECTED:
                     logNetworkEvent(NetworkEvent.NETWORK_CONNECTED);
+                    mIsWifiAlwaysValid = getWifiValidationSettings();
+                    if (mIsWifiAlwaysValid) {
+                        notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
+                    }
                     transitionTo(mEvaluatingState);
                     return HANDLED;
                 case CMD_NETWORK_DISCONNECTED:
@@ -581,7 +587,9 @@ public class NetworkMonitor extends StateMachine {
                         case APP_RETURN_UNWANTED:
                             mDontDisplaySigninNotification = true;
                             mUserDoesNotWant = true;
-                            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+                            if (!mIsWifiAlwaysValid) {
+                                notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+                            }
                             // TODO: Should teardown network.
                             mUidResponsibleForReeval = 0;
                             transitionTo(mEvaluatingState);
@@ -645,7 +653,9 @@ public class NetworkMonitor extends StateMachine {
         public void enter() {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
-            notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
+            if (!mIsWifiAlwaysValid) {
+                notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
+            }
             mValidations++;
         }
 
@@ -736,6 +746,8 @@ public class NetworkMonitor extends StateMachine {
             }
             mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
             mEvaluateAttempts = 0;
+
+            mIsWifiAlwaysValid = getWifiValidationSettings();
         }
 
         @Override
@@ -996,12 +1008,16 @@ public class NetworkMonitor extends StateMachine {
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
                     } else if (probeResult.isPortal()) {
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        if (!mIsWifiAlwaysValid) {
+                            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        }
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        if (!mIsWifiAlwaysValid) {
+                            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        }
                         transitionTo(mWaitingForNextProbeState);
                     }
                     return HANDLED;
@@ -1119,6 +1135,11 @@ public class NetworkMonitor extends StateMachine {
     private int getDataStallEvalutionType() {
         return mDependencies.getSetting(mContext, Settings.Global.DATA_STALL_EVALUATION_TYPE,
                 DEFAULT_DATA_STALL_EVALUATION_TYPES);
+    }
+
+    private boolean getWifiValidationSettings() {
+        return Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.WIFI_VALID_ENABLE, 1) == 1;
     }
 
     private URL[] makeCaptivePortalFallbackUrls() {
