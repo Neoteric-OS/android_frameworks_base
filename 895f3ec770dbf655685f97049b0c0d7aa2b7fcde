@@ -16,6 +16,24 @@
       "revId": "895f3ec770dbf655685f97049b0c0d7aa2b7fcde",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f14f26a_e129159d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1322568
+      },
+      "writtenOn": "2018-10-19T00:40:55Z",
+      "side": 1,
+      "message": "Yes, my test is manually.\nThere are test items.\n1) receive a phone call which doesn\u0027t be saved in phone book. check it can be correctly record into database.\n2) receive a phone call which is saved in phone book. check it can be correctly record into database.\n3) receive a phone call which is a private number. check it can be correctly record into database.\n\nIf have any suggest test item, please tell me.",
+      "parentUuid": "7bf35a6c_cc6000de",
+      "revId": "895f3ec770dbf655685f97049b0c0d7aa2b7fcde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
