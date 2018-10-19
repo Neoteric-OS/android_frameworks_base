@@ -19,14 +19,13 @@ package android.net;
 import static android.os.UserHandle.PER_USER_RANGE;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * An inclusive range of UIDs.
  *
  * @hide
  */
-public final class UidRange implements Parcelable {
+public final class UidRange extends UidRangeParcel {
     public final int start;
     public final int stop;
 
