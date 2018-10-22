@@ -594,6 +594,9 @@ Landroid/net/INetworkStatsService;->openSessionForUsageStats(ILjava/lang/String;
 Landroid/net/INetworkStatsSession;->close()V
 Landroid/net/INetworkStatsSession;->getSummaryForAllUid(Landroid/net/NetworkTemplate;JJZ)Landroid/net/NetworkStats;
 Landroid/net/INetworkStatsSession;->getSummaryForNetwork(Landroid/net/NetworkTemplate;JJ)Landroid/net/NetworkStats;
+Landroid/net/IpConfiguration;->ipAssignment:Landroid/net/IpConfiguration$IpAssignment;
+Landroid/net/IpConfiguration;->proxySettings:Landroid/net/IpConfiguration$ProxySettings;
+Landroid/net/IpConfiguration;->staticIpConfiguration:Landroid/net/StaticIpConfiguration;
 Landroid/net/MobileLinkQualityInfo;-><init>()V
 Landroid/net/nsd/INsdManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/net/nsd/INsdManager;
 Landroid/net/nsd/INsdManager;->getMessenger()Landroid/os/Messenger;
@@ -1577,6 +1580,7 @@ Landroid/view/View$ListenerInfo;-><init>()V
 Landroid/view/ViewTreeObserver$InternalInsetsInfo;-><init>()V
 Landroid/webkit/CacheManager$CacheResult;-><init>()V
 Landroid/webkit/IWebViewUpdateService$Stub$Proxy;-><init>(Landroid/os/IBinder;)V
+Landroid/webkit/IWebViewUpdateService$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 Landroid/webkit/IWebViewUpdateService$Stub$Proxy;->waitForAndGetProvider()Landroid/webkit/WebViewProviderResponse;
 Landroid/webkit/IWebViewUpdateService$Stub;->asInterface(Landroid/os/IBinder;)Landroid/webkit/IWebViewUpdateService;
 Landroid/webkit/IWebViewUpdateService;->getCurrentWebViewPackageName()Ljava/lang/String;
@@ -2859,7 +2863,9 @@ Ljava/util/zip/ZipOutputStream;->written:J
 Ljavax/net/ssl/SSLServerSocketFactory;->defaultServerSocketFactory:Ljavax/net/ssl/SSLServerSocketFactory;
 Ljavax/net/ssl/SSLSocketFactory;->createSocket(Ljava/net/Socket;Ljava/io/InputStream;Z)Ljava/net/Socket;
 Ljavax/net/ssl/SSLSocketFactory;->defaultSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
+Llibcore/icu/ICU;->addLikelySubtags(Ljava/lang/String;)Ljava/lang/String;
 Llibcore/icu/ICU;->addLikelySubtags(Ljava/util/Locale;)Ljava/util/Locale;
+Llibcore/icu/ICU;->getScript(Ljava/lang/String;)Ljava/lang/String;
 Llibcore/util/BasicLruCache;->map:Ljava/util/LinkedHashMap;
 Llibcore/util/ZoneInfo;->mTransitions:[J
 Lorg/ccil/cowan/tagsoup/AttributesImpl;->data:[Ljava/lang/String;
