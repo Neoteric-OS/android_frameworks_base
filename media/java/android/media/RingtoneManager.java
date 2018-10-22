@@ -797,6 +797,31 @@ public class RingtoneManager {
     }
 
     /**
+     * check if ringtone uri exist in database.
+     *
+     * @hide
+     */
+    public static boolean isRingtoneUriExist(Context context, Uri uri) {
+      ContentResolver res = context.getContentResolver();
+      Cursor cursor = null;
+      if (uri != null) {
+        String authority = ContentProvider.getAuthorityWithoutUserId(uri.getAuthority());
+        if (MediaStore.AUTHORITY.equals(authority)) {
+          final String mediaSelection = null;
+          cursor = res.query(uri, MEDIA_COLUMNS, mediaSelection, null, null);
+          if (cursor != null && cursor.getCount() == 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else {
+        return true;
+      }
+      return false;
+    }
+
+    /**
      * Gets the current default sound's {@link Uri}. This will give the actual
      * sound {@link Uri}, instead of using this, most clients can use
      * {@link System#DEFAULT_RINGTONE_URI}.
@@ -820,6 +845,9 @@ public class RingtoneManager {
         if (ringtoneUri != null
                 && ContentProvider.getUserIdFromUri(ringtoneUri) == context.getUserId()) {
             ringtoneUri = ContentProvider.getUriWithoutUserId(ringtoneUri);
+        }
+        if (!isRingtoneUriExist(context, ringtoneUri)) {
+          return null;
         }
 
         return ringtoneUri;
