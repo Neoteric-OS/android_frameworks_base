@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff341a9_11fab3f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-10-22T16:21:13Z",
+      "side": 1,
+      "message": "Add that these were implictly whitelisted in P.",
+      "revId": "e197ee39a7b18f1964b437f902e96482b8e073fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
