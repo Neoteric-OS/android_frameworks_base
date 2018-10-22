@@ -34,6 +34,24 @@
       "revId": "895f3ec770dbf655685f97049b0c0d7aa2b7fcde",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefb9707_c14f8c13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-10-22T14:51:16Z",
+      "side": 1,
+      "message": "Please add that to your commit message, thanks.",
+      "parentUuid": "8f14f26a_e129159d",
+      "revId": "895f3ec770dbf655685f97049b0c0d7aa2b7fcde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
