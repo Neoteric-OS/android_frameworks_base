@@ -69,6 +69,30 @@
       "revId": "ec0aac9c8b7278f516e5c6709f6c760b2bb1316e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff2d317_cb43bd1b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2018-10-22T07:16:38Z",
+      "side": 1,
+      "message": "Could you provide me any sample to use cldr libraries in android side?",
+      "parentUuid": "bea8b688_1f9370cb",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 59
+      },
+      "revId": "ec0aac9c8b7278f516e5c6709f6c760b2bb1316e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
