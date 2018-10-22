@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf862ed_c74ca83e",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-22T03:36:39Z",
+      "side": 1,
+      "message": "Nit: I\u0027d clarify to:\n\nUidRange is no longer passed to netd. UID ranges between the framework and netd are passed as\nUidRangeParcel objects.",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "1a91b4bfddb9070ef9844f1cd029355408a595eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc279d61_2e8babab",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-22T03:36:39Z",
+      "side": 1,
+      "message": "What does this \"Corrected\" mean? Do you mean that this test checks that toParcel is correct? If so, I don\u0027t think you need to use the word correct here. The point of a test is always to check that the code is correct. :-)",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "1a91b4bfddb9070ef9844f1cd029355408a595eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
