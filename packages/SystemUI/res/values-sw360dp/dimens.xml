@@ -26,5 +26,8 @@
          navigation_extra_key_width -->
     <dimen name="navigation_side_padding">40dip</dimen>
 
+    <!-- The padding on the side of QuickQSPanel -->
+    <dimen name="qs_header_tile_margin_horizontal">11dp</dimen>
+
 </resources>
 
