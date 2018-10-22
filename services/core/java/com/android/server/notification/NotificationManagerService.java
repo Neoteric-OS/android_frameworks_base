@@ -3749,7 +3749,7 @@ public class NotificationManagerService extends SystemService {
                 final ArraySet<ManagedServiceInfo> listeners =
                     mListenersDisablingEffects.valueAt(i);
                 for (int j = 0; j < listeners.size(); j++) {
-                    final ManagedServiceInfo listener = listeners.valueAt(i);
+                    final ManagedServiceInfo listener = listeners.valueAt(j);
                     listener.writeToProto(proto, ListenersDisablingEffectsProto.LISTENERS, null);
                 }
 
