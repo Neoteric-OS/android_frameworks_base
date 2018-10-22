@@ -22,6 +22,30 @@
       "revId": "b1b11ccbca40385ebfaa2853f23250d01a2e8b8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4574822_b699621a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-22T15:02:25Z",
+      "side": 1,
+      "message": "Agree that this would be a good simplification. Maybe even just moving the chainName variable and the debug statement closeSocketsForFirewallChainLocked would help.",
+      "parentUuid": "90fdc8e7_4313247f",
+      "range": {
+        "startLine": 2108,
+        "startChar": 25,
+        "endLine": 2108,
+        "endChar": 34
+      },
+      "revId": "b1b11ccbca40385ebfaa2853f23250d01a2e8b8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
