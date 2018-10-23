@@ -5037,6 +5037,57 @@ package android.telephony {
     field public static final int WWAN = 1; // 0x1
   }
 
+  public class CallAttributes implements android.os.Parcelable {
+    ctor public CallAttributes(android.telephony.PreciseCallState, int, android.telephony.CallQuality);
+    method public int describeContents();
+    method public int getCallMode();
+    method public android.telephony.CallQuality getCallQuality();
+    method public android.telephony.PreciseCallState getPreciseCallState();
+    method public void setCallMode(int);
+    method public void setCallQuality(android.telephony.CallQuality);
+    method public void setPreciseCallState(android.telephony.PreciseCallState);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.CallAttributes> CREATOR;
+  }
+
+  public final class CallQuality implements android.os.Parcelable {
+    ctor public CallQuality(int, int, int, int, int, int, int, int, int, int, int);
+    method public int describeContents();
+    method public int getAverageRelativeJitter();
+    method public int getAverageRoundTripTime();
+    method public int getCallId();
+    method public int getCallQualityDuration();
+    method public int getCallQualityLevel();
+    method public int getCodecType();
+    method public int getMaxRelativeJitter();
+    method public int getNumRtpPacketsNotReceived();
+    method public int getNumRtpPacketsNotTransmitted();
+    method public int getNumRtpPacketsReceived();
+    method public int getNumRtpPacketsTransmitted();
+    method public void setAverageRelativeJitter(int);
+    method public void setAverageRoundTripTime(int);
+    method public void setCallId(int);
+    method public void setCallQualityDuration(int);
+    method public void setCallQualityLevel(int);
+    method public void setCodecType(int);
+    method public void setMaxRelativeJitter(int);
+    method public void setNumRtpPacketsNotReceived(int);
+    method public void setNumRtpPacketsNotTransmitted(int);
+    method public void setNumRtpPacketsReceived(int);
+    method public void setNumRtpPacketsTransmitted(int);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CALL_QUALITY_BAD = 4; // 0x4
+    field public static final int CALL_QUALITY_EXCELLENT = 0; // 0x0
+    field public static final int CALL_QUALITY_FAIR = 2; // 0x2
+    field public static final int CALL_QUALITY_GOOD = 1; // 0x1
+    field public static final int CALL_QUALITY_NOT_AVAILABLE = 5; // 0x5
+    field public static final int CALL_QUALITY_POOR = 3; // 0x3
+    field public static final int CODEC_TYPE_AMR = 1; // 0x1
+    field public static final int CODEC_TYPE_EVS = 0; // 0x0
+    field public static final int CODEC_TYPE_WB_AMR = 2; // 0x2
+    field public static final android.os.Parcelable.Creator<android.telephony.CallQuality> CREATOR;
+  }
+
   public class CarrierConfigManager {
     method public static android.os.PersistableBundle getDefaultConfig();
     method public void overrideConfig(int, android.os.PersistableBundle);
@@ -5132,9 +5183,11 @@ package android.telephony {
   }
 
   public class PhoneStateListener {
+    method public void onCallAttributesChanged(android.telephony.CallAttributes);
     method public void onRadioPowerStateChanged(int);
     method public void onSrvccStateChanged(int);
     method public void onVoiceActivationStateChanged(int);
+    field public static final int LISTEN_CALL_ATTRIBUTES_CHANGED = 33554432; // 0x2000000
     field public static final int LISTEN_RADIO_POWER_STATE_CHANGED = 8388608; // 0x800000
     field public static final int LISTEN_SRVCC_STATE_CHANGED = 16384; // 0x4000
     field public static final int LISTEN_VOICE_ACTIVATION_STATE = 131072; // 0x20000
