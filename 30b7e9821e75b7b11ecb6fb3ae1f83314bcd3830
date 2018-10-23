@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c7a40e_9cc4ef77",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-10-23T11:13:07Z",
+      "side": 1,
+      "message": "onLaunchStarted?",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116b8588_1f7290dd",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-10-23T11:13:07Z",
+      "side": 1,
+      "message": "cancelled",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be60982_45f947ca",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-10-23T11:13:07Z",
+      "side": 1,
+      "message": "onLaunchFinished?",
+      "range": {
+        "startLine": 132,
+        "startChar": 25,
+        "endLine": 132,
+        "endChar": 41
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494e61dd_7d2b91fe",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-10-23T11:13:07Z",
+      "side": 1,
+      "message": "FYI we use 4 indent spaces. If you use IntelliJ/Android Studio, please set the style file in\n\ndevelopment/ide/intellij/codestyles/AndroidStyle.xml\n\nIf you don\u0027t use Android Studio/IntelliJ consider doing so to speed up code review :-) No seriously, it\u0027s much much easier and faster to edit Java, and will save a lot of time on nits during code review because the way it formats things according to our style guide.",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
