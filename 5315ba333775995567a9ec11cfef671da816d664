@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "88e12a47_705017ce",
+        "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-23T02:46:12Z",
+      "side": 1,
+      "message": "The Context.getUser()\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 will be null by using \"runtest frameworks-net\". It will result in \"java.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.os.UserHandle.getIdentifier()\u0027 on a null object reference\".\n\nIs anything missing in my local environment?",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 49
+      },
+      "revId": "5315ba333775995567a9ec11cfef671da816d664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f8d314c_cf0db049",
         "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
         "patchSetId": 11
