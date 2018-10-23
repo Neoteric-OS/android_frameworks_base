@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4ebc9eb6_3c66e2d2",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-10-23T08:41:31Z",
+      "side": 1,
+      "message": "Hmm, I now think you need to use delegation instead of inheritance.\n\npublic final class UidRange implements Parcelable {\n    private UidRangeParcel inner_;\n\n    public UidRange(int start, int stop) {\n        inner_ \u003d new UidRangeParcel();\n        inner_.start \u003d start;\n        inner_.stop \u003d stop;\n    }\n\n    private UidRange(UidRangeParcel inner) {\n        inner_ \u003d inner;\n    }\n    \n    public void writeToParcel(Parcel dest, ...) {\n        inner_.writeToParcel(dest);\n    }\n\n    public static final Creator\u003cUidRange\u003e CREATOR \u003d\n        new Creator\u003cUidRange\u003e() {\n            @Override\n            public UidRange createFromParcel(Parcel in) {\n                UidRangeParcel inner \u003d UidRangeParcel.CREATOR.createFromParcel(in);\n                return new UidRange(inner);\n            }\n        };",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23f0d733_780d9866",
         "filename": "core/java/android/net/UidRange.java",
         "patchSetId": 4
