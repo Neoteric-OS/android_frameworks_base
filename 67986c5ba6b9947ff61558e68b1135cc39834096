@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d63da0e_f8646f8d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-23T12:17:17Z",
+      "side": 1,
+      "message": "Now that this is outside its state, I suggest naming it mEvaluateAttempts or something.",
+      "range": {
+        "startLine": 315,
+        "startChar": 16,
+        "endLine": 315,
+        "endChar": 25
+      },
+      "revId": "67986c5ba6b9947ff61558e68b1135cc39834096",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7c9b5a_0792b8c4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-23T12:17:17Z",
+      "side": 1,
+      "message": "Note that a standard way of doing this is to pass mThread as a second argument to obtainMessage() and test here that it\u0027s \u003d\u003d to mThread. mThread needs to be made volatile, and you\u0027d need to null out the object or somehow make sure the message is recycled.\n\nOtherwise a sequence number sounds good, but put it in a final member inside mThread to make sure you don\u0027t have to lock.",
+      "range": {
+        "startLine": 855,
+        "startChar": 20,
+        "endLine": 856,
+        "endChar": 76
+      },
+      "revId": "67986c5ba6b9947ff61558e68b1135cc39834096",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
