@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "20e44030_524e3b70",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-10-23T15:36:34Z",
+      "side": 1,
+      "message": "@jjaggi Is this true? I thought AM can support multiple launches. If we support launching apps in different windowing modes, we will need to track multiple launch sequences in AML.",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b288454_efffeeab",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-10-23T15:36:34Z",
+      "side": 1,
+      "message": "I don\u0027t think this assumption will remain true in the future.",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 42
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8c7a40e_9cc4ef77",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
         "patchSetId": 1
@@ -13,6 +53,29 @@
       "writtenOn": "2018-10-23T11:13:07Z",
       "side": 1,
       "message": "onLaunchStarted?",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6028bcd5_7355b399",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-10-23T15:36:34Z",
+      "side": 1,
+      "message": "We start recording the launch in notifyActivityLaunching. At this point we do not have an activity record. This will deviate any launch metrics from Tron data. Will this be an issue?",
       "range": {
         "startLine": 103,
         "startChar": 25,
@@ -71,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "d1e35daf_96ec6bbd",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-10-23T15:36:34Z",
+      "side": 1,
+      "message": "should this be tracked as part of WindowingModeTransitionInfo so we can support multiple launches in the future?",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494e61dd_7d2b91fe",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
         "patchSetId": 1
@@ -82,6 +168,29 @@
       "writtenOn": "2018-10-23T11:13:07Z",
       "side": 1,
       "message": "FYI we use 4 indent spaces. If you use IntelliJ/Android Studio, please set the style file in\n\ndevelopment/ide/intellij/codestyles/AndroidStyle.xml\n\nIf you don\u0027t use Android Studio/IntelliJ consider doing so to speed up code review :-) No seriously, it\u0027s much much easier and faster to edit Java, and will save a lot of time on nits during code review because the way it formats things according to our style guide.",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf1a157_b189555a",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-10-23T15:36:34Z",
+      "side": 1,
+      "message": "Its a current limitation. Right now it only tracks one launch, not one launch per-windowing mode.",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 73
+      },
       "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
