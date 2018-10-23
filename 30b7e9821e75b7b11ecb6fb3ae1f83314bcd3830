@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "9295dba9_24aa1bdd",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-23T20:20:33Z",
+      "side": 1,
+      "message": "How long is \"in the future\"? If it will hold true in Q can we just fix it in the subsequent version once its no longer true?\n\nAnd if it will change Very Soon Now, what should the interface look like instead?",
+      "parentUuid": "8b288454_efffeeab",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 42
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8c7a40e_9cc4ef77",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
         "patchSetId": 1
@@ -85,6 +109,30 @@
       "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03944cd_22779769",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-23T20:20:33Z",
+      "side": 1,
+      "message": "We can add timestamps as a parameter to the callbacks here. The ActivityMetricsLogger is the one source of truth for accurate timing, the observer shouldn\u0027t be doing its own timing under the hood.",
+      "parentUuid": "6028bcd5_7355b399",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "3974bd7e_ba55b4dd",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-23T20:20:33Z",
+      "side": 1,
+      "message": "You\u0027re probably right, but I am confused about why the other 4 fields above are global (also see L527)?",
+      "parentUuid": "d1e35daf_96ec6bbd",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494e61dd_7d2b91fe",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
         "patchSetId": 1
@@ -185,6 +257,30 @@
       "writtenOn": "2018-10-23T15:36:34Z",
       "side": 1,
       "message": "Its a current limitation. Right now it only tracks one launch, not one launch per-windowing mode.",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 73
+      },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7255087a_fb5b680b",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-23T20:20:33Z",
+      "side": 1,
+      "message": "This is the part I am not quite sure I understand?",
+      "parentUuid": "6bf1a157_b189555a",
       "range": {
         "startLine": 527,
         "startChar": 0,
