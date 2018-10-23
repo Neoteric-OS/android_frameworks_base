@@ -70,6 +70,30 @@
       "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ee23f_b0e76505",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-10-23T02:29:33Z",
+      "side": 1,
+      "message": "Thank you for your answer. I will modify the method.",
+      "parentUuid": "9b6e480d_4b1ef1a5",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
