@@ -45,6 +45,75 @@
       "revId": "8654dabfd37c47d02b0564011338f6f2dc301c06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f86f0cf_c9246aaf",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T13:36:23Z",
+      "side": 1,
+      "message": "Is this comment correct if eBPF is in use? If not, then we should update it.",
+      "range": {
+        "startLine": 808,
+        "startChar": 0,
+        "endLine": 812,
+        "endChar": 60
+      },
+      "revId": "8654dabfd37c47d02b0564011338f6f2dc301c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebd6208_f3249b46",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T13:36:23Z",
+      "side": 1,
+      "message": "in use",
+      "range": {
+        "startLine": 819,
+        "startChar": 42,
+        "endLine": 819,
+        "endChar": 51
+      },
+      "revId": "8654dabfd37c47d02b0564011338f6f2dc301c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051163ed_18212f35",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T13:36:23Z",
+      "side": 1,
+      "message": "Add a comment?\n\n    // Stats we expect to be accounted for root in the same circumstances as above, except\n    // if the device is using eBPF.\n    // RX: xtRootUidEntry minus appEntry, minus 20 bytes per packet. This cancels out the\n    // double-counting in xtRootUidEntry.\n    // TX: same as xtRootUidEntry.\n\nGiven that this is hard to follow... would it be clearer if we put the eBPF entry second, instead of third, like so?\n\n    // Traffic sent/received by an app.\n    final NetworkStats.Entry appEntry \u003d new NetworkStats.Entry(\n    ...\n\n    // Traffic we could measure for the root user on the base interface if eBPF if in use.\n    // Incorrectly includes appEntry\u0027s bytes and packets, plus IPv4-IPv6 translation\n    // overhead (20 bytes per packet), only for TX traffic.\n    final NetworkStats.Entry appEntry \u003d new NetworkStats.Entry(\n    ...\n\n    // Traffic we could measure for the root user on the base interface if xt_qtaguid is in use.\n    // Incorrectly includes appEntry\u0027s bytes and packets, plus IPv4-IPv6 translation\n    // overhead (20 bytes per packet), in both directions.\n    final NetworkStats.Entry xtRootUidEntry \u003d new NetworkStats.Entry(\n    ...",
+      "range": {
+        "startLine": 805,
+        "startChar": 8,
+        "endLine": 805,
+        "endChar": 75
+      },
+      "revId": "8654dabfd37c47d02b0564011338f6f2dc301c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

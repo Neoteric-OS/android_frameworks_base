@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67deb2d_7b569175",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T13:36:23Z",
+      "side": 1,
+      "message": "Nit: why do we have this function, instead of just using mUseBpfTrafficStats? Can we delete the function?",
+      "range": {
+        "startLine": 1624,
+        "startChar": 16,
+        "endLine": 1624,
+        "endChar": 35
+      },
+      "revId": "0c90e2f53eface89fed9c144cff6ba20847a0216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
