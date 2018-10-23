@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71231893_419d936b",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-23T02:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf862ed_c74ca83e",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "1a91b4bfddb9070ef9844f1cd029355408a595eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc279d61_2e8babab",
         "filename": "tests/net/java/android/net/UidRangeTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1a91b4bfddb9070ef9844f1cd029355408a595eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3df2000_87547015",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-23T02:50:30Z",
+      "side": 1,
+      "message": "use subclass, remove it.",
+      "parentUuid": "dc279d61_2e8babab",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "1a91b4bfddb9070ef9844f1cd029355408a595eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
