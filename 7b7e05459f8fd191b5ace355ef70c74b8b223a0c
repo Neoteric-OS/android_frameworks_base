@@ -22,6 +22,30 @@
       "revId": "7b7e05459f8fd191b5ace355ef70c74b8b223a0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70c79e5_f3a399f9",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-10-23T02:34:48Z",
+      "side": 0,
+      "message": "I removed this because \"new Resource\" is deprecated from API level 25, please see below official page:\nhttps://developer.android.com/reference/android/content/res/Resources#Resources(android.content.res.AssetManager,%20android.util.DisplayMetrics,%20android.content.res.Configuration)",
+      "parentUuid": "fbfc954c_755e44d9",
+      "range": {
+        "startLine": 1701,
+        "startChar": 6,
+        "endLine": 1704,
+        "endChar": 88
+      },
+      "revId": "7b7e05459f8fd191b5ace355ef70c74b8b223a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
