@@ -46,6 +46,30 @@
       "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6e480d_4b1ef1a5",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-10-23T01:41:24Z",
+      "side": 1,
+      "message": "Yeah, you can remove the deprecation. I\u0027m not sure why it was put there in the first place. You should also rename it to getIconDrawable for clarity\u0027s sake.",
+      "parentUuid": "ac522c6d_d4897d93",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "04c90fab19a3bdecfbf78207aeca3467a6d94c82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
