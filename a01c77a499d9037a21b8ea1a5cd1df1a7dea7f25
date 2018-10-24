@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c617503_4b66b93a",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-10-24T23:07:07Z",
+      "side": 0,
+      "message": "You still need to keep this around -- change the @Deprecated to @Removed and just call getIconDrawable in the body. Silly API rules.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "a01c77a499d9037a21b8ea1a5cd1df1a7dea7f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
