@@ -16,6 +16,24 @@
       "revId": "08ebd8d775de58ca41f118a5e67adafb5cd23698",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672a3171_01ab7e43",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-24T10:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057f8e44_0fbec4c8",
+      "revId": "08ebd8d775de58ca41f118a5e67adafb5cd23698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
