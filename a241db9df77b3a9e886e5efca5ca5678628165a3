@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d68c974a_d323f445",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-24T07:38:01Z",
+      "side": 1,
+      "message": "Nit: consider adding:\n\n    String chainName \u003d getFirewallChainName(chain);\n\nand using that both here and in the call to closeSocketsForFirewallChainLocked?",
+      "range": {
+        "startLine": 2036,
+        "startChar": 73,
+        "endLine": 2036,
+        "endChar": 78
+      },
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df251f7_b641ab12",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-24T07:38:01Z",
+      "side": 1,
+      "message": "Not for this CL, but netd obviously knows which chains are whitelist chains and which chains are blacklist chains. So perhaps we can remove the ruleType argument to firewallSetUidRule. Having this argument basically only allows us to get it wrong :-)",
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fd8396_f65ccd59",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-24T07:38:01Z",
+      "side": 1,
+      "message": "Per in-person discussion, NetworkPolicyManager.FIREWALL_RULE_ALLOW and INetd.FIREWALL_RULE_ALLOW are by definition the same value. So I\u0027d just say:\n\n        if (rule \u003d\u003d NetworkPolicyManager.FIREWALL_RULE_DEFAULT) {\n            return getFirewallType(chain) \u003d\u003d FIREWALL_TYPE_WHITELIST ?\n                    INetd.FIREWALL_RULE_DENY : INetd.FIREWALL_RULE_ALLOW;\n        }\n        return rule;",
+      "range": {
+        "startLine": 2211,
+        "startChar": 0,
+        "endLine": 2222,
+        "endChar": 13
+      },
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
