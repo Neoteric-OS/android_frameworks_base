@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7a8b9d_73f439f3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-24T13:25:31Z",
+      "side": 1,
+      "message": "An alternative to this (here and in other relevant places) would be to move obtaining the user ID inside the lock. I prefer this ; after all this lock is frequently taken, but the null case is vanishinlgy rare.",
+      "range": {
+        "startLine": 5905,
+        "startChar": 12,
+        "endLine": 5905,
+        "endChar": 30
+      },
+      "revId": "628a436a7998a599d5f7232ceb0a6b6cfa673863",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
