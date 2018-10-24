@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f084f9_39f83e0f",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2018-10-24T17:18:21Z",
+      "side": 1,
+      "message": "I\u0027m making a note that we need to pull these constants into one place,\nat bug 17108623  remove hard-coded sample rate assumptions throughout system",
+      "revId": "ff16eede056e3614aaf18106b72a070303abd20d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
