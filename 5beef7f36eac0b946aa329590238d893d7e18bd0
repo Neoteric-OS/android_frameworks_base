@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f71aab75_21b8d78b",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-24T08:26:06Z",
+      "side": 1,
+      "message": "Done.\nIt is a final class.",
+      "parentUuid": "79cc65c0_f303e582",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f0d733_780d9866",
         "filename": "core/java/android/net/UidRange.java",
         "patchSetId": 4
