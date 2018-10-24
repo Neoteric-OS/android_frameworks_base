@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "07ea9970_da00c67d",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-24T07:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ebc9eb6_3c66e2d2",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f0d733_780d9866",
         "filename": "core/java/android/net/UidRange.java",
         "patchSetId": 4
@@ -68,6 +92,30 @@
       "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfeabb55_4d7debef",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-24T07:57:55Z",
+      "side": 1,
+      "message": "using the way which Jinyong suggest for inheritance",
+      "parentUuid": "23f0d733_780d9866",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 6
+      },
+      "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
