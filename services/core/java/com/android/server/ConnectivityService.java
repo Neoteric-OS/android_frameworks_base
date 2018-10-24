@@ -5759,6 +5759,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         newRestrictBackground);
             }
             if (oldBlocked != newBlocked) {
+                maybeLogBlockedStatusChanged(nri, nai.network, newBlocked);
                 callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED,
                         encodeBool(newBlocked));
             }
@@ -5792,6 +5793,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 NetworkRequest nr = nai.requestAt(i);
                 NetworkRequestInfo nri = mNetworkRequests.get(nr);
                 if (nri != null && nri.mUid == uid) {
+                    maybeLogBlockedStatusChanged(nri, nai.network, newBlocked);
                     callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED, arg);
                 }
             }
