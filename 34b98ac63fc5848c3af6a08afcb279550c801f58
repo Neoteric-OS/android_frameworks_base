@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cfe01a9_0f14c055",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-24T08:13:38Z",
+      "side": 1,
+      "message": "Does this need to be public? It\u0027s not very useful since it will result in a range with start \u003d 0 and and \u003d 0. Can it be protected or package private? If it can\u0027t be, it\u0027s probably fine for it to be public.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "34b98ac63fc5848c3af6a08afcb279550c801f58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
