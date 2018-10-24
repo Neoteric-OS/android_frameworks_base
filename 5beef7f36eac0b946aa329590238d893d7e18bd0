@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad9e33f2_df028f4d",
+        "filename": "core/java/android/net/UidRange.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-24T08:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a6f712_39c1eff8",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "5beef7f36eac0b946aa329590238d893d7e18bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ebc9eb6_3c66e2d2",
         "filename": "core/java/android/net/UidRange.java",
         "patchSetId": 4
