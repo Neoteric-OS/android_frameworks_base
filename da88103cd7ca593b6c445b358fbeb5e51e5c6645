@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7263fb2d_a4e05188",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-25T18:00:49Z",
+      "side": 1,
+      "message": "Should these values use defined constant in CellSignalStrength (such as CellSignalStrength#SIGNAL_STRENGTH_NONE_OR_UNKNOWN)?",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "da88103cd7ca593b6c445b358fbeb5e51e5c6645",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
