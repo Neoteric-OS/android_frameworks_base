@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a9c7818_da3c1c03",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-25T03:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68c974a_d323f445",
+      "range": {
+        "startLine": 2036,
+        "startChar": 73,
+        "endLine": 2036,
+        "endChar": 78
+      },
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df251f7_b641ab12",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2018-10-24T07:38:01Z",
       "side": 1,
       "message": "Not for this CL, but netd obviously knows which chains are whitelist chains and which chains are blacklist chains. So perhaps we can remove the ruleType argument to firewallSetUidRule. Having this argument basically only allows us to get it wrong :-)",
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bd8ded_b27d4206",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-25T03:07:24Z",
+      "side": 1,
+      "message": "Netd don\u0027t handle FIREWALL_RULE_DEFAULT currently, we might add the supporting if we want to remove getFirewallRuleType. Do you mean we should move it to Netd?",
+      "parentUuid": "4df251f7_b641ab12",
       "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a25a690_27f482fc",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-25T03:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fd8396_f65ccd59",
+      "range": {
+        "startLine": 2211,
+        "startChar": 0,
+        "endLine": 2222,
+        "endChar": 13
+      },
+      "revId": "a241db9df77b3a9e886e5efca5ca5678628165a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
