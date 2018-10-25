@@ -22,6 +22,30 @@
       "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a751743_7d5cd638",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2018-10-25T13:33:36Z",
+      "side": 1,
+      "message": "callPostForkSystemServerHooks() and callPostForChildHooks() are called in SpecializeCommon in frameworks/base/./base/core/jni/com_android_internal_os_Zygote.cpp.",
+      "parentUuid": "2b1ad9cf_ba410e1b",
+      "range": {
+        "startLine": 214,
+        "startChar": 24,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
