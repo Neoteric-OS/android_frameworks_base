@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2521d09e_8cffb4bd",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7309,
+      "author": {
+        "id": 1316472
+      },
+      "writtenOn": "2018-10-25T09:22:41Z",
+      "side": 1,
+      "message": "It is component name or package name? It looks naming different with the others.",
+      "range": {
+        "startLine": 7306,
+        "startChar": 0,
+        "endLine": 7309,
+        "endChar": 0
+      },
+      "revId": "bb5bf50d1b7d2366b603bc11e82b8832ae598159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
