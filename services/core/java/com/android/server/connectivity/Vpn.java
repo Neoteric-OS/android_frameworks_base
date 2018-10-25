@@ -381,6 +381,15 @@ public class Vpn {
     }
 
     /**
+     * Check whether to prevent all traffic outside of a VPN even when the VPN is not connected.
+     *
+     * @return {@code true} if VPN lockdown is enabled.
+     */
+    public boolean getLockdown() {
+        return mLockdown;
+    }
+
+    /**
      * Checks if a VPN app supports always-on mode.
      *
      * In order to support the always-on feature, an app has to
@@ -1533,17 +1542,16 @@ public class Vpn {
     }
 
     /**
-     * @return {@code true} if {@param uid} is blocked by an always-on VPN.
+     * @param uid The target uid.
+     *
+     * @return {@code true} if {@code uid} will be blocked when VPN lockdown is enabled.
      *         A UID is blocked if it's included in one of the mBlockedUsers ranges and the VPN is
      *         not connected, or if the VPN is connected but does not apply to the UID.
      *
+     * @apiNote This method don't check VPN lockdown status.
      * @see #mBlockedUsers
      */
     public synchronized boolean isBlockingUid(int uid) {
-        if (!mLockdown) {
-            return false;
-        }
-
         if (mNetworkInfo.isConnected()) {
             return !appliesToUid(uid);
         } else {
