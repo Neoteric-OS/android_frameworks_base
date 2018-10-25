@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55239466_312dd397",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2018-10-25T22:15:45Z",
+      "side": 1,
+      "message": "remove do not merge",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "6833963221441e26a1d6ec71e04cf4153553a455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
