@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "44af2b90_fd5c861d",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7306,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-25T14:52:47Z",
+      "side": 1,
+      "message": "I\u0027d leave out the UnsupportedAppUsage annotation.  From Telecom we can access it.  The APIs will be what we use to get/set from the Settings app.  So this should not be needed.",
+      "range": {
+        "startLine": 7306,
+        "startChar": 8,
+        "endLine": 7306,
+        "endChar": 28
+      },
+      "revId": "bb5bf50d1b7d2366b603bc11e82b8832ae598159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2521d09e_8cffb4bd",
         "filename": "core/java/android/provider/Settings.java",
         "patchSetId": 1
