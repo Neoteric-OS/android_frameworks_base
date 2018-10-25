@@ -801,21 +801,14 @@ public final class BearerData {
         outStream.write(4, 0);
     }
 
-    private static byte[] encodeDtmfSmsAddress(String address) {
-        int digits = address.length();
+    private static byte[] encodeTo4bitDtmfSmsAddress(byte[] dtmfBytes) {
+        int digits = dtmfBytes.length;
         int dataBits = digits * 4;
         int dataBytes = (dataBits / 8);
         dataBytes += (dataBits % 8) > 0 ? 1 : 0;
         byte[] rawData = new byte[dataBytes];
         for (int i = 0; i < digits; i++) {
-            char c = address.charAt(i);
-            int val = 0;
-            if ((c >= '1') && (c <= '9')) val = c - '0';
-            else if (c == '0') val = 10;
-            else if (c == '*') val = 11;
-            else if (c == '#') val = 12;
-            else return null;
-            rawData[i / 2] |= val << (4 - ((i % 2) * 4));
+            rawData[i / 2] |= dtmfBytes[i] << (4 - ((i % 2) * 4));
         }
         return rawData;
     }
@@ -830,11 +823,12 @@ public final class BearerData {
         if (addr.digitMode == CdmaSmsAddress.DIGIT_MODE_8BIT_CHAR) {
             try {
                 addr.origBytes = addr.address.getBytes("US-ASCII");
+                addr.numberOfDigits = addr.origBytes.length;
             } catch (java.io.UnsupportedEncodingException ex) {
                 throw new CodingException("invalid SMS address, cannot convert to ASCII");
             }
         } else {
-            addr.origBytes = encodeDtmfSmsAddress(addr.address);
+            addr.origBytes = encodeTo4bitDtmfSmsAddress(addr.origBytes);
         }
     }
 
