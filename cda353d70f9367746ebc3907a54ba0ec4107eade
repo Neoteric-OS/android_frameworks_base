@@ -46,6 +46,47 @@
       "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62b669fa_44b2e026",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-10-25T13:39:51Z",
+      "side": 1,
+      "message": "Ah yes, see it now :)",
+      "parentUuid": "5a751743_7d5cd638",
+      "range": {
+        "startLine": 214,
+        "startChar": 24,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d286ab10_4a24412e",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-10-25T13:39:51Z",
+      "side": 1,
+      "message": "Do  you want to fix this in this CL or as a follow-up?",
+      "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
