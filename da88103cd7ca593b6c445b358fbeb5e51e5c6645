@@ -22,6 +22,30 @@
       "revId": "da88103cd7ca593b6c445b358fbeb5e51e5c6645",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cade3028_0f466785",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-25T18:08:33Z",
+      "side": 1,
+      "message": "SIGNAL_STRENGTH_NON_OR_UNKNOWN is a special value that\u0027s used by getLevel(). Again, not a great name, but it also denotes LOW in getLevel() in addition to UNAVAILABLE signal strength. Note that value isn\u0027t used outside of getLevel() (which just returns a value 0-4, nothing else). These are distinct. Of course, getLevel() on the CellSignalStrength classes is another unfortunate choice, but we have to leave it since it\u0027s public.",
+      "parentUuid": "7263fb2d_a4e05188",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "da88103cd7ca593b6c445b358fbeb5e51e5c6645",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
