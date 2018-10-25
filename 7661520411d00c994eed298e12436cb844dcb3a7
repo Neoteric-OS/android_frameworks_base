@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c54dba66_a3dad3d8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5764,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-10-25T02:28:04Z",
+      "side": 1,
+      "message": "Nit: Shall we combine this to another function call in case we may only add one of callCallbackForRequest() and callCallbackForRequest() but miss another one?",
+      "range": {
+        "startLine": 5762,
+        "startChar": 16,
+        "endLine": 5764,
+        "endChar": 48
+      },
+      "revId": "7661520411d00c994eed298e12436cb844dcb3a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
