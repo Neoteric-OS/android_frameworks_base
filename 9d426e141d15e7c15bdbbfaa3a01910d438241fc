@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8271be9_370d1e25",
+        "filename": "cmds/statsd/src/statsd_config.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1131148
+      },
+      "writtenOn": "2018-10-26T23:37:09Z",
+      "side": 1,
+      "message": "They should have ordered this, but passing over since it helps merge.",
+      "range": {
+        "startLine": 222,
+        "startChar": 33,
+        "endLine": 222,
+        "endChar": 35
+      },
+      "revId": "9d426e141d15e7c15bdbbfaa3a01910d438241fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
