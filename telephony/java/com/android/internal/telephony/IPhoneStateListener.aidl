@@ -46,6 +46,7 @@ oneway interface IPhoneStateListener {
     void onPreciseDataConnectionStateChanged(in PreciseDataConnectionState dataConnectionState);
     void onDataConnectionRealTimeInfoChanged(in DataConnectionRealTimeInfo dcRtInfo);
     void onVoLteServiceStateChanged(in VoLteServiceState lteState);
+    void onSrvccStateChanged(in int state);
     void onVoiceActivationStateChanged(int activationState);
     void onDataActivationStateChanged(int activationState);
     void onOemHookRawEvent(in byte[] rawData);
