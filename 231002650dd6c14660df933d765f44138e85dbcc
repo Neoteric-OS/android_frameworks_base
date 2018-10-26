@@ -22,6 +22,30 @@
       "revId": "231002650dd6c14660df933d765f44138e85dbcc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb0bbe5_3bf48476",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1341667
+      },
+      "writtenOn": "2018-10-26T07:43:29Z",
+      "side": 1,
+      "message": "Added  android.os.SystemProperties;  and made AOSP build, its passed",
+      "parentUuid": "91825bdb_c5496f17",
+      "range": {
+        "startLine": 347,
+        "startChar": 21,
+        "endLine": 347,
+        "endChar": 37
+      },
+      "revId": "231002650dd6c14660df933d765f44138e85dbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
