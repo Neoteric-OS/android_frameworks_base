@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af92444e_fb04b8c5",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7306,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-26T06:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44af2b90_fd5c861d",
+      "range": {
+        "startLine": 7306,
+        "startChar": 8,
+        "endLine": 7306,
+        "endChar": 28
+      },
+      "revId": "bb5bf50d1b7d2366b603bc11e82b8832ae598159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2521d09e_8cffb4bd",
         "filename": "core/java/android/provider/Settings.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bb5bf50d1b7d2366b603bc11e82b8832ae598159",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d95a03_6ddd9659",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7309,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-26T06:18:12Z",
+      "side": 1,
+      "message": "Check with Tyler, it sets component name.",
+      "parentUuid": "2521d09e_8cffb4bd",
+      "range": {
+        "startLine": 7306,
+        "startChar": 0,
+        "endLine": 7309,
+        "endChar": 0
+      },
+      "revId": "bb5bf50d1b7d2366b603bc11e82b8832ae598159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
