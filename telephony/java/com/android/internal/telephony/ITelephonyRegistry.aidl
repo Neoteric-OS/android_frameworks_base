@@ -71,6 +71,7 @@ interface ITelephonyRegistry {
             String failCause);
     void notifyCellInfoForSubscriber(in int subId, in List<CellInfo> cellInfo);
     void notifyVoLteServiceStateChanged(in VoLteServiceState lteState);
+    void notifySrvccStateChanged(in int subId, in int lteState);
     void notifySimActivationStateChangedForPhoneId(in int phoneId, in int subId,
             int activationState, int activationType);
     void notifyOemHookRawEventForSubscriber(in int subId, in byte[] rawData);

@@ -198,6 +198,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private VoLteServiceState mVoLteServiceState = new VoLteServiceState();
 
+    private int[] mSrvccState;
+
     private int mDefaultSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
     private int mDefaultPhoneId = SubscriptionManager.INVALID_PHONE_INDEX;
@@ -356,6 +358,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mCallForwarding = new boolean[numPhones];
         mCellLocation = new Bundle[numPhones];
         mCellInfo = new ArrayList<List<CellInfo>>();
+        mSrvccState = new int[numPhones];
         mPhysicalChannelConfigs = new ArrayList<List<PhysicalChannelConfig>>();
         for (int i = 0; i < numPhones; i++) {
             mCallState[i] =  TelephonyManager.CALL_STATE_IDLE;
@@ -371,6 +374,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mCallForwarding[i] =  false;
             mCellLocation[i] = new Bundle();
             mCellInfo.add(i, null);
+            mSrvccState[i] = TelephonyManager.SRVCC_STATE_HANDOVER_NONE;
             mPhysicalChannelConfigs.add(i, new ArrayList<PhysicalChannelConfig>());
         }
 
@@ -768,6 +772,13 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     if ((events & PhoneStateListener.LISTEN_RADIO_POWER_STATE_CHANGED) != 0) {
                         try {
                             r.callback.onRadioPowerStateChanged(mRadioPowerState);
+                        } catch (RemoteException ex) {
+                            remove(r.binder);
+                        }
+                    }
+                    if ((events & PhoneStateListener.LISTEN_SRVCC_STATE_CHANGED) != 0) {
+                        try {
+                            r.callback.onSrvccStateChanged(mSrvccState[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -1542,6 +1553,37 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     }
 
+    @Override
+    public void notifySrvccStateChanged(int subId, @TelephonyManager.SrvccState int state) {
+        if (!checkNotifyPermission("notifySrvccStateChanged()")) {
+            return;
+        }
+        if (VDBG) {
+            log("notifySrvccStateChanged: subId=" + subId + " srvccState=" + state);
+        }
+        int phoneId = SubscriptionManager.getPhoneId(subId);
+        synchronized (mRecords) {
+            if (validatePhoneId(phoneId)) {
+                mSrvccState[phoneId]  = state;
+                for (Record r : mRecords) {
+                    if (r.matchPhoneStateListenerEvent(
+                            PhoneStateListener.LISTEN_SRVCC_STATE_CHANGED) &&
+                            idMatch(r.subId, subId, phoneId)) {
+                        try {
+                            if (DBG_LOC) {
+                                log("notifySrvccStateChanged: mSrvccState=" + state + " r=" + r);
+                            }
+                            r.callback.onSrvccStateChanged(state);
+                        } catch (RemoteException ex) {
+                            mRemoveList.add(r.binder);
+                        }
+                    }
+                }
+            }
+            handleRemoveListLocked();
+        }
+    }
+
     public void notifyOemHookRawEventForSubscriber(int subId, byte[] rawData) {
         if (!checkNotifyPermission("notifyOemHookRawEventForSubscriber")) {
             return;
@@ -1681,6 +1723,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             pw.println("mForegroundCallState=" + mForegroundCallState);
             pw.println("mBackgroundCallState=" + mBackgroundCallState);
             pw.println("mVoLteServiceState=" + mVoLteServiceState);
+            pw.println("mSrvccState=" + mSrvccState);
             pw.println("mPhoneCapability=" + mPhoneCapability);
             pw.println("mPreferredDataSubId=" + mPreferredDataSubId);
             pw.println("mRadioPowerState=" + mRadioPowerState);
@@ -1930,6 +1973,12 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, null);
         }
+
+        if ((events & PhoneStateListener.LISTEN_SRVCC_STATE_CHANGED) != 0) {
+            mContext.enforceCallingOrSelfPermission(
+                    android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, null);
+        }
+
 
         return true;
     }
