@@ -2,6 +2,9 @@
   "presubmit": [
     {
       "name": "view-compiler-tests"
+    },
+    {
+      "name": "dex-builder-test"
     }
   ]
 }

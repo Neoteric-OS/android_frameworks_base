@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.startop.test" >
+
+    <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="28" />
+
+    <application>
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+    <instrumentation android:name="android.support.test.runner.AndroidJUnitRunner"
+                     android:targetPackage="android.startop.test"
+                     android:label="DexBuilder Tests"/>
+
+</manifest>

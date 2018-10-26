@@ -62,3 +62,36 @@ cc_test_host {
     ],
     test_suites: ["general-tests"],
 }
+
+cc_binary_host {
+    name: "dex_testcase_generator",
+    defaults: ["viewcompiler_defaults"],
+    srcs: ["dex_testcase_generator.cc"],
+    static_libs: [
+        "libviewcompiler",
+    ],
+}
+
+genrule {
+    name: "generate_dex_testcases",
+    tools: [":dex_testcase_generator"],
+    cmd: "$(location :dex_testcase_generator) $(genDir)",
+    out: ["trivial.dex"],
+}
+
+java_test {
+    name: "dex-builder-test",
+    srcs: ["java/DexBuilderTest.java"],
+//    data: [":generate_dex_testcases"],
+//    host_supported: false,
+//    device_supported: true,
+    test_suites: ["device-tests"],
+    libs: [
+//"cts-dalvik-device-test-runner",     
+   "android-support-test", 
+        "junit",
+     ],
+//    test_config: "AndroidTest.xml",
+//    manifest: "AndroidManifest.xml",
+//    installable: true,
+}
