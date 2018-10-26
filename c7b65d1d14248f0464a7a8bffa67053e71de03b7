@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "326e1cb6_0fb7c6e3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T08:42:32Z",
+      "side": 1,
+      "message": "Makes sense. Let\u0027s keep the bug number then.",
+      "parentUuid": "de0308c4_8e7ecec5",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 91
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5254bf92_e13c0f6c",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
