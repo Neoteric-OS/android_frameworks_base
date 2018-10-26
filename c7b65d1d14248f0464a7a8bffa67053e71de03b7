@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c921d95_92ba514c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T07:50:07Z",
+      "side": 1,
+      "message": "We try to avoid citing buganizer URLs in AOSP code because external contributors and readers can\u0027t see what they refer to. It\u0027s not an absolute rule – sometimes it\u0027s the only reasonable way to explain what\u0027s going on or the reference/history would be need to get all the necessary context – but in this case you can replace it advantageously with a short explanation of what this is about, e.g. :\n\n  For backward compatibility, on devices that launched before Q daemons and apps running as the system UID are exempted from this check.",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 91
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5254bf92_e13c0f6c",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T07:50:07Z",
+      "side": 1,
+      "message": "I think I prefer the solution you had in patch 2, where you had a spy() (but do keep the change that made getDeviceFirstSdkInt package-private).\n\nI don\u0027t really have a very strong opinion though.",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18227d0_44ec88aa",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T07:50:07Z",
+      "side": 1,
+      "message": "You know what, let\u0027s change this into the following :\n\n  private boolean hasPermission(String partition, int targetSdkVersion, int uid, String... heldPermissions)\n...and have it return the value of mPermissionMonitor.hasUseBackgroundNetworksPermission(uid).\n\nThat makes the code in each test look like this :\n\n  assertFalse(hasPermission(PARTITION_SYSTEM, VERSION_CODES.P, MOCK_UID);\n  assertTrue(hasPermission(PARTITION_SYSTEM, VERSION_CODES.P, MOCK_UID, CHANGE_NETWORK_STATE))\n  assertTrue(hasPermission(PARTITION_SYSTEM, VERSION_CODES.P, MOCK_UID, NETWORK_STACK))",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28450b78_00e043d9",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T07:50:07Z",
+      "side": 1,
+      "message": "At this point I\u0027d recommend import static Build.VERSION_CODES.P and Q.\n\nIf you don\u0027t like having a P constant floating around in your test, then just define\n\n  private static final int VERSION_P \u003d Build.VERSION_CODES.P;\n  private static final int VERSION_Q \u003d Build.VERSION_CODES.Q;\n...and cut down on the churn.",
+      "range": {
+        "startLine": 151,
+        "startChar": 34,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8fa05d_44152efa",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T07:50:07Z",
+      "side": 1,
+      "message": "Let\u0027s add a test that SYSTEM_UID has the permission on both P and Q when it does hold CONNECTIVITY_STACK or CONNECTIVITY_USE_RESTRICTED_NETWORKS",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 18
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
