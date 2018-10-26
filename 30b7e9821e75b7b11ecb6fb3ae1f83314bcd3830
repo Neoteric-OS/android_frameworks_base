@@ -136,6 +136,23 @@
     },
     {
       "key": {
+        "uuid": "142ab687_f1743ec2",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-26T21:41:31Z",
+      "side": 1,
+      "message": "Discussed offline with Vishnu: Let\u0027s add (long \u003csequence id\u003e, long \u003ctimestamp\u003e) to all these callbacks.\n\nThe sequences will allow us to distinguish multiple concurrent launches. The timestamps means we don\u0027t have to do our own timing, so we will always be consistent with the metrics.",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "116b8588_1f7290dd",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLaunchObserver.java",
         "patchSetId": 1
@@ -229,6 +246,40 @@
     },
     {
       "key": {
+        "uuid": "0b5ddb74_1349668b",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-26T21:41:31Z",
+      "side": 1,
+      "message": "Discussed offline with Vishnu: Let\u0027s remove this field and instead add \u0027long mCurrentLaunchSequenceId\u0027",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fc1d0e_c22e46db",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-26T21:41:31Z",
+      "side": 1,
+      "message": "Discussed offline with Vishnu:\n\n(Assuming an extra state is ok) Then we can add the intent here as a parameter and do the mLaunchObserver.onIntentStarted(...) callback.\n\nAlso we can increment the launch sequence ID here.",
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494e61dd_7d2b91fe",
         "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
         "patchSetId": 1
@@ -287,6 +338,23 @@
         "endLine": 527,
         "endChar": 73
       },
+      "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc85fa51_43d1a482",
+        "filename": "services/core/java/com/android/server/am/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-10-26T21:41:31Z",
+      "side": 1,
+      "message": "Discussed offline with Vishnu: Ok to leave these in but put them behind the \n\n  if DEBUG_METRICS.",
       "revId": "30b7e9821e75b7b11ecb6fb3ae1f83314bcd3830",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
