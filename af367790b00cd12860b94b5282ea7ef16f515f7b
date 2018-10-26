@@ -94,6 +94,30 @@
       "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f786268b_f34d6f6c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-26T12:25:27Z",
+      "side": 1,
+      "message": "Sorry for the delay. Now that I\u0027ve wrapped my head around this, I see what the actual problem is.\n\nEvery time a page starts or finishes loading, the activity is starting a new thread that checks for the portal. If the network is not very good, it\u0027s very possible that multiple threads will get stuck on the network access, and all call done() one after the other. In this case, your change will result in mCaptivePortal.reportCaptivePortalDismissed() multiple times, and I do not think this is acceptable. This is the original problem for which this boolean was added.\n\nCan we think of a way to not regress on this ? I think you might need to do something a lot more complex unfortunately, like timestamp the calls to testCaptivePortal() and only call done if the thread has been started after the last call to done() has been issued. (which is not great by the way, there is probably a better way to achieve this)",
+      "parentUuid": "fd467ffc_2096a1a5",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
