@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de0308c4_8e7ecec5",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-26T07:57:48Z",
+      "side": 1,
+      "message": "+1 to a better description in the comment. But keep in mind that a bug number is also useful for tracking: for example, N years down the line when it\u0027s time to remove this code, we can look at the bug to see when it was fixed, what the original problem was, etc. If you think about it, it\u0027s the same reason why we include bug numbers in commit messages. So I think it\u0027s a good idea to keep the bug number here as well as having a better description.",
+      "parentUuid": "5c921d95_92ba514c",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 91
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5254bf92_e13c0f6c",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
