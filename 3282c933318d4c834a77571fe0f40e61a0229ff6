@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3af9c1a7_b3c959fd",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-10-26T18:48:59Z",
+      "side": 1,
+      "message": "Maybe take a look at some other carrier-specific icons and see if there\u0027s a way to copy that logic here.",
+      "parentUuid": "70fe4afc_f4dc093d",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 17
+      },
+      "revId": "3282c933318d4c834a77571fe0f40e61a0229ff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c24a8b47_bf15026b",
         "filename": "telecomm/java/android/telecom/StatusHints.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-26T17:20:48Z",
       "side": 1,
       "message": "We shouldn\u0027t be exposing the subId in the StatusHints class.  Its a generic class which is supposed to communicate an icon and potential extras.  Subs are telephony implementation detail.",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 5
+      },
+      "revId": "3282c933318d4c834a77571fe0f40e61a0229ff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef75008_00e5f73e",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-10-26T18:48:59Z",
+      "side": 1,
+      "message": "This actually looks like it\u0027s left over from an old revision",
+      "parentUuid": "c24a8b47_bf15026b",
       "range": {
         "startLine": 151,
         "startChar": 4,
