@@ -16,7 +16,9 @@
 
 package android.telephony;
 
+import android.Manifest;
 import android.annotation.NonNull;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Bundle;
@@ -202,10 +204,12 @@ public class PhoneStateListener {
 
     /**
      * Listen for changes to LTE network state
-     *
-     * @see #onLteNetworkStateChanged
+     * @deprecated Only used for SRVCC state, which is not tied directly to VoLTE, instead use
+     * {@link #onSrvccStateChanged(int)}.
+     * @see #onVoLteServiceStateChanged(VoLteServiceState)
      * @hide
      */
+    @Deprecated
     public static final int LISTEN_VOLTE_STATE                              = 0x00004000;
 
     /**
@@ -300,6 +304,15 @@ public class PhoneStateListener {
      */
     @SystemApi
     public static final int LISTEN_RADIO_POWER_STATE_CHANGED               = 0x00800000;
+
+    /**
+     * Listen for changes to the SRVCC state of the active call.
+     * @see #onSrvccStateChanged(int)
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public static final int LISTEN_SRVCC_STATE_CHANGED                     = 0x01000000;
 
     /*
      * Subscription used to listen to the phone state changes
@@ -403,6 +416,9 @@ public class PhoneStateListener {
                         break;
                     case LISTEN_VOLTE_STATE:
                         PhoneStateListener.this.onVoLteServiceStateChanged((VoLteServiceState)msg.obj);
+                        break;
+                    case LISTEN_SRVCC_STATE_CHANGED:
+                        PhoneStateListener.this.onSrvccStateChanged((int) msg.obj);
                         break;
                     case LISTEN_VOICE_ACTIVATION_STATE:
                         PhoneStateListener.this.onVoiceActivationStateChanged((int)msg.obj);
@@ -608,10 +624,23 @@ public class PhoneStateListener {
      * Callback invoked when the service state of LTE network
      * related to the VoLTE service has changed.
      * @param stateInfo is the current LTE network information
+     * @deprecated Only used for SRVCC state, which is not tied directly to
+     *     VoLTE, instead use {@link #onSrvccStateChanged(int)}.
      * @hide
      */
+    @Deprecated
     @UnsupportedAppUsage
     public void onVoLteServiceStateChanged(VoLteServiceState stateInfo) {
+    }
+
+    /**
+     * Callback invoked when there has been a change in the Single Radio Voice Call Continuity
+     * (SRVCC) state for the currently active call.
+     * @hide
+     */
+    @SystemApi
+    public void onSrvccStateChanged(@TelephonyManager.SrvccState int srvccState) {
+
     }
 
     /**
@@ -797,6 +826,10 @@ public class PhoneStateListener {
 
         public void onVoLteServiceStateChanged(VoLteServiceState lteState) {
             send(LISTEN_VOLTE_STATE, 0, 0, lteState);
+        }
+
+        public void onSrvccStateChanged(int state) {
+            send(LISTEN_SRVCC_STATE_CHANGED, 0, 0, state);
         }
 
         public void onVoiceActivationStateChanged(int activationState) {
