@@ -1189,6 +1189,9 @@ class StorageManagerService extends IStorageManager.Stub
         } else if (vol.type == VolumeInfo.TYPE_PRIVATE) {
             mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
 
+        } else if (vol.type == VolumeInfo.TYPE_STUB) {
+            vol.mountUserId = mCurrentUserId;
+            mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
         } else {
             Slog.d(TAG, "Skipping automatic mounting of " + vol);
         }
@@ -1199,6 +1202,7 @@ class StorageManagerService extends IStorageManager.Stub
             case VolumeInfo.TYPE_PRIVATE:
             case VolumeInfo.TYPE_PUBLIC:
             case VolumeInfo.TYPE_EMULATED:
+            case VolumeInfo.TYPE_STUB:
                 break;
             default:
                 return false;
@@ -1275,7 +1279,8 @@ class StorageManagerService extends IStorageManager.Stub
             }
         }
 
-        if (vol.type == VolumeInfo.TYPE_PUBLIC && vol.state == VolumeInfo.STATE_EJECTING) {
+        if ((vol.type == VolumeInfo.TYPE_PUBLIC || vol.type == VolumeInfo.TYPE_STUB)
+                    && vol.state == VolumeInfo.STATE_EJECTING) {
             // TODO: this should eventually be handled by new ObbVolume state changes
             /*
              * Some OBBs might have been unmounted when this volume was
@@ -1357,7 +1362,8 @@ class StorageManagerService extends IStorageManager.Stub
         }
 
         boolean isTypeRestricted = false;
-        if (vol.type == VolumeInfo.TYPE_PUBLIC || vol.type == VolumeInfo.TYPE_PRIVATE) {
+        if (vol.type == VolumeInfo.TYPE_PUBLIC || vol.type == VolumeInfo.TYPE_PRIVATE
+                || vol.type == VolumeInfo.TYPE_STUB) {
             isTypeRestricted = userManager
                     .hasUserRestriction(UserManager.DISALLOW_MOUNT_PHYSICAL_MEDIA,
                     Binder.getCallingUserHandle());
@@ -2748,6 +2754,7 @@ class StorageManagerService extends IStorageManager.Stub
                 final VolumeInfo vol = mVolumes.valueAt(i);
                 switch (vol.getType()) {
                     case VolumeInfo.TYPE_PUBLIC:
+                    case VolumeInfo.TYPE_STUB:
                     case VolumeInfo.TYPE_EMULATED:
                         break;
                     default:
