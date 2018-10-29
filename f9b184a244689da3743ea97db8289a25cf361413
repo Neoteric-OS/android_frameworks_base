@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34bce6c4_9db1a809",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2018-10-29T15:07:40Z",
+      "side": 1,
+      "message": "Could we get a fallback code that assigns a default value if the meta-data is not available? Like SIM for example. This would be useful during the transition time, for all the testing tools/wallets to align with the new method.",
+      "revId": "f9b184a244689da3743ea97db8289a25cf361413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
