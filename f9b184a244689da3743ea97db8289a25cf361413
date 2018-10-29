@@ -52,6 +52,24 @@
       "revId": "f9b184a244689da3743ea97db8289a25cf361413",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d262557a_9dd604af",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-10-29T22:49:43Z",
+      "side": 1,
+      "message": "It would be good to have fallback option configurable to allow fallback to either eSE or UICC in case offhost is not mentioned in meta data (provided by App).\nThis would be same as Android Pie, where it can be configured using DEFAULT_OFFHOST_ROUTE.",
+      "parentUuid": "3269adda_32a199e7",
+      "revId": "f9b184a244689da3743ea97db8289a25cf361413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
