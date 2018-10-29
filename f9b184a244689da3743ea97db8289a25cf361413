@@ -34,6 +34,24 @@
       "revId": "f9b184a244689da3743ea97db8289a25cf361413",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3269adda_32a199e7",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-29T17:46:40Z",
+      "side": 1,
+      "message": "That\u0027s what is happening. If you check the patch in packages/apps/Nfc, it falls back to SIM default UICC offHost.",
+      "parentUuid": "e131b58d_0fb13b89",
+      "revId": "f9b184a244689da3743ea97db8289a25cf361413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
