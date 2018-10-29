@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dd7c0889_249e364e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-10-29T03:24:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "326e1cb6_0fb7c6e3",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 91
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5254bf92_e13c0f6c",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "writtenOn": "2018-10-26T07:50:07Z",
       "side": 1,
       "message": "I think I prefer the solution you had in patch 2, where you had a spy() (but do keep the change that made getDeviceFirstSdkInt package-private).\n\nI don\u0027t really have a very strong opinion though.",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c78876_921bd1bb",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-10-29T03:24:17Z",
+      "side": 1,
+      "message": "Because using spy() will hit a stubbing error due to packageInfo is also mocked at the same time in expectPermission(). Hence, I use this method to solve this problem and keep getDeviceFirstSdkInt package-private.",
+      "parentUuid": "5254bf92_e13c0f6c",
       "range": {
         "startLine": 72,
         "startChar": 1,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a750f454_4950887f",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-10-29T03:24:17Z",
+      "side": 1,
+      "message": "Update accordingly.",
+      "parentUuid": "f18227d0_44ec88aa",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28450b78_00e043d9",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f1e3a28e_7b14421b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-10-29T03:24:17Z",
+      "side": 1,
+      "message": "Update accordingly.",
+      "parentUuid": "28450b78_00e043d9",
+      "range": {
+        "startLine": 151,
+        "startChar": 34,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a8fa05d_44152efa",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
@@ -162,6 +258,30 @@
       "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec103dc0_767dec61",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-10-29T03:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a8fa05d_44152efa",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 18
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
