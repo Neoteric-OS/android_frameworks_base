@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "0208fe14_11603f23",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-29T10:50:30Z",
+      "side": 1,
+      "message": "So, this has nothing to do with PackageInfo. Let me paste the actual error message :\n\n\u003c\u003c\u003c\n  org.mockito.exceptions.misusing.MissingMethodInvocationException: \n  when() requires an argument which has to be \u0027a method call on a mock\u0027.\n  For example:\n      when(mock.getArticles()).thenReturn(articles);\n\n  Also, this error might show up because:\n  1. you stub either of: final/private/equals()/hashCode() methods.\n     Those methods *cannot* be stubbed/verified.\n     Mocking methods declared on non-public parent classes is not supported.\n  2. inside when() you don\u0027t call method on mock but on some other object.\n\n  \tat com.android.server.connectivity.PermissionMonitorTest.testHasUseBackgroundNetworksPermissionSystemUid(PermissionMonitorTest.java:196)\n\u003e\u003e\u003e\n\nWhat\u0027s interesting here is the \"private\" part. The spies are loaded by a custom class loader that\u0027s different from the loader used for loading the real thing (that\u0027s because the test runner is loading the real classes, but then Mockito has to generate the mocks and spies) :\nPermissionMonitor is loaded by : dalvik.system.PathClassLoader[DexPathList[[zip file \"/system/framework/android.test.runner.impl.jar\", zip file \"/system/framework/android.test.mock.impl.jar\", zip file \"/data/app/com.android.frameworks.tests.net-_VjeIAeg3SWAGsAWPCgTzw\u003d\u003d/base.apk\"],\n\nPermissionMonitor_Proxy is loaded by : dalvik.system.DexClassLoader[DexPathList[[zip file \"/data/user/0/com.android.frameworks.tests.net/app_dxmaker_cache/Generated_-580128936.jar\"],nativeLibraryDirectories\u003d[/system/lib64, /vendor/lib64]]]\n\nIn practice that means those two classes are not in the same package, so a package private method is not accessible, so you can\u0027t call when() on it. I\u0027m surprised to have to conclude package private methods are never spy-able. There are resources on the net speaking about this and demos of how that\u0027s only true if there is some class-loading logic involved in the app, but we don\u0027t have that ; I do surmise however that this will work only if we let Mockito load the class under test, and in this case (like in most) it\u0027s already loaded by the runner because it\u0027s needed it to populate the member.\n\n\nThe obvious next step is to try and make the method protected instead. Because the spy will still inherit from the real class, it will have access to it. Unfortunately when I do this, Mockito generates a spy method with an identical signature but that calls the original method with 1 argument, because, it seems, it believes that method is \"equals()\"... ?\n\nThat\u0027s where I am now, but I have to go home.",
+      "parentUuid": "b5c78876_921bd1bb",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "c7b65d1d14248f0464a7a8bffa67053e71de03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f18227d0_44ec88aa",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3

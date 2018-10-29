@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d505db0_f6d1e8b7",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-29T10:50:30Z",
+      "side": 1,
+      "message": "Make this a \"String... permission\" and remove line 84. You can then pass multiple permissions to test, and you never have to pass null for an empty array.",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "dc64f28adbf763c2608aa4ceba85bd3d6e86dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c42b51_c84a4985",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-29T10:50:30Z",
+      "side": 1,
+      "message": "Style : space before",
+      "range": {
+        "startLine": 84,
+        "startChar": 51,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "dc64f28adbf763c2608aa4ceba85bd3d6e86dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
