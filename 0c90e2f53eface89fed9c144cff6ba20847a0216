@@ -22,6 +22,30 @@
       "revId": "0c90e2f53eface89fed9c144cff6ba20847a0216",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486b1825_6e93b8fd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-29T14:10:19Z",
+      "side": 1,
+      "message": "Yes, since it is already final.\nBut I would like to do that in a follow-up commit.\nDue to it touches the parts that don\u0027t really belong to this change.",
+      "parentUuid": "c67deb2d_7b569175",
+      "range": {
+        "startLine": 1624,
+        "startChar": 16,
+        "endLine": 1624,
+        "endChar": 35
+      },
+      "revId": "0c90e2f53eface89fed9c144cff6ba20847a0216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
