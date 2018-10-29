@@ -102,6 +102,9 @@ public class WifiStatusTracker extends ConnectivityManager.NetworkCallback {
 
     public void handleBroadcast(Intent intent) {
         String action = intent.getAction();
+        if (mWifiManager == null) {
+            return;
+        }
         if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
             updateWifiState();
         } else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {

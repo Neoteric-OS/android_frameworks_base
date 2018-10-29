@@ -115,7 +115,9 @@ public class AccessPointControllerImpl
         if (ap == null) return false;
         if (DEBUG) Log.d(TAG, "connect networkId=" + ap.getConfig().networkId);
         if (ap.isSaved()) {
-            mWifiTracker.getManager().connect(ap.getConfig().networkId, mConnectListener);
+            if (mWifiTracker.getManager() != null) {
+                mWifiTracker.getManager().connect(ap.getConfig().networkId, mConnectListener);
+            }
         } else {
             // Unknown network, need to add it.
             if (ap.getSecurity() != AccessPoint.SECURITY_NONE) {
@@ -126,7 +128,9 @@ public class AccessPointControllerImpl
                 return true;
             } else {
                 ap.generateOpenNetworkConfig();
-                mWifiTracker.getManager().connect(ap.getConfig(), mConnectListener);
+                if (mWifiTracker.getManager() != null) {
+                    mWifiTracker.getManager().connect(ap.getConfig(), mConnectListener);
+                }
             }
         }
         return false;
