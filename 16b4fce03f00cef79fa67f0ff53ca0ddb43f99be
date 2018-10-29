@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6c48af_bc13c3ee",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiStatusTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "nit: move this check up one line",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3847c4b_b764ab61",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "inline this check instead of using an if statement",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13279ca2_aea0f490",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "keep this in line with the below isWifiEnabled check",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76374df6_02881337",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "nit: keep this in line with the return statement\n\nreturn mWifiManager !\u003d null \u0026\u0026 mWifiManager.isWifiEnabled()\n\nalso add unit tests for WifiTrackerTest for this",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a088222_063e7f67",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "if the scanner is never started, you don\u0027t need this conditional",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfc0adb_1b9b2e69",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/AccessPointControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "neither of these code blocks can be entered wifi not available so i believe you can revert this file",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e9cb73_7e227b03",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/HotspotControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2018-10-29T14:07:49Z",
+      "side": 1,
+      "message": "nit: move this up one line. no need to listen for wifi events if there\u0027s no wifi manager",
+      "revId": "16b4fce03f00cef79fa67f0ff53ca0ddb43f99be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
