@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a489dd_53c26afe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-10-30T11:36:12Z",
+      "side": 1,
+      "message": "Add one line summary which is \u003c 80 chars",
+      "revId": "05a259f1263a763dcbb17e176293a1e7ff3b2e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
