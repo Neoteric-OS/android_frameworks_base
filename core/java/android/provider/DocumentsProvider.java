@@ -461,6 +461,37 @@ public abstract class DocumentsProvider extends ContentProvider {
     }
 
     /**
+     * Return recently modified documents under the requested root. This will
+     * only be called for roots that advertise
+     * {@link Root#FLAG_SUPPORTS_RECENTS}. The returned documents should be
+     * sorted by {@link Document#COLUMN_LAST_MODIFIED} in descending order of
+     * the most recently modified documents.
+     * <p>
+     * If this method is overriden by the concrete DocumentsProvider and
+     * QUERY_ARGS_LIMIT is specified with a nonnegative int under queryArgs, the
+     * result will be limited by that number and QUERY_ARG_LIMIT will be
+     * specified under EXTRA_HONORED_ARGS. Otherwise, a default 64 limit will
+     * be used and no QUERY_ARG* will be specified under EXTRA_HONORED_ARGS.
+     * <p>
+     * Recent documents do not support change notifications.
+     *
+     * @param projection list of {@link Document} columns to put into the
+     *            cursor. If {@code null} all supported columns should be
+     *            included.
+     * @param queryArgs the extra query arguments.
+     * @see DocumentsContract#EXTRA_LOADING
+     */
+    @SuppressWarnings("unused")
+    public Cursor queryRecentDocuments(
+            String rootId, String[] projection, Bundle queryArgs)
+            throws FileNotFoundException {
+        Cursor c = queryRecentDocuments(rootId, projection);
+        c.getExtras().putStringArray(
+                ContentResolver.EXTRA_HONORED_ARGS, new String[0]);
+        return c;
+    }
+
+    /**
      * Return metadata for the single requested document. You should avoid
      * making network requests to keep this request fast.
      *
