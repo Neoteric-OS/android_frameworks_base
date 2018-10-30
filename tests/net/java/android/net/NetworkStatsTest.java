@@ -803,8 +803,8 @@ public class NetworkStatsTest {
                 baseIface, rootUid, SET_DEFAULT, TAG_NONE,
                 163577 /* rxBytes */,
                 187 /* rxPackets */,
-                1169942 /* txBytes */,
-                13902 /* txPackets */,
+                17607,
+                97,
                 0 /* operations */);
 
         // Traffic measured for the root uid on the base interface if xt_qtaguid is in use.
@@ -814,8 +814,8 @@ public class NetworkStatsTest {
                 baseIface, rootUid, SET_DEFAULT, TAG_NONE,
                 31113087 /* rxBytes */,
                 22588 /* rxPackets */,
-                1169942 /* txBytes */,
-                13902 /* txPackets */,
+                17607,
+                97,
                 0 /* operations */);
 
         final NetworkStats.Entry otherEntry = new NetworkStats.Entry(

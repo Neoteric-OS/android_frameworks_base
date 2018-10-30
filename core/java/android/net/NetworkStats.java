@@ -54,6 +54,8 @@ public class NetworkStats implements Parcelable {
     public static final String IFACE_ALL = null;
     /** {@link #uid} value when UID details unavailable. */
     public static final int UID_ALL = -1;
+    /** Special {@link #uid} value used to specify clatd uid. */
+    public static final int UID_CLAT = 1029;
     /** {@link #tag} value matching any tag. */
     // TODO: Rename TAG_ALL to TAG_ANY.
     public static final int TAG_ALL = -1;
@@ -864,17 +866,14 @@ public class NetworkStats implements Parcelable {
             if (baseIface == null) {
                 continue;
             }
-            // Subtract any 464lat traffic seen for the root UID on the current base interface.
+            // Subtract any 464lat rx traffic seen for the root UID on the current base interface.
             // However, for eBPF, the per uid stats is collected by different hook, the rx packets
-            // on base interface will not be counted. Thus, the adjustment on root uid is only
-            // needed in tx direction.
+            // on base interface will not be counted.
             adjust.iface = baseIface;
             if (!useBpfStats) {
                 adjust.rxBytes = -(entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
                 adjust.rxPackets = -entry.rxPackets;
             }
-            adjust.txBytes = -(entry.txBytes + entry.txPackets * IPV4V6_HEADER_DELTA);
-            adjust.txPackets = -entry.txPackets;
             adjustments.combineValues(adjust);
 
             // For 464xlat traffic, per uid stats only counts the bytes of the native IPv4 packet
@@ -886,6 +885,10 @@ public class NetworkStats implements Parcelable {
             stackedTraffic.setValues(i, entry);
         }
 
+        // 464xlat tx traffic on root uid has been moved to clat uid. Thus, the adjustment for tx
+        // packet on root uid is not needed anymore. Instead, all traffic on clat uid should be
+        // ignored.
+        baseTraffic.removeUids(new int[] {UID_CLAT});
         baseTraffic.combineAllValues(adjustments);
     }
 
