@@ -118,6 +118,30 @@
       "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1be652a_386fb818",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1033528
+      },
+      "writtenOn": "2018-10-30T11:43:34Z",
+      "side": 1,
+      "message": "Chalard, thank you for the comment.\nFinally, we need to investigate the case you pointed out and additional UX after log in.\nAnd we need a time to conclude then, I want to abandon this patch and will re-open (or create newly) the patch after the conclusion.\n\nJust thought:\nfor mCaptivePortal.reportCaptivePortalDismissed() multiple times\n(This is not checked on our environment but..) I\u0027m not sure the case causes some problem (i.e. multiple internet tests to AP).\nBecause CaptivePortal.reportCaptivePortalDismissed() send APP_RETURN_DISMISSED to NetworkMonitor() but NetworkMonitor state is in ValidatedState in that case.\nhttps://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/connectivity/NetworkMonitor.java#520\nIts state has no catch APP_RETURN_DISMISSED then problem might not be happened ?",
+      "parentUuid": "f786268b_f34d6f6c",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "af367790b00cd12860b94b5282ea7ef16f515f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
