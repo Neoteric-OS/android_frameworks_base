@@ -1803,6 +1803,7 @@ class AlarmManagerService extends SystemService {
             final long oldId = Binder.clearCallingIdentity();
             try {
                 setTimeZoneImpl(tz);
+                mClockReceiver.scheduleDateChangedEvent();
             } finally {
                 Binder.restoreCallingIdentity(oldId);
             }
