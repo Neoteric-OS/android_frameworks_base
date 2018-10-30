@@ -42022,6 +42022,7 @@ package android.telephony {
     field public static final java.lang.String KEY_VVM_SSL_ENABLED_BOOL = "vvm_ssl_enabled_bool";
     field public static final java.lang.String KEY_VVM_TYPE_STRING = "vvm_type_string";
     field public static final java.lang.String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
+    field public static final java.lang.String KEY_SUPPORT_EMERGENCY_DIALER_SHORTCUT_BOOL = "support_emergency_dialer_shortcut_bool";
   }
 
   public abstract class CellIdentity implements android.os.Parcelable {
