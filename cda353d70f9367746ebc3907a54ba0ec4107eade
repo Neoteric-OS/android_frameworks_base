@@ -87,6 +87,24 @@
       "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7856c9_e891c34c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2018-10-30T12:02:34Z",
+      "side": 1,
+      "message": "We are already hardcoding the string \"system_server\" throughout this binary. As such this CL is not affecting the flexibility here so follow up CL is going to be better.",
+      "parentUuid": "d286ab10_4a24412e",
+      "revId": "cda353d70f9367746ebc3907a54ba0ec4107eade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
