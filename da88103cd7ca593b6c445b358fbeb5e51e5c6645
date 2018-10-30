@@ -46,6 +46,30 @@
       "revId": "da88103cd7ca593b6c445b358fbeb5e51e5c6645",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9713889_b9d5a84d",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-30T17:53:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cade3028_0f466785",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "da88103cd7ca593b6c445b358fbeb5e51e5c6645",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
