@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6390242e_51c4238f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2018-10-30T07:46:09Z",
+      "side": 1,
+      "message": "Please follow the format:\n\n\none line topic\n  \u003cone blank line here\u003e\n\nAdd more descriptions here.\n\nOtherwise, you\u0027ll see the long sentence as the title at the top.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 132
+      },
+      "revId": "1cb31e8224118e1d9fbbd1c17e60b620fc1ff945",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "99017395_6defcd2d",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2018-10-30T07:46:09Z",
+      "side": 1,
+      "message": "is this fixed?",
+      "parentUuid": "8eab727e_289a4aa0",
+      "range": {
+        "startLine": 354,
+        "startChar": 12,
+        "endLine": 354,
+        "endChar": 13
+      },
+      "revId": "16639812211d5e40701c7bc053550cb499cbf610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5b0f4d_b06cfa67",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2018-10-30T07:46:09Z",
+      "side": 1,
+      "message": "is this fixed?",
+      "parentUuid": "221907b4_f2d112fa",
+      "range": {
+        "startLine": 354,
+        "startChar": 41,
+        "endLine": 354,
+        "endChar": 42
+      },
+      "revId": "16639812211d5e40701c7bc053550cb499cbf610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa6a5ec8_bcddf033",
         "filename": "core/java/com/android/server/SystemConfig.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-09-06T07:15:57Z",
       "side": 1,
       "message": "shouldn\u0027t odmfile be read here?\n\nOr you want it to take precedence?\nIf so, please add comments like:\n\n// Read odm permissions last so it will take precedence",
+      "range": {
+        "startLine": 368,
+        "startChar": 12,
+        "endLine": 368,
+        "endChar": 54
+      },
+      "revId": "16639812211d5e40701c7bc053550cb499cbf610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34fef5c_6fccbda2",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2018-10-30T07:46:09Z",
+      "side": 1,
+      "message": "also this comment is either not fixed or replied",
+      "parentUuid": "fa6a5ec8_bcddf033",
       "range": {
         "startLine": 368,
         "startChar": 12,
