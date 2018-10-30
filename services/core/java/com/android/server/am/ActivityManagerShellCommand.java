@@ -2070,7 +2070,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
 
         FeatureInfo[] features = pm.getSystemAvailableFeatures();
         Arrays.sort(features, (o1, o2) ->
-                (o1.name == o2.name ? 0 : (o1.name == null ? -1 : o1.name.compareTo(o2.name))));
+                (o1.name == o2.name ? 0 : (o1.name == null ? -1 : (o2.name == null)? 1 : o1.name.compareTo(o2.name))));
         for (int i = 0; i < features.length; i++) {
             if (features[i].name != null) {
                 if (protoOutputStream != null) {
