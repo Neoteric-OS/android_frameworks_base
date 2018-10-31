@@ -869,6 +869,35 @@ public class ApfTest {
         }
     }
 
+    /**
+     * Generate APF program, run pcap file though APF filter, then check all the packets in the file
+     * should be dropped.
+     */
+    @Test
+    public void testApfFilterPcapFile() throws Exception {
+        final byte[] MOCK_PCAP_IPV4_ADDR = {(byte) 172, 16, 7, (byte) 151};
+        String pcapFilename = stageFile(R.raw.apfPcap);
+        MockIpClientCallback ipClientCallback = new MockIpClientCallback();
+        LinkAddress link = new LinkAddress(InetAddress.getByAddress(MOCK_PCAP_IPV4_ADDR), 16);
+        LinkProperties lp = new LinkProperties();
+        lp.addLinkAddress(link);
+
+        ApfConfiguration config = getDefaultConfig();
+        ApfCapabilities MOCK_APF_PCAP_CAPABILITIES = new ApfCapabilities(4, 1700, ARPHRD_ETHER);
+        config.apfCapabilities = MOCK_APF_PCAP_CAPABILITIES;
+        config.multicastFilter = DROP_MULTICAST;
+        config.ieee802_3Filter = DROP_802_3_FRAMES;
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipClientCallback, mLog);
+        apfFilter.setLinkProperties(lp);
+        byte[] program = ipClientCallback.getApfProgram();
+        byte[] data = new byte[ApfFilter.Counter.totalSize()];
+        final boolean result;
+
+        result = dropsAllPackets(program, data, pcapFilename);
+        assertTrue("Failed to drop all packets by filter. \nAPF counter:" +
+            HexDump.toHexString(data, false), result);
+    }
+
     private class MockIpClientCallback extends IpClient.Callback {
         private final ConditionVariable mGotApfProgram = new ConditionVariable();
         private byte[] mLastApfProgram;
@@ -1705,6 +1734,14 @@ public class ApfTest {
      */
     private native static boolean compareBpfApf(String filter, String pcap_filename,
             byte[] apf_program);
+
+
+    /**
+     * Open packet capture file {@code pcapFilename} and run it through APF filter. Then
+     * checks whether all the packets are dropped and populates data[] {@code data} with
+     * the APF counters.
+     */
+    private native static boolean dropsAllPackets(byte[] program, byte[] data, String pcapFilename);
 
     @Test
     public void testBroadcastAddress() throws Exception {
