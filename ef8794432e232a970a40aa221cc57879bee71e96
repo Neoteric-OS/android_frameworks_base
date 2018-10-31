@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3b8503_4154bfe3",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 42109,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-31T17:42:42Z",
+      "side": 1,
+      "message": "This isn\u0027t applicable any more; either edit current.txt or re-run make update-api.",
+      "range": {
+        "startLine": 42108,
+        "startChar": 5,
+        "endLine": 42109,
+        "endChar": 0
+      },
+      "revId": "ef8794432e232a970a40aa221cc57879bee71e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
