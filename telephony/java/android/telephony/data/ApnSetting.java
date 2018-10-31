@@ -675,7 +675,7 @@ public class ApnSetting implements Parcelable {
             mmsc, mmsProxyAddress, mmsProxyPort, user, password, authType, mApnTypeBitmask,
             protocol, roamingProtocol, carrierEnabled, networkTypeBitmask, profileId,
             modemCognitive, maxConns, waitTime, maxConnsTime, mtu, mvnoType, mvnoMatchData,
-            Carriers.NO_SET_SET);
+            Carriers.NO_ID_SET);
     }
 
     /** @hide */
@@ -720,12 +720,13 @@ public class ApnSetting implements Parcelable {
                 networkTypeBitmask,
                 cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.PROFILE_ID)),
                 cursor.getInt(cursor.getColumnIndexOrThrow(
-                        Telephony.Carriers.MODEM_COGNITIVE)) == 1,
-                cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.MAX_CONNS)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.WAIT_TIME)),
+                        Telephony.Carriers.MODEM_PERSIST)) == 1,
+                cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.MAX_CONNECTIONS)),
                 cursor.getInt(cursor.getColumnIndexOrThrow(
-                        Telephony.Carriers.MAX_CONNS_TIME)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.MTU)),
+                        Telephony.Carriers.WAIT_TIME_RETRY_IN_MS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(
+                        Telephony.Carriers.TIME_LIMIT_FOR_MAX_CONNECTIONS_IN_SECONDS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.MTU_IN_BYTES)),
                 getMvnoTypeIntFromString(
                     cursor.getString(cursor.getColumnIndexOrThrow(
                         Telephony.Carriers.MVNO_TYPE))),
@@ -836,7 +837,7 @@ public class ApnSetting implements Parcelable {
         int mtu = UNSET_MTU;
         String mvnoType = "";
         String mvnoMatchData = "";
-        int apnSetId = Carriers.NO_SET_SET;
+        int apnSetId = Carriers.NO_ID_SET;
         if (version == 1) {
             typeArray = new String[a.length - 13];
             System.arraycopy(a, 13, typeArray, 0, a.length - 13);
