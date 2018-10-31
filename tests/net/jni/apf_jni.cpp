@@ -178,6 +178,38 @@ static jboolean com_android_server_ApfTest_compareBpfApf(JNIEnv* env, jclass, js
     return true;
 }
 
+static jboolean com_android_server_ApfTest_filterPcapFile(JNIEnv* env, jclass, jbyteArray jprogram,
+                                                          jstring jpcap_filename) {
+    ScopedUtfChars pcap_filename(env, jpcap_filename);
+    uint8_t* apf_program = (uint8_t*)env->GetByteArrayElements(jprogram, NULL);
+    uint32_t apf_program_len = env->GetArrayLength(jprogram);
+    pcap_pkthdr apf_header;
+    const uint8_t* apf_packet;
+    int result = 0;
+    char pcap_error[PCAP_ERRBUF_SIZE];
+
+    // Open pcap file
+    ScopedFILE apf_fp(fopen(pcap_filename.c_str(), "rb"));
+    ScopedPcap apf_pcap(pcap_fopen_offline(apf_fp.get(), pcap_error));
+
+    if (apf_pcap.get() == NULL) {
+        throwException(env, "pcap_fopen_offline failed: " + std::string(pcap_error));
+        return false;
+    }
+
+    while((apf_packet = pcap_next(apf_pcap.get(), &apf_header)) != NULL) {
+        result = accept_packet(apf_program, apf_program_len, 0, apf_packet, apf_header.len, 0);
+
+        apf_packet = pcap_next(apf_pcap.get(), &apf_header);
+
+        // return false once packet passes the filter
+        if (result)
+          return false;
+   }
+
+    return true;
+}
+
 extern "C" jint JNI_OnLoad(JavaVM* vm, void*) {
     JNIEnv *env;
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
@@ -192,6 +224,8 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void*) {
                     (void*)com_android_server_ApfTest_compileToBpf },
             { "compareBpfApf", "(Ljava/lang/String;Ljava/lang/String;[B)Z",
                     (void*)com_android_server_ApfTest_compareBpfApf },
+            { "filterPcapFile", "([BLjava/lang/String;)Z",
+                    (void*)com_android_server_ApfTest_filterPcapFile },
     };
 
     jniRegisterNativeMethods(env, "android/net/apf/ApfTest",
