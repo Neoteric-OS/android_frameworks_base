@@ -23,6 +23,7 @@
 #include <utils/Log.h>
 
 #include "apf_interpreter.h"
+#include "nativehelper/scoped_primitive_array.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
@@ -45,6 +46,7 @@ static jint com_android_server_ApfTest_apfSimulate(
     jint result =
         accept_packet(program_and_data, program_len, program_len + data_len,
                       packet_raw, packet_len, filter_age);
+
     if (data) {
         memcpy(data_raw, program_and_data + program_len, data_len);
         env->ReleaseByteArrayElements(data, (jbyte*)data_raw, 0 /* copy back */);
@@ -118,8 +120,12 @@ static jboolean com_android_server_ApfTest_compareBpfApf(JNIEnv* env, jclass, js
         jstring jpcap_filename, jbyteArray japf_program) {
     ScopedUtfChars filter(env, jfilter);
     ScopedUtfChars pcap_filename(env, jpcap_filename);
-    uint8_t* apf_program = (uint8_t*)env->GetByteArrayElements(japf_program, NULL);
-    uint32_t apf_program_len = env->GetArrayLength(japf_program);
+    ScopedByteArrayRO apf_program(env, japf_program);
+
+    if (apf_program.get() == NULL) {
+        throwException(env, "get NULL apf program");
+        return false;
+    }
 
     // Open pcap file for BPF filtering
     ScopedFILE bpf_fp(fopen(pcap_filename.c_str(), "rb"));
@@ -161,20 +167,74 @@ static jboolean com_android_server_ApfTest_compareBpfApf(JNIEnv* env, jclass, js
         do {
             apf_packet = pcap_next(apf_pcap.get(), &apf_header);
         } while (apf_packet != NULL && !accept_packet(
-                apf_program, apf_program_len, 0 /* data_len */,
+                reinterpret_cast<uint8_t*>(const_cast<int8_t*>(apf_program.get())),
+                apf_program.size(), 0 /* data_len */,
                 apf_packet, apf_header.len, 0 /* filter_age */));
 
         // Make sure both filters matched the same packet.
         if (apf_packet == NULL && bpf_packet == NULL)
              break;
         if (apf_packet == NULL || bpf_packet == NULL)
-             return false;
+            return false;
         if (apf_header.len != bpf_header.len ||
                 apf_header.ts.tv_sec != bpf_header.ts.tv_sec ||
                 apf_header.ts.tv_usec != bpf_header.ts.tv_usec ||
-                memcmp(apf_packet, bpf_packet, apf_header.len))
+                memcmp(apf_packet, bpf_packet, apf_header.len)) {
             return false;
+        }
     }
+    return true;
+}
+
+static jboolean com_android_server_ApfTest_dropsAllPackets(JNIEnv* env, jclass, jbyteArray jprogram,
+                                                          jbyteArray jdata, jstring jpcap_filename) {
+    ScopedUtfChars pcap_filename(env, jpcap_filename);
+    ScopedByteArrayRO apf_program(env, jprogram);
+    ScopedByteArrayRW data_raw(env, jdata);
+    uint32_t apf_program_len = (uint32_t)apf_program.size();
+    uint32_t data_len = (uint32_t)data_raw.size();
+    pcap_pkthdr apf_header;
+    const uint8_t* apf_packet;
+    char pcap_error[PCAP_ERRBUF_SIZE];
+
+    if (apf_program.get() == NULL) {
+        throwException(env, "get NULL apf program.");
+        return false;
+    }
+
+    if(data_raw.get() == NULL) {
+        throwException(env, "get NULL data section.");
+        return false;
+    }
+
+    // Merge program and data into a single buffer.
+    uint8_t* program_and_data = (uint8_t*)malloc(apf_program_len + data_len);
+    memcpy(program_and_data, apf_program.get(), apf_program_len);
+    memcpy(program_and_data + apf_program_len, data_raw.get(), data_len);
+
+    // Open pcap file
+    ScopedFILE apf_fp(fopen(pcap_filename.c_str(), "rb"));
+    ScopedPcap apf_pcap(pcap_fopen_offline(apf_fp.get(), pcap_error));
+
+    if (apf_pcap.get() == NULL) {
+        throwException(env, "pcap_fopen_offline failed: " + std::string(pcap_error));
+        free(program_and_data);
+        return false;
+    }
+
+    while ((apf_packet = pcap_next(apf_pcap.get(), &apf_header)) != NULL) {
+        int result = accept_packet(program_and_data, apf_program_len, apf_program_len + data_len,
+                                   apf_packet, apf_header.len, 0);
+
+        // Return false once packet passes the filter
+        if (result) {
+            memcpy(data_raw.get(), program_and_data + apf_program_len, data_len);
+            free(program_and_data);
+            return false;
+         }
+    }
+
+    free(program_and_data);
     return true;
 }
 
@@ -192,6 +252,8 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void*) {
                     (void*)com_android_server_ApfTest_compileToBpf },
             { "compareBpfApf", "(Ljava/lang/String;Ljava/lang/String;[B)Z",
                     (void*)com_android_server_ApfTest_compareBpfApf },
+            { "dropsAllPackets", "([B[BLjava/lang/String;)Z",
+                    (void*)com_android_server_ApfTest_dropsAllPackets },
     };
 
     jniRegisterNativeMethods(env, "android/net/apf/ApfTest",
