@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f04e54_5e77e717",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-31T17:09:25Z",
+      "side": 1,
+      "message": "Since I know the goal is to put this into the QPR you\u0027ll need to make this @hide.",
+      "range": {
+        "startLine": 2242,
+        "startChar": 4,
+        "endLine": 2246,
+        "endChar": 53
+      },
+      "revId": "a5991bfd362853e78caf673d43e3f3f79919342c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
