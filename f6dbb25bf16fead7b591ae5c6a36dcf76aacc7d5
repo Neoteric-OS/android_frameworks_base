@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883acd62_251de1f3",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-31T15:07:39Z",
+      "side": 1,
+      "message": "I think the name \"hasPermission\" could be confusing because PermissionMonitor deals with several different permissions. Maybe rename to hasUseBackgroundNetworksPermission? Or hasBgPermission, to make the lines shorter and avoid line wrapping?",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "f6dbb25bf16fead7b591ae5c6a36dcf76aacc7d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
