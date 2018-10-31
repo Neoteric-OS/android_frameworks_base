@@ -40,9 +40,6 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.RouteInfo;
-import android.net.ip.IpClient.Callback;
-import android.net.ip.IpClient.InitialConfiguration;
-import android.net.ip.IpClient.ProvisioningConfiguration;
 import android.net.util.InterfaceParams;
 import android.os.INetworkManagementService;
 import android.provider.Settings;
@@ -87,9 +84,9 @@ public class IpClientTest {
     @Mock private INetworkManagementService mNMService;
     @Mock private INetd mNetd;
     @Mock private Resources mResources;
-    @Mock private Callback mCb;
+    @Mock private IpClientCallback mCb;
     @Mock private AlarmManager mAlarm;
-    @Mock private IpClient.Dependencies mDependecies;
+    @Mock private IpClientProxy.Dependencies mDependecies;
     private MockContentResolver mContentResolver;
 
     private BaseNetworkObserver mObserver;
@@ -121,9 +118,9 @@ public class IpClientTest {
         when(mDependecies.getInterfaceParams(anyString())).thenReturn(mIfParams);
     }
 
-    private IpClient makeIpClient(String ifname) throws Exception {
+    private IpClientProxy makeIpClient(String ifname) throws Exception {
         setTestInterfaceParams(ifname);
-        final IpClient ipc = new IpClient(mContext, ifname, mCb, mDependecies);
+        final IpClientProxy ipc = new IpClientProxy(mContext, ifname, mCb, mDependecies);
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).disableIpv6(ifname);
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).clearInterfaceAddresses(ifname);
         ArgumentCaptor<BaseNetworkObserver> arg =
@@ -147,7 +144,7 @@ public class IpClientTest {
     public void testNullInterfaceNameMostDefinitelyThrows() throws Exception {
         setTestInterfaceParams(null);
         try {
-            final IpClient ipc = new IpClient(mContext, null, mCb, mDependecies);
+            final IpClientProxy ipc = new IpClientProxy(mContext, null, mCb, mDependecies);
             ipc.shutdown();
             fail();
         } catch (NullPointerException npe) {
@@ -160,7 +157,7 @@ public class IpClientTest {
         final String ifname = "lo";
         setTestInterfaceParams(ifname);
         try {
-            final IpClient ipc = new IpClient(mContext, ifname, null, mDependecies);
+            final IpClientProxy ipc = new IpClientProxy(mContext, ifname, null, mDependecies);
             ipc.shutdown();
             fail();
         } catch (NullPointerException npe) {
@@ -171,15 +168,15 @@ public class IpClientTest {
     @Test
     public void testInvalidInterfaceDoesNotThrow() throws Exception {
         setTestInterfaceParams(TEST_IFNAME);
-        final IpClient ipc = new IpClient(mContext, TEST_IFNAME, mCb, mDependecies);
+        final IpClientProxy ipc = new IpClientProxy(mContext, TEST_IFNAME, mCb, mDependecies);
         ipc.shutdown();
     }
 
     @Test
     public void testInterfaceNotFoundFailsImmediately() throws Exception {
         setTestInterfaceParams(null);
-        final IpClient ipc = new IpClient(mContext, TEST_IFNAME, mCb, mDependecies);
-        ipc.startProvisioning(new IpClient.ProvisioningConfiguration());
+        final IpClientProxy ipc = new IpClientProxy(mContext, TEST_IFNAME, mCb, mDependecies);
+        ipc.startProvisioning(new ProvisioningConfiguration());
         verify(mCb, times(1)).onProvisioningFailure(any());
         ipc.shutdown();
     }
@@ -187,7 +184,7 @@ public class IpClientTest {
     @Test
     public void testDefaultProvisioningConfiguration() throws Exception {
         final String iface = TEST_IFNAME;
-        final IpClient ipc = makeIpClient(iface);
+        final IpClientProxy ipc = makeIpClient(iface);
 
         ProvisioningConfiguration config = new ProvisioningConfiguration.Builder()
                 .withoutIPv4()
@@ -211,7 +208,7 @@ public class IpClientTest {
     @Test
     public void testProvisioningWithInitialConfiguration() throws Exception {
         final String iface = TEST_IFNAME;
-        final IpClient ipc = makeIpClient(iface);
+        final IpClientProxy ipc = makeIpClient(iface);
 
         String[] addresses = {
             "fe80::a4be:f92:e1f7:22d1/64",
@@ -292,7 +289,7 @@ public class IpClientTest {
         };
 
         for (IsProvisionedTestCase testcase : testcases) {
-            if (IpClient.isProvisioned(testcase.lp, testcase.config) != testcase.isProvisioned) {
+            if (IpClientProxy.isProvisioned(testcase.lp, testcase.config) != testcase.isProvisioned) {
                 fail(testcase.errorMessage());
             }
         }
@@ -488,11 +485,11 @@ public class IpClientTest {
         List<String> list3 = Arrays.asList("bar", "baz");
         List<String> list4 = Arrays.asList("foo", "bar", "baz");
 
-        assertTrue(IpClient.all(list1, (x) -> false));
-        assertFalse(IpClient.all(list2, (x) -> false));
-        assertTrue(IpClient.all(list3, (x) -> true));
-        assertTrue(IpClient.all(list2, (x) -> x.charAt(0) == 'f'));
-        assertFalse(IpClient.all(list4, (x) -> x.charAt(0) == 'f'));
+        assertTrue(InitialConfiguration.all(list1, (x) -> false));
+        assertFalse(InitialConfiguration.all(list2, (x) -> false));
+        assertTrue(InitialConfiguration.all(list3, (x) -> true));
+        assertTrue(InitialConfiguration.all(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.all(list4, (x) -> x.charAt(0) == 'f'));
     }
 
     @Test
@@ -502,11 +499,11 @@ public class IpClientTest {
         List<String> list3 = Arrays.asList("bar", "baz");
         List<String> list4 = Arrays.asList("foo", "bar", "baz");
 
-        assertFalse(IpClient.any(list1, (x) -> true));
-        assertTrue(IpClient.any(list2, (x) -> true));
-        assertTrue(IpClient.any(list2, (x) -> x.charAt(0) == 'f'));
-        assertFalse(IpClient.any(list3, (x) -> x.charAt(0) == 'f'));
-        assertTrue(IpClient.any(list4, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.any(list1, (x) -> true));
+        assertTrue(InitialConfiguration.any(list2, (x) -> true));
+        assertTrue(InitialConfiguration.any(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.any(list3, (x) -> x.charAt(0) == 'f'));
+        assertTrue(InitialConfiguration.any(list4, (x) -> x.charAt(0) == 'f'));
     }
 
     @Test
@@ -515,9 +512,9 @@ public class IpClientTest {
         List<String> list2 = Arrays.asList("foo");
         List<String> list3 = Arrays.asList("foo", "bar", "baz");
 
-        assertEquals(list1, IpClient.findAll(list1, (x) -> true));
-        assertEquals(list1, IpClient.findAll(list3, (x) -> false));
-        assertEquals(list3, IpClient.findAll(list3, (x) -> true));
-        assertEquals(list2, IpClient.findAll(list3, (x) -> x.charAt(0) == 'f'));
+        assertEquals(list1, IpClientProxy.findAll(list1, (x) -> true));
+        assertEquals(list1, IpClientProxy.findAll(list3, (x) -> false));
+        assertEquals(list3, IpClientProxy.findAll(list3, (x) -> true));
+        assertEquals(list2, IpClientProxy.findAll(list3, (x) -> x.charAt(0) == 'f'));
     }
 }

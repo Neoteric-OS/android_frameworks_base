@@ -15,13 +15,7 @@
  */
 package android.net;
 
-import android.net.INetworkMonitorCallback;
-import android.net.Network;
-import android.net.NetworkRequest;
-
 /** @hide */
-oneway interface IConnectivityAppConnector {
-    void startNetworkMonitor(in Network network, in NetworkRequest defaultRequest,
-            in INetworkMonitorCallback cb);
-    void makeIpClient(in String ifName, in IBinder callbacks);
+oneway interface IConnectivityAppRequest {
+    void onConnectivityAppConnected(in IBinder connector);
 }

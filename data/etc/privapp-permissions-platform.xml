@@ -228,6 +228,7 @@ applications that come with the platform
     <privapp-permissions package="com.android.server.connectivity">
         <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
         <permission name="android.permission.NETWORK_SETTINGS"/>
+        <permission name="android.permission.NETWORK_STACK" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.server.telecom">

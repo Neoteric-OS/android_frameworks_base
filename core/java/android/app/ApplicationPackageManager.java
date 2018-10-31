@@ -1057,6 +1057,10 @@ public class ApplicationPackageManager extends PackageManager {
     @SuppressWarnings("unchecked")
     public List<ResolveInfo> queryIntentServicesAsUser(Intent intent, int flags, int userId) {
         try {
+            if ("android.net.IConnectivityAppConnector".equals(intent.getAction())) {
+                Log.i(TAG, "[PMSCAN] Querying intent services; PackageManager is " + mPM);
+            }
+
             ParceledListSlice<ResolveInfo> parceledList =
                     mPM.queryIntentServices(intent,
                     intent.resolveTypeIfNeeded(mContext.getContentResolver()),
@@ -1064,6 +1068,13 @@ public class ApplicationPackageManager extends PackageManager {
             if (parceledList == null) {
                 return Collections.emptyList();
             }
+            if ("android.net.IConnectivityAppConnector".equals(intent.getAction())) {
+                Log.i(TAG, "[PMSCAN] Done querying intent services; result size is " + parceledList.getList().size());
+                if (parceledList.getList().size() == 0) {
+                    Log.e(TAG, "[PMSCAN] Empty result", new Exception());
+                }
+            }
+
             return parceledList.getList();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();

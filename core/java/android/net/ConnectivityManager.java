@@ -2027,6 +2027,37 @@ public class ConnectivityManager {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
+    private class ConnectivityAppRequestStub extends IConnectivityAppRequest.Stub {
+        private final ConnectivityAppRequest mReq;
+
+        private ConnectivityAppRequestStub(ConnectivityAppRequest req) {
+            mReq = req;
+        }
+
+        @Override
+        public void onConnectivityAppConnected(IBinder connector) {
+            final IConnectivityAppConnector connectorInterface =
+                    IConnectivityAppConnector.Stub.asInterface(connector);
+            mReq.onConnectivityAppConnected(connectorInterface);
+        }
+    }
+
+    /** @hide */
+    @SystemApi
+    public interface ConnectivityAppRequest {
+        void onConnectivityAppConnected(IConnectivityAppConnector connector);
+    }
+
+    /** @hide */
+    @SystemApi
+    public void requestConnectivityApp(ConnectivityAppRequest req) {
+        try {
+            mService.requestConnectivityApp(new ConnectivityAppRequestStub(req));
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /* TODO: These permissions checks don't belong in client-side code. Move them to
      * services.jar, possibly in com.android.server.net. */
 

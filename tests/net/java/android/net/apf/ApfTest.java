@@ -19,7 +19,7 @@ package android.net.apf;
 import static android.net.util.NetworkConstants.*;
 import static android.system.OsConstants.*;
 import static com.android.internal.util.BitUtils.bytesToBEInt;
-import static com.android.internal.util.BitUtils.put;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,7 +33,7 @@ import android.net.LinkProperties;
 import android.net.apf.ApfFilter.ApfConfiguration;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
-import android.net.ip.IpClient;
+import android.net.ip.IpClientCallback;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.RaEvent;
 import android.net.util.InterfaceParams;
@@ -869,7 +869,7 @@ public class ApfTest {
         }
     }
 
-    private class MockIpClientCallback extends IpClient.Callback {
+    private class MockIpClientCallback extends IpClientCallback {
         private final ConditionVariable mGotApfProgram = new ConditionVariable();
         private byte[] mLastApfProgram;
 
@@ -900,7 +900,7 @@ public class ApfTest {
         private final long mFixedTimeMs = SystemClock.elapsedRealtime();
 
         public TestApfFilter(Context context, ApfConfiguration config,
-                IpClient.Callback ipClientCallback, IpConnectivityLog log) throws Exception {
+                IpClientCallback ipClientCallback, IpConnectivityLog log) throws Exception {
             super(context, config, InterfaceParams.getByName("lo"), ipClientCallback, log);
         }
 
@@ -1024,7 +1024,7 @@ public class ApfTest {
     private static final byte[] IPV4_ANY_HOST_ADDR       = {0, 0, 0, 0};
 
     // Helper to initialize a default apfFilter.
-    private ApfFilter setupApfFilter(IpClient.Callback ipClientCallback, ApfConfiguration config)
+    private ApfFilter setupApfFilter(IpClientCallback ipClientCallback, ApfConfiguration config)
             throws Exception {
         LinkAddress link = new LinkAddress(InetAddress.getByAddress(MOCK_IPV4_ADDR), 19);
         LinkProperties lp = new LinkProperties();

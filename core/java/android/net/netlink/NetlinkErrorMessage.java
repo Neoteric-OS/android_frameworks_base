@@ -16,9 +16,6 @@
 
 package android.net.netlink;
 
-import android.net.netlink.StructNlMsgHdr;
-import android.net.netlink.NetlinkMessage;
-
 import java.nio.ByteBuffer;
 
 

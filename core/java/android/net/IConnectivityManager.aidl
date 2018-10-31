@@ -167,6 +167,8 @@ interface IConnectivityManager
 
     int getMultipathPreference(in Network Network);
 
+    void requestConnectivityApp(IBinder req);
+
     int getRestoreDefaultNetworkDelay(int networkType);
 
     boolean addVpnAddress(String address, int prefixLength);

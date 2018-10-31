@@ -20,7 +20,7 @@ import android.content.Context;
 import android.net.ConnectivityMetricsEvent;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetdEventCallback;
-import android.net.ip.IpClient;
+import android.net.ip.IpClientProxy;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.os.Binder;
@@ -271,7 +271,7 @@ final public class IpConnectivityMetrics extends SystemService {
         // format. Also print network dns/connect statistics and default network event time series.
         static final String CMD_LIST = "list";
         // Dump all IpClient logs ("ipclient").
-        static final String CMD_IPCLIENT = IpClient.DUMP_ARG;
+        static final String CMD_IPCLIENT = IpClientProxy.DUMP_ARG;
         // By default any other argument will fall into the default case which is the equivalent
         // of calling both the "list" and "ipclient" commands. This includes most notably bug
         // reports collected by dumpsys.cpp with the "-a" argument.
@@ -299,7 +299,7 @@ final public class IpConnectivityMetrics extends SystemService {
                     final String[] ipclientArgs = ((args != null) && (args.length > 1))
                             ? Arrays.copyOfRange(args, 1, args.length)
                             : null;
-                    IpClient.dumpAllLogs(pw, ipclientArgs);
+                    IpClientProxy.dumpAllLogs(pw, ipclientArgs);
                     return;
                 }
                 case CMD_LIST:
@@ -308,7 +308,7 @@ final public class IpConnectivityMetrics extends SystemService {
                 default:
                     cmdList(pw);
                     pw.println("");
-                    IpClient.dumpAllLogs(pw, null);
+                    IpClientProxy.dumpAllLogs(pw, null);
                     return;
             }
         }

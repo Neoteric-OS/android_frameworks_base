@@ -417,9 +417,11 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private final NetworkCallback mNetworkCallback = new NetworkCallback() {
+
+
         @Override
         public void onAvailable(Network network, NetworkCapabilities networkCapabilities,
-                LinkProperties linkProperties) {
+                LinkProperties linkProperties, boolean blocked) {
             if (!network.equals(mNetwork)) {
                 return;
             }

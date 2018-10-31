@@ -16,26 +16,21 @@
 
 package android.net.netlink;
 
-import static android.os.Process.INVALID_UID;
 import static android.net.netlink.NetlinkConstants.SOCK_DIAG_BY_FAMILY;
 import static android.net.netlink.NetlinkSocket.DEFAULT_RECV_BUFSIZE;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_DUMP;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REQUEST;
+import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.NETLINK_INET_DIAG;
 
-import android.os.Build;
-import android.os.Process;
 import android.system.ErrnoException;
 import android.util.Log;
 
 import java.io.FileDescriptor;
 import java.io.InterruptedIOException;
-import java.net.DatagramSocket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetSocketAddress;

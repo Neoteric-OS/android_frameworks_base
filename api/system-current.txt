@@ -3079,9 +3079,14 @@ package android.net {
     method public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback);
     method public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler);
     method public void stopTethering(int);
+    method public void requestConnectivityApp(android.net.ConnectivityManager.ConnectivityAppRequest);
     field public static final int TETHERING_BLUETOOTH = 2; // 0x2
     field public static final int TETHERING_USB = 1; // 0x1
     field public static final int TETHERING_WIFI = 0; // 0x0
+  }
+
+  public static interface ConnectivityManager.ConnectivityAppRequest {
+    method public void onConnectivityAppConnected(android.net.IConnectivityAppConnector);
   }
 
   public static abstract class ConnectivityManager.OnStartTetheringCallback {

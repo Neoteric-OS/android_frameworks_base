@@ -16,7 +16,6 @@
 
 package android.net.netlink;
 
-import android.net.netlink.NetlinkConstants;
 import java.nio.ByteBuffer;
 
 

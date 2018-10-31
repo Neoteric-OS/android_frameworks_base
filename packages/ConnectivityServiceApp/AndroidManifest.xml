@@ -17,7 +17,8 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.android.server.connectivity" >
+          package="com.android.server.connectivity"
+          android:sharedUserId="android.uid.connectivityservice">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -25,11 +26,12 @@
     <uses-permission android:name="android.permission.NETWORK_SETTINGS" />
     <!-- Launch captive portal app as specific user -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.NETWORK_STACK" />
 
     <application
         android:label="ConnectivityServiceApplication"
         android:usesCleartextTraffic="true">
-        <service android:name=".NetworkMonitorService">
+        <service android:name=".ConnectivityAppService">
             <intent-filter>
                 <action android:name="android.net.IConnectivityAppConnector"/>
             </intent-filter>

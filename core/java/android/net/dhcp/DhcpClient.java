@@ -24,11 +24,7 @@ import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.DhcpResults;
-import android.net.InterfaceConfiguration;
-import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.metrics.IpConnectivityLog;
@@ -36,8 +32,6 @@ import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.util.InterfaceParams;
 import android.os.Message;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -102,35 +96,6 @@ public class DhcpClient extends StateMachine {
     // a blocking operation with a 30-second timeout. We pick 36 seconds so we can send packets at
     // t=0, t=2, t=6, t=14, t=30, allowing for 10% jitter.
     private static final int DHCP_TIMEOUT_MS    =  36 * SECONDS;
-
-    private static final int PUBLIC_BASE = Protocol.BASE_DHCP;
-
-    /* Commands from controller to start/stop DHCP */
-    public static final int CMD_START_DHCP                  = PUBLIC_BASE + 1;
-    public static final int CMD_STOP_DHCP                   = PUBLIC_BASE + 2;
-
-    /* Notification from DHCP state machine prior to DHCP discovery/renewal */
-    public static final int CMD_PRE_DHCP_ACTION             = PUBLIC_BASE + 3;
-    /* Notification from DHCP state machine post DHCP discovery/renewal. Indicates
-     * success/failure */
-    public static final int CMD_POST_DHCP_ACTION            = PUBLIC_BASE + 4;
-    /* Notification from DHCP state machine before quitting */
-    public static final int CMD_ON_QUIT                     = PUBLIC_BASE + 5;
-
-    /* Command from controller to indicate DHCP discovery/renewal can continue
-     * after pre DHCP action is complete */
-    public static final int CMD_PRE_DHCP_ACTION_COMPLETE    = PUBLIC_BASE + 6;
-
-    /* Command and event notification to/from IpManager requesting the setting
-     * (or clearing) of an IPv4 LinkAddress.
-     */
-    public static final int CMD_CLEAR_LINKADDRESS           = PUBLIC_BASE + 7;
-    public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
-    public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
-
-    /* Message.arg1 arguments to CMD_POST_DHCP_ACTION notification */
-    public static final int DHCP_SUCCESS = 1;
-    public static final int DHCP_FAILURE = 2;
 
     // Internal messages.
     private static final int PRIVATE_BASE         = Protocol.BASE_DHCP + 100;
@@ -473,11 +438,12 @@ public class DhcpClient extends StateMachine {
 
     private void notifySuccess() {
         mController.sendMessage(
-                CMD_POST_DHCP_ACTION, DHCP_SUCCESS, 0, new DhcpResults(mDhcpLease));
+                DhcpClientConstants.CMD_POST_DHCP_ACTION, DhcpClientConstants.DHCP_SUCCESS, 0, new DhcpResults(mDhcpLease));
     }
 
     private void notifyFailure() {
-        mController.sendMessage(CMD_POST_DHCP_ACTION, DHCP_FAILURE, 0, null);
+        mController.sendMessage(
+                DhcpClientConstants.CMD_POST_DHCP_ACTION, DhcpClientConstants.DHCP_FAILURE, 0, null);
     }
 
     private void acceptDhcpResults(DhcpResults results, String msg) {
@@ -506,7 +472,7 @@ public class DhcpClient extends StateMachine {
     @Override
     protected void onQuitting() {
         Log.d(TAG, "onQuitting");
-        mController.sendMessage(CMD_ON_QUIT);
+        mController.sendMessage(DhcpClientConstants.CMD_ON_QUIT);
     }
 
     abstract class LoggingState extends State {
@@ -563,14 +529,14 @@ public class DhcpClient extends StateMachine {
         @Override
         public void enter() {
             super.enter();
-            mController.sendMessage(CMD_PRE_DHCP_ACTION);
+            mController.sendMessage(DhcpClientConstants.CMD_PRE_DHCP_ACTION);
         }
 
         @Override
         public boolean processMessage(Message message) {
             super.processMessage(message);
             switch (message.what) {
-                case CMD_PRE_DHCP_ACTION_COMPLETE:
+                case DhcpClientConstants.CMD_PRE_DHCP_ACTION_COMPLETE:
                     transitionTo(mOtherState);
                     return HANDLED;
                 default:
@@ -583,7 +549,7 @@ public class DhcpClient extends StateMachine {
         @Override
         public boolean processMessage(Message message) {
             switch (message.what) {
-                case CMD_START_DHCP:
+                case DhcpClientConstants.CMD_START_DHCP:
                     if (mRegisteredForPreDhcpNotification) {
                         transitionTo(mWaitBeforeStartState);
                     } else {
@@ -636,7 +602,7 @@ public class DhcpClient extends StateMachine {
         public boolean processMessage(Message message) {
             super.processMessage(message);
             switch (message.what) {
-                case CMD_STOP_DHCP:
+                case DhcpClientConstants.CMD_STOP_DHCP:
                     transitionTo(mStoppedState);
                     return HANDLED;
                 default:
@@ -842,7 +808,7 @@ public class DhcpClient extends StateMachine {
             // Tell IpManager to clear the IPv4 address. There is no need to
             // wait for confirmation since any subsequent packets are sent from
             // INADDR_ANY anyway (DISCOVER, REQUEST).
-            mController.sendMessage(CMD_CLEAR_LINKADDRESS);
+            mController.sendMessage(DhcpClientConstants.CMD_CLEAR_LINKADDRESS);
         }
     }
 
@@ -850,14 +816,14 @@ public class DhcpClient extends StateMachine {
         @Override
         public void enter() {
             super.enter();
-            mController.sendMessage(CMD_CONFIGURE_LINKADDRESS, mDhcpLease.ipAddress);
+            mController.sendMessage(DhcpClientConstants.CMD_CONFIGURE_LINKADDRESS, mDhcpLease.ipAddress);
         }
 
         @Override
         public boolean processMessage(Message message) {
             super.processMessage(message);
             switch (message.what) {
-                case EVENT_LINKADDRESS_CONFIGURED:
+                case DhcpClientConstants.EVENT_LINKADDRESS_CONFIGURED:
                     transitionTo(mDhcpBoundState);
                     return HANDLED;
                 default:

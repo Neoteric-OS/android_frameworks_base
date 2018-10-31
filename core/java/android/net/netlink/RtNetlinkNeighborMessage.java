@@ -21,16 +21,10 @@ import static android.net.netlink.StructNlMsgHdr.NLM_F_DUMP;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REPLACE;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REQUEST;
 
-import android.net.netlink.StructNdaCacheInfo;
-import android.net.netlink.StructNdMsg;
-import android.net.netlink.StructNlAttr;
-import android.net.netlink.StructNlMsgHdr;
-import android.net.netlink.NetlinkMessage;
 import android.system.OsConstants;
-import android.util.Log;
 
-import java.net.InetAddress;
 import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 

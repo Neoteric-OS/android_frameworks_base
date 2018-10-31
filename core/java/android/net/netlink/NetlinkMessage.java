@@ -16,13 +16,6 @@
 
 package android.net.netlink;
 
-import android.net.netlink.NetlinkConstants;
-import android.net.netlink.NetlinkErrorMessage;
-import android.net.netlink.RtNetlinkNeighborMessage;
-import android.net.netlink.StructNlAttr;
-import android.net.netlink.StructNlMsgHdr;
-import android.util.Log;
-
 import java.nio.ByteBuffer;
 
 

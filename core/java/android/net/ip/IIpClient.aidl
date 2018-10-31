@@ -13,15 +13,20 @@
  * See the License for the specific language governing perNmissions and
  * limitations under the License.
  */
-package android.net;
+package android.net.ip;
 
-import android.net.INetworkMonitorCallback;
-import android.net.Network;
-import android.net.NetworkRequest;
+import android.net.ProxyInfo;
+import android.net.ip.ProvisioningConfiguration;
 
 /** @hide */
-oneway interface IConnectivityAppConnector {
-    void startNetworkMonitor(in Network network, in NetworkRequest defaultRequest,
-            in INetworkMonitorCallback cb);
-    void makeIpClient(in String ifName, in IBinder callbacks);
+oneway interface IIpClient {
+    void completedPreDhcpAction();
+    void confirmConfiguration();
+    void readPacketFilterComplete(in byte[] data);
+    void shutdown();
+    void startProvisioning(in ProvisioningConfiguration req);
+    void stop();
+    void setTcpBufferSizes(in String tcpBufferSizes);
+    void setHttpProxy(in ProxyInfo proxyInfo);
+    void setMulticastFilter(boolean enabled);
 }

@@ -17,17 +17,9 @@
 package android.net.ip;
 
 import android.content.Context;
-import android.net.INetd;
-import android.net.LinkProperties;
 import android.net.Network;
 import android.net.StaticIpConfiguration;
 import android.net.apf.ApfCapabilities;
-import android.net.util.NetdService;
-import android.os.INetworkManagementService;
-import android.os.ServiceManager;
-import android.net.apf.ApfCapabilities;
-
-import com.android.internal.annotations.VisibleForTesting;
 
 
 /*
@@ -35,13 +27,13 @@ import com.android.internal.annotations.VisibleForTesting;
  *
  * @hide
  */
-public class IpManager extends IpClient {
-    public static class ProvisioningConfiguration extends IpClient.ProvisioningConfiguration {
-        public ProvisioningConfiguration(IpClient.ProvisioningConfiguration ipcConfig) {
+public class IpManager extends IpClientProxy {
+    public static class ProvisioningConfiguration extends android.net.ip.ProvisioningConfiguration {
+        public ProvisioningConfiguration(android.net.ip.ProvisioningConfiguration ipcConfig) {
             super(ipcConfig);
         }
 
-        public static class Builder extends IpClient.ProvisioningConfiguration.Builder {
+        public static class Builder extends android.net.ip.ProvisioningConfiguration.Builder {
             @Override
             public Builder withoutIPv4() {
                 super.withoutIPv4();
@@ -69,7 +61,7 @@ public class IpManager extends IpClient {
             }
             // No Override; locally defined type.
             public Builder withInitialConfiguration(InitialConfiguration initialConfig) {
-                super.withInitialConfiguration((IpClient.InitialConfiguration) initialConfig);
+                super.withInitialConfiguration((android.net.ip.InitialConfiguration) initialConfig);
                 return this;
             }
             @Override
@@ -108,10 +100,10 @@ public class IpManager extends IpClient {
         return new ProvisioningConfiguration.Builder();
     }
 
-    public static class InitialConfiguration extends IpClient.InitialConfiguration {
+    public static class InitialConfiguration extends android.net.ip.InitialConfiguration {
     }
 
-    public static class Callback extends IpClient.Callback {
+    public static class Callback extends IpClientCallback {
     }
 
     public IpManager(Context context, String ifName, Callback callback) {
@@ -119,6 +111,6 @@ public class IpManager extends IpClient {
     }
 
     public void startProvisioning(ProvisioningConfiguration req) {
-        super.startProvisioning((IpClient.ProvisioningConfiguration) req);
+        super.startProvisioning((android.net.ip.ProvisioningConfiguration) req);
     }
 }

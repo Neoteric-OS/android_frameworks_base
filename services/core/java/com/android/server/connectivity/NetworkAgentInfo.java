@@ -29,6 +29,7 @@ import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.net.IConnectivityAppConnector;
+import android.net.IConnectivityAppRequest;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallback;
 import android.net.LinkProperties;
@@ -258,7 +259,6 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public Nat464Xlat clatd;
 
     private final NetworkRequest defaultRequest;
-    private IConnectivityAppConnector appConnector;
     private INetworkMonitor networkMonitor;
     private final ArrayList<Message> pendingMonitorMessages = new ArrayList<>();
 
@@ -268,24 +268,6 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private final INetworkMonitorCallback mNetworkMonitorCallback;
     private final Context mContext;
     private final Handler mHandler;
-
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            appConnector = IConnectivityAppConnector.Stub.asInterface(service);
-            try {
-                appConnector.startNetworkMonitor(network, defaultRequest, mNetworkMonitorCallback);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error starting NetworkMonitor");
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            appConnector = null;
-            networkMonitor = null;
-        }
-    };
 
     private class NetworkMonitorCallback extends INetworkMonitorCallback.Stub {
         @Override
@@ -339,6 +321,15 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkMisc = misc;
         defaultRequest = defaultReq;
         mNetworkMonitorCallback = new NetworkMonitorCallback();
+
+        mConnService.requestConnectivityApp(new ConnectivityAppRequest());
+    }
+
+    private class ConnectivityAppRequest extends IConnectivityAppRequest.Stub {
+        @Override
+        public void onConnectivityAppConnected(IBinder connector) {
+            startNetworkMonitor(IConnectivityAppConnector.Stub.asInterface(connector));
+        }
     }
 
     public ConnectivityService connService() {
@@ -353,31 +344,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return network;
     }
 
-    public void startNetworkMonitor() {
-        // final Intent intent = new Intent("com.android.server.connectivity.START_NETWORK_MONITOR");
-        final Intent intent = new Intent(IConnectivityAppConnector.class.getName());
-
-        //*
-        List<ResolveInfo> matches = mContext.getPackageManager().queryIntentServices(intent, 0);
-        if (matches.size() != 1) {
-            Log.e(TAG, "Invalid number of NetworkMonitor matches: " + matches.size());
-            return;
-        }
-
-        final ServiceInfo svcInfo = matches.get(0).serviceInfo;
-        intent.setComponent(new ComponentName(
-                svcInfo.applicationInfo.packageName,
-                svcInfo.name));
-        //*/
-        /*
-        final ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
-        intent.setComponent(comp);
-        //*/
-
-        // if (comp == null || !mContext.bindServiceAsUser(intent, mServiceConnection,
-        if (!mContext.bindServiceAsUser(intent, mServiceConnection,
-                Context.BIND_AUTO_CREATE, mHandler, mContext.getUser())) {
-            Log.e(TAG, "Could not bind to NetworkMonitor service with " + intent);
+    public void startNetworkMonitor(IConnectivityAppConnector appConnector) {
+        try {
+            appConnector.startNetworkMonitor(network, defaultRequest, mNetworkMonitorCallback);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error starting NetworkMonitor");
         }
     }
 
