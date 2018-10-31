@@ -869,6 +869,28 @@ public class ApfTest {
         }
     }
 
+    /**
+     * Generate APF program, run pcap file though APF filter, then check all the packets in the file
+     * should be dropped.
+     */
+    @Test
+    public void testApfFilterPcapFile() throws Exception {
+        String pcap_filename = stageFile(R.raw.apfPcap);
+        MockIpClientCallback ipClientCallback = new MockIpClientCallback();
+        LinkAddress link = new LinkAddress(InetAddress.getByAddress(MOCK_PCAP_IPV4_ADDR), 16);
+        LinkProperties lp = new LinkProperties();
+        lp.addLinkAddress(link);
+
+        ApfConfiguration config = getDefaultConfig();
+        config.multicastFilter = DROP_MULTICAST;
+        config.ieee802_3Filter = DROP_802_3_FRAMES;
+        TestApfFilter apfFilter = new TestApfFilter(mContext, config, ipClientCallback, mLog);
+        apfFilter.setLinkProperties(lp);
+        byte[] program = ipClientCallback.getApfProgram();
+
+        assertTrue("Failed to drop packet by filter.", filterPcapFile(program, pcap_filename));
+    }
+
     private class MockIpClientCallback extends IpClient.Callback {
         private final ConditionVariable mGotApfProgram = new ConditionVariable();
         private byte[] mLastApfProgram;
@@ -1022,6 +1044,7 @@ public class ApfTest {
     private static final byte[] MOCK_MULTICAST_IPV4_ADDR = {(byte) 224, 0, 0, 1};
     private static final byte[] ANOTHER_IPV4_ADDR        = {10, 0, 0, 2};
     private static final byte[] IPV4_ANY_HOST_ADDR       = {0, 0, 0, 0};
+    private static final byte[] MOCK_PCAP_IPV4_ADDR      = {(byte) 172, 16, 7, (byte) 151};
 
     // Helper to initialize a default apfFilter.
     private ApfFilter setupApfFilter(IpClient.Callback ipClientCallback, ApfConfiguration config)
@@ -1705,6 +1728,13 @@ public class ApfTest {
      */
     private native static boolean compareBpfApf(String filter, String pcap_filename,
             byte[] apf_program);
+
+
+    /**
+     * Open packet capture file {@code pcap_filename} and run it through APF filter. Then
+     * check all the packet are dropped.
+     */
+    private native static boolean filterPcapFile(byte[] program, String pcap_filename);
 
     @Test
     public void testBroadcastAddress() throws Exception {
