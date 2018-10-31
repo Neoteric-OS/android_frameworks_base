@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "14e74df7_fe8c1a6a",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-10-31T21:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5830a720_0151d6d4",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "82198d378af60c1b17f2d0427f657d9c75cd1ba5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c949694_c594a8b4",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2018-10-30T20:27:36Z",
       "side": 1,
       "message": "Is the numbering specified by the spec? If not, would suggest making NONE zero instead",
+      "range": {
+        "startLine": 185,
+        "startChar": 28,
+        "endLine": 185,
+        "endChar": 53
+      },
+      "revId": "82198d378af60c1b17f2d0427f657d9c75cd1ba5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d7b8a7_eb3ee06f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-10-31T21:55:46Z",
+      "side": 1,
+      "message": "This is the numbering used in IRadio (see SrvccState in types.hal)",
+      "parentUuid": "9c949694_c594a8b4",
       "range": {
         "startLine": 185,
         "startChar": 28,
