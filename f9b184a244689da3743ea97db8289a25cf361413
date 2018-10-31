@@ -70,6 +70,24 @@
       "revId": "f9b184a244689da3743ea97db8289a25cf361413",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48404949_55722068",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-31T18:45:40Z",
+      "side": 1,
+      "message": "Will look into falling back to mDefaultOffHost to keep it backward compatible.",
+      "parentUuid": "d262557a_9dd604af",
+      "revId": "f9b184a244689da3743ea97db8289a25cf361413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
