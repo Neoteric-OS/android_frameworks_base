@@ -25,6 +25,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.VibrationEffect;
+import android.os.VibrationElement;
 import android.test.suitebuilder.annotation.SmallTest;
 
 /**
@@ -50,7 +51,8 @@ public class VibratorServicePermissionTest extends TestCase {
     public void testVibrate() throws RemoteException {
         try {
             final VibrationEffect effect =
-                    VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE);
+                    VibrationEffect.createOneShot(VibrationElement.createSingle(100,
+                    VibrationEffect.DEFAULT_AMPLITUDE));
             mVibratorService.vibrate(Process.myUid(), null, effect, AudioManager.STREAM_ALARM,
                     new Binder());
             fail("vibrate did not throw SecurityException as expected");

@@ -78,6 +78,7 @@ import android.os.MessageQueue;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.os.VibrationElement;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
@@ -112,6 +113,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import libcore.io.IoUtils;
 import libcore.io.Streams;
@@ -223,7 +225,7 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeSetShowTouches(long ptr, boolean enabled);
     private static native void nativeSetInteractive(long ptr, boolean interactive);
     private static native void nativeReloadCalibration(long ptr);
-    private static native void nativeVibrate(long ptr, int deviceId, long[] pattern,
+    private static native void nativeVibrate(long ptr, int deviceId, VibrationElement[] pattern,
             int repeat, int token);
     private static native void nativeCancelVibrate(long ptr, int deviceId, int token);
     private static native void nativeReloadKeyboardLayouts(long ptr);
@@ -1631,7 +1633,7 @@ public class InputManagerService extends IInputManager.Stub
 
     // Binder call
     @Override
-    public void vibrate(int deviceId, long[] pattern, int repeat, IBinder token) {
+    public void vibrate(int deviceId, VibrationElement[] pattern, int repeat, IBinder token) {
         if (repeat >= pattern.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
