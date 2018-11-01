@@ -1659,6 +1659,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Error parsing ip address in validation event");
             }
         }
+
+        @Override
+        public void onDnsEvent(int netId, int eventType, int returnCode, String hostname,
+                String[] ipAddresses, int ipAddressesCount, long timestamp, int uid) {
+            NetworkAgentInfo nai = getNetworkAgentInfoForNetId(netId);
+            // Netd event only allow registrants from system. Each NetworkMonitor thread is under
+            // NetworkAgent creator thread. Thus, it's not allowed to register netd event callback
+            // for certain nai. e.g. cellular. Register here to pass to NetworkMonitor instead.
+            if (nai != null && nai.satisfies(mDefaultRequest)) {
+                nai.networkMonitor.sendMessage(NetworkMonitor.EVENT_DNS_NOTIFICATION, returnCode);
+            }
+        }
     };
 
     @VisibleForTesting
