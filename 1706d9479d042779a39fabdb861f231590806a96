@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e8a814_4e9a0745",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3636,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-01T21:52:47Z",
+      "side": 1,
+      "message": "If you made this \"final\" you could use it as your locking object  :)",
+      "revId": "1706d9479d042779a39fabdb861f231590806a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
