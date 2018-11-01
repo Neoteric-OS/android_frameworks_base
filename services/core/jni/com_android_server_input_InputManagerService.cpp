@@ -75,6 +75,9 @@ namespace android {
 // where the speed ranges from -7 to + 7 and is supplied by the user.
 static const float POINTER_SPEED_EXPONENT = 1.0f / 4;
 
+// The vibration magnitude for the "DEFAULT_AMPLITUDE" magnitude constant (-1).
+static const uint16_t DEFAULT_MAGNITUDE = 0xc000;
+
 static struct {
     jmethodID notifyConfigurationChanged;
     jmethodID notifyInputDevicesChanged;
@@ -124,7 +127,11 @@ static struct {
     jmethodID getAffineTransform;
 } gTouchCalibrationClassInfo;
 
-
+static struct {
+    jclass clazz;
+    jfieldID duration;
+    jfieldID channels;
+} gVibrationElementClassInfo;
 
 // --- Global functions ---
 
@@ -1529,7 +1536,7 @@ static void nativeReloadCalibration(JNIEnv* env, jclass clazz, jlong ptr) {
 }
 
 static void nativeVibrate(JNIEnv* env,
-        jclass /* clazz */, jlong ptr, jint deviceId, jlongArray patternObj,
+        jclass /* clazz */, jlong ptr, jint deviceId, jobjectArray patternObj,
         jint repeat, jint token) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
 
@@ -1541,16 +1548,43 @@ static void nativeVibrate(JNIEnv* env,
         return; // limit to reasonable size
     }
 
-    jlong* patternMillis = static_cast<jlong*>(env->GetPrimitiveArrayCritical(
-            patternObj, NULL));
-    nsecs_t pattern[patternSize];
+    std::vector<VibrationElement> pattern(patternSize);
     for (size_t i = 0; i < patternSize; i++) {
-        pattern[i] = max(jlong(0), min(patternMillis[i],
-                (jlong)(MAX_VIBRATE_PATTERN_DELAY_NSECS / 1000000LL))) * 1000000LL;
-    }
-    env->ReleasePrimitiveArrayCritical(patternObj, patternMillis, JNI_ABORT);
+        // sanity check elements
+        jobject element = env->GetObjectArrayElement(patternObj, i);
+        if (!element) {
+            ALOGI("Skipped requested vibration because element %zu is null.", i);
+            return;
+        }
 
-    im->getInputManager()->getReader()->vibrate(deviceId, pattern, patternSize, repeat, token);
+        jintArray channelsObj = (jintArray) env->GetObjectField(element,
+                gVibrationElementClassInfo.channels);
+        if (!channelsObj) {
+            ALOGI("Skipped requested vibration because channels for element %zu is null.", i);
+            return;
+        }
+
+        jsize channelCount = env->GetArrayLength(channelsObj);
+        pattern[i].channels.reserve(channelCount);
+        pattern[i].duration = max(jlong(0), min(env->GetLongField(element,
+                gVibrationElementClassInfo.duration), (jlong)(MAX_VIBRATE_PATTERN_DELAY_NSECS
+                / 1000000LL))) * 1000000LL;
+
+        // only process channels if channels are present
+        if (!channelCount) {
+            continue;
+        }
+
+        jint* channels = static_cast<jint*>(env->GetPrimitiveArrayCritical(channelsObj, nullptr));
+        std::transform(channels, channels + channelCount, std::back_inserter(pattern[i].channels),
+                [] (jint channel) -> uint16_t {
+            return (channel == -1) ? DEFAULT_MAGNITUDE : ((uint16_t) channel << 8);
+        });
+
+        env->ReleasePrimitiveArrayCritical(channelsObj, channels, JNI_ABORT);
+    }
+
+    im->getInputManager()->getReader()->vibrate(deviceId, pattern, repeat, token);
 }
 
 static void nativeCancelVibrate(JNIEnv* /* env */,
@@ -1698,7 +1732,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetInteractive },
     { "nativeReloadCalibration", "(J)V",
             (void*) nativeReloadCalibration },
-    { "nativeVibrate", "(JI[JII)V",
+    { "nativeVibrate", "(JI[Landroid/os/VibrationElement;II)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(JII)V",
             (void*) nativeCancelVibrate },
@@ -1853,6 +1887,15 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gTouchCalibrationClassInfo.getAffineTransform, gTouchCalibrationClassInfo.clazz,
             "getAffineTransform", "()[F");
+
+    // VibrationElement
+
+    FIND_CLASS(gVibrationElementClassInfo.clazz, "android/os/VibrationElement");
+    gVibrationElementClassInfo.clazz = jclass(env->NewGlobalRef(gVibrationElementClassInfo.clazz));
+    GET_FIELD_ID(gVibrationElementClassInfo.duration, gVibrationElementClassInfo.clazz, "duration",
+            "J");
+    GET_FIELD_ID(gVibrationElementClassInfo.channels, gVibrationElementClassInfo.clazz, "channels",
+            "[I");
 
     return 0;
 }

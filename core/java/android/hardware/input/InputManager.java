@@ -35,6 +35,7 @@ import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
+import android.os.VibrationElement;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -1201,15 +1202,15 @@ public final class InputManager {
         @Override
         public void vibrate(int uid, String opPkg,
                 VibrationEffect effect, AudioAttributes attributes) {
-            long[] pattern;
+            VibrationElement[] pattern;
             int repeat;
             if (effect instanceof VibrationEffect.OneShot) {
                 VibrationEffect.OneShot oneShot = (VibrationEffect.OneShot) effect;
-                pattern = new long[] { 0, oneShot.getDuration() };
+                pattern = new VibrationElement[] { oneShot.getElement() };
                 repeat = -1;
             } else if (effect instanceof VibrationEffect.Waveform) {
                 VibrationEffect.Waveform waveform = (VibrationEffect.Waveform) effect;
-                pattern = waveform.getTimings();
+                pattern = waveform.getElements();
                 repeat = waveform.getRepeatIndex();
             } else {
                 // TODO: Add support for prebaked effects
