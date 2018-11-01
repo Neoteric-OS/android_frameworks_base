@@ -16,6 +16,24 @@
       "revId": "a13597a09d016b4febff82c960e596ff22b02e4b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e53628_e4834f9b",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-01T13:33:41Z",
+      "side": 1,
+      "message": "This is me moving it out. The problem is that as we replace a key it may be in the same keymaster instance the new one goes to or another. So this could be one more operation that requires both keymaster instances and lead to one blocking on the other.\n\nOn second thought, I implemented delete as a kind of fire and forget operation. So by the time the delete operation is dispatched to the keymaster instance the blob has already been deleted from the file system. This would indeed allow us to reuse the entry even thought the old keyblob has not actually been invalidated yet.\n\nI\u0027ll look into it.",
+      "parentUuid": "2694376e_426d88e0",
+      "revId": "a13597a09d016b4febff82c960e596ff22b02e4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
