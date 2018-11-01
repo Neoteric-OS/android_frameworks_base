@@ -16,6 +16,24 @@
       "revId": "1706d9479d042779a39fabdb861f231590806a96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea0c358_9aae48ab",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3636,
+      "author": {
+        "id": 1256579
+      },
+      "writtenOn": "2018-11-01T22:31:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e8a814_4e9a0745",
+      "revId": "1706d9479d042779a39fabdb861f231590806a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
