@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80593f2d_bd3ebf44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-01T10:25:33Z",
+      "side": 1,
+      "message": "These tests are not relevant to this change.\nAre there any java tests that would give us some coverage?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
