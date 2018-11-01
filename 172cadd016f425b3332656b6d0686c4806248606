@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7393ac69_22cc47d1",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-01T07:58:55Z",
+      "side": 1,
+      "message": "The Java style guide says variables should be camelCase. So call this pcapFilename?",
+      "revId": "172cadd016f425b3332656b6d0686c4806248606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef3780f_62e367e2",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-01T07:58:55Z",
+      "side": 1,
+      "message": "This assertion will tell us that a packet was allowed, but it doesn\u0027t tell us which packet. Can we make it so that the error message tells us what the packet is?\n\nIf this test passes because no packets are ever allowed, then perhaps this does not matter.\n\nDoes this test pass? If the test does not pass because some packets are allowed, then perhaps we need two PCAP files. One containing all the packets, and one containing all the packets that we expect will be allowed.",
+      "range": {
+        "startLine": 892,
+        "startChar": 20,
+        "endLine": 892,
+        "endChar": 41
+      },
+      "revId": "172cadd016f425b3332656b6d0686c4806248606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3bea0f_41d53a2b",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-01T07:58:55Z",
+      "side": 1,
+      "message": "\"filter\" implies that this function filters packets, i.e., returns some of the packets but not all of them. But what it\u0027s doing is checking that all the packets are dropped. Maybe rename the function to dropsAllPackets() or something?",
+      "range": {
+        "startLine": 1737,
+        "startChar": 34,
+        "endLine": 1737,
+        "endChar": 48
+      },
+      "revId": "172cadd016f425b3332656b6d0686c4806248606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0319a701_b291081f",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-01T07:58:55Z",
+      "side": 1,
+      "message": "pcapFilename",
+      "range": {
+        "startLine": 1737,
+        "startChar": 72,
+        "endLine": 1737,
+        "endChar": 85
+      },
+      "revId": "172cadd016f425b3332656b6d0686c4806248606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
