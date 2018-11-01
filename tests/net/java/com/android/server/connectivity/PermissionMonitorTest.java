@@ -27,11 +27,21 @@ import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_VENDOR;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.os.Process.SYSTEM_UID;
 
+import static com.android.server.connectivity.PermissionMonitor.NETWORK;
+import static com.android.server.connectivity.PermissionMonitor.SYSTEM;
+
+import static junit.framework.Assert.fail;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.AdditionalMatchers.or;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.isNull;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -40,6 +50,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.INetworkManagementService;
+import android.os.UserHandle;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -48,12 +60,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+
+import java.util.HashMap;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class PermissionMonitorTest {
-    private static final int MOCK_UID = 10001;
-    private static final String[] MOCK_PACKAGE_NAMES = new String[] { "com.foo.bar" };
+    private static final int MOCK_USER1 = 0;
+    private static final int MOCK_USER2 = 1;
+    private static final int MOCK_UID1 = 10001;
+    private static final String MOCK_PACKAGE1 = "appName1";
+    private static final String SYSTEM_PACKAGE1 = "sysName1";
+    private static final String SYSTEM_PACKAGE2 = "sysName2";
     private static final String PARTITION_SYSTEM = "system";
     private static final String PARTITION_OEM = "oem";
     private static final String PARTITION_PRODUCT = "product";
@@ -63,6 +82,7 @@ public class PermissionMonitorTest {
 
     @Mock private Context mContext;
     @Mock private PackageManager mPackageManager;
+    @Mock private INetworkManagementService mNMS;
 
     private PermissionMonitor mPermissionMonitor;
 
@@ -70,8 +90,7 @@ public class PermissionMonitorTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
-        when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(MOCK_PACKAGE_NAMES);
-        mPermissionMonitor = spy(new PermissionMonitor(mContext, null));
+        mPermissionMonitor = spy(new PermissionMonitor(mContext, mNMS));
     }
 
     private boolean hasBgPermission(String partition, int targetSdkVersion, int uid,
@@ -80,7 +99,8 @@ public class PermissionMonitorTest {
         packageInfo.applicationInfo.targetSdkVersion = targetSdkVersion;
         packageInfo.applicationInfo.uid = uid;
         when(mPackageManager.getPackageInfoAsUser(
-                eq(MOCK_PACKAGE_NAMES[0]), eq(GET_PERMISSIONS), anyInt())).thenReturn(packageInfo);
+                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS), anyInt())).thenReturn(packageInfo);
+        when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[] {MOCK_PACKAGE1});
         return mPermissionMonitor.hasUseBackgroundNetworksPermission(uid);
     }
 
@@ -143,16 +163,16 @@ public class PermissionMonitorTest {
 
     @Test
     public void testHasUseBackgroundNetworksPermission() throws Exception {
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID, CHANGE_NETWORK_STATE));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID, NETWORK_STACK));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID, CONNECTIVITY_INTERNAL));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID,
+        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
+        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
+        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, NETWORK_STACK));
+        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
+        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1,
                 CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
 
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID));
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1));
+        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1, CHANGE_WIFI_STATE));
     }
 
     @Test
@@ -172,15 +192,130 @@ public class PermissionMonitorTest {
 
     @Test
     public void testHasUseBackgroundNetworksPermissionVendorApp() throws Exception {
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID, CHANGE_NETWORK_STATE));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID, NETWORK_STACK));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID, CONNECTIVITY_INTERNAL));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID,
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1));
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, NETWORK_STACK));
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1,
                 CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID, CHANGE_WIFI_STATE));
+        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
 
-        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID));
-        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
+        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CHANGE_WIFI_STATE));
+    }
+
+    private class NMSMonitor {
+        private final HashMap<Integer, Boolean> mApps = new HashMap<>();
+
+        NMSMonitor(INetworkManagementService mockNMS) throws Exception {
+            // Add hook to verify and track result of setPermission.
+            doAnswer((InvocationOnMock invocation) -> {
+                final Object[] args = invocation.getArguments();
+                final Boolean isSystem = args[0].equals("SYSTEM");
+                for (final int uid : (int[]) args[1]) {
+                    if (mApps.containsKey(uid) && mApps.get(uid) == isSystem) {
+                        fail("uid " + uid + " is already set to " + isSystem);
+                    }
+                    mApps.put(uid, isSystem);
+                }
+                return null;
+            }).when(mockNMS).setPermission(anyString(), any(int[].class));
+
+            // Add hook to verify and track result of clearPermission.
+            doAnswer((InvocationOnMock invocation) -> {
+                final Object[] args = invocation.getArguments();
+                for (final int uid : (int[]) args[0]) {
+                    if (!mApps.containsKey(uid)) {
+                        fail("uid " + uid + " does not exist.");
+                    }
+                    mApps.remove(uid);
+                }
+                return null;
+            }).when(mockNMS).clearPermission(any(int[].class));
+        }
+
+        public void expectPermission(Boolean permission, int[] users, int[] apps) {
+            for (final int user : users) {
+                for (final int app : apps) {
+                    final int uid = UserHandle.getUid(user, app);
+                    if (!mApps.containsKey(uid)) {
+                        fail("uid " + uid + " does not exist.");
+                    }
+                    if (mApps.get(uid) != permission) {
+                        fail("uid " + uid + " has wrong permission: " +  permission);
+                    }
+                }
+            }
+        }
+
+        public void expectNoPermission(int[] users, int[] apps) {
+            for (final int user : users) {
+                for (final int app : apps) {
+                    final int uid = UserHandle.getUid(user, app);
+                    if (mApps.containsKey(uid)) {
+                        fail("uid " + uid + " has listed permissions, expected none.");
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testUserAndPackageAddRemove() throws Exception {
+        final NMSMonitor mNMSMonitor = new NMSMonitor(mNMS);
+
+        // MOCK_UID1: MOCK_PACKAGE1 only has network permission.
+        // SYSTEM_UID: SYSTEM_PACKAGE1 has system permission.
+        // SYSTEM_UID: SYSTEM_PACKAGE2 only has network permission.
+        doReturn(SYSTEM).when(mPermissionMonitor).highestPermissionForUid(eq(SYSTEM), anyString());
+        doReturn(SYSTEM).when(mPermissionMonitor).highestPermissionForUid(or(isNull(), eq(NETWORK)),
+                eq(SYSTEM_PACKAGE1));
+        doReturn(NETWORK).when(mPermissionMonitor).highestPermissionForUid(or(isNull(),
+                eq(NETWORK)), eq(SYSTEM_PACKAGE2));
+        doReturn(NETWORK).when(mPermissionMonitor).highestPermissionForUid(or(isNull(),
+                eq(NETWORK)), eq(MOCK_PACKAGE1));
+
+        // Add SYSTEM_PACKAGE2, expect only have network permission.
+        mPermissionMonitor.onUserAdded(MOCK_USER1);
+        mPermissionMonitor.onPackageAdded(SYSTEM_PACKAGE2, SYSTEM_UID);
+        mNMSMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1}, new int[]{SYSTEM_UID});
+
+        // Add SYSTEM_PACKAGE1, expect permission escalate.
+        mPermissionMonitor.onPackageAdded(SYSTEM_PACKAGE1, SYSTEM_UID);
+        mNMSMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1}, new int[]{SYSTEM_UID});
+
+        mPermissionMonitor.onUserAdded(MOCK_USER2);
+        mNMSMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{SYSTEM_UID});
+
+        mPermissionMonitor.onPackageAdded(MOCK_PACKAGE1, MOCK_UID1);
+        mNMSMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{SYSTEM_UID});
+        mNMSMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{MOCK_UID1});
+
+        // Remove MOCK_UID1, expect no permission left for all user.
+        mPermissionMonitor.onPackageRemoved(MOCK_UID1);
+        mNMSMonitor.expectNoPermission(new int[]{MOCK_USER1, MOCK_USER2}, new int[]{MOCK_UID1});
+
+        // Remove SYSTEM_PACKAGE1, expect permission downgrade.
+        when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[]{SYSTEM_PACKAGE2});
+        mPermissionMonitor.onPackageRemoved(SYSTEM_UID);
+        mNMSMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{SYSTEM_UID});
+
+        mPermissionMonitor.onUserRemoved(MOCK_USER1);
+        mNMSMonitor.expectPermission(NETWORK, new int[]{MOCK_USER2}, new int[]{SYSTEM_UID});
+
+        // Remove all packages, expect no permission left.
+        when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[]{});
+        mPermissionMonitor.onPackageRemoved(SYSTEM_UID);
+        mNMSMonitor.expectNoPermission(new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{SYSTEM_UID, MOCK_UID1});
+
+        // Remove last user, expect no redundant clearPermission is invoked.
+        mPermissionMonitor.onUserRemoved(MOCK_USER2);
+        mNMSMonitor.expectNoPermission(new int[]{MOCK_USER1, MOCK_USER2},
+                new int[]{SYSTEM_UID, MOCK_UID1});
     }
 }
