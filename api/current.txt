@@ -33631,11 +33631,24 @@ package android.os {
 
   public abstract class VibrationEffect implements android.os.Parcelable {
     method public static android.os.VibrationEffect createOneShot(long, int);
+    method public static android.os.VibrationEffect createOneShot(android.os.VibrationElement);
     method public static android.os.VibrationEffect createWaveform(long[], int);
     method public static android.os.VibrationEffect createWaveform(long[], int[], int);
+    method public static android.os.VibrationEffect createWaveform(android.os.VibrationElement[], int);
     method public int describeContents();
     field public static final android.os.Parcelable.Creator<android.os.VibrationEffect> CREATOR;
     field public static final int DEFAULT_AMPLITUDE = -1; // 0xffffffff
+  }
+
+  public class VibrationElement implements android.os.Parcelable {
+    method public static android.os.VibrationElement create(long, int...);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CHANNEL_DEFAULT = 0; // 0x0
+    field public static final android.os.Parcelable.Creator<android.os.VibrationElement> CREATOR;
+    field public static final int MAX_CHANNELS = 16; // 0x10
+    field public final int[] channels;
+    field public final long duration;
   }
 
   public abstract class Vibrator {

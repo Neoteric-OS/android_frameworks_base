@@ -27,6 +27,8 @@ import android.util.MathUtils;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * A VibrationEffect describes a haptic effect to be performed by a {@link Vibrator}.
@@ -136,7 +138,24 @@ public abstract class VibrationEffect implements Parcelable {
      * @return The desired effect.
      */
     public static VibrationEffect createOneShot(long milliseconds, int amplitude) {
-        VibrationEffect effect = new OneShot(milliseconds, amplitude);
+        VibrationEffect effect =
+                new OneShot(VibrationElement.create(milliseconds, amplitude));
+        effect.validate();
+        return effect;
+    }
+
+    /**
+     * Create a one shot vibration.
+     *
+     * One shot vibrations will vibrate constantly for the period and channel amplitudes specified
+     * by the {@link android.os.VibrationElement}.
+     *
+     * @param element The {@link android.os.VibrationElement} defining the effect.
+     *
+     * @return The desired effect.
+     */
+    public static VibrationEffect createOneShot(VibrationElement element) {
+        VibrationEffect effect = new OneShot(element);
         effect.validate();
         return effect;
     }
@@ -197,7 +216,33 @@ public abstract class VibrationEffect implements Parcelable {
      * @return The desired effect.
      */
     public static VibrationEffect createWaveform(long[] timings, int[] amplitudes, int repeat) {
-        VibrationEffect effect = new Waveform(timings, amplitudes, repeat);
+        VibrationEffect effect = new Waveform(IntStream.range(0, timings.length)
+                .mapToObj(i -> VibrationElement.create(timings[i], amplitudes[i]))
+                .toArray(VibrationElement[]::new), repeat);
+        effect.validate();
+        return effect;
+    }
+
+    /**
+     * Create a waveform vibration.
+     *
+     * Waveform vibrations are a potentially repeating series of
+     * {@link android.os.VibrationElement}. Each element determines the per channel strength of the
+     * vibration and how long it vibrates for. An amplitude of 0 implies no vibration (i.e. off),
+     * and any elements with a duration value of 0 will be ignored.
+     * </p><p>
+     * To cause the pattern to repeat, pass the index into the elements array at which to start the
+     * repetition, or -1 to disable repeating.
+     * </p>
+     *
+     * @param elements The array of {@link android.os.VibrationElement} representing the waveform.
+     * @param repeat The index into the timings array at which to repeat, or -1 if you you don't
+     *               want to repeat.
+     *
+     * @return The desired effect.
+     */
+    public static VibrationEffect createWaveform(VibrationElement[] elements, int repeat) {
+        VibrationEffect effect = new Waveform(elements, repeat);
         effect.validate();
         return effect;
     }
@@ -320,26 +365,38 @@ public abstract class VibrationEffect implements Parcelable {
 
     /** @hide */
     public static class OneShot extends VibrationEffect implements Parcelable {
-        private final long mDuration;
-        private final int mAmplitude;
+        private final VibrationElement mElement;
 
         public OneShot(Parcel in) {
-            mDuration = in.readLong();
-            mAmplitude = in.readInt();
+            mElement = in.readTypedObject(VibrationElement.CREATOR);
         }
 
-        public OneShot(long milliseconds, int amplitude) {
-            mDuration = milliseconds;
-            mAmplitude = amplitude;
+        public OneShot(VibrationElement element) {
+            mElement = element;
         }
 
         @Override
         public long getDuration() {
-            return mDuration;
+            return mElement.duration;
         }
 
         public int getAmplitude() {
-            return mAmplitude;
+            return getAmplitude(VibrationElement.CHANNEL_DEFAULT);
+        }
+
+        /**
+         * Get the amplitude of the corresponding channel.
+         *
+         * @param channel the channel being requested
+         *
+         * @return The amplitude of the requested channel.
+         */
+        public int getAmplitude(int channel) {
+            return mElement.channels[channel];
+        }
+
+        public VibrationElement getElement() {
+            return mElement;
         }
 
         /**
@@ -351,8 +408,8 @@ public abstract class VibrationEffect implements Parcelable {
          * @return A {@link OneShot} effect with the same timing but scaled amplitude.
          */
         public VibrationEffect scale(float gamma, int maxAmplitude) {
-            int newAmplitude = scale(mAmplitude, gamma, maxAmplitude);
-            return new OneShot(mDuration, newAmplitude);
+            VibrationElement newElement = VibrationElement.scale(mElement, gamma, maxAmplitude);
+            return new OneShot(newElement);
         }
 
         /**
@@ -365,26 +422,28 @@ public abstract class VibrationEffect implements Parcelable {
          * @hide
          */
         public OneShot resolve(int defaultAmplitude) {
-            if (defaultAmplitude > MAX_AMPLITUDE || defaultAmplitude < 0) {
-                throw new IllegalArgumentException(
-                        "Amplitude is negative or greater than MAX_AMPLITUDE");
+            VibrationElement element = mElement.resolve(defaultAmplitude);
+            if (element == mElement) {
+                return this;
             }
-            if (mAmplitude == DEFAULT_AMPLITUDE) {
-                return new OneShot(mDuration, defaultAmplitude);
-            }
-            return this;
+            return new OneShot(element);
         }
 
         @Override
         public void validate() {
-            if (mAmplitude < -1 || mAmplitude == 0 || mAmplitude > 255) {
+            if (IntStream.of(mElement.channels).anyMatch(a -> (a < -1 || a > 255))) {
                 throw new IllegalArgumentException(
-                        "amplitude must either be DEFAULT_AMPLITUDE, "
-                        + "or between 1 and 255 inclusive (amplitude=" + mAmplitude + ")");
+                        "channels must either be DEFAULT_AMPLITUDE, "
+                        + "or between 0 and 255 inclusive");
             }
-            if (mDuration <= 0) {
+            if (IntStream.of(mElement.channels).noneMatch(a -> (a != 0))) {
                 throw new IllegalArgumentException(
-                        "duration must be positive (duration=" + mDuration + ")");
+                        "at least one channel must either be DEFAULT_AMPLITUDE, "
+                        + "or between 1 and 255 inclusive");
+            }
+            if (mElement.duration <= 0) {
+                throw new IllegalArgumentException(
+                        "duration must be positive (duration=" + mElement.duration + ")");
             }
         }
 
@@ -394,27 +453,23 @@ public abstract class VibrationEffect implements Parcelable {
                 return false;
             }
             VibrationEffect.OneShot other = (VibrationEffect.OneShot) o;
-            return other.mDuration == mDuration && other.mAmplitude == mAmplitude;
+            return other.mElement.equals(mElement);
         }
 
         @Override
         public int hashCode() {
-            int result = 17;
-            result += 37 * (int) mDuration;
-            result += 37 * mAmplitude;
-            return result;
+            return mElement.hashCode();
         }
 
         @Override
         public String toString() {
-            return "OneShot{mDuration=" + mDuration + ", mAmplitude=" + mAmplitude + "}";
+            return "OneShot{mElement=" + mElement + "}";
         }
 
         @Override
         public void writeToParcel(Parcel out, int flags) {
             out.writeInt(PARCEL_TOKEN_ONE_SHOT);
-            out.writeLong(mDuration);
-            out.writeInt(mAmplitude);
+            out.writeTypedObject(mElement, flags);
         }
 
         public static final Parcelable.Creator<OneShot> CREATOR =
@@ -434,28 +489,40 @@ public abstract class VibrationEffect implements Parcelable {
 
     /** @hide */
     public static class Waveform extends VibrationEffect implements Parcelable {
-        private final long[] mTimings;
-        private final int[] mAmplitudes;
+        private final VibrationElement[] mElements;
         private final int mRepeat;
 
         public Waveform(Parcel in) {
-            this(in.createLongArray(), in.createIntArray(), in.readInt());
+            this(in.createTypedArray(VibrationElement.CREATOR), in.readInt());
         }
 
-        public Waveform(long[] timings, int[] amplitudes, int repeat) {
-            mTimings = new long[timings.length];
-            System.arraycopy(timings, 0, mTimings, 0, timings.length);
-            mAmplitudes = new int[amplitudes.length];
-            System.arraycopy(amplitudes, 0, mAmplitudes, 0, amplitudes.length);
+        public Waveform(VibrationElement[] elements, int repeat) {
+            mElements = new VibrationElement[elements.length];
+            System.arraycopy(elements, 0, mElements, 0, elements.length);
             mRepeat = repeat;
         }
 
         public long[] getTimings() {
-            return mTimings;
+            return Stream.of(mElements).mapToLong(e -> e.duration).toArray();
         }
 
         public int[] getAmplitudes() {
-            return mAmplitudes;
+            return getAmplitudes(VibrationElement.CHANNEL_DEFAULT);
+        }
+
+        /**
+         * Get the amplitude array of the corresponding channel.
+         *
+         * @param channel the channel being requested
+         *
+         * @return The amplitude array of the requested channel.
+         */
+        public int[] getAmplitudes(int channel) {
+            return Stream.of(mElements).mapToInt(e -> e.channels[channel]).toArray();
+        }
+
+        public VibrationElement[] getElements() {
+            return mElements;
         }
 
         public int getRepeatIndex() {
@@ -467,11 +534,7 @@ public abstract class VibrationEffect implements Parcelable {
             if (mRepeat >= 0) {
                 return Long.MAX_VALUE;
             }
-            long duration = 0;
-            for (long d : mTimings) {
-                duration += d;
-            }
-            return duration;
+            return Stream.of(mElements).mapToLong(e -> e.duration).sum();
         }
 
         /**
@@ -486,14 +549,12 @@ public abstract class VibrationEffect implements Parcelable {
         public VibrationEffect scale(float gamma, int maxAmplitude) {
             if (gamma == 1.0f && maxAmplitude == MAX_AMPLITUDE) {
                 // Just return a copy of the original if there's no scaling to be done.
-                return new Waveform(mTimings, mAmplitudes, mRepeat);
+                return new Waveform(mElements, mRepeat);
             }
 
-            int[] scaledAmplitudes = Arrays.copyOf(mAmplitudes, mAmplitudes.length);
-            for (int i = 0; i < scaledAmplitudes.length; i++) {
-                scaledAmplitudes[i] = scale(scaledAmplitudes[i], gamma, maxAmplitude);
-            }
-            return new Waveform(mTimings, scaledAmplitudes, mRepeat);
+            return new Waveform(Stream.of(mElements)
+                .map(e -> VibrationElement.scale(e, gamma, maxAmplitude))
+                .toArray(VibrationElement[]::new), mRepeat);
         }
 
         /**
@@ -511,44 +572,27 @@ public abstract class VibrationEffect implements Parcelable {
                 throw new IllegalArgumentException(
                         "Amplitude is negative or greater than MAX_AMPLITUDE");
             }
-            int[] resolvedAmplitudes = Arrays.copyOf(mAmplitudes, mAmplitudes.length);
-            for (int i = 0; i < resolvedAmplitudes.length; i++) {
-                if (resolvedAmplitudes[i] == DEFAULT_AMPLITUDE) {
-                    resolvedAmplitudes[i] = defaultAmplitude;
-                }
-            }
-            return new Waveform(mTimings, resolvedAmplitudes, mRepeat);
+            return new Waveform(Stream.of(mElements)
+                    .map(e -> VibrationElement.resolve(e, defaultAmplitude))
+                    .toArray(VibrationElement[]::new), mRepeat);
         }
 
         @Override
         public void validate() {
-            if (mTimings.length != mAmplitudes.length) {
-                throw new IllegalArgumentException(
-                        "timing and amplitude arrays must be of equal length"
-                        + " (timings.length=" + mTimings.length
-                        + ", amplitudes.length=" + mAmplitudes.length + ")");
-            }
-            if (!hasNonZeroEntry(mTimings)) {
+            if (Stream.of(mElements).noneMatch(e -> e.duration > 0)) {
                 throw new IllegalArgumentException("at least one timing must be non-zero"
-                        + " (timings=" + Arrays.toString(mTimings) + ")");
+                        + " (elements=" + Arrays.toString(mElements) + ")");
             }
-            for (long timing : mTimings) {
-                if (timing < 0) {
-                    throw new IllegalArgumentException("timings must all be >= 0"
-                            + " (timings=" + Arrays.toString(mTimings) + ")");
-                }
-            }
-            for (int amplitude : mAmplitudes) {
-                if (amplitude < -1 || amplitude > 255) {
-                    throw new IllegalArgumentException(
-                            "amplitudes must all be DEFAULT_AMPLITUDE or between 0 and 255"
-                            + " (amplitudes=" + Arrays.toString(mAmplitudes) + ")");
-                }
-            }
-            if (mRepeat < -1 || mRepeat >= mTimings.length) {
+            if (Stream.of(mElements).anyMatch(e -> IntStream.of(e.channels)
+                    .anyMatch(a -> (a < -1 || a > 255)))) {
                 throw new IllegalArgumentException(
-                        "repeat index must be within the bounds of the timings array"
-                        + " (timings.length=" + mTimings.length + ", index=" + mRepeat + ")");
+                        "amplitudes must all be DEFAULT_AMPLITUDE or between 0 and 255"
+                        + " (elements=" + Arrays.toString(mElements) + ")");
+            }
+            if (mRepeat < -1 || mRepeat >= mElements.length) {
+                throw new IllegalArgumentException(
+                        "repeat index must be within the bounds of the elements array"
+                        + " (elements.length=" + mElements.length + ", index=" + mRepeat + ")");
             }
         }
 
@@ -558,24 +602,21 @@ public abstract class VibrationEffect implements Parcelable {
                 return false;
             }
             VibrationEffect.Waveform other = (VibrationEffect.Waveform) o;
-            return Arrays.equals(mTimings, other.mTimings)
-                && Arrays.equals(mAmplitudes, other.mAmplitudes)
+            return Arrays.equals(mElements, other.mElements)
                 && mRepeat == other.mRepeat;
         }
 
         @Override
         public int hashCode() {
             int result = 17;
-            result += 37 * Arrays.hashCode(mTimings);
-            result += 37 * Arrays.hashCode(mAmplitudes);
+            result += 37 * Arrays.hashCode(mElements);
             result += 37 * mRepeat;
             return result;
         }
 
         @Override
         public String toString() {
-            return "Waveform{mTimings=" + Arrays.toString(mTimings)
-                + ", mAmplitudes=" + Arrays.toString(mAmplitudes)
+            return "Waveform{mElements=" + Arrays.toString(mElements)
                 + ", mRepeat=" + mRepeat
                 + "}";
         }
@@ -583,20 +624,9 @@ public abstract class VibrationEffect implements Parcelable {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             out.writeInt(PARCEL_TOKEN_WAVEFORM);
-            out.writeLongArray(mTimings);
-            out.writeIntArray(mAmplitudes);
+            out.writeTypedArray(mElements, flags);
             out.writeInt(mRepeat);
         }
-
-        private static boolean hasNonZeroEntry(long[] vals) {
-            for (long val : vals) {
-                if (val != 0) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
 
         public static final Parcelable.Creator<Waveform> CREATOR =
             new Parcelable.Creator<Waveform>() {
