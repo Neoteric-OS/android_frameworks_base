@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12689d14_9da7e5be",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-11-01T16:46:42Z",
+      "side": 1,
+      "message": "addResetListener() to support multiple in the future",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "6efdb1413e3e29af85b0e7d8ad2277e0e934283b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde59502_30e3a3da",
+        "filename": "core/java/android/os/storage/StorageManagerInternal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-11-01T16:46:42Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this method added here?  (I think we can keep it internal only to SMS?)",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "6efdb1413e3e29af85b0e7d8ad2277e0e934283b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
