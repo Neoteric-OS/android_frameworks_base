@@ -36,12 +36,14 @@ TAG_WHITELIST = "whitelist"
 TAG_GREYLIST = "greylist"
 TAG_BLACKLIST = "blacklist"
 TAG_BLACKLIST_MAX_O = "blacklist-max-o"
+TAG_BLACKLIST_MAX_P = "blacklist-max-p"
 
 TAGS = [
     TAG_WHITELIST,
     TAG_GREYLIST,
     TAG_BLACKLIST,
     TAG_BLACKLIST_MAX_O,
+    TAG_BLACKLIST_MAX_P,
 ]
 
 SERIALIZATION_PATTERNS = [
