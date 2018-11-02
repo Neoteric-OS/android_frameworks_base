@@ -38,11 +38,13 @@ import android.security.keymaster.KeymasterBlob;
 import android.security.keymaster.KeymasterCertificateChain;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keymaster.OperationResult;
+import android.security.keystore.IKeystoreService;
 import android.security.keystore.KeyExpiredException;
 import android.security.keystore.KeyNotYetValidException;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.security.keystore.KeyProtection;
+import android.security.keystore.KeystoreResponse;
 import android.security.keystore.StrongBoxUnavailableException;
 import android.security.keystore.UserNotAuthenticatedException;
 import android.util.Log;
@@ -54,6 +56,8 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import sun.security.util.ObjectIdentifier;
 import sun.security.x509.AlgorithmId;
 
@@ -602,14 +606,36 @@ public class KeyStore {
         return exportKey(alias, format, clientId, appId, UID_SELF);
     }
 
+    private class OperationPromise
+    extends android.security.keystore.IKeystoreOperationResultCallback.Stub {
+        final private CompletableFuture<OperationResult> future = new CompletableFuture<OperationResult>();
+        @Override
+        public void onFinished(OperationResult operationResult) throws android.os.RemoteException {
+            future.complete(operationResult);
+        }
+        public final CompletableFuture<OperationResult> getFuture() {
+            return future;
+        }
+    };
+
     public OperationResult begin(String alias, int purpose, boolean pruneable,
             KeymasterArguments args, byte[] entropy, int uid) {
         try {
             args = args != null ? args : new KeymasterArguments();
             entropy = entropy != null ? entropy : new byte[0];
-            return mBinder.begin(getToken(), alias, purpose, pruneable, args, entropy, uid);
+            OperationPromise promise = new OperationPromise();
+            int errorCode =  mBinder.begin(promise, getToken(), alias, purpose, pruneable, args,
+                                           entropy, uid);
+            if (errorCode == NO_ERROR) {
+                return promise.getFuture().get();
+            } else {
+                return new OperationResult(errorCode);
+            }
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
+            return null;
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Begin completed with exception", e);
             return null;
         }
     }
@@ -625,9 +651,18 @@ public class KeyStore {
         try {
             arguments = arguments != null ? arguments : new KeymasterArguments();
             input = input != null ? input : new byte[0];
-            return mBinder.update(token, arguments, input);
+            OperationPromise promise = new OperationPromise();
+            int errorCode =  mBinder.update(promise, token, arguments, input);
+            if (errorCode == NO_ERROR) {
+                return promise.getFuture().get();
+            } else {
+                return new OperationResult(errorCode);
+            }
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
+            return null;
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Update completed with exception", e);
             return null;
         }
     }
@@ -638,9 +673,18 @@ public class KeyStore {
             arguments = arguments != null ? arguments : new KeymasterArguments();
             entropy = entropy != null ? entropy : new byte[0];
             signature = signature != null ? signature : new byte[0];
-            return mBinder.finish(token, arguments, signature, entropy);
+            OperationPromise promise = new OperationPromise();
+            int errorCode = mBinder.finish(promise, token, arguments, signature, entropy);
+            if (errorCode == NO_ERROR) {
+                return promise.getFuture().get();
+            } else {
+                return new OperationResult(errorCode);
+            }
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
+            return null;
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Finish completed with exception", e);
             return null;
         }
     }
@@ -649,11 +693,32 @@ public class KeyStore {
         return finish(token, arguments, signature, null);
     }
 
+    private class KeystoreResultPromise
+    extends android.security.keystore.IKeystoreResponseCallback.Stub {
+        final private CompletableFuture<KeystoreResponse> future = new CompletableFuture<KeystoreResponse>();
+        @Override
+        public void onFinished(KeystoreResponse keystoreResponse) throws android.os.RemoteException {
+            future.complete(keystoreResponse);
+        }
+        public final CompletableFuture<KeystoreResponse> getFuture() {
+            return future;
+        }
+    };
+
     public int abort(IBinder token) {
         try {
-            return mBinder.abort(token);
+            KeystoreResultPromise promise = new KeystoreResultPromise();
+            int errorCode = mBinder.abort(promise, token);
+            if (errorCode == NO_ERROR) {
+                return promise.getFuture().get().getErrorCode();
+            } else {
+                return errorCode;
+            }
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
+            return SYSTEM_ERROR;
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Abort completed with exception", e);
             return SYSTEM_ERROR;
         }
     }
