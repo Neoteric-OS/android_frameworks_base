@@ -50,7 +50,7 @@ import static android.net.ConnectivityManager.NETID_UNSET;
 public class LingerMonitor {
 
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
     private static final String TAG = LingerMonitor.class.getSimpleName();
 
     public static final int DEFAULT_NOTIFICATION_DAILY_LIMIT = 3;
@@ -262,10 +262,23 @@ public class LingerMonitor {
         // unvalidated.
         if (fromNai.lastValidated) return;
 
-        if (!isNotificationEnabled(fromNai, toNai)) return;
+        if (!isNotificationEnabled(fromNai, toNai)) {
+            if (VDBG) {
+                Log.d(TAG, "Not notifying handover from " + fromNai.name()
+                        + ", notification not enabled");
+            }
+            return;
+        }
 
         final long now = SystemClock.elapsedRealtime();
-        if (isRateLimited(now) || isAboveDailyLimit(now)) return;
+        if (isRateLimited(now) || isAboveDailyLimit(now)) {
+            if (VDBG) {
+                Log.d(TAG, String.format(
+                        "Not notifying handover from %s, above limit (now: %d, first %d, count %d)",
+                        fromNai.name(), now, mFirstNotificationMillis, mNotificationCounter));
+            }
+            return;
+        }
 
         notify(fromNai, toNai, forceToast);
     }
