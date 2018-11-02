@@ -279,7 +279,7 @@ public class LingerMonitor {
 
     private boolean isRateLimited(long now) {
         final long millisSinceLast = now - mLastNotificationMillis;
-        if (millisSinceLast < mRateLimitMillis) {
+        if (millisSinceLast < mRateLimitMillis && mLastNotificationMillis > 0) {
             return true;
         }
         mLastNotificationMillis = now;
