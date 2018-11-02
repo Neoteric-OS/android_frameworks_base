@@ -406,6 +406,17 @@ public class DexManagerTests {
     }
 
     @Test
+    public void testNotifySupportedAndUnsupportedClassLoader() {
+    }
+
+    @Test
+    public void testNotifyNullClassPath() {
+        notifyDexLoad(mBarUser0, null, mUser0);
+
+        assertNoUseInfo(mBarUser0);
+    }
+
+    @Test
     public void testNotifyVariableClassLoader() {
         // Record bar secondaries with the default PathClassLoader.
         List<String> secondaries = mBarUser0.getSecondaryDexPaths();
@@ -500,14 +511,17 @@ public class DexManagerTests {
         // By default, assume a single class loader in the chain.
         // This makes writing tests much easier.
         List<String> classLoaders = Arrays.asList(testData.mClassLoader);
-        List<String> classPaths = Arrays.asList(String.join(File.pathSeparator, dexPaths));
+        List<String> classPaths = (dexPaths == null)
+                                  ? Arrays.asList((String) null)
+                                  : Arrays.asList(String.join(File.pathSeparator, dexPaths));
         notifyDexLoad(testData, classLoaders, classPaths, loaderUserId);
     }
 
     private void notifyDexLoad(TestData testData, List<String> classLoader, List<String> classPaths,
             int loaderUserId) {
-        mDexManager.notifyDexLoad(testData.mPackageInfo.applicationInfo, classLoader, classPaths,
-                testData.mLoaderIsa, loaderUserId);
+        // We call the internal function so any exceptions thrown cause test failures.
+        mDexManager.notifyDexLoadInternal(testData.mPackageInfo.applicationInfo, classLoader,
+                classPaths, testData.mLoaderIsa, loaderUserId);
     }
 
     private PackageUseInfo getPackageUseInfo(TestData testData) {
