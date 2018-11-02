@@ -2448,11 +2448,11 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         final boolean resumeWhilePausing = (next.info.flags & FLAG_RESUME_WHILE_PAUSING) != 0
                 && !lastResumedCanPip;
 
-        boolean pausing = mStackSupervisor.pauseBackStacks(userLeaving, next, false);
+        boolean pausing = mStackSupervisor.pauseBackStacks(userLeaving, next, resumeWhilePausing);
         if (mResumedActivity != null) {
             if (DEBUG_STATES) Slog.d(TAG_STATES,
                     "resumeTopActivityLocked: Pausing " + mResumedActivity);
-            pausing |= startPausingLocked(userLeaving, false, next, false);
+            pausing |= startPausingLocked(userLeaving, false, next, resumeWhilePausing);
         }
         if (pausing && !resumeWhilePausing) {
             if (DEBUG_SWITCH || DEBUG_STATES) Slog.v(TAG_STATES,
