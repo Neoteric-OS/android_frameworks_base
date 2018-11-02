@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
+import java.net.Inet6Address;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -250,6 +251,16 @@ public class MacAddressTest {
             fail("MacAddress.fromBytes(null) should have failed, but returned " + mac);
         } catch (NullPointerException excepted) {
         }
+    }
+
+    /**
+     * Tests that link-local address generation from MAC is valid.
+     */
+    @Test
+    public void testLinkLocalFromMacGeneration() {
+        MacAddress mac = MacAddress.fromString("52:74:f2:b1:a8:7f");
+        Inet6Address llv6 = mac.getLinkLocalIpv6FromEui48Mac();
+        assertTrue(llv6.isLinkLocalAddress());
     }
 
     static byte[] toByteArray(int... in) {
