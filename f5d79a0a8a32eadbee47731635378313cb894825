@@ -22,6 +22,30 @@
       "revId": "f5d79a0a8a32eadbee47731635378313cb894825",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79304852_7e5ccfba",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-11-02T08:27:54Z",
+      "side": 1,
+      "message": "Sounds like a good option - done",
+      "parentUuid": "922aa6fe_d0f5521e",
+      "range": {
+        "startLine": 282,
+        "startChar": 50,
+        "endLine": 282,
+        "endChar": 76
+      },
+      "revId": "f5d79a0a8a32eadbee47731635378313cb894825",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
