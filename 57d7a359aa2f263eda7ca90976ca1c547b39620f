@@ -16,6 +16,24 @@
       "revId": "57d7a359aa2f263eda7ca90976ca1c547b39620f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a91935c_b0d54b6d",
+        "filename": "cmds/statsd/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-11-02T18:37:12Z",
+      "side": 1,
+      "message": "Unintentionally left in from an earlier fix attempt, removed.",
+      "parentUuid": "0b648354_08154128",
+      "revId": "57d7a359aa2f263eda7ca90976ca1c547b39620f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
