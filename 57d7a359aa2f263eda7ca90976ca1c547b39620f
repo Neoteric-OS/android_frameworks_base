@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b648354_08154128",
+        "filename": "cmds/statsd/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2018-11-02T18:32:42Z",
+      "side": 1,
+      "message": "Can you please explain this change to me?",
+      "revId": "57d7a359aa2f263eda7ca90976ca1c547b39620f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
