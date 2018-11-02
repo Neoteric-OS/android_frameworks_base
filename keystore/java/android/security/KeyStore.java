@@ -80,6 +80,9 @@ public class KeyStore {
      */
     public static final int OP_AUTH_NEEDED = 15;
 
+    // Used when a user changes their pin, invalidating old auth bound keys.
+    public static final int KEY_PERMANENTLY_INVALIDATED = 16;
+
     // Used for UID field to indicate the calling UID.
     public static final int UID_SELF = -1;
 
