@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922aa6fe_d0f5521e",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-02T08:06:16Z",
+      "side": 1,
+      "message": "Can\u0027t we initialize mLastNotificationMillis to -mRateLimitMillis instead of testing for this every time ?",
+      "range": {
+        "startLine": 282,
+        "startChar": 50,
+        "endLine": 282,
+        "endChar": 76
+      },
+      "revId": "f5d79a0a8a32eadbee47731635378313cb894825",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
