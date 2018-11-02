@@ -59,7 +59,8 @@ public final class CaptivePortalProbeResult {
     }
 
     public boolean isPortal() {
-        return !isSuccessful() && (mHttpResponseCode >= 200) && (mHttpResponseCode <= 399);
+        return (!isSuccessful() && (mHttpResponseCode >= 200) && (mHttpResponseCode <= 399))
+                || mHttpResponseCode == 511;
     }
 
     public boolean isFailed() {
