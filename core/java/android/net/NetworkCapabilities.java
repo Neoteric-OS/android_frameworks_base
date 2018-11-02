@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.IntDef;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
@@ -79,6 +80,7 @@ public final class NetworkCapabilities implements Parcelable {
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
         mNetworkSpecifier = null;
+        mMetaNetworkCapabilities = null;
         mSignalStrength = SIGNAL_STRENGTH_UNSPECIFIED;
         mUids = null;
         mEstablishingVpnAppUid = INVALID_UID;
@@ -95,6 +97,7 @@ public final class NetworkCapabilities implements Parcelable {
         mLinkUpBandwidthKbps = nc.mLinkUpBandwidthKbps;
         mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
         mNetworkSpecifier = nc.mNetworkSpecifier;
+        mMetaNetworkCapabilities = nc.mMetaNetworkCapabilities;
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
         mEstablishingVpnAppUid = nc.mEstablishingVpnAppUid;
@@ -670,6 +673,7 @@ public final class NetworkCapabilities implements Parcelable {
         checkValidTransportType(transportType);
         mTransportTypes |= 1 << transportType;
         setNetworkSpecifier(mNetworkSpecifier); // used for exception checking
+        setMetaNetworkCapabilities(mMetaNetworkCapabilities); // used for exception checking
         return this;
     }
 
@@ -684,6 +688,7 @@ public final class NetworkCapabilities implements Parcelable {
         checkValidTransportType(transportType);
         mTransportTypes &= ~(1 << transportType);
         setNetworkSpecifier(mNetworkSpecifier); // used for exception checking
+        setMetaNetworkCapabilities(mMetaNetworkCapabilities); // used for exception checking
         return this;
     }
 
@@ -874,6 +879,7 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     private NetworkSpecifier mNetworkSpecifier = null;
+    private MetaNetworkCapabilities mMetaNetworkCapabilities = null;
 
     /**
      * Sets the optional bearer specific network specifier.
@@ -899,6 +905,30 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * Sets the optional bearer specific network capabilities.
+     * This has no meaning if a single transport is also not specified, so calling
+     * this without a single transport set will generate an exception, as will
+     * subsequently adding or removing transports after this is set.
+     * </p>
+     *
+     * @param metaNetworkCapabilities A concrete, parcelable framework class that extends
+     *                                {@link MetaNetworkCapabilities}.
+     * @return This NetworkCapabilities instance, to facilitate chaining.
+     * @hide
+     */
+    public NetworkCapabilities setMetaNetworkCapabilities(
+            MetaNetworkCapabilities metaNetworkCapabilities) {
+        if (metaNetworkCapabilities != null && Long.bitCount(mTransportTypes) != 1) {
+            throw new IllegalStateException("Must have a single transport specified to use " +
+                    "setMetaNetworkCapabilities");
+        }
+
+        mMetaNetworkCapabilities = metaNetworkCapabilities;
+
+        return this;
+    }
+
+    /**
      * Gets the optional bearer specific network specifier.
      *
      * @return The optional {@link NetworkSpecifier} specifying the bearer specific network
@@ -908,6 +938,17 @@ public final class NetworkCapabilities implements Parcelable {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public NetworkSpecifier getNetworkSpecifier() {
         return mNetworkSpecifier;
+    }
+
+    /**
+     * Returns a network-specific information container. The application may cast this
+     * container to a concrete sub-class based on its knowledge of the network type.
+     *
+     * @return A concrete implementation of the {@link MetaNetworkCapabilities} class or null if
+     * not available for the network.
+     */
+    public @Nullable MetaNetworkCapabilities getMetaNetworkCapabilities() {
+        return mMetaNetworkCapabilities;
     }
 
     private void combineSpecifiers(NetworkCapabilities nc) {
@@ -924,6 +965,18 @@ public final class NetworkCapabilities implements Parcelable {
 
     private boolean equalsSpecifier(NetworkCapabilities nc) {
         return Objects.equals(mNetworkSpecifier, nc.mNetworkSpecifier);
+    }
+
+    private void combineMetaCapabilities(NetworkCapabilities nc) {
+        if (mMetaNetworkCapabilities != null && !mMetaNetworkCapabilities.equals(
+                nc.mMetaNetworkCapabilities)) {
+            throw new IllegalStateException("Can't combine two metaNetworkCapabilities");
+        }
+        setMetaNetworkCapabilities(nc.mMetaNetworkCapabilities);
+    }
+
+    private boolean equalsMetaCapabilities(NetworkCapabilities nc) {
+        return Objects.equals(mMetaNetworkCapabilities, nc.mMetaNetworkCapabilities);
     }
 
     /**
@@ -1238,6 +1291,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineTransportTypes(nc);
         combineLinkBandwidths(nc);
         combineSpecifiers(nc);
+        combineMetaCapabilities(nc);
         combineSignalStrength(nc);
         combineUids(nc);
         combineSSIDs(nc);
@@ -1347,6 +1401,7 @@ public final class NetworkCapabilities implements Parcelable {
                 && equalsLinkBandwidths(that)
                 && equalsSignalStrength(that)
                 && equalsSpecifier(that)
+                && equalsMetaCapabilities(that)
                 && equalsUids(that)
                 && equalsSSID(that));
     }
@@ -1364,7 +1419,8 @@ public final class NetworkCapabilities implements Parcelable {
                 + Objects.hashCode(mNetworkSpecifier) * 23
                 + (mSignalStrength * 29)
                 + Objects.hashCode(mUids) * 31
-                + Objects.hashCode(mSSID) * 37;
+                + Objects.hashCode(mSSID) * 37
+                + Objects.hashCode(mMetaNetworkCapabilities) * 41;
     }
 
     @Override
@@ -1379,6 +1435,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeInt(mLinkUpBandwidthKbps);
         dest.writeInt(mLinkDownBandwidthKbps);
         dest.writeParcelable((Parcelable) mNetworkSpecifier, flags);
+        dest.writeParcelable((Parcelable) mMetaNetworkCapabilities, flags);
         dest.writeInt(mSignalStrength);
         dest.writeArraySet(mUids);
         dest.writeString(mSSID);
@@ -1396,6 +1453,7 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mLinkUpBandwidthKbps = in.readInt();
                 netCap.mLinkDownBandwidthKbps = in.readInt();
                 netCap.mNetworkSpecifier = in.readParcelable(null);
+                netCap.mMetaNetworkCapabilities = in.readParcelable(null);
                 netCap.mSignalStrength = in.readInt();
                 netCap.mUids = (ArraySet<UidRange>) in.readArraySet(
                         null /* ClassLoader, null for default */);
@@ -1434,6 +1492,9 @@ public final class NetworkCapabilities implements Parcelable {
         }
         if (mNetworkSpecifier != null) {
             sb.append(" Specifier: <").append(mNetworkSpecifier).append(">");
+        }
+        if (mMetaNetworkCapabilities != null) {
+            sb.append(" MetaCap: <").append(mMetaNetworkCapabilities).append(">");
         }
         if (hasSignalStrength()) {
             sb.append(" SignalStrength: ").append(mSignalStrength);
@@ -1500,6 +1561,9 @@ public final class NetworkCapabilities implements Parcelable {
 
         if (mNetworkSpecifier != null) {
             proto.write(NetworkCapabilitiesProto.NETWORK_SPECIFIER, mNetworkSpecifier.toString());
+        }
+        if (mMetaNetworkCapabilities != null) {
+            // TODO: do we need to write Meta capabilities to proto? What does it do?
         }
 
         proto.write(NetworkCapabilitiesProto.CAN_REPORT_SIGNAL_STRENGTH, hasSignalStrength());

@@ -27463,6 +27463,9 @@ package android.net {
     field public static final java.lang.String MAILTO_SCHEME = "mailto:";
   }
 
+  public abstract interface MetaNetworkCapabilities {
+  }
+
   public class Network implements android.os.Parcelable {
     method public void bindSocket(java.net.DatagramSocket) throws java.io.IOException;
     method public void bindSocket(java.net.Socket) throws java.io.IOException;
@@ -27484,6 +27487,7 @@ package android.net {
     method public int describeContents();
     method public int getLinkDownstreamBandwidthKbps();
     method public int getLinkUpstreamBandwidthKbps();
+    method public android.net.MetaNetworkCapabilities getMetaNetworkCapabilities();
     method public boolean hasCapability(int);
     method public boolean hasTransport(int);
     method public void writeToParcel(android.os.Parcel, int);
