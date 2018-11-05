@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63cfd107_b4a941d3",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-11-05T20:04:08Z",
+      "side": 1,
+      "message": "How can we make sure those MCC+MNC are \"only\" used in Guam? From our source it shows that 310/470 is also used by nTelos in the U.S.\n\nSame questions for other MCC/MNC as well. We are not sure those MCC/MNC are in Guam only.",
+      "range": {
+        "startLine": 3521,
+        "startChar": 15,
+        "endLine": 3521,
+        "endChar": 24
+      },
+      "revId": "099824413fafd498b00c93a6976db6343a3b602d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
