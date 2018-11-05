@@ -237,10 +237,9 @@ public class NetworkRegistrationState implements Parcelable {
     }
 
     /**
-     * @return {@link ServiceState.RoamingType roaming type}. This could return
-     * overridden roaming type based on resource overlay or carrier config.
-     * @hide
+     * @return the current network roaming type {@link ServiceState.RoamingType roaming type}.
      */
+
     public @ServiceState.RoamingType int getRoamingType() {
         return mRoamingType;
     }
