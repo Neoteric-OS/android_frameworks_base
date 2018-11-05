@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2556f209_f3aa9539",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "s/resolvers/resolver/",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1923f686_c650ad12",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "period at end.",
+      "range": {
+        "startLine": 393,
+        "startChar": 72,
+        "endLine": 393,
+        "endChar": 77
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721f4a53_f28a4de7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "is elapsedRealtime always being called when new DnsNotification?\nIf yes, then could we encapsulate all things into DnsNotification class?\nFurthermore, how about put all detail inside custom RingBuffer class, e.g. mDnsEvent.append(int code);  then do all things inside it?",
+      "range": {
+        "startLine": 1554,
+        "startChar": 25,
+        "endLine": 1554,
+        "endChar": 44
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec9f49a_e5cde13a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "How about rename to something like mDataStallDnsCountThreshold \u0026 mDataStallDnsTimeThreshold?",
+      "range": {
+        "startLine": 1581,
+        "startChar": 61,
+        "endLine": 1581,
+        "endChar": 79
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccbc425_54cfb402",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "period at end",
+      "range": {
+        "startLine": 1581,
+        "startChar": 80,
+        "endLine": 1581,
+        "endChar": 82
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e753380_a624feb7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-05T12:01:15Z",
+      "side": 1,
+      "message": "How about something like SystemClock.elapsedRealtime() - mRecentDnsInterval \u003c mDnsEvent.getTimeStampAt(mConsecutiveDnsTimeoutThreshold)?",
+      "range": {
+        "startLine": 1587,
+        "startChar": 26,
+        "endLine": 1587,
+        "endChar": 96
+      },
+      "revId": "86a299983889317459df29d91e305e117df8468f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
