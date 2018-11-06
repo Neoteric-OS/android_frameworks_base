@@ -794,6 +794,7 @@ public class TaskStack extends WindowContainer<Task> implements
         updateBoundsForWindowModeChange();
         mAnimationBackgroundSurface = makeChildSurface(null).setColorLayer(true)
             .setName("animation background stackId=" + mStackId)
+            .setContainerLayer(false)
             .build();
 
         super.onDisplayChanged(dc);
