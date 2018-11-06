@@ -40,6 +40,7 @@ import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -70,6 +71,7 @@ public class NetworkMonitorTest {
     private @Mock Handler mHandler;
     private @Mock IpConnectivityLog mLogger;
     private @Mock NetworkAgentInfo mAgent;
+    private @Mock NetworkAgentInfo mNotMeterAgent;
     private @Mock NetworkInfo mNetworkInfo;
     private @Mock NetworkRequest mRequest;
     private @Mock TelephonyManager mTelephony;
@@ -94,6 +96,12 @@ public class NetworkMonitorTest {
         mAgent.networkCapabilities = new NetworkCapabilities()
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
         mAgent.networkInfo = mNetworkInfo;
+
+        mNotMeterAgent.linkProperties = new LinkProperties();
+        mNotMeterAgent.networkCapabilities = new NetworkCapabilities()
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+        mNotMeterAgent.networkInfo = mNetworkInfo;
 
         when(mAgent.network()).thenReturn(mNetwork);
         when(mDependencies.getNetwork(any())).thenReturn(mNetwork);
@@ -138,6 +146,35 @@ public class NetworkMonitorTest {
         when(mNetwork.getAllByName(any())).thenReturn(new InetAddress[] {
             InetAddress.parseNumericAddress("192.168.0.0")
         });
+    }
+
+    private class WrappedNetworkMonitor extends NetworkMonitor {
+        private long mMockProbeTime = 0;
+
+        WrappedNetworkMonitor(Context context, Handler handler,
+                NetworkAgentInfo networkAgentInfo, NetworkRequest defaultRequest,
+                IpConnectivityLog logger, Dependencies deps) {
+                super(context, handler, networkAgentInfo, defaultRequest, logger, deps);
+        }
+
+        @Override
+        protected long getLastProbeTime() {
+            return mMockProbeTime;
+        }
+
+        protected void setLastProbeTime(long time) {
+            mMockProbeTime = time;
+        }
+    }
+
+    WrappedNetworkMonitor makeMeteredWrappedNetworkMonitor() {
+        return new WrappedNetworkMonitor(
+            mContext, mHandler, mAgent, mRequest, mLogger, mDependencies);
+    }
+
+    WrappedNetworkMonitor makeNotMeteredWrappedNetworkMonitor() {
+        return new WrappedNetworkMonitor(
+            mContext, mHandler, mNotMeterAgent, mRequest, mLogger, mDependencies);
     }
 
     NetworkMonitor makeMonitor() {
@@ -270,6 +307,73 @@ public class NetworkMonitorTest {
         set302(mOtherFallbackConnection, "http://login.portal.example.com");
 
         assertPortal(makeMonitor().isCaptivePortal());
+    }
+
+    private void configureDataStallParameter(int minEvaluateInterval, int evaluationType,
+            int validDnsInterval, int consecutiveDnsTimeoutThreshold) {
+        setMinDataStallEvaluateInterval(minEvaluateInterval);
+        setDataStallEvaluationType(evaluationType);
+        setValidDataStallDnsTimeThreshold(validDnsInterval);
+        setConsecutiveDnsTimeoutThreshold(consecutiveDnsTimeoutThreshold);
+    }
+
+    @Test
+    public void testIsDataStall_EvaluationDisabled() {
+        configureDataStallParameter(500, 0 , 2000, 5);
+        WrappedNetworkMonitor wrappedmonitor = makeMeteredWrappedNetworkMonitor();
+        wrappedmonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
+        assertFalse(wrappedmonitor.isDataStall());
+    }
+
+    @Test
+    public void testIsDataStall_EvaluationDnsOnNotMeteredNetwork() {
+        configureDataStallParameter(0, 1 << NetworkMonitor.DATA_STALL_EVALUATION_TYPE_DNS, 2000,
+                5);
+        WrappedNetworkMonitor wrappedmonitor = makeNotMeteredWrappedNetworkMonitor();
+        wrappedmonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
+        makeDnsTimeoutEvent(wrappedmonitor, 5);
+        assertTrue(wrappedmonitor.isDataStall());
+    }
+
+    @Test
+    public void testIsDataStall_EvaluationDnsOnMeteredNetwork() {
+        configureDataStallParameter(500, 1 << NetworkMonitor.DATA_STALL_EVALUATION_TYPE_DNS, 2000,
+                5);
+
+        WrappedNetworkMonitor wrappedmonitor = makeMeteredWrappedNetworkMonitor();
+        wrappedmonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
+        assertFalse(wrappedmonitor.isDataStall());
+
+        wrappedmonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 1000);
+        makeDnsTimeoutEvent(wrappedmonitor, 5);
+        assertTrue(wrappedmonitor.isDataStall());
+    }
+
+    private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedmonitor, int count) {
+        for (int i = 0; i < count; i++) {
+            wrappedmonitor.getDnsDetection().calculateConsecutiveDnsTimeoutCount(
+                    NetworkMonitor.DnsNotification.RETURN_CODE_DNS_TIMEOUT);
+        }
+    }
+
+    private void setDataStallEvaluationType(int type) {
+        when(mDependencies.getSetting(any(),
+            eq(Settings.Global.DATA_STALL_EVALUATION_TYPE), anyInt())).thenReturn(type);
+    }
+
+    private void setMinDataStallEvaluateInterval(int time) {
+        when(mDependencies.getSetting(any(),
+            eq(Settings.Global.MIN_DATA_STALL_EVALUATE_INTERVAL), anyInt())).thenReturn(time);
+    }
+
+    private void setValidDataStallDnsTimeThreshold(int time) {
+        when(mDependencies.getSetting(any(),
+            eq(Settings.Global.VALID_DATA_STALL_DNS_TIME_THRESHOLD), anyInt())).thenReturn(time);
+    }
+
+    private void setConsecutiveDnsTimeoutThreshold(int num) {
+        when(mDependencies.getSetting(any(),
+            eq(Settings.Global.CONSECUTIVE_DNS_TIMEOUT_THRESHOLD), anyInt())).thenReturn(num);
     }
 
     private void setFallbackUrl(String url) {
