@@ -70,7 +70,8 @@ public class ZenModeFilteringTest extends UiServiceTestCase {
 
     private NotificationRecord getNotificationRecord(NotificationChannel c) {
         StatusBarNotification sbn = mock(StatusBarNotification.class);
-        when(sbn.getNotification()).thenReturn(mock(Notification.class));
+        Notification notif = mock(Notification.class);
+        when(sbn.getNotification()).thenReturn(notif);
         return new NotificationRecord(mContext, sbn, c);
     }
 
@@ -170,5 +171,18 @@ public class ZenModeFilteringTest extends UiServiceTestCase {
         ZenModeConfig config = mock(ZenModeConfig.class);
 
         assertFalse(mZenModeFiltering.shouldIntercept(ZEN_MODE_OFF, config, r));
+    }
+
+    @Test
+    public void testSuppressAnything_bypass_ZenModeOn() {
+        NotificationRecord r = getNotificationRecord();
+        r.setCriticality(CriticalNotificationExtractor.CRITICAL);
+        when(r.sbn.getPackageName()).thenReturn("bananas");
+        Policy policy = new Policy(0, 0, 0, Policy.getAllSuppressedVisualEffects());
+
+        assertFalse(mZenModeFiltering.shouldIntercept(ZEN_MODE_NO_INTERRUPTIONS, policy, r));
+
+        r.setCriticality(CriticalNotificationExtractor.CRITICAL_LOW);
+        assertFalse(mZenModeFiltering.shouldIntercept(ZEN_MODE_NO_INTERRUPTIONS, policy, r));
     }
 }
