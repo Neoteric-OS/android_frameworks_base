@@ -16,6 +16,24 @@
       "revId": "e034f343436818c71c12f3dd80beaf49c147fa5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041d9358_069739bf",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/dex/DexManagerTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2018-11-06T15:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d62a9a9_366af525",
+      "revId": "e034f343436818c71c12f3dd80beaf49c147fa5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
