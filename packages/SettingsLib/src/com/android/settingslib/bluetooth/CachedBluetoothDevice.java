@@ -1201,7 +1201,17 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
      * @return {@code true} if {@code cachedBluetoothDevice} is HFP device
      */
     public boolean isHfpDevice() {
-        return mProfileManager.getHeadsetProfile().getConnectionStatus(mDevice) ==
-                BluetoothProfile.STATE_CONNECTED;
-    }
+
+        if (mProfileManager.getHeadsetProfile() != null) {
+            return mProfileManager.getHeadsetProfile().getConnectionStatus(mDevice) ==
+                    BluetoothProfile.STATE_CONNECTED;
+        } else if (mProfileManager.getHfpClientProfile() != null) {
+            return mProfileManager.getHfpClientProfile().getConnectionStatus(mDevice) ==
+                    BluetoothProfile.STATE_CONNECTED;
+        } else {
+            if (Utils.D)
+                Log.d(TAG, "isHfpDevice: no Hfp  profile found");
+            return false;
+        }
+   }
 }
