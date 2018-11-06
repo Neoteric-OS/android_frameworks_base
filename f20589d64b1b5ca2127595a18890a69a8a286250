@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78d2ef0_8fdfb41b",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-06T15:12:40Z",
+      "side": 1,
+      "message": "Is this line too long for the java style guide? (not sure, just asking).",
+      "range": {
+        "startLine": 897,
+        "startChar": 8,
+        "endLine": 897,
+        "endChar": 117
+      },
+      "revId": "f20589d64b1b5ca2127595a18890a69a8a286250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898599c5_8481d78a",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-06T15:12:40Z",
+      "side": 1,
+      "message": "We must free program_and_data before all return paths.\n\nInstead of adding even more manual memory management, we could use unique_ptr with the simplest possible Deleter which calls free:\n\n  std::unique_ptr\u003cuint8_t, decltype(\u0026free)\u003e program_and_data(malloc(...), free);\n\nOr, in case you don\u0027t want to write program_and_data.get() on each use:\n\n  uint8_t* program_and_data \u003d malloc(...);\n  std::unique_ptr\u003cuint8_t, decltype(\u0026free)\u003e program_and_data_deleter(program_and_data, free);",
+      "range": {
+        "startLine": 203,
+        "startChar": 42,
+        "endLine": 203,
+        "endChar": 48
+      },
+      "revId": "f20589d64b1b5ca2127595a18890a69a8a286250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d94afe3_313b8311",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-06T15:12:40Z",
+      "side": 1,
+      "message": "++pkt_pass_count or pkt_pass_count++\n\nBut since this function always returns false when pkt_pass_count !\u003d 1, isn\u0027t it easier to just return immediately?\n\nAlternative: change this function to return the number of packets filtered, and leave the interpretation to the caller.",
+      "range": {
+        "startLine": 224,
+        "startChar": 11,
+        "endLine": 224,
+        "endChar": 31
+      },
+      "revId": "f20589d64b1b5ca2127595a18890a69a8a286250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
