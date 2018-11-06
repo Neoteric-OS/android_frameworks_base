@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14887621_f4175896",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-06T02:16:37Z",
+      "side": 1,
+      "message": "Since we are amazingly running low on bits with this PhoneStateListener, can we alias LISTEN_SRVCC_STATE_CHANGED to LISTEN_VOLTE_STATE (define it as 0x00004000)? Eventually LISTEN_VOLTE_STATE will just stop being invoked. We could also potentially start doing smart things with API level so that depending on the target SDK of the calling app we do 1 vs the other (to \"encourage\" people to move). They literally should never have to both be functional for the same caller at the same time.",
+      "range": {
+        "startLine": 324,
+        "startChar": 77,
+        "endLine": 324,
+        "endChar": 87
+      },
+      "revId": "35507b5d1c1c013e445d629f15fa045267556d77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
