@@ -22,6 +22,30 @@
       "revId": "2780e301192ee8257ad055ffe2cc68fa9de73f76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d59e60_c754c3db",
+        "filename": "telephony/java/com/android/internal/telephony/NetworkScanResult.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-06T19:04:50Z",
+      "side": 1,
+      "message": "Yes I tested it and yes it works.\nhttps://docs.oracle.com/javase/7/docs/api/java/util/AbstractCollection.html#toString()",
+      "parentUuid": "d8d47f5c_d63181c8",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "2780e301192ee8257ad055ffe2cc68fa9de73f76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
