@@ -109,7 +109,8 @@ class WindowSurfaceController {
                 .setSize(w, h)
                 .setFormat(format)
                 .setFlags(flags)
-                .setMetadata(windowType, ownerUid);
+                .setMetadata(windowType, ownerUid)
+                .setContainerLayer(false);
         mSurfaceControl = b.build();
         Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
     }

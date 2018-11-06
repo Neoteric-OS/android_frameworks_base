@@ -165,6 +165,7 @@ class Dimmer {
                 .setParent(mHost.getSurfaceControl())
                 .setColorLayer(true)
                 .setName("Dim Layer for - " + mHost.getName())
+                .setContainerLayer(false)
                 .build();
     }
 
