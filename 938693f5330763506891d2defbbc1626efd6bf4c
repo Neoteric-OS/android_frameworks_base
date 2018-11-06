@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6dfb036_60b136eb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2018-11-06T18:13:32Z",
+      "side": 1,
+      "message": "I believe this will call KeyguardViewMediator.resetKeyguard(), which might have lots of side effects.",
+      "revId": "938693f5330763506891d2defbbc1626efd6bf4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
