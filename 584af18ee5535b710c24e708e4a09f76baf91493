@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41117c2e_687791f8",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/dex/DexManagerTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2018-11-07T12:04:02Z",
+      "side": 1,
+      "message": "Done.\n\nSorry, I don\u0027t know why I\u0027ve suddentl lost the ability to notice that myself.",
+      "parentUuid": "8327d8d6_688cab56",
+      "range": {
+        "startLine": 412,
+        "startChar": 100,
+        "endLine": 412,
+        "endChar": 105
+      },
+      "revId": "584af18ee5535b710c24e708e4a09f76baf91493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e7ed7e_fb8fd5fc",
         "filename": "services/tests/servicestests/src/com/android/server/pm/dex/DexManagerTests.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "584af18ee5535b710c24e708e4a09f76baf91493",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a32b7bb_4389a360",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/dex/DexManagerTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2018-11-07T12:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e7ed7e_fb8fd5fc",
+      "range": {
+        "startLine": 527,
+        "startChar": 100,
+        "endLine": 527,
+        "endChar": 101
+      },
+      "revId": "584af18ee5535b710c24e708e4a09f76baf91493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
