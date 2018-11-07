@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e07aaa6_40f6988c",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-07T07:19:34Z",
+      "side": 1,
+      "message": "This only supports plain proxies with host and port. Can this be a ProxyInfo instead? It\u0027s Parcelable, it\u0027s what we use in LinkProperties, and it allows us to support other types of proxies as well.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "b67ea485cf86dc3a6872939a285defb78f945b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
