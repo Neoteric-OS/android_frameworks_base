@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38ac7e59_d1efc21e",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-07T06:29:53Z",
+      "side": 1,
+      "message": "yes, 100 characters per line.\nI\u0027ll fix it.",
+      "parentUuid": "d78d2ef0_8fdfb41b",
+      "range": {
+        "startLine": 897,
+        "startChar": 8,
+        "endLine": 897,
+        "endChar": 117
+      },
+      "revId": "f20589d64b1b5ca2127595a18890a69a8a286250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "898599c5_8481d78a",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2018-11-06T15:12:40Z",
       "side": 1,
       "message": "++pkt_pass_count or pkt_pass_count++\n\nBut since this function always returns false when pkt_pass_count !\u003d 1, isn\u0027t it easier to just return immediately?\n\nAlternative: change this function to return the number of packets filtered, and leave the interpretation to the caller.",
+      "range": {
+        "startLine": 224,
+        "startChar": 11,
+        "endLine": 224,
+        "endChar": 31
+      },
+      "revId": "f20589d64b1b5ca2127595a18890a69a8a286250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfa1d86_39998ee1",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-07T06:29:53Z",
+      "side": 1,
+      "message": "Yes, the following check can be moved into the loop then we don\u0027t need variable pkt_pass_count.\nI just think that do we need to run whole file and then return the result.\nIf return false immediately, the counter TOTAL_PACKETS will indicate the first packet passes the filter. \nIt looks more helpful for debugging if return false immediately.",
+      "parentUuid": "2d94afe3_313b8311",
       "range": {
         "startLine": 224,
         "startChar": 11,
