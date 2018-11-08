@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dacd9af_6a8b7b83",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-08T08:26:07Z",
+      "side": 1,
+      "message": "This sounds really dangerous, because this code now becomes reliant on other code where it\u0027s not documented that there is this assumption. In other words, I can go in ConnectivityService, send another message to the network monitor, void this assumption and break this code without ever having to look at this comment.\n\nI believe that if you really need to do this, then you have to implement one of the strategies that you described in the comment l.853~856 to protect against this issue.",
+      "range": {
+        "startLine": 850,
+        "startChar": 57,
+        "endLine": 852,
+        "endChar": 55
+      },
+      "revId": "4a35815eaac1204ea12eb148ca99cbee3640b9be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
