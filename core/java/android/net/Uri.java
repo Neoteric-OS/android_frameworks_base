@@ -376,9 +376,8 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
     /**
      * Return a string representation of the URI that is safe to print
      * to logs and other places where PII should be avoided.
-     * @hide
+     * @return the PII data filtered string representation of this URI
      */
-    @UnsupportedAppUsage
     public String toSafeString() {
         String scheme = getScheme();
         String ssp = getSchemeSpecificPart();
