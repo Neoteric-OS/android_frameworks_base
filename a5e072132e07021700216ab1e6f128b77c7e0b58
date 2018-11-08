@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d7f074d_53c899de",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-08T20:56:51Z",
+      "side": 1,
+      "message": "Yes it is removed from AIDL it still exists in the hidden api.",
+      "parentUuid": "e817eabc_da3a12f3",
+      "revId": "a5e072132e07021700216ab1e6f128b77c7e0b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4627422_f7474d04",
         "filename": "keystore/java/android/security/KeyStore.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a5e072132e07021700216ab1e6f128b77c7e0b58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b8f458_8c2f17ef",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-08T20:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4627422_f7474d04",
+      "revId": "a5e072132e07021700216ab1e6f128b77c7e0b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
