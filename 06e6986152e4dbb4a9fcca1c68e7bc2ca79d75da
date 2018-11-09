@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c103d6d1_2fbf58a8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-09T02:10:41Z",
+      "side": 1,
+      "message": "is possible to use obj.hashCode() instead of token?",
+      "range": {
+        "startLine": 843,
+        "startChar": 85,
+        "endLine": 843,
+        "endChar": 90
+      },
+      "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
