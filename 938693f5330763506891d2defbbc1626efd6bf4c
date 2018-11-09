@@ -16,6 +16,24 @@
       "revId": "938693f5330763506891d2defbbc1626efd6bf4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac9934e_8e6a426c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBouncer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2018-11-09T04:06:30Z",
+      "side": 1,
+      "message": "No, it will only call KeyguardSecurityView.reset(), which will trigger IPC call into lock_settings.",
+      "parentUuid": "f6dfb036_60b136eb",
+      "revId": "938693f5330763506891d2defbbc1626efd6bf4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
