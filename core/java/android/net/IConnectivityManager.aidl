@@ -203,4 +203,6 @@ interface IConnectivityManager
 
     void getLatestTetheringEntitlementValue(int type, in ResultReceiver receiver,
             boolean showEntitlementUi, String callerPkg);
+
+    IBinder getTestNetworkService();
 }
