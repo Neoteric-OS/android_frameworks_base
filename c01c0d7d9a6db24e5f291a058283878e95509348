@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57e9965_1de2e881",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-09T07:03:30Z",
+      "side": 1,
+      "message": "Can you add a short comment saying this is to avoid processing a message from an old thread ? Also (unless you feel it\u0027s obvious) that mThread can\u0027t be null here because it\u0027s set to non-null in enter and null in exit.",
+      "range": {
+        "startLine": 855,
+        "startChar": 31,
+        "endLine": 855,
+        "endChar": 38
+      },
+      "revId": "c01c0d7d9a6db24e5f291a058283878e95509348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
