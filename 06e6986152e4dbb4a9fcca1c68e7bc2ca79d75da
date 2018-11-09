@@ -46,6 +46,30 @@
       "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc5627a2_dfc82787",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-09T09:41:09Z",
+      "side": 1,
+      "message": "After more testing, there will be timing issue while using the hashCode() of the thread object. \nIssue flow is \n1. Finish enter() here but the mThread does not yet to run.\n2. Soon receive CMD_NETWORK_DISCONNECTED and go to exit\n3. Thread interrupt is not blocking and the thread is set to null.\n4. then the mThread start to run and try to have the hashcode\n\nIt will get a null pointer exception since the mThread is already set null.\n\nThus, I will prefer to reset to patch set 2 to simply use a token to do this protection.",
+      "parentUuid": "a1c1af8a_5925d819",
+      "range": {
+        "startLine": 843,
+        "startChar": 85,
+        "endLine": 843,
+        "endChar": 90
+      },
+      "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
