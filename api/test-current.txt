@@ -597,6 +597,10 @@ package android.media.audiofx {
 
 package android.net {
 
+  public class ConnectivityManager {
+    method public android.net.TestNetworkManager getTestNetworkManager();
+  }
+
   public final class IpSecManager {
     field public static final int INVALID_SECURITY_PARAMETER_INDEX = 0; // 0x0
   }

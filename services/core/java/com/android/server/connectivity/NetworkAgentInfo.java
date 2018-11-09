@@ -16,8 +16,6 @@
 
 package com.android.server.connectivity;
 
-import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
-
 import android.content.Context;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -29,7 +27,6 @@ import android.net.NetworkState;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.Messenger;
-import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.SparseArray;
@@ -37,11 +34,8 @@ import android.util.SparseArray;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
-import com.android.server.connectivity.NetworkMonitor;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -422,6 +416,10 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public boolean isVPN() {
         return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+    }
+
+    public boolean isTestNetwork() {
+        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_TEST);
     }
 
     private int getCurrentScore(boolean pretendValidated) {

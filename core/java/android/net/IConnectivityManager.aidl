@@ -185,4 +185,6 @@ interface IConnectivityManager
     byte[] getNetworkWatchlistConfigHash();
 
     int getConnectionOwnerUid(in ConnectionInfo connectionInfo);
+
+    IBinder getTestNetworkService(in String callingPackage);
 }

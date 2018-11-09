@@ -22,6 +22,7 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -4000,6 +4001,26 @@ public class ConnectivityManager {
                 sb.append(" [").append(stackTrace).append("]");
             }
             Log.d(TAG, "StackLog:" + sb.toString());
+        }
+    }
+
+    /**
+     * Retrieves (and lazily-initializes) the TestNetworkManager
+     *
+     * <p>The TestNetworkManager allows for the creation and management of per-UID,
+     * capability-limited Networks for testing purposes.
+     *
+     * @hide
+     */
+    @TestApi
+    public TestNetworkManager getTestNetworkManager() {
+        try {
+            ITestNetworkManager service =
+                    ITestNetworkManager.Stub.asInterface(
+                            mService.getTestNetworkService(mContext.getOpPackageName()));
+            return new TestNetworkManager(mContext, service);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }
