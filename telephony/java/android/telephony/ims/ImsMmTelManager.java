@@ -52,6 +52,7 @@ import java.util.concurrent.Executor;
  * @see #createForSubscriptionId(Context, int)
  * @hide
  */
+@SystemApi
 public class ImsMmTelManager {
 
     private static final String TAG = "ImsMmTelManager";
@@ -70,16 +71,12 @@ public class ImsMmTelManager {
     /**
      * Register for IMS over IWLAN if WiFi signal quality is high enough. Do not hand over to LTE
      * registration if signal quality degrades.
-     * @hide
      */
-    @SystemApi
     public static final int WIFI_MODE_WIFI_ONLY = 0;
 
     /**
      * Prefer registering for IMS over LTE if LTE signal quality is high enough.
-     * @hide
      */
-    @SystemApi
     public static final int WIFI_MODE_CELLULAR_PREFERRED = 1;
 
     /**
@@ -91,8 +88,8 @@ public class ImsMmTelManager {
 
     /**
      * Callback class for receiving Registration callback events.
-     * @see #addImsRegistrationCallback(Executor, RegistrationCallback) (RegistrationCallback)
-     * @see #removeImsRegistrationCallback(RegistrationCallback)
+     * @see #registerImsRegistrationCallback(Executor, RegistrationCallback) (RegistrationCallback)
+     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
      */
     public static class RegistrationCallback {
 
@@ -219,8 +216,8 @@ public class ImsMmTelManager {
     /**
      * Receives IMS capability status updates from the ImsService.
      *
-     * @see #addMmTelCapabilityCallback(Executor, CapabilityCallback) (CapabilityCallback)
-     * @see #removeMmTelCapabilityCallback(CapabilityCallback)
+     * @see #registerMmTelCapabilityCallback(Executor, CapabilityCallback) (CapabilityCallback)
+     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
      */
     public static class CapabilityCallback {
 
@@ -315,14 +312,14 @@ public class ImsMmTelManager {
      * Registers a {@link RegistrationCallback} with the system, which will provide registration
      * updates for the subscription specified in {@link #createForSubscriptionId(Context, int)}. Use
      * {@link SubscriptionManager.OnSubscriptionsChangedListener} to listen to Subscription changed
-     * events and call {@link #removeImsRegistrationCallback(RegistrationCallback)} to clean up
+     * events and call {@link #unregisterImsRegistrationCallback(RegistrationCallback)} to clean up
      * after a subscription is removed.
      * @param executor The executor the callback events should be run on.
      * @param c The {@link RegistrationCallback} to be added.
-     * @see #removeImsRegistrationCallback(RegistrationCallback)
+     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-    public void addImsRegistrationCallback(@CallbackExecutor Executor executor,
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void registerImsRegistrationCallback(@CallbackExecutor Executor executor,
             @NonNull RegistrationCallback c) {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
@@ -332,8 +329,7 @@ public class ImsMmTelManager {
         }
         c.setExecutor(executor);
         try {
-            getITelephony().addImsRegistrationCallback(mSubId, c.getBinder(),
-                    mContext.getOpPackageName());
+            getITelephony().registerImsRegistrationCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -344,16 +340,15 @@ public class ImsMmTelManager {
      * up to avoid memory leaks or when the subscription is removed.
      * @param c The {@link RegistrationCallback} to be removed.
      * @see SubscriptionManager.OnSubscriptionsChangedListener
-     * @see #addImsRegistrationCallback(Executor, RegistrationCallback)
+     * @see #registerImsRegistrationCallback(Executor, RegistrationCallback)
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-    public void removeImsRegistrationCallback(@NonNull RegistrationCallback c) {
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void unregisterImsRegistrationCallback(@NonNull RegistrationCallback c) {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
         try {
-            getITelephony().removeImsRegistrationCallback(mSubId, c.getBinder(),
-                    mContext.getOpPackageName());
+            getITelephony().unregisterImsRegistrationCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -364,14 +359,14 @@ public class ImsMmTelManager {
      * updates for the subscription specified in {@link #createForSubscriptionId(Context, int)}.
      * Use {@link SubscriptionManager.OnSubscriptionsChangedListener} to listen to
      * subscription changed events and call
-     * {@link #removeImsRegistrationCallback(RegistrationCallback)} to clean up after a subscription
-     * is removed.
+     * {@link #unregisterImsRegistrationCallback(RegistrationCallback)} to clean up after a
+     * subscription is removed.
      * @param executor The executor the callback events should be run on.
      * @param c The MmTel {@link CapabilityCallback} to be registered.
-     * @see #removeMmTelCapabilityCallback(CapabilityCallback)
+     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-    public void addMmTelCapabilityCallback(@CallbackExecutor Executor executor,
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void registerMmTelCapabilityCallback(@CallbackExecutor Executor executor,
             @NonNull CapabilityCallback c) {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
@@ -381,8 +376,7 @@ public class ImsMmTelManager {
         }
         c.setExecutor(executor);
         try {
-            getITelephony().addMmTelCapabilityCallback(mSubId, c.getBinder(),
-                    mContext.getOpPackageName());
+            getITelephony().registerMmTelCapabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -392,29 +386,42 @@ public class ImsMmTelManager {
      * Removes an existing MmTel {@link CapabilityCallback}. Be sure to call this when cleaning
      * up to avoid memory leaks.
      * @param c The MmTel {@link CapabilityCallback} to be removed.
-     * @see #addMmTelCapabilityCallback(Executor, CapabilityCallback)
+     * @see #registerMmTelCapabilityCallback(Executor, CapabilityCallback)
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-    public void removeMmTelCapabilityCallback(@NonNull CapabilityCallback c) {
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void unregisterMmTelCapabilityCallback(@NonNull CapabilityCallback c) {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
         try {
-            getITelephony().removeMmTelCapabilityCallback(mSubId, c.getBinder(),
-                    mContext.getOpPackageName());
+            getITelephony().unregisterMmTelCapabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
     }
 
     /**
-     * Query the user's setting for whether or not to use MmTel capabilities over IMS,
-     * such as voice and video, depending on carrier configuration for the current subscription.
+     * Query the user’s setting for “Advanced Calling” or "Enhanced 4G LTE", which is used to
+     * enable MmTel IMS features, depending on the carrier configuration for the current
+     * subscription. If this setting is enabled, IMS voice and video telephony over IWLAN/LTE will
+     * be enabled as long as the carrier has provisioned these services for the specified
+     * subscription. Other IMS services (SMS/UT) are not affected by this user setting and depend on
+     * carrier requirements.
+     *
+     * Modifying this value may also trigger an IMS registration or deregistration, depending on
+     * whether or not the new value is enabled or disabled.
+     *
+     * Note: If the carrier configuration for advanced calling is not editable or hidden, this
+     * method will do nothing and will instead always use the default value.
+     *
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
      * @see #setAdvancedCallingSetting(boolean)
-     * @return true if the user’s setting for advanced calling is enabled and false otherwise.
-     * @hide
+     * @return true if the user's setting for advanced calling is enabled, false otherwise.
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isAdvancedCallingSettingEnabled() {
         try {
@@ -426,13 +433,25 @@ public class ImsMmTelManager {
 
     /**
      * Modify the user’s setting for “Advanced Calling” or "Enhanced 4G LTE", which is used to
-     * enable MmTel IMS features, such as voice and video calling, depending on the carrier
-     * configuration for the current subscription. Modifying this value may also trigger an IMS
-     * registration or deregistration, depending on the new value.
-     * @see #isAdvancedCallingEnabled()
-     * @hide
+     * enable MmTel IMS features, depending on the carrier configuration for the current
+     * subscription. If this setting is enabled, IMS voice and video telephony over IWLAN/LTE will
+     * be enabled as long as the carrier has provisioned these services for the specified
+     * subscription. Other IMS services (SMS/UT) are not affected by this user setting and depend on
+     * carrier requirements.
+     *
+     * Modifying this value may also trigger an IMS registration or deregistration, depending on
+     * whether or not the new value is enabled or disabled.
+     *
+     * Note: If the carrier configuration for advanced calling is not editable or hidden, this
+     * method will do nothing and will instead always use the default value.
+     *
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
+     * @see #isAdvancedCallingSettingEnabled()
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setAdvancedCallingSetting(boolean isEnabled) {
         try {
@@ -464,12 +483,11 @@ public class ImsMmTelManager {
      * @return {@code true} if the MmTel IMS capability is capable for this subscription, false
      *         otherwise.
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isCapable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
         try {
-            return getITelephony().isCapable(mSubId, capability, imsRegTech,
-                    mContext.getOpPackageName());
+            return getITelephony().isCapable(mSubId, capability, imsRegTech);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -492,12 +510,11 @@ public class ImsMmTelManager {
      * @return {@code true} if the MmTel IMS capability is available for this subscription, false
      *         otherwise.
      */
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isAvailable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
         try {
-            return getITelephony().isAvailable(mSubId, capability, imsRegTech,
-                    mContext.getOpPackageName());
+            return getITelephony().isAvailable(mSubId, capability, imsRegTech);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -508,11 +525,10 @@ public class ImsMmTelManager {
      * @return true if the user’s “Video Calling” setting is currently enabled.
      * @see #setVtSetting(boolean)
      */
-    @SystemApi
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVtSettingEnabled() {
         try {
-            return getITelephony().isVtSettingEnabled(mSubId, mContext.getOpPackageName());
+            return getITelephony().isVtSettingEnabled(mSubId);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -521,9 +537,7 @@ public class ImsMmTelManager {
     /**
      * Change the user's setting for Video Telephony and enable the Video Telephony capability.
      * @see #isVtSettingEnabled()
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVtSetting(boolean isEnabled) {
         try {
@@ -537,9 +551,7 @@ public class ImsMmTelManager {
     /**
      * @return true if the user's setting for Voice over WiFi is enabled and false if it is not.
      * @see #setVoWiFiSetting(boolean)
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVoWiFiSettingEnabled() {
         try {
@@ -553,9 +565,7 @@ public class ImsMmTelManager {
      * Sets the user's setting for whether or not Voice over WiFi is enabled.
      * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise=
      * @see #isVoWiFiSettingEnabled()
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiSetting(boolean isEnabled) {
         try {
@@ -570,9 +580,7 @@ public class ImsMmTelManager {
      * @return true if the user's setting for Voice over WiFi while roaming is enabled, false
      * if disabled.
      * @see #setVoWiFiRoamingSetting(boolean)
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVoWiFiRoamingSettingEnabled() {
         try {
@@ -587,9 +595,7 @@ public class ImsMmTelManager {
      * @param isEnabled true if the user's setting for Voice over WiFi while roaming is enabled,
      *     false otherwise.
      * @see #isVoWiFiRoamingSettingEnabled()
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingSetting(boolean isEnabled) {
         try {
@@ -611,9 +617,7 @@ public class ImsMmTelManager {
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #setVoWiFiSetting(boolean)
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiNonPersistent(boolean isCapable, int mode) {
         try {
@@ -631,9 +635,7 @@ public class ImsMmTelManager {
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #setVoWiFiSetting(boolean)
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @WiFiCallingMode int getVoWiFiModeSetting() {
         try {
@@ -651,9 +653,7 @@ public class ImsMmTelManager {
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #getVoWiFiModeSetting()
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiModeSetting(@WiFiCallingMode int mode) {
         try {
@@ -674,9 +674,7 @@ public class ImsMmTelManager {
      *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      *     - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #setVoWiFiRoamingSetting(boolean)
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
         try {
@@ -696,9 +694,7 @@ public class ImsMmTelManager {
      *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      *     - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #getVoWiFiRoamingModeSetting()
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingModeSetting(@WiFiCallingMode int mode) {
         try {
@@ -712,9 +708,7 @@ public class ImsMmTelManager {
     /**
      * Change the user's setting for RTT capability of this device.
      * @param isEnabled if true RTT will be enabled during calls.
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setRttCapabilitySetting(boolean isEnabled) {
         try {
@@ -729,9 +723,7 @@ public class ImsMmTelManager {
      * @return true if TTY over VoLTE is supported
      * @see android.telecom.TelecomManager#getCurrentTtyMode
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     boolean isTtyOverVolteEnabled() {
         try {
