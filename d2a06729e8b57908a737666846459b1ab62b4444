@@ -22,6 +22,30 @@
       "revId": "d2a06729e8b57908a737666846459b1ab62b4444",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f983a4ac_2b488d62",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-09T22:04:16Z",
+      "side": 1,
+      "message": "No, LISTEN_SRVCC_STATE is read_privileged_phone_state, so it shouldn\u0027t check this permisssion.",
+      "parentUuid": "4f43398b_14b9c9b5",
+      "range": {
+        "startLine": 236,
+        "startChar": 35,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "d2a06729e8b57908a737666846459b1ab62b4444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
