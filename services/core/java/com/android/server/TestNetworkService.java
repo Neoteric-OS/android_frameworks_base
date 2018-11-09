@@ -19,7 +19,6 @@ package com.android.server;
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
@@ -31,7 +30,6 @@ import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
-import android.net.NetworkMisc;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.util.NetdService;
@@ -59,6 +57,8 @@ import java.net.SocketException;
 class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private static final String TAG = TestNetworkService.class.getSimpleName();
     @NonNull private static final String TEST_NETWORK_TYPE = "TEST_NETWORK";
+    @NonNull private static final String TEST_TUN_PREFIX = "TEST_TUN";
+    @NonNull private static final String TEST_TAP_PREFIX = "TEST_TAP";
 
     @NonNull private final Context mContext;
     @NonNull private final INetworkManagementService mNMS;
@@ -85,7 +85,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     }
 
     private boolean isTunTapName(@NonNull String iface) {
-        return iface.startsWith("testTun") || iface.startsWith("testTap");
+        return iface.startsWith(TEST_TUN_PREFIX) || iface.startsWith(TEST_TAP_PREFIX);
     }
 
     /**
@@ -143,10 +143,9 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 @NonNull NetworkInfo ni,
                 @NonNull NetworkCapabilities nc,
                 @NonNull LinkProperties lp,
-                @Nullable NetworkMisc networkMisc,
                 int uid,
                 @NonNull IBinder binder) {
-            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE, networkMisc);
+            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE);
 
             mUid = uid;
             mNi = ni;
@@ -216,7 +215,6 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addTransportType(NetworkCapabilities.TRANSPORT_TEST);
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
-        nc.setSingleUid(callingUid);
         nc.setNetworkSpecifier(new StringNetworkSpecifier(iface));
 
         // Build LinkProperties
@@ -247,12 +245,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null, iface));
         }
 
-        // Allow bypass so that traffic is routed correctly when multiple test networks are stacked.
-        // This is useful for VPN and IPsec testing.
-        NetworkMisc networkMisc = new NetworkMisc();
-        networkMisc.allowBypass = true;
-
-        return new TestNetworkAgent(looper, context, ni, nc, lp, networkMisc, callingUid, binder);
+        return new TestNetworkAgent(looper, context, ni, nc, lp, callingUid, binder);
     }
 
     /**
