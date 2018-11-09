@@ -22,6 +22,30 @@
       "revId": "c01c0d7d9a6db24e5f291a058283878e95509348",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fa620d_61f6a6e0",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-09T09:58:05Z",
+      "side": 1,
+      "message": "Ack. Thanks for the suggestion. I add a commment \"Ensure that CMD_PROBE_COMPLETE from stale threads are ignored.\" Please let me know if the comment is not clear enough.\n\nFor the mThread part. I update the design to not use hashCode(). That should be a note for using Thread.hashCode(). Suppose we do not need the note in the latest patch if you\u0027re fine with the seqNum way.",
+      "parentUuid": "c57e9965_1de2e881",
+      "range": {
+        "startLine": 855,
+        "startChar": 31,
+        "endLine": 855,
+        "endChar": 38
+      },
+      "revId": "c01c0d7d9a6db24e5f291a058283878e95509348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
