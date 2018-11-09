@@ -4300,4 +4300,23 @@ public class ConnectivityManager {
             Log.d(TAG, "StackLog:" + sb.toString());
         }
     }
+
+    /**
+     * Retrieves (and lazily-initializes) the TestNetworkManager
+     *
+     * <p>The TestNetworkManager allows for the creation and management of per-UID,
+     * capability-limited Networks for testing purposes.
+     *
+     * @hide
+     */
+    @TestApi
+    public TestNetworkManager getTestNetworkManager() {
+        try {
+            ITestNetworkManager service =
+                    ITestNetworkManager.Stub.asInterface(mService.getTestNetworkService());
+            return new TestNetworkManager(mContext, service);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
