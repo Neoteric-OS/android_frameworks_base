@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f43398b_14b9c9b5",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-11-09T19:30:06Z",
+      "side": 1,
+      "message": "do you want to replace this with LISTEN_SRVCC_STATE?",
+      "range": {
+        "startLine": 236,
+        "startChar": 35,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "d2a06729e8b57908a737666846459b1ab62b4444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
