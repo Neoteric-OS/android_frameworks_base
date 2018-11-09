@@ -150,13 +150,13 @@ public class WebViewZygote {
         }
 
         try {
-            sZygote = Process.zygoteProcess.startChildZygote(
+            sZygote = Process.ZYGOTE_PROCESS.startChildZygote(
                     "com.android.internal.os.WebViewZygoteInit",
                     "webview_zygote",
                     Process.WEBVIEW_ZYGOTE_UID,
                     Process.WEBVIEW_ZYGOTE_UID,
                     null,  // gids
-                    0,  // runtimeFlags
+                    0,  // mRuntimeFlags
                     "webview_zygote",  // seInfo
                     sPackage.applicationInfo.primaryCpuAbi,  // abi
                     null);  // instructionSet

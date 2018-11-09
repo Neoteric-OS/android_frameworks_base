@@ -30,16 +30,6 @@ public class Process {
     private static final String LOG_TAG = "Process";
 
     /**
-     * @hide for internal use only.
-     */
-    public static final String ZYGOTE_SOCKET = "zygote";
-
-    /**
-     * @hide for internal use only.
-     */
-    public static final String SECONDARY_ZYGOTE_SOCKET = "zygote_secondary";
-
-    /**
      * An invalid UID value.
      */
     public static final int INVALID_UID = -1;
@@ -451,8 +441,7 @@ public class Process {
      * State associated with the zygote process.
      * @hide
      */
-    public static final ZygoteProcess zygoteProcess =
-            new ZygoteProcess(ZYGOTE_SOCKET, SECONDARY_ZYGOTE_SOCKET);
+    public static final ZygoteProcess ZYGOTE_PROCESS = new ZygoteProcess();
 
     /**
      * Start a new process.
@@ -464,14 +453,14 @@ public class Process {
      * <p>If processes are not enabled, a new thread in the caller's
      * process is created and main() of <var>processClass</var> called there.
      * 
-     * <p>The niceName parameter, if not an empty string, is a custom name to
+     * <p>The mNiceName parameter, if not an empty string, is a custom name to
      * give to the process instead of using processClass.  This allows you to
      * make easily identifyable processes even if you are using the same base
      * <var>processClass</var> to start them.
      * 
-     * When invokeWith is not null, the process will be started as a fresh app
+     * When mInvokeWith is not null, the process will be started as a fresh app
      * and not a zygote fork. Note that this is only allowed for uid 0 or when
-     * runtimeFlags contains DEBUG_ENABLE_DEBUGGER.
+     * mRuntimeFlags contains DEBUG_ENABLE_DEBUGGER.
      *
      * @param processClass The class to use as the process's main entry
      *                     point.
@@ -504,9 +493,10 @@ public class Process {
                                   String appDataDir,
                                   String invokeWith,
                                   String[] zygoteArgs) {
-        return zygoteProcess.start(processClass, niceName, uid, gid, gids,
+        return ZYGOTE_PROCESS.start(processClass, niceName, uid, gid, gids,
                     runtimeFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith,
+                    /*isWebViewProcess=*/ false, zygoteArgs);
     }
 
     /** @hide */
@@ -523,7 +513,8 @@ public class Process {
                                   String[] zygoteArgs) {
         return WebViewZygote.getProcess().start(processClass, niceName, uid, gid, gids,
                     runtimeFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith,
+                    /*isWebViewProcess=*/ true, zygoteArgs);
     }
 
     /**
