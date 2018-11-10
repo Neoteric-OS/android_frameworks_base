@@ -27,6 +27,7 @@ public:
     ~DeviceCallback();
 
     void onDeviceOpen();
+    void onDeviceGetReport(int requestId, int reportId);
     void onDeviceError();
 
 private:
@@ -45,6 +46,7 @@ public:
     ~Device();
 
     void sendReport(uint8_t* report, size_t reportSize);
+    void sendGetFeatureReportReply(uint32_t id, uint16_t err, uint8_t* report, size_t reportSize);
     void close();
 
     int handleEvents(int events);
