@@ -1811,6 +1811,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         // Create a version of the intent with the number always populated.
         Intent intentWithPhoneNumber = new Intent(intent);
         intentWithPhoneNumber.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, incomingNumber);
+        intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, incomingNumber);
 
         // Send broadcast twice, once for apps that have PRIVILEGED permission and once for those
         // that have the runtime one
