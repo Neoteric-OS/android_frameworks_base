@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f79a73_c84cc61f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T23:08:31Z",
+      "side": 1,
+      "message": "Let\u0027s keep the names consistent and rename this to onPackageAdded. Likewise with onPackageRemoved below.",
+      "range": {
+        "startLine": 4188,
+        "startChar": 27,
+        "endLine": 4188,
+        "endChar": 37
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb4b150_b33bdb7e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T23:08:31Z",
+      "side": 1,
+      "message": "isSystem maybe ?",
+      "range": {
+        "startLine": 214,
+        "startChar": 30,
+        "endLine": 214,
+        "endChar": 35
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8025ff_4ccb6a5d",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T23:08:31Z",
+      "side": 1,
+      "message": "style : no space (here and next arg as well as below)",
+      "range": {
+        "startLine": 237,
+        "startChar": 60,
+        "endLine": 237,
+        "endChar": 61
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf29142_3f7df296",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T23:08:31Z",
+      "side": 1,
+      "message": "does",
+      "range": {
+        "startLine": 242,
+        "startChar": 46,
+        "endLine": 242,
+        "endChar": 48
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebba6f4d_0e267d78",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T23:08:31Z",
+      "side": 1,
+      "message": "has listed permissions, expected none",
+      "range": {
+        "startLine": 255,
+        "startChar": 70,
+        "endLine": 255,
+        "endChar": 81
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
