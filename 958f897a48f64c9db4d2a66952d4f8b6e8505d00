@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641bc2b8_8a2693aa",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-11-12T21:26:42Z",
+      "side": 1,
+      "message": "The general approach looks good. I think this can be further simplified by modifying the SurfaceControl.Builder to unset the container layer when color layer is set and vice versa.\n\nThis way, DisplayContent#makeChildSurface will call setContainerLayer(like in the current patch set) and cases where we need a color layer, we dont need to call setContainerLayer(false).",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
