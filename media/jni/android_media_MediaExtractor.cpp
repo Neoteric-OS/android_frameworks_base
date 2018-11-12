@@ -289,6 +289,11 @@ bool JMediaExtractor::getCachedDuration(int64_t *durationUs, bool *eos) const {
     return mImpl->getCachedDuration(durationUs, eos);
 }
 
+status_t JMediaExtractor::setMediaDrmSession(const Vector<uint8_t> &drmUuid,
+        const Vector<uint8_t> &sessionId) const {
+    return mImpl->setMediaDrmSession(drmUuid, sessionId);
+}
+
 }  // namespace android
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -894,6 +899,39 @@ android_media_MediaExtractor_native_getMetrics(JNIEnv * env, jobject thiz)
     return mybundle;
 }
 
+/* copy from frameworks/base/media/jni/android_media_MediaDrm.cpp */
+static Vector<uint8_t> JByteArrayToVector(JNIEnv *env, jbyteArray const &byteArray) {
+    Vector<uint8_t> vector;
+    size_t length = env->GetArrayLength(byteArray);
+    vector.insertAt((size_t)0, length);
+    env->GetByteArrayRegion(byteArray, 0, length, (jbyte *)vector.editArray());
+    return vector;
+}
+
+static void android_media_MediaExtractor_setMediaDrmSession(
+        JNIEnv *env, jobject thiz,
+        jbyteArray uuidObj, jbyteArray sessionIdObj) {
+
+    sp<JMediaExtractor> extractor = getMediaExtractor(env, thiz);
+
+    if (extractor == NULL || uuidObj == NULL || sessionIdObj == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return;
+    }
+
+    Vector<uint8_t> uuid = JByteArrayToVector(env, uuidObj);
+    Vector<uint8_t> sessionId = JByteArrayToVector(env, sessionIdObj);
+
+    status_t err = extractor->setMediaDrmSession(uuid, sessionId);
+
+    if (err != OK) {
+        jniThrowException(
+            env,
+            "java/io/IOException",
+            "Failed to setMediaDrmSession.");
+        return;
+    }
+}
 
 static const JNINativeMethod gMethods[] = {
     { "release", "()V", (void *)android_media_MediaExtractor_release },
@@ -963,6 +1001,9 @@ static const JNINativeMethod gMethods[] = {
 
     {"native_getMetrics",          "()Landroid/os/PersistableBundle;",
       (void *)android_media_MediaExtractor_native_getMetrics},
+
+    { "nativeSetMediaDrmSession", "([B[B)V",
+      (void *)android_media_MediaExtractor_setMediaDrmSession },
 };
 
 int register_android_media_MediaExtractor(JNIEnv *env) {
