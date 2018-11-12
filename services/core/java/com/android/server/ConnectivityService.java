@@ -901,6 +901,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Listen to package add and removal events for all users.
         intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
         mContext.registerReceiverAsUser(
@@ -4192,12 +4193,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mPermissionMonitor.onPackageAdded(packageName, uid);
     }
 
-    private void onPackageRemoved(String packageName, int uid) {
+    private void onPackageReplaced(String packageName, int uid) {
+        if (TextUtils.isEmpty(packageName) || uid < 0) {
+            loge("Invalid package in onPackageReplaced: " + packageName + " | " + uid);
+            return;
+        }
+        final int userId = UserHandle.getUserId(uid);
+        synchronized (mVpns) {
+            final Vpn vpn = mVpns.get(userId);
+            if (vpn == null) {
+                return;
+            }
+            if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName)) {
+                vpn.startAlwaysOnVpn();
+            }
+        }
+    }
+
+    private void onPackageRemoved(String packageName, int uid, boolean isReplacing) {
         if (TextUtils.isEmpty(packageName) || uid < 0) {
             Slog.wtf(TAG, "Invalid package in onPackageRemoved: " + packageName + " | " + uid);
             return;
         }
         mPermissionMonitor.onPackageRemoved(uid);
+
+        final int userId = UserHandle.getUserId(uid);
+        synchronized (mVpns) {
+            final Vpn vpn = mVpns.get(userId);
+            if (vpn == null) {
+                return;
+            }
+            if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName) && !isReplacing) {
+                vpn.setAlwaysOnPackage(null, false);
+            }
+        }
     }
 
     private void onUserUnlocked(int userId) {
@@ -4234,8 +4263,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 onUserUnlocked(userId);
             } else if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
                 onPackageAdded(packageName, uid);
+            } else if (Intent.ACTION_PACKAGE_REPLACED.equals(action)) {
+                onPackageReplaced(packageName, uid);
             } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
-                onPackageRemoved(packageName, uid);
+                final boolean isReplacing = intent.getBooleanExtra(
+                        Intent.EXTRA_REPLACING, false);
+                onPackageRemoved(packageName, uid, isReplacing);
             }
         }
     };
