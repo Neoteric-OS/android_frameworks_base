@@ -595,6 +595,18 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return true;
     }
 
+    @ServiceThreadOnly
+    protected boolean handleUserControlPressed(HdmiCecMessage message) {
+        assertRunOnServiceThread();
+        if (mService.isPowerStandbyOrTransient() && isPowerOnOrToggleCommand(message)) {
+            if (!mAutoWakeup) {
+                // Do nothing
+                return true;
+            }
+        }
+        return super.handleUserControlPressed(message);
+    }
+
     @Override
     protected boolean handleTimerStatus(HdmiCecMessage message) {
         // Do nothing.
