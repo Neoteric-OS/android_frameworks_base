@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "691c2641_539ca251",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-12T13:51:31Z",
+      "side": 1,
+      "message": "This is not true, we just don\u0027t use it, will remove it in next patch.",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 317,
+        "endChar": 60
+      },
+      "revId": "265abdd588f5cadd7aac56cb661ec07443953fb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ce4546_b154c08d",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-12T13:51:31Z",
+      "side": 1,
+      "message": "Need to add some comments for this.",
+      "range": {
+        "startLine": 211,
+        "startChar": 12,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "265abdd588f5cadd7aac56cb661ec07443953fb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cd2b4f_3e73b22a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-12T13:51:31Z",
+      "side": 1,
+      "message": "And this.",
+      "range": {
+        "startLine": 223,
+        "startChar": 12,
+        "endLine": 223,
+        "endChar": 55
+      },
+      "revId": "265abdd588f5cadd7aac56cb661ec07443953fb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
