@@ -901,6 +901,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Listen to package add and removal events for all users.
         intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
         mContext.registerReceiverAsUser(
@@ -4188,8 +4189,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mPermissionMonitor.onAppAdded(appName, appUid);
     }
 
-    private void onPackageRemoved(int appUid) {
+    private void onPackageReplaced(String appName, int appUid) {
+        if (TextUtils.isEmpty(appName)) return;
+        synchronized (mVpns) {
+            final int vpnsSize = mVpns.size();
+            for (int i = 0; i < vpnsSize; i++) {
+                Vpn vpn = mVpns.valueAt(i);
+                if (TextUtils.equals(vpn.getAlwaysOnPackage(), appName)) {
+                    vpn.startAlwaysOnVpn();
+                }
+            }
+        }
+    }
+
+    private void onPackageRemoved(String appName, int appUid, boolean isAppRemoved) {
+        if (TextUtils.isEmpty(appName)) return;
         mPermissionMonitor.onAppRemoved(appUid);
+        synchronized (mVpns) {
+            final int vpnsSize = mVpns.size();
+            for (int i = 0; i < vpnsSize; i++) {
+                Vpn vpn = mVpns.valueAt(i);
+                if (TextUtils.equals(vpn.getAlwaysOnPackage(), appName) && isAppRemoved) {
+                    vpn.setAlwaysOnPackage(null, false);
+                }
+            }
+        }
     }
 
     private void onUserUnlocked(int userId) {
@@ -4211,6 +4235,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final int appUid = intent.getIntExtra(Intent.EXTRA_UID, -1);
             final Uri appData = intent.getData();
             final String appName = appData != null ? appData.getSchemeSpecificPart() : null;
+            final boolean isAppRemoved = !intent.getBooleanExtra(
+                    Intent.EXTRA_REPLACING, false);
             if (userId == UserHandle.USER_NULL) return;
 
             if (Intent.ACTION_USER_STARTED.equals(action)) {
@@ -4225,8 +4251,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 onUserUnlocked(userId);
             } else if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
                 onPackageAdded(appName, appUid);
+            } else if (Intent.ACTION_PACKAGE_REPLACED.equals(action)) {
+                onPackageReplaced(appName, appUid);
             } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
-                onPackageRemoved(appUid);
+                onPackageRemoved(appName, appUid, isAppRemoved);
             }
         }
     };
