@@ -33,6 +33,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.util.Pair;
 import android.util.Log;
 import android.util.Size;
 import android.view.IPinnedStackController;
@@ -160,8 +161,11 @@ public class PipTouchHandler {
 
         @Override
         public void onPipDismiss() {
-            MetricsLoggerWrapper.logPictureInPictureDismissByTap(mContext,
-                    PipUtils.getTopPinnedActivity(mContext, mActivityManager));
+            final Pair<ComponentName, Integer> topPipActivityInfo =
+                    PipUtils.getTopPinnedActivity(mContext, mActivityManager);
+            if (topPipActivityInfo.first != null) {
+                MetricsLoggerWrapper.logPictureInPictureDismissByTap(mContext, topPipActivityInfo);
+            }
             mMotionHelper.dismissPip();
         }
 
@@ -485,8 +489,11 @@ public class PipTouchHandler {
             return;
         }
         if (mIsMinimized != isMinimized) {
-            MetricsLoggerWrapper.logPictureInPictureMinimize(mContext,
-                    isMinimized, PipUtils.getTopPinnedActivity(mContext, mActivityManager));
+            final Pair<ComponentName, Integer> topPipActivityInfo =
+                    PipUtils.getTopPinnedActivity(mContext, mActivityManager);
+            if (topPipActivityInfo.first != null) {
+                MetricsLoggerWrapper.logPictureInPictureMinimize(mContext,isMinimized,topPipActivityInfo);
+            }
         }
         mIsMinimized = isMinimized;
         mSnapAlgorithm.setMinimized(isMinimized);
@@ -689,8 +696,11 @@ public class PipTouchHandler {
             if (ENABLE_DISMISS_DRAG_TO_EDGE) {
                 // Check if the user dragged or flung the PiP offscreen to dismiss it
                 if (mMotionHelper.shouldDismissPip() || isFlingToBot) {
-                    MetricsLoggerWrapper.logPictureInPictureDismissByDrag(mContext,
-                            PipUtils.getTopPinnedActivity(mContext, mActivityManager));
+                    final Pair<ComponentName, Integer> topPipActivityInfo =
+                            PipUtils.getTopPinnedActivity(mContext, mActivityManager);
+                    if (topPipActivityInfo.first != null) {
+                        MetricsLoggerWrapper.logPictureInPictureDismissByDrag(mContext, topPipActivityInfo);
+                    }
                     mMotionHelper.animateDismiss(mMotionHelper.getBounds(), vel.x,
                         vel.y, mUpdateScrimListener);
                     return true;
