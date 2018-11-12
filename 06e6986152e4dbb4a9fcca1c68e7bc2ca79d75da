@@ -94,6 +94,30 @@
       "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b85c7635_dd1a70f7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-12T02:53:05Z",
+      "side": 1,
+      "message": "Yes, statemachine does not got to processMessage(). \n\nThis problem is not related to the new event message. The problem is that the mThread is already started but the Thread.run() do not processed by os. However, the thread is already in the OS process queue and processed with another thread. When the state machine go to exit of ProbingState, it will assign mThread to null. At this timestamp, the object inside the new Runnable will also be null. \nAs my understanding, the statemachine won\u0027t try to access mThread member but the object is still located in the memory until being recycled by garbage collection. Because there is still one thread using the objects, it will still be accessed inside the runnable.",
+      "parentUuid": "3a4a0efb_f7e8875d",
+      "range": {
+        "startLine": 843,
+        "startChar": 85,
+        "endLine": 843,
+        "endChar": 90
+      },
+      "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
