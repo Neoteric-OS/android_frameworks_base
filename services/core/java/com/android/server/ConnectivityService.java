@@ -5743,6 +5743,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             scheduleUnvalidatedPrompt(networkAgent);
 
             if (networkAgent.isVPN()) {
+                // Set VPN Proxy when VPN is connected.
+                int user = UserHandle.getUserId(Binder.getCallingUid());
+                VpnConfig legacyVpnConfig;
+                synchronized(mVpns) {
+                    legacyVpnConfig = mVpns.get(user).getLegacyVpnConfig();
+                }
+                mProxyTracker.setVpnProxy(legacyVpnConfig != null ? legacyVpnConfig.proxy : null);
+
                 // Temporarily disable the default proxy (not global).
                 mProxyTracker.setDefaultProxyEnabled(false);
                 // TODO: support proxy per network.
@@ -5767,6 +5775,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.asyncChannel.disconnect();
             if (networkAgent.isVPN()) {
                 mProxyTracker.setDefaultProxyEnabled(true);
+
+                // Clean up VPN Proxy when VPN is disconnected.
+                mProxyTracker.setVpnProxy(null);
+
                 updateUids(networkAgent, networkAgent.networkCapabilities, null);
             }
             disconnectAndDestroyNetwork(networkAgent);
