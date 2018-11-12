@@ -73,6 +73,9 @@ public class ProxyTracker {
     @GuardedBy("mProxyLock")
     private boolean mDefaultProxyEnabled = true;
 
+    @GuardedBy("mProxyLock")
+    private volatile ProxyInfo mVPNProxy = null;
+
     // The object responsible for Proxy Auto Configuration (PAC).
     @NonNull
     private final PacManager mPacManager;
@@ -127,8 +130,7 @@ public class ProxyTracker {
         // This information is already available as a world read/writable jvm property.
         synchronized (mProxyLock) {
             if (mGlobalProxy != null) return mGlobalProxy;
-            if (mDefaultProxyEnabled) return mDefaultProxy;
-            return null;
+            return mDefaultProxyEnabled ? mDefaultProxy : mVPNProxy;
         }
     }
 
@@ -318,10 +320,22 @@ public class ProxyTracker {
         synchronized (mProxyLock) {
             if (mDefaultProxyEnabled != enabled) {
                 mDefaultProxyEnabled = enabled;
-                if (mGlobalProxy == null && mDefaultProxy != null) {
+                if (mGlobalProxy == null && (mDefaultProxy != null || mVPNProxy != null)) {
                     sendProxyBroadcast();
                 }
             }
+        }
+    }
+
+    /**
+     * Sets the vpn proxy for the device.
+     *
+     * The vpn proxy is the proxy used for vpn networks.
+     * @param proxyInfo the proxy spec, or null for no proxy.
+     */
+    public void setVpnProxy(@Nullable ProxyInfo proxyInfo) {
+        synchronized (mProxyLock) {
+            mVPNProxy = proxyInfo;
         }
     }
 }

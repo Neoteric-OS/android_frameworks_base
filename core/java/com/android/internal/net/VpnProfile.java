@@ -17,6 +17,8 @@
 package com.android.internal.net;
 
 import android.annotation.UnsupportedAppUsage;
+import android.net.ProxyInfo;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -45,6 +47,10 @@ public class VpnProfile implements Cloneable, Parcelable {
     public static final int TYPE_IPSEC_HYBRID_RSA = 5;
     public static final int TYPE_MAX = 5;
 
+    // Match these constants with R.array.vpn_proxy_settings.
+    public static final int PROXY_NONE = 0;
+    public static final int PROXY_MANUAL = 1;
+
     // Entity fields.
     @UnsupportedAppUsage
     public final String key;           // -1
@@ -67,6 +73,7 @@ public class VpnProfile implements Cloneable, Parcelable {
     public String ipsecUserCert = "";  // 12
     public String ipsecCaCert = "";    // 13
     public String ipsecServerCert = "";// 14
+    public ProxyInfo proxy = null;     // 15~18
 
     // Helper fields.
     @UnsupportedAppUsage
@@ -95,6 +102,9 @@ public class VpnProfile implements Cloneable, Parcelable {
         ipsecCaCert = in.readString();
         ipsecServerCert = in.readString();
         saveLogin = in.readInt() != 0;
+
+        // VPN Proxy
+        proxy = in.readParcelable(null);
     }
 
     @Override
@@ -116,6 +126,9 @@ public class VpnProfile implements Cloneable, Parcelable {
         out.writeString(ipsecCaCert);
         out.writeString(ipsecServerCert);
         out.writeInt(saveLogin ? 1 : 0);
+
+        // VPN Proxy
+        out.writeParcelable(proxy, flags);
     }
 
     @UnsupportedAppUsage
@@ -126,8 +139,8 @@ public class VpnProfile implements Cloneable, Parcelable {
             }
 
             String[] values = new String(value, StandardCharsets.UTF_8).split("\0", -1);
-            // There can be 14 or 15 values in ICS MR1.
-            if (values.length < 14 || values.length > 15) {
+            // There can be 14 - 19 Bytes in values.length.
+            if (values.length < 14 || values.length > 19) {
                 return null;
             }
 
@@ -150,6 +163,16 @@ public class VpnProfile implements Cloneable, Parcelable {
             profile.ipsecUserCert = values[12];
             profile.ipsecCaCert = values[13];
             profile.ipsecServerCert = (values.length > 14) ? values[14] : "";
+            String host = (values.length > 15) ? values[15] : "";
+            String port = (values.length > 16) ? values[16] : "";
+            String exclList = (values.length > 17) ? values[17] : "";
+            String pacFileUrl = (values.length > 18) ? values[18] : "";
+            if (pacFileUrl.isEmpty()) {
+                profile.proxy = new ProxyInfo(host, port.isEmpty() ? 0 : Integer.parseInt(port),
+                        exclList);
+            } else {
+                profile.proxy = new ProxyInfo(pacFileUrl);
+            }
 
             profile.saveLogin = !profile.username.isEmpty() || !profile.password.isEmpty();
             return profile;
@@ -175,6 +198,10 @@ public class VpnProfile implements Cloneable, Parcelable {
         builder.append('\0').append(ipsecUserCert);
         builder.append('\0').append(ipsecCaCert);
         builder.append('\0').append(ipsecServerCert);
+        builder.append('\0').append(proxy != null ? proxy.getHost() : "");
+        builder.append('\0').append(proxy != null ? proxy.getPort() : "");
+        builder.append('\0').append(proxy != null ? proxy.getExclusionListAsString() : "");
+        builder.append('\0').append(proxy != null ? proxy.getPacFileUrl().toString() : "");
         return builder.toString().getBytes(StandardCharsets.UTF_8);
     }
 

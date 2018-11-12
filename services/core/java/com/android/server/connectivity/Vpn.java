@@ -1791,8 +1791,11 @@ public class Vpn {
         config.user = profile.key;
         config.interfaze = iface;
         config.session = profile.name;
+        // Add proxy
+        config.proxy = profile.proxy;
 
         config.addLegacyRoutes(profile.routes);
+
         if (!profile.dnsServers.isEmpty()) {
             config.dnsServers = Arrays.asList(profile.dnsServers.split(" +"));
         }
