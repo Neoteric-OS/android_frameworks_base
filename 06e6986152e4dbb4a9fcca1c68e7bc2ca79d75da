@@ -70,6 +70,30 @@
       "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4a0efb_f7e8875d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T02:04:10Z",
+      "side": 1,
+      "message": "I\u0027m happy with either #hashCode() or a sequence number, so I\u0027m fine with the new patch.\n\nHowever, for my own education, can you explain a bit further how the scenario you describe can happen ?\nMy understanding is that once this state goes to exit(), then it\u0027s not possible to go to processMessage() for this state (enter, exit and processMessage all always run on the same thread). The message would arrive, but by the time it does the state machine is in another state that won\u0027t try to access the mThread member.\nIt\u0027s true that it\u0027s still possible for the state machine to enter() this state again before the message from the old thread is processed, but in this case too mThread is not null, and indeed that\u0027s exactly the case you try to protect against.\n\nSo IIUC, it should not be possible that mThread is null. Did you find this is not accurate ? If so can you explain where my understanding is flawed ?",
+      "parentUuid": "dc5627a2_dfc82787",
+      "range": {
+        "startLine": 843,
+        "startChar": 85,
+        "endLine": 843,
+        "endChar": 90
+      },
+      "revId": "06e6986152e4dbb4a9fcca1c68e7bc2ca79d75da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

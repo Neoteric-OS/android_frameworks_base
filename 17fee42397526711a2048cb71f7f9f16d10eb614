@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5090c392_0d212265",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-12T02:04:10Z",
+      "side": 1,
+      "message": "Make this volatile, or put a comment saying it must only ever be used on the state machine thread",
+      "range": {
+        "startLine": 316,
+        "startChar": 4,
+        "endLine": 316,
+        "endChar": 11
+      },
+      "revId": "17fee42397526711a2048cb71f7f9f16d10eb614",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
