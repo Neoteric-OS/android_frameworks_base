@@ -22,6 +22,30 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc38f49_9982aa51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-11-12T07:37:06Z",
+      "side": 1,
+      "message": "Could we add test while we really start to use this callback? There has no one uses this callback function in frameworks so far.\n\nI saw that another netd event callback \"onPrivateDnsValidationEvent\" is added in aosp/591294 which has no test case. The callback function\u0027s related tests are added in aosp/633505 which starts to use the callback function (onPrivateDnsValidationEvent) in connectivity service. I would like to know if we could postpone to add test case until we start to use it.",
+      "parentUuid": "80593f2d_bd3ebf44",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
