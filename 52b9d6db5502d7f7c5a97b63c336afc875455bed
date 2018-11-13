@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457408cf_0977badb",
+        "filename": "packages/ExternalStorageProvider/src/com/android/externalstorage/ExternalStorageProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-13T16:45:34Z",
+      "side": 1,
+      "message": "Sorry, I wasn\u0027t clear; could you simplify this entire check to be:\n\n  if (volume.getType() !\u003d VolumeInfo.TYPE_EMULATED) {\n\nWhich essentially says we\u0027re willing to eject anything except emulated volumes.",
+      "revId": "52b9d6db5502d7f7c5a97b63c336afc875455bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
