@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "187110b2_29636b3a",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-13T23:40:12Z",
+      "side": 1,
+      "message": "Can we do this cleanup in a followup CL?",
+      "parentUuid": "9985876d_ec567c45",
+      "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2e8bff9_7a108833",
         "filename": "keystore/java/android/security/keystore/KeystoreResponse.java",
         "patchSetId": 6
