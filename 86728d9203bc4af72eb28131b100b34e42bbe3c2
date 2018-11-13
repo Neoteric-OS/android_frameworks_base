@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4d379c6f_7afba100",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-13T23:38:51Z",
+      "side": 1,
+      "message": "Moving this to the top of the class declaration.",
+      "range": {
+        "startLine": 486,
+        "startChar": 8,
+        "endLine": 487,
+        "endChar": 54
+      },
+      "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9985876d_ec567c45",
         "filename": "keystore/java/android/security/KeyStore.java",
         "patchSetId": 6
@@ -33,6 +56,24 @@
       "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a4730e_cf457da1",
+        "filename": "keystore/java/android/security/keystore/KeystoreResponse.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-13T23:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e8bff9_7a108833",
+      "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
