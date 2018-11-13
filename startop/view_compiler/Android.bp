@@ -22,7 +22,14 @@ cc_defaults {
     shared_libs: [
         "libbase",
         "libdexfile",
+        "libz",
         "slicer",
+    ],
+    static_libs: [
+        "libandroidfw",
+        "liblog",
+        "libutils",
+        "libziparchive",
     ],
     cppflags: ["-std=c++17"],
 }
@@ -31,9 +38,11 @@ cc_library_host_static {
     name: "libviewcompiler",
     defaults: ["viewcompiler_defaults"],
     srcs: [
+        "apk_layout_compiler.cc",
         "dex_builder.cc",
         "java_lang_builder.cc",
         "util.cc",
+        "view_compiler.cc",
     ],
 }
 

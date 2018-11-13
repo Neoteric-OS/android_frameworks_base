@@ -33,23 +33,11 @@ void JavaLangViewBuilder::Start() const {
           "\n"
           "public final class CompiledView {\n"
           "\n"
-          "static <T extends View> T createView(Context context, AttributeSet attrs, View parent, "
-          "String name, LayoutInflater.Factory factory, LayoutInflater.Factory2 factory2) {"
-          "\n"
-          "  if (factory2 != null) {\n"
-          "    return (T)factory2.onCreateView(parent, name, context, attrs);\n"
-          "  } else if (factory != null) {\n"
-          "    return (T)factory.onCreateView(name, context, attrs);\n"
-          "  }\n"
-          // TODO: find a way to call the private factory
-          "  return null;\n"
-          "}\n"
-          "\n"
-          "  public static View inflate(Context context) {\n"
+          "  public static View "
+       << layout_name_
+       << "(Context context, int resid) {\n"
           "    try {\n"
           "      LayoutInflater inflater = LayoutInflater.from(context);\n"
-          "      LayoutInflater.Factory factory = inflater.getFactory();\n"
-          "      LayoutInflater.Factory2 factory2 = inflater.getFactory2();\n"
           "      Resources res = context.getResources();\n"
        << StringPrintf("      XmlResourceParser xml = res.getLayout(%s.R.layout.%s);\n",
                        package_.c_str(),
@@ -67,7 +55,7 @@ void JavaLangViewBuilder::Finish() const {
           "}\n";     // end CompiledView
 }
 
-void JavaLangViewBuilder::StartView(const string& class_name) {
+void JavaLangViewBuilder::StartView(const string& class_name, bool is_viewgroup) {
   const string view_var = MakeVar("view");
   const string layout_var = MakeVar("layout");
   std::string parent = "null";
@@ -75,10 +63,12 @@ void JavaLangViewBuilder::StartView(const string& class_name) {
     const StackEntry& parent_entry = view_stack_.back();
     parent = parent_entry.view_var;
   }
+  const string type = is_viewgroup ? "ViewGroup" : "View";
   out_ << "      xml.next(); // <" << class_name << ">\n"
-       << StringPrintf("      %s %s = createView(context, attrs, %s, \"%s\", factory, factory2);\n",
-                       class_name.c_str(),
+       << StringPrintf("      %s %s = inflater.tryCreate%s(%s, \"%s\", context, attrs);\n",
+                       type.c_str(),
                        view_var.c_str(),
+                       type.c_str(),
                        parent.c_str(),
                        class_name.c_str())
        << StringPrintf("      if (%s == null) %s = new %s(context, attrs);\n",

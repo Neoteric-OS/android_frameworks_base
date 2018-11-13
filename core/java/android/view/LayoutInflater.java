@@ -36,6 +36,9 @@ import android.widget.FrameLayout;
 
 import com.android.internal.R;
 
+import dalvik.system.PathClassLoader;
+import java.io.File;
+import java.lang.reflect.Method;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -430,11 +433,80 @@ public abstract class LayoutInflater {
         }
 
         final XmlResourceParser parser = res.getLayout(resource);
+
+        View view = tryInflatePrecompiled(resource, res, parser);
+        if (view != null) {
+            return view;
+        }
+
         try {
             return inflate(parser, root, attachToRoot);
         } finally {
             parser.close();
         }
+    }
+
+    private View tryInflatePrecompiled(@LayoutRes int resource, Resources res, XmlResourceParser parser) {
+        // Try to inflate using a precompiled layout.
+        String pkg = res.getResourcePackageName(resource);
+        String layout = res.getResourceEntryName(resource);
+
+        ClassLoader loader = mContext.getClassLoader();
+        String dexFile = mContext.getCodeCacheDir() + "/compiled_view.dex";
+        Log.d("precompiled view", "Checking for dex file: " + dexFile);
+        if (new File(dexFile).exists()) {
+          Log.d("precompiled view", "Loading views from precompiled dex file.");
+          loader = new PathClassLoader(dexFile, loader);
+        } else {
+          Log.d("precompiled view", "Attempting to load precompiled view from APK");
+        }
+        try {
+            Class clazz = loader.loadClass("" + pkg + ".CompiledView");
+            Method inflater = clazz.getMethod(layout, Context.class, int.class);
+            Log.d("precompiled view", "Using precompiled view");
+            View result = (View) inflater.invoke(null, mContext, resource);
+            if (result != null) {
+                return result;
+            }
+        } catch (Exception e) {
+          Log.e("precompiled view", "Unable to use precompiled view", e);
+        }
+        Log.d("precompiled view", "Falling back on XML inflater");
+        return null;
+    }
+
+    /**
+     * Try to create a view.
+     */
+    public View tryCreateView(View parent, String name, Context context, AttributeSet attrs)
+        throws Exception {
+        if (name.equals(TAG_1995)) {
+            // Let's party like it's 1995!
+            return new BlinkLayout(context, attrs);
+        }
+
+        View view;
+        if (mFactory2 != null) {
+            view = mFactory2.onCreateView(parent, name, context, attrs);
+        } else if (mFactory != null) {
+            view = mFactory.onCreateView(name, context, attrs);
+        } else {
+            view = null;
+        }
+
+        if (view == null && mPrivateFactory != null) {
+            view = mPrivateFactory.onCreateView(parent, name, context, attrs);
+        }
+
+        return view;
+    }
+
+    /**
+     * Try to create a view group
+     */
+    public ViewGroup tryCreateViewGroup(View parent, String name, Context context, AttributeSet
+        attrs) throws Exception {
+        return (ViewGroup) tryCreateView(parent, name, context, attrs);
     }
 
     /**
@@ -759,7 +831,7 @@ public abstract class LayoutInflater {
      */
     @UnsupportedAppUsage
     View createViewFromTag(View parent, String name, Context context, AttributeSet attrs,
-            boolean ignoreThemeAttr) {
+        boolean ignoreThemeAttr) {
         if (name.equals("view")) {
             name = attrs.getAttributeValue(null, "class");
         }
@@ -774,24 +846,9 @@ public abstract class LayoutInflater {
             ta.recycle();
         }
 
-        if (name.equals(TAG_1995)) {
-            // Let's party like it's 1995!
-            return new BlinkLayout(context, attrs);
-        }
-
         try {
-            View view;
-            if (mFactory2 != null) {
-                view = mFactory2.onCreateView(parent, name, context, attrs);
-            } else if (mFactory != null) {
-                view = mFactory.onCreateView(name, context, attrs);
-            } else {
-                view = null;
-            }
 
-            if (view == null && mPrivateFactory != null) {
-                view = mPrivateFactory.onCreateView(parent, name, context, attrs);
-            }
+            View view = tryCreateView(parent, name, context, attrs);
 
             if (view == null) {
                 final Object lastContext = mConstructorArgs[0];
@@ -808,6 +865,7 @@ public abstract class LayoutInflater {
             }
 
             return view;
+
         } catch (InflateException e) {
             throw e;
 
@@ -956,78 +1014,89 @@ public abstract class LayoutInflater {
             } else {
                 final XmlResourceParser childParser = context.getResources().getLayout(layout);
 
-                try {
-                    final AttributeSet childAttrs = Xml.asAttributeSet(childParser);
+                View precompiled = tryInflatePrecompiled(layout, context.getResources(), childParser);
+                if (precompiled != null) {
+                    ViewGroup precompiledGroup = (ViewGroup)parent;
+                    final XmlResourceParser childParser2 = context.getResources().getLayout(layout);
+                    childParser2.next(); // start document
+                    childParser2.next(); // start view
+                    ViewGroup.LayoutParams precompiledParams = precompiledGroup.generateLayoutParams(childParser2);
+                    precompiledGroup.addView(precompiled, precompiledParams);
+                } else {
 
-                    while ((type = childParser.next()) != XmlPullParser.START_TAG &&
+                    try {
+                        final AttributeSet childAttrs = Xml.asAttributeSet(childParser);
+
+                        while ((type = childParser.next()) != XmlPullParser.START_TAG &&
                             type != XmlPullParser.END_DOCUMENT) {
-                        // Empty.
-                    }
+                            // Empty.
+                        }
 
-                    if (type != XmlPullParser.START_TAG) {
-                        throw new InflateException(childParser.getPositionDescription() +
+                        if (type != XmlPullParser.START_TAG) {
+                            throw new InflateException(childParser.getPositionDescription() +
                                 ": No start tag found!");
-                    }
+                        }
 
-                    final String childName = childParser.getName();
+                        final String childName = childParser.getName();
 
-                    if (TAG_MERGE.equals(childName)) {
-                        // The <merge> tag doesn't support android:theme, so
-                        // nothing special to do here.
-                        rInflate(childParser, parent, context, childAttrs, false);
-                    } else {
-                        final View view = createViewFromTag(parent, childName,
+                        if (TAG_MERGE.equals(childName)) {
+                            // The <merge> tag doesn't support android:theme, so
+                            // nothing special to do here.
+                            rInflate(childParser, parent, context, childAttrs, false);
+                        } else {
+                            final View view = createViewFromTag(parent, childName,
                                 context, childAttrs, hasThemeOverride);
-                        final ViewGroup group = (ViewGroup) parent;
+                            final ViewGroup group = (ViewGroup) parent;
 
-                        final TypedArray a = context.obtainStyledAttributes(
+                            final TypedArray a = context.obtainStyledAttributes(
                                 attrs, R.styleable.Include);
-                        final int id = a.getResourceId(R.styleable.Include_id, View.NO_ID);
-                        final int visibility = a.getInt(R.styleable.Include_visibility, -1);
-                        a.recycle();
+                            final int id = a.getResourceId(R.styleable.Include_id, View.NO_ID);
+                            final int visibility = a.getInt(R.styleable.Include_visibility, -1);
+                            a.recycle();
 
-                        // We try to load the layout params set in the <include /> tag.
-                        // If the parent can't generate layout params (ex. missing width
-                        // or height for the framework ViewGroups, though this is not
-                        // necessarily true of all ViewGroups) then we expect it to throw
-                        // a runtime exception.
-                        // We catch this exception and set localParams accordingly: true
-                        // means we successfully loaded layout params from the <include>
-                        // tag, false means we need to rely on the included layout params.
-                        ViewGroup.LayoutParams params = null;
-                        try {
-                            params = group.generateLayoutParams(attrs);
-                        } catch (RuntimeException e) {
-                            // Ignore, just fail over to child attrs.
+                            // We try to load the layout params set in the <include /> tag.
+                            // If the parent can't generate layout params (ex. missing width
+                            // or height for the framework ViewGroups, though this is not
+                            // necessarily true of all ViewGroups) then we expect it to throw
+                            // a runtime exception.
+                            // We catch this exception and set localParams accordingly: true
+                            // means we successfully loaded layout params from the <include>
+                            // tag, false means we need to rely on the included layout params.
+                            ViewGroup.LayoutParams params = null;
+                            try {
+                                params = group.generateLayoutParams(attrs);
+                            } catch (RuntimeException e) {
+                                // Ignore, just fail over to child attrs.
+                            }
+                            if (params == null) {
+                                params = group.generateLayoutParams(childAttrs);
+                            }
+                            view.setLayoutParams(params);
+
+                            // Inflate all children.
+                            rInflateChildren(childParser, view, childAttrs, true);
+
+                            if (id != View.NO_ID) {
+                                view.setId(id);
+                            }
+
+                            switch (visibility) {
+                                case 0:
+                                    view.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    view.setVisibility(View.INVISIBLE);
+                                    break;
+                                case 2:
+                                    view.setVisibility(View.GONE);
+                                    break;
+                            }
+
+                            group.addView(view);
                         }
-                        if (params == null) {
-                            params = group.generateLayoutParams(childAttrs);
-                        }
-                        view.setLayoutParams(params);
-
-                        // Inflate all children.
-                        rInflateChildren(childParser, view, childAttrs, true);
-
-                        if (id != View.NO_ID) {
-                            view.setId(id);
-                        }
-
-                        switch (visibility) {
-                            case 0:
-                                view.setVisibility(View.VISIBLE);
-                                break;
-                            case 1:
-                                view.setVisibility(View.INVISIBLE);
-                                break;
-                            case 2:
-                                view.setVisibility(View.GONE);
-                                break;
-                        }
-
-                        group.addView(view);
+                    } finally {
+                        childParser.close();
                     }
-                } finally {
-                    childParser.close();
                 }
             }
         } else {
