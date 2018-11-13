@@ -114,6 +114,29 @@
       "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb51973_00bba135",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2018-11-13T03:40:15Z",
+      "side": 1,
+      "message": "Use SYSTEM/NETWORK\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 definition instead.",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 29
+      },
+      "revId": "44bdacb2b3e6c2bbfe9e8a3f53a3ae0ae9925510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
