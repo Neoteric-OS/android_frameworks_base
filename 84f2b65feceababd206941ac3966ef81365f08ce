@@ -70,6 +70,30 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4631b66_a62fcf85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-13T10:54:04Z",
+      "side": 1,
+      "message": "We have a prototype idea that would make onPrivateDnsValidationEvent() testable from netd_integration_test:\n\nhttps://android-review.googlesource.com/c/platform/system/netd/+/816674/2/resolv/getaddrinfo.cpp#1535",
+      "parentUuid": "7009c7c5_e2aab9c8",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
