@@ -313,6 +313,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
                                         // process that it is hidden.
     boolean sleeping;       // have we told the activity to sleep?
     boolean nowVisible;     // is this activity's window visible?
+    boolean mDrawn;          // is this activity's window drawn?
     boolean mClientVisibilityDeferred;// was the visibility change message to client deferred?
     boolean idle;           // has the activity gone idle?
     boolean hasBeenLaunched;// has this activity ever been launched?
@@ -881,6 +882,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
         inHistory = false;
         visible = false;
         nowVisible = false;
+        mDrawn = false;
         idle = false;
         hasBeenLaunched = false;
         mStackSupervisor = supervisor;
@@ -2073,8 +2075,12 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
     }
 
     @Override
-    public void onWindowsDrawn(long timestamp) {
+    public void onWindowsDrawn(boolean drawn, long timestamp) {
         synchronized (service) {
+            mDrawn = drawn;
+            if (!drawn) {
+                return;
+            }
             mStackSupervisor.getActivityMetricsLogger().notifyWindowsDrawn(getWindowingMode(),
                     timestamp);
             if (displayStartTime != 0) {
