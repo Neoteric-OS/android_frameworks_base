@@ -46,6 +46,30 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7009c7c5_e2aab9c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-13T09:36:06Z",
+      "side": 1,
+      "message": "We don\u0027t have test coverage for onDnsEvent() and onPrivateDnsValidationEvent() in netd_integration_test, but we really should. It would have caught that h_errno was always 0.\n\nI guess it\u0027s ok to move tests to a separate change because it\u0027s non-trivial and requires some common infrastructure for all binder calls, but we should really have coverage before anything starts depending on this new code.",
+      "parentUuid": "ebc38f49_9982aa51",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
