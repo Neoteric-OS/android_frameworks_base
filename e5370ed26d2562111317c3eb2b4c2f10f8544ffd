@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9459f2c9_af2c167d",
+        "filename": "packages/ExternalStorageProvider/src/com/android/externalstorage/ExternalStorageProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-13T01:27:18Z",
+      "side": 1,
+      "message": "I do agree that we should hide the eject button, but only when it\u0027s a TYPE_EMULATED volume.  We should still support ejecting for the case where the primary storage is being provided by a traditional TYPE_PUBLIC volume.",
+      "revId": "e5370ed26d2562111317c3eb2b4c2f10f8544ffd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
