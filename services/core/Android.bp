@@ -64,5 +64,8 @@ java_genrule {
 
 java_library {
     name: "services.core",
-    static_libs: ["services.core.priorityboosted"],
+    static_libs: [
+        "services.core.priorityboosted",
+        "services.net",
+    ],
 }
