@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f50daba_4a90b66a",
+        "filename": "packages/SystemUI/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1111338
+      },
+      "writtenOn": "2018-11-13T07:28:23Z",
+      "side": 1,
+      "message": "nit: drop the decimal place here and on line 947 and change this to 1dp to match existing dimens",
+      "range": {
+        "startLine": 943,
+        "startChar": 37,
+        "endLine": 943,
+        "endChar": 42
+      },
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
