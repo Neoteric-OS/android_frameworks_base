@@ -10436,6 +10436,36 @@ public final class Settings {
         public static final String CAPTIVE_PORTAL_USER_AGENT = "captive_portal_user_agent";
 
         /**
+         * The threshold value for the number of consecutive dns timeout events received to be a
+         * signal of data stall.
+         * @hide
+         */
+        public static final String CONSECUTIVE_DNS_TIMEOUT_THRESHOLD =
+                "consecutive_dns_timeout_threshold";
+
+        /**
+         * The minimal time interval in ms for data stall reevaluation.
+         * @hide
+         */
+        public static final String MIN_DATA_STALL_EVALUATE_INTERVAL =
+                "min_data_stall_evaluate_interval";
+
+        /**
+         * Only dns queried that timed out in the last ms interval should be evaluated for data
+         * stall judgement.
+         * @hide
+         */
+        public static final String VALID_DATA_STALL_DNS_TIME_THRESHOLD =
+                "valid_data_stall_dns_time_threshold";
+
+        /**
+         * Which data stall detection signal to use. Possible values are a union of the powers of 2
+         * of DATA_STALL_EVALUATION_TYPE_*.
+         * @hide
+         */
+        public static final String DATA_STALL_EVALUATION_TYPE = "data_stall_evaluation_type";
+
+        /**
          * Whether network service discovery is enabled.
          *
          * @hide
