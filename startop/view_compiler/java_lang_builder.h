@@ -35,9 +35,12 @@ class JavaLangViewBuilder {
   void Finish() const;
 
   // Begin creating a view (i.e. process the opening tag)
-  void StartView(const std::string& class_name);
+  void StartView(const std::string& class_name, bool is_viewgroup);
   // Finish a view, after all of its child nodes have been processed.
   void FinishView();
+
+  static void GenerateFrontMatter(const std::string& package, std::ostream& out);
+  static void GenerateEndMatter(std::ostream& out);
 
  private:
   const std::string MakeVar(std::string prefix);

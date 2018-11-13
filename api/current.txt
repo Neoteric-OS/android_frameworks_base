@@ -47341,6 +47341,8 @@ package android.view {
     method public void setFactory(android.view.LayoutInflater.Factory);
     method public void setFactory2(android.view.LayoutInflater.Factory2);
     method public void setFilter(android.view.LayoutInflater.Filter);
+    method public android.view.View tryCreateView(android.view.View, java.lang.String, android.content.Context, android.util.AttributeSet) throws java.lang.Exception;
+    method public android.view.ViewGroup tryCreateViewGroup(android.view.View, java.lang.String, android.content.Context, android.util.AttributeSet) throws java.lang.Exception;
   }
 
   public static abstract interface LayoutInflater.Factory {

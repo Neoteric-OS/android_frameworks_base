@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef VIEW_COMPILER_UTIL_H_
-#define VIEW_COMPILER_UTIL_H_
+
+#ifndef APK_LAYOUT_COMPILER_H_
+#define APK_LAYOUT_COMPILER_H_
 
 #include <string>
 
 namespace startop {
-namespace util {
 
-std::string FindLayoutNameFromFilename(const std::string& filename);
+enum class CompilationTarget { kJavaLanguage, kDex };
 
-}  // namespace util
+void CompileApkLayouts(const std::string& filename, CompilationTarget target,
+                       std::ostream& target_out);
+
 }  // namespace startop
 
-#endif  // VIEW_COMPILER_UTIL_H_
+#endif  // APK_LAYOUT_COMPILER_H_

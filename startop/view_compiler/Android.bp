@@ -22,21 +22,43 @@ cc_defaults {
     shared_libs: [
         "libbase",
         "libdexfile",
+        "libz",
         "slicer",
     ],
+    static_libs: [
+        "liblog",
+        "libutils",
+        "libziparchive",
+    ],
+    cppflags: ["-std=c++17"],
+    target: {
+        android: {
+            shared_libs: [
+                "libandroidfw",
+            ],
+        },
+        host: {
+            static_libs: [
+                "libandroidfw",
+            ],
+        },
+    },
 }
 
-cc_library_host_static {
+cc_library_static {
     name: "libviewcompiler",
     defaults: ["viewcompiler_defaults"],
     srcs: [
+        "apk_layout_compiler.cc",
         "dex_builder.cc",
         "java_lang_builder.cc",
         "util.cc",
+        "view_compiler.cc",
     ],
+    host_supported: true,
 }
 
-cc_binary_host {
+cc_binary {
     name: "viewcompiler",
     defaults: ["viewcompiler_defaults"],
     srcs: [
@@ -47,6 +69,7 @@ cc_binary_host {
         "libgflags",
         "libviewcompiler",
     ],
+    host_supported: true,
 }
 
 cc_test_host {
