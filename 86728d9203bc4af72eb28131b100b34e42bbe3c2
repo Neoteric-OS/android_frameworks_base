@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9985876d_ec567c45",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-11-13T05:43:14Z",
+      "side": 1,
+      "message": "Turning these async calls into synchronous is a repeated pattern in this file. Did you consider wrapping the binder call in a callable so some of this logic can be generalized?",
+      "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e8bff9_7a108833",
+        "filename": "keystore/java/android/security/keystore/KeystoreResponse.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-11-13T05:43:14Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "revId": "86728d9203bc4af72eb28131b100b34e42bbe3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
