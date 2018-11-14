@@ -22,6 +22,30 @@
       "revId": "c96993154a3e2165d12f3adb078d1c97421dd2c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0c3206_1e099a00",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-14T22:01:31Z",
+      "side": 0,
+      "message": "That team was mistaken. They anchored our enums to theirs because they incorrectly asserted that these enums didn\u0027t have to align to the public API and could be changed. In this case, these can\u0027t change because they are already anchored to other constants that are part of the public API.\n\nHere is the incorrect assertion from the the CL where they made this change:\n\"For frameworks constants that don\u0027t have intrinsic meaning (i.e. their actual\nvalue and order don\u0027t matter), so that it is unlikely that their values\nwill be changed...\"\n\nI also verified that the submitter, bookatz@ didn\u0027t get review from anybody on the telephony team when they made this change or we could have pointed this out. I\u0027ll go ahead and add bookatz and Robert so that everyone can see exactly what happened here. In a couple years, I\u0027m going to remove these duplicate definitions and not feel at all bad about that either.",
+      "parentUuid": "040f00f4_7ad80baa",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "c96993154a3e2165d12f3adb078d1c97421dd2c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
