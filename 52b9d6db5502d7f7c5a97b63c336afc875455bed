@@ -16,6 +16,24 @@
       "revId": "52b9d6db5502d7f7c5a97b63c336afc875455bed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dc1785_7c5e160d",
+        "filename": "packages/ExternalStorageProvider/src/com/android/externalstorage/ExternalStorageProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1233205
+      },
+      "writtenOn": "2018-11-14T06:33:18Z",
+      "side": 1,
+      "message": "Thanks, that makes sense.",
+      "parentUuid": "457408cf_0977badb",
+      "revId": "52b9d6db5502d7f7c5a97b63c336afc875455bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
