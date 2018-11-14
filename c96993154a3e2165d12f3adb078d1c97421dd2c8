@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040f00f4_7ad80baa",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-11-14T21:55:25Z",
+      "side": 0,
+      "message": "unfortunately we can\u0027t directly delete the TelephnyProtoEnum definition, this is by design :((( I know its weird..\nMetrics team want us to reference to their definitions so that our definition and their metrics definition are always in sync.\n\nOther instances are https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/3707274",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "c96993154a3e2165d12f3adb078d1c97421dd2c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
