@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ae8a2b_ba46a940",
+        "filename": "core/java/android/net/INetdUnsolicitedEventCallback.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-14T07:38:44Z",
+      "side": 1,
+      "message": "Why do we need this when we already have INetdUnsolicitedEventListener.aidl?",
+      "revId": "d0b1b67889a3978df28bce2c8147a202d83929c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84245d11_8a1432b8",
+        "filename": "services/core/java/com/android/server/NetdUnsolicitedEventListenerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-14T07:38:44Z",
+      "side": 1,
+      "message": "Actually I don\u0027t think you need this. You can just have an inner class of NetworkManagementService that does:\n\n\n    public class NetworkManagementService extends INetworkManagementService.Stub {\n\n        ...\n\n        private class EventListener extends INetdUnsolicitedEventListener.Stub {\n\n            @Override\n            public void onInterfaceClassActivityChangedEvent(boolean isActive, int label,\n                                                             long timestamp, int uid) {\n                ...\n                // We can call private methods in NetworkManagementService directly.\n                notifyInterfaceClassActivity(...);",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "d0b1b67889a3978df28bce2c8147a202d83929c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
