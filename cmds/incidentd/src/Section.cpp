@@ -242,7 +242,7 @@ static inline bool isSysfs(const char* filename) { return strncmp(filename, "/sy
 
 FileSection::FileSection(int id, const char* filename, const bool deviceSpecific,
                          const int64_t timeoutMs)
-    : Section(id, timeoutMs, false, deviceSpecific), mFilename(filename) {
+    : Section(id, timeoutMs, true, deviceSpecific), mFilename(filename) {
     name = filename;
     mIsSysfs = isSysfs(filename);
 }
