@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2b6ef76_b0874edc",
+        "filename": "core/java/android/security/keymaster/KeyCharacteristics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2018-11-14T16:55:36Z",
+      "side": 1,
+      "message": "Need to add text or remove.",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "b9c2b3980053f418cda013d9fa257f95cc888803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29c0ce9_18aa0c05",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2018-11-14T16:55:36Z",
+      "side": 1,
+      "message": "Need to wrap at 100 cols.",
+      "range": {
+        "startLine": 492,
+        "startChar": 6,
+        "endLine": 497,
+        "endChar": 9
+      },
+      "revId": "b9c2b3980053f418cda013d9fa257f95cc888803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
