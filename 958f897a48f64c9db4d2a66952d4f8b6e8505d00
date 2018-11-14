@@ -22,6 +22,30 @@
       "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c437341_60c9bf8c",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1353558
+      },
+      "writtenOn": "2018-11-14T08:50:52Z",
+      "side": 1,
+      "message": "Yes,I got it, just I think unset the container layer in setColorLayer function is a little strange, also we need set ContainerLayer false when the layer type is Bufferlayer, such as the change in services/core/java/com/android/server/wm/WindowSurfaceController.java.\nMaybe the better solution is each surface only set the layer type one time.. It seems hard to apply currently\n\nanyway, please help confirm should we modify it to the new solution now（unset the container layer in setColorLayer function and vice versa）? If yes I will provide the new patch, or keep current solution is OK now, thanks.",
+      "parentUuid": "641bc2b8_8a2693aa",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
