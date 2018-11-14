@@ -46,6 +46,30 @@
       "revId": "c96993154a3e2165d12f3adb078d1c97421dd2c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7916d8c8_ea905080",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-14T22:03:31Z",
+      "side": 0,
+      "message": "Here\u0027s the CL that introduced these: http://ag/3455897",
+      "parentUuid": "4b0c3206_1e099a00",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "c96993154a3e2165d12f3adb078d1c97421dd2c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
