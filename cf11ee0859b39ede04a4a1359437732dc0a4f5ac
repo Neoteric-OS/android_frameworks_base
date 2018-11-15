@@ -413,6 +413,24 @@
     },
     {
       "key": {
+        "uuid": "44706d1c_6ab983c3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a14cedfb_d2f1c0fc",
+      "revId": "cf11ee0859b39ede04a4a1359437732dc0a4f5ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e27f4e2_8239bbed",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 8
@@ -448,6 +466,30 @@
       "side": 1,
       "message": "Yes, I record more events than needed for evaluating data stall. The idea is to keep them for metrics purpose. Currently, we do not know what is the best threshold for judging data stall. Thus, I could use those recorded events to see if I need to have the threshold higher or lower. e.g. If I could always see a true data stall with 10 or higher consecutive DNS timeouts but I just set it to 5, it may result in some false positive and I may need to have higher threshold in the judgement.\n\nDoes this make sense to you?",
       "parentUuid": "4e27f4e2_8239bbed",
+      "range": {
+        "startLine": 1528,
+        "startChar": 33,
+        "endLine": 1528,
+        "endChar": 50
+      },
+      "revId": "cf11ee0859b39ede04a4a1359437732dc0a4f5ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c694011_780b96fe",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Oh, I see. Yes it makes sense, but please add a comment to explain this rationale.",
+      "parentUuid": "1503b086_6fdebbfc",
       "range": {
         "startLine": 1528,
         "startChar": 33,
@@ -856,6 +898,24 @@
       "revId": "cf11ee0859b39ede04a4a1359437732dc0a4f5ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf9bff1_1e2102ae",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7c04751_f0cad674",
+      "revId": "cf11ee0859b39ede04a4a1359437732dc0a4f5ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

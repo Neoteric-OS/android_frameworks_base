@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7b66d2_4dd6d282",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10454,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "in the last VALID_DATA_STALL_DNS_TIME_THRESHOLD interval\n\nOr you could reword completely :\nDefines, in milliseconds, for how long a DNS timeout is considered valid for the purposes of detecting a data stall.\nAnother possibility :\nDNS timeouts older than this timeout (in milliseconds) are not considered for detecting a data stall.\n\nPlease pick the one you find clearer",
+      "range": {
+        "startLine": 10454,
+        "startChar": 43,
+        "endLine": 10454,
+        "endChar": 57
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cc600a_e0ec369c",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10454,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "queries",
+      "range": {
+        "startLine": 10454,
+        "startChar": 20,
+        "endLine": 10454,
+        "endChar": 27
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b66304_b8f4d4f2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Is this change from patchset 8 from 1 minute to 10 seconds intended ? If it is, please ignore this comment.",
+      "range": {
+        "startLine": 122,
+        "startChar": 71,
+        "endLine": 122,
+        "endChar": 72
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9421d7e3_9a5d6c63",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "I think the Dependencies class is the right place for that.\n(but keep it as a TODO for this change is fine, and it\u0027s also fine not to do this until an actual need arises)",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 79
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfe8cd7_74253c2d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this explanation is right. It would be right if you were still using the RingBuffer class, because it\u0027s expensive clearing a RingBuffer, but now that it\u0027s a LinkedList this does not apply.\n\nNo, the reason you are not clearing is that you want to keep more data than necessary for detection, so that you have logs to do simulation.",
+      "range": {
+        "startLine": 1542,
+        "startChar": 15,
+        "endLine": 1542,
+        "endChar": 55
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f04a52_3b597f1b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "s/nT/ntT/",
+      "range": {
+        "startLine": 1554,
+        "startChar": 59,
+        "endLine": 1554,
+        "endChar": 61
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190b9a31_bd06ce25",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "No, I don\u0027t think this is a good idea.\n\nIn principle, you could say that a value \u003c\u003d 0 is legal and mean \"disabled\". You\u0027d have to document it in the comment for Settings.Global.CONSECUTIVE_DNS_TIMEOUT_THRESHOLD in Settings.java by saying \"set to 0 to disable\" or something similar.\n\nBut in this case, you already have a dedicated mechanism for enabling/disabling this specific data stall evaluation type. It does not make any sense, API-wise, to turn it on but give it a \u003c\u003d 0 value ; anyone who does that is definitely making a configuration error. So I think it makes more sense to throw IAE here.\n\nBut I also understand you\u0027re worried about gservices mistakenly writing a 0 value here and crashing the system server for everyone, and I think that\u0027s a valid concern. So I suggest you simply replace the call to Log.e() to a call to Log.wtf() here. That will not crash the system server, but it will make some alarms go off on our side and we\u0027ll know to push a fix.\nAlso do document in Settings.java, saying this value should be \u003e 0 if the DNS data stall detection is enabled.",
+      "range": {
+        "startLine": 1556,
+        "startChar": 16,
+        "endLine": 1556,
+        "endChar": 79
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f511c1c_eeccf625",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Say why. You need to explain why you can be sure that timeoutCountThreshold is guaranteed to be \u003c\u003d mDnsEvents.size().",
+      "range": {
+        "startLine": 1561,
+        "startChar": 87,
+        "endLine": 1562,
+        "endChar": 26
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975b26b3_16f3e731",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "This should be package private or more ; there is no point having a private accessor that only returns a member.\n\nThe reason the outer class is able to see this is because enclosing classes are defined as being able to access private members, and Java does that by creating a synthetic public accessor. So in this case, you have the outer class calling the synthetic accessor, which calls this accessor, which returns the member. The class is already protected (and private in spirit) so you can cut the middle man.",
+      "range": {
+        "startLine": 1569,
+        "startChar": 8,
+        "endLine": 1569,
+        "endChar": 15
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fc7776_2b1b853f",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Sorry, I meant actually change the setting to verify that it\u0027s taken into account.\n\nsetConsecutiveDnsTimeoutCount(6)\nwm \u003d makeWrapped()\nmakeDnsTimeoutEvent(wm,5)\nassertFalse(wm.isDataStall())\nmakeDnsTimeoutEvent(wm,1)\nassertTrue(wm.isDataStall())\nsetConsecutiveDnsTimeoutCount(9)\nwm \u003d makeWrapped()\nmakeDnsTimeoutEvent(wm,8)\nassertFalse(wm.isDataStall())\nmakeDnsTimeoutEvent(wm,1)\nassertTrue(wm.isDataStall())",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 348,
+        "endChar": 64
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475c2a49_bad849af",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-15T20:50:59Z",
+      "side": 1,
+      "message": "Likewise ; call setValidDataStallDnsTimeThreshold to change it and verify for both with setLastProbeTime that it\u0027s not a data stall if not enough probes are recent enough and that it is when they are.",
+      "range": {
+        "startLine": 359,
+        "startChar": 32,
+        "endLine": 359,
+        "endChar": 65
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
