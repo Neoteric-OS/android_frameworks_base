@@ -41819,6 +41819,7 @@ package android.telecom {
     method public java.util.List<android.telecom.PhoneAccountHandle> getSelfManagedPhoneAccounts();
     method public android.telecom.PhoneAccountHandle getSimCallManager();
     method public java.lang.String getSystemDialerPackage();
+    method public android.telecom.PhoneAccountHandle getUserSelectedOutgoingPhoneAccount();
     method public java.lang.String getVoiceMailNumber(android.telecom.PhoneAccountHandle);
     method public boolean handleMmi(java.lang.String);
     method public boolean handleMmi(java.lang.String, android.telecom.PhoneAccountHandle);

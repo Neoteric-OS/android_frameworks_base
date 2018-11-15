@@ -5072,6 +5072,7 @@ package android.telecom {
     method public boolean isRinging();
     method public boolean isTtySupported();
     method public boolean setDefaultDialer(java.lang.String);
+    method public void setUserSelectedOutgoingPhoneAccount(android.telecom.PhoneAccountHandle);
     field public static final java.lang.String EXTRA_CALL_BACK_INTENT = "android.telecom.extra.CALL_BACK_INTENT";
     field public static final java.lang.String EXTRA_CLEAR_MISSED_CALLS_INTENT = "android.telecom.extra.CLEAR_MISSED_CALLS_INTENT";
     field public static final java.lang.String EXTRA_CONNECTION_SERVICE = "android.telecom.extra.CONNECTION_SERVICE";
