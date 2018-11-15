@@ -54,6 +54,7 @@ import java.math.BigInteger;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
@@ -662,11 +663,9 @@ public class KeyStore {
         args.addEnum(KeymasterDefs.KM_TAG_DIGEST, KeymasterDefs.KM_DIGEST_SHA_2_384);
         args.addEnum(KeymasterDefs.KM_TAG_DIGEST, KeymasterDefs.KM_DIGEST_SHA_2_512);
         args.addBoolean(KeymasterDefs.KM_TAG_NO_AUTH_REQUIRED);
-        args.addUnsignedLong(KeymasterDefs.KM_TAG_ORIGINATION_EXPIRE_DATETIME,
-                             KeymasterArguments.UINT64_MAX_VALUE);
-        args.addUnsignedLong(KeymasterDefs.KM_TAG_USAGE_EXPIRE_DATETIME,
-                             KeymasterArguments.UINT64_MAX_VALUE);
-        args.addUnsignedLong(KeymasterDefs.KM_TAG_ACTIVE_DATETIME, BigInteger.ZERO);
+        args.addDate(KeymasterDefs.KM_TAG_ORIGINATION_EXPIRE_DATETIME, new Date(Long.MAX_VALUE));
+        args.addDate(KeymasterDefs.KM_TAG_USAGE_EXPIRE_DATETIME, new Date(Long.MAX_VALUE)));
+        args.addDate(KeymasterDefs.KM_TAG_ACTIVE_DATETIME, new Date(0));
         return args;
     }
 
