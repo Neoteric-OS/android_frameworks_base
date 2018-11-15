@@ -97,13 +97,15 @@ public class NetworkMonitorTest {
         MockitoAnnotations.initMocks(this);
         mAgent.linkProperties = new LinkProperties();
         mAgent.networkCapabilities = new NetworkCapabilities()
-                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         mAgent.networkInfo = mNetworkInfo;
 
         mNotMeteredAgent.linkProperties = new LinkProperties();
         mNotMeteredAgent.networkCapabilities = new NetworkCapabilities()
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         mNotMeteredAgent.networkInfo = mNetworkInfo;
 
         when(mAgent.network()).thenReturn(mNetwork);
@@ -366,6 +368,18 @@ public class NetworkMonitorTest {
         wrappedMonitor = makeMeteredWrappedNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 1000);
         makeDnsTimeoutEvent(wrappedMonitor, 5);
+        assertFalse(wrappedMonitor.isDataStall());
+    }
+
+    @Test
+    public void testIsDataStall_EvaluationWithNetworkSuspended() {
+        WrappedNetworkMonitor wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 1000);
+        makeDnsTimeoutEvent(wrappedMonitor, 5);
+        assertTrue(wrappedMonitor.isDataStall());
+
+        mAgent.networkCapabilities.removeCapability(
+                NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         assertFalse(wrappedMonitor.isDataStall());
     }
 
