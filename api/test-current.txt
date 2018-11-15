@@ -701,6 +701,12 @@ package android.net {
     field public static final android.os.Parcelable.Creator<android.net.StaticIpConfiguration> CREATOR;
   }
 
+  public class TestNetworkManager {
+    method public android.os.ParcelFileDescriptor createTunInterface(java.lang.String, android.net.LinkAddress[]);
+    method public void setupTestNetwork(java.lang.String, android.os.IBinder);
+    method public void teardownTestNetwork(android.net.Network);
+  }
+
   public class TrafficStats {
     method public static long getLoopbackRxBytes();
     method public static long getLoopbackRxPackets();
