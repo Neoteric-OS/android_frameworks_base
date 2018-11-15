@@ -607,6 +607,12 @@ package android.net {
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
+  public class TestNetworkManager {
+    method public void buildTestNetwork(java.lang.String, android.os.IBinder);
+    method public android.os.ParcelFileDescriptor buildTun(java.lang.String, android.net.LinkAddress[]);
+    method public void teardownTestNetwork(android.net.Network);
+  }
+
   public class TrafficStats {
     method public static long getLoopbackRxBytes();
     method public static long getLoopbackRxPackets();
