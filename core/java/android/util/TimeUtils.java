@@ -20,7 +20,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.SystemClock;
 
 import libcore.timezone.TimeZoneFinder;
-import libcore.util.ZoneInfoDB;
+import libcore.timezone.ZoneInfoDB;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;

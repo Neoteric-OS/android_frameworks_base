@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto2";
+package android.service;
+
+option java_multiple_files = true;
+option java_outer_classname = "RuntimeInfoServiceProto";
+
+// Represents dumpsys from RuntimeInfoService.
+message RuntimeInfoServiceDumpProto {
+  option (android.msg_privacy).dest = DEST_AUTOMATIC;
+
+  optional TimeZoneDataProto time_zone_data = 1;
+}
+
+// Information about the time zone data set being used by the runtime.
+message TimeZoneDataProto {
+  option (android.msg_privacy).dest = DEST_AUTOMATIC;
+
+  // Version metadata about the time zone data set present in /data.
+  // See com.android.timezone.data.TzDataVersion for format.
+  optional string data_distro_version = 1;
+
+  // Version metadata about the time zone data set prevent in the time zone
+  // data module (if present).
+  // See com.android.timezone.data.TzDataVersion for format.
+  optional string tz_module_version = 2;
+
+  // Version metadata about the time zone data set present in the runtime module.
+  // See com.android.timezone.data.TzDataVersion for format.
+  optional string runtime_module_version = 3;
+
+  // Version metadata about the time zone data set prevent in /system.
+  // See com.android.timezone.data.TzDataVersion for format.
+  optional string system_version_string = 4;
+
+  // Time zone information reported by libraries used on Android.
+  repeated TimeZoneLibraryProto libraries = 5;
+}
+
+// Information reported by a specific library used on Android.
+message TimeZoneLibraryProto {
+  option (android.msg_privacy).dest = DEST_AUTOMATIC;
+
+  // A free text identifier for the library. This can be assumed to be unique.
+  optional string id = 1;
+  // The tzdb version ID reported by the library.
+  optional string tzdb_version = 2;
+}
