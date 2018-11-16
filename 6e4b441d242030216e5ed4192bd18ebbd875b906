@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ca5224_a7d43ec5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:19:27Z",
+      "side": 1,
+      "message": "You know what I think we want to make this a Log.wtf. It\u0027s never supposed to happen.",
+      "range": {
+        "startLine": 4197,
+        "startChar": 12,
+        "endLine": 4197,
+        "endChar": 16
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b047263d_e09eed1a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:19:27Z",
+      "side": 1,
+      "message": "Can\u0027t you just afford to say any() here ? I think it simplifies the code, and I seem to remember that Mockito will return the first match that you defined, in order.\nLikewise in the two statements below. Or maybe you prefer to leave as is on grounds that it stays correct even if l.274 gets deleted ?",
+      "range": {
+        "startLine": 275,
+        "startChar": 74,
+        "endLine": 275,
+        "endChar": 99
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1595d2a_eee8588a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:19:27Z",
+      "side": 1,
+      "message": "This style of comment (/**) is for Javadoc, and requires that the first line is empty.\n\nI suggest you just comment the entire block with //, or you can go with /* */",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 7
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
