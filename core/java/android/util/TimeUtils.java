@@ -19,7 +19,7 @@ package android.util;
 import android.annotation.UnsupportedAppUsage;
 import android.os.SystemClock;
 
-import libcore.util.TimeZoneFinder;
+import libcore.timezone.TimeZoneFinder;
 import libcore.util.ZoneInfoDB;
 
 import java.io.PrintWriter;
