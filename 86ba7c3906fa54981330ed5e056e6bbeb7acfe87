@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8018eb43_2b83cf1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-11-16T17:24:51Z",
+      "side": 1,
+      "message": "\"not needed any more because...\"\n\nalso, a \"Test: \" line is still needed, even if it\u0027s just \"make\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "86ba7c3906fa54981330ed5e056e6bbeb7acfe87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
