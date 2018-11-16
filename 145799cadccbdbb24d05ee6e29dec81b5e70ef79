@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd997e3_79dd8ee6",
+        "filename": "core/java/android/net/MetaNetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:53:32Z",
+      "side": 1,
+      "message": "All right, time to bikeshed on the name.\n\nI like NetworkDescriptor or ConcreteNetworkDescriptor more.",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "145799cadccbdbb24d05ee6e29dec81b5e70ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ccbc75_0b6aec9e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:53:32Z",
+      "side": 1,
+      "message": "I understand you\u0027re just doing the same thing as for the specifier, but I don\u0027t think this is right. First, I think it may definitely make sense in the case of a VPN which may have multiple transports. Then, while I understand that this has to come from some concrete network provider and that they do all have some technology, I\u0027m not sure how fundamentally intrictated that is ; at least I think it\u0027s disjoint enough that it should be okay to set the meta capabilities before the the transport when building a NetworkCapabilites object that describes a specific network.\n\nI\u0027d vote to simply remove this part and the comment and the throw. (and probably in the future also remove the same test for the network specifier)",
+      "range": {
+        "startLine": 909,
+        "startChar": 7,
+        "endLine": 909,
+        "endChar": 70
+      },
+      "revId": "145799cadccbdbb24d05ee6e29dec81b5e70ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4e879a_fa882da3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T20:53:32Z",
+      "side": 1,
+      "message": "This is for incidentd. You can take a look at ag/3379567 for context. It would be nice and occasionally useful to print it, but it may contain PII and at this time it\u0027s a bit unclear what is relevant so the only thing we could possibly do is to call toString() and try to send some pretty-printed string.\n\nFor now I think you can afford to go with what you\u0027ve written, maybe just rewording the comment to say TODO : send information about the meta capabilities when it\u0027s useful to do so, or something similar.",
+      "range": {
+        "startLine": 1566,
+        "startChar": 12,
+        "endLine": 1566,
+        "endChar": 85
+      },
+      "revId": "145799cadccbdbb24d05ee6e29dec81b5e70ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
