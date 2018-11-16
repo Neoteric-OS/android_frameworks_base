@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d87dde_9f49509b",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Line space",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 4
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9857089c_8302f38e",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Which keys are these?",
+      "range": {
+        "startLine": 108,
+        "startChar": 13,
+        "endLine": 108,
+        "endChar": 17
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c15384_f303e896",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "It seems like this is passed to Vpn.java, no?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 48
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64938baa_0a4d2d52",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Same as below; let\u0027s use the parcelable methods",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 57
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09584c7_b40345e7",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "ProxyInfo is parcelable; suggest just using the parcel creator method?",
+      "range": {
+        "startLine": 198,
+        "startChar": 27,
+        "endLine": 198,
+        "endChar": 78
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cecc8a3_2eedee33",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Suggest just using ProxyInfo\u0027s toString() method",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 84
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629b91d1_43e9c7d4",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Should proxyPort be a int?",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b23791e_52e54342",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Are we storing Host/Port separately here for a specific reason? in VpnConfig we store them as proxyInfo",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71ccb1b_81638208",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5669,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "If I may ask, what drove the decision to put this in ConnectivityService rather than having LegacyVpnRunner do this?",
+      "range": {
+        "startLine": 5669,
+        "startChar": 16,
+        "endLine": 5669,
+        "endChar": 98
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4dbf0b_f67fe216",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Does this need to be updated?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f5211c_bd7e85c7",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Is this meant to proxy VPN inner packets? or the encapsulated packets?",
+      "range": {
+        "startLine": 133,
+        "startChar": 58,
+        "endLine": 133,
+        "endChar": 67
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651d439c_9c5c2248",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "Why do we need to clear it every time? In the initialization case, can we not just rely on it being null as a default?",
+      "range": {
+        "startLine": 339,
+        "startChar": 12,
+        "endLine": 339,
+        "endChar": 29
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957a9f03_73e56a63",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "This check probably should be done before the (expensive) synchronized block.",
+      "range": {
+        "startLine": 340,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449efbc7_1c7819d4",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-16T03:56:15Z",
+      "side": 1,
+      "message": "If we\u0027re always using this a full ProxyInfo instance, let\u0027s store it as that all the way down?",
+      "range": {
+        "startLine": 1797,
+        "startChar": 23,
+        "endLine": 1797,
+        "endChar": 73
+      },
+      "revId": "645f90f3bddd01d9014aa2459f9a95bc7e44444f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
