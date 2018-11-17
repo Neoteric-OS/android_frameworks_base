@@ -603,12 +603,7 @@ java_defaults {
         ":installd_aidl",
         ":dumpstate_aidl",
 
-        "lowpan/java/android/net/lowpan/ILowpanEnergyScanCallback.aidl",
-        "lowpan/java/android/net/lowpan/ILowpanNetScanCallback.aidl",
-        "lowpan/java/android/net/lowpan/ILowpanInterfaceListener.aidl",
-        "lowpan/java/android/net/lowpan/ILowpanInterface.aidl",
-        "lowpan/java/android/net/lowpan/ILowpanManagerListener.aidl",
-        "lowpan/java/android/net/lowpan/ILowpanManager.aidl",
+        ":lowpan_aidl",
 
         "core/java/android/app/admin/SecurityLogTags.logtags",
         "core/java/android/content/EventLogTags.logtags",
@@ -720,6 +715,18 @@ filegroup {
     srcs: [
         "core/java/android/os/IStatsCompanionService.aidl",
         "core/java/android/os/IStatsManager.aidl",
+    ],
+}
+
+filegroup {
+    name: "lowpan_aidl",
+    srcs: [
+        "lowpan/java/android/net/lowpan/ILowpanEnergyScanCallback.aidl",
+        "lowpan/java/android/net/lowpan/ILowpanNetScanCallback.aidl",
+        "lowpan/java/android/net/lowpan/ILowpanInterfaceListener.aidl",
+        "lowpan/java/android/net/lowpan/ILowpanInterface.aidl",
+        "lowpan/java/android/net/lowpan/ILowpanManagerListener.aidl",
+        "lowpan/java/android/net/lowpan/ILowpanManager.aidl",
     ],
 }
 
