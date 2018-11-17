@@ -1,0 +1,30 @@
+cc_library_shared {
+    name: "librs_jni",
+
+    srcs: ["android_renderscript_RenderScript.cpp"],
+
+    shared_libs: [
+        "libandroid",
+        "libandroid_runtime",
+        "libandroidfw",
+        "libnativehelper",
+        "libRS",
+        "libcutils",
+        "liblog",
+        "libhwui",
+        "libutils",
+        "libui",
+        "libgui",
+        "libjnigraphics",
+    ],
+
+    header_libs: ["libbase_headers"],
+
+    cflags: [
+        "-Wno-unused-parameter",
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+}
