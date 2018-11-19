@@ -22,6 +22,30 @@
       "revId": "52aa2178e1daf08cfb01ad6e1186df1fc34f604e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22576f2f_b07a5341",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-11-19T23:57:03Z",
+      "side": 1,
+      "message": "Yes. I tried \"@UnsupportedAppUsage(maxTargetSdk \u003d Build.VERSION_CODES.P)\" but still got the compile error.",
+      "parentUuid": "a941ea23_d34df446",
+      "range": {
+        "startLine": 195,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 24
+      },
+      "revId": "52aa2178e1daf08cfb01ad6e1186df1fc34f604e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
