@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "68e25b97_bc24992c",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10454,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack. Update to alternative wording as suggestion.",
+      "parentUuid": "21cc600a_e0ec369c",
+      "range": {
+        "startLine": 10454,
+        "startChar": 20,
+        "endLine": 10454,
+        "endChar": 27
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b66304_b8f4d4f2",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -59,6 +83,30 @@
       "writtenOn": "2018-11-15T20:50:59Z",
       "side": 1,
       "message": "Is this change from patchset 8 from 1 minute to 10 seconds intended ? If it is, please ignore this comment.",
+      "range": {
+        "startLine": 122,
+        "startChar": 71,
+        "endLine": 122,
+        "endChar": 72
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7fb84ad_3aa5c5b1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Sorry for that. It should be 1 minute.",
+      "parentUuid": "25b66304_b8f4d4f2",
       "range": {
         "startLine": 122,
         "startChar": 71,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f080c1ec_66b35514",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack. Those setting keys are use Dependencies class to do the query. Do you mean to have them all included into Dependencies class? My thought for the TODO here is to move them to another class. This may help to have NetworkMonitor cleaner and probably aligning with what Remi plan to do.",
+      "parentUuid": "9421d7e3_9a5d6c63",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 79
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dfe8cd7_74253c2d",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -114,6 +186,30 @@
       "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b23b85_446f1357",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "updated",
+      "parentUuid": "4dfe8cd7_74253c2d",
+      "range": {
+        "startLine": 1542,
+        "startChar": 15,
+        "endLine": 1542,
+        "endChar": 55
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b90fc324_4d5ba841",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80f04a52_3b597f1b",
+      "range": {
+        "startLine": 1554,
+        "startChar": 59,
+        "endLine": 1554,
+        "endChar": 61
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190b9a31_bd06ce25",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -160,6 +280,30 @@
       "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158d245a_df8cf265",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack. I update it the Log.wtf() and update the document in Setting.java.",
+      "parentUuid": "190b9a31_bd06ce25",
+      "range": {
+        "startLine": 1556,
+        "startChar": 16,
+        "endLine": 1556,
+        "endChar": 79
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "3ffa3727_78e067dd",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f511c1c_eeccf625",
+      "range": {
+        "startLine": 1561,
+        "startChar": 87,
+        "endLine": 1562,
+        "endChar": 26
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975b26b3_16f3e731",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 9
@@ -206,6 +374,30 @@
       "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a949621_9501f83f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "975b26b3_16f3e731",
+      "range": {
+        "startLine": 1569,
+        "startChar": 8,
+        "endLine": 1569,
+        "endChar": 15
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "a20181b5_968a6bd5",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54fc7776_2b1b853f",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 348,
+        "endChar": 64
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "475c2a49_bad849af",
         "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 9
@@ -252,6 +468,30 @@
       "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b5ddaf_ab74c5ce",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-19T03:49:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "475c2a49_bad849af",
+      "range": {
+        "startLine": 359,
+        "startChar": 32,
+        "endLine": 359,
+        "endChar": 65
+      },
+      "revId": "3605e8a4ef2cb6876acb00b5a505a80baab08745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
