@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a941ea23_d34df446",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-19T23:52:06Z",
+      "side": 1,
+      "message": "Just to confirm: you need to remove this because otherwise the greylist generation code complains, right?",
+      "range": {
+        "startLine": 195,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 24
+      },
+      "revId": "52aa2178e1daf08cfb01ad6e1186df1fc34f604e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
