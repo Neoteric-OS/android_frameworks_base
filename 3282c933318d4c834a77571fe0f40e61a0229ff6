@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "cf151820_d9bf755f",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-11-19T07:23:31Z",
+      "side": 1,
+      "message": "I\u0027m not going to add this it here. I\u0027m going to add it at Telephony. I think it satisfy your expectation that \"why this loading logic can\u0027T take place in Telephony and desired values sent via the parcelable\".",
+      "parentUuid": "61ceffdf_3d7d15f6",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 17
+      },
+      "revId": "3282c933318d4c834a77571fe0f40e61a0229ff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c24a8b47_bf15026b",
         "filename": "telecomm/java/android/telecom/StatusHints.java",
         "patchSetId": 6
