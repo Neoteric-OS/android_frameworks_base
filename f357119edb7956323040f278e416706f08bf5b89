@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a1a7b0_3f062006",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-19T04:07:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s a good idea to allow apps to pass in the scope, as it is non-trivial to deal with and easy to get wrong (and ignored by the kernel in many cases). Unless it\u0027s clear that we need to do this, we should unhide the non-scoped versions instead, like the other versions below:\n\n    public LinkAddress(InetAddress address, int prefixLength)\n    public LinkAddress(String address)",
+      "range": {
+        "startLine": 161,
+        "startChar": 73,
+        "endLine": 161,
+        "endChar": 82
+      },
+      "revId": "f357119edb7956323040f278e416706f08bf5b89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
