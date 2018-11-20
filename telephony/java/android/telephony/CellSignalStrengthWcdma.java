@@ -21,6 +21,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 import java.util.Objects;
 
 /**
@@ -60,6 +62,16 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     }
 
     /** @hide */
+    public CellSignalStrengthWcdma(android.hardware.radio.V1_0.WcdmaSignalStrength wcdma) {
+        this(wcdma.signalStrength, wcdma.bitErrorRate, CellInfo.UNAVAILABLE, CellInfo.UNAVAILABLE);
+    }
+
+    /** @hide */
+    public CellSignalStrengthWcdma(android.hardware.radio.V1_2.WcdmaSignalStrength wcdma) {
+        this(wcdma.base.signalStrength, wcdma.base.bitErrorRate, wcdma.rscp, wcdma.ecno);
+    }
+
+    /** @hide */
     public CellSignalStrengthWcdma(CellSignalStrengthWcdma s) {
         copyFrom(s);
     }
@@ -87,6 +99,16 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
         mEcNo = CellInfo.UNAVAILABLE;
     }
 
+    private static String sLevelCalculationMethod = "rssi";
+    private static int[] sThresholds = new int[]{0, 3, 8, 13, 18, 32};
+
+    @VisibleForTesting
+    public static void setLevelCalculation(String method, int[] thresholds) {
+        // TODO(nharold): thread safety and tamper safety for this
+        sLevelCalculationMethod = method;
+        sThresholds = thresholds;
+    }
+
     /**
      * Retrieve an abstract level value for the overall signal strength.
      *
@@ -95,19 +117,24 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
      */
     @Override
     public int getLevel() {
-        int level;
+        int measurementValue = CellInfo.UNAVAILABLE;
+        // TODO: abstract this entire thing into a series of functions
+        switch (sLevelCalculationMethod) {
+            case "rscp":
+                measurementValue = mRscp;
+            case "rssi":
+                measurementValue = mSignalStrength;
+            default:
+                Rlog.e(LOG_TAG, "Invalid level calculation specified, using RSSI");
+        }
 
-        // ASU ranges from 0 to 31 - TS 27.007 Sec 8.5
-        // asu = 0 (-113dB or less) is very weak
-        // signal, its better to show 0 bars to the user in such cases.
-        // asu = 99 is a special case, where the signal strength is unknown.
-        int asu = mSignalStrength;
-        if (asu <= 2 || asu == 99) level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_GREAT) level = SIGNAL_STRENGTH_GREAT;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_GOOD)  level = SIGNAL_STRENGTH_GOOD;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_MODERATE)  level = SIGNAL_STRENGTH_MODERATE;
-        else level = SIGNAL_STRENGTH_POOR;
-        if (DBG) log("getLevel=" + level);
+        if (measurementValue < sThresholds[0]
+                || measurementValue >= sThresholds[sThresholds.length - 1]) {
+            return SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
+
+        int level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        while (measurementValue >= sThresholds[level+1]) level++;
         return level;
     }
 
@@ -127,6 +154,15 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
         }
         if (DBG) log("getDbm=" + dBm);
         return dBm;
+    }
+
+    /**
+     * Get the RSCP as dBm
+     * @hide
+     */
+    public int getRscp() {
+        if (mRscp > 96) return CellInfo.UNAVAILABLE;
+        return -120 + mRscp;
     }
 
     /**

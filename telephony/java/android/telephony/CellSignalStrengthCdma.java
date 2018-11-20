@@ -75,6 +75,13 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
     }
 
     /** @hide */
+    public CellSignalStrengthCdma(android.hardware.radio.V1_0.CdmaSignalStrength cdma,
+            android.hardware.radio.V1_0.EvdoSignalStrength evdo) {
+        this(cdma.dbm, cdma.ecio, evdo.dbm, evdo.ecio, evdo.signalNoiseRatio);
+    }
+
+
+    /** @hide */
     public CellSignalStrengthCdma(CellSignalStrengthCdma s) {
         copyFrom(s);
     }
@@ -131,7 +138,7 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
     }
 
     /**
-     * Get the signal level as an asu value between 0..97, 99 is unknown
+     * Get the CDMA ASU signal level as an asu value between 0..16, 99 is unknown
      */
     @Override
     public int getAsuLevel() {
@@ -219,6 +226,35 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
         return level;
     }
 
+    /**
+     * Get the evdo signal level as an asu value between 0..31, 99 is unknown
+     *
+     * @hide
+     */
+    public int getEvdoAsuLevel() {
+        int evdoDbm = getEvdoDbm();
+        int evdoSnr = getEvdoSnr();
+        int levelEvdoDbm;
+        int levelEvdoSnr;
+
+        if (evdoDbm >= -65) levelEvdoDbm = 16;
+        else if (evdoDbm >= -75) levelEvdoDbm = 8;
+        else if (evdoDbm >= -85) levelEvdoDbm = 4;
+        else if (evdoDbm >= -95) levelEvdoDbm = 2;
+        else if (evdoDbm >= -105) levelEvdoDbm = 1;
+        else levelEvdoDbm = 99;
+
+        if (evdoSnr >= 7) levelEvdoSnr = 16;
+        else if (evdoSnr >= 6) levelEvdoSnr = 8;
+        else if (evdoSnr >= 5) levelEvdoSnr = 4;
+        else if (evdoSnr >= 3) levelEvdoSnr = 2;
+        else if (evdoSnr >= 1) levelEvdoSnr = 1;
+        else levelEvdoSnr = 99;
+
+        int level = (levelEvdoDbm < levelEvdoSnr) ? levelEvdoDbm : levelEvdoSnr;
+        if (DBG) log("getEvdoAsuLevel=" + level);
+        return level;
+    }
     /**
      * Get the signal strength as dBm
      */
