@@ -16,6 +16,8 @@
 
 package android.telephony;
 
+import android.os.PersistableBundle;
+
 /**
  * Abstract base class for cell phone signal strength related information.
  */
@@ -85,4 +87,42 @@ public abstract class CellSignalStrength {
 
     @Override
     public abstract boolean equals (Object o);
+
+    /**
+     * This method is called to calculate carrier-influenced values such as the signal "Level".
+     *
+     * @hide
+     */
+    public abstract void customizeForCarrier(PersistableBundle cc, ServiceState ss);
+
+    // Range for RSCP ASU (0-31, 99) as defined in TS 27.007 8.69
+    /** @hide */
+    protected final static int getRssiDbmFromAsu(int asu) {
+        if (asu > 31 || asu < 0) return CellInfo.UNAVAILABLE;
+        return -113 + (2 * asu);
+    }
+
+    // ASU ranges from 0 to 31 - TS 27.007 Sec 8.5
+    // asu = 0 (-113dB or less) is very weak
+    // signal, its better to show 0 bars to the user in such cases.
+    // asu = 99 is a special case, where the signal strength is unknown.
+    /** @hide */
+    protected final static int getAsuFromRssiDbm(int dbm) {
+        if (dbm == CellInfo.UNAVAILABLE) return 99;
+        return (dbm / 2) + 113;
+    }
+
+    // Range for RSCP ASU (0-96, 255) as defined in TS 27.007 8.69
+    /** @hide */
+    protected final static int getRscpDbmFromAsu(int asu) {
+            if (asu > 96 || asu < 0) return CellInfo.UNAVAILABLE;
+            return asu - 120;
+        }
+
+    // Range for signal to noise ratio ASU (0-49, 255) as defined in TS 27.007 8.69
+    /** @hide */
+    protected final static int getEcNoDbFromAsu(int asu) {
+        if (asu > 49 || asu < 0) return CellInfo.UNAVAILABLE;
+        return -24 + (asu / 2);
+    }
 }
