@@ -83,3 +83,36 @@ int android_getaddrinfofornetwork(net_handle_t network,
 
     return android_getaddrinfofornet(node, service, hints, netid, 0, res);
 }
+
+int android_res_nquery(net_handle_t network,
+        const char *dname, int ns_class, int ns_type) {
+    unsigned netid;
+    if (!getnetidfromhandle(network, &netid)) {
+        return -ENONET;
+    }
+
+    return resNetworkQuery(netid, dname, ns_class, ns_type);
+}
+
+int android_res_nresult(int nquery_fd,
+        int *rcode, unsigned char *answer, int anslen) {
+    return resNetworkResult(nquery_fd, rcode, answer, anslen);
+}
+
+int android_res_nsend(net_handle_t network,
+        const unsigned char *msg, int msglen) {
+    unsigned netid;
+    if (!getnetidfromhandle(network, &netid)) {
+        return -ENONET;
+    }
+
+    return resNetworkSend(netid, msg, msglen);
+}
+int android_res_nrecv(int nsend_fd,
+        int *rcode, unsigned char *answer, int anslen) {
+    return resNetworkRecv(nsend_fd, rcode, answer, anslen);
+}
+
+void android_res_cancel(int nsend_fd) {
+    resNetworkCancel(nsend_fd);
+}
