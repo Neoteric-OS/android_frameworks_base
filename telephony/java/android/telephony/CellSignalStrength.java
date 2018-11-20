@@ -16,6 +16,8 @@
 
 package android.telephony;
 
+import android.os.PersistableBundle;
+
 /**
  * Abstract base class for cell phone signal strength related information.
  */
@@ -85,4 +87,11 @@ public abstract class CellSignalStrength {
 
     @Override
     public abstract boolean equals (Object o);
+
+    /**
+     * This method is called to calculate carrier-influenced values such as the signal "Level".
+     *
+     * @hide
+     */
+    public abstract void customizeForCarrier(PersistableBundle cc, ServiceState ss);
 }

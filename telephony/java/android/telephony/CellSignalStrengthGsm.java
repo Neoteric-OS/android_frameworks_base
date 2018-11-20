@@ -19,6 +19,7 @@ package android.telephony;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.telephony.Rlog;
 
 import java.util.Objects;
@@ -41,6 +42,7 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     private int mBitErrorRate;   // bit error rate (0-7, 99) as defined in TS 27.007 8.5
     @UnsupportedAppUsage
     private int mTimingAdvance; // range from 0-219 or CellInfo.UNAVAILABLE if unknown
+    private int mLevel;
 
     /** @hide */
     @UnsupportedAppUsage
@@ -54,10 +56,16 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     }
 
     /** @hide */
+    public CellSignalStrengthGsm(android.hardware.radio.V1_0.GsmSignalStrength gsm) {
+        this(gsm.signalStrength, gsm.bitErrorRate, gsm.timingAdvance);
+    }
+
+    /** @hide */
     public CellSignalStrengthGsm(int ss, int ber, int ta) {
         mSignalStrength = ss;
         mBitErrorRate = ber;
         mTimingAdvance = ta;
+        customizeForCarrier(null, null);
     }
 
     /** @hide */
@@ -70,6 +78,7 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         mSignalStrength = s.mSignalStrength;
         mBitErrorRate = s.mBitErrorRate;
         mTimingAdvance = s.mTimingAdvance;
+        mLevel = s.mLevel;
     }
 
     /** @hide */
@@ -84,6 +93,7 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         mSignalStrength = CellInfo.UNAVAILABLE;
         mBitErrorRate = CellInfo.UNAVAILABLE;
         mTimingAdvance = CellInfo.UNAVAILABLE;
+        mLevel = CellInfo.UNAVAILABLE;
     }
 
     /**
@@ -94,20 +104,22 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
      */
     @Override
     public int getLevel() {
-        int level;
+        return mLevel;
+    }
 
+    /** @hide */
+    @Override
+    public void customizeForCarrier(PersistableBundle cc, ServiceState ss) {
         // ASU ranges from 0 to 31 - TS 27.007 Sec 8.5
         // asu = 0 (-113dB or less) is very weak
         // signal, its better to show 0 bars to the user in such cases.
         // asu = 99 is a special case, where the signal strength is unknown.
         int asu = mSignalStrength;
-        if (asu <= 2 || asu == 99) level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
-        else if (asu >= GSM_SIGNAL_STRENGTH_GREAT) level = SIGNAL_STRENGTH_GREAT;
-        else if (asu >= GSM_SIGNAL_STRENGTH_GOOD)  level = SIGNAL_STRENGTH_GOOD;
-        else if (asu >= GSM_SIGNAL_STRENGTH_MODERATE)  level = SIGNAL_STRENGTH_MODERATE;
-        else level = SIGNAL_STRENGTH_POOR;
-        if (DBG) log("getLevel=" + level);
-        return level;
+        if (asu <= 2 || asu == 99) mLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        else if (asu >= GSM_SIGNAL_STRENGTH_GREAT) mLevel = SIGNAL_STRENGTH_GREAT;
+        else if (asu >= GSM_SIGNAL_STRENGTH_GOOD)  mLevel = SIGNAL_STRENGTH_GOOD;
+        else if (asu >= GSM_SIGNAL_STRENGTH_MODERATE)  mLevel = SIGNAL_STRENGTH_MODERATE;
+        else mLevel = SIGNAL_STRENGTH_POOR;
     }
 
     /**
@@ -154,6 +166,15 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         return level;
     }
 
+    /**
+     * Return the Bit Error Rate
+     * @returns the bit error rate (0-7, 99) as defined in TS 27.007 8.5 or UNAVAILBLE.
+     * @hide
+     */
+    public int getBitErrorRate() {
+        return mBitErrorRate;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(mSignalStrength, mBitErrorRate, mTimingAdvance);
@@ -161,20 +182,13 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
 
     @Override
     public boolean equals (Object o) {
-        CellSignalStrengthGsm s;
+        if (!(o instanceof CellSignalStrengthGsm)) return false;
+        CellSignalStrengthGsm s = (CellSignalStrengthGsm) o;
 
-        try {
-            s = (CellSignalStrengthGsm) o;
-        } catch (ClassCastException ex) {
-            return false;
-        }
-
-        if (o == null) {
-            return false;
-        }
-
-        return mSignalStrength == s.mSignalStrength && mBitErrorRate == s.mBitErrorRate &&
-                        s.mTimingAdvance == mTimingAdvance;
+        return mSignalStrength == s.mSignalStrength
+                && mBitErrorRate == s.mBitErrorRate
+                && mTimingAdvance == s.mTimingAdvance
+                && mLevel == s.mLevel;
     }
 
     /**
@@ -185,7 +199,8 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         return "CellSignalStrengthGsm:"
                 + " ss=" + mSignalStrength
                 + " ber=" + mBitErrorRate
-                + " mTa=" + mTimingAdvance;
+                + " mTa=" + mTimingAdvance
+                + " mLevel=" + mLevel;
     }
 
     /** Implement the Parcelable interface */
@@ -195,6 +210,7 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         dest.writeInt(mSignalStrength);
         dest.writeInt(mBitErrorRate);
         dest.writeInt(mTimingAdvance);
+        dest.writeInt(mLevel);
     }
 
     /**
@@ -205,6 +221,7 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
         mSignalStrength = in.readInt();
         mBitErrorRate = in.readInt();
         mTimingAdvance = in.readInt();
+        mLevel = in.readInt();
         if (DBG) log("CellSignalStrengthGsm(Parcel): " + toString());
     }
 
