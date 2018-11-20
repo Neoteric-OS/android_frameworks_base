@@ -94,6 +94,75 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c874c7_d13f6b4b",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-20T15:22:47Z",
+      "side": 1,
+      "message": "This should actually be called NAT64 prefix, not DNS64 prefix.",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa83d3a9_b2949959",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-20T15:22:47Z",
+      "side": 1,
+      "message": "detected NAT64 prefix",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db75bf2_aa7e7531",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-20T15:22:47Z",
+      "side": 1,
+      "message": "Is this true?",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 54
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
