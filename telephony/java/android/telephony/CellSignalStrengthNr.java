@@ -18,6 +18,7 @@ package android.telephony;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 
 import java.util.Objects;
 
@@ -48,6 +49,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
     private int mSsRsrp;
     private int mSsRsrq;
     private int mSsSinr;
+    private int mLevel;
 
     /**
      * @param csiRsrp CSI reference signal received power.
@@ -66,6 +68,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mSsRsrp = ssRsrp;
         mSsRsrq = ssRsrq;
         mSsSinr = ssSinr;
+        customizeForCarrier(null, null);
     }
 
     /**
@@ -142,6 +145,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         dest.writeInt(mSsRsrp);
         dest.writeInt(mSsRsrq);
         dest.writeInt(mSsSinr);
+        dest.writeInt(mLevel);
     }
 
     private CellSignalStrengthNr(Parcel in) {
@@ -151,6 +155,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mSsRsrp = in.readInt();
         mSsRsrq = in.readInt();
         mSsSinr = in.readInt();
+        mLevel = in.readInt();
     }
 
     /** @hide */
@@ -162,20 +167,27 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mSsRsrp = CellInfo.UNAVAILABLE;
         mSsRsrq = CellInfo.UNAVAILABLE;
         mSsSinr = CellInfo.UNAVAILABLE;
+        mLevel = CellInfo.UNAVAILABLE;
     }
 
     @Override
     public int getLevel() {
+        return mLevel;
+    }
+
+    /** @hide */
+    @Override
+    public void customizeForCarrier(PersistableBundle cc, ServiceState ss) {
         if (mCsiRsrp == CellInfo.UNAVAILABLE) {
-            return SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+            mLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
         } else if (mCsiRsrp >= SIGNAL_GREAT_THRESHOLD) {
-            return SIGNAL_STRENGTH_GREAT;
+            mLevel = SIGNAL_STRENGTH_GREAT;
         } else if (mCsiRsrp >= SIGNAL_GOOD_THRESHOLD) {
-            return SIGNAL_STRENGTH_GOOD;
+            mLevel = SIGNAL_STRENGTH_GOOD;
         } else if (mCsiRsrp >= SIGNAL_MODERATE_THRESHOLD) {
-            return SIGNAL_STRENGTH_MODERATE;
+            mLevel = SIGNAL_STRENGTH_MODERATE;
         } else {
-            return SIGNAL_STRENGTH_POOR;
+            mLevel = SIGNAL_STRENGTH_POOR;
         }
     }
 
@@ -206,15 +218,25 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
     }
 
     /** @hide */
+    public CellSignalStrengthNr(CellSignalStrengthNr s) {
+        mCsiRsrp = s.mCsiRsrp;
+        mCsiRsrq = s.mCsiRsrq;
+        mCsiSinr = s.mCsiSinr;
+        mSsRsrp = s.mSsRsrp;
+        mSsRsrq = s.mSsRsrq;
+        mSsSinr = s.mSsSinr;
+        mLevel = s.mLevel;
+    }
+
+    /** @hide */
     @Override
-    public CellSignalStrength copy() {
-        return new CellSignalStrengthNr(
-                mCsiRsrp, mCsiRsrq, mCsiSinr, mSsRsrp, mSsRsrq, mSsSinr);
+    public CellSignalStrengthNr copy() {
+        return new CellSignalStrengthNr(this);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mCsiRsrp, mCsiRsrq, mCsiSinr, mSsRsrp, mSsRsrq, mSsSinr);
+        return Objects.hash(mCsiRsrp, mCsiRsrq, mCsiSinr, mSsRsrp, mSsRsrq, mSsSinr, mLevel);
     }
 
     @Override
@@ -222,7 +244,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         if (obj instanceof CellSignalStrengthNr) {
             CellSignalStrengthNr o = (CellSignalStrengthNr) obj;
             return mCsiRsrp == o.mCsiRsrp && mCsiRsrq == o.mCsiRsrq && mCsiSinr == o.mCsiSinr
-                    && mSsRsrp == o.mSsRsrp && mSsRsrq == o.mSsRsrq && mSsSinr == o.mSsSinr;
+                    && mSsRsrp == o.mSsRsrp && mSsRsrq == o.mSsRsrq && mSsSinr == o.mSsSinr
+                    && mLevel == o.mLevel;
         }
         return false;
     }
@@ -237,6 +260,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
                 .append(" ssRsrp = " + mSsRsrp)
                 .append(" ssRsrq = " + mSsRsrq)
                 .append(" ssSinr = " + mSsSinr)
+                .append(" level = " + mLevel)
                 .append(" }")
                 .toString();
     }
