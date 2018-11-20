@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad6454b_44fcf8ab",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-11-20T09:33:19Z",
+      "side": 1,
+      "message": "I\u0027m curious about the use-case for having this easily configurable: do you have devices that need to have the check disabled ? Why was it necessary ?",
+      "range": {
+        "startLine": 870,
+        "startChar": 27,
+        "endLine": 871,
+        "endChar": 73
+      },
+      "revId": "0328855836aaa069adf9649ec269a96cff5f713e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be86e62_b215ff2c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-11-20T09:33:19Z",
+      "side": 1,
+      "message": "We should have the HTTPS URL configurable the same way as well: validation will especially not work well if the HTTPS URL is not relevant for the device.\nFor consistency the fallback URLs and specs (CAPTIVE_PORTAL_FALLBACK_URL, CAPTIVE_PORTAL_OTHER_FALLBACK_URLS, CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS) should probably be treated the same way.",
+      "range": {
+        "startLine": 894,
+        "startChar": 25,
+        "endLine": 894,
+        "endChar": 54
+      },
+      "revId": "0328855836aaa069adf9649ec269a96cff5f713e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
