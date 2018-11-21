@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d49ff7_6c6466e6",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "we should probably update the link too :)",
+      "range": {
+        "startLine": 152,
+        "startChar": 22,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514dd185_62155f02",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "worth having a message that lists the overlap?",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b6bd6f_72d4f68d",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "consider list comprehension? (see below)",
+      "range": {
+        "startLine": 210,
+        "startChar": 18,
+        "endLine": 210,
+        "endChar": 99
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4a0d9a_7e69e4c1",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "might be clearer to return a new dict instead?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 82
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bbafef_0149ae3c",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "clearer?\n[line.split(\u0027,\u0027) for line in csv_lines]",
+      "range": {
+        "startLine": 231,
+        "startChar": 17,
+        "endLine": 231,
+        "endChar": 61
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16e33d4_67186c03",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "clearer?\n[csv[0] for csv in csv_values]",
+      "range": {
+        "startLine": 234,
+        "startChar": 15,
+        "endLine": 234,
+        "endChar": 50
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf4e343_553fcae6",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "consider list comprehension again",
+      "range": {
+        "startLine": 238,
+        "startChar": 52,
+        "endLine": 238,
+        "endChar": 88
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6e2a3b_f3ef07ff",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "better done in regular loop?",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 70
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760422eb_1d61d0b8",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "seems like entries_dict gets passed around a lot. Might be clearer to make a class that encapsulates it? (especially since it\u0027s modified in place a lot which is a bit counter intuitive as is)\n\nclass EntriesDict(object):\n\n  def __init__(self, csv_file):\n     ...\n  \n  def assign_tag(self, tag, entries_subset):\n\n...etc",
+      "range": {
+        "startLine": 244,
+        "startChar": 36,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93c693f_51d8b6eb",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-21T14:42:15Z",
+      "side": 1,
+      "message": "better done in a regular loop?\n\n(not actually using the return values here?)",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 267,
+        "endChar": 63
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
