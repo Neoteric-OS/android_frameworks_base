@@ -22,6 +22,30 @@
       "revId": "0e2f799363a2ca2cd6186ec0f8b1d1492257db1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4bc038_24429a00",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6182,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-11-21T09:08:22Z",
+      "side": 1,
+      "message": "Oh, you\u0027re absolutely right. Done. Thanks for catching that.",
+      "parentUuid": "6a8ec535_9eed2063",
+      "range": {
+        "startLine": 6182,
+        "startChar": 19,
+        "endLine": 6182,
+        "endChar": 40
+      },
+      "revId": "0e2f799363a2ca2cd6186ec0f8b1d1492257db1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
