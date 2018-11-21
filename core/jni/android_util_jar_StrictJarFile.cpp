@@ -22,15 +22,17 @@
 
 #include <log/log.h>
 
+#include <nativehelper/jni_macros.h>
 #include <nativehelper/JNIHelp.h>
-#include <nativehelper/JniConstants.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include "jni.h"
+
+#include "core_jni_helpers.h"
 #include "ziparchive/zip_archive.h"
 
 namespace android {
 
+static jclass zipEntryClass;
 // The method ID for ZipEntry.<init>(String,String,JJJIII[BJJ)
 static jmethodID zipEntryCtor;
 
@@ -39,7 +41,7 @@ static void throwIoException(JNIEnv* env, const int32_t errorCode) {
 }
 
 static jobject newZipEntry(JNIEnv* env, const ZipEntry& entry, jstring entryName) {
-  return env->NewObject(JniConstants::zipEntryClass,
+  return env->NewObject(zipEntryClass,
                         zipEntryCtor,
                         entryName,
                         NULL,  // comment
@@ -156,6 +158,7 @@ static void StrictJarFile_nativeClose(JNIEnv*, jobject, jlong nativeHandle) {
   CloseArchive(reinterpret_cast<ZipArchiveHandle>(nativeHandle));
 }
 
+
 static JNINativeMethod gMethods[] = {
   NATIVE_METHOD(StrictJarFile, nativeOpenJarFile, "(Ljava/lang/String;I)J"),
   NATIVE_METHOD(StrictJarFile, nativeStartIteration, "(JLjava/lang/String;)J"),
@@ -165,13 +168,10 @@ static JNINativeMethod gMethods[] = {
 };
 
 int register_android_util_jar_StrictJarFile(JNIEnv* env) {
-  jniRegisterNativeMethods(env, "android/util/jar/StrictJarFile", gMethods, NELEM(gMethods));
-
-  zipEntryCtor = env->GetMethodID(JniConstants::zipEntryClass, "<init>",
-      "(Ljava/lang/String;Ljava/lang/String;JJJII[BJ)V");
-  LOG_ALWAYS_FATAL_IF(zipEntryCtor == NULL, "Unable to find ZipEntry.<init>");
-
-  return 0;
+  zipEntryClass = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/util/zip/ZipEntry"));
+  zipEntryCtor = GetMethodIDOrDie(env, zipEntryClass, "<init>",
+                                  "(Ljava/lang/String;Ljava/lang/String;JJJII[BJ)V");
+  return jniRegisterNativeMethods(env, "android/util/jar/StrictJarFile", gMethods, NELEM(gMethods));
 }
 
 }; // namespace android
