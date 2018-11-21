@@ -183,6 +183,52 @@
       "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feda53fb_6e62a0ca",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-21T09:17:52Z",
+      "side": 1,
+      "message": "Actually all of these testDnsXXX is specific to DnsStallDetector.isDataStallSuspected\nHow about move these tests to a standalone file such as DnsStallDetectorTest\nand focus on the test of isDataStallSuspected() instead of monitor.isDataStall()?",
+      "range": {
+        "startLine": 329,
+        "startChar": 16,
+        "endLine": 329,
+        "endChar": 64
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3e9ad0_a71aac92",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-21T09:17:52Z",
+      "side": 1,
+      "message": "Do we need to test counter reset case after this?\ne.g.\nmakeDnsSuccess(...)\nassertFalse(...)",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 18
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
