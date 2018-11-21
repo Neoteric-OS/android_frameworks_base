@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e6e11e_b3f3bf37",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "pcapFilename",
+      "range": {
+        "startLine": 1740,
+        "startChar": 39,
+        "endLine": 1740,
+        "endChar": 52
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7145d8e_dceb991e",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "Also note that it populates data[] with the APF counters.",
+      "range": {
+        "startLine": 1741,
+        "startChar": 47,
+        "endLine": 1741,
+        "endChar": 48
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c356ecae_fb06a63c",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "\"dropAllPackets\" seems like an imperative, and suggests that this function will drop all packets. But actually it checks whether all the packets are dropped. Maybe call this \"dropsAllPackets\"?",
+      "range": {
+        "startLine": 1743,
+        "startChar": 34,
+        "endLine": 1743,
+        "endChar": 48
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729b8f4c_fd27ab32",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "Instead of adding all these release statements, is it feasible to use ScopedByteArrayRW?",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 84
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989a07b9_ef156d46",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "Should this be JNI_COMMIT?",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbee7e9_cd6c74bb",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T14:31:43Z",
+      "side": 1,
+      "message": "Looks like this makes sure that the APF counters are captured in jdata. Why do you this only if you return false? It could be useful to know what the counters are even if all the packets are dropped.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 78
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
