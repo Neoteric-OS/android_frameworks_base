@@ -229,6 +229,29 @@
       "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f602da61_7338e81e",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-21T09:20:07Z",
+      "side": 1,
+      "message": "Should we add more comments about this?",
+      "range": {
+        "startLine": 369,
+        "startChar": 16,
+        "endLine": 369,
+        "endChar": 65
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
