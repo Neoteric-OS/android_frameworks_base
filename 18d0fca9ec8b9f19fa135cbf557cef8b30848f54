@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87d4bb65_e951564c",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 10446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "From a mainline perspective, instead of using Settings (which cannot be updated) we should probably use something like go/android-flags-api .",
+      "range": {
+        "startLine": 10445,
+        "startChar": 0,
+        "endLine": 10446,
+        "endChar": 52
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4b7e38_a634711c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "Call this \"TYPES\" instead of \"TYPE\" since it\u0027s a bitmask.",
+      "range": {
+        "startLine": 126,
+        "startChar": 59,
+        "endLine": 126,
+        "endChar": 63
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a004f92_cf74232d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "Note that in a mainline world, this is likely going to work by NetworkMonitor directly registering for these events with netd. That doesn\u0027t seem like a blocker here though.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 7
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c666e5ed_ec0d1f3b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "I think it would be good to move this code to another file sooner rather than later. Not just the configuration, but the logic too.",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 79
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154eae88_ed4433c3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should encourage this. So maybe change \"once it\" to \"if it ever\"? :-)",
+      "range": {
+        "startLine": 1530,
+        "startChar": 60,
+        "endLine": 1530,
+        "endChar": 73
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b95457_4c168d41",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "This is a bit hard to understand. Maybe put it into a local variable with a readable name (firstConsecutiveTimeout?) and a comment describing what it does?",
+      "range": {
+        "startLine": 1573,
+        "startChar": 41,
+        "endLine": 1573,
+        "endChar": 82
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

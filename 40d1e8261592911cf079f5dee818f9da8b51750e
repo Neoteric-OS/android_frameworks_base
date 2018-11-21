@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "952aef3d_6a659d1f",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 10444,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T08:46:16Z",
+      "side": 1,
+      "message": "We should prefix this string (and the other ones you\u0027re adding) with something that explains that it\u0027s for data stall detection or for networking in general.\n\nDATA_STALL_DNS_TIMEOUT_THRESHOLD?\nNETWORK_STALL_DNS_TIMEOUT_THRESHOLD?\n\nIt\u0027s probably a good idea to have them start with the same prefix (NETWORK_STALL_xxx or DATA_STALL_xxx).",
+      "range": {
+        "startLine": 10444,
+        "startChar": 35,
+        "endLine": 10444,
+        "endChar": 68
+      },
+      "revId": "40d1e8261592911cf079f5dee818f9da8b51750e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
