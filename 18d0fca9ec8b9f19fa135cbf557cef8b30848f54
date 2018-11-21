@@ -117,6 +117,52 @@
     },
     {
       "key": {
+        "uuid": "f2fe25eb_94500756",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-21T08:55:35Z",
+      "side": 1,
+      "message": "I think the function do more then accumulate, maybe it will confuse others?\nHow about recordDnsEvent()?",
+      "range": {
+        "startLine": 1545,
+        "startChar": 23,
+        "endLine": 1545,
+        "endChar": 59
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b44a76_bbd8ddca",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-21T08:55:35Z",
+      "side": 1,
+      "message": "should be modified.",
+      "range": {
+        "startLine": 1547,
+        "startChar": 41,
+        "endLine": 1547,
+        "endChar": 51
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b95457_4c168d41",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 12
