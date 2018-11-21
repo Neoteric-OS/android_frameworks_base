@@ -22,6 +22,30 @@
       "revId": "30cc367e0b8823996062e51b02046b1beeb89356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa1a0f5_f195ba3e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-21T09:14:35Z",
+      "side": 1,
+      "message": "If thread wait for I/O, then it will not actually be terminated. Previous thought about that is \nthe probes will not be referred and eventually it will finish. Also, in our last mail discussion with tobiast@, it seems disconnect() is not guaranteed to actually disconnect it. It may need some more implementation to real disconnect the HttpURLConnection.\nSince this commit was already merged, I will have another commit to follow up this.",
+      "parentUuid": "708e698c_fbc6c929",
+      "range": {
+        "startLine": 898,
+        "startChar": 24,
+        "endLine": 898,
+        "endChar": 33
+      },
+      "revId": "30cc367e0b8823996062e51b02046b1beeb89356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
