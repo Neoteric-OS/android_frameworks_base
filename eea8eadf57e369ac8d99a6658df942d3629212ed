@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f400f7d_73765466",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42822,
+      "author": {
+        "id": 1377475
+      },
+      "writtenOn": "2018-11-21T01:10:02Z",
+      "side": 1,
+      "message": "Also, I\u0027m not sure how to test the APIs. And whether or not these changes are necessary,",
+      "revId": "eea8eadf57e369ac8d99a6658df942d3629212ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
