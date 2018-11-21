@@ -21,7 +21,6 @@
 #include <cutils/ashmem.h>
 #include <utils/Log.h>
 #include <nativehelper/JNIHelp.h>
-#include <nativehelper/JniConstants.h>
 #include <nativehelper/ScopedLocalRef.h>
 
 #include <algorithm>
@@ -31,10 +30,10 @@
 
 namespace {
 
-static void throwErrnoException(JNIEnv* env, const char* functionName, int error) {
-    static jmethodID ctor = env->GetMethodID(JniConstants::errnoExceptionClass,
-            "<init>", "(Ljava/lang/String;I)V");
+static jclass errnoExceptionClass;
+static jmethodID errnoExceptionCtor;  // MethodID for ErrnoException.<init>(String,I)
 
+static void throwErrnoException(JNIEnv* env, const char* functionName, int error) {
     ScopedLocalRef<jstring> detailMessage(env, env->NewStringUTF(functionName));
     if (detailMessage.get() == NULL) {
         // Not really much we can do here. We're probably dead in the water,
@@ -42,8 +41,10 @@ static void throwErrnoException(JNIEnv* env, const char* functionName, int error
         env->ExceptionClear();
     }
 
-    jobject exception = env->NewObject(JniConstants::errnoExceptionClass, ctor,
-            detailMessage.get(), error);
+    jobject exception = env->NewObject(errnoExceptionClass,
+                                       errnoExceptionCtor,
+                                       detailMessage.get(),
+                                       error);
     env->Throw(reinterpret_cast<jthrowable>(exception));
 }
 
@@ -97,8 +98,11 @@ static const JNINativeMethod methods[] = {
 
 namespace android {
 
-int register_android_os_SharedMemory(JNIEnv* env)
-{
+int register_android_os_SharedMemory(JNIEnv* env) {
+    errnoExceptionClass =
+        MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/system/ErrnoException"));
+    errnoExceptionCtor =
+        GetMethodIDOrDie(env, errnoExceptionClass, "<init>", "(Ljava/lang/String;I)V");
     return RegisterMethodsOrDie(env, "android/os/SharedMemory", methods, NELEM(methods));
 }
 
