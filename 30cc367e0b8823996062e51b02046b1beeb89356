@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6090181_a678da94",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-22T03:33:54Z",
+      "side": 1,
+      "message": "Jean and I were discussing this for another reason and I think there is a deeper problem with this code that is not fixed by this CL. The problem is that this code both:\n\n1. Defers *everything* except the probe complete messages.\n2. Never exits if the probe complete message indicates that the probe timed out or failed.\n\nWhat this means is that if the probe times out or fails, we never do anything else but stay in this state. Any other messages, such as, say, CMD_PRIVATE_DNS_SETTINGS_CHANGED, will never be processed until we exit this state. This is not a good idea because it means that any time we add a new message we need to remember to explicitly return HANDLED or NOT_HANDLED here. You did this for CMD_NETWORK_DISCONNECTED, but there will be others in the future.\n\nAlso I *think* there is one case that is currently incorrect bug: CMD_FORCE_REEVALUATION. IO think CMD_FORCE_REEVALUATION is generally supposed to transition to evaluating state and reset the backoff timer, but at the moment I think that won\u0027t happen because we\u0027ll just defer it instead.\n\nJean has some ideas on how to fix this issue which are promising, so maybe the two of you can discuss that?",
+      "range": {
+        "startLine": 885,
+        "startChar": 0,
+        "endLine": 885,
+        "endChar": 46
+      },
+      "revId": "30cc367e0b8823996062e51b02046b1beeb89356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "708e698c_fbc6c929",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 5
