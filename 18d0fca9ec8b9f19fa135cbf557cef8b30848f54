@@ -237,6 +237,29 @@
     },
     {
       "key": {
+        "uuid": "14cf4da1_0534cfa8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-22T12:04:59Z",
+      "side": 1,
+      "message": "Nits: It looks like get specific item of LinkedList has the time complexity of O(n).\nAfter discuss with Jean/Lorenzo, it should be fine since we don\u0027t query it very ofen.\nHowever, as Jean mentioned before, I think a RingBuffer with a get(int) function should be the best choice since get(int) only takes O(1) to query an item of an array.\nBut consider that the members of RingBuffer class are all private, we don\u0027t get access to it unless we change the class. \n\nSo I think RingBufferIndices should be our best choice.\nSince it leaves the ability for us to access to array.\nYou can see sample code here: https://cs.corp.google.com/aosp-master/packages/services/Car/service/src/com/android/car/CarService.java?type\u003dcs\u0026q\u003dRingBufferIndices\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d236\n\nIIUC, to query 5-th last event, it would be something like mDnsEvents[mDnsEventsIndices.indexOf(DNS_SIZE-5)]\nIs that make sense?",
+      "range": {
+        "startLine": 1536,
+        "startChar": 22,
+        "endLine": 1536,
+        "endChar": 32
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2fe25eb_94500756",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 12
@@ -281,6 +304,30 @@
       "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e532369_d1ace123",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-22T12:04:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bef23f31_6d142aa0",
+      "range": {
+        "startLine": 1545,
+        "startChar": 23,
+        "endLine": 1545,
+        "endChar": 59
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +399,30 @@
       "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c34e053_30eba47a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-22T12:04:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d279969_fef0421b",
+      "range": {
+        "startLine": 1547,
+        "startChar": 41,
+        "endLine": 1547,
+        "endChar": 51
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -437,6 +508,30 @@
       "side": 1,
       "message": "That is because currently we have only this StallDetector. The target is to test whole data stall results from each StallDector. I still need to test the combination behavior for isDatastall even those move to a standalone file. Do we usually have such a separate and standalone test file to test a subclass in one class?",
       "parentUuid": "feda53fb_6e62a0ca",
+      "range": {
+        "startLine": 329,
+        "startChar": 16,
+        "endLine": 329,
+        "endChar": 64
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff12210_e6e4178c",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-22T12:04:59Z",
+      "side": 1,
+      "message": "No, but it seems that StallDetector doesn\u0027t have to be a subclass.\nAnd instead of test whole, if we mocking all StallDetectors, we can test more complex cases of isDataStall() and verify each StallDector.isDataStallSuspected separately.\nBut I think we could refactor that when it is needed in future.\nSo I\u0027m fine with current design.",
+      "parentUuid": "8622f37e_87af11bc",
       "range": {
         "startLine": 329,
         "startChar": 16,
@@ -564,6 +659,30 @@
       "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2b0e0d_0cd9b497",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-22T12:04:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b6fe738_7fe64e72",
+      "range": {
+        "startLine": 369,
+        "startChar": 16,
+        "endLine": 369,
+        "endChar": 65
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
