@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cfbd7739_bcaa8ccc",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 10446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-22T03:35:16Z",
+      "side": 1,
+      "message": "Yes, moving to the new flags API is fine to do in a separate commit.",
+      "parentUuid": "601ef3db_d8a4e840",
+      "range": {
+        "startLine": 10445,
+        "startChar": 0,
+        "endLine": 10446,
+        "endChar": 52
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c4b7e38_a634711c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 12
