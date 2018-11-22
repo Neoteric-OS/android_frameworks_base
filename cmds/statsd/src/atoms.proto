@@ -123,8 +123,7 @@ message Atom {
         PhoneServiceStateChanged phone_service_state_changed = 94;
         PhoneStateChanged phone_state_changed = 95;
         LowMemReported low_mem_reported = 81;
-
-
+        NetworkDNSevent network_dns_event = 82;
     }
 
     // Pulled events will start at field 10000.
@@ -1273,6 +1272,28 @@ message WTFOccurred {
 
     // The pid if available. -1 means not available.
     optional sint32 pid = 4;
+}
+
+/**
+ * Logs that a DNS lookup heppened
+ * Logged from:
+ *   /system/netd/server/DnsProxyListener.cpp
+ */
+message NetworkDNSevent {
+    // Every network gets assigned a netid on creation based on order of
+    // creation. Thus netid N is assigned to the network created directly
+    // after network N-1. Thus there is no PII involved here. Zero means no
+    // network. The value 0 is never assigned to a network.
+    optional int32 netid = 1;
+
+    // The types of the DNS lookups, as defined in system/netd/server/binder/android/net/metrics/INetdEventListener.aidl
+    optional int32 event_type = 2;
+
+    // The return value of the DNS resolver for each DNS lookups.
+    optional int32 return_code = 3;
+
+    // The time it took for each DNS lookups to complete.
+    optional int32 latencyMs = 4;
 }
 
 /**
