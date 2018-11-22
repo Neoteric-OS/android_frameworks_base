@@ -283,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "1d279969_fef0421b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-22T00:41:51Z",
+      "side": 1,
+      "message": "Acked. Got your point after chatting.",
+      "parentUuid": "ce510e12_6efb2c63",
+      "range": {
+        "startLine": 1547,
+        "startChar": 41,
+        "endLine": 1547,
+        "endChar": 51
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b95457_4c168d41",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 12
@@ -459,6 +483,30 @@
       "side": 1,
       "message": "I am fully get your point here. Do you mean to comment about what is the coverage in this test? or..?",
       "parentUuid": "f602da61_7338e81e",
+      "range": {
+        "startLine": 369,
+        "startChar": 16,
+        "endLine": 369,
+        "endChar": 65
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6fe738_7fe64e72",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-22T00:41:51Z",
+      "side": 1,
+      "message": "Correct last comment. It\u0027s not fully. Acked after chatting.",
+      "parentUuid": "a95e977b_672de730",
       "range": {
         "startLine": 369,
         "startChar": 16,
