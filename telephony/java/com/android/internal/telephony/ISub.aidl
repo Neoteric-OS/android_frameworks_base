@@ -174,6 +174,15 @@ interface ISub {
     int setParentSubId(int parentSubId, int subId);
 
     /**
+     * Set whether a subscription is metered
+     *
+     * @param isMetered whether it’s a metered subscription.
+     * @param subId the unique SubscriptionInfo index in database
+     * @return the number of records updated
+     */
+    int setMetered(boolean isMetered, int subId);
+
+    /**
      * Set which subscription is preferred for cellular data. It's
      * designed to overwrite default data subscription temporarily.
      *

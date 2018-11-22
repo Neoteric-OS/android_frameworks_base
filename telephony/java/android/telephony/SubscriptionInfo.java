@@ -148,6 +148,11 @@ public class SubscriptionInfo implements Parcelable {
     private int mParentSubId;
 
     /**
+     *  A property in opportunistic subscription to indicate whether it is metered or not.
+     */
+    private boolean mIsMetered;
+
+    /**
      * @hide
      */
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
@@ -156,7 +161,7 @@ public class SubscriptionInfo implements Parcelable {
             @Nullable UiccAccessRule[] accessRules, String cardId) {
         this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
                 roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardId,
-                false, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                false, SubscriptionManager.INVALID_SUBSCRIPTION_ID, false);
     }
 
     /**
@@ -166,7 +171,7 @@ public class SubscriptionInfo implements Parcelable {
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
             @Nullable UiccAccessRule[] accessRules, String cardId, boolean isOpportunistic,
-            int parentSubId) {
+            int parentSubId, boolean isMetered) {
         this.mId = id;
         this.mIccId = iccId;
         this.mSimSlotIndex = simSlotIndex;
@@ -185,6 +190,7 @@ public class SubscriptionInfo implements Parcelable {
         this.mCardId = cardId;
         this.mIsOpportunistic = isOpportunistic;
         this.mParentSubId = parentSubId;
+        this.mIsMetered = isMetered;
     }
 
     /**
@@ -401,6 +407,17 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     * Used in opportunistic subscription ({@link #isOpportunistic()}) to indicate whether it's
+     * metered or not.This is one of the factors when deciding to switch to the subscription.
+     * (a non-metered subscription, for example, would likely be preferred over a metered one).
+     *
+     * @return whether subscription is metered.
+     */
+    public boolean isMetered() {
+        return mIsMetered;
+    }
+
+    /**
      * Checks whether the app with the given context is authorized to manage this subscription
      * according to its metadata. Only supported for embedded subscriptions (if {@link #isEmbedded}
      * returns true).
@@ -494,10 +511,11 @@ public class SubscriptionInfo implements Parcelable {
             String cardId = source.readString();
             boolean isOpportunistic = source.readBoolean();
             int parentSubId = source.readInt();
+            boolean isMetered = source.readBoolean();
 
             return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
                     nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
-                    isEmbedded, accessRules, cardId, isOpportunistic, parentSubId);
+                    isEmbedded, accessRules, cardId, isOpportunistic, parentSubId, isMetered);
         }
 
         @Override
@@ -526,6 +544,7 @@ public class SubscriptionInfo implements Parcelable {
         dest.writeString(mCardId);
         dest.writeBoolean(mIsOpportunistic);
         dest.writeInt(mParentSubId);
+        dest.writeBoolean(mIsMetered);
     }
 
     @Override
@@ -559,14 +578,14 @@ public class SubscriptionInfo implements Parcelable {
                 + " mnc " + mMnc + "mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
                 + " accessRules " + Arrays.toString(mAccessRules)
                 + " cardId=" + cardIdToPrint + " isOpportunistic " + mIsOpportunistic
-                + " parentSubId=" + mParentSubId + "}";
+                + " parentSubId=" + mParentSubId + " isMetered=" + mIsMetered + "}";
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mId, mSimSlotIndex, mNameSource, mIconTint, mDataRoaming, mIsEmbedded,
-                mIsOpportunistic, mParentSubId, mIccId, mNumber, mMcc, mMnc, mCountryIso,
-                mCardId, mDisplayName, mCarrierName, mAccessRules);
+                mIsOpportunistic, mParentSubId, mIsMetered, mIccId, mNumber, mMcc, mMnc,
+                mCountryIso, mCardId, mDisplayName, mCarrierName, mAccessRules);
     }
 
     @Override
@@ -589,6 +608,7 @@ public class SubscriptionInfo implements Parcelable {
                 && mIsEmbedded == toCompare.mIsEmbedded
                 && mIsOpportunistic == toCompare.mIsOpportunistic
                 && mParentSubId == toCompare.mParentSubId
+                && mIsMetered == toCompare.mIsMetered
                 && Objects.equals(mIccId, toCompare.mIccId)
                 && Objects.equals(mNumber, toCompare.mNumber)
                 && Objects.equals(mMcc, toCompare.mMcc)
