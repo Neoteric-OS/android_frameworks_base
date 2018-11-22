@@ -576,6 +576,13 @@ public class SubscriptionManager {
     public static final String PARENT_SUB_ID = "parent_sub_id";
 
     /**
+     * TelephonyProvider column name for whether a subscription is metered or not, that is, whether
+     * the network it connects to charges for subscription or not. For example, paid CBRS or unpaid.
+     * @hide
+     */
+    public static final String IS_METERED = "is_metered";
+
+    /**
      * Broadcast Action: The user has changed one of the default subs related to
      * data, phone calls, or sms</p>
      *
@@ -2368,6 +2375,21 @@ public class SubscriptionManager {
         if (VDBG) logd("[setParentSubId]+ parentSubId:" + parentSubId + " subId:" + subId);
         return setSubscriptionPropertyHelper(subId, "parentSubId",
                 (iSub)-> iSub.setParentSubId(parentSubId, subId));
+    }
+
+    /**
+     * Set metered by simInfo index
+     *
+     * @param isMetered whether it’s a metered subscription.
+     * @param subId the unique SubscriptionInfo index in database
+     * @return the number of records updated
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public int setMetered(boolean isMetered, int subId) {
+        if (VDBG) logd("[setIsMetered]+ isMetered:" + isMetered + " subId:" + subId);
+        return setSubscriptionPropertyHelper(subId, "setIsMetered",
+                (iSub)-> iSub.setMetered(isMetered, subId));
     }
 
     private interface CallISubMethodHelper {
