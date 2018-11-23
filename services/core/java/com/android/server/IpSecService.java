@@ -1223,7 +1223,8 @@ public class IpSecService extends IIpSecService.Stub {
                     OsConstants.UDP_ENCAP,
                     OsConstants.UDP_ENCAP_ESPINUDP);
 
-            mSrvConfig.getNetdInstance().ipSecSetEncapSocketOwner(sockFd, callingUid);
+            mSrvConfig.getNetdInstance().ipSecSetEncapSocketOwner(
+                        new ParcelFileDescriptor(sockFd), callingUid);
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
                 Os.bind(sockFd, INADDR_ANY, port);
@@ -1676,7 +1677,7 @@ public class IpSecService extends IIpSecService.Stub {
         mSrvConfig
                 .getNetdInstance()
                 .ipSecApplyTransportModeTransform(
-                        socket.getFileDescriptor(),
+                        socket,
                         callingUid,
                         direction,
                         c.getSourceAddress(),
@@ -1695,7 +1696,7 @@ public class IpSecService extends IIpSecService.Stub {
             throws RemoteException {
         mSrvConfig
                 .getNetdInstance()
-                .ipSecRemoveTransportModeTransform(socket.getFileDescriptor());
+                .ipSecRemoveTransportModeTransform(socket);
     }
 
     /**
