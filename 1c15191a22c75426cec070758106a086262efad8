@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "337674cb_ca5abf7f",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-23T11:24:55Z",
+      "side": 1,
+      "message": "new patchset LGTM",
+      "parentUuid": "35c16342_375bde91",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b6bd6f_72d4f68d",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 13
@@ -139,6 +163,30 @@
       "revId": "1c15191a22c75426cec070758106a086262efad8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d63363_a0b65abc",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-23T11:24:55Z",
+      "side": 1,
+      "message": "Yeah, this comment is redundant with latest patchset anyway",
+      "parentUuid": "3aa72577_4492af15",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 82
+      },
+      "revId": "1c15191a22c75426cec070758106a086262efad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
