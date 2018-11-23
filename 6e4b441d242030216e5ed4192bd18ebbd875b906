@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07c33928_27e84813",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4197,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-23T07:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ca5224_a7d43ec5",
+      "range": {
+        "startLine": 4197,
+        "startChar": 12,
+        "endLine": 4197,
+        "endChar": 16
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b047263d_e09eed1a",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28b32c8a_b8ebc6c0",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-23T07:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b047263d_e09eed1a",
+      "range": {
+        "startLine": 275,
+        "startChar": 74,
+        "endLine": 275,
+        "endChar": 99
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1595d2a_eee8588a",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d93f48_eef34ec4",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-23T07:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1595d2a_eee8588a",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 7
+      },
+      "revId": "6e4b441d242030216e5ed4192bd18ebbd875b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
