@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ea30809b_3f89a27a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-23T03:49:05Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I update it.",
+      "parentUuid": "14cf4da1_0534cfa8",
+      "range": {
+        "startLine": 1536,
+        "startChar": 22,
+        "endLine": 1536,
+        "endChar": 32
+      },
+      "revId": "18d0fca9ec8b9f19fa135cbf557cef8b30848f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2fe25eb_94500756",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 12
