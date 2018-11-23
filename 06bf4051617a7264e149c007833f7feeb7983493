@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de1d7a3_7b5ab04a",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2018-11-23T09:46:48Z",
+      "side": 1,
+      "message": "-\u003e \"exists\"",
+      "range": {
+        "startLine": 1902,
+        "startChar": 32,
+        "endLine": 1902,
+        "endChar": 43
+      },
+      "revId": "06bf4051617a7264e149c007833f7feeb7983493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
