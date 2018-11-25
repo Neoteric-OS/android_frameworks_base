@@ -287,6 +287,53 @@
       "revId": "eea8eadf57e369ac8d99a6658df942d3629212ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f254be_6ccb3ded",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2390,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-11-25T23:49:44Z",
+      "side": 1,
+      "message": "This will be needed by carrier apps. Which means it needs to be a public API which checks carrier privilege permission.\nMy plan was make this hidden first, and then change it to public along with setOpportunistic and setSubscriptionGoup which are currently hidden and also needed by carrier apps.",
+      "parentUuid": "39aba227_3b9606fc",
+      "range": {
+        "startLine": 2387,
+        "startChar": 5,
+        "endLine": 2390,
+        "endChar": 57
+      },
+      "revId": "eea8eadf57e369ac8d99a6658df942d3629212ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecff519_2a339dd8",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-11-25T23:49:44Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 2395,
+        "startChar": 0,
+        "endLine": 2397,
+        "endChar": 65
+      },
+      "revId": "eea8eadf57e369ac8d99a6658df942d3629212ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

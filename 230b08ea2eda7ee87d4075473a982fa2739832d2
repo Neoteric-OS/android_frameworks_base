@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0252217_c2a7746a",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-11-25T23:49:44Z",
+      "side": 1,
+      "message": "i\u0027m not sure where this constructor is called, but isMetered should by default (if carrier app didn\u0027t set it) be true.",
+      "range": {
+        "startLine": 164,
+        "startChar": 68,
+        "endLine": 164,
+        "endChar": 73
+      },
+      "revId": "230b08ea2eda7ee87d4075473a982fa2739832d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
