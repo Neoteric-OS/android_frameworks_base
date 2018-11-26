@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff11919_0398e9c0",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-11-26T17:38:22Z",
+      "side": 1,
+      "message": "Why JNI_COMMIT? We never modify apf_program... in fact, we could declare it const uint8_t* for clarity.",
+      "range": {
+        "startLine": 233,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 77
+      },
+      "revId": "a58f5589ad795d0a69243dc997b5974a1b127f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
