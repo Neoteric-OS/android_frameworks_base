@@ -2073,12 +2073,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return new MockableSystemProperties();
     }
 
-    private void updateTcpBufferSizes(NetworkAgentInfo nai) {
+    private void updateTcpBufferSizes(NetworkAgentInfo nai, LinkProperties lp) {
         if (isDefaultNetwork(nai) == false) {
             return;
         }
 
-        String tcpBufferSizes = nai.linkProperties.getTcpBufferSizes();
+        String tcpBufferSizes = lp.getTcpBufferSizes();
         String[] values = null;
         if (tcpBufferSizes != null) {
             values = tcpBufferSizes.split(",");
@@ -4728,23 +4728,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateUids(nai, null, nai.networkCapabilities);
     }
 
-    private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties oldLp) {
-        LinkProperties newLp = new LinkProperties(networkAgent.linkProperties);
-        int netId = networkAgent.network.netId;
+    private void updateLinkProperties(NetworkAgentInfo nai, LinkProperties newLp,
+            LinkProperties oldLp) {
+        int netId = nai.network.netId;
 
         // The NetworkAgentInfo does not know whether clatd is running on its network or not. Before
         // we do anything else, make sure its LinkProperties are accurate.
-        if (networkAgent.clatd != null) {
-            networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
+        if (nai.clatd != null) {
+            nai.clatd.fixupLinkProperties(oldLp, newLp);
         }
 
-        updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
+        updateInterfaces(newLp, oldLp, netId, nai.networkCapabilities);
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
 //            updateMtu(lp, null);
 //        }
-        updateTcpBufferSizes(networkAgent);
+        updateTcpBufferSizes(nai, newLp);
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
@@ -4754,23 +4754,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // updateDnses will fetch the private DNS configuration from DnsManager.
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
-        // Start or stop clat accordingly to network state.
-        networkAgent.updateClat(mNMS);
-        if (isDefaultNetwork(networkAgent)) {
+        if (isDefaultNetwork(nai)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
             updateProxy(newLp, oldLp);
         }
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
-            synchronized (networkAgent) {
-                networkAgent.linkProperties = newLp;
+            synchronized (nai) {
+                nai.linkProperties = newLp;
             }
+            // Start or stop clat accordingly to network state.
+            nai.updateClat(mNMS);
             notifyIfacesChangedForNetworkStats();
-            notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
+            if (nai.everConnected) {
+                notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_IP_CHANGED);
+            }
         }
 
-        mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
+        mKeepaliveTracker.handleCheckKeepalivesStillValid(nai);
     }
 
     private void wakeupModifyInterface(String iface, NetworkCapabilities caps, boolean add) {
@@ -5072,13 +5074,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     "; created=" + nai.created +
                     "; everConnected=" + nai.everConnected);
         }
-        LinkProperties oldLp = nai.linkProperties;
-        synchronized (nai) {
-            nai.linkProperties = newLp;
-        }
-        if (nai.everConnected) {
-            updateLinkProperties(nai, oldLp);
-        }
+        updateLinkProperties(nai, newLp, new LinkProperties(nai.linkProperties));
     }
 
     private void sendUpdatedScoreToFactories(NetworkAgentInfo nai) {
@@ -5239,7 +5235,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
-        updateTcpBufferSizes(newNetwork);
+        updateTcpBufferSizes(newNetwork, new LinkProperties(newNetwork.linkProperties));
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
     }
@@ -5604,62 +5600,62 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo) {
+    private void updateNetworkInfo(NetworkAgentInfo nai, NetworkInfo newInfo) {
         final NetworkInfo.State state = newInfo.getState();
         NetworkInfo oldInfo = null;
-        final int oldScore = networkAgent.getCurrentScore();
-        synchronized (networkAgent) {
-            oldInfo = networkAgent.networkInfo;
-            networkAgent.networkInfo = newInfo;
+        final int oldScore = nai.getCurrentScore();
+        synchronized (nai) {
+            oldInfo = nai.networkInfo;
+            nai.networkInfo = newInfo;
         }
-        notifyLockdownVpn(networkAgent);
+        notifyLockdownVpn(nai);
 
         if (DBG) {
-            log(networkAgent.name() + " EVENT_NETWORK_INFO_CHANGED, going from " +
+            log(nai.name() + " EVENT_NETWORK_INFO_CHANGED, going from " +
                     (oldInfo == null ? "null" : oldInfo.getState()) +
                     " to " + state);
         }
 
-        if (!networkAgent.created
+        if (!nai.created
                 && (state == NetworkInfo.State.CONNECTED
-                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
+                || (state == NetworkInfo.State.CONNECTING && nai.isVPN()))) {
 
             // A network that has just connected has zero requests and is thus a foreground network.
-            networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
+            nai.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
 
             try {
                 // This should never fail.  Specifying an already in use NetID will cause failure.
-                if (networkAgent.isVPN()) {
-                    mNMS.createVirtualNetwork(networkAgent.network.netId,
-                            !networkAgent.linkProperties.getDnsServers().isEmpty(),
-                            (networkAgent.networkMisc == null ||
-                                !networkAgent.networkMisc.allowBypass));
+                if (nai.isVPN()) {
+                    mNMS.createVirtualNetwork(nai.network.netId,
+                            !nai.linkProperties.getDnsServers().isEmpty(),
+                            (nai.networkMisc == null ||
+                                !nai.networkMisc.allowBypass));
                 } else {
-                    mNMS.createPhysicalNetwork(networkAgent.network.netId,
-                            getNetworkPermission(networkAgent.networkCapabilities));
+                    mNMS.createPhysicalNetwork(nai.network.netId,
+                            getNetworkPermission(nai.networkCapabilities));
                 }
             } catch (Exception e) {
-                loge("Error creating network " + networkAgent.network.netId + ": "
+                loge("Error creating network " + nai.network.netId + ": "
                         + e.getMessage());
                 return;
             }
-            networkAgent.created = true;
+            nai.created = true;
         }
 
-        if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
-            networkAgent.everConnected = true;
+        if (!nai.everConnected && state == NetworkInfo.State.CONNECTED) {
+            nai.everConnected = true;
 
-            if (networkAgent.linkProperties == null) {
-                Slog.wtf(TAG, networkAgent.name() + " connected with null LinkProperties");
+            if (nai.linkProperties == null) {
+                Slog.wtf(TAG, nai.name() + " connected with null LinkProperties");
             }
 
-            handlePerNetworkPrivateDnsConfig(networkAgent, mDnsManager.getPrivateDnsConfig());
-            updateLinkProperties(networkAgent, null);
+            handlePerNetworkPrivateDnsConfig(nai, mDnsManager.getPrivateDnsConfig());
+            updateLinkProperties(nai, new LinkProperties(nai.linkProperties), null);
 
-            networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
-            scheduleUnvalidatedPrompt(networkAgent);
+            nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
+            scheduleUnvalidatedPrompt(nai);
 
-            if (networkAgent.isVPN()) {
+            if (nai.isVPN()) {
                 // Temporarily disable the default proxy (not global).
                 mProxyTracker.setDefaultProxyEnabled(false);
                 // TODO: support proxy per network.
@@ -5672,35 +5668,35 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // so we could decide to tear it down immediately afterwards. That's fine though - on
             // disconnection NetworkAgents should stop any signal strength monitoring they have been
             // doing.
-            updateSignalStrengthThresholds(networkAgent, "CONNECT", null);
+            updateSignalStrengthThresholds(nai, "CONNECT", null);
 
             // Consider network even though it is not yet validated.
             final long now = SystemClock.elapsedRealtime();
-            rematchNetworkAndRequests(networkAgent, ReapUnvalidatedNetworks.REAP, now);
+            rematchNetworkAndRequests(nai, ReapUnvalidatedNetworks.REAP, now);
 
             // This has to happen after matching the requests, because callbacks are just requests.
-            notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_PRECHECK);
+            notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_PRECHECK);
         } else if (state == NetworkInfo.State.DISCONNECTED) {
-            networkAgent.asyncChannel.disconnect();
-            if (networkAgent.isVPN()) {
+            nai.asyncChannel.disconnect();
+            if (nai.isVPN()) {
                 mProxyTracker.setDefaultProxyEnabled(true);
-                updateUids(networkAgent, networkAgent.networkCapabilities, null);
+                updateUids(nai, nai.networkCapabilities, null);
             }
-            disconnectAndDestroyNetwork(networkAgent);
+            disconnectAndDestroyNetwork(nai);
         } else if ((oldInfo != null && oldInfo.getState() == NetworkInfo.State.SUSPENDED) ||
                 state == NetworkInfo.State.SUSPENDED) {
             // going into or coming out of SUSPEND: re-score and notify
-            if (networkAgent.getCurrentScore() != oldScore) {
-                rematchAllNetworksAndRequests(networkAgent, oldScore);
+            if (nai.getCurrentScore() != oldScore) {
+                rematchAllNetworksAndRequests(nai, oldScore);
             }
-            updateCapabilities(networkAgent.getCurrentScore(), networkAgent,
-                    networkAgent.networkCapabilities);
+            updateCapabilities(nai.getCurrentScore(), nai,
+                    nai.networkCapabilities);
             // TODO (b/73132094) : remove this call once the few users of onSuspended and
             // onResumed have been removed.
-            notifyNetworkCallbacks(networkAgent, (state == NetworkInfo.State.SUSPENDED ?
+            notifyNetworkCallbacks(nai, (state == NetworkInfo.State.SUSPENDED ?
                     ConnectivityManager.CALLBACK_SUSPENDED :
                     ConnectivityManager.CALLBACK_RESUMED));
-            mLegacyTypeTracker.update(networkAgent);
+            mLegacyTypeTracker.update(nai);
         }
     }
 
