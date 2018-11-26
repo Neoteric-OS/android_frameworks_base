@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5a0a863_c47348ce",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e6e11e_b3f3bf37",
+      "range": {
+        "startLine": 1740,
+        "startChar": 39,
+        "endLine": 1740,
+        "endChar": 52
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7145d8e_dceb991e",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cf8121_caed4ed4",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7145d8e_dceb991e",
+      "range": {
+        "startLine": 1741,
+        "startChar": 47,
+        "endLine": 1741,
+        "endChar": 48
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a591ebd_d53422dc",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c356ecae_fb06a63c",
+      "range": {
+        "startLine": 1743,
+        "startChar": 34,
+        "endLine": 1743,
+        "endChar": 48
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "729b8f4c_fd27ab32",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-11-21T14:31:43Z",
       "side": 1,
       "message": "Instead of adding all these release statements, is it feasible to use ScopedByteArrayRW?",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 84
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f94e7d_2f5333e0",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "There are many places use this release statement so I think maybe we can have another commit to do this change.",
+      "parentUuid": "729b8f4c_fd27ab32",
       "range": {
         "startLine": 130,
         "startChar": 8,
@@ -128,6 +224,54 @@
       "writtenOn": "2018-11-21T14:31:43Z",
       "side": 1,
       "message": "Looks like this makes sure that the APF counters are captured in jdata. Why do you this only if you return false? It could be useful to know what the counters are even if all the packets are dropped.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 78
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a8be2d_5ee5e017",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "I think pass 0 to update data and free the space used by the copy is more proper than JNI_COMMIT since we don\u0027t need the copy after function return, right?\nUse memcpy() to copy counters from program_and_data to data_raw and then call ReleaseByteArrayElements() passing 0 as mode parameter so that we don\u0027t need SetByteArrayRegion() since counter will be copied back by ReleaseByteArrayElements().",
+      "parentUuid": "989a07b9_ef156d46",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0381aab_9bcb4166",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-26T13:58:52Z",
+      "side": 1,
+      "message": "The counters will be only dumped when assert true failure. If dump counters when all the packets are dropped, we need to print the result to android log? or we can show the result after finishing the unit test?",
+      "parentUuid": "4fbee7e9_cd6c74bb",
       "range": {
         "startLine": 224,
         "startChar": 0,
