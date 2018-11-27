@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0b108105_1fa20825",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-27T18:53:48Z",
+      "side": 1,
+      "message": "It seems like the AIDL thing would also require adding an override to ConnectivityServiceMock (which will need to be in a separate CL): http://cs/android/frameworks/opt/telephony/tests/telephonytests/src/com/android/internal/telephony/mocks/ConnectivityServiceMock.java?l\u003d67\n\nI\u0027m open to passing an instance of ConnectivityService directly to Vpn if everyone is ok with it. \nlorenzo@ / jchalard@ - Please let me know your thoughts.",
+      "parentUuid": "ed960763_cd00066b",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ecffe7_cb357a8c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
