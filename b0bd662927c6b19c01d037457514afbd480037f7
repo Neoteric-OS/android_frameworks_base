@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc599c65_70f6fab1",
+        "filename": "core/tests/coretests/src/android/text/AndroidCharacterTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-27T16:50:49Z",
+      "side": 1,
+      "message": "I believe it\u0027s a small test since it takes \u003c0.3 seconds to finish on my device. Please correct me if I am wrong.",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "b0bd662927c6b19c01d037457514afbd480037f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
