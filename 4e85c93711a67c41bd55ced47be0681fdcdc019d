@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28d23990_e5a35566",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-27T10:00:56Z",
+      "side": 1,
+      "message": "Ack. I will remove it.",
+      "parentUuid": "617623fc_38da9386",
+      "range": {
+        "startLine": 1551,
+        "startChar": 13,
+        "endLine": 1552,
+        "endChar": 40
+      },
+      "revId": "4e85c93711a67c41bd55ced47be0681fdcdc019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30926fa1_d8dd89f0",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a5c852ac_b9c13767",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-27T10:00:56Z",
+      "side": 1,
+      "message": "Ack. Thanks for the explanation in chat.",
+      "parentUuid": "30926fa1_d8dd89f0",
+      "range": {
+        "startLine": 1554,
+        "startChar": 12,
+        "endLine": 1554,
+        "endChar": 46
+      },
+      "revId": "4e85c93711a67c41bd55ced47be0681fdcdc019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53662343_b6004048",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2018-11-27T09:26:04Z",
       "side": 1,
       "message": "Likewise : indexOf() is defined to never return this. You don\u0027t need this code. If you are worried, you can leave a comment instead.",
+      "range": {
+        "startLine": 1581,
+        "startChar": 12,
+        "endLine": 1584,
+        "endChar": 0
+      },
+      "revId": "4e85c93711a67c41bd55ced47be0681fdcdc019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63ee860_c492b8f3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-11-27T10:00:56Z",
+      "side": 1,
+      "message": "Ack. Thanks for the explanation in chat.",
+      "parentUuid": "53662343_b6004048",
       "range": {
         "startLine": 1581,
         "startChar": 12,
