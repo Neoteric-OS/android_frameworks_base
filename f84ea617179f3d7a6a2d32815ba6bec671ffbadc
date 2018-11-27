@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9e4c9329_8d10f342",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-27T07:59:51Z",
+      "side": 1,
+      "message": "The reason that many places use it is that this CL adds 7 of them :-)\n\nIf you think about it the root of the problem here is that we forgot to release the memory when writing the code. But if we add manual release statements like we\u0027re doing here, we\u0027ll have the same problem: when someone adds a new codepath for this, they may forget to release the memory. If we move to a scoped array instead, that can never happen again.\n\nIs moving to ScopedByteArrayRW a lot of work? If it\u0027s only a couple of lines, then that\u0027s probably better than the 7 release statements that you\u0027re adding in this CL. On the other hand, if it\u0027s 30 lines of unrelated refactoring, then it\u0027s probably best not to do it in this CL.",
+      "parentUuid": "97f94e7d_2f5333e0",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 84
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "989a07b9_ef156d46",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 4
@@ -277,6 +301,54 @@
         "startChar": 0,
         "endLine": 227,
         "endChar": 78
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6899130d_bb93ae12",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-27T07:59:51Z",
+      "side": 1,
+      "message": "Given that it\u0027s is easy to get the counters, we might as well get them. We could log them, or print them when running the test. But you\u0027re right, we could also just not dump them.\n\nThe only thing I\u0027d say is that if we only populate the counters on failure, then that\u0027s confusing, because the documentation of dropsAllPackets says \"populates data[] with the APF counters\". If we only dump them on failure then it should say that it only populates the counters on failure.",
+      "parentUuid": "b0381aab_9bcb4166",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 78
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca695902_a1437459",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-27T07:59:51Z",
+      "side": 1,
+      "message": "After discussing with Bernie and re-reading the documentation I agree that 0 is correct. I think you can still use SetByteArrayRegion instead of memcpy, but I think what you have is fine too.",
+      "parentUuid": "b6a8be2d_5ee5e017",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 76
       },
       "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
