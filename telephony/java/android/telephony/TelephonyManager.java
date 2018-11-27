@@ -1625,10 +1625,7 @@ public class TelephonyManager {
      * @deprecated use {@link #getAllCellInfo} instead, which returns a superset of this API.
      */
     @Deprecated
-    @RequiresPermission(anyOf = {
-            android.Manifest.permission.ACCESS_COARSE_LOCATION,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-    })
+    @RequiresPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
     public CellLocation getCellLocation() {
         try {
             ITelephony telephony = getITelephony();
@@ -4816,7 +4813,7 @@ public class TelephonyManager {
      * @return List of {@link android.telephony.CellInfo}; null if cell
      * information is unavailable.
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+    @RequiresPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
     public List<CellInfo> getAllCellInfo() {
         try {
             ITelephony telephony = getITelephony();
@@ -4859,7 +4856,7 @@ public class TelephonyManager {
      * @param executor the executor on which callback will be invoked.
      * @param callback a callback to receive CellInfo.
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+    @RequiresPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
     public void requestCellInfoUpdate(
             @NonNull @CallbackExecutor Executor executor, @NonNull CellInfoCallback callback) {
         try {
@@ -6379,9 +6376,10 @@ public class TelephonyManager {
      *
      * <p> Note that this scan can take a long time (sometimes minutes) to happen.
      *
-     * <p>Requires Permission:
+     * <p>Requires Permissions:
      * {@link android.Manifest.permission#MODIFY_PHONE_STATE} or that the calling app has carrier
      * privileges (see {@link #hasCarrierPrivileges})
+     * and {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}.
      *
      * @return {@link CellNetworkScanResult} with the status
      * {@link CellNetworkScanResult#STATUS_SUCCESS} and a list of
@@ -6390,12 +6388,15 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.MODIFY_PHONE_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public CellNetworkScanResult getAvailableNetworks() {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getCellNetworkScanResults(getSubId());
+                return telephony.getCellNetworkScanResults(getSubId(), getOpPackageName());
             }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "getAvailableNetworks RemoteException", ex);
@@ -6414,7 +6415,8 @@ public class TelephonyManager {
      *
      * <p>Requires Permission:
      * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE} or that the calling
-     * app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     * app has carrier privileges (see {@link #hasCarrierPrivileges})
+     * and {@link android.Manifest.permission#ACCESS_FINE_LOCATION}.
      *
      * @param request Contains all the RAT with bands/channels that need to be scanned.
      * @param executor The executor through which the callback should be invoked. Since the scan
@@ -6425,7 +6427,10 @@ public class TelephonyManager {
      * @return A NetworkScan obj which contains a callback which can be used to stop the scan.
      */
     @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
-    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.MODIFY_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    })
     public NetworkScan requestNetworkScan(
             NetworkScanRequest request, Executor executor,
             TelephonyScanManager.NetworkScanCallback callback) {
@@ -6434,7 +6439,8 @@ public class TelephonyManager {
                 mTelephonyScanManager = new TelephonyScanManager();
             }
         }
-        return mTelephonyScanManager.requestNetworkScan(getSubId(), request, executor, callback);
+        return mTelephonyScanManager.requestNetworkScan(getSubId(), request, executor, callback,
+                getOpPackageName());
     }
 
     /**
@@ -6444,7 +6450,10 @@ public class TelephonyManager {
      * @removed
      */
     @Deprecated
-    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.MODIFY_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    })
     public NetworkScan requestNetworkScan(
         NetworkScanRequest request, TelephonyScanManager.NetworkScanCallback callback) {
         return requestNetworkScan(request, AsyncTask.SERIAL_EXECUTOR, callback);
@@ -8385,10 +8394,14 @@ public class TelephonyManager {
      * given subId. Otherwise, applies to {@link SubscriptionManager#getDefaultSubscriptionId()}
      *
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
-     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges})
+     * and {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}.
      */
     @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(allOf = {
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public ServiceState getServiceState() {
         return getServiceStateForSubscriber(getSubId());
     }
