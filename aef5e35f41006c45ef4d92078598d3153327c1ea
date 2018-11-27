@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d02e072_d90dc3b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5256,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-27T18:28:35Z",
+      "side": 1,
+      "message": "Its here: http://cs/android/frameworks/base/services/core/java/com/android/server/ConnectivityService.java?l\u003d3849",
+      "parentUuid": "81ae8ac4_6385bf7b",
+      "range": {
+        "startLine": 5256,
+        "startChar": 8,
+        "endLine": 5256,
+        "endChar": 33
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71b3714b_9a5eaca7",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ed960763_cd00066b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-27T18:28:35Z",
+      "side": 1,
+      "message": "Yeah I thought about that, but it seems like this class has been using CM instead. Passing in CS to VPN I think would be increasing the surface area of the change (and thus the associated risk).",
+      "parentUuid": "44d9a85e_24287943",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ecffe7_cb357a8c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2018-11-27T08:05:32Z",
       "side": 1,
       "message": "suggest new test method",
+      "range": {
+        "startLine": 4513,
+        "startChar": 8,
+        "endLine": 4513,
+        "endChar": 51
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2141ad6d_89962819",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4513,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-27T18:28:35Z",
+      "side": 1,
+      "message": "It seems like the tests here (and in other places) seems to not follow the pattern of small tests. So to be consistent, I ended up appending to existing tests.\n\nI\u0027m open to adding a separate test for this. Would like to get others (lorenzo@/jchalard@) opinion as well.",
+      "parentUuid": "24ecffe7_cb357a8c",
       "range": {
         "startLine": 4513,
         "startChar": 8,
