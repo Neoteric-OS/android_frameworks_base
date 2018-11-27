@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "44d9a85e_24287943",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-27T17:58:59Z",
+      "side": 1,
+      "message": "It\u0027s a good thought. I\u0027d do whatever is in the file in other places.",
+      "parentUuid": "71b3714b_9a5eaca7",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ecffe7_cb357a8c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
