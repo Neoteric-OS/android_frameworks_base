@@ -30,6 +30,10 @@ java_library_static {
         "android.hardware.tv.cec-V1.0-java",
     ],
 
+    required: [
+        "gps_debug.conf",
+    ],
+
     static_libs: [
         "time_zone_distro",
         "time_zone_distro_installer",
