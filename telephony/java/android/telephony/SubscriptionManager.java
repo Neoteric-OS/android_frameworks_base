@@ -131,7 +131,7 @@ public class SubscriptionManager {
     }
 
     /**
-     * A content {@link Uri} used to receive updates on wfc enabled user setting.
+     * A content {@link Uri} used to receive updates on wfc enabled user setting
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
      * subscription wfc enabled {@link ImsMmTelManager#isVoWiFiSettingEnabled()}
@@ -147,7 +147,8 @@ public class SubscriptionManager {
     public static final Uri WFC_ENABLED_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc");
 
     /**
-     * A content {@link Uri} used to receive updates on advanced calling user setting.
+     * A content {@link Uri} used to receive updates on advanced calling user setting
+     * @see ImsMmTelManager#isAdvancedCallingSettingEnabled()
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
      * subscription advanced calling enabled
