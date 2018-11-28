@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "c7bb3741_19898446",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-28T18:59:42Z",
+      "side": 1,
+      "message": ":)\nThat\u0027s what I started with. See http://ag/5545442.\nI guess the reason I ended up with this CL was to make the deltas consolidated and keeping changes minimal (per Lorenzo\u0027s recommendation in order to make it less riskier).\n\nHonestly, I don\u0027t think I have a strong preference here, so I\u0027m fine to revert back to previous version.\n\nlorenzo@ - Please let me know your thoughts as well.",
+      "parentUuid": "27560d98_2787ef78",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90659273_d4b88cf1",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -188,6 +212,30 @@
       "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3046af18_bb6c0618",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-11-28T18:59:42Z",
+      "side": 1,
+      "message": "\u003e it has nothing to do with b/119129310\n\nThis is needed to ensure VPN\u0027s capabilities are updated as per current default rather than relying on default network changing or its capabilities changing (otherwise VPN remains metered by default). So, it does happen to also fix b/118856062. But it is also necessary to fix b/119129310.",
+      "parentUuid": "90659273_d4b88cf1",
+      "range": {
+        "startLine": 1111,
+        "startChar": 12,
+        "endLine": 1111,
+        "endChar": 30
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
