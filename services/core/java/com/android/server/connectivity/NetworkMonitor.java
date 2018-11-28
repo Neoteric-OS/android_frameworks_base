@@ -313,6 +313,7 @@ public class NetworkMonitor extends StateMachine {
     private final State mCaptivePortalState = new CaptivePortalState();
     private final State mEvaluatingPrivateDnsState = new EvaluatingPrivateDnsState();
     private final State mProbingState = new ProbingState();
+    private final State mProbeFailReevaluationState = new ProbeFailReevaluationState();
 
     private CustomIntentReceiver mLaunchCaptivePortalAppBroadcastReceiver = null;
 
@@ -368,6 +369,7 @@ public class NetworkMonitor extends StateMachine {
         addState(mMaybeNotifyState, mDefaultState);
             addState(mEvaluatingState, mMaybeNotifyState);
                 addState(mProbingState, mEvaluatingState);
+                addState(mProbeFailReevaluationState, mEvaluatingState);
             addState(mCaptivePortalState, mMaybeNotifyState);
         addState(mEvaluatingPrivateDnsState, mDefaultState);
         addState(mValidatedState, mDefaultState);
@@ -904,29 +906,16 @@ public class NetworkMonitor extends StateMachine {
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else {
-                        final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
-                        sendMessageDelayed(msg, mReevaluateDelayMs);
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
                         notifyNetworkTestResultInvalid(probeResult.redirectUrl);
-                        if (mEvaluateAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
-                            // Don't continue to blame UID forever.
-                            TrafficStats.clearThreadStatsUid();
-                        }
-                        mReevaluateDelayMs *= 2;
-                        if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
-                            mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
-                        }
+                        transitionTo(mProbeFailReevaluationState);
                     }
                     return HANDLED;
-                case CMD_REEVALUATE:
-                    // Leave the event to EvaluatingState. Defer this message will result in reset
-                    // of mReevaluateDelayMs and mEvaluateAttempts.
-                case CMD_NETWORK_DISCONNECTED:
                 case EVENT_DNS_NOTIFICATION:
+                    // Leave the event to DefaultState to record correct dns timestamp.
                     return NOT_HANDLED;
                 default:
-                    // TODO: Some events may able to handle in this state, instead of deferring to
-                    // next state.
+                    // Waiting for probe result and defer events to next state by default.
                     deferMessage(message);
                     return HANDLED;
             }
@@ -938,6 +927,30 @@ public class NetworkMonitor extends StateMachine {
                 mThread.interrupt();
             }
             mThread = null;
+        }
+    }
+
+    private class ProbeFailReevaluationState extends State {
+        @Override
+        public void enter() {
+            final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+            sendMessageDelayed(msg, mReevaluateDelayMs);
+            if (mEvaluateAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
+                // Don't continue to blame UID forever.
+                TrafficStats.clearThreadStatsUid();
+            }
+            mReevaluateDelayMs *= 2;
+            if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
+                mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
+            }
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                default:
+                    return NOT_HANDLED;
+            }
         }
     }
 
