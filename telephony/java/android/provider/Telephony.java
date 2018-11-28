@@ -16,6 +16,7 @@
 
 package android.provider;
 
+import android.annotation.IntDef;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -44,10 +45,13 @@ import android.util.Patterns;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.SmsApplication;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * The Telephony provider contains data related to phone operation, specifically SMS and MMS
@@ -2898,34 +2902,36 @@ public final class Telephony {
          *@hide
          */
         @SystemApi
-        public static final String MODEM_COGNITIVE = "modem_cognitive";
+        public static final String MODEM_PERSIST = "modem_cognitive";
 
         /**
-         * The max connections of this APN.
+         * The max number of connections of this APN.
          * <p>Type: INTEGER</p>
          *@hide
          */
         @SystemApi
-        public static final String MAX_CONNS = "max_conns";
+        public static final String MAX_CONNECTIONS = "max_conns";
 
         /**
-         * The wait time for retry of the APN.
+         * The wait time for retry of the APN. wait time in ms.
          * <p>Type: INTEGER</p>
          *@hide
          */
         @SystemApi
-        public static final String WAIT_TIME = "wait_time";
+        public static final String WAIT_TIME_RETRY = "wait_time";
 
         /**
-         * The time to limit max connection for the APN.
+         * The time limit in second which allow the maximum number of connections
+         * {@link #MAX_CONNECTIONS} of this APN.
          * <p>Type: INTEGER</p>
          *@hide
          */
         @SystemApi
-        public static final String MAX_CONNS_TIME = "max_conns_time";
+        public static final String TIME_LIMIT_FOR_MAX_CONNECTIONS = "max_conns_time";
 
         /**
          * The MTU(Maxinum transmit unit) size of the mobile interface to which the APN connected.
+         * size in bytes.
          * <p>Type: INTEGER </p>
          * @hide
          */
@@ -2933,12 +2939,13 @@ public final class Telephony {
         public static final String MTU = "mtu";
 
         /**
-         * APN edit status. APN could be added/edited/deleted by a user or carrier.
+         * APN edit status. APN could be added/edited/deleted by a user or carrier. see all possible
+         * returned APN edit status {@link EditStatus}.
          * <p>Type: INTEGER </p>
          * @hide
          */
         @SystemApi
-        public static final String EDITED = "edited";
+        public static final String EDITED_STATUS = "edited";
 
         /**
          * {@code true} if this APN visible to the user, {@code false} otherwise.
@@ -2957,8 +2964,8 @@ public final class Telephony {
         public static final String USER_EDITABLE = "user_editable";
 
         /**
-         * {@link #EDITED APN edit status} indicates that this APN has not been edited or fails to
-         * edit.
+         * {@link #EDITED_STATUS APN edit status} indicates that this APN has not been edited or
+         * fails to edit.
          * <p>Type: INTEGER </p>
          * @hide
          */
@@ -2966,7 +2973,7 @@ public final class Telephony {
         public static final int UNEDITED = 0;
 
         /**
-         * {@link #EDITED APN edit status} indicates that this APN has been edited by users.
+         * {@link #EDITED_STATUS APN edit status} indicates that this APN has been edited by users.
          * <p>Type: INTEGER </p>
          * @hide
          */
@@ -2974,7 +2981,7 @@ public final class Telephony {
         public static final int USER_EDITED = 1;
 
         /**
-         * {@link #EDITED APN edit status} indicates that this APN has been deleted by users.
+         * {@link #EDITED_STATUS APN edit status} indicates that this APN has been deleted by users.
          * <p>Type: INTEGER </p>
          * @hide
          */
@@ -2982,15 +2989,16 @@ public final class Telephony {
         public static final int USER_DELETED = 2;
 
         /**
-         * {@link #EDITED APN edit status} is an intermediate value used to indicate that an entry
-         * deleted by the user is still present in the new APN database and therefore must remain
-         * tagged as user deleted rather than completely removed from the database.
+         * {@link #EDITED_STATUS APN edit status} is an intermediate value used to indicate that an
+         * entry deleted by the user is still present in the new APN database and therefore must
+         * remain tagged as user deleted rather than completely removed from the database.
          * @hide
          */
         public static final int USER_DELETED_BUT_PRESENT_IN_XML = 3;
 
         /**
-         * {@link #EDITED APN edit status} indicates that this APN has been edited by carriers.
+         * {@link #EDITED_STATUS APN edit status} indicates that this APN has been edited by
+         * carriers.
          * <p>Type: INTEGER </p>
          * @hide
          */
@@ -2998,18 +3006,19 @@ public final class Telephony {
         public static final int CARRIER_EDITED = 4;
 
         /**
-         * {@link #EDITED APN edit status} indicates that this APN has been deleted by carriers.
-         * CARRIER_DELETED values are currently not used as there is no use case. If they are used,
-         * delete() will have to change accordingly. Currently it is hardcoded to USER_DELETED.
+         * {@link #EDITED_STATUS APN edit status} indicates that this APN has been deleted by
+         * carriers. CARRIER_DELETED values are currently not used as there is no use case.
+         * If they are used, delete() will have to change accordingly. Currently it is hardcoded to
+         * USER_DELETED.
          * <p>Type: INTEGER </p>
          * @hide
          */
         public static final int CARRIER_DELETED = 5;
 
         /**
-         * {@link #EDITED APN edit status} is an intermediate value used to indicate that an entry
-         * deleted by the carrier is still present in the new APN database and therefore must remain
-         * tagged as user deleted rather than completely removed from the database.
+         * {@link #EDITED_STATUS APN edit status} is an intermediate value used to indicate that an
+         * entry deleted by the carrier is still present in the new APN database and therefore must
+         * remain tagged as user deleted rather than completely removed from the database.
          * @hide
          */
         public static final int CARRIER_DELETED_BUT_PRESENT_IN_XML = 6;
@@ -3046,14 +3055,14 @@ public final class Telephony {
         public static final String APN_SET_ID = "apn_set_id";
 
         /**
-         * Possible value for the{@link #APN_SET_ID} field. By default APNs will not belong to a
-         * set. If the user manually selects an APN with no set set, there is no need to prioritize
-         * any specific APN set ids.
+         * Possible value for the {@link #APN_SET_ID} field. By default APNs will not belong to a
+         * set. If the user manually selects an APN with invalid set id, there is no need to
+         * prioritize any specific APN set ids.
          * <p>Type: INTEGER</p>
          * @hide
          */
         @SystemApi
-        public static final int NO_SET_SET = 0;
+        public static final int INVALID_APN_SET_ID = 0;
 
         /**
          * A unique carrier id associated with this APN
@@ -3061,6 +3070,17 @@ public final class Telephony {
          * <p>Type: STRING</p>
          */
         public static final String CARRIER_ID = "carrier_id";
+
+        /** @hide */
+        @IntDef({
+                UNEDITED,
+                USER_EDITED,
+                USER_DELETED,
+                CARRIER_DELETED,
+                CARRIER_EDITED,
+        })
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface EditStatus {}
 
     }
 
