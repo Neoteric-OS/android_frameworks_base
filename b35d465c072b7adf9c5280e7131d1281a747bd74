@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83efa759_60f5447a",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-11-28T21:56:14Z",
+      "side": 1,
+      "message": "Can an app has just fine location permission, without coarse permission? And shall we allow it to call onServiceStateChanged here?\n\nSame for another checkCoarseLocationAccess(r) above.",
+      "range": {
+        "startLine": 944,
+        "startChar": 28,
+        "endLine": 944,
+        "endChar": 56
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdcffe8_f76c058a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6261,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-11-28T21:56:14Z",
+      "side": 1,
+      "message": "Perhaps add coarse location permission here as well.",
+      "range": {
+        "startLine": 6261,
+        "startChar": 10,
+        "endLine": 6261,
+        "endChar": 30
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bfb558_1cfdc941",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6297,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-11-28T21:56:14Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 6297,
+        "startChar": 10,
+        "endLine": 6297,
+        "endChar": 30
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a879d1cc_10e8661e",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-11-28T21:56:14Z",
+      "side": 1,
+      "message": "add doc if this checks for FINE permissions as well?",
+      "range": {
+        "startLine": 185,
+        "startChar": 7,
+        "endLine": 185,
+        "endChar": 27
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

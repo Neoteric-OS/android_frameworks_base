@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ab7694_69d1d652",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-11-28T21:56:14Z",
+      "side": 0,
+      "message": "Though not necessary, would be nice to have @param for callingPackage as well.",
+      "range": {
+        "startLine": 780,
+        "startChar": 29,
+        "endLine": 780,
+        "endChar": 31
+      },
+      "revId": "bfd3237eac41449b1b3185cdcb1dcec0b95db58b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
