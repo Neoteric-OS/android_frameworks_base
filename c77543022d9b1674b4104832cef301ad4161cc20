@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f41bb7e6_54c8b49a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2018-11-28T21:46:22Z",
+      "side": 1,
+      "message": "Just in the interest of transparency, what happens if we\u0027re somehow wrong?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "c77543022d9b1674b4104832cef301ad4161cc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
