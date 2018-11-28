@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a6456d4_cdb3fdcf",
+        "filename": "tests/TouchLatency/app/src/main/java/com/prefabulated/touchlatency/TouchLatencyActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1112163
+      },
+      "writtenOn": "2018-11-28T21:30:47Z",
+      "side": 1,
+      "message": "Thanks for the pointer, the idea here is to detect abrupt changes in frame times as well (i.e. jank or frame rate change) and display that change. I guess could use frame time for the same",
+      "parentUuid": "b502c69e_38aa8b3a",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "beefecc309039a3232e7f73ce1307f8ad6256c4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd7b25a_041ec88c",
         "filename": "tests/TouchLatency/app/src/main/java/com/prefabulated/touchlatency/TouchLatencyActivity.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-28T20:56:44Z",
       "side": 1,
       "message": "this should be a static field so you don\u0027t GC churn. Particularly as this is otherwise a steady-state app.",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 58
+      },
+      "revId": "beefecc309039a3232e7f73ce1307f8ad6256c4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e337e0_be278805",
+        "filename": "tests/TouchLatency/app/src/main/java/com/prefabulated/touchlatency/TouchLatencyActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1112163
+      },
+      "writtenOn": "2018-11-28T21:30:47Z",
+      "side": 1,
+      "message": "ah yes, that was the plan but missed this",
+      "parentUuid": "4bd7b25a_041ec88c",
       "range": {
         "startLine": 180,
         "startChar": 8,
