@@ -791,6 +791,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 // This triggers transition to STATE_ON
                 mBluetooth.onLeServiceUp();
                 persistBluetoothSetting(BLUETOOTH_ON_BLUETOOTH);
+                // mEnable flag could  be reset by disable() when BLE_TURNING_ON. Reenable it.
+                mEnable = true;
             }
         } catch (RemoteException e) {
             Slog.e(TAG, "Unable to call onServiceUp", e);
