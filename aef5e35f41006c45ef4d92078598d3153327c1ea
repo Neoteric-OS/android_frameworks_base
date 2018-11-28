@@ -144,6 +144,53 @@
     },
     {
       "key": {
+        "uuid": "27560d98_2787ef78",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-28T06:23:11Z",
+      "side": 1,
+      "message": "I think the best option is simply to pass the default network that you need. I really would prefer not to have that new ConnectivityManager method, as it\u0027s extremely ad-hoc.\n\nThere are four call sites for this function :\n- The constructor\n- setUnderlyingNetworks\n- onUserAdded\n- onUserRemoved\n\nAll of them are called by ConnectivityService. Why not just pass what you need ?",
+      "parentUuid": "0b108105_1fa20825",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90659273_d4b88cf1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-28T06:23:11Z",
+      "side": 1,
+      "message": "This is the only change needed to address b/118856062, and it has nothing to do with b/119129310. I think it should be in a separate change.",
+      "range": {
+        "startLine": 1111,
+        "startChar": 12,
+        "endLine": 1111,
+        "endChar": 30
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ecffe7_cb357a8c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
