@@ -56,6 +56,13 @@ bool transferFunctionCloseToSRGB(const SkColorSpace* colorSpace) {
 }
 
 sk_sp<SkColorSpace> DataSpaceToColorSpace(android_dataspace dataspace) {
+    // We treat the UNKNOWN as linear in sRGB color space.
+    // When Skia reads back the layer into bitmap, it needs a valid
+    // color space to do the color space conversion, otherwise,
+    // it will only do a "copy".
+    if (dataspace == HAL_DATASPACE_UNKNOWN) {
+        dataspace = HAL_DATASPACE_V0_SRGB_LINEAR;
+    }
 
     SkColorSpace::Gamut gamut;
     switch (dataspace & HAL_DATASPACE_STANDARD_MASK) {
