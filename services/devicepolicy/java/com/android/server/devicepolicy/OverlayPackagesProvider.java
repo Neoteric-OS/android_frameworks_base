@@ -98,6 +98,20 @@ public class OverlayPackagesProvider {
         return nonRequiredApps;
     }
 
+    /**
+     * Returns set of vendor non-required apps.
+     *
+     * @param provisioningAction action indicating type of provisioning, should be one of
+     *                           {@link ACTION_PROVISION_MANAGED_DEVICE}, {@link
+     *                           ACTION_PROVISION_MANAGED_PROFILE} or
+     *                           {@link ACTION_PROVISION_MANAGED_USER}.
+     * @return the set of vendor non-required apps.
+     */
+    @NonNull
+    public Set<String> getVendorDisallowedApps(@NonNull String provisioningAction) {
+        return getVendorDisallowedAppsSet(provisioningAction);
+    }
+
     private Set<String> getLaunchableApps(int userId) {
         final Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -145,7 +159,6 @@ public class OverlayPackagesProvider {
     private Set<String> getDisallowedApps(String provisioningAction) {
         final Set<String> disallowedApps = new ArraySet<>();
         disallowedApps.addAll(getDisallowedAppsSet(provisioningAction));
-        disallowedApps.addAll(getVendorDisallowedAppsSet(provisioningAction));
         return disallowedApps;
     }
 
