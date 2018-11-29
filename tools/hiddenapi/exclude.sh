@@ -31,7 +31,7 @@ TEAMS=LIBCORE
 # Generate the list of packages and convert to a regular expression.
 PACKAGES=$(for t in $TEAMS; do echo $(eval echo \${${t}_PACKAGES}); done)
 RE=$(echo ${PACKAGES} | sed "s/ /|/g")
-git show --name-only --pretty=format: $1 | grep "config/hiddenapi-.*txt" | while read file; do
+git show --name-only --pretty=format: $1 | grep -E "config/hiddenapi-light-greylist.txt|config/hiddenapi-vendor-list.txt" | while read file; do
     ENTRIES=$(grep -E "^L(${RE})/" <(git show $1:$file))
     if [[ -n "${ENTRIES}" ]]; then
       echo -e "\e[1m\e[31m$file $1 contains the following entries\e[0m"
