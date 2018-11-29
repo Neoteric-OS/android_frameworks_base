@@ -22,6 +22,30 @@
       "revId": "9b84f31be8b8f9ef36d22b55d39d1f54611e0e95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5157b2f_2dfc79d1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3240,
+      "author": {
+        "id": 1159753
+      },
+      "writtenOn": "2018-11-29T05:43:07Z",
+      "side": 1,
+      "message": "in buganizer, sudheer comment:\n\nIf it is going to help make the debugging easier, I\u0027d prefer to add package names to some of the other sections too (for e.g. whitelists) rather than just for things related to data saver. Now we might end up calling PM.getPackagesForUid() for almost all the uids on the device, so it is going to be quite inefficient to do it for each uid individually. Let me take a look on how to add this to more sections efficiently.\n\ndo you have better idea?",
+      "parentUuid": "fbdc5ed9_aeaf292d",
+      "range": {
+        "startLine": 3240,
+        "startChar": 30,
+        "endLine": 3240,
+        "endChar": 81
+      },
+      "revId": "9b84f31be8b8f9ef36d22b55d39d1f54611e0e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
