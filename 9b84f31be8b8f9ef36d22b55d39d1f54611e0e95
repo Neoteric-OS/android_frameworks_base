@@ -46,6 +46,30 @@
       "revId": "9b84f31be8b8f9ef36d22b55d39d1f54611e0e95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37cdefe_e7516501",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3240,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-29T06:55:56Z",
+      "side": 1,
+      "message": "I\u0027ll have 2 ideas about this:\n1. Move the query outside of sync blocks, so when we query from packageManager, it won\u0027t block other things.\n2. Maintain your mapping table when event happened, for example when PACKAGE_ADDED for one uid was received.\n\nBut I think neither of these are good enough to solve this problem.",
+      "parentUuid": "b5157b2f_2dfc79d1",
+      "range": {
+        "startLine": 3240,
+        "startChar": 30,
+        "endLine": 3240,
+        "endChar": 81
+      },
+      "revId": "9b84f31be8b8f9ef36d22b55d39d1f54611e0e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
