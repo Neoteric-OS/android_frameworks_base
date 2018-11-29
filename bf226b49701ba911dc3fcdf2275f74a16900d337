@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d18872dd_ff255d38",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1906,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-29T17:19:30Z",
+      "side": 1,
+      "message": "Please use PackageManager.MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE for the flags, to ensure that you can pick up a wallpaper that isn\u0027t Direct Boot aware yet.",
+      "revId": "bf226b49701ba911dc3fcdf2275f74a16900d337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
