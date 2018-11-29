@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9b6a1a29_b94fae49",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6261,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-11-29T00:56:15Z",
+      "side": 1,
+      "message": "Agree",
+      "parentUuid": "1cdcffe8_f76c058a",
+      "range": {
+        "startLine": 6261,
+        "startChar": 10,
+        "endLine": 6261,
+        "endChar": 30
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18bfb558_1cfdc941",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -140,6 +164,29 @@
       "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f34358f5_5f133a62",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8277,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-11-29T00:56:15Z",
+      "side": 1,
+      "message": "Add the coarse loc permission here too.",
+      "range": {
+        "startLine": 8276,
+        "startChar": 11,
+        "endLine": 8277,
+        "endChar": 90
+      },
+      "revId": "b35d465c072b7adf9c5280e7131d1281a747bd74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
