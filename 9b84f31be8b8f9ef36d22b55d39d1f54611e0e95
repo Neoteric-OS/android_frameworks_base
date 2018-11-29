@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbdc5ed9_aeaf292d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3240,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-29T05:32:41Z",
+      "side": 1,
+      "message": "Is this time consuming or might cause ANR if PackageManager is busy on something?\nIt looks like we will still iterate though all uids at lease once, while both uid lock and netpolicy lock held.",
+      "range": {
+        "startLine": 3240,
+        "startChar": 30,
+        "endLine": 3240,
+        "endChar": 81
+      },
+      "revId": "9b84f31be8b8f9ef36d22b55d39d1f54611e0e95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
