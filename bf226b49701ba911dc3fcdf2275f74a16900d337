@@ -16,6 +16,24 @@
       "revId": "bf226b49701ba911dc3fcdf2275f74a16900d337",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9bb4b9_be325612",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1906,
+      "author": {
+        "id": 1128729
+      },
+      "writtenOn": "2018-11-30T05:36:42Z",
+      "side": 1,
+      "message": "Thanks for suggestion.\nDone and verified on a device with/without GSI.",
+      "parentUuid": "d18872dd_ff255d38",
+      "revId": "bf226b49701ba911dc3fcdf2275f74a16900d337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
