@@ -531,9 +531,28 @@ public class TetheringTest {
     }
 
     private void runUsbTethering(NetworkState upstreamState) {
+        when(mUpstreamNetworkMonitor.getDefaultInternetUpstream())
+                .thenReturn(upstreamState.network);
         prepareUsbTethering(upstreamState);
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
+        // If default upstream is available, tethering should receive EVENT_UPSTREAM_CALLBACK
+        // callback to choose tether upstream after starting UpstreamNetworkMonitor
+        mTetheringDependencies.upstreamNetworkMonitorMasterSM.sendMessage(
+                Tethering.TetherMasterSM.EVENT_UPSTREAM_CALLBACK,
+                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
+                0,
+                upstreamState);
+        mLooper.dispatchAll();
+    }
+
+    @Test
+    public void testRegisterMobileWhenNoDefaultUpstream() throws Exception {
+        prepareUsbTethering(null);
+        sendUsbBroadcast(true, true, true);
+        mLooper.dispatchAll();
+
+        verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
     }
 
     @Test

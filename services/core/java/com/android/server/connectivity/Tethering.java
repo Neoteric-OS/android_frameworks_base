@@ -944,10 +944,11 @@ public class Tethering extends BaseNetworkObserver {
     public boolean hasTetherableConfiguration() {
         final TetheringConfiguration cfg = mConfig;
         final boolean hasDownstreamConfiguration =
-                (cfg.tetherableUsbRegexs.length != 0) ||
-                (cfg.tetherableWifiRegexs.length != 0) ||
-                (cfg.tetherableBluetoothRegexs.length != 0);
-        final boolean hasUpstreamConfiguration = !cfg.preferredUpstreamIfaceTypes.isEmpty();
+                (cfg.tetherableUsbRegexs.length != 0)
+                || (cfg.tetherableWifiRegexs.length != 0)
+                || (cfg.tetherableBluetoothRegexs.length != 0);
+        final boolean hasUpstreamConfiguration = !cfg.preferredUpstreamIfaceTypes.isEmpty()
+                || cfg.chooseUpstreamAutomatically;
 
         return hasDownstreamConfiguration && hasUpstreamConfiguration;
     }
@@ -1387,8 +1388,15 @@ public class Tethering extends BaseNetworkObserver {
                 if (upstreamWanted()) {
                     mUpstreamWanted = true;
                     mOffload.start();
-                    chooseUpstreamType(true);
-                    mTryCell = false;
+                    // Call chooseUpstreamType() right away after UpstreamNetworkMonitor#start(),
+                    // it would cause race condition problem between UpstreamNetworkCallback and
+                    // chooseUpstreamType(). Rather than chooseUpstreamType() here,
+                    // UpstreamNetworkMonitor#onLinkPropertiesChanged() would help to call
+                    // chooseUpstreamType() later.
+                    if (mUpstreamNetworkMonitor.getDefaultInternetUpstream() == null) {
+                        chooseUpstreamType(true);
+                        mTryCell = false;
+                    }
                 }
             }
 
