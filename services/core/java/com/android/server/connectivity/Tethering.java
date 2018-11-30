@@ -1387,8 +1387,12 @@ public class Tethering extends BaseNetworkObserver {
                 if (upstreamWanted()) {
                     mUpstreamWanted = true;
                     mOffload.start();
-                    chooseUpstreamType(true);
-                    mTryCell = false;
+                    // To ensure dun config is correct
+                    maybeUpdateConfiguration();
+                    if (mConfig.chooseUpstreamAutomatically
+                            || mUpstreamNetworkMonitor.getDefaultInternetUpstream() == null) {
+                        mUpstreamNetworkMonitor.registerMobileNetworkRequest();
+                    }
                 }
             }
 
