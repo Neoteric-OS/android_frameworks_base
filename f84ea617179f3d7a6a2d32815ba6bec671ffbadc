@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "290102af_a64f3ab4",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T08:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4c9329_8d10f342",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 84
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "989a07b9_ef156d46",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 4
@@ -353,6 +377,54 @@
       "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e86eead_b909bb9e",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T08:14:26Z",
+      "side": 1,
+      "message": "Replaced by using ScopedByteArrayRO and ScopedByteArrayRW.\nScopedByteArrayRO will release element with mode JNI_ABORT.\nScopedByteArrayRW will release element with mode 0.",
+      "parentUuid": "ca695902_a1437459",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6695baec_3d2b4dc3",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T08:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6899130d_bb93ae12",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 78
+      },
+      "revId": "f84ea617179f3d7a6a2d32815ba6bec671ffbadc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
