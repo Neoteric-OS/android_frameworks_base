@@ -1334,26 +1334,29 @@ public class Vpn {
      */
     @GuardedBy("this")
     private void setVpnForcedLocked(boolean enforce) {
-        final List<String> exemptedPackages =
-                isNullOrLegacyVpn(mPackage) ? null : Collections.singletonList(mPackage);
         final Set<UidRange> rangesToTellNetdToRemove = new ArraySet<>(mBlockedUidsAsToldToNetd);
-
         final Set<UidRange> rangesThatShouldBeBlocked;
         if (enforce) {
-            rangesThatShouldBeBlocked = createUserAndRestrictedProfilesRanges(mUserHandle,
-                    /* allowedApplications */ null,
-                    /* disallowedApplications */ exemptedPackages);
+            // Build the ranges of UIDs that should be blocked. They consist of the entire
+            // range of UIDs for this macro-user, except the one UID of the VPN app if it's
+            // not the legacy VPN.
+            rangesThatShouldBeBlocked = new ArraySet<>();
 
-            // The UID range of the first user (0-99999) would block the IPSec traffic, which comes
-            // directly from the kernel and is marked as uid=0. So we adjust the range to allow
-            // it through (b/69873852).
-            for (UidRange range : rangesThatShouldBeBlocked) {
-                if (range.start == 0) {
-                    rangesThatShouldBeBlocked.remove(range);
-                    if (range.stop != 0) {
-                        rangesThatShouldBeBlocked.add(new UidRange(1, range.stop));
-                    }
-                }
+            final UidRange uidRangeForUser = UidRange.createForUser(mUserHandle);
+            // IPSec traffic comes from the kernel with uid 0 and should never be blocked, but
+            // the first user's range will contain uid 0 so remove it (b/69873852).
+            if (uidRangeForUser.start == 0) uidRangeForUser.start = 1;
+
+            if (isNullOrLegacyVpn(mPackage)) {
+                // If using the legacy VPN, block all UIDs without poking a hole.
+                rangesThatShouldBeBlocked.add(uidRangeForUser);
+            } else {
+                // Poke a hole in the user range for the owner UID.
+                final int ownerAppUid = UserHandle.getUid(mUserHandle, mOwnerUID);
+                final UidRange rangeBefore = new UidRange(uidRangeForUser.start, ownerAppUid - 1);
+                final UidRange rangeAfter = new UidRange(ownerAppUid + 1, uidRangeForUser.stop);
+                rangesThatShouldBeBlocked.add(rangeBefore);
+                rangesThatShouldBeBlocked.add(rangeAfter);
             }
 
             rangesToTellNetdToRemove.removeAll(rangesThatShouldBeBlocked);
