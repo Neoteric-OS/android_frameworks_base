@@ -16,7 +16,7 @@
 package com.android.tests.rcs;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.telephony.rcs.RcsManager;
+import android.telephony.ims.RcsManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
