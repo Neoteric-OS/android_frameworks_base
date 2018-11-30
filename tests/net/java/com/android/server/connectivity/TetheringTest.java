@@ -451,9 +451,8 @@ public class TetheringTest {
         // tetherMatchingInterfaces() which starts by fetching all interfaces).
         verify(mNMService, times(1)).listInterfaces();
 
-        // UpstreamNetworkMonitor should receive selected upstream
-        verify(mUpstreamNetworkMonitor, times(1)).selectPreferredUpstreamType(any());
-        verify(mUpstreamNetworkMonitor, times(1)).setCurrentUpstream(upstreamState.network);
+        // UpstreamNetworkMonitor should receive registerMobileNetworkRequest
+        verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
     }
 
     @Test
@@ -531,9 +530,28 @@ public class TetheringTest {
     }
 
     private void runUsbTethering(NetworkState upstreamState) {
+        when(mUpstreamNetworkMonitor.getDefaultInternetUpstream())
+                .thenReturn(upstreamState.network);
         prepareUsbTethering(upstreamState);
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
+        // If any upstream is available, tethering should receive EVENT_UPSTREAM_CALLBACK
+        // callback to choose tether upstream after starting UpstreamNetworkMonitor
+        mTetheringDependencies.upstreamNetworkMonitorMasterSM.sendMessage(
+                Tethering.TetherMasterSM.EVENT_UPSTREAM_CALLBACK,
+                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
+                0,
+                upstreamState);
+        mLooper.dispatchAll();
+    }
+
+    @Test
+    public void testRegisterMobileWhenNoDefaultUpstream() throws Exception {
+        prepareUsbTethering(null);
+        sendUsbBroadcast(true, true, true);
+        mLooper.dispatchAll();
+
+        verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
     }
 
     @Test
@@ -648,6 +666,8 @@ public class TetheringTest {
         // Setup IPv6
         final NetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
+
+        verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
 
         // UpstreamNetworkMonitor should choose upstream automatically
         // (in this specific case: choose the default network).
