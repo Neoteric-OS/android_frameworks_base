@@ -24,7 +24,6 @@ import static android.system.OsConstants.AF_UNSPEC;
 import static android.system.OsConstants.EINVAL;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
-
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
@@ -793,6 +792,7 @@ public class IpSecService extends IIpSecService.Stub {
     private final class TunnelInterfaceRecord extends OwnedResourceRecord {
         private final String mInterfaceName;
         private final Network mUnderlyingNetwork;
+        private final boolean mProtectedFromVpn;
 
         // outer addresses
         private final String mLocalAddress;
@@ -807,6 +807,7 @@ public class IpSecService extends IIpSecService.Stub {
                 int resourceId,
                 String interfaceName,
                 Network underlyingNetwork,
+                boolean protectedFromVpn,
                 String localAddr,
                 String remoteAddr,
                 int ikey,
@@ -816,6 +817,7 @@ public class IpSecService extends IIpSecService.Stub {
 
             mInterfaceName = interfaceName;
             mUnderlyingNetwork = underlyingNetwork;
+            mProtectedFromVpn = protectedFromVpn;
             mLocalAddress = localAddr;
             mRemoteAddress = remoteAddr;
             mIkey = ikey;
@@ -869,6 +871,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         public Network getUnderlyingNetwork() {
             return mUnderlyingNetwork;
+        }
+
+        public boolean isProtectedFromVpn() {
+            return mProtectedFromVpn;
         }
 
         /** Returns the local, outer address for the tunnelInterface */
@@ -1274,7 +1280,11 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized IpSecTunnelInterfaceResponse createTunnelInterface(
-            String localAddr, String remoteAddr, Network underlyingNetwork, IBinder binder,
+            String localAddr,
+            String remoteAddr,
+            Network underlyingNetwork,
+            boolean protectedFromVpn,
+            IBinder binder,
             String callingPackage) {
         enforceTunnelPermissions(callingPackage);
         checkNotNull(binder, "Null Binder passed to createTunnelInterface");
@@ -1284,9 +1294,6 @@ public class IpSecService extends IIpSecService.Stub {
 
         // Check that the user has the permissions to use this Network
         enforceNetworkPermissions(underlyingNetwork);
-
-        // TODO: Check that underlying network exists, and IP addresses not assigned to a different
-        //       network (b/72316676).
 
         int callerUid = Binder.getCallingUid();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(callerUid);
@@ -1338,6 +1345,7 @@ public class IpSecService extends IIpSecService.Stub {
                                     resourceId,
                                     intfName,
                                     underlyingNetwork,
+                                    protectedFromVpn,
                                     localAddr,
                                     remoteAddr,
                                     ikey,
@@ -1548,6 +1556,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         config.setMarkValue(0);
         config.setMarkMask(0);
+
+        // Clear protectedFromVpn. This can only be set (and known) when applying tunnel
+        //    mode transforms to a tunnel.
+        config.setProtectedFromVpn(false);
     }
 
     private static final String TUNNEL_OP = AppOpsManager.OPSTR_MANAGE_IPSEC_TUNNELS;
@@ -1617,6 +1629,7 @@ public class IpSecService extends IIpSecService.Stub {
 
         // Underlying network
         createSaParcel.underlyingNetId = (c.getNetwork() != null) ? c.getNetwork().netId : 0;
+        createSaParcel.protectedFromVpn = c.isProtectedFromVpn();
 
         // Mark
         createSaParcel.markValue = c.getMarkValue();
@@ -1821,8 +1834,11 @@ public class IpSecService extends IIpSecService.Stub {
             // c.setMarkMask(0xffffffff);
 
             if (direction == IpSecManager.DIRECTION_OUT) {
-                // Set output mark via underlying network (output only)
+                // Set underlying network and permissions for output mark
+                // Permissions bits are only needed for the outbound packets, and are only set with
+                // output mark (or set-mark)
                 c.setNetwork(tunnelInterfaceInfo.getUnderlyingNetwork());
+                c.setProtectedFromVpn(tunnelInterfaceInfo.isProtectedFromVpn());
 
                 // Set outbound SPI only. We want inbound to use any valid SA (old, new) on rekeys,
                 // but want to guarantee outbound packets are sent over the new SA.

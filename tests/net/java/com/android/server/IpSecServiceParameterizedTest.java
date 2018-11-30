@@ -325,6 +325,7 @@ public class IpSecServiceParameterizedTest {
         assertEquals(
                 (config.getNetwork() != null) ? config.getNetwork().netId : 0,
                 createSaParcel.underlyingNetId);
+        assertEquals(config.isProtectedFromVpn(), createSaParcel.protectedFromVpn);
 
         // Verify Mark
         assertEquals(0, createSaParcel.markValue);
@@ -630,9 +631,19 @@ public class IpSecServiceParameterizedTest {
 
     private IpSecTunnelInterfaceResponse createAndValidateTunnel(
             String localAddr, String remoteAddr, String pkgName) {
+        return createAndValidateTunnel(localAddr, remoteAddr, false, pkgName);
+    }
+
+    private IpSecTunnelInterfaceResponse createAndValidateTunnel(
+            String localAddr, String remoteAddr, boolean protectFromVpn, String pkgName) {
         IpSecTunnelInterfaceResponse createTunnelResp =
                 mIpSecService.createTunnelInterface(
-                        mSourceAddr, mDestinationAddr, fakeNetwork, new Binder(), pkgName);
+                        mSourceAddr,
+                        mDestinationAddr,
+                        fakeNetwork,
+                        protectFromVpn,
+                        new Binder(),
+                        pkgName);
 
         assertNotNull(createTunnelResp);
         assertEquals(IpSecManager.Status.OK, createTunnelResp.status);
@@ -722,7 +733,16 @@ public class IpSecServiceParameterizedTest {
 
     @Test
     public void testApplyTunnelModeTransformOutbound() throws Exception {
-        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT);
+        checkApplyTunnelModeTransformOutbound(false);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformOutboundProtectedFromVpn() throws Exception {
+        checkApplyTunnelModeTransformOutbound(true);
+    }
+
+    private void checkApplyTunnelModeTransformOutbound(boolean protectFromVpn) throws Exception {
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT, protectFromVpn);
 
         // Additionally also verify the security policies are updated
         for (int selAddrFamily : ADDRESS_FAMILIES) {
@@ -742,7 +762,16 @@ public class IpSecServiceParameterizedTest {
 
     @Test
     public void testApplyTunnelModeTransformInbound() throws Exception {
-        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN);
+        checkApplyTunnelModeTransformInbound(false);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformInboundProtectedFromVpn() throws Exception {
+        checkApplyTunnelModeTransformInbound(true);
+    }
+
+    public void checkApplyTunnelModeTransformInbound(boolean protectFromVpn) throws Exception {
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN, protectFromVpn);
 
         // Additionally also verify the security policies are updated
         for (int selAddrFamily : ADDRESS_FAMILIES) {
@@ -760,7 +789,8 @@ public class IpSecServiceParameterizedTest {
         }
     }
 
-    private void applyAndVerifyTunnelModeTransform(int direction) throws Exception {
+    private void applyAndVerifyTunnelModeTransform(int direction, boolean protectFromVpn)
+            throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         ipSecConfig.setMode(IpSecTransform.MODE_TUNNEL);
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
@@ -769,28 +799,19 @@ public class IpSecServiceParameterizedTest {
         IpSecTransformResponse createTransformResp =
                 mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
         IpSecTunnelInterfaceResponse createTunnelResp =
-                createAndValidateTunnel(mSourceAddr, mDestinationAddr, "blessedPackage");
+                createAndValidateTunnel(
+                        mSourceAddr, mDestinationAddr, protectFromVpn, "blessedPackage");
 
         int transformResourceId = createTransformResp.resourceId;
         int tunnelResourceId = createTunnelResp.resourceId;
-        mIpSecService.applyTunnelModeTransform(tunnelResourceId, IpSecManager.DIRECTION_OUT,
-                transformResourceId, "blessedPackage");
-
-        for (int selAddrFamily : ADDRESS_FAMILIES) {
-            verify(mMockNetd)
-                    .ipSecUpdateSecurityPolicy(
-                            eq(mUid),
-                            eq(selAddrFamily),
-                            eq(IpSecManager.DIRECTION_OUT),
-                            anyString(),
-                            anyString(),
-                            eq(TEST_SPI),
-                            anyInt(), // iKey/oKey
-                            anyInt(), // mask
-                            eq(tunnelResourceId));
-        }
+        mIpSecService.applyTunnelModeTransform(
+                tunnelResourceId, direction, transformResourceId, "blessedPackage");
 
         ipSecConfig.setXfrmInterfaceId(tunnelResourceId);
+        if (direction == IpSecManager.DIRECTION_OUT) {
+            ipSecConfig.setProtectedFromVpn(protectFromVpn);
+        }
+
         verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp);
     }
 

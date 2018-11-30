@@ -42,12 +42,19 @@ public final class IpSecConfig implements Parcelable {
     // for outbound packets. It may also be used to select packets.
     private Network mNetwork;
 
+    /**
+     * Whether the output of an IPsec tunnel should be protected from the VPN.
+     *
+     * <p>Internal (System server) use only. Value passed in by users will be cleared.
+     */
+    private boolean mProtectedFromVpn;
+
     // Minimum requirements for identifying a transform
     // SPI identifying the IPsec SA in packet processing
     // and a destination IP address
     private int mSpiResourceId = IpSecManager.INVALID_RESOURCE_ID;
 
-    // Encryption Algorithm
+    // Encryption Algorithmq
     private IpSecAlgorithm mEncryption;
 
     // Authentication Algorithm
@@ -110,6 +117,11 @@ public final class IpSecConfig implements Parcelable {
     /** Set the underlying network that will carry traffic for this transform */
     public void setNetwork(Network network) {
         mNetwork = network;
+    }
+
+    /** Set whether or not traffic should be protected from the VPN */
+    public void setProtectedFromVpn(boolean protectedFromVpn) {
+        mProtectedFromVpn = protectedFromVpn;
     }
 
     public void setEncapType(int encapType) {
@@ -183,6 +195,10 @@ public final class IpSecConfig implements Parcelable {
 
     public Network getNetwork() {
         return mNetwork;
+    }
+
+    public boolean isProtectedFromVpn() {
+        return mProtectedFromVpn;
     }
 
     public int getEncapType() {

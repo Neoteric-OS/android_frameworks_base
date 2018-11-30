@@ -22,6 +22,7 @@ import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -30,10 +31,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.test.mock.MockContext;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.system.Os;
+import android.test.mock.MockContext;
 
 import com.android.server.IpSecService;
 
@@ -261,12 +262,17 @@ public class IpSecManagerTest {
         IpSecTunnelInterfaceResponse dummyResponse =
                 new IpSecTunnelInterfaceResponse(IpSecManager.Status.OK, resourceId, intfName);
         when(mMockIpSecService.createTunnelInterface(
-                eq(VTI_LOCAL_ADDRESS.getHostAddress()), eq(GOOGLE_DNS_4.getHostAddress()),
-                anyObject(), anyObject(), anyString()))
-                        .thenReturn(dummyResponse);
+                        eq(VTI_LOCAL_ADDRESS.getHostAddress()),
+                        eq(GOOGLE_DNS_4.getHostAddress()),
+                        anyObject(),
+                        anyBoolean(),
+                        anyObject(),
+                        anyString()))
+                .thenReturn(dummyResponse);
 
-        IpSecManager.IpSecTunnelInterface tunnelIntf = mIpSecManager.createIpSecTunnelInterface(
-                VTI_LOCAL_ADDRESS, GOOGLE_DNS_4, mock(Network.class));
+        IpSecManager.IpSecTunnelInterface tunnelIntf =
+                mIpSecManager.createIpSecTunnelInterface(
+                        VTI_LOCAL_ADDRESS, GOOGLE_DNS_4, mock(Network.class), false);
 
         assertNotNull(tunnelIntf);
         return tunnelIntf;
