@@ -45,6 +45,7 @@ interface IIpSecService
             in String localAddr,
             in String remoteAddr,
             in Network underlyingNetwork,
+            boolean protectFromVpn,
             in IBinder binder,
             in String callingPackage);
 
