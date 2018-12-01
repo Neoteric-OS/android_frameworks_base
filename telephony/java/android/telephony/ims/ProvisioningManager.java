@@ -233,6 +233,20 @@ public class ProvisioningManager {
         }
     }
 
+    /**
+     * Notify the framework that an RCS autoconfiguration XML file has been received for
+     * provisioning.
+     * @param config The XML file to be read.
+     * @param isCompressed The XML file is compressed in gzip format and must be decompressed
+     *         before being read.
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void notifyRcsAutoConfigurationReceived(String config, boolean isCompressed) {
+        // TODO: Connect to ImsConfigImplBase.
+        throw new UnsupportedOperationException("notifyRcsAutoConfigurationReceived is not"
+                + "supported");
+    }
+
     private static SubscriptionManager getSubscriptionManager(Context context) {
         SubscriptionManager manager = context.getSystemService(SubscriptionManager.class);
         if (manager == null) {
