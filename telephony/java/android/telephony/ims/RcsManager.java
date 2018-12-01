@@ -25,12 +25,14 @@ import android.content.Context;
  */
 @SystemService(Context.TELEPHONY_RCS_SERVICE)
 public class RcsManager {
+    private final Context mContext;
     private final RcsMessageStore mRcsMessageStore;
 
     /**
      * @hide
      */
     public RcsManager(Context context) {
+        mContext = context;
         mRcsMessageStore = new RcsMessageStore(context);
     }
 
@@ -39,5 +41,18 @@ public class RcsManager {
      */
     public RcsMessageStore getRcsMessageStore() {
         return mRcsMessageStore;
+    }
+
+    /**
+     * Interfaces with the framework RCS services, including the User Capability Exchange (UCE)
+     * service. Also manages user settings associated with RCS.
+     *
+     * @param subscriptionId The ID of the subscription that this RcsFeatureController will use.
+     * @see android.telephony.SubscriptionManager#getActiveSubscriptionInfoList().
+     * @throws IllegalArgumentException if the subscription is invalid.
+     * @return An instance of {@link RcsFeatureController} for the subscription ID specified.
+     */
+    public RcsFeatureController getRcsFeatureController(int subscriptionId) {
+        return new RcsFeatureController(mContext, subscriptionId);
     }
 }
