@@ -15,6 +15,6 @@
 ** limitations under the License.
 */
 
-package android.telephony;
+package android.telephony.ims;
 
-parcelable RcsThread;
+parcelable RcsPart;
