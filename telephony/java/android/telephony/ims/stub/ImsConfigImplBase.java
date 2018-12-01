@@ -387,4 +387,15 @@ public class ImsConfigImplBase {
         // Base Implementation - To be overridden.
         return null;
     }
+
+    /**
+     * The framework has received an RCS autoconfiguration XML file for provisioning.
+     *
+     * @param config The XML file to be read, if not compressed, it should be in ASCII/UTF8 format.
+     * @param isCompressed The XML file is compressed in gzip format and must be decompressed
+     *         before being read.
+     * @hide
+     */
+    public void notifyRcsAutoConfigurationReceived(byte[] config, boolean isCompressed) {
+    }
 }
