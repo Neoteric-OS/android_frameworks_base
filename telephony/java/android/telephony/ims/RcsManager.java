@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.tests.rcs;
+package android.telephony.ims;
 
-import android.support.test.runner.AndroidJUnit4;
-import android.telephony.rcs.RcsManager;
+/**
+ * The manager class for RCS related utilities.
+ * @hide
+ */
+public class RcsManager {
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+    private static final RcsMessageStore sRcsMessageStoreInstance = new RcsMessageStore();
 
-@RunWith(AndroidJUnit4.class)
-public class RcsManagerTest {
-    //TODO(sahinc): Add meaningful tests once we have more of the implementation in place
-    @Test
-    public void testDeleteThreadDoesntCrash() {
-        RcsManager mRcsManager = new RcsManager();
-        mRcsManager.deleteThread(0);
+    /**
+     * Returns an instance of RcsMessageStore.
+     */
+    public RcsMessageStore getRcsMessageStore() {
+        return sRcsMessageStoreInstance;
     }
 }
