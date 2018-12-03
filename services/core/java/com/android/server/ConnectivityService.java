@@ -5044,7 +5044,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         updateUids(nai, prevNc, newNc);
-
+        nai.networkMonitor.sendMessage(NetworkMonitor.EVENT_CAPABILITIES_CHANGED,
+                new NetworkCapabilities(nai.networkCapabilities));
         if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
             // If the requestable capabilities haven't changed, and the score hasn't changed, then
             // the change we're processing can't affect any requests, it can only affect the listens

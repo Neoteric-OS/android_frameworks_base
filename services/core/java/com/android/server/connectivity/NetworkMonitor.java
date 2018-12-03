@@ -249,6 +249,12 @@ public class NetworkMonitor extends StateMachine {
      */
     public static final int EVENT_DNS_NOTIFICATION = BASE + 17;
 
+    /**
+     * ConnectivityService notifies NetworkMonitor of NetworkCapabilities change
+     * obj = Updated NetworkCapabilities of the network
+     */
+    public static final int EVENT_CAPABILITIES_CHANGED = BASE + 18;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
     private static final int MAX_REEVALUATE_DELAY_MS = 10*60*1000;
@@ -314,6 +320,7 @@ public class NetworkMonitor extends StateMachine {
     private final State mEvaluatingPrivateDnsState = new EvaluatingPrivateDnsState();
     private final State mProbingState = new ProbingState();
     private final State mWaitingForNextProbeState = new WaitingForNextProbeState();
+    private final State mNetworkSuspendedState = new NetworkSuspendedState();
 
     private CustomIntentReceiver mLaunchCaptivePortalAppBroadcastReceiver = null;
 
@@ -337,6 +344,7 @@ public class NetworkMonitor extends StateMachine {
     private final int mDataStallEvaluationType;
     private final DnsStallDetector mDnsStallDetector;
     private long mLastProbeTime;
+    private NetworkCapabilities mNetworkCapabilities;
 
     public NetworkMonitor(Context context, Handler handler, NetworkAgentInfo networkAgentInfo,
             NetworkRequest defaultRequest) {
@@ -364,12 +372,13 @@ public class NetworkMonitor extends StateMachine {
         mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         mDefaultRequest = defaultRequest;
-
+        mNetworkCapabilities = new NetworkCapabilities(mNetworkAgentInfo.networkCapabilities);
         addState(mDefaultState);
         addState(mMaybeNotifyState, mDefaultState);
             addState(mEvaluatingState, mMaybeNotifyState);
                 addState(mProbingState, mEvaluatingState);
                 addState(mWaitingForNextProbeState, mEvaluatingState);
+                addState(mNetworkSuspendedState, mEvaluatingState);
             addState(mCaptivePortalState, mMaybeNotifyState);
         addState(mEvaluatingPrivateDnsState, mDefaultState);
         addState(mValidatedState, mDefaultState);
@@ -429,7 +438,7 @@ public class NetworkMonitor extends StateMachine {
 
     private boolean isValidationRequired() {
         return isValidationRequired(
-                mDefaultRequest.networkCapabilities, mNetworkAgentInfo.networkCapabilities);
+                mDefaultRequest.networkCapabilities, mNetworkCapabilities);
     }
 
 
@@ -539,6 +548,9 @@ public class NetworkMonitor extends StateMachine {
                 }
                 case EVENT_DNS_NOTIFICATION:
                     mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
+                    break;
+                case EVENT_CAPABILITIES_CHANGED:
+                    mNetworkCapabilities = (NetworkCapabilities) message.obj;
                     break;
                 default:
                     break;
@@ -954,7 +966,42 @@ public class NetworkMonitor extends StateMachine {
 
         @Override
         public boolean processMessage(Message message) {
-            return NOT_HANDLED;
+            switch (message.what) {
+                case EVENT_CAPABILITIES_CHANGED:
+                    mNetworkCapabilities = (NetworkCapabilities) message.obj;
+                    if (!mNetworkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)) {
+                        transitionTo(mNetworkSuspendedState);
+                    }
+                    return HANDLED;
+                default:
+                    return NOT_HANDLED;
+            }
+        }
+    }
+
+    // Being in the NetworkSuspendedState indicates that the network is suspended and state is
+    // transited from WaitingForNextProbeState. Probing will be temporarily stopped until resuming
+    // from suspended.
+    private class NetworkSuspendedState extends State {
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                case CMD_REEVALUATE:
+                    // Not reevaluate since internet is supposed to be unavailable if
+                    // network is suspended.
+                    log("Not reevaluate due to network suspeneded");
+                    return HANDLED;
+                case EVENT_CAPABILITIES_CHANGED:
+                    mNetworkCapabilities = (NetworkCapabilities) message.obj;
+                    if (mNetworkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)) {
+                        transitionTo(mEvaluatingState);
+                    }
+                    return HANDLED;
+                default:
+                    return NOT_HANDLED;
+            }
         }
     }
 
@@ -1483,7 +1530,7 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private void logNetworkEvent(int evtype) {
-        int[] transports = mNetworkAgentInfo.networkCapabilities.getTransportTypes();
+        int[] transports = mNetworkCapabilities.getTransportTypes();
         mMetricsLog.log(mNetId, transports, new NetworkEvent(evtype));
     }
 
@@ -1505,14 +1552,14 @@ public class NetworkMonitor extends StateMachine {
 
     private void maybeLogEvaluationResult(int evtype) {
         if (mEvaluationTimer.isRunning()) {
-            int[] transports = mNetworkAgentInfo.networkCapabilities.getTransportTypes();
+            int[] transports = mNetworkCapabilities.getTransportTypes();
             mMetricsLog.log(mNetId, transports, new NetworkEvent(evtype, mEvaluationTimer.stop()));
             mEvaluationTimer.reset();
         }
     }
 
     private void logValidationProbe(long durationMs, int probeType, int probeResult) {
-        int[] transports = mNetworkAgentInfo.networkCapabilities.getTransportTypes();
+        int[] transports = mNetworkCapabilities.getTransportTypes();
         boolean isFirstValidation = validationStage().isFirstValidation;
         ValidationProbeEvent ev = new ValidationProbeEvent();
         ev.probeType = ValidationProbeEvent.makeProbeType(probeType, isFirstValidation);
@@ -1641,9 +1688,16 @@ public class NetworkMonitor extends StateMachine {
         boolean result = false;
         // Reevaluation will generate traffic. Thus, set a minimal reevaluation timer to limit the
         // possible traffic cost in metered network.
-        if (mNetworkAgentInfo.networkCapabilities.isMetered()
+        if (mNetworkCapabilities.isMetered()
                 && (SystemClock.elapsedRealtime() - getLastProbeTime()
                 < mDataStallMinEvaluateTime)) {
+            return false;
+        }
+
+        // Not evaluate data stall since data is supposed to be unavailable if network is
+        // suspended.
+        if (!mNetworkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)) {
             return false;
         }
 
