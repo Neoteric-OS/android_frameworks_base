@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.telephony.rcs;
+package android.telephony.ims;
 
 import android.annotation.SystemService;
 import android.content.Context;
@@ -25,13 +25,13 @@ import android.telephony.Rlog;
 import com.android.internal.telephony.rcs.IRcs;
 
 /**
- * RcsManager is the application interface to RcsProvider and provides access methods to
+ * RcsMessageStorage is the application interface to RcsProvider and provides access methods to
  * RCS related database tables.
  * @hide - TODO make this public
  */
 @SystemService(Context.TELEPHONY_RCS_SERVICE)
-public class RcsManager {
-    private static final String TAG = "RcsManager";
+public class RcsMessageStorage {
+    private static final String TAG = "RcsMessageStorage";
     private static final boolean VDBG = false;
 
     /**

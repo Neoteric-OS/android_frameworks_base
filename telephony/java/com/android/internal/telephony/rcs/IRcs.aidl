@@ -17,7 +17,7 @@
 package com.android.internal.telephony.rcs;
 
 interface IRcs {
-    // RcsManager APIs
+    // RcsMessageStorage APIs
     void deleteThread(int threadId);
 
     // RcsThread APIs

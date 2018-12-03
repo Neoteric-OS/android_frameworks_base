@@ -16,17 +16,17 @@
 package com.android.tests.rcs;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.telephony.rcs.RcsManager;
+import android.telephony.ims.RcsMessageStorage;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class RcsManagerTest {
+public class RcsMessageStorageTest {
     //TODO(sahinc): Add meaningful tests once we have more of the implementation in place
     @Test
     public void testDeleteThreadDoesntCrash() {
-        RcsManager mRcsManager = new RcsManager();
-        mRcsManager.deleteThread(0);
+        RcsMessageStorage mRcsMessageStorage = new RcsMessageStorage();
+        mRcsMessageStorage.deleteThread(0);
     }
 }
