@@ -128,8 +128,8 @@ public class AdbService extends IAdbManager.Stub {
                 mAdbUsbEnabled = containsFunction(
                         SystemProperties.get(USB_PERSISTENT_CONFIG_PROPERTY, ""),
                         UsbManager.USB_FUNCTION_ADB);
-                // TODO: for mAdbWifiEnabled
-                mAdbWifiEnabled = false;
+                mAdbWifiEnabled = "1".equals(
+                        SystemProperties.get(WIFI_PERSISTENT_CONFIG_PROPERTY, "0"));
 
                 // register observer to listen for settings changes
                 mObserver = new AdbSettingsObserver();
@@ -212,6 +212,7 @@ public class AdbService extends IAdbManager.Stub {
      * May also contain vendor-specific default functions for testing purposes.
      */
     private static final String USB_PERSISTENT_CONFIG_PROPERTY = "persist.sys.usb.config";
+    private static final String WIFI_PERSISTENT_CONFIG_PROPERTY = "persist.sys.adb.wifi";
 
     private final Context mContext;
     private final ContentResolver mContentResolver;
@@ -228,7 +229,8 @@ public class AdbService extends IAdbManager.Stub {
 
         boolean secureAdbEnabled = AdbProperties.secure().orElse(false);
         boolean dataEncrypted = "1".equals(SystemProperties.get("vold.decrypt"));
-        if (secureAdbEnabled && !dataEncrypted) {
+        boolean emulatorWantsAuth = "1".equals(SystemProperties.get("qemu.adb.auth"));
+        if ((secureAdbEnabled && !dataEncrypted) || emulatorWantsAuth) {
             mDebuggingManager = new AdbDebuggingManager(context);
         }
 
@@ -313,6 +315,62 @@ public class AdbService extends IAdbManager.Stub {
                 android.Manifest.permission.MANAGE_DEBUGGING, "AdbService");
         return isAdbWifiSupported() && mContext.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA_ANY);
+    }
+
+    @Override
+    public void allowWirelessDebugging(boolean alwaysAllow, String bssid) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.allowWirelessDebugging(alwaysAllow, bssid);
+        }
+    }
+
+    @Override
+    public void denyWirelessDebugging() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.denyWirelessDebugging();
+        }
+    }
+
+    @Override
+    public void queryPairedDevices() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.queryPairedDevices();
+        }
+    }
+
+    @Override
+    public void unpairDevice(String fingerprint) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.unpairDevice(fingerprint);
+        }
+    }
+
+    @Override
+    public void enablePairingByPairingCode() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.enablePairingByPairingCode();
+        }
+    }
+
+    @Override
+    public void enablePairingByQrCode(String serviceName, String password) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.enablePairingByQrCode(serviceName, password);
+        }
+    }
+
+    @Override
+    public void disablePairing() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mDebuggingManager != null) {
+            mDebuggingManager.disablePairing();
+        }
     }
 
     private void setAdbEnabled(boolean enable, byte transportType) {
