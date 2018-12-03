@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2698d63d_6099bb0d",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7958,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-03T13:49:06Z",
+      "side": 1,
+      "message": "this also lists regular packages, is that how you would most often expect to use this API? I guess I had expected MATCH_APEX to only match APEX. I guess we could add MATCH_APEX_ONLY if there\u0027s a need for that later...",
+      "range": {
+        "startLine": 7957,
+        "startChar": 12,
+        "endLine": 7958,
+        "endChar": 27
+      },
+      "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
