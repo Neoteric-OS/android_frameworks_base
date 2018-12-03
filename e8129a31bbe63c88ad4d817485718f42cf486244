@@ -22,6 +22,30 @@
       "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3626dd_009aa1c6",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7958,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-12-03T14:03:26Z",
+      "side": 1,
+      "message": "Good point. However as this CL is a cherry-pick (has Merged-In), I will address that in a follow-up CL.",
+      "parentUuid": "2698d63d_6099bb0d",
+      "range": {
+        "startLine": 7957,
+        "startChar": 12,
+        "endLine": 7958,
+        "endChar": 27
+      },
+      "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
