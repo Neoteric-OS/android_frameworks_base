@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "b3725bfa_deead394",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2018-12-03T23:49:28Z",
+      "side": 1,
+      "message": "Hi Jean - ptal http://aosp/839532 with passing default network.",
+      "parentUuid": "c7bb3741_19898446",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 86
+      },
+      "revId": "aef5e35f41006c45ef4d92078598d3153327c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90659273_d4b88cf1",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
