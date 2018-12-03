@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b514c5d_93a4ea0c",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Which call does this pertain to?  Curious how you could tie this to a specific ongoing call on the device if there are multiple ongoing calls?",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4be7bf_495a7ece",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Docs please.",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e007c6b3_811146f7",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "We don\u0027t typically expose setters on a parcelable.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd68c3d_c8c2c83c",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Similar values in ImsStreamMediaProfile are defined (e.g. AUDIO_QUALITY_EVS_WB).  Can we use those values?  They\u0027re already reported by the modem.",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7262dcdd_684dd3b1",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Add the prefix tag.\nprefix \u003d { \"CALL_QUALITY_\" },\nvalue \u003d { ... }",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14081392_f75ecc56",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "What are the units?",
+      "range": {
+        "startLine": 153,
+        "startChar": 15,
+        "endLine": 153,
+        "endChar": 37
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f347c0_75a0f40c",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Could use some docs to explain what the parameters are, how they\u0027re used, etc.  Especially the jitter.",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63ea927_08d8422d",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "What are the units here?",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a683b73_3d30d6f8",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "How does this call ID relate to the call IDs used in Telephony and Telecom?",
+      "range": {
+        "startLine": 190,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949f5cbf_44b304a8",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "Don\u0027t usually expose the setters in a parcelable.",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c4f954_97e2695f",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "As the user changes between foreground and background calls, does the call attributes update as well?\n\nHow frequently are these reported?",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 14
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321f2632_9db69608",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-03T21:20:57Z",
+      "side": 1,
+      "message": "call attributes :)",
+      "range": {
+        "startLine": 653,
+        "startChar": 33,
+        "endLine": 653,
+        "endChar": 56
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
