@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.telephony.rcs;
+package android.telephony.ims;
 
 import android.os.Parcel;
 import android.os.Parcelable;
