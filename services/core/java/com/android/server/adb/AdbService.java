@@ -155,6 +155,9 @@ public class AdbService extends IAdbManager.Stub {
                     if (mDebuggingManager != null) {
                         mDebuggingManager.setAdbEnabled(mAdbEnabled);
                     }
+                    if (mWirelessDebuggingManager != null) {
+                        mWirelessDebuggingManager.bootCompleted();
+                    }
                     break;
             }
         }
@@ -192,6 +195,7 @@ public class AdbService extends IAdbManager.Stub {
 
     private boolean mAdbEnabled;
     private AdbDebuggingManager mDebuggingManager;
+    private WirelessDebuggingManager mWirelessDebuggingManager;
 
     private AdbService(Context context) {
         mContext = context;
@@ -203,6 +207,7 @@ public class AdbService extends IAdbManager.Stub {
             mDebuggingManager = new AdbDebuggingManager(context);
         }
 
+        mWirelessDebuggingManager = new WirelessDebuggingManager(context);
         mHandler = new AdbHandler(FgThread.get().getLooper());
 
         LocalServices.addService(AdbManagerInternal.class, new AdbManagerInternalImpl());
@@ -257,6 +262,88 @@ public class AdbService extends IAdbManager.Stub {
         } else {
             throw new RuntimeException("Cannot clear ADB debugging keys, "
                     + "AdbDebuggingManager not enabled");
+        }
+    }
+
+    @Override
+    public void enableAdbWireless(boolean enable) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.enableAdbWireless(enable);
+        }
+    }
+
+    @Override
+    public void queryAdbWirelessPairedDevices() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.queryPairedDevices();
+        }
+    }
+
+    @Override
+    public void queryAdbWirelessPairingDevices() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.queryPairingDevices();
+        }
+    }
+
+    @Override
+    public void pairDevice(int pairMode, String guid, String code) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.pairDevice(pairMode, guid, code);
+        }
+    }
+
+    @Override
+    public void unpairDevice(String guid) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.unpairDevice(guid);
+        }
+    }
+
+    @Override
+    public void cancelPairing(int pairMode, String guid) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.cancelPairing(pairMode, guid);
+        }
+    }
+
+    @Override
+    public boolean isEnabled() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            return mWirelessDebuggingManager.isEnabled();
+        }
+        return false;
+    }
+
+    @Override
+    public String getName() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            return mWirelessDebuggingManager.getName();
+        }
+        return "";
+    }
+
+    @Override
+    public void setName(String name) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.setName(name);
+        }
+    }
+
+    @Override
+    public void setDiscoverable(int pairMode, boolean enable) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
+        if (mWirelessDebuggingManager != null) {
+            mWirelessDebuggingManager.setDiscoverable(pairMode, enable);
         }
     }
 
