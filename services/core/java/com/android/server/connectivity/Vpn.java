@@ -238,7 +238,7 @@ public class Vpn {
         mNetworkCapabilities = new NetworkCapabilities();
         mNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
         mNetworkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
-        updateCapabilities();
+        updateCapabilities(null /* defaultNetwork */);
 
         loadAlwaysOnPackage();
     }
@@ -265,8 +265,18 @@ public class Vpn {
         updateAlwaysOnNotification(detailedState);
     }
 
-    public void updateCapabilities() {
-        final Network[] underlyingNetworks = (mConfig != null) ? mConfig.underlyingNetworks : null;
+    public void updateCapabilities(@Nullable Network defaultNetwork) {
+        if (mConfig == null) {
+            // VPN is not running.
+            return;
+        }
+
+        Network[] underlyingNetworks = mConfig.underlyingNetworks;
+        if (underlyingNetworks == null && defaultNetwork != null) {
+            // null underlying networks means to track the default.
+            underlyingNetworks = new Network[] { defaultNetwork };
+        }
+
         updateCapabilities(mContext.getSystemService(ConnectivityManager.class), underlyingNetworks,
                 mNetworkCapabilities);
 
@@ -1231,7 +1241,7 @@ public class Vpn {
         return ranges;
     }
 
-    public void onUserAdded(int userHandle) {
+    public void onUserAdded(int userHandle, Network defaultNetwork) {
         // If the user is restricted tie them to the parent user's VPN
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1242,7 +1252,7 @@ public class Vpn {
                         addUserToRanges(existingRanges, userHandle, mConfig.allowedApplications,
                                 mConfig.disallowedApplications);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities();
+                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to add restricted user to owner", e);
                     }
@@ -1252,7 +1262,7 @@ public class Vpn {
         }
     }
 
-    public void onUserRemoved(int userHandle) {
+    public void onUserRemoved(int userHandle, Network defaultNetwork) {
         // clean up if restricted
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1264,7 +1274,7 @@ public class Vpn {
                             uidRangesForUser(userHandle, existingRanges);
                         existingRanges.removeAll(removedRanges);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities();
+                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to remove restricted user to owner", e);
                     }
@@ -1477,7 +1487,7 @@ public class Vpn {
         return success;
     }
 
-    public synchronized boolean setUnderlyingNetworks(Network[] networks) {
+    public synchronized boolean setUnderlyingNetworks(Network[] networks, Network defaultNetwork) {
         if (!isCallerEstablishedOwnerLocked()) {
             return false;
         }
@@ -1493,7 +1503,7 @@ public class Vpn {
                 }
             }
         }
-        updateCapabilities();
+        updateCapabilities(defaultNetwork);
         return true;
     }
 
