@@ -338,6 +338,7 @@ java_library {
     static_libs: [
         "apex_aidl_interface-java",
         "suspend_control_aidl_interface-java",
+        "adb-java-protos",
         "framework-protos",
         "game-driver-protos",
         "android.hidl.base-V1.0-java",
