@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab278da2_339786a9",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2018-12-03T18:50:42Z",
+      "side": 1,
+      "message": "Need one for CALL_QUALITY_NOT_AVAILABLE ?",
+      "revId": "afc4e44a2f27892f9c81e1c53dd2d3f8cc2ed495",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902f20c2_12ba1b66",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2018-12-03T18:50:42Z",
+      "side": 1,
+      "message": "Can we use types defined in \"ImsStreamMediaProfile.java\" instead ?",
+      "revId": "afc4e44a2f27892f9c81e1c53dd2d3f8cc2ed495",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
