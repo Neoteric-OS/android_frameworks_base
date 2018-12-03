@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e83cbf43_04961adc",
+        "filename": "telephony/java/android/telephony/ims/RcsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-03T21:24:08Z",
+      "side": 1,
+      "message": "Looking at this a little closer... I know we have SmsManager, which manages SMS, but RCS includes more than just RCS messaging...\n\nPerhaps this class should be called RcsMessagingManager, or similar? I only ask because there are other RCS services, such as User Capability Exchange, that I am implementing in Q.\n\nWhat is your opinion on this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "8f2beacc6bd22e4497f0dbd0fb1008ba3109ac12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
