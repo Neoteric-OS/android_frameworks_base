@@ -46,6 +46,30 @@
       "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36e5f119_66d5f779",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7958,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-12-03T21:25:49Z",
+      "side": 1,
+      "message": "That\u0027s not how this API is designed and I\u0027d rather not make it more complicated.\n\nIf this is truly a use case that\u0027s required [it sounds like it isn\u0027t required, just nice-to-have], we already have PackageInfo.isApex. Callers can use that to filter out just APEX files.",
+      "parentUuid": "eb3626dd_009aa1c6",
+      "range": {
+        "startLine": 7957,
+        "startChar": 12,
+        "endLine": 7958,
+        "endChar": 27
+      },
+      "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
