@@ -47,10 +47,12 @@ import android.net.dhcp.DhcpLeaseRepository.InvalidAddressException;
 import android.net.dhcp.DhcpLeaseRepository.OutOfAddressesException;
 import android.net.dhcp.DhcpServer.Clock;
 import android.net.dhcp.DhcpServer.Dependencies;
-import android.net.util.SharedLog;
-import android.os.test.TestLooper;
 import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
+import android.testing.AndroidTestingRunner;
+import android.testing.TestableLooper;
+import android.testing.TestableLooper.RunWithLooper;
+
+import com.google.android.networkstack.util.SharedLog;
 
 import org.junit.After;
 import org.junit.Before;
@@ -67,10 +69,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidTestingRunner.class)
 @SmallTest
+@RunWithLooper
 public class DhcpServerTest {
-    private static final String PROP_DEXMAKER_SHARE_CLASSLOADER = "dexmaker.share_classloader";
     private static final String TEST_IFACE = "testiface";
 
     private static final Inet4Address TEST_SERVER_ADDR = parseAddr("192.168.0.2");
@@ -113,7 +115,7 @@ public class DhcpServerTest {
     private ArgumentCaptor<Inet4Address> mResponseDstAddrCaptor;
 
     @NonNull
-    private TestLooper mLooper;
+    private TestableLooper mLooper;
     @NonNull
     private DhcpServer mServer;
 
@@ -122,9 +124,6 @@ public class DhcpServerTest {
 
     @Before
     public void setUp() throws Exception {
-        // Allow mocking package-private classes
-        mPrevShareClassloaderProp = System.getProperty(PROP_DEXMAKER_SHARE_CLASSLOADER);
-        System.setProperty(PROP_DEXMAKER_SHARE_CLASSLOADER, "true");
         MockitoAnnotations.initMocks(this);
 
         when(mDeps.makeLeaseRepository(any(), any(), any())).thenReturn(mRepository);
@@ -143,20 +142,18 @@ public class DhcpServerTest {
                 .setExcludedAddrs(TEST_EXCLUDED_ADDRS)
                 .build();
 
-        mLooper = new TestLooper();
+        mLooper = TestableLooper.get(this);
         mServer = new DhcpServer(mLooper.getLooper(), TEST_IFACE, servingParams,
                 new SharedLog(DhcpServerTest.class.getSimpleName()), mDeps);
 
         mServer.start();
-        mLooper.dispatchAll();
+        mLooper.processAllMessages();
     }
 
     @After
     public void tearDown() {
         // Calling stop() several times is not an issue
         mServer.stop();
-        System.setProperty(PROP_DEXMAKER_SHARE_CLASSLOADER,
-                (mPrevShareClassloaderProp == null ? "" : mPrevShareClassloaderProp));
     }
 
     @Test
@@ -167,7 +164,7 @@ public class DhcpServerTest {
     @Test
     public void testStop() throws Exception {
         mServer.stop();
-        mLooper.dispatchAll();
+        mLooper.processAllMessages();
         verify(mPacketListener, times(1)).stop();
     }
 
