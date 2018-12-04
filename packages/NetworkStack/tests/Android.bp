@@ -14,31 +14,22 @@
 // limitations under the License.
 //
 
-java_library {
-    name: "NetworkStackCore",
-    srcs: [
-        "src/**/*.java",
-    ],
+android_test {
+    name: "NetworkingServiceUnitTests",
+    srcs: ["src/**/*.java"],
     static_libs: [
-        "dhcp-lib"
+        "android-support-test",
+        "mockito-target-extended-minus-junit4",
+        "NetworkStackCore",
+        "testables",
+    ],
+    libs: [
+        "android.test.runner",
+        "android.test.base",
+    ],
+    jni_libs: [
+        // For mockito extended
+        "libdexmakerjvmtiagent",
+        "libstaticjvmtiagent",
     ]
-}
-
-java_library {
-    name: "NetworkStackLib",
-    installable: true,
-    static_libs: [
-        "NetworkStackCore"
-    ],
-}
-
-android_app {
-    name: "NetworkStack",
-    platform_apis: true,
-    certificate: "platform",
-    privileged: true,
-    static_libs: [
-        "NetworkStackCore"
-    ],
-    manifest: "AndroidManifest.xml",
 }

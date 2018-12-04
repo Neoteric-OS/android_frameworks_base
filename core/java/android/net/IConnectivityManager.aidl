@@ -27,6 +27,8 @@ import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.ProxyInfo;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.os.IBinder;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
@@ -166,6 +168,9 @@ interface IConnectivityManager
     void startCaptivePortalApp(in Network network);
 
     int getMultipathPreference(in Network Network);
+
+    void makeDhcpServer(in String ifName, in DhcpServingParamsParcel params,
+        in IDhcpServerCallbacks cb);
 
     int getRestoreDefaultNetworkDelay(int networkType);
 

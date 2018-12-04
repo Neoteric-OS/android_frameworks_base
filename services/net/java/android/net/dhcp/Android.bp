@@ -14,31 +14,10 @@
 // limitations under the License.
 //
 
+// TODO: move these classes to networking app when moving DhcpClient and remove this lib
 java_library {
-    name: "NetworkStackCore",
+    name: "dhcp-lib",
     srcs: [
-        "src/**/*.java",
-    ],
-    static_libs: [
-        "dhcp-lib"
+        "*Packet.java",
     ]
-}
-
-java_library {
-    name: "NetworkStackLib",
-    installable: true,
-    static_libs: [
-        "NetworkStackCore"
-    ],
-}
-
-android_app {
-    name: "NetworkStack",
-    platform_apis: true,
-    certificate: "platform",
-    privileged: true,
-    static_libs: [
-        "NetworkStackCore"
-    ],
-    manifest: "AndroidManifest.xml",
 }
