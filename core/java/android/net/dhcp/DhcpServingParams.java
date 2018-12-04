@@ -17,7 +17,7 @@
 package android.net.dhcp;
 
 import static android.net.NetworkUtils.getPrefixMaskAsInet4Address;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
+import static android.net.util.NetworkConstants.DHCP4_INFINITE_LEASE;
 import static android.net.util.NetworkConstants.IPV4_MAX_MTU;
 import static android.net.util.NetworkConstants.IPV4_MIN_MTU;
 
@@ -27,6 +27,9 @@ import android.annotation.NonNull;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.ArraySet;
 
 import com.google.android.collect.Sets;
 
@@ -41,7 +44,7 @@ import java.util.Set;
  * <p>Instances are immutable. Use {@link DhcpServingParams.Builder} to instantiate.
  * @hide
  */
-public class DhcpServingParams {
+public class DhcpServingParams implements Parcelable {
     public static final int MTU_UNSET = 0;
     public static final int MIN_PREFIX_LENGTH = 16;
     public static final int MAX_PREFIX_LENGTH = 30;
@@ -101,6 +104,50 @@ public class DhcpServingParams {
         this.dhcpLeaseTimeSecs = dhcpLeaseTimeSecs;
         this.linkMtu = linkMtu;
         this.metered = metered;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(serverAddr, flags);
+        dest.writeArraySet(new ArraySet<>(defaultRouters));
+        dest.writeArraySet(new ArraySet<>(dnsServers));
+        dest.writeArraySet(new ArraySet<>(excludedAddrs));
+        dest.writeLong(dhcpLeaseTimeSecs);
+        dest.writeInt(linkMtu);
+        dest.writeByte((byte) (metered ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DhcpServingParams> CREATOR = new Creator<DhcpServingParams>() {
+        @Override
+        public DhcpServingParams createFromParcel(Parcel in) {
+            try {
+                return new DhcpServingParams.Builder()
+                        .setServerAddr(in.readParcelable(LinkAddress.class.getClassLoader()))
+                        .setDefaultRouters(readInet4AddressSet(in))
+                        .setDnsServers(readInet4AddressSet(in))
+                        .setExcludedAddrs(readInet4AddressSet(in))
+                        .setDhcpLeaseTimeSecs(in.readLong())
+                        .setLinkMtu(in.readInt())
+                        .setMetered(in.readByte() != 0)
+                        .build();
+            } catch (InvalidParameterException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+
+        @Override
+        public DhcpServingParams[] newArray(int size) {
+            return new DhcpServingParams[size];
+        }
+    };
+
+    private static ArraySet<Inet4Address> readInet4AddressSet(Parcel in) {
+        return (ArraySet<Inet4Address>) in.readArraySet(Inet4Address.class.getClassLoader());
     }
 
     @NonNull
@@ -284,7 +331,7 @@ public class DhcpServingParams {
                 // Empty set is OK, but enforce explicitly setting it
                 throw new InvalidParameterException("Missing dnsServers");
             }
-            if (dhcpLeaseTimeSecs <= 0 || dhcpLeaseTimeSecs > toUnsignedLong(INFINITE_LEASE)) {
+            if (dhcpLeaseTimeSecs <= 0 || dhcpLeaseTimeSecs > toUnsignedLong(DHCP4_INFINITE_LEASE)) {
                 throw new InvalidParameterException("Invalid lease time: " + dhcpLeaseTimeSecs);
             }
             if (linkMtu != MTU_UNSET && (linkMtu < IPV4_MIN_MTU || linkMtu > IPV4_MAX_MTU)) {
@@ -323,7 +370,7 @@ public class DhcpServingParams {
     }
 
     @NonNull
-    static IpPrefix makeIpPrefix(@NonNull LinkAddress addr) {
+    public static IpPrefix makeIpPrefix(@NonNull LinkAddress addr) {
         return new IpPrefix(addr.getAddress(), addr.getPrefixLength());
     }
 }

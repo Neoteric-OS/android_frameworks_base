@@ -66,6 +66,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ip.IpServer;
@@ -77,6 +78,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
+import android.net.util.ILogDumpCallback;
 import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
@@ -131,6 +133,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -144,6 +148,8 @@ public class Tethering extends BaseNetworkObserver {
     private final static String TAG = Tethering.class.getSimpleName();
     private final static boolean DBG = false;
     private final static boolean VDBG = false;
+
+    private static final long REMOTE_LOG_DUMP_TIMEOUT_MS = 5000L;
 
     protected static final String DISABLE_PROVISIONING_SYSPROP_KEY = "net.tethering.noprovisioning";
 
@@ -1859,6 +1865,11 @@ public class Tethering extends BaseNetworkObserver {
             pw.println("<log removed for brevity>");
         } else {
             mLog.dump(fd, pw, args);
+            pw.println();
+            pw.println("Networking process logs:");
+            final char[] nwProcessLogs = mContext.getSystemService(ConnectivityManager.class)
+                    .dumpTetheringLogs(REMOTE_LOG_DUMP_TIMEOUT_MS);
+            pw.write(nwProcessLogs);
         }
         pw.decreaseIndent();
 
@@ -1975,7 +1986,7 @@ public class Tethering extends BaseNetworkObserver {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
-                             mDeps.getIpServerDependencies()));
+                             mDeps.getIpServerDependencies(mContext)));
         mTetherStates.put(iface, tetherState);
         tetherState.ipServer.start();
     }

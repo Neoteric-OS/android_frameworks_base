@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
 
+import java.io.CharArrayWriter;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.StringJoiner;
@@ -78,6 +79,14 @@ public class SharedLog {
 
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         mLocalLog.readOnlyLocalLog().dump(fd, writer, args);
+    }
+
+    public char[] toCharArray() {
+        final CharArrayWriter caw = new CharArrayWriter();
+        final PrintWriter pw = new PrintWriter(caw);
+        dump(null, pw, null);
+
+        return caw.toCharArray();
     }
 
     //////
