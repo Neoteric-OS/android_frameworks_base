@@ -25,6 +25,8 @@ import static android.view.InsetsState.containsType;
 import static android.view.WindowInsetsController.APPEARANCE_LOW_PROFILE_BARS;
 import static android.view.WindowInsetsController.APPEARANCE_OPAQUE_STATUS_BARS;
 import static android.view.WindowInsetsController.APPEARANCE_SEMI_TRANSPARENT_STATUS_BARS;
+import static com.android.settingslib.display.BrightnessUtils.GAMMA_SPACE_MAX;
+import static com.android.settingslib.display.BrightnessUtils.convertGammaToLinear;
 
 import static androidx.core.view.ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_AUTO;
 import static androidx.core.view.ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS;
@@ -554,11 +556,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
     private DisplayManager mDisplayManager;
 
     private int mMinBrightness;
+    private int mMaxBrightness;
     private int mInitialTouchX;
     private int mInitialTouchY;
     private int mLinger;
     private int mQuickQsTotalHeight;
-    private boolean mAutomaticBrightness;
+    //private boolean mAutomaticBrightness;
     private boolean mBrightnessControl;
     private boolean mBrightnessChanged;
     private boolean mJustPeeked;
@@ -1193,9 +1196,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mNotificationShadeWindowView.setOnTouchListener(getStatusBarWindowTouchListener());
         mWallpaperController.setRootView(mNotificationShadeWindowView);
 
-        mMinBrightness = context.getResources().getInteger(
-                com.android.internal.R.integer.config_screenBrightnessDim);
-
         // TODO: Deal with the ugliness that comes from having some of the statusbar broken out
         // into fragments, but the rest here, it leaves some awkward lifecycle and whatnot.
         mNotificationLogger.setUpWithContainer(mNotifListContainer);
@@ -1396,7 +1396,11 @@ public class CentralSurfacesImpl extends CoreStartable implements
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
+
         mFlashlightController = Dependency.get(FlashlightController.class);
+
+        mMinBrightness = mPowerManager.getMinimumScreenBrightnessSetting();
+        mMaxBrightness = mPowerManager.getMaximumScreenBrightnessSetting();
     }
 
 
@@ -1480,6 +1484,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 Math.max(BRIGHTNESS_CONTROL_PADDING, raw));
         float value = (padded - BRIGHTNESS_CONTROL_PADDING) /
                 (1 - (2.0f * BRIGHTNESS_CONTROL_PADDING));
+/*
         if (mAutomaticBrightness) {
             float adj = (2 * value) - 1;
             adj = Math.max(adj, -1);
@@ -1494,10 +1499,11 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 }
             });
         } else {
-            int newBrightness = mMinBrightness + (int) Math.round(value *
-                    (PowerManager.BRIGHTNESS_ON - mMinBrightness));
-            newBrightness = Math.min(newBrightness, PowerManager.BRIGHTNESS_ON);
-            newBrightness = Math.max(newBrightness, mMinBrightness);
+*/
+            int newBrightness = convertGammaToLinear(Math.round(value * GAMMA_SPACE_MAX),
+                    mMinBrightness, mMaxBrightness);
+            newBrightness = Math.min(newBrightness, GAMMA_SPACE_MAX);
+            newBrightness = Math.max(newBrightness, 2);
             final int val = newBrightness;
             mDisplayManager.setTemporaryBrightness(mDisplayId,
                     BrightnessSynchronizer.brightnessIntToFloat(val));
@@ -1509,7 +1515,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
                             UserHandle.USER_CURRENT);
                 }
             });
-        }
+        //}
     }
 
     private void brightnessControl(MotionEvent event) {
@@ -4196,9 +4202,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_LOCKSCREEN_MEDIA_ART),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+            /*resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE),
-                    false, this, UserHandle.USER_ALL);
+                    false, this, UserHandle.USER_ALL);*/
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL),
                     false, this, UserHandle.USER_ALL);
@@ -4249,12 +4255,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
     }
 
     private void setScreenBrightnessMode() {
-        int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
+/*        int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.SCREEN_BRIGHTNESS_MODE,
             Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
             UserHandle.USER_CURRENT);
         mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
-
+*/
         mBrightnessControl = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
             UserHandle.USER_CURRENT) == 1;
