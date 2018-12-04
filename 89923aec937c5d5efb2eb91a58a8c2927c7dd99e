@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1be9c44c_860f69a9",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-04T01:05:42Z",
+      "side": 1,
+      "message": "This should give info about the call which the user is actively on (hearing and speaking to). The mCallQuality contains callId but maybe I should bubble that up so that it\u0027s more clear in the CallAttributes also.",
+      "parentUuid": "1b514c5d_93a4ea0c",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd4be7bf_495a7ece",
         "filename": "telephony/java/android/telephony/CallAttributes.java",
         "patchSetId": 3
@@ -209,6 +233,30 @@
     },
     {
       "key": {
+        "uuid": "936cc70b_2b60787f",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-04T01:05:42Z",
+      "side": 1,
+      "message": "This should match the call ID from telecom. Is that different than the one from telephony?",
+      "parentUuid": "6a683b73_3d30d6f8",
+      "range": {
+        "startLine": 190,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "949f5cbf_44b304a8",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -243,6 +291,30 @@
       "writtenOn": "2018-12-03T21:20:57Z",
       "side": 1,
       "message": "As the user changes between foreground and background calls, does the call attributes update as well?\n\nHow frequently are these reported?",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 14
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142e7ac2_2b44efc9",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-04T01:05:42Z",
+      "side": 1,
+      "message": "Changing between calls would update the CallQuality.callId, which means the CallAttributes should be updated too.\n\nThe frequency that the modem reports changes will depend on the current quality and also needs to be tuned, but we\u0027re hoping for just once per call (at the end) in good conditions.",
+      "parentUuid": "20c4f954_97e2695f",
       "range": {
         "startLine": 320,
         "startChar": 7,
