@@ -168,6 +168,7 @@ public final class NetworkConstants {
      */
     public static final int DHCP4_SERVER_PORT = 67;
     public static final int DHCP4_CLIENT_PORT = 68;
+    public static final int DHCP4_INFINITE_LEASE = (int) 0xffffffff;
 
     /**
      * DNS constants.

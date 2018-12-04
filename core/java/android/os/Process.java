@@ -174,6 +174,12 @@ public class Process {
      */
     public static final int SE_UID = 1068;
 
+    /**
+     * Defines the UID/GID for the ConnectivityService app.
+     * @hide
+     */
+    public static final int CONNECTIVITYSERVICE_UID = 1072;
+
     /** {@hide} */
     public static final int NOBODY_UID = 9999;
 

@@ -37,6 +37,7 @@ import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Matchers.anyBoolean;
@@ -47,6 +48,8 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -76,8 +79,9 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
-import android.net.dhcp.DhcpServer;
 import android.net.dhcp.DhcpServingParams;
+import android.net.dhcp.IDhcpServer;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.IpServer;
 import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
@@ -132,6 +136,8 @@ public class TetheringTest {
     private static final String TEST_USB_IFNAME = "test_rndis0";
     private static final String TEST_WLAN_IFNAME = "test_wlan0";
 
+    private static final int DHCPSERVER_START_TIMEOUT_MS = 1000;
+
     // Actual contents of the request don't matter for this test. The lack of
     // any specific TRANSPORT_* is sufficient to identify this request.
     private static final NetworkRequest mDefaultRequest = new NetworkRequest.Builder().build();
@@ -150,9 +156,11 @@ public class TetheringTest {
     @Mock private UpstreamNetworkMonitor mUpstreamNetworkMonitor;
     @Mock private IPv6TetheringCoordinator mIPv6TetheringCoordinator;
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
-    @Mock private DhcpServer mDhcpServer;
+    @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
 
+    private final MockIpServerDependencies mIpServerDependencies =
+            spy(new MockIpServerDependencies());
     private final MockTetheringDependencies mTetheringDependencies =
             new MockTetheringDependencies();
 
@@ -192,6 +200,45 @@ public class TetheringTest {
         }
     }
 
+    public class MockIpServerDependencies extends IpServer.Dependencies {
+        MockIpServerDependencies() {
+            super(null);
+        }
+
+        @Override
+        public RouterAdvertisementDaemon getRouterAdvertisementDaemon(
+                InterfaceParams ifParams) {
+            return mRouterAdvertisementDaemon;
+        }
+
+        @Override
+        public InterfaceParams getInterfaceParams(String ifName) {
+            final String[] ifaces = new String[] {
+                    TEST_USB_IFNAME, TEST_WLAN_IFNAME, TEST_MOBILE_IFNAME };
+            final int index = ArrayUtils.indexOf(ifaces, ifName);
+            assertTrue("Non-mocked interface: " + ifName, index >= 0);
+            return new InterfaceParams(ifName, index + IFINDEX_OFFSET,
+                    MacAddress.ALL_ZEROS_ADDRESS);
+        }
+
+        @Override
+        public INetd getNetdService() {
+            return mNetd;
+        }
+
+        @Override
+        public void makeDhcpServer(String ifName, DhcpServingParams params,
+                IDhcpServerCallbacks cb) {
+            new Thread(() -> {
+                try {
+                    cb.onDhcpServerCreated(mDhcpServer);
+                } catch (RemoteException e) {
+                    fail(e.getMessage());
+                }
+            }).run();
+        }
+    }
+
     public class MockTetheringDependencies extends TetheringDependencies {
         StateMachine upstreamNetworkMonitorMasterSM;
         ArrayList<IpServer> ipv6CoordinatorNotifyList;
@@ -223,35 +270,8 @@ public class TetheringTest {
         }
 
         @Override
-        public IpServer.Dependencies getIpServerDependencies() {
-            return new IpServer.Dependencies() {
-                @Override
-                public RouterAdvertisementDaemon getRouterAdvertisementDaemon(
-                        InterfaceParams ifParams) {
-                    return mRouterAdvertisementDaemon;
-                }
-
-                @Override
-                public InterfaceParams getInterfaceParams(String ifName) {
-                    final String[] ifaces = new String[] {
-                            TEST_USB_IFNAME, TEST_WLAN_IFNAME, TEST_MOBILE_IFNAME };
-                    final int index = ArrayUtils.indexOf(ifaces, ifName);
-                    assertTrue("Non-mocked interface: " + ifName, index >= 0);
-                    return new InterfaceParams(ifName, index + IFINDEX_OFFSET,
-                            MacAddress.ALL_ZEROS_ADDRESS);
-                }
-
-                @Override
-                public INetd getNetdService() {
-                    return mNetd;
-                }
-
-                @Override
-                public DhcpServer makeDhcpServer(Looper looper, InterfaceParams iface,
-                        DhcpServingParams params, SharedLog log) {
-                    return mDhcpServer;
-                }
-            };
+        public IpServer.Dependencies getIpServerDependencies(Context context) {
+            return mIpServerDependencies;
         }
 
         @Override
@@ -613,7 +633,7 @@ public class TetheringTest {
 
         sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, never()).buildNewRa(any(), notNull());
-        verify(mDhcpServer, times(1)).start();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start();
     }
 
     @Test
@@ -624,7 +644,7 @@ public class TetheringTest {
         runUsbTethering(upstreamState);
         sendIPv6TetherUpdates(upstreamState);
 
-        verify(mDhcpServer, never()).start();
+        verify(mIpServerDependencies, never()).makeDhcpServer(any(), any(), any());
     }
 
     @Test
@@ -648,7 +668,7 @@ public class TetheringTest {
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mRouterAdvertisementDaemon, times(1)).start();
-        verify(mDhcpServer, times(1)).start();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start();
 
         sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
@@ -662,7 +682,7 @@ public class TetheringTest {
 
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mDhcpServer, times(1)).start();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start();
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME,
                 TEST_XLAT_MOBILE_IFNAME);
@@ -679,7 +699,7 @@ public class TetheringTest {
         runUsbTethering(upstreamState);
 
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mDhcpServer, times(1)).start();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start();
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         // Then 464xlat comes up
@@ -703,7 +723,7 @@ public class TetheringTest {
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         // DHCP not restarted on downstream (still times(1))
-        verify(mDhcpServer, times(1)).start();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start();
     }
 
     @Test

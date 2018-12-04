@@ -1109,6 +1109,7 @@ public class ConnectivityServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        /*
         setAlwaysOnNetworks(false);
         if (mCellNetworkAgent != null) {
             mCellNetworkAgent.disconnect();
@@ -1121,7 +1122,7 @@ public class ConnectivityServiceTest {
         if (mEthernetNetworkAgent != null) {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
-        }
+        }*/
         FakeSettingsProvider.clearSettingsProvider();
     }
 

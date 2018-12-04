@@ -21,6 +21,7 @@ import static android.net.util.NetworkConstants.asByte;
 import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStatsService;
@@ -29,8 +30,9 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
-import android.net.dhcp.DhcpServer;
 import android.net.dhcp.DhcpServingParams;
+import android.net.dhcp.IDhcpServer;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
@@ -126,6 +128,10 @@ public class IpServer extends StateMachine {
     }
 
     public static class Dependencies {
+        private static Context mContext;
+        public Dependencies(Context context) {
+            mContext = context;
+        }
         public RouterAdvertisementDaemon getRouterAdvertisementDaemon(InterfaceParams ifParams) {
             return new RouterAdvertisementDaemon(ifParams);
         }
@@ -138,9 +144,9 @@ public class IpServer extends StateMachine {
             return NetdService.getInstance();
         }
 
-        public DhcpServer makeDhcpServer(Looper looper, InterfaceParams iface,
-                DhcpServingParams params, SharedLog log) {
-            return new DhcpServer(looper, iface, params, log);
+        public void makeDhcpServer(String ifName, DhcpServingParams params,
+                IDhcpServerCallbacks cb) {
+            mContext.getSystemService(ConnectivityManager.class).makeDhcpServer(ifName, params, cb);
         }
     }
 
@@ -197,7 +203,8 @@ public class IpServer extends StateMachine {
     // Advertisements (otherwise, we do not add them to mLinkProperties at all).
     private LinkProperties mLastIPv6LinkProperties;
     private RouterAdvertisementDaemon mRaDaemon;
-    private DhcpServer mDhcpServer;
+    private boolean mDhcpServerShouldRun = false;
+    private IDhcpServer mDhcpServer;
     private RaParams mLastRaParams;
 
     public IpServer(
@@ -256,12 +263,6 @@ public class IpServer extends StateMachine {
         if (mUsingLegacyDhcp) {
             return true;
         }
-
-        final InterfaceParams ifaceParams = mDeps.getInterfaceParams(mIfaceName);
-        if (ifaceParams == null) {
-            Log.e(TAG, "Failed to find interface params for DHCPv4");
-            return false;
-        }
         final DhcpServingParams params;
         try {
             params = new DhcpServingParams.Builder()
@@ -277,16 +278,35 @@ public class IpServer extends StateMachine {
             return false;
         }
 
-        mDhcpServer = mDeps.makeDhcpServer(getHandler().getLooper(), ifaceParams, params,
-                mLog.forSubComponent("DHCP"));
-        mDhcpServer.start();
+        mDhcpServerShouldRun = true;
+        mDeps.makeDhcpServer(mIfaceName, params, new IDhcpServerCallbacks.Stub() {
+            @Override
+            public void onDhcpServerCreated(IDhcpServer server) {
+                getHandler().post(() -> {
+                    if (!mDhcpServerShouldRun) {
+                        return;
+                    }
+                    mDhcpServer = server;
+                    try {
+                        mDhcpServer.start();
+                    } catch (RemoteException e) {
+                        e.rethrowFromSystemServer();
+                    }
+                });
+            }
+        });
         return true;
     }
 
     private void stopDhcp() {
+        mDhcpServerShouldRun = false;
         if (mDhcpServer != null) {
-            mDhcpServer.stop();
-            mDhcpServer = null;
+            try {
+                mDhcpServer.stop();
+                mDhcpServer = null;
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
         }
     }
 
