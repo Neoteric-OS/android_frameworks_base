@@ -48,8 +48,8 @@ public class TetheringDependencies {
         return new IPv6TetheringCoordinator(notifyList, log);
     }
 
-    public IpServer.Dependencies getIpServerDependencies() {
-        return new IpServer.Dependencies();
+    public IpServer.Dependencies getIpServerDependencies(Context context) {
+        return new IpServer.Dependencies(context);
     }
 
     public boolean isTetheringSupported() {

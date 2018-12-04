@@ -26,6 +26,9 @@ import android.annotation.UnsupportedAppUsage;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParams;
+import android.net.util.ILogDumpCallback;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -63,6 +66,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class that answers queries about the state of network connectivity. It also
@@ -2025,6 +2030,64 @@ public class ConnectivityManager {
     @UnsupportedAppUsage
     public static ConnectivityManager from(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    /** @hide */
+    public void makeDhcpServer(String ifName, DhcpServingParams params, DhcpServerCallbacks cb) {
+        try {
+            mService.makeDhcpServer(ifName, params.toParcel(), cb);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    private static class LogDumpCallback extends ILogDumpCallback.Stub {
+        private final CountDownLatch mLatch = new CountDownLatch(1);
+        private volatile char[] mData;
+
+        @Override
+        public void onDumpCompleted(char[] logData) {
+            mData = logData;
+            mLatch.countDown();
+        }
+
+        @Override
+        public int getInterfaceVersion() {
+            return ILogDumpCallback.VERSION;
+        }
+
+        public char[] awaitAndGetData(long timeoutMs) {
+            try {
+                mLatch.await(timeoutMs, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                return "Interrupted waiting for log".toCharArray();
+            }
+
+            final char[] newData = mData;
+            if (newData == null) {
+                return "DHCP log not received within timeout".toCharArray();
+            } else {
+                return newData;
+            }
+        }
+
+
+    }
+
+    /**
+     * Dump logs for tethering components that are in the networking service process.
+     *
+     * Blocks until logs are received, or until the timeout expires.
+     * @hide
+     */
+    public char[] dumpTetheringLogs(long timeoutMs) {
+        final LogDumpCallback cb = new LogDumpCallback();
+        try {
+            mService.requestTetheringLogDump(cb);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return cb.awaitAndGetData(timeoutMs);
     }
 
     /* TODO: These permissions checks don't belong in client-side code. Move them to

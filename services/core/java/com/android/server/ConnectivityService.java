@@ -48,15 +48,19 @@ import android.app.BroadcastOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.PacketKeepalive;
+import android.net.INetworkStackConnector;
+import android.net.INetworkStackRequest;
 import android.net.IConnectivityManager;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetd;
@@ -87,9 +91,12 @@ import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.Uri;
 import android.net.VpnService;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
+import android.net.util.ILogDumpCallback;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
 import android.os.Binder;
@@ -441,6 +448,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private static final int EVENT_DATA_SAVER_CHANGED = 40;
 
+    public static final int EVENT_CONNECTIVITY_APP_REQUEST = 44;
+
     private static String eventName(int what) {
         return sMagicDecoderRing.get(what, Integer.toString(what));
     }
@@ -539,6 +548,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
+
+    private INetworkStackConnector mAppConnector;
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -1963,6 +1974,105 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private static abstract class NetworkStackRequest extends INetworkStackRequest.Stub {
+        @Override
+        public int getInterfaceVersion() {
+            return INetworkStackRequest.VERSION;
+        }
+    }
+
+    private final ArrayList<INetworkStackRequest> mPendingConnAppRequests = new ArrayList<>();
+
+    private void handleConnectivityAppRequest(INetworkStackRequest req) {
+        if (mAppConnector != null) {
+            try {
+                req.onNetworkingAppConnected(mAppConnector.asBinder());
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        } else {
+            mPendingConnAppRequests.add(req);
+        }
+    }
+
+    private void requestNetworkStack(INetworkStackRequest.Stub req) {
+        final INetworkStackRequest reqInterface = INetworkStackRequest.Stub.asInterface(req);
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_CONNECTIVITY_APP_REQUEST, reqInterface));
+    }
+
+    @Override
+    public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+            IDhcpServerCallbacks cb) {
+        requestNetworkStack(new NetworkStackRequest() {
+            @Override
+            public void onNetworkingAppConnected(IBinder connector) throws RemoteException {
+                INetworkStackConnector.Stub.asInterface(connector)
+                        .makeDhcpServer(ifName, params, cb);
+            }
+        });
+    }
+
+    @Override
+    public void requestTetheringLogDump(ILogDumpCallback cb) {
+        requestNetworkStack(new NetworkStackRequest() {
+            @Override
+            public void onNetworkingAppConnected(IBinder connector) throws RemoteException {
+                INetworkStackConnector.Stub.asInterface(connector)
+                        .requestTetheringLogDump(cb);
+            }
+        });
+    }
+
+    private void notifyAppConnected(IBinder service) {
+        for (INetworkStackRequest r : mPendingConnAppRequests) {
+            try {
+                r.onNetworkingAppConnected(service);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        }
+        mPendingConnAppRequests.clear();
+    }
+
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mAppConnector = INetworkStackConnector.Stub.asInterface(service);
+            notifyAppConnected(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Slog.wtf(TAG, "Lost networking service");
+        }
+    };
+
+    private void startConnectivityApp() {
+        IBinder connector = null;
+        try {
+          final Class service = Class.forName(
+                  "com.android.server.networkstack.NetworkStackService");
+          connector = (IBinder) service.getMethod("getConnector", Context.class)
+                  .invoke(null, mContext);
+        } catch (ReflectiveOperationException e) {
+          // Fall through
+        }
+
+        if (connector != null) {
+            mAppConnector = INetworkStackConnector.Stub.asInterface(connector);
+            notifyAppConnected(mAppConnector.asBinder());
+        } else {
+            final Intent intent = new Intent(INetworkStackConnector.class.getName());
+            final ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
+            intent.setComponent(comp);
+
+            if (comp == null || !mContext.bindServiceAsUser(intent, mServiceConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT, mHandler, UserHandle.SYSTEM)) {
+                loge("Could not bind to networking service with " + intent);
+            }
+        }
+    }
+
     void systemReady() {
         mProxyTracker.loadGlobalProxy();
         registerNetdEventCallback();
@@ -1985,6 +2095,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
 
         mPermissionMonitor.startMonitoring();
+        startConnectivityApp();
     }
 
     /**
@@ -3326,6 +3437,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_DATA_SAVER_CHANGED:
                     handleRestrictBackgroundChanged(toBool(msg.arg1));
+                    break;
+                case EVENT_CONNECTIVITY_APP_REQUEST:
+                    handleConnectivityAppRequest((INetworkStackRequest) msg.obj);
                     break;
             }
         }
