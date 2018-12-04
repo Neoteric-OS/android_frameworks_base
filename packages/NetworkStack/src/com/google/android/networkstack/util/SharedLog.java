@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net.util;
+package com.google.android.networkstack.util;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -32,7 +32,6 @@ import java.util.StringJoiner;
  *
  * All access to class methods other than dump() must be on the same thread.
  *
- * TODO: this is a copy of NetworkStackLog. Remove after Tethering is migrated to the module.
  * @hide
  */
 public class SharedLog {

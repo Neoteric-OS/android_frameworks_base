@@ -19,9 +19,6 @@ package android.net.dhcp;
 import static android.net.NetworkUtils.getPrefixMaskAsInet4Address;
 import static android.net.NetworkUtils.inet4AddressToIntHTH;
 import static android.net.NetworkUtils.intToInet4AddressHTH;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
-import static android.net.util.NetworkConstants.IPV4_MAX_MTU;
-import static android.net.util.NetworkConstants.IPV4_MIN_MTU;
 
 import static java.lang.Integer.toUnsignedLong;
 
@@ -48,6 +45,10 @@ public class DhcpServingParams {
     public static final int MTU_UNSET = 0;
     public static final int MIN_PREFIX_LENGTH = 16;
     public static final int MAX_PREFIX_LENGTH = 30;
+    public static final int INFINITE_LEASE = 0xffffffff;
+
+    private static final int IPV4_MIN_MTU = 68;
+    private static final int IPV4_MAX_MTU = 65_535;
 
     /** Server inet address and prefix to serve */
     @NonNull

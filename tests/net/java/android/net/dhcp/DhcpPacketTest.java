@@ -233,7 +233,7 @@ public class DhcpPacketTest {
         assertLeaseTimeParses(true, 300, 300 * 1000, fiveMinuteLease);
         assertLeaseTimeParses(true, 86400, 86400 * 1000, oneDayLease);
         assertLeaseTimeParses(true, -2147483647, 2147483649L * 1000, maxIntPlusOneLease);
-        assertLeaseTimeParses(true, DhcpPacket.INFINITE_LEASE, 0, infiniteLease);
+        assertLeaseTimeParses(true, INFINITE_LEASE, 0, infiniteLease);
     }
 
     private void checkIpAddress(String expected, Inet4Address clientIp, Inet4Address yourIp,
