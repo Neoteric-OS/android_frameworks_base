@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4fbd85d_4c55d426",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-04T08:55:04Z",
+      "side": 1,
+      "message": "Much, much better! Can you also convert com_android_server_ApfTest_apfSimulate() above?",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7479812_3ac40f5d",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-04T08:55:04Z",
+      "side": 1,
+      "message": "Why not just data? I don\u0027t think \"raw\" adds any information...",
+      "range": {
+        "startLine": 192,
+        "startChar": 22,
+        "endLine": 192,
+        "endChar": 30
+      },
+      "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a4cb86_6862e11c",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-04T08:55:04Z",
+      "side": 1,
+      "message": "std::vector\u003cuint8_t\u003e program_and_data(program_and_data, 0);\n\nThen, use program_and_data.data() and program_and_data.size() to access the raw buffer for memcpy(). You can also eliminate memcpy:\n\n  std::vector\u003cuint8_t\u003e program_and_data(apf_program.get(), apf_program.get() + apf_program_len);\n  program_and_data.insert(program_and_data.end(), data_raw.get(), data_raw.get() + data_len);\n\nThis seems easier to understand, and can\u0027t leak memory.",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 77
+      },
+      "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
