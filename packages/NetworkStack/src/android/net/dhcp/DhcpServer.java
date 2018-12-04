@@ -23,7 +23,7 @@ import static android.net.dhcp.DhcpPacket.DHCP_CLIENT;
 import static android.net.dhcp.DhcpPacket.DHCP_HOST_NAME;
 import static android.net.dhcp.DhcpPacket.DHCP_SERVER;
 import static android.net.dhcp.DhcpPacket.ENCAP_BOOTP;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
+import static android.net.dhcp.DhcpServingParams.INFINITE_LEASE;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
@@ -39,7 +39,6 @@ import android.annotation.Nullable;
 import android.net.MacAddress;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
-import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -50,6 +49,8 @@ import android.text.TextUtils;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.HexDump;
+
+import com.google.android.networkstack.util.SharedLog;
 
 import java.io.FileDescriptor;
 import java.io.IOException;

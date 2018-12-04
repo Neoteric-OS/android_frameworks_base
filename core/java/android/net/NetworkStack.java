@@ -25,9 +25,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.util.Slog;
@@ -59,6 +62,22 @@ public class NetworkStack {
 
     public NetworkStack(@NonNull Context context) {
         mContext = context;
+    }
+
+    /**
+     * Create a DHCP server according to the specified parameters.
+     *
+     * <p>The server will be returned asynchronously through the provided callbacks.
+     */
+    public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+            IDhcpServerCallbacks cb) {
+        getConnector(connector -> {
+            try {
+                connector.makeDhcpServer(ifName, params, cb);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        });
     }
 
     private class NetworkStackConnection implements ServiceConnection {

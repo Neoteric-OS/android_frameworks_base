@@ -1833,7 +1833,7 @@ public class Tethering extends BaseNetworkObserver {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
-                             mDeps.getIpServerDependencies()));
+                             mDeps.getIpServerDependencies(mContext)));
         mTetherStates.put(iface, tetherState);
         tetherState.ipServer.start();
     }

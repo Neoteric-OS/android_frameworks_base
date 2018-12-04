@@ -14,28 +14,10 @@
 // limitations under the License.
 //
 
-// Library including the network stack, used to compile the network stack app, or as-is on devices
-// that run the stack in the system server
+// TODO: move these classes to networking app when moving DhcpClient and remove this lib
 java_library {
-    name: "NetworkStackLib",
-    installable: true,
+    name: "dhcp-lib",
     srcs: [
-        "src/**/*.java",
-    ],
-    static_libs: [
-        "dhcp-lib",
-        "frameworks-net-shared-utils",
+        "*Packet.java",
     ]
-}
-
-// Updatable network stack packaged as an application
-android_app {
-    name: "NetworkStack",
-    platform_apis: true,
-    certificate: "platform",
-    privileged: true,
-    static_libs: [
-        "NetworkStackLib"
-    ],
-    manifest: "AndroidManifest.xml",
 }
