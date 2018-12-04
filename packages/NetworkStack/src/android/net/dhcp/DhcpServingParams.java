@@ -18,9 +18,10 @@ package android.net.dhcp;
 
 import static android.net.NetworkUtils.getPrefixMaskAsInet4Address;
 import static android.net.NetworkUtils.intToInet4AddressHTH;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
-import static android.net.util.NetworkConstants.IPV4_MAX_MTU;
-import static android.net.util.NetworkConstants.IPV4_MIN_MTU;
+
+import static com.android.server.util.NetworkStackConstants.INFINITE_LEASE;
+import static com.android.server.util.NetworkStackConstants.IPV4_MAX_MTU;
+import static com.android.server.util.NetworkStackConstants.IPV4_MIN_MTU;
 
 import static java.lang.Integer.toUnsignedLong;
 
