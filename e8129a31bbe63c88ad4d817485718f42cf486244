@@ -70,6 +70,30 @@
       "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edcfcf67_281c0c40",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7958,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-12-04T02:31:45Z",
+      "side": 1,
+      "message": "Ack. Understood.",
+      "parentUuid": "36e5f119_66d5f779",
+      "range": {
+        "startLine": 7957,
+        "startChar": 12,
+        "endLine": 7958,
+        "endChar": 27
+      },
+      "revId": "e8129a31bbe63c88ad4d817485718f42cf486244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
