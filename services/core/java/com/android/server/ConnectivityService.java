@@ -93,6 +93,8 @@ import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.Uri;
 import android.net.VpnService;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
@@ -101,7 +103,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -1993,6 +1994,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void requestNetworkStack(NetworkStackRequest req) {
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_STACK_REQUEST, req));
+    }
+
+    @Override
+    public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+            IDhcpServerCallbacks cb) {
+        requestNetworkStack(connector -> connector.makeDhcpServer(ifName, params, cb));
     }
 
     @VisibleForTesting

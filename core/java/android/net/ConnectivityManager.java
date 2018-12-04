@@ -26,6 +26,8 @@ import android.annotation.UnsupportedAppUsage;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParams;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -2025,6 +2027,21 @@ public class ConnectivityManager {
     @UnsupportedAppUsage
     public static ConnectivityManager from(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    /**
+     * Request creation of a new DhcpServer.
+     *
+     * <p>The server is created and returned asynchronously by the network stack service.
+     * @param cb Callback that will be called with the created server.
+     * @hide
+     */
+    public void makeDhcpServer(String ifName, DhcpServingParams params, DhcpServerCallbacks cb) {
+        try {
+            mService.makeDhcpServer(ifName, params.toParcel(), cb);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /* TODO: These permissions checks don't belong in client-side code. Move them to

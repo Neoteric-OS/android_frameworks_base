@@ -16,6 +16,9 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.dhcp.IDhcpServerCallbacks;
+import android.os.RemoteException;
 
 /**
  * Service used to communicate with the network stack, which is running in a separate module.
@@ -27,5 +30,19 @@ public class NetworkStackConnector {
 
     public NetworkStackConnector(@NonNull INetworkStackConnector connector) {
         mConnector = connector;
+    }
+
+    /**
+     * Create a DHCP server according to the specified parameters.
+     *
+     * <p>The server will be returned asynchronously through the provided callbacks.
+     */
+    public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+            IDhcpServerCallbacks cb) {
+        try {
+            mConnector.makeDhcpServer(ifName, params, cb);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
     }
 }
