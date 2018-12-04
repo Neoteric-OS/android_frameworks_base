@@ -52,6 +52,7 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.CellIdentityCdma;
@@ -895,19 +896,35 @@ public class NetworkMonitor extends StateMachine {
                     final CaptivePortalProbeResult probeResult =
                             (CaptivePortalProbeResult) message.obj;
                     mLastProbeTime = SystemClock.elapsedRealtime();
-                    if (probeResult.isSuccessful()) {
+                    // 1: pass
+                    // 2: captive portal
+                    // 3: partial connectivity
+                    // 4: failed
+                    int testMode = SystemProperties.getInt("net.test.probeResult", 0);
+                    if ((probeResult.isSuccessful() && testMode == 0) ||
+                            testMode == 1) {
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
+                        log("Validation result: pass");
                         transitionTo(mEvaluatingPrivateDnsState);
-                    } else if (probeResult.isPortal()) {
+                    } else if (probeResult.isPortal() && testMode == 0) ||
+                            testMode == 2) {
+                        log("Validation result: captive portal");
                         notifyNetworkTestResultInvalid(probeResult.redirectUrl);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else {
+                        log("Validation result: failed");
                         final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
                         sendMessageDelayed(msg, mReevaluateDelayMs);
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
+                        if (probeResult.isPartialConnectivity() && testMode == 0) ||
+                                testMode == 3) {
+                            probeResult.setPartialConnectivity(true);
+                            log("Validation result: partial connectivity");
+                            logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
+                        }
+                        notifyNetworkTestResultInvalid(probeResult);
                         if (mEvaluateAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
                             // Don't continue to blame UID forever.
                             TrafficStats.clearThreadStatsUid();
@@ -1342,10 +1359,11 @@ public class NetworkMonitor extends StateMachine {
         // If we have new-style probe specs, use those. Otherwise, use the fallback URLs.
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
         final URL fallbackUrl = (probeSpec != null) ? probeSpec.getUrl() : nextFallbackUrl();
+        CaptivePortalProbeResult fallbackProbe = null;
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (result.isPortal()) {
-                return result;
+            fallbackProbe = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
+            if (fallbackProbe.isPortal()) {
+                return fallbackProbe;
             }
         }
         // Otherwise wait until http and https probes completes and use their results.
@@ -1355,6 +1373,10 @@ public class NetworkMonitor extends StateMachine {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            if ((httpProbe.result().isSuccessful() || fallbackProbe.isSuccessful()) &&
+                    httpsProbe.result().isFailed()) {
+                httpsProbe.result().setPartialConnectivity(true);
+            }
             return httpsProbe.result();
         } catch (InterruptedException e) {
             validationLog("Error: http or https probe wait interrupted!");

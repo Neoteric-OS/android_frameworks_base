@@ -47,6 +47,7 @@ public class NetworkNotificationManager {
         LOST_INTERNET(SystemMessage.NOTE_NETWORK_LOST_INTERNET),
         NETWORK_SWITCH(SystemMessage.NOTE_NETWORK_SWITCH),
         NO_INTERNET(SystemMessage.NOTE_NETWORK_NO_INTERNET),
+        PARTIAL_CONNECTIVITY(SystemMessage.NOTE_NETWORK_PARTIAL_CONNECTIVITY),
         SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN);
 
         public final int eventId;
@@ -170,6 +171,9 @@ public class NetworkNotificationManager {
         if (notifyType == NotificationType.NO_INTERNET && transportType == TRANSPORT_WIFI) {
             title = r.getString(R.string.wifi_no_internet, 0);
             details = r.getString(R.string.wifi_no_internet_detailed);
+        } else if (notifyType == NotificationType.PARTIAL_CONNECTIVITY) {
+            title = r.getString(R.string.partial_connectivity, 0);
+            details = r.getString(R.string.partial_connectivity_detailed);
         } else if (notifyType == NotificationType.LOST_INTERNET &&
                 transportType == TRANSPORT_WIFI) {
             title = r.getString(R.string.wifi_no_internet, 0);
@@ -296,6 +300,8 @@ public class NetworkNotificationManager {
         }
         switch (t) {
             case SIGN_IN:
+                return 5;
+            case PARTIAL_CONNECTIVITY:
                 return 4;
             case NO_INTERNET:
                 return 3;

@@ -294,8 +294,14 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi
     public static final int NET_CAPABILITY_OEM_PAID = 22;
 
+    /**
+     * Indicates that this network may incomplete. This capability is set when
+     * the network only pass the http validation.
+     */
+    public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 23;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
