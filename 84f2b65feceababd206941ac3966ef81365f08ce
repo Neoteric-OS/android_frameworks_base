@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "3a6bf2f0_d2b5f91b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-12-04T10:15:12Z",
+      "side": 1,
+      "message": "Testing onDns64PrefixEvent() has been recorded as a task item.",
+      "parentUuid": "a4631b66_a62fcf85",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9c874c7_d13f6b4b",
         "filename": "core/java/android/net/INetdEventCallback.aidl",
         "patchSetId": 9
@@ -117,6 +141,30 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa9dfe7_ada00665",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-12-04T10:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c874c7_d13f6b4b",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "011deac6_9085c69d",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-12-04T10:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa83d3a9_b2949959",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db75bf2_aa7e7531",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 9
@@ -163,6 +235,30 @@
       "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e911975_9e4580c5",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2018-12-04T10:15:12Z",
+      "side": 1,
+      "message": "Prefix detection is implemented by thread for per netid. I think that it is possible if prefix detection are running concurrently on two or more networks.",
+      "parentUuid": "4db75bf2_aa7e7531",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 54
+      },
+      "revId": "84f2b65feceababd206941ac3966ef81365f08ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
