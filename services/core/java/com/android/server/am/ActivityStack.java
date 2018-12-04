@@ -5153,7 +5153,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             if (isOnHomeDisplay() && mode != REMOVE_TASK_MODE_MOVING_TO_TOP
                     && mStackSupervisor.isFocusedStack(this)) {
                 String myReason = reason + " leftTaskHistoryEmpty";
-                if (!inMultiWindowMode() || !adjustFocusToNextFocusableStack(myReason)) {
+                if (!adjustFocusToNextFocusableStack(myReason)) {
                     mStackSupervisor.moveHomeStackToFront(myReason);
                 }
             }
