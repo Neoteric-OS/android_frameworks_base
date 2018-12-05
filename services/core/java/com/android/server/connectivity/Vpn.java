@@ -153,7 +153,7 @@ public class Vpn {
                 .divide(BigInteger.valueOf(100));
     }
     // How many routes to evaluate before bailing and declaring this Vpn should provide
-    // the INTERNET capability. This is necessary because computing the adress space is
+    // the INTERNET capability. This is necessary because computing the address space is
     // O(n²) and this is running in the system service, so a limit is needed to alleviate
     // the risk of attack.
     // This is taken as a total of IPv4 + IPV6 routes for simplicity, but the algorithm
@@ -194,6 +194,12 @@ public class Vpn {
      * not set.
      */
     private boolean mLockdown = false;
+
+    /**
+     * Set of packages that can access the network directly when VPN is not connected even if
+     * {@code mLockdown} is set.
+     */
+    private @NonNull List<String> mLockdownWhitelist = Collections.emptyList();
 
     /**
      * List of UIDs for which networking should be blocked until VPN is ready, during brief periods
@@ -455,10 +461,11 @@ public class Vpn {
      * @param lockdown whether to prevent traffic outside of a VPN, for example while connecting.
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
-    public synchronized boolean setAlwaysOnPackage(String packageName, boolean lockdown) {
+    public synchronized boolean setAlwaysOnPackage(
+            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
         enforceControlPermissionOrInternalCaller();
 
-        if (setAlwaysOnPackageInternal(packageName, lockdown)) {
+        if (setAlwaysOnPackageInternal(packageName, lockdown, lockdownWhitelist)) {
             saveAlwaysOnPackage();
             return true;
         }
@@ -476,7 +483,8 @@ public class Vpn {
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
     @GuardedBy("this")
-    private boolean setAlwaysOnPackageInternal(String packageName, boolean lockdown) {
+    private boolean setAlwaysOnPackageInternal(
+            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
         if (VpnConfig.LEGACY_VPN.equals(packageName)) {
             Log.w(TAG, "Not setting legacy VPN \"" + packageName + "\" as always-on.");
             return false;
@@ -500,9 +508,25 @@ public class Vpn {
             // Prepare this app. The notification will update as a side-effect of updateState().
             prepareInternal(packageName);
         }
+
+        mLockdownWhitelist =
+                lockdownWhitelist != null ? lockdownWhitelist : Collections.emptyList();
+
         maybeRegisterPackageChangeReceiverLocked(packageName);
         setVpnForcedLocked(mLockdown);
         return true;
+    }
+
+    private List<String> getExemptedPackagesLocked() {
+        if (mLockdownWhitelist.isEmpty()) {
+            return isNullOrLegacyVpn(mPackage) ? null : Collections.singletonList(mPackage);
+        } else if (isNullOrLegacyVpn(mPackage)) {
+            return mLockdownWhitelist;
+        } else {
+            final ArrayList<String> res = new ArrayList<>(mLockdownWhitelist);
+            res.add(mPackage);
+            return res;
+        }
     }
 
     private static boolean isNullOrLegacyVpn(String packageName) {
@@ -556,6 +580,8 @@ public class Vpn {
                     getAlwaysOnPackage(), mUserHandle);
             mSystemServices.settingsSecurePutIntForUser(Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN,
                     (mAlwaysOn && mLockdown ? 1 : 0), mUserHandle);
+            mSystemServices.settingsSecurePutStringForUser(Settings.Secure.ALWAYS_ON_VPN_WHITELIST,
+                    String.join(",", mLockdownWhitelist), mUserHandle);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -572,9 +598,24 @@ public class Vpn {
                     Settings.Secure.ALWAYS_ON_VPN_APP, mUserHandle);
             final boolean alwaysOnLockdown = mSystemServices.settingsSecureGetIntForUser(
                     Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN, 0 /*default*/, mUserHandle) != 0;
-            setAlwaysOnPackageInternal(alwaysOnPackage, alwaysOnLockdown);
+            final String whitelistString = mSystemServices.settingsSecureGetStringForUser(
+                    Settings.Secure.ALWAYS_ON_VPN_WHITELIST, mUserHandle);
+            final List<String> whitelistedPackages = parseWhitelist(whitelistString);
+            setAlwaysOnPackageInternal(alwaysOnPackage, alwaysOnLockdown, whitelistedPackages);
         } finally {
             Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    private List<String> parseWhitelist(String whitelistString) {
+        if (TextUtils.isEmpty(whitelistString)) {
+            return Collections.emptyList();
+        } else {
+            final ArrayList<String> result = new ArrayList<>();
+            for (final String s : whitelistString.split(",")) {
+                if (!s.isEmpty()) result.add(s);
+            }
+            return result;
         }
     }
 
@@ -592,7 +633,7 @@ public class Vpn {
             }
             // Remove always-on VPN if it's not supported.
             if (!isAlwaysOnPackageSupported(alwaysOnPackage)) {
-                setAlwaysOnPackage(null, false);
+                setAlwaysOnPackage(null, false, null);
                 return false;
             }
             // Skip if the service is already established. This isn't bulletproof: it's not bound
@@ -1326,15 +1367,13 @@ public class Vpn {
      */
     @GuardedBy("this")
     private void setVpnForcedLocked(boolean enforce) {
-        final List<String> exemptedPackages =
-                isNullOrLegacyVpn(mPackage) ? null : Collections.singletonList(mPackage);
         final Set<UidRange> removedRanges = new ArraySet<>(mBlockedUsers);
 
         Set<UidRange> addedRanges = Collections.emptySet();
         if (enforce) {
             addedRanges = createUserAndRestrictedProfilesRanges(mUserHandle,
                     /* allowedApplications */ null,
-                    /* disallowedApplications */ exemptedPackages);
+                    /* disallowedApplications */ getExemptedPackagesLocked());
 
             // The UID range of the first user (0-99999) would block the IPSec traffic, which comes
             // directly from the kernel and is marked as uid=0. So we adjust the range to allow

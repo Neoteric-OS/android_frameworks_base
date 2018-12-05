@@ -3972,7 +3972,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public boolean setAlwaysOnVpnPackage(int userId, String packageName, boolean lockdown) {
+    public boolean setAlwaysOnVpnPackage(
+            int userId, String packageName, boolean lockdown, List<String> lockdownWhitelist) {
         enforceConnectivityInternalPermission();
         enforceCrossUserPermission(userId);
 
@@ -3987,11 +3988,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Slog.w(TAG, "User " + userId + " has no Vpn configuration");
                 return false;
             }
-            if (!vpn.setAlwaysOnPackage(packageName, lockdown)) {
+            if (!vpn.setAlwaysOnPackage(packageName, lockdown, lockdownWhitelist)) {
                 return false;
             }
             if (!startAlwaysOnVpn(userId)) {
-                vpn.setAlwaysOnPackage(null, false);
+                vpn.setAlwaysOnPackage(null, false, null);
                 return false;
             }
         }
@@ -6028,7 +6029,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             synchronized (mVpns) {
                 final String alwaysOnPackage = getAlwaysOnVpnPackage(userId);
                 if (alwaysOnPackage != null) {
-                    setAlwaysOnVpnPackage(userId, null, false);
+                    setAlwaysOnVpnPackage(userId, null, false, null);
                     setVpnPackageAuthorization(alwaysOnPackage, userId, false);
                 }
 
