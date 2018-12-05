@@ -223,6 +223,11 @@ public class ActivityManager {
      * @hide
      */
     public static final int BUGREPORT_OPTION_WIFI = 5;
+    /**
+     * Takes a bugreport without any extra options or mode set.
+     * @hide
+     */
+    public static final int BUGREPORT_OPTION_DEFAULT = 6;
 
     /**
      * <a href="{@docRoot}guide/topics/manifest/meta-data-element.html">{@code

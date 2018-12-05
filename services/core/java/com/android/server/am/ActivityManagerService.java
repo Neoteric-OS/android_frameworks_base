@@ -13646,8 +13646,11 @@ public class ActivityManagerService extends IActivityManager.Stub
     public void requestBugReport(int bugreportType) {
         String extraOptions = null;
         switch (bugreportType) {
-            case ActivityManager.BUGREPORT_OPTION_FULL:
+            case ActivityManager.BUGREPORT_OPTION_DEFAULT:
                 // Default options.
+                break;
+            case ActivityManager.BUGREPORT_OPTION_FULL:
+                extraOptions = "bugreportfull";
                 break;
             case ActivityManager.BUGREPORT_OPTION_INTERACTIVE:
                 extraOptions = "bugreportplus";
