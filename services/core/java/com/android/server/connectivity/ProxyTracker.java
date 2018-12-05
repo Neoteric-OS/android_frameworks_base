@@ -34,6 +34,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.util.Log;
 import android.text.TextUtils;
 import android.util.Slog;
 
@@ -303,24 +304,6 @@ public class ProxyTracker {
             if (mGlobalProxy != null) return;
             if (mDefaultProxyEnabled) {
                 sendProxyBroadcast();
-            }
-        }
-    }
-
-    /**
-     * Enable or disable the default proxy.
-     *
-     * This sets the flag for enabling/disabling the default proxy and sends the broadcast
-     * if applicable.
-     * @param enabled whether the default proxy should be enabled.
-     */
-    public void setDefaultProxyEnabled(final boolean enabled) {
-        synchronized (mProxyLock) {
-            if (mDefaultProxyEnabled != enabled) {
-                mDefaultProxyEnabled = enabled;
-                if (mGlobalProxy == null && mDefaultProxy != null) {
-                    sendProxyBroadcast();
-                }
             }
         }
     }

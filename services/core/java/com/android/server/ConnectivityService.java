@@ -464,7 +464,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // A helper object to track the current default HTTP proxy. ConnectivityService needs to tell
     // the world when it changes.
-    private final ProxyTracker mProxyTracker;
+    @VisibleForTesting
+    protected final ProxyTracker mProxyTracker;
 
     final private SettingsObserver mSettingsObserver;
 
@@ -797,7 +798,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mPolicyManagerInternal = checkNotNull(
                 LocalServices.getService(NetworkPolicyManagerInternal.class),
                 "missing NetworkPolicyManagerInternal");
-        mProxyTracker = new ProxyTracker(context, mHandler, EVENT_PROXY_HAS_CHANGED);
+        mProxyTracker = makeProxyTracker();
 
         mNetd = NetdService.getInstance();
         mKeyStore = KeyStore.getInstance();
@@ -961,6 +962,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return new Tethering(mContext, mNMS, mStatsService, mPolicyManager,
                 IoThread.get().getLooper(), new MockableSystemProperties(),
                 deps);
+    }
+
+    @VisibleForTesting
+    protected ProxyTracker makeProxyTracker() {
+        return new ProxyTracker(mContext, mHandler, EVENT_PROXY_HAS_CHANGED);
     }
 
     private static NetworkCapabilities createDefaultNetworkCapabilitiesForUid(int uid) {
@@ -1239,7 +1245,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return getActiveNetworkForUidInternal(uid, ignoreBlocked);
     }
 
-    private Network getActiveNetworkForUidInternal(final int uid, boolean ignoreBlocked) {
+    Network getActiveNetworkForUidInternal(final int uid, boolean ignoreBlocked) {
         final int user = UserHandle.getUserId(uid);
         int vpnNetId = NETID_UNSET;
         synchronized (mVpns) {
@@ -2763,6 +2769,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             updateAllVpnsCapabilities();
         }
         rematchAllNetworksAndRequests(null, 0);
+        if (nai.isVPN()) {
+            // As the active or bound network changes for apps, broadcast the default proxy, as
+            // apps may need to update their proxy data.
+            mProxyTracker.sendProxyBroadcast();
+        }
         mLingerMonitor.noteDisconnect(nai);
         if (nai.created) {
             // Tell netd to clean up the configuration for this network
@@ -3581,10 +3592,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public ProxyInfo getProxyForNetwork(Network network) {
-        if (network == null) return mProxyTracker.getDefaultProxy();
         final ProxyInfo globalProxy = mProxyTracker.getGlobalProxy();
         if (globalProxy != null) return globalProxy;
-        if (!NetworkUtils.queryUserAccess(Binder.getCallingUid(), network.netId)) return null;
+        if (network == null) {
+            // Get the network associated with the calling UID.
+            final Network activeNetwork = getActiveNetworkForUidInternal(Binder.getCallingUid(),
+                    false);
+            if (activeNetwork == null) {
+                // Get default proxy if there is no active network for the calling UID or no proxy
+                // set on the network link.
+                return mProxyTracker.getDefaultProxy();
+            }
+            final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(activeNetwork);
+            if (nai != null) {
+                synchronized (nai) {
+                    final ProxyInfo linkHttpProxy = nai.linkProperties.getHttpProxy();
+                    return linkHttpProxy == null ? null : new ProxyInfo(linkHttpProxy);
+                }
+            }
+        } else if (!NetworkUtils.queryUserAccess(Binder.getCallingUid(), network.netId)) {
+            // No proxy info available if the calling UID does not have network access.
+            return null;
+        }
         // Don't call getLinkProperties() as it requires ACCESS_NETWORK_STATE permission, which
         // caller may not have.
         final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
@@ -3619,8 +3648,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // If the proxy has changed from oldLp to newLp, resend proxy broadcast with default proxy.
     // This method gets called when any network changes proxy, but the broadcast only ever contains
     // the default proxy (even if it hasn't changed).
-    // TODO: Deprecate the broadcast extras as they aren't necessarily applicable in a multi-network
-    // world where an app might be bound to a non-default network.
+    // TODO : deprecate the broadcast extras as they are not applicable in a multi-network world.
+    // For example they are broken when configuring HTTP proxy over VPN, or in the presence of a
+    // bound network for the process.
     private void updateProxy(LinkProperties newLp, LinkProperties oldLp) {
         ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
         ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
@@ -5742,12 +5772,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
             scheduleUnvalidatedPrompt(networkAgent);
 
-            if (networkAgent.isVPN()) {
-                // Temporarily disable the default proxy (not global).
-                mProxyTracker.setDefaultProxyEnabled(false);
-                // TODO: support proxy per network.
-            }
-
             // Whether a particular NetworkRequest listen should cause signal strength thresholds to
             // be communicated to a particular NetworkAgent depends only on the network's immutable,
             // capabilities, so it only needs to be done once on initial connect, not every time the
@@ -5766,7 +5790,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else if (state == NetworkInfo.State.DISCONNECTED) {
             networkAgent.asyncChannel.disconnect();
             if (networkAgent.isVPN()) {
-                mProxyTracker.setDefaultProxyEnabled(true);
                 updateUids(networkAgent, networkAgent.networkCapabilities, null);
             }
             disconnectAndDestroyNetwork(networkAgent);

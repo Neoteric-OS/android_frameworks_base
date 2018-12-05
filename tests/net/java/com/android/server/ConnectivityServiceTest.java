@@ -115,6 +115,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkUtils;
+import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.UidRange;
@@ -154,6 +155,7 @@ import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
@@ -925,6 +927,7 @@ public class ConnectivityServiceTest {
         public WrappedMultinetworkPolicyTracker wrappedMultinetworkPolicyTracker;
         private WrappedNetworkMonitor mLastCreatedNetworkMonitor;
         private MockableSystemProperties mSystemProperties;
+        private ProxyTracker mProxyTracker;
 
         public WrappedConnectivityService(Context context, INetworkManagementService netManager,
                 INetworkStatsService statsService, INetworkPolicyManager policyManager,
@@ -932,6 +935,7 @@ public class ConnectivityServiceTest {
             super(context, netManager, statsService, policyManager, log);
             mNetd = netd;
             mLingerDelayMs = TEST_LINGER_DELAY_MS;
+            mProxyTracker = super.mProxyTracker;
         }
 
         @Override
@@ -947,6 +951,11 @@ public class ConnectivityServiceTest {
         @Override
         protected Tethering makeTethering() {
             return mock(Tethering.class);
+        }
+
+        @Override
+        protected ProxyTracker makeProxyTracker() {
+            return mock(ProxyTracker.class);
         }
 
         @Override
@@ -4795,5 +4804,35 @@ public class ConnectivityServiceTest {
         lp.setTcpBufferSizes(TEST_TCP_BUFFER_SIZES);
         mCellNetworkAgent.sendLinkProperties(lp);
         verifyTcpBufferSizeChange(TEST_TCP_BUFFER_SIZES);
+    }
+
+    @Test
+    public void testGetGlobalProxyForNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        Network wifiNetwork = mWiFiNetworkAgent.getNetwork();
+        when(mService.mProxyTracker.getGlobalProxy()).thenReturn(testProxyInfo);
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(wifiNetwork));
+    }
+
+    @Test
+    public void testGetProxyForNullActiveNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        when(mService.mProxyTracker.getDefaultProxy()).thenReturn(testProxyInfo);
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
+    }
+
+    @Test
+    public void testGetProxyForActiveNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        final LinkProperties testLinkProperties = new LinkProperties();
+        testLinkProperties.setHttpProxy(testProxyInfo);
+
+        mWiFiNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
     }
 }
