@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771d77b0_373dfbe6",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T22:31:40Z",
+      "side": 1,
+      "message": "Use RcsManager here",
+      "range": {
+        "startLine": 518,
+        "startChar": 55,
+        "endLine": 518,
+        "endChar": 70
+      },
+      "revId": "1c9662445de7f5e63122c450d40a28bc0ffbf098",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358255c4_5a25b0b0",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4254,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T22:31:40Z",
+      "side": 1,
+      "message": "Link to RcsManager",
+      "range": {
+        "startLine": 4254,
+        "startChar": 36,
+        "endLine": 4254,
+        "endChar": 51
+      },
+      "revId": "1c9662445de7f5e63122c450d40a28bc0ffbf098",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccedfd7_9a30d26b",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T22:31:40Z",
+      "side": 1,
+      "message": "Move to RcsManager",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "1c9662445de7f5e63122c450d40a28bc0ffbf098",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
