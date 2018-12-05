@@ -1,6 +1,6 @@
 package android.net.dhcp;
 
-import static android.net.util.NetworkConstants.IPV4_MAX_MTU;
+import static android.net.util.NetworkConstants.DHCP4_INFINITE_LEASE;
 import static android.net.util.NetworkConstants.IPV4_MIN_MTU;
 
 import android.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.net.DhcpResults;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.metrics.DhcpErrorEvent;
+import android.net.util.NetworkConstants;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.system.OsConstants;
@@ -40,8 +41,7 @@ public abstract class DhcpPacket {
     // dhcpcd has a minimum lease of 20 seconds, but DhcpStateMachine would refuse to wake up the
     // CPU for anything shorter than 5 minutes. For sanity's sake, this must be higher than the
     // DHCP client timeout.
-    public static final int MINIMUM_LEASE = 60;
-    public static final int INFINITE_LEASE = (int) 0xffffffff;
+    private static final int MINIMUM_LEASE = 60;
 
     public static final Inet4Address INADDR_ANY = (Inet4Address) Inet4Address.ANY;
     public static final Inet4Address INADDR_BROADCAST = (Inet4Address) Inet4Address.ALL;
@@ -707,7 +707,7 @@ public abstract class DhcpPacket {
 
     protected void addCommonServerTlvs(ByteBuffer buf) {
         addTlv(buf, DHCP_LEASE_TIME, mLeaseTime);
-        if (mLeaseTime != null && mLeaseTime != INFINITE_LEASE) {
+        if (mLeaseTime != null && mLeaseTime != DHCP4_INFINITE_LEASE) {
             // The client should renew at 1/2 the lease-expiry interval
             addTlv(buf, DHCP_RENEWAL_TIME, (int) (Integer.toUnsignedLong(mLeaseTime) / 2));
             // Default rebinding time is set as below by RFC2131
@@ -1246,7 +1246,7 @@ public abstract class DhcpPacket {
         results.domains = mDomainName;
         results.serverAddress = mServerIdentifier;
         results.vendorInfo = mVendorInfo;
-        results.leaseDuration = (mLeaseTime != null) ? mLeaseTime : INFINITE_LEASE;
+        results.leaseDuration = (mLeaseTime != null) ? mLeaseTime : DHCP4_INFINITE_LEASE;
         results.mtu = (mMtu != null && MIN_MTU <= mMtu && mMtu <= MAX_MTU) ? mMtu : 0;
 
         return results;
@@ -1257,7 +1257,7 @@ public abstract class DhcpPacket {
      */
     public long getLeaseTimeMillis() {
         // dhcpcd treats the lack of a lease time option as an infinite lease.
-        if (mLeaseTime == null || mLeaseTime == INFINITE_LEASE) {
+        if (mLeaseTime == null || mLeaseTime == DHCP4_INFINITE_LEASE) {
             return 0;
         } else if (0 <= mLeaseTime && mLeaseTime < MINIMUM_LEASE) {
             return MINIMUM_LEASE * 1000;
