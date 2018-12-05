@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21b25257_754bb577",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4255,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2018-12-05T22:19:44Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "7523f03a_6fb91096",
+      "range": {
+        "startLine": 4255,
+        "startChar": 14,
+        "endLine": 4255,
+        "endChar": 31
+      },
+      "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8436827_20d29213",
         "filename": "telephony/java/com/android/internal/telephony/rcs/IRcs.aidl",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0199495f_e748a2e1",
+        "filename": "telephony/java/com/android/internal/telephony/rcs/IRcs.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2018-12-05T22:19:44Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "c8436827_20d29213",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
