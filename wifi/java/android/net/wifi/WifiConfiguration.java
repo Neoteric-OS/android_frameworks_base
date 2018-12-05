@@ -26,7 +26,6 @@ import android.net.MacAddress;
 import android.net.ProxyInfo;
 import android.net.StaticIpConfiguration;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;

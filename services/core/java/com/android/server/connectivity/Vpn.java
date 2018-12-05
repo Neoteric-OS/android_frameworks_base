@@ -100,6 +100,8 @@ import com.android.server.DeviceIdleController;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,8 +122,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import libcore.io.IoUtils;
 
 /**
  * @hide
@@ -745,6 +745,7 @@ public class Vpn {
 
             Log.i(TAG, "Switched from " + mPackage + " to " + newPackage);
             mPackage = newPackage;
+            Log.w("blabla", "mOwnerUid is set to getAppUid() of " + newPackage + " " + mUserHandle);
             mOwnerUID = getAppUid(newPackage, mUserHandle);
             try {
                 mNetd.allowProtect(mOwnerUID);
@@ -851,6 +852,10 @@ public class Vpn {
                 allowIPv4 |= address instanceof Inet4Address;
                 allowIPv6 |= address instanceof Inet6Address;
             }
+        }
+
+        if (mConfig.proxyInfo != null) {
+            lp.setHttpProxy(mConfig.proxyInfo);
         }
 
         if (!allowIPv4) {
@@ -1012,9 +1017,11 @@ public class Vpn {
     public synchronized ParcelFileDescriptor establish(VpnConfig config) {
         // Check if the caller is already prepared.
         UserManager mgr = UserManager.get(mContext);
+        Log.w("blabla", ";;;" + mgr.toString() + "; " + Binder.getCallingUid() + "; " + mOwnerUID);
         if (Binder.getCallingUid() != mOwnerUID) {
             return null;
         }
+        Log.w("blabla", "mPackage " + mPackage);
         // Check to ensure consent hasn't been revoked since we were prepared.
         if (!isVpnUserPreConsented(mPackage)) {
             return null;
