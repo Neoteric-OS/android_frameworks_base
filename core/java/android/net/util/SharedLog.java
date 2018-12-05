@@ -35,8 +35,8 @@ import java.util.StringJoiner;
  * @hide
  */
 public class SharedLog {
-    private final static int DEFAULT_MAX_RECORDS = 500;
-    private final static String COMPONENT_DELIMITER = ".";
+    private static final int DEFAULT_MAX_RECORDS = 500;
+    private static final String COMPONENT_DELIMITER = ".";
 
     private enum Category {
         NONE,
@@ -69,6 +69,13 @@ public class SharedLog {
         mComponent = component;
     }
 
+    /**
+     * Create a new SharedLog instance for a subcomponent of this SharedLog.
+     *
+     * <p>The child instance will use the same underlying local log, but with an additional
+     * component tag on each log line.
+     * @param component Component tag to append to log lines of the child SharedLog.
+     */
     public SharedLog forSubComponent(String component) {
         if (!isRootLogInstance()) {
             component = mComponent + COMPONENT_DELIMITER + component;
@@ -76,6 +83,11 @@ public class SharedLog {
         return new SharedLog(mLocalLog, mTag, component);
     }
 
+    /**
+     * Dump contents of the log into the specified writer.
+     *
+     * <p>This method is safe to call from an arbitrary thread.
+     */
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         mLocalLog.readOnlyLocalLog().dump(fd, writer, args);
     }
@@ -84,10 +96,21 @@ public class SharedLog {
     // Methods that both log an entry and emit it to the system log.
     //////
 
+    /**
+     * Log an error message from an exception.
+     *
+     * <p>The message both appear in the system log and the local log. This method does not log the
+     * stacktrace of the exception.
+     */
     public void e(Exception e) {
         Log.e(mTag, record(Category.ERROR, e.toString()));
     }
 
+    /**
+     * Log an error message.
+     *
+     * <p>The message both appear in the system log and the local log.
+     */
     public void e(String msg) {
         Log.e(mTag, record(Category.ERROR, msg));
     }
@@ -106,10 +129,20 @@ public class SharedLog {
         Log.e(mTag, record(Category.ERROR, msg + ": " + exception.getMessage()), exception);
     }
 
+    /**
+     * Log an informational message.
+     *
+     * <p>The message both appear in the system log and the local log.
+     */
     public void i(String msg) {
         Log.i(mTag, record(Category.NONE, msg));
     }
 
+    /**
+     * Log a warning message.
+     *
+     * <p>The message both appear in the system log and the local log.
+     */
     public void w(String msg) {
         Log.w(mTag, record(Category.WARN, msg));
     }
@@ -118,14 +151,30 @@ public class SharedLog {
     // Methods that only log an entry (and do NOT emit to the system log).
     //////
 
+    /**
+     * Log an arbitrary message.
+     *
+     * <p>The message will only appear in the local log, not the system log.
+     */
     public void log(String msg) {
         record(Category.NONE, msg);
     }
 
+    /**
+     * Log an arbitrary message with formatting.
+     *
+     * <p>The message will only appear in the local log, not the system log.
+     * @see String#format(String, Object...)
+     */
     public void logf(String fmt, Object... args) {
         log(String.format(fmt, args));
     }
 
+    /**
+     * Log a message with MARK log level.
+     *
+     * <p>The message will only appear in the local log, not the system log.
+     */
     public void mark(String msg) {
         record(Category.MARK, msg);
     }
