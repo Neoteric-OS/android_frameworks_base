@@ -115,6 +115,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkUtils;
+import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.UidRange;
@@ -154,6 +155,7 @@ import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
@@ -950,6 +952,11 @@ public class ConnectivityServiceTest {
         }
 
         @Override
+        protected ProxyTracker makeProxyTracker() {
+            return mock(ProxyTracker.class);
+        }
+
+        @Override
         protected int reserveNetId() {
             while (true) {
                 final int netId = super.reserveNetId();
@@ -969,6 +976,11 @@ public class ConnectivityServiceTest {
 
                 return netId;
             }
+        }
+
+        @Override
+        protected boolean queryUserAccess(int uid, int netId) {
+            return true;
         }
 
         @Override
@@ -4795,5 +4807,85 @@ public class ConnectivityServiceTest {
         lp.setTcpBufferSizes(TEST_TCP_BUFFER_SIZES);
         mCellNetworkAgent.sendLinkProperties(lp);
         verifyTcpBufferSizeChange(TEST_TCP_BUFFER_SIZES);
+    }
+
+    @Test
+    public void testGetGlobalProxyForNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        final Network wifiNetwork = mWiFiNetworkAgent.getNetwork();
+        when(mService.mProxyTracker.getGlobalProxy()).thenReturn(testProxyInfo);
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(wifiNetwork));
+    }
+
+    @Test
+    public void testGetProxyForActiveNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        waitForIdle();
+        assertNull(mService.getProxyForNetwork(null));
+
+        final LinkProperties testLinkProperties = new LinkProperties();
+        testLinkProperties.setHttpProxy(testProxyInfo);
+
+        mWiFiNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
+    }
+
+    @Test
+    public void testGetProxyForVPN() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+
+        // Set up a WiFi network with no proxy
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        waitForIdle();
+        assertNull(mService.getProxyForNetwork(null));
+
+        // Set up a VPN network with a proxy
+        final int uid = Process.myUid();
+        final MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN);
+        final ArraySet<UidRange> ranges = new ArraySet<>();
+        ranges.add(new UidRange(uid, uid));
+        mMockVpn.setUids(ranges);
+        LinkProperties testLinkProperties = new LinkProperties();
+        testLinkProperties.setHttpProxy(testProxyInfo);
+        vpnNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+
+        // Connect to VPN with proxy
+        mMockVpn.setNetworkAgent(vpnNetworkAgent);
+        vpnNetworkAgent.connect(true);
+        mMockVpn.connect();
+        waitForIdle();
+
+        // Test that the VPN network returns a proxy, and the WiFi does not.
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(vpnNetworkAgent.getNetwork()));
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
+        assertNull(mService.getProxyForNetwork(mWiFiNetworkAgent.getNetwork()));
+
+        // Test that the VPN network returns no proxy when it is set to null.
+        testLinkProperties.setHttpProxy(null);
+        vpnNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+        assertNull(mService.getProxyForNetwork(vpnNetworkAgent.getNetwork()));
+        assertNull(mService.getProxyForNetwork(null));
+
+        // Set WiFi proxy and check that the vpn proxy is still null.
+        testLinkProperties.setHttpProxy(testProxyInfo);
+        mWiFiNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+        assertNull(mService.getProxyForNetwork(null));
+
+        // Disconnect from VPN and check that the active network, which is now the WiFi, has the
+        // correct proxy setting.
+        vpnNetworkAgent.disconnect();
+        waitForIdle();
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(mWiFiNetworkAgent.getNetwork()));
+        assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
     }
 }
