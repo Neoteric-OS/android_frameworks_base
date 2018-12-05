@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d54fecd7_ceba3855",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5530,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T01:10:48Z",
+      "side": 1,
+      "message": "Binder.WCCI(()-\u003eexectutor.execute(()-\u003e...",
+      "range": {
+        "startLine": 5529,
+        "startChar": 16,
+        "endLine": 5530,
+        "endChar": 61
+      },
+      "revId": "5f33d68ff4563a7e07cf0bdf485c7e2e1dcbfdf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
