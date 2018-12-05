@@ -31,6 +31,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,6 +64,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
+import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnService;
@@ -182,10 +184,8 @@ public class VpnTest {
         final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id),
-            UidRange.createForUser(restrictedProfileA.id)
-        })), ranges);
+        assertEquals(new ArraySet<>(Arrays.asList(UidRange.createForUser(primaryUser.id),
+            UidRange.createForUser(restrictedProfileA.id))), ranges);
     }
 
     @Test
@@ -196,9 +196,7 @@ public class VpnTest {
         final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id)
-        })), ranges);
+        assertEquals(new ArraySet<>(Arrays.asList(UidRange.createForUser(primaryUser.id))), ranges);
     }
 
     @Test
@@ -209,13 +207,11 @@ public class VpnTest {
         final Set<UidRange> ranges = new ArraySet<>();
         vpn.addUserToRanges(ranges, primaryUser.id, null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id)
-        })), ranges);
+        assertEquals(new ArraySet<>(Arrays.asList(UidRange.createForUser(primaryUser.id))), ranges);
     }
 
     @Test
-    public void testUidWhiteAndBlacklist() throws Exception {
+    public void testUidWhiteAndBlacklist() {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = UidRange.createForUser(primaryUser.id);
         final String[] packages = {PKGS[0], PKGS[1], PKGS[2]};
@@ -223,20 +219,18 @@ public class VpnTest {
         // Whitelist
         final Set<UidRange> allow = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 Arrays.asList(packages), null);
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
+        assertEquals(new ArraySet<>(Arrays.asList(
             new UidRange(user.start + PKG_UIDS[0], user.start + PKG_UIDS[0]),
-            new UidRange(user.start + PKG_UIDS[1], user.start + PKG_UIDS[2])
-        })), allow);
+            new UidRange(user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]))), allow);
 
         // Blacklist
         final Set<UidRange> disallow = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, Arrays.asList(packages));
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
+        assertEquals(new ArraySet<>(Arrays.asList(
             new UidRange(user.start, user.start + PKG_UIDS[0] - 1),
             new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
             /* Empty range between UIDS[1] and UIDS[2], should be excluded, */
-            new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
-        })), disallow);
+            new UidRange(user.start + PKG_UIDS[2] + 1, user.stop))), disallow);
     }
 
     @Test
@@ -671,5 +665,25 @@ public class VpnTest {
         assertTrue(Vpn.providesRoutesToMostDestinations(lp));
         final long end = SystemClock.currentThreadTimeMillis();
         assertTrue(end - start < MAX_ALLOWED_TIME_MS);
+    }
+
+    @Test
+    public void testLinkPropertiesPropagateProxy() {
+        final LinkProperties lp = new LinkProperties();
+        lp.addRoute(new RouteInfo(new IpPrefix("0.0.0.0/0")));
+        lp.setHttpProxy(ProxyInfo.buildDirectProxy("host", 8888));
+
+        assertTrue(mConnectivityManager.getDefaultProxy() == null);
+        assertTrue(mConnectivityManager.getGlobalProxy() == null);
+        assertTrue(mConnectivityManager.getProxyForNetwork(mConnectivityManager
+            .getActiveNetwork()) == null);
+
+        ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("host", 8888);
+
+        Vpn vpn = createVpn(primaryUser.id);
+        vpn.mConfig.proxyInfo = testProxyInfo;
+        vpn.establish(vpn.mConfig);
+
+        vpn.mNetworkAgent.sendLinkProperties(lp);
     }
 }

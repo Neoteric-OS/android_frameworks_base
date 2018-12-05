@@ -154,6 +154,7 @@ import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
