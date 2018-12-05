@@ -5877,7 +5877,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
      * @throws UnsupportedOperationException if the package does not support being set as always-on.
      */
     @Override
-    public boolean setAlwaysOnVpnPackage(ComponentName admin, String vpnPackage, boolean lockdown)
+    public boolean setAlwaysOnVpnPackage(ComponentName admin, String vpnPackage, boolean lockdown,
+            List<String> lockdownWhitelist)
             throws SecurityException {
         enforceProfileOrDeviceOwner(admin);
 
@@ -5887,9 +5888,13 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             if (vpnPackage != null && !isPackageInstalledForUser(vpnPackage, userId)) {
                 return false;
             }
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (!connectivityManager.setAlwaysOnVpnPackageForUser(userId, vpnPackage, lockdown)) {
+            if (lockdownWhitelist != null) {
+                for (String packageName : lockdownWhitelist) {
+                    if (!isPackageInstalledForUser(packageName, userId)) return false;
+                }
+            }
+            if (!getConnectivityManager().setAlwaysOnVpnPackageForUser(
+                    userId, vpnPackage, lockdown, lockdownWhitelist)) {
                 throw new UnsupportedOperationException();
             }
         } finally {
@@ -5899,16 +5904,40 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     @Override
-    public String getAlwaysOnVpnPackage(ComponentName admin)
+    public String getAlwaysOnVpnPackage(ComponentName admin) throws SecurityException {
+        enforceProfileOrDeviceOwner(admin);
+
+        final int userId = mInjector.userHandleGetCallingUserId();
+        final long token = mInjector.binderClearCallingIdentity();
+        try {
+            return getConnectivityManager().getAlwaysOnVpnPackageForUser(userId);
+        } finally {
+            mInjector.binderRestoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public boolean getAlwaysOnVpnLockdownEnabled(ComponentName admin) throws SecurityException {
+        enforceProfileOrDeviceOwner(admin);
+
+        final int userId = mInjector.userHandleGetCallingUserId();
+        final long token = mInjector.binderClearCallingIdentity();
+        try {
+            return getConnectivityManager().isAlwaysOnVpnLockdownEnabled(userId);
+        } finally {
+            mInjector.binderRestoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public List<String> getAlwaysOnVpnLockdownWhitelist(ComponentName admin)
             throws SecurityException {
         enforceProfileOrDeviceOwner(admin);
 
         final int userId = mInjector.userHandleGetCallingUserId();
         final long token = mInjector.binderClearCallingIdentity();
-        try{
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            return connectivityManager.getAlwaysOnVpnPackageForUser(userId);
+        try {
+            return getConnectivityManager().getAlwaysOnVpnLockdownWhitelist(userId);
         } finally {
             mInjector.binderRestoreCallingIdentity(token);
         }
@@ -6378,9 +6407,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         long token = mInjector.binderClearCallingIdentity();
         try {
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            connectivityManager.setGlobalProxy(proxyInfo);
+            getConnectivityManager().setGlobalProxy(proxyInfo);
         } finally {
             mInjector.binderRestoreCallingIdentity(token);
         }
@@ -13128,5 +13155,9 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
 
     private static String getManagedProvisioningPackage(Context context) {
         return context.getResources().getString(R.string.config_managed_provisioning_package);
+    }
+
+    private ConnectivityManager getConnectivityManager() {
+        return (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 }
