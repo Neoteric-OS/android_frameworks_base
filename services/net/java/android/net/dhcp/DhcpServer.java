@@ -23,7 +23,7 @@ import static android.net.dhcp.DhcpPacket.DHCP_CLIENT;
 import static android.net.dhcp.DhcpPacket.DHCP_HOST_NAME;
 import static android.net.dhcp.DhcpPacket.DHCP_SERVER;
 import static android.net.dhcp.DhcpPacket.ENCAP_BOOTP;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
+import static android.net.util.NetworkConstants.DHCP4_INFINITE_LEASE;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
@@ -469,8 +469,8 @@ public class DhcpServer {
             return EXPIRED_FALLBACK_LEASE_TIME_SECS;
         }
 
-        if (remainingTimeSecs >= toUnsignedLong(INFINITE_LEASE)) {
-            return INFINITE_LEASE;
+        if (remainingTimeSecs >= toUnsignedLong(DHCP4_INFINITE_LEASE)) {
+            return DHCP4_INFINITE_LEASE;
         }
 
         return (int) remainingTimeSecs;
