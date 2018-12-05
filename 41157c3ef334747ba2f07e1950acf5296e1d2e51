@@ -22,6 +22,29 @@
       "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8436827_20d29213",
+        "filename": "telephony/java/com/android/internal/telephony/rcs/IRcs.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T18:57:49Z",
+      "side": 1,
+      "message": "you can also use com.android.ims.aidl if that makes more sense. Don\u0027t really need a new directory for this",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
