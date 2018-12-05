@@ -100,6 +100,8 @@ import com.android.server.DeviceIdleController;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,8 +122,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import libcore.io.IoUtils;
 
 /**
  * @hide
@@ -786,6 +786,10 @@ public class Vpn {
                 allowIPv4 |= address instanceof Inet4Address;
                 allowIPv6 |= address instanceof Inet6Address;
             }
+        }
+
+        if (mConfig.proxyInfo != null) {
+            lp.setHttpProxy(mConfig.proxyInfo);
         }
 
         if (!allowIPv4) {

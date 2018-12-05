@@ -115,6 +115,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkUtils;
+import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.UidRange;
@@ -4795,5 +4796,14 @@ public class ConnectivityServiceTest {
         lp.setTcpBufferSizes(TEST_TCP_BUFFER_SIZES);
         mCellNetworkAgent.sendLinkProperties(lp);
         verifyTcpBufferSizeChange(TEST_TCP_BUFFER_SIZES);
+    }
+
+    @Test
+    public void testGetGlobalProxyForNetwork() {
+        final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        Network wifiNetwork = mWiFiNetworkAgent.getNetwork();
+        mService.setGlobalProxy(testProxyInfo);
+        assertEquals(mService.getProxyForNetwork(wifiNetwork), testProxyInfo);
     }
 }
