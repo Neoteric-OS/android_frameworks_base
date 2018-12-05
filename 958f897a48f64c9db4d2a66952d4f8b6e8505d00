@@ -46,6 +46,30 @@
       "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7430d8e1_61f1427b",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-12-05T03:47:50Z",
+      "side": 1,
+      "message": "Hi Yu Chen,\nApologies for the delay in getting back to you. Please modify the solution to set the container layer to false in builder when color layer is set. Yes you will still need to set the containerLayer false for buffer layers.\n\nIn internal master, we are planning set a layer as container layer by default and the caller has to explicitly set the layer as buffer or color layer. This is a more involved change and will have merge conflicts so the team feels its best to modify the builder for now.",
+      "parentUuid": "9c437341_60c9bf8c",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
