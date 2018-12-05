@@ -16,9 +16,6 @@
 
 package android.net.util;
 
-import java.nio.ByteBuffer;
-
-
 /**
  * Networking protocol constants.
  *
@@ -29,7 +26,9 @@ import java.nio.ByteBuffer;
  * @hide
  */
 public final class NetworkConstants {
-    private NetworkConstants() { throw new RuntimeException("no instance permitted"); }
+    private NetworkConstants() {
+        throw new RuntimeException("no instance permitted");
+    }
 
     /**
      * Ethernet constants.
@@ -178,12 +177,32 @@ public final class NetworkConstants {
     public static final int DNS_SERVER_PORT = 53;
 
     /**
-     * Utility functions.
+     * Utility function to cast an integer to a byte.
      */
-    public static byte asByte(int i) { return (byte) i; }
+    public static byte asByte(int i) {
+        return (byte) i;
+    }
 
-    public static String asString(int i) { return Integer.toString(i); }
+    /**
+     * Utility function to get the String representation of an integer.
+     *
+     * @see Integer#toString(int)
+     */
+    public static String asString(int i) {
+        return Integer.toString(i);
+    }
 
-    public static int asUint(byte b) { return (b & 0xff); }
-    public static int asUint(short s) { return (s & 0xffff); }
+    /**
+     * Utility function to read a byte as an unsigned int.
+     */
+    public static int asUint(byte b) {
+        return (b & 0xff);
+    }
+
+    /**
+     * Utility function to read a short as an unsigned int.
+     */
+    public static int asUint(short s) {
+        return (s & 0xffff);
+    }
 }
