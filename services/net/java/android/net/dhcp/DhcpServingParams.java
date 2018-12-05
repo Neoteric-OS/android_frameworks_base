@@ -17,7 +17,7 @@
 package android.net.dhcp;
 
 import static android.net.NetworkUtils.getPrefixMaskAsInet4Address;
-import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
+import static android.net.util.NetworkConstants.DHCP4_INFINITE_LEASE;
 import static android.net.util.NetworkConstants.IPV4_MAX_MTU;
 import static android.net.util.NetworkConstants.IPV4_MIN_MTU;
 
@@ -284,7 +284,8 @@ public class DhcpServingParams {
                 // Empty set is OK, but enforce explicitly setting it
                 throw new InvalidParameterException("Missing dnsServers");
             }
-            if (dhcpLeaseTimeSecs <= 0 || dhcpLeaseTimeSecs > toUnsignedLong(INFINITE_LEASE)) {
+            if (dhcpLeaseTimeSecs <= 0
+                    || dhcpLeaseTimeSecs > toUnsignedLong(DHCP4_INFINITE_LEASE)) {
                 throw new InvalidParameterException("Invalid lease time: " + dhcpLeaseTimeSecs);
             }
             if (linkMtu != MTU_UNSET && (linkMtu < IPV4_MIN_MTU || linkMtu > IPV4_MAX_MTU)) {

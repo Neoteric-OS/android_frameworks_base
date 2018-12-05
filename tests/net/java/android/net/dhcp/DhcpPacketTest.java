@@ -19,6 +19,8 @@ package android.net.dhcp;
 import static android.net.NetworkUtils.getBroadcastAddress;
 import static android.net.NetworkUtils.getPrefixMaskAsInet4Address;
 import static android.net.dhcp.DhcpPacket.*;
+import static android.net.util.NetworkConstants.DHCP4_INFINITE_LEASE;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -30,6 +32,7 @@ import android.net.DhcpResults;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.metrics.DhcpErrorEvent;
+import android.net.util.NetworkConstants;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
 
@@ -233,7 +236,7 @@ public class DhcpPacketTest {
         assertLeaseTimeParses(true, 300, 300 * 1000, fiveMinuteLease);
         assertLeaseTimeParses(true, 86400, 86400 * 1000, oneDayLease);
         assertLeaseTimeParses(true, -2147483647, 2147483649L * 1000, maxIntPlusOneLease);
-        assertLeaseTimeParses(true, DhcpPacket.INFINITE_LEASE, 0, infiniteLease);
+        assertLeaseTimeParses(true, DHCP4_INFINITE_LEASE, 0, infiniteLease);
     }
 
     private void checkIpAddress(String expected, Inet4Address clientIp, Inet4Address yourIp,
@@ -1013,7 +1016,7 @@ public class DhcpPacketTest {
         // Lease time
         bos.write(new byte[] { (byte) 0x33, (byte) 0x04 });
         bos.write(intToByteArray(leaseTimeSecs));
-        if (leaseTimeSecs != INFINITE_LEASE) {
+        if (leaseTimeSecs != DHCP4_INFINITE_LEASE) {
             // Renewal time
             bos.write(new byte[]{(byte) 0x3a, (byte) 0x04});
             bos.write(intToByteArray(renewalTime));
@@ -1061,7 +1064,7 @@ public class DhcpPacketTest {
         checkBuildOfferPacket(3600, HOSTNAME);
         checkBuildOfferPacket(Integer.MAX_VALUE, HOSTNAME);
         checkBuildOfferPacket(0x80000000, HOSTNAME);
-        checkBuildOfferPacket(INFINITE_LEASE, HOSTNAME);
+        checkBuildOfferPacket(DHCP4_INFINITE_LEASE, HOSTNAME);
         checkBuildOfferPacket(3600, null);
     }
 
