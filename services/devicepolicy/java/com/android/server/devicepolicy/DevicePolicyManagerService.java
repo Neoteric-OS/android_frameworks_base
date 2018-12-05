@@ -1855,6 +1855,10 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             return (AlarmManager) mContext.getSystemService(AlarmManager.class);
         }
 
+        private ConnectivityManager getConnectivityManager() {
+            return mContext.getSystemService(ConnectivityManager.class);
+        }
+
         IWindowManager getIWindowManager() {
             return IWindowManager.Stub
                     .asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
@@ -5877,7 +5881,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
      * @throws UnsupportedOperationException if the package does not support being set as always-on.
      */
     @Override
-    public boolean setAlwaysOnVpnPackage(ComponentName admin, String vpnPackage, boolean lockdown)
+    public boolean setAlwaysOnVpnPackage(ComponentName admin, String vpnPackage, boolean lockdown,
+            List<String> lockdownWhitelist)
             throws SecurityException {
         enforceProfileOrDeviceOwner(admin);
 
@@ -5885,11 +5890,20 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         final long token = mInjector.binderClearCallingIdentity();
         try {
             if (vpnPackage != null && !isPackageInstalledForUser(vpnPackage, userId)) {
-                return false;
+                Slog.w(LOG_TAG, "Non-existent VPN package specified: " + vpnPackage);
+                throw new IllegalArgumentException(vpnPackage);
             }
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (!connectivityManager.setAlwaysOnVpnPackageForUser(userId, vpnPackage, lockdown)) {
+
+            if (vpnPackage != null && lockdown && lockdownWhitelist != null) {
+                for (String packageName : lockdownWhitelist) {
+                    if (!isPackageInstalledForUser(packageName, userId)) {
+                        Slog.w(LOG_TAG, "Non-existent package in VPN whitelist: " + packageName);
+                        throw new IllegalArgumentException(packageName);
+                    }
+                }
+            }
+            if (!mInjector.getConnectivityManager().setAlwaysOnVpnPackageForUser(
+                    userId, vpnPackage, lockdown, lockdownWhitelist)) {
                 throw new UnsupportedOperationException();
             }
         } finally {
@@ -5899,16 +5913,40 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     @Override
-    public String getAlwaysOnVpnPackage(ComponentName admin)
+    public String getAlwaysOnVpnPackage(ComponentName admin) throws SecurityException {
+        enforceProfileOrDeviceOwner(admin);
+
+        final int userId = mInjector.userHandleGetCallingUserId();
+        final long token = mInjector.binderClearCallingIdentity();
+        try {
+            return mInjector.getConnectivityManager().getAlwaysOnVpnPackageForUser(userId);
+        } finally {
+            mInjector.binderRestoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public boolean getAlwaysOnVpnLockdownEnabled(ComponentName admin) throws SecurityException {
+        enforceProfileOrDeviceOwner(admin);
+
+        final int userId = mInjector.userHandleGetCallingUserId();
+        final long token = mInjector.binderClearCallingIdentity();
+        try {
+            return mInjector.getConnectivityManager().isVpnLockdownEnabled(userId);
+        } finally {
+            mInjector.binderRestoreCallingIdentity(token);
+        }
+    }
+
+    @Override
+    public List<String> getAlwaysOnVpnLockdownWhitelist(ComponentName admin)
             throws SecurityException {
         enforceProfileOrDeviceOwner(admin);
 
         final int userId = mInjector.userHandleGetCallingUserId();
         final long token = mInjector.binderClearCallingIdentity();
-        try{
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            return connectivityManager.getAlwaysOnVpnPackageForUser(userId);
+        try {
+            return mInjector.getConnectivityManager().getVpnLockdownWhitelist(userId);
         } finally {
             mInjector.binderRestoreCallingIdentity(token);
         }
@@ -6378,9 +6416,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         long token = mInjector.binderClearCallingIdentity();
         try {
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            connectivityManager.setGlobalProxy(proxyInfo);
+            mInjector.getConnectivityManager().setGlobalProxy(proxyInfo);
         } finally {
             mInjector.binderRestoreCallingIdentity(token);
         }

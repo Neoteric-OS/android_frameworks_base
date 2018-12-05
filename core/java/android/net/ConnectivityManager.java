@@ -986,14 +986,17 @@ public class ConnectivityManager {
      *                   to remove an existing always-on VPN configuration.
      * @param lockdownEnabled {@code true} to disallow networking when the VPN is not connected or
      *        {@code false} otherwise.
+     * @param lockdownWhitelist The list of packages that are allowed to access network directly
+     *         when VPN is in lockdown mode but is not running.
      * @return {@code true} if the package is set as always-on VPN controller;
      *         {@code false} otherwise.
      * @hide
      */
     public boolean setAlwaysOnVpnPackageForUser(int userId, @Nullable String vpnPackage,
-            boolean lockdownEnabled) {
+            boolean lockdownEnabled, @Nullable List<String> lockdownWhitelist) {
         try {
-            return mService.setAlwaysOnVpnPackage(userId, vpnPackage, lockdownEnabled);
+            return mService.setAlwaysOnVpnPackage(
+                    userId, vpnPackage, lockdownEnabled, lockdownWhitelist);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1011,6 +1014,36 @@ public class ConnectivityManager {
     public String getAlwaysOnVpnPackageForUser(int userId) {
         try {
             return mService.getAlwaysOnVpnPackage(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @return whether always-on VPN is in lockdown mode.
+     *
+     * @hide
+     **/
+    @RequiresPermission(android.Manifest.permission.CONNECTIVITY_INTERNAL)
+    public boolean isVpnLockdownEnabled(int userId) {
+        try {
+            return mService.isVpnLockdownEnabled(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+
+    }
+
+    /**
+     * @return the list of packages that are allowed to access network when always-on VPN is in
+     *         lockdown mode but not connected.
+     *
+     * @hide
+     **/
+    @RequiresPermission(android.Manifest.permission.CONNECTIVITY_INTERNAL)
+    public List<String> getVpnLockdownWhitelist(int userId) {
+        try {
+            return mService.getVpnLockdownWhitelist(userId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
