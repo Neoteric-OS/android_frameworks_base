@@ -6552,6 +6552,7 @@ package android.app.admin {
     method public void setAccountManagementDisabled(android.content.ComponentName, java.lang.String, boolean);
     method public void setAffiliationIds(android.content.ComponentName, java.util.Set<java.lang.String>);
     method public void setAlwaysOnVpnPackage(android.content.ComponentName, java.lang.String, boolean) throws android.content.pm.PackageManager.NameNotFoundException, java.lang.UnsupportedOperationException;
+    method public void setAlwaysOnVpnPackage(android.content.ComponentName, java.lang.String, boolean, java.util.List<java.lang.String>) throws android.content.pm.PackageManager.NameNotFoundException, java.lang.UnsupportedOperationException;
     method public boolean setApplicationHidden(android.content.ComponentName, java.lang.String, boolean);
     method public void setApplicationRestrictions(android.content.ComponentName, java.lang.String, android.os.Bundle);
     method public deprecated void setApplicationRestrictionsManagingPackage(android.content.ComponentName, java.lang.String) throws android.content.pm.PackageManager.NameNotFoundException;
