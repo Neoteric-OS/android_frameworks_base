@@ -3580,10 +3580,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public ProxyInfo getProxyForNetwork(Network network) {
-        if (network == null) return mProxyTracker.getDefaultProxy();
         final ProxyInfo globalProxy = mProxyTracker.getGlobalProxy();
         if (globalProxy != null) return globalProxy;
-        if (!NetworkUtils.queryUserAccess(Binder.getCallingUid(), network.netId)) return null;
+        if (network == null) {
+            // Get the network associated with the calling UID.
+            Network activeNetwork = getActiveNetworkForUidInternal(Binder.getCallingUid(), false);
+            if (activeNetwork != null) {
+                final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(activeNetwork);
+                if (nai != null) {
+                    synchronized (nai) {
+                        return nai.linkProperties.getHttpProxy();
+                    }
+                }
+            }
+            // Get default proxy if there is no active network for the calling UID or no proxy set
+            // on the network link.
+            return mProxyTracker.getDefaultProxy();
+        } else if (!NetworkUtils.queryUserAccess(Binder.getCallingUid(), network.netId)) {
+            // No proxy info available if the calling UID does not have network access.
+            return null;
+        }
         // Don't call getLinkProperties() as it requires ACCESS_NETWORK_STATE permission, which
         // caller may not have.
         final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
@@ -3619,7 +3635,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // This method gets called when any network changes proxy, but the broadcast only ever contains
     // the default proxy (even if it hasn't changed).
     // TODO: Deprecate the broadcast extras as they aren't necessarily applicable in a multi-network
-    // world where an app might be bound to a non-default network.
+    // world where an app might be bound to a non-default network. The broadcast extras are broken
+    // when configuring HTTP proxy over VPN.
     private void updateProxy(LinkProperties newLp, LinkProperties oldLp) {
         ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
         ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
@@ -5703,12 +5720,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
             scheduleUnvalidatedPrompt(networkAgent);
 
-            if (networkAgent.isVPN()) {
-                // Temporarily disable the default proxy (not global).
-                mProxyTracker.setDefaultProxyEnabled(false);
-                // TODO: support proxy per network.
-            }
-
             // Whether a particular NetworkRequest listen should cause signal strength thresholds to
             // be communicated to a particular NetworkAgent depends only on the network's immutable,
             // capabilities, so it only needs to be done once on initial connect, not every time the
@@ -5727,7 +5738,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else if (state == NetworkInfo.State.DISCONNECTED) {
             networkAgent.asyncChannel.disconnect();
             if (networkAgent.isVPN()) {
-                mProxyTracker.setDefaultProxyEnabled(true);
                 updateUids(networkAgent, networkAgent.networkCapabilities, null);
             }
             disconnectAndDestroyNetwork(networkAgent);
