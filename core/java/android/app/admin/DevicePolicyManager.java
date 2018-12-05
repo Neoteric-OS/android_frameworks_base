@@ -4463,11 +4463,16 @@ public class DevicePolicyManager {
     }
 
     /**
+     * Service-specific error code used in implementation of {@code setAlwaysOnVpnPackage} methods.
+     * @hide
+     */
+    public static final int ERROR_VPN_PACKAGE_NOT_FOUND = 1;
+
+    /**
      * Called by a device or profile owner to configure an always-on VPN connection through a
      * specific application for the current user. This connection is automatically granted and
      * persisted after a reboot.
-     * <p>
-     * To support the always-on feature, an app must
+     * <p> To support the always-on feature, an app must
      * <ul>
      *     <li>declare a {@link android.net.VpnService} in its manifest, guarded by
      *         {@link android.Manifest.permission#BIND_VPN_SERVICE};</li>
@@ -4476,12 +4481,13 @@ public class DevicePolicyManager {
      *         {@link android.net.VpnService#SERVICE_META_DATA_SUPPORTS_ALWAYS_ON}.</li>
      * </ul>
      * The call will fail if called with the package name of an unsupported VPN app.
+     * <p> Enabling lockdown via {@code lockdownEnabled} argument carries the risk that any failure
+     * of the VPN provider could break networking for all apps.
      *
      * @param vpnPackage The package name for an installed VPN app on the device, or {@code null} to
      *        remove an existing always-on VPN configuration.
      * @param lockdownEnabled {@code true} to disallow networking when the VPN is not connected or
-     *        {@code false} otherwise. This carries the risk that any failure of the VPN provider
-     *        could break networking for all apps. This has no effect when clearing.
+     *        {@code false} otherwise. This has no effect when clearing.
      * @throws SecurityException if {@code admin} is not a device or a profile owner.
      * @throws NameNotFoundException if {@code vpnPackage} is not installed.
      * @throws UnsupportedOperationException if {@code vpnPackage} exists but does not support being
@@ -4493,13 +4499,107 @@ public class DevicePolicyManager {
         throwIfParentInstance("setAlwaysOnVpnPackage");
         if (mService != null) {
             try {
-                if (!mService.setAlwaysOnVpnPackage(admin, vpnPackage, lockdownEnabled)) {
-                    throw new NameNotFoundException(vpnPackage);
+                mService.setAlwaysOnVpnPackage(
+                        admin, vpnPackage, lockdownEnabled, Collections.emptyList());
+            } catch (ServiceSpecificException e) {
+                switch (e.errorCode) {
+                    case ERROR_VPN_PACKAGE_NOT_FOUND:
+                        throw new NameNotFoundException(e.getMessage());
+                    default:
+                        throw new RuntimeException(
+                                "Unknown error setting always-on VPN: " + e.errorCode);
                 }
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
         }
+    }
+
+    /**
+     * A version of {@link #setAlwaysOnVpnPackage(ComponentName, String, boolean)} that allows the
+     * admin to specify a set of apps that should be able to access the network directly when VPN
+     * is not connected. When VPN connects these apps switch over to VPN if allowed to use that VPN.
+     * Privileged apps can always bypass VPN.
+     *
+     * @param vpnPackage package name for an installed VPN app on the device, or {@code null}
+     *         to remove an existing always-on VPN configuration
+     * @param lockdownEnabled {@code true} to disallow networking when the VPN is not connected or
+     *         {@code false} otherwise. This has no effect when clearing.
+     * @param lockdownWhitelist Packages that will be able to access the network directly when VPN
+     *         is in lockdown mode but not connected. Has no effect when clearing.
+     * @throws SecurityException if {@code admin} is not a device or a profile
+     *         owner.
+     * @throws NameNotFoundException if {@code vpnPackage} or one of
+     *         {@code lockdownWhitelist} is not installed.
+     * @throws UnsupportedOperationException if {@code vpnPackage} exists but does
+     *         not support being set as always-on, or if always-on VPN is not
+     *         available.
+     */
+    public void setAlwaysOnVpnPackage(@NonNull ComponentName admin, @Nullable String vpnPackage,
+            boolean lockdownEnabled, @Nullable List<String> lockdownWhitelist)
+            throws NameNotFoundException, UnsupportedOperationException {
+        throwIfParentInstance("setAlwaysOnVpnPackage");
+        if (mService != null) {
+            try {
+                mService.setAlwaysOnVpnPackage(
+                        admin, vpnPackage, lockdownEnabled, lockdownWhitelist);
+            } catch (ServiceSpecificException e) {
+                switch (e.errorCode) {
+                    case ERROR_VPN_PACKAGE_NOT_FOUND:
+                        throw new NameNotFoundException(e.getMessage());
+                    default:
+                        throw new RuntimeException(
+                                "Unknown error setting always-on VPN: " + e.errorCode);
+                }
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /**
+     * Called by device or profile owner to query whether current always-on VPN is configured in
+     * lockdown mode. Returns {@code false} when no always-on configuration is set.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with.
+     *
+     * @throws SecurityException if {@code admin} is not a device or a profile owner.
+     *
+     * @see #setAlwaysOnVpnPackage(ComponentName, String, boolean)
+     */
+    public boolean getAlwaysOnVpnLockdownEnabled(@NonNull ComponentName admin) {
+        throwIfParentInstance("getAlwaysOnVpnLockdownEnabled");
+        if (mService != null) {
+            try {
+                return mService.getAlwaysOnVpnLockdownEnabled(admin);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Called by device or profile owner to query the list of packages that are allowed to access
+     * the network directly when always-on VPN is in lockdown mode but not connected. Returns
+     * {@code null} when always-on VPN is not active or not in lockdown mode.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with.
+     *
+     * @throws SecurityException if {@code admin} is not a device or a profile owner.
+     *
+     * @see #setAlwaysOnVpnPackage(ComponentName, String, boolean, List)
+     */
+    public List<String> getAlwaysOnVpnLockdownWhitelist(@NonNull ComponentName admin) {
+        throwIfParentInstance("getAlwaysOnVpnLockdownWhitelist");
+        if (mService != null) {
+            try {
+                return mService.getAlwaysOnVpnLockdownWhitelist(admin);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return null;
     }
 
     /**

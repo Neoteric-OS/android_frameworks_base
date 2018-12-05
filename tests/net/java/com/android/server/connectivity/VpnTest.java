@@ -248,11 +248,11 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on without lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, null));
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on with lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null));
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
             new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
@@ -261,7 +261,7 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[1]);
 
         // Switch to another app.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
             new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
@@ -288,7 +288,7 @@ public class VpnTest {
         final UidRange profile = UidRange.createForUser(tempProfile.id);
 
         // Set lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null));
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[3] - 1),
             new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
@@ -414,7 +414,7 @@ public class VpnTest {
                 .cancelAsUser(anyString(), anyInt(), eq(userHandle));
 
         // Start showing a notification for disconnected once always-on.
-        vpn.setAlwaysOnPackage(PKGS[0], false);
+        vpn.setAlwaysOnPackage(PKGS[0], false, null);
         order.verify(mNotificationManager)
                 .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
 
@@ -428,7 +428,7 @@ public class VpnTest {
                 .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
 
         // Notification should be cleared after unsetting always-on package.
-        vpn.setAlwaysOnPackage(null, false);
+        vpn.setAlwaysOnPackage(null, false, null);
         order.verify(mNotificationManager).cancelAsUser(anyString(), anyInt(), eq(userHandle));
     }
 
