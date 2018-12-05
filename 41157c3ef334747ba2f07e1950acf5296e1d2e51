@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7523f03a_6fb91096",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4255,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-05T18:55:45Z",
+      "side": 1,
+      "message": "Dont know if this is technically \"bad\" but it seems the rest of the docs use the full path name instead of importing it above.",
+      "range": {
+        "startLine": 4255,
+        "startChar": 14,
+        "endLine": 4255,
+        "endChar": 31
+      },
+      "revId": "41157c3ef334747ba2f07e1950acf5296e1d2e51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
