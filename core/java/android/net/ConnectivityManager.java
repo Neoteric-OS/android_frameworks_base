@@ -991,9 +991,10 @@ public class ConnectivityManager {
      * @hide
      */
     public boolean setAlwaysOnVpnPackageForUser(int userId, @Nullable String vpnPackage,
-            boolean lockdownEnabled) {
+            boolean lockdownEnabled, List<String> lockdownWhitelist) {
         try {
-            return mService.setAlwaysOnVpnPackage(userId, vpnPackage, lockdownEnabled);
+            return mService.setAlwaysOnVpnPackage(
+                    userId, vpnPackage, lockdownEnabled, lockdownWhitelist);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1011,6 +1012,32 @@ public class ConnectivityManager {
     public String getAlwaysOnVpnPackageForUser(int userId) {
         try {
             return mService.getAlwaysOnVpnPackage(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
+     * @return whether always-on VPN is in lockdown mode.
+     **/
+    public boolean isVpnLockdownEnabled(int userId) {
+        try {
+            return mService.isVpnLockdownEnabled(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+
+    }
+
+    /**
+     * @hide
+     * @return the list of packages that are allowed to access network when always-on VPN is in
+     *         lockdown mode but not connected.
+     **/
+    public List<String> getVpnLockdownWhitelist(int userId) {
+        try {
+            return mService.getVpnLockdownWhitelist(userId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
