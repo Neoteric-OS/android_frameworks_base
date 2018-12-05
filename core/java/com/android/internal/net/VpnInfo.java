@@ -29,14 +29,17 @@ public class VpnInfo implements Parcelable {
     public int ownerUid;
     public String vpnIface;
     public String primaryUnderlyingIface;
+    public String vpnProxyHost;
+    public int vpnProxyPort;
 
     @Override
     public String toString() {
-        return "VpnInfo{" +
-                "ownerUid=" + ownerUid +
-                ", vpnIface='" + vpnIface + '\'' +
-                ", primaryUnderlyingIface='" + primaryUnderlyingIface + '\'' +
-                '}';
+        return "VpnInfo{"
+                + "ownerUid=" + ownerUid
+                + ", vpnIface='" + vpnIface + '\''
+                + ", primaryUnderlyingIface='" + primaryUnderlyingIface + '\''
+                + ", vpnProxy='" + vpnProxyHost + ":" + vpnProxyPort + "'\''"
+                + '}';
     }
 
     @Override
@@ -49,6 +52,8 @@ public class VpnInfo implements Parcelable {
         dest.writeInt(ownerUid);
         dest.writeString(vpnIface);
         dest.writeString(primaryUnderlyingIface);
+        dest.writeString(vpnProxyHost);
+        dest.writeInt(vpnProxyPort);
     }
 
     public static final Parcelable.Creator<VpnInfo> CREATOR = new Parcelable.Creator<VpnInfo>() {
@@ -58,6 +63,8 @@ public class VpnInfo implements Parcelable {
             info.ownerUid = source.readInt();
             info.vpnIface = source.readString();
             info.primaryUnderlyingIface = source.readString();
+            info.vpnProxyHost = source.readString();
+            info.vpnProxyPort = source.readInt();
             return info;
         }
 

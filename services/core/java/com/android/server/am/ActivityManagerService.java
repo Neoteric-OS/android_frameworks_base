@@ -2240,16 +2240,6 @@ public class ActivityManagerService extends IActivityManager.Stub
             } break;
             case UPDATE_HTTP_PROXY_MSG: {
                 ProxyInfo proxy = (ProxyInfo)msg.obj;
-                String host = "";
-                String port = "";
-                String exclList = "";
-                Uri pacFileUrl = Uri.EMPTY;
-                if (proxy != null) {
-                    host = proxy.getHost();
-                    port = Integer.toString(proxy.getPort());
-                    exclList = proxy.getExclusionListAsString();
-                    pacFileUrl = proxy.getPacFileUrl();
-                }
                 synchronized (ActivityManagerService.this) {
                     for (int i = mLruProcesses.size() - 1 ; i >= 0 ; i--) {
                         ProcessRecord r = mLruProcesses.get(i);
@@ -2257,7 +2247,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         // ConnectivityManager and don't have network privileges anyway.
                         if (r.thread != null && !r.isolated) {
                             try {
-                                r.thread.setHttpProxy(host, port, exclList, pacFileUrl);
+                                r.thread.setHttpProxy();
                             } catch (RemoteException ex) {
                                 Slog.w(TAG, "Failed to update http proxy for: " +
                                         r.info.processName);
