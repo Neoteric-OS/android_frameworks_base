@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5d50d45_38b3a67f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1022843
+      },
+      "writtenOn": "2018-12-06T18:05:47Z",
+      "side": 1,
+      "message": "we found the issue on xt_qtag.\nactually, we are not 100% sure whether eBPF + offload have this issue.\nbecause we don\u0027t have this product yet.",
+      "parentUuid": "d41ab9aa_edfea39c",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e6f240_d60834f6",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e85b0b9_3bdc785f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1022843
+      },
+      "writtenOn": "2018-12-06T18:05:47Z",
+      "side": 1,
+      "message": "I also ever considered this case. I tested xt_tag + non-offload case.\nI found this logic\n\n################\nprivate class NetdTetheringStatsProvider extends ITetheringStatsProvider.Stub {\n    @Override\n    public NetworkStats getTetherStats(int how) {\n        // We only need to return per-UID stats. Per-device stats are already counted by\n        // interface counters.\n        if (how !\u003d STATS_PER_UID) {\n            return new NetworkStats(SystemClock.elapsedRealtime(), 0);\n        }\n\n#################\nso when we invoke getNetworkStatsTethering(STATS_PER_IFACE), will return all Zero from netd.\nthen will not double count the tether usage.",
+      "parentUuid": "433631ca_eca54462",
+      "range": {
+        "startLine": 948,
+        "startChar": 19,
+        "endLine": 948,
+        "endChar": 52
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
