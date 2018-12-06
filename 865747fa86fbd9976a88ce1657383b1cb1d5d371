@@ -45,6 +45,30 @@
       "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433631ca_eca54462",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-06T12:07:22Z",
+      "side": 1,
+      "message": "Does getNetworkStatsTethering need a mode that does not use NetdTetheringStatsProvider?",
+      "parentUuid": "28e6f240_d60834f6",
+      "range": {
+        "startLine": 948,
+        "startChar": 19,
+        "endLine": 948,
+        "endChar": 52
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
