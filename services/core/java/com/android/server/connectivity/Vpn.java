@@ -83,6 +83,7 @@ import android.security.KeyStore;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -116,7 +117,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -945,14 +945,6 @@ public class Vpn {
             return false;
         }
 
-        // TODO: we currently do not support seamless handover if the allowed or disallowed
-        // applications have changed. Consider diffing UID ranges and only applying the delta.
-        if (!Objects.equals(oldConfig.allowedApplications, mConfig.allowedApplications) ||
-                !Objects.equals(oldConfig.disallowedApplications, mConfig.disallowedApplications)) {
-            Log.i(TAG, "Handover not possible due to changes to whitelisted/blacklisted apps");
-            return false;
-        }
-
         LinkProperties lp = makeLinkProperties();
         final boolean hadInternetCapability = mNetworkCapabilities.hasCapability(
                 NetworkCapabilities.NET_CAPABILITY_INTERNET);
@@ -1035,9 +1027,11 @@ public class Vpn {
      * returns {@code null} if the application is revoked or not prepared.
      *
      * @param config The parameters to configure the network.
-     * @return The file descriptor of the VPN interface.
+     * @return A pair containing the file descriptor of the VPN interface and a boolean that tells
+     * whether network capabilities for an existing network should be updated. This can happen e.g.
+     * when a VPN app re-establishes the connection with an updated set of allowed uids.
      */
-    public synchronized ParcelFileDescriptor establish(VpnConfig config) {
+    public synchronized Pair<ParcelFileDescriptor, Boolean> establish(VpnConfig config) {
         // Check if the caller is already prepared.
         UserManager mgr = UserManager.get(mContext);
         if (Binder.getCallingUid() != mOwnerUID) {
@@ -1077,8 +1071,9 @@ public class Vpn {
         String oldInterface = mInterface;
         Connection oldConnection = mConnection;
         NetworkAgent oldNetworkAgent = mNetworkAgent;
-        Set<UidRange> oldUsers = mNetworkCapabilities.getUids();
+        Set<UidRange> oldUids = mNetworkCapabilities.getUids();
 
+        boolean needUpdateNC = false;
         // Configure the interface. Abort if any of these steps fails.
         ParcelFileDescriptor tun = ParcelFileDescriptor.adoptFd(jniCreate(config.mtu));
         try {
@@ -1114,6 +1109,7 @@ public class Vpn {
             if (oldConfig != null
                     && updateLinkPropertiesInPlaceIfPossible(mNetworkAgent, oldConfig)) {
                 // Keep mNetworkAgent unchanged
+                needUpdateNC = maybeUpdateAllowedApps(oldUids);
             } else {
                 mNetworkAgent = null;
                 updateState(DetailedState.CONNECTING, "establish");
@@ -1145,13 +1141,27 @@ public class Vpn {
             // restore old state
             mConfig = oldConfig;
             mConnection = oldConnection;
-            mNetworkCapabilities.setUids(oldUsers);
+            mNetworkCapabilities.setUids(oldUids);
             mNetworkAgent = oldNetworkAgent;
             mInterface = oldInterface;
             throw e;
         }
         Log.i(TAG, "Established by " + config.user + " on " + mInterface);
-        return tun;
+        return new Pair<>(tun, needUpdateNC);
+    }
+
+    private boolean maybeUpdateAllowedApps(Set<UidRange> oldUids) {
+        Set<UidRange> newUids = createUserAndRestrictedProfilesRanges(mUserHandle,
+                mConfig.allowedApplications, mConfig.disallowedApplications);
+        if (oldUids == null) {
+            oldUids = Collections.emptySet();
+        }
+
+        if (!newUids.containsAll(oldUids) || !oldUids.containsAll(newUids)) {
+            mNetworkCapabilities.setUids(newUids);
+            return true;
+        }
+        return false;
     }
 
     private boolean isRunningLocked() {
