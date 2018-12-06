@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d41ab9aa_edfea39c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-06T09:16:55Z",
+      "side": 1,
+      "message": "Is it eBPF specific?\nDo you tried devices that use xt_qtag?",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e6f240_d60834f6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-06T09:16:55Z",
+      "side": 1,
+      "message": "Do you ever try tethering on non-offloaded cases?\nIt seems getTetherStats would return both sw and hw values.\nmaybe the tethering usage would be double counted when adding with nativeStats.\nCould you double check that?",
+      "range": {
+        "startLine": 948,
+        "startChar": 19,
+        "endLine": 948,
+        "endChar": 52
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
