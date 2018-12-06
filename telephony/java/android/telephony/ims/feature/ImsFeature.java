@@ -20,7 +20,6 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.IInterface;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -394,30 +393,17 @@ public abstract class ImsFeature {
                 }
             }
         }
-        sendImsServiceIntent(state);
+        sendFeatureStateIntent(state, mSlotId);
     }
 
     /**
-     * Provide backwards compatibility using deprecated service UP/DOWN intents.
+     * Implementations of ImsFeature may send an intent to provide deprecated functionality for
+     * older APIs.
+     * @hide
      */
-    private void sendImsServiceIntent(@ImsState int state) {
-        if (mContext == null || mSlotId == SubscriptionManager.INVALID_SIM_SLOT_INDEX) {
-            return;
-        }
-        Intent intent;
-        switch (state) {
-            case ImsFeature.STATE_UNAVAILABLE:
-            case ImsFeature.STATE_INITIALIZING:
-                intent = new Intent(ACTION_IMS_SERVICE_DOWN);
-                break;
-            case ImsFeature.STATE_READY:
-                intent = new Intent(ACTION_IMS_SERVICE_UP);
-                break;
-            default:
-                intent = new Intent(ACTION_IMS_SERVICE_DOWN);
-        }
-        intent.putExtra(EXTRA_PHONE_ID, mSlotId);
-        mContext.sendBroadcast(intent);
+    protected void sendFeatureStateIntent(@ImsState int state, int slotId) {
+        // Do nothing by default. Implementations of ImsFeature may send an intent to provide
+        // deprecated functionality.
     }
 
     /**
@@ -438,6 +424,21 @@ public abstract class ImsFeature {
      */
     public final void removeCapabilityCallback(IImsCapabilityCallback c) {
         mCapabilityCallbacks.unregister(c);
+    }
+
+    /**@hide*/
+    protected final void queryCapabilityConfigurationInternal(int capability, int radioTech,
+            IImsCapabilityCallback c) {
+        synchronized (mLock) {
+            boolean enabled = queryCapabilityConfiguration(capability, radioTech);
+            try {
+                if (c != null) {
+                    c.onQueryCapabilityConfiguration(capability, radioTech, enabled);
+                }
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "queryCapabilityConfigurationInternal called on dead binder!");
+            }
+        }
     }
 
     /**
@@ -462,7 +463,9 @@ public abstract class ImsFeature {
             throw new IllegalArgumentException(
                     "ImsFeature#requestChangeEnabledCapabilities called with invalid params.");
         }
-        changeEnabledCapabilities(request, new CapabilityCallbackProxy(c));
+        synchronized (mLock) {
+            changeEnabledCapabilities(request, new CapabilityCallbackProxy(c));
+        }
     }
 
     /**
@@ -491,6 +494,16 @@ public abstract class ImsFeature {
             mCapabilityCallbacks.finishBroadcast();
         }
     }
+
+    /**
+     * Provides the ImsFeature with the ability to return the framework Capability Configuration
+     * for a provided Capability. If the framework calls {@link #changeEnabledCapabilities} and
+     * includes a capability A to enable or disable, this method should return the correct enabled
+     * status for capability A.
+     * @param capability The capability that we are querying the configuration for.
+     * @return true if the capability is enabled, false otherwise.
+     */
+    public abstract boolean queryCapabilityConfiguration(int capability, int radioTech);
 
     /**
      * Features should override this method to receive Capability preference change requests from

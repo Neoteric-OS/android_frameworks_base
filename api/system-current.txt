@@ -6253,6 +6253,7 @@ package android.telephony.ims.feature {
     method public abstract void changeEnabledCapabilities(android.telephony.ims.feature.CapabilityChangeRequest, android.telephony.ims.feature.ImsFeature.CapabilityCallbackProxy);
     method public abstract void onFeatureReady();
     method public abstract void onFeatureRemoved();
+    method public abstract boolean queryCapabilityConfiguration(int, int);
     method public final void setFeatureState(int);
     field public static final int CAPABILITY_ERROR_GENERIC = -1; // 0xffffffff
     field public static final int CAPABILITY_SUCCESS = 0; // 0x0
@@ -6319,6 +6320,7 @@ package android.telephony.ims.feature {
     method public void changeEnabledCapabilities(android.telephony.ims.feature.CapabilityChangeRequest, android.telephony.ims.feature.ImsFeature.CapabilityCallbackProxy);
     method public void onFeatureReady();
     method public void onFeatureRemoved();
+    method public boolean queryCapabilityConfiguration(int, int);
   }
 
 }

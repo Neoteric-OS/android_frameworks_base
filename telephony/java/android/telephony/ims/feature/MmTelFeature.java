@@ -20,10 +20,12 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.RemoteException;
 import android.telecom.TelecomManager;
+import android.telephony.SubscriptionManager;
 import android.telephony.ims.ImsCallProfile;
 import android.telephony.ims.ImsCallSession;
 import android.telephony.ims.ImsReasonInfo;
@@ -37,7 +39,6 @@ import android.telephony.ims.stub.ImsMultiEndpointImplBase;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.telephony.ims.stub.ImsSmsImplBase;
 import android.telephony.ims.stub.ImsUtImplBase;
-import android.util.Log;
 
 import com.android.ims.internal.IImsCallSession;
 import com.android.ims.internal.IImsEcbm;
@@ -154,17 +155,13 @@ public class MmTelFeature extends ImsFeature {
         @Override
         public void changeCapabilitiesConfiguration(CapabilityChangeRequest request,
                 IImsCapabilityCallback c) {
-            synchronized (mLock) {
-                MmTelFeature.this.requestChangeEnabledCapabilities(request, c);
-            }
+            MmTelFeature.this.requestChangeEnabledCapabilities(request, c);
         }
 
         @Override
         public void queryCapabilityConfiguration(int capability, int radioTech,
                 IImsCapabilityCallback c) {
-            synchronized (mLock) {
-                queryCapabilityConfigurationInternal(capability, radioTech, c);
-            }
+            queryCapabilityConfigurationInternal(capability, radioTech, c);
         }
 
         @Override
@@ -381,18 +378,6 @@ public class MmTelFeature extends ImsFeature {
         }
     }
 
-    private void queryCapabilityConfigurationInternal(int capability, int radioTech,
-            IImsCapabilityCallback c) {
-        boolean enabled = queryCapabilityConfiguration(capability, radioTech);
-        try {
-            if (c != null) {
-                c.onQueryCapabilityConfiguration(capability, radioTech, enabled);
-            }
-        } catch (RemoteException e) {
-            Log.e(LOG_TAG, "queryCapabilityConfigurationInternal called on dead binder!");
-        }
-    }
-
     /**
      * The current capability status that this MmTelFeature has defined is available. This
      * configuration will be used by the platform to figure out which capabilities are CURRENTLY
@@ -512,6 +497,7 @@ public class MmTelFeature extends ImsFeature {
      * @param capability The capability that we are querying the configuration for.
      * @return true if the capability is enabled, false otherwise.
      */
+    @Override
     public boolean queryCapabilityConfiguration(@MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int radioTech) {
         // Base implementation - Override to provide functionality
@@ -721,6 +707,31 @@ public class MmTelFeature extends ImsFeature {
     @Override
     public void onFeatureReady() {
         // Base Implementation - Should be overridden
+    }
+
+    /**
+     * Provide backwards compatibility using deprecated service UP/DOWN intents.\
+     * @hide
+     */
+    @Override
+    protected void sendFeatureStateIntent(@ImsState int state, int slotId) {
+        if (mContext == null || slotId == SubscriptionManager.INVALID_SIM_SLOT_INDEX) {
+            return;
+        }
+        Intent intent;
+        switch (state) {
+            case ImsFeature.STATE_UNAVAILABLE:
+            case ImsFeature.STATE_INITIALIZING:
+                intent = new Intent(ACTION_IMS_SERVICE_DOWN);
+                break;
+            case ImsFeature.STATE_READY:
+                intent = new Intent(ACTION_IMS_SERVICE_UP);
+                break;
+            default:
+                intent = new Intent(ACTION_IMS_SERVICE_DOWN);
+        }
+        intent.putExtra(EXTRA_PHONE_ID, slotId);
+        mContext.sendBroadcast(intent);
     }
 
     /**
