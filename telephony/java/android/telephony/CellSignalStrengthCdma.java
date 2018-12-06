@@ -81,7 +81,6 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
         this(-cdma.dbm, -cdma.ecio, -evdo.dbm, -evdo.ecio, evdo.signalNoiseRatio);
     }
 
-
     /** @hide */
     public CellSignalStrengthCdma(CellSignalStrengthCdma s) {
         copyFrom(s);
