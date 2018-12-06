@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77de4d1_b09e3acd",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-06T19:08:29Z",
+      "side": 0,
+      "message": "I\u0027ll upload a new patch set without this. It belongs in the previous commit.",
+      "revId": "562156963944736e8649dbb0620be716b9a344fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
