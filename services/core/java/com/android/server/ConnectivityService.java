@@ -95,7 +95,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -5082,7 +5081,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         updateUids(nai, prevNc, newNc);
 
-        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
+        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)
+                && newNc.equalsUids(prevNc)) {
             // If the requestable capabilities haven't changed, and the score hasn't changed, then
             // the change we're processing can't affect any requests, it can only affect the listens
             // on this network. We might have been called by rematchNetworkAndRequests when a

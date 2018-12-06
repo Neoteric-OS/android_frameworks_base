@@ -1133,7 +1133,6 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @hide
      */
-    @VisibleForTesting
     public boolean equalsUids(NetworkCapabilities nc) {
         Set<UidRange> comparedUids = nc.mUids;
         if (null == comparedUids) return null == mUids;
