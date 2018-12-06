@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "539bc0ef_b814d5c1",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-06T16:24:55Z",
+      "side": 1,
+      "message": "fix extra \"*\" in license.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 2
+      },
+      "revId": "85fd4ceddf2f4d6e6a0cd2484ddd810f8b7b6757",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
