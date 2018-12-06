@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55cf2211_59086ab1",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-12-06T21:08:20Z",
+      "side": 1,
+      "message": "does this mean: Return a list of signal strength measures from different technologies? The code does not do the calculation.",
+      "range": {
+        "startLine": 193,
+        "startChar": 26,
+        "endLine": 193,
+        "endChar": 83
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80d6d7c_b8f6ee18",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-12-06T21:08:20Z",
+      "side": 1,
+      "message": "No permission to protect this API?",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 14
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13524ba7_5748f273",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-12-06T21:08:20Z",
+      "side": 1,
+      "message": "1) Need more documentations to explain why there are only two elements\n2) Initialize Arraylist with a size number does not strict how many items that can be added into the list, so it would need a log to log unexpected cases",
+      "range": {
+        "startLine": 216,
+        "startChar": 66,
+        "endLine": 216,
+        "endChar": 99
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
