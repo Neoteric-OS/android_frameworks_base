@@ -46,6 +46,30 @@
       "revId": "a58f5589ad795d0a69243dc997b5974a1b127f61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2e2c18_48548c2a",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-06T12:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91814439_7a06170b",
+      "range": {
+        "startLine": 233,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 77
+      },
+      "revId": "a58f5589ad795d0a69243dc997b5974a1b127f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
