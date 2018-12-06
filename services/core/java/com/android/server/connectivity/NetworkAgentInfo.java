@@ -157,6 +157,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Whether a captive portal was found during the last network validation attempt.
     public boolean lastCaptivePortalDetected;
 
+    // Set to true when the network only pass the http validation but fail to https validation.
+    public boolean partialConnectivity;
+
     // Networks are lingered when they become unneeded as a result of their NetworkRequests being
     // satisfied by a higher-scoring network. so as to allow communication to wrap up before the
     // network is taken down.  This usually only happens to the default network. Lingering ends with
@@ -610,6 +613,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} " +
                 "everCaptivePortalDetected{" + everCaptivePortalDetected + "} " +
                 "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} " +
+                "partialConnectivity{" + partialConnectivity + "} " +
                 "clat{" + clatd + "} " +
                 "}";
     }

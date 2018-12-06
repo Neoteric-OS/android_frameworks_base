@@ -65,6 +65,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 
 /** Platform implementation of the network controller. **/
@@ -232,12 +233,16 @@ public class NetworkControllerImpl extends BroadcastReceiver
                     mLastNetworkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED);
                 boolean validated =
                     networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED);
+                boolean lastPartialConnectivity = (mLastNetworkCapabilities != null) &&
+                    mLastNetworkCapabilities.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY);
+                boolean partialConnectivity =
+                    networkCapabilities.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY);
 
                 // This callback is invoked a lot (i.e. when RSSI changes), so avoid updating
                 // icons when connectivity state has remained the same.
                 if (network.equals(mLastNetwork) &&
                     networkCapabilities.equalsTransportTypes(mLastNetworkCapabilities) &&
-                    validated == lastValidated) {
+                    validated == lastValidated && lastPartialConnectivity == partialConnectivity) {
                     return;
                 }
                 mLastNetwork = network;
@@ -706,7 +711,8 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 mConnectivityManager.getDefaultNetworkCapabilitiesForUser(mCurrentUserId)) {
             for (int transportType : nc.getTransportTypes()) {
                 mConnectedTransports.set(transportType);
-                if (nc.hasCapability(NET_CAPABILITY_VALIDATED)) {
+                if (nc.hasCapability(NET_CAPABILITY_VALIDATED) ||
+                        nc.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)) {
                     mValidatedTransports.set(transportType);
                 }
             }

@@ -140,6 +140,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_NOT_CONGESTED,
             NET_CAPABILITY_NOT_SUSPENDED,
             NET_CAPABILITY_OEM_PAID,
+            NET_CAPABILITY_PARTIAL_CONNECTIVITY,
     })
     public @interface NetCapability { }
 
@@ -294,8 +295,14 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi
     public static final int NET_CAPABILITY_OEM_PAID = 22;
 
+    /**
+     * Indicates that this network may incomplete. This capability is set when
+     * the network only pass the http validation but fail to https validation.
+     */
+    public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 23;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -310,7 +317,8 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_ROAMING)
             | (1 << NET_CAPABILITY_FOREGROUND)
             | (1 << NET_CAPABILITY_NOT_CONGESTED)
-            | (1 << NET_CAPABILITY_NOT_SUSPENDED);
+            | (1 << NET_CAPABILITY_NOT_SUSPENDED)
+            | (1 << NET_CAPABILITY_PARTIAL_CONNECTIVITY);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -1549,6 +1557,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_NOT_CONGESTED:  return "NOT_CONGESTED";
             case NET_CAPABILITY_NOT_SUSPENDED:  return "NOT_SUSPENDED";
             case NET_CAPABILITY_OEM_PAID:       return "OEM_PAID";
+            case NET_CAPABILITY_PARTIAL_CONNECTIVITY: return "PARTIAL_CONNECTIVITY";
             default:                            return Integer.toString(capability);
         }
     }

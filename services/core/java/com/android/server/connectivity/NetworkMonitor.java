@@ -907,12 +907,15 @@ public class NetworkMonitor extends StateMachine {
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
                     } else if (probeResult.isPortal()) {
-                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
+                        notifyNetworkTestResultInvalid(probeResult);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else {
+                        if (probeResult.isPartialConnectivity()) {
+                            logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
+                        }
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
+                        notifyNetworkTestResultInvalid(probeResult);
                         transitionTo(mWaitingForNextProbeState);
                     }
                     return HANDLED;
@@ -1359,10 +1362,11 @@ public class NetworkMonitor extends StateMachine {
         // If we have new-style probe specs, use those. Otherwise, use the fallback URLs.
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
         final URL fallbackUrl = (probeSpec != null) ? probeSpec.getUrl() : nextFallbackUrl();
+        CaptivePortalProbeResult fallbackProbe = null;
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (result.isPortal()) {
-                return result;
+            fallbackProbe = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
+            if (fallbackProbe.isPortal()) {
+                return fallbackProbe;
             }
         }
         // Otherwise wait until http and https probes completes and use their results.
@@ -1372,6 +1376,10 @@ public class NetworkMonitor extends StateMachine {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            if ((httpProbe.result().isSuccessful() || fallbackProbe.isSuccessful()) &&
+                    httpsProbe.result().isFailed()) {
+                httpsProbe.result().setPartialConnectivity(true);
+            }
             return httpsProbe.result();
         } catch (InterruptedException e) {
             validationLog("Error: http or https probe wait interrupted!");
