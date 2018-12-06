@@ -292,6 +292,7 @@ public class SettingsBackupTest {
                     Settings.Global.MDC_INITIAL_MAX_RETRY,
                     Settings.Global.MHL_INPUT_SWITCHING_ENABLED,
                     Settings.Global.MHL_POWER_CHARGE_ENABLED,
+                    Settings.Global.MIN_DURATION_BETWEEN_RECOVERY_STEPS,
                     Settings.Global.MOBILE_DATA, // Candidate for backup?
                     Settings.Global.MOBILE_DATA_ALWAYS_ON,
                     Settings.Global.MODE_RINGER,
@@ -374,6 +375,7 @@ public class SettingsBackupTest {
                     Settings.Global.RADIO_WIMAX,
                     Settings.Global.RECOMMENDED_NETWORK_EVALUATOR_CACHE_EXPIRY_MS,
                     Settings.Global.READ_EXTERNAL_STORAGE_ENFORCED_DEFAULT,
+                    Settings.Global.DATA_STALL_RECOVERY_ON_BAD_NETWORK,
                     Settings.Global.REQUIRE_PASSWORD_TO_DECRYPT,
                     Settings.Global.SAFE_BOOT_DISALLOWED,
                     Settings.Global.SELINUX_STATUS,
