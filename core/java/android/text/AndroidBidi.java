@@ -120,28 +120,21 @@ public class AndroidBidi {
                 ++runCount;
             }
         }
-
         // add final run for trailing counter-directional whitespace
         int visLen = len;
-        if ((curLevel & 1) != (baseLevel & 1)) {
-            // look for visible end
-            while (--visLen >= 0) {
-                char ch = chars[cstart + visLen];
-
-                if (ch == '\n') {
-                    --visLen;
-                    break;
-                }
-
-                if (ch != ' ' && ch != '\t') {
-                    break;
-                }
+        // look for visible end
+        while (--visLen >= 0) {
+            char ch = chars[cstart + visLen];
+            if (ch == '\n') {
+                --visLen;
+                break;
             }
-            ++visLen;
-            if (visLen != len) {
-                ++runCount;
+
+            if (ch != ' ' && ch != '\t') {
+                break;
             }
         }
+        ++visLen;
 
         if (runCount == 1 && minLevel == baseLevel) {
             // we're done, only one run on this line
@@ -150,8 +143,13 @@ public class AndroidBidi {
             }
             return Layout.DIRS_ALL_LEFT_TO_RIGHT;
         }
-
         int[] ld = new int[runCount * 2];
+
+        if (visLen < len && (curLevel & 1) != (baseLevel & 1)) {
+            ld[runCount * 2-2] = visLen;
+            ld[runCount * 2-1] = (len - visLen) | (baseLevel << Layout.RUN_LEVEL_SHIFT);
+        }
+
         int maxLevel = minLevel;
         int levelBits = minLevel << Layout.RUN_LEVEL_SHIFT;
         {
@@ -178,10 +176,6 @@ public class AndroidBidi {
                 }
             }
             ld[n] = (lstart + visLen - prev) | levelBits;
-            if (visLen < len) {
-                ld[++n] = visLen;
-                ld[++n] = (len - visLen) | (baseLevel << Layout.RUN_LEVEL_SHIFT);
-            }
         }
 
         // See if we need to swap any runs.
