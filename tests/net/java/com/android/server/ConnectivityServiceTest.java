@@ -900,8 +900,9 @@ public class ConnectivityServiceTest {
 
         @Override
         public void updateCapabilities() {
-            if (!mConnected) return;
-            super.updateCapabilities();
+            if (mConnected) {
+                super.updateCapabilities();
+            }
             // Because super.updateCapabilities will update the capabilities of the agent but not
             // the mock agent, the mock agent needs to know about them.
             copyCapabilitiesToNetworkAgent();
@@ -4345,23 +4346,20 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectCallback(CallbackState.LOST, vpnNetworkAgent);
 
-        // TODO : The default network callback should actually get a LOST call here (also see the
-        // comment below for AVAILABLE). This is because ConnectivityService does not look at UID
-        // ranges at all when determining whether a network should be rematched. In practice, VPNs
-        // can't currently update their UIDs without disconnecting, so this does not matter too
-        // much, but that is the reason the test here has to check for an update to the
-        // capabilities instead of the expected LOST then AVAILABLE.
-        defaultCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, vpnNetworkAgent);
+        defaultCallback.expectCallback(CallbackState.LOST, vpnNetworkAgent);
+        defaultCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
 
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setUids(ranges);
 
         genericNetworkCallback.expectAvailableCallbacksValidated(vpnNetworkAgent);
+        // TODO: This callback is redundant: b/122845176
+        genericNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, vpnNetworkAgent);
+
         genericNotVpnNetworkCallback.assertNoCallback();
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectAvailableCallbacksValidated(vpnNetworkAgent);
-        // TODO : Here like above, AVAILABLE would be correct, but because this can't actually
-        // happen outside of the test, ConnectivityService does not rematch callbacks.
+        defaultCallback.expectAvailableCallbacksValidated(vpnNetworkAgent);
         defaultCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, vpnNetworkAgent);
 
         mWiFiNetworkAgent.disconnect();
@@ -4369,7 +4367,7 @@ public class ConnectivityServiceTest {
         genericNetworkCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         genericNotVpnNetworkCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         wifiNetworkCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
-        vpnNetworkCallback.assertNoCallback();
+        vpnNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, vpnNetworkAgent);
         defaultCallback.assertNoCallback();
 
         vpnNetworkAgent.disconnect();
@@ -4379,7 +4377,7 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectCallback(CallbackState.LOST, vpnNetworkAgent);
         defaultCallback.expectCallback(CallbackState.LOST, vpnNetworkAgent);
-        assertEquals(null, mCm.getActiveNetwork());
+        assertNull(mCm.getActiveNetwork());
 
         mCm.unregisterNetworkCallback(genericNetworkCallback);
         mCm.unregisterNetworkCallback(wifiNetworkCallback);

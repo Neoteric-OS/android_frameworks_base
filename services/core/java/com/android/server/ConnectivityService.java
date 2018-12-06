@@ -5201,16 +5201,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.networkCapabilities = newNc;
         }
 
-        updateUids(nai, prevNc, newNc);
+        final boolean uidsChanged = updateUids(nai, prevNc, newNc);
 
-        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
-            // If the requestable capabilities haven't changed, and the score hasn't changed, then
-            // the change we're processing can't affect any requests, it can only affect the listens
-            // on this network. We might have been called by rematchNetworkAndRequests when a
-            // network changed foreground state.
+        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)
+                && !uidsChanged) {
+            // If the requestable capabilities, score and uids haven't changed, then the change
+            // we're processing can't affect any requests, it can only affect the listens on this
+            // network. We might have been called by rematchNetworkAndRequests when a network
+            // changed foreground state.
             processListenRequests(nai, true);
         } else {
-            // If the requestable capabilities have changed or the score changed, we can't have been
+            // If the requestable capabilities or the score or uids changed, we can't have been
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
             rematchAllNetworksAndRequests(nai, oldScore);
             try {
@@ -5247,7 +5248,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
+    /**
+     * Updates uids that can access VPN network.
+     *
+     * @return whether there was any change in uids.
+     */
+    private boolean updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
         Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
@@ -5273,6 +5279,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Never crash!
             loge("Exception in updateUids: " + e);
         }
+        return !newRanges.isEmpty() || !prevRanges.isEmpty();
     }
 
     public void handleUpdateLinkProperties(NetworkAgentInfo nai, LinkProperties newLp) {
