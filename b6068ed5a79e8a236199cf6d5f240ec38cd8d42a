@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d6e109d_38598c5e",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-06T21:54:46Z",
+      "side": 1,
+      "message": "Slightly reworded. LMK.",
+      "parentUuid": "55cf2211_59086ab1",
+      "range": {
+        "startLine": 193,
+        "startChar": 26,
+        "endLine": 193,
+        "endChar": 83
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e80d6d7c_b8f6ee18",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "73cd127c_a3feee9e",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-06T21:54:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e21e2383_e9f34156",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 14
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13524ba7_5748f273",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -140,6 +188,30 @@
       "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0212a5_b65b388a",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-06T21:54:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a702cd3b_e01fff6c",
+      "range": {
+        "startLine": 216,
+        "startChar": 66,
+        "endLine": 216,
+        "endChar": 99
+      },
+      "revId": "b6068ed5a79e8a236199cf6d5f240ec38cd8d42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
