@@ -2340,6 +2340,110 @@ public class CarrierConfigManager {
     public static final String KEY_SUPPORT_EMERGENCY_DIALER_SHORTCUT_BOOL =
             "support_emergency_dialer_shortcut_bool";
 
+    /**
+     * Call forwarding uses USSD command without SS command.
+     * When {@code true}, the call forwarding query/set by ussd command and UI only display Call
+     * Forwarding when unanswered.
+     * When {@code false}, don't use USSD to query/set call forwarding.
+     * @hide
+     */
+    public static final String KEY_USE_CALL_FORWARDING_USSD_BOOL = "use_call_forwarding_ussd_bool";
+
+    /**
+     * This flag specifies whether to support for the caller id set command by ussd.
+     * When {@code true}, device shall sync caller id ussd result to ss command.
+     * When {@code false}, caller id don't support ussd command.
+     * @hide
+     */
+    public static final String KEY_USE_CALLER_ID_USSD_BOOL = "use_caller_id_ussd_bool";
+
+    /**
+     * Specifies the service class for call waiting service.
+     * Default value is
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}.
+     * <p>
+     * See 27.007 +CCFC or +CLCK.
+     * The value set as below:
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_NONE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_FAX}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_SMS}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_SYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_ASYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PACKET}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PAD}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_MAX}
+     * @hide
+     */
+    public static final String KEY_CALL_WAITING_SERVICE_CLASS_INT =
+            "call_waiting_service_class_int";
+
+    /**
+     * Call forwarding uses USSD command without SS command.
+     * When {@code true}, the call forwarding query/set by ussd command and UI only display Call
+     * Forwarding when unanswered.
+     * When {@code false}, don't use USSD to query/set call forwarding.
+     * @hide
+     */
+    public static final String KEY_USE_CALL_FORWARDING_USSD_BOOL = "use_call_forwarding_ussd_bool";
+
+    /**
+     * This flag specifies whether to support for the caller id set command by ussd.
+     * When {@code true}, device shall sync caller id ussd result to ss command.
+     * When {@code false}, caller id don't support ussd command.
+     * @hide
+     */
+    public static final String KEY_USE_CALLER_ID_USSD_BOOL = "use_caller_id_ussd_bool";
+
+    /**
+     * Specifies the service class for call waiting service.
+     * Default value is
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}.
+     * <p>
+     * See 27.007 +CCFC or +CLCK.
+     * The value set as below:
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_NONE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_FAX}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_SMS}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_SYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_ASYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PACKET}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PAD}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_MAX}
+     * @hide
+     */
+    public static final String KEY_CALL_WAITING_SERVICE_CLASS_INT =
+            "call_waiting_service_class_int";
+
+    /**
+     * This configuration allow the system UI to display different 5G icon for different 5G status.
+     *
+     * There are four 5G status:
+     * 1. connected_mmwave: device currently connected to 5G cell as the secondary cell and using
+     *    millimeter wave.
+     * 2. connected: device currently connected to 5G cell as the secondary cell but not using
+     *    millimeter wave.
+     * 3. not_restricted: device camped on a network that has 5G capability(not necessary to connect
+     *    a 5G cell as a secondary cell) and the use of 5G is not restricted.
+     * 4. restricted: device camped on a network that has 5G capability(not necessary to connect a
+     *    5G cell as a secondary cell) but the use of 5G is restricted.
+     *
+     * The configured string contains multiple key-value pairs separated by comma. For each pair,
+     * the key and value is separated by a colon. The key is corresponded to a 5G status above and
+     * the value is the icon name. Use "None" as the icon name if no icon should be shown in a
+     * specific 5G status.
+     *
+     * Here is an example of the configuration:
+     * "connected_mmwave:5GPlus,connected:5G,not_restricted:None,restricted:None"
+     *
+     * @hide
+     */
+    public static final String KEY_5G_ICON_CONFIGURATION_STRING =
+            "5g_icon_configuration_string";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2699,6 +2803,14 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_WAITING_OVER_UT_WARNING_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_CLIR_NETWORK_DEFAULT_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_EMERGENCY_DIALER_SHORTCUT_BOOL, true);
+        sDefaults.putBoolean(KEY_USE_CALL_FORWARDING_USSD_BOOL, false);
+        sDefaults.putBoolean(KEY_USE_CALLER_ID_USSD_BOOL, false);
+        sDefaults.putInt(KEY_CALL_WAITING_SERVICE_CLASS_INT, 1 /* SERVICE_CLASS_VOICE */);
+        sDefaults.putBoolean(KEY_USE_CALL_FORWARDING_USSD_BOOL, false);
+        sDefaults.putBoolean(KEY_USE_CALLER_ID_USSD_BOOL, false);
+        sDefaults.putInt(KEY_CALL_WAITING_SERVICE_CLASS_INT, 1 /* SERVICE_CLASS_VOICE */);
+        sDefaults.putString(KEY_5G_ICON_CONFIGURATION_STRING,
+                "connected_mmwave:None,connected:5G,not_restricted:None,restricted:None");
     }
 
     /**
