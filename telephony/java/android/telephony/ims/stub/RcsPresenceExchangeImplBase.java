@@ -19,6 +19,8 @@ package android.telephony.ims.stub;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.net.Uri;
+import android.os.RemoteException;
+import android.telephony.ims.ImsException;
 import android.telephony.ims.RcsContactUceCapability;
 import android.util.Log;
 
@@ -120,8 +122,12 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
      *         response for.
      */
     public final void onNetworkResponse(@PresenceResponseCode int code, @NonNull String reason,
-            int operationToken) {
-        throw new UnsupportedOperationException();
+            int operationToken) throws ImsException {
+        try {
+            getListener().onNetworkResponse(code, reason, operationToken);
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
@@ -129,8 +135,12 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
      * using {@link #requestCapabilities(List, int)} .
      */
     public final void onCapabilityRequestResponse(@NonNull List<RcsContactUceCapability> infos,
-            int operationToken) {
-        throw new UnsupportedOperationException();
+            int operationToken) throws ImsException {
+        try {
+            getListener().onCapabilityRequestResponsePresence(infos, operationToken);
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
@@ -140,15 +150,23 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
      * <p>
      * The device will cache all presence publications after boot until this method is called once.
      */
-    public final void onNotifyUpdateCapabilites() {
-        throw new UnsupportedOperationException();
+    public final void onNotifyUpdateCapabilites() throws ImsException {
+        try {
+            getListener().onNotifyUpdateCapabilities();
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
      * Notify the framework that the device’s capabilities have been unpublished from the network.
      */
-    public final void onUnpublish() {
-        throw new UnsupportedOperationException();
+    public final void onUnpublish() throws ImsException {
+        try {
+            getListener().onUnpublish();
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
@@ -169,7 +187,11 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
     public void requestCapabilities(@NonNull List<Uri> uris, int operationToken) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "requestCapabilities called with no implementation.");
-        onCommandUpdate(COMMAND_CODE_GENERIC_FAILURE, operationToken);
+        try {
+            getListener().onCommandUpdate(COMMAND_CODE_NOT_SUPPORTED, operationToken);
+        } catch (RemoteException | ImsException e) {
+            // Do not do anything, this is a stub implementation.
+        }
     }
 
     /**
@@ -186,6 +208,10 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
             int operationToken) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "updateCapabilities called with no implementation.");
-        onCommandUpdate(COMMAND_CODE_GENERIC_FAILURE, operationToken);
+        try {
+            getListener().onCommandUpdate(COMMAND_CODE_NOT_SUPPORTED, operationToken);
+        } catch (RemoteException | ImsException e) {
+            // Do not do anything, this is a stub implementation.
+        }
     }
 }

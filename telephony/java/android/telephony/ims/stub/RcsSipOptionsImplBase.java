@@ -20,6 +20,8 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.Uri;
+import android.os.RemoteException;
+import android.telephony.ims.ImsException;
 import android.telephony.ims.RcsContactUceCapability;
 import android.util.Log;
 
@@ -89,8 +91,12 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
      *        {@link #sendCapabilityRequest(Uri, RcsContactUceCapability, int)}.
      */
     public final void onCapabilityRequestResponse(@SipResponseCode int code, @NonNull String reason,
-            @Nullable RcsContactUceCapability info, int operationToken) {
-        throw new UnsupportedOperationException();
+            @Nullable RcsContactUceCapability info, int operationToken) throws ImsException {
+        try {
+            getListener().onCapabilityRequestResponseOptions(code, reason, info, operationToken);
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
@@ -106,8 +112,12 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
      *         {@link #respondToCapabilityRequest(String, RcsContactUceCapability, int)}.
      */
     public final void onRemoteCapabilityRequest(@NonNull Uri contactUri,
-            @NonNull RcsContactUceCapability remoteInfo, int operationToken) {
-        throw new UnsupportedOperationException();
+            @NonNull RcsContactUceCapability remoteInfo, int operationToken) throws ImsException {
+        try {
+            getListener().onRemoteCapabilityRequest(contactUri, remoteInfo, operationToken);
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
@@ -127,7 +137,11 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
             @NonNull RcsContactUceCapability capabilities, int operationToken) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "sendCapabilityRequest called with no implementation.");
-        onCommandUpdate(COMMAND_CODE_GENERIC_FAILURE, operationToken);
+        try {
+            getListener().onCommandUpdate(COMMAND_CODE_NOT_SUPPORTED, operationToken);
+        } catch (RemoteException | ImsException e) {
+            // Do not do anything, this is a stub implementation.
+        }
     }
 
     /**
@@ -145,7 +159,11 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
             @NonNull RcsContactUceCapability ownCapabilities, int operationToken) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "respondToCapabilityRequest called with no implementation.");
-        onCommandUpdate(COMMAND_CODE_GENERIC_FAILURE, operationToken);
+        try {
+            getListener().onCommandUpdate(COMMAND_CODE_NOT_SUPPORTED, operationToken);
+        } catch (RemoteException | ImsException e) {
+            // Do not do anything, this is a stub implementation.
+        }
     }
 
     /**
@@ -164,6 +182,10 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
             @SipResponseCode int code, @NonNull String reason, int operationToken) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "respondToCapabiltyRequestWithError called with no implementation.");
-        onCommandUpdate(COMMAND_CODE_GENERIC_FAILURE, operationToken);
+        try {
+            getListener().onCommandUpdate(COMMAND_CODE_NOT_SUPPORTED, operationToken);
+        } catch (RemoteException | ImsException e) {
+            // Do not do anything, this is a stub implementation.
+        }
     }
 }
