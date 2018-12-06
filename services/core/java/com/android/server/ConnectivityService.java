@@ -4269,8 +4269,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            return mVpns.get(user).establish(config);
+            Pair<ParcelFileDescriptor, Boolean> result = mVpns.get(user).establish(config);
+            if (result.second) {
+                updateVpnCapabilitiesAsync(user);
+            }
+            return result.first;
         }
+    }
+
+    private void updateVpnCapabilitiesAsync(int user) {
+        mHandler.post(() -> {
+            synchronized (mVpns) {
+                final Vpn vpn = mVpns.get(user);
+                if (vpn != null) {
+                    updateVpnCapabilities(vpn, getNetwork(getDefaultNetwork()));
+                }
+            }
+        });
     }
 
     /**
@@ -4397,15 +4412,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (mVpns) {
             for (int i = 0; i < mVpns.size(); i++) {
                 final Vpn vpn = mVpns.valueAt(i);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
+                updateVpnCapabilities(vpn, defaultNetwork);
             }
         }
     }
 
-    private void updateVpnCapabilities(Vpn vpn, @Nullable NetworkCapabilities nc) {
+    @GuardedBy("mVpns")
+    private void updateVpnCapabilities(Vpn vpn, @Nullable Network defaultNetwork) {
         ensureRunningOnConnectivityServiceThread();
         NetworkAgentInfo vpnNai = getNetworkAgentInfoForNetId(vpn.getNetId());
+        NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
         if (vpnNai == null || nc == null) {
             return;
         }
@@ -4758,8 +4774,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserAdded(userId);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
+                updateVpnCapabilities(vpn, defaultNetwork);
             }
         }
     }
@@ -4772,8 +4787,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserRemoved(userId);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
+                updateVpnCapabilities(vpn, defaultNetwork);
             }
         }
     }
@@ -5776,16 +5790,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.setNetworkCapabilities(newNc);
         }
 
-        updateUids(nai, prevNc, newNc);
+        final boolean uidsChanged = updateUids(nai, prevNc, newNc);
 
-        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
-            // If the requestable capabilities haven't changed, and the score hasn't changed, then
-            // the change we're processing can't affect any requests, it can only affect the listens
-            // on this network. We might have been called by rematchNetworkAndRequests when a
-            // network changed foreground state.
+        if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)
+                && !uidsChanged) {
+            // If the requestable capabilities, score and uids haven't changed, then the change
+            // we're processing can't affect any requests, it can only affect the listens on this
+            // network. We might have been called by rematchNetworkAndRequests when a network
+            // changed foreground state.
             processListenRequests(nai, true);
         } else {
-            // If the requestable capabilities have changed or the score changed, we can't have been
+            // If the requestable capabilities or the score or uids changed, we can't have been
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
             rematchAllNetworksAndRequests(nai, oldScore);
             notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED);
@@ -5845,7 +5860,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 && (lp.hasIPv4DefaultRoute() || lp.hasIPv6DefaultRoute());
     }
 
-    private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
+    /**
+     * Updates uids that can access VPN network.
+     *
+     * @return whether there was any change in uids.
+     */
+    private boolean updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
         Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
@@ -5899,6 +5919,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Never crash!
             loge("Exception in updateUids: ", e);
         }
+        return !newRanges.isEmpty() || !prevRanges.isEmpty();
     }
 
     public void handleUpdateLinkProperties(NetworkAgentInfo nai, LinkProperties newLp) {

@@ -1063,7 +1063,7 @@ public class ConnectivityManager {
         }
     }
 
-   /**
+    /**
      * Returns the package name of the currently set always-on VPN application.
      * If there is no always-on VPN set, or the VPN is provided by the system instead
      * of by an app, {@code null} will be returned.
