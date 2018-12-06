@@ -50,35 +50,6 @@ public abstract class ImsFeature {
     private static final String LOG_TAG = "ImsFeature";
 
     /**
-     * Action to broadcast when ImsService is up.
-     * Internal use only.
-     * Only defined here separately for compatibility purposes with the old ImsService.
-     *
-     * @hide
-     */
-    public static final String ACTION_IMS_SERVICE_UP =
-            "com.android.ims.IMS_SERVICE_UP";
-
-    /**
-     * Action to broadcast when ImsService is down.
-     * Internal use only.
-     * Only defined here separately for compatibility purposes with the old ImsService.
-     *
-     * @hide
-     */
-    public static final String ACTION_IMS_SERVICE_DOWN =
-            "com.android.ims.IMS_SERVICE_DOWN";
-
-    /**
-     * Part of the ACTION_IMS_SERVICE_UP or _DOWN intents.
-     * A long value; the phone ID corresponding to the IMS service coming up or down.
-     * Only defined here separately for compatibility purposes with the old ImsService.
-     *
-     * @hide
-     */
-    public static final String EXTRA_PHONE_ID = "android:phone_id";
-
-    /**
      * Invalid feature value
      * @hide
      */
@@ -416,6 +387,21 @@ public abstract class ImsFeature {
         mCapabilityCallbacks.unregister(c);
     }
 
+    /**@hide*/
+    protected final void queryCapabilityConfigurationInternal(int capability, int radioTech,
+            IImsCapabilityCallback c) {
+        synchronized (mLock) {
+            boolean enabled = queryCapabilityConfiguration(capability, radioTech);
+            try {
+                if (c != null) {
+                    c.onQueryCapabilityConfiguration(capability, radioTech, enabled);
+                }
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "queryCapabilityConfigurationInternal called on dead binder!");
+            }
+        }
+    }
+
     /**
      * @return the cached capabilities status for this feature.
      * @hide
@@ -438,7 +424,9 @@ public abstract class ImsFeature {
             throw new IllegalArgumentException(
                     "ImsFeature#requestChangeEnabledCapabilities called with invalid params.");
         }
-        changeEnabledCapabilities(request, new CapabilityCallbackProxy(c));
+        synchronized (mLock) {
+            changeEnabledCapabilities(request, new CapabilityCallbackProxy(c));
+        }
     }
 
     /**
@@ -467,6 +455,17 @@ public abstract class ImsFeature {
             mCapabilityCallbacks.finishBroadcast();
         }
     }
+
+    /**
+     * Provides the ImsFeature with the ability to return the framework Capability Configuration
+     * for a provided Capability. If the framework calls {@link #changeEnabledCapabilities} and
+     * includes a capability A to enable or disable, this method should return the correct enabled
+     * status for capability A.
+     * @param capability The capability that we are querying the configuration for.
+     * @return true if the capability is enabled, false otherwise.
+     * @hide
+     */
+    public abstract boolean queryCapabilityConfiguration(int capability, int radioTech);
 
     /**
      * Features should override this method to receive Capability preference change requests from
