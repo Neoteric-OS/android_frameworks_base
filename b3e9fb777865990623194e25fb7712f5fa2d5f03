@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d9406aa_473529f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-06T14:55:57Z",
+      "side": 1,
+      "message": "Why do we still need to add these values now that pretty much all APIs taking network types are deprecated? Can we fix this? If not, let\u0027s add a TODO.",
+      "range": {
+        "startLine": 653,
+        "startChar": 0,
+        "endLine": 660,
+        "endChar": 43
+      },
+      "revId": "b3e9fb777865990623194e25fb7712f5fa2d5f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1069dd1c_8cba15e8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-06T14:55:57Z",
+      "side": 1,
+      "message": "virtual interface\n\n(since it could also be a tap instead of a tun)",
+      "range": {
+        "startLine": 637,
+        "startChar": 47,
+        "endLine": 637,
+        "endChar": 50
+      },
+      "revId": "b3e9fb777865990623194e25fb7712f5fa2d5f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
