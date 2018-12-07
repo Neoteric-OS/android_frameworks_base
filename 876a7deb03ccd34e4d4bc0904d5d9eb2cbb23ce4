@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e98ac5e_bf14848a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-12-07T18:59:06Z",
+      "side": 1,
+      "message": "Do we need to create this temporary variable?  If it is just for documentation purposes I think a comment would be better.",
+      "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
