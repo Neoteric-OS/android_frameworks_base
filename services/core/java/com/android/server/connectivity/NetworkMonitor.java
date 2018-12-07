@@ -26,7 +26,9 @@ import static android.net.metrics.ValidationProbeEvent.DNS_SUCCESS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_FALLBACK;
 import static android.net.metrics.ValidationProbeEvent.PROBE_PRIVDNS;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.StringRes;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -69,6 +71,7 @@ import android.util.LocalLog;
 import android.util.LocalLog.ReadOnlyLocalLog;
 import android.util.Log;
 
+import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Protocol;
@@ -1000,8 +1003,9 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private String getCaptivePortalServerHttpsUrl() {
-        return mDependencies.getSetting(mContext,
-                Settings.Global.CAPTIVE_PORTAL_HTTPS_URL, DEFAULT_HTTPS_URL);
+        return mDependencies.getSettingFromResource(mContext,
+                R.string.config_captive_portal_https_url, Settings.Global.CAPTIVE_PORTAL_HTTPS_URL,
+                        DEFAULT_HTTPS_URL);
     }
 
     private int getConsecutiveDnsTimeoutThreshold() {
@@ -1033,17 +1037,20 @@ public class NetworkMonitor extends StateMachine {
     }
 
     public static String getCaptivePortalServerHttpUrl(Dependencies deps, Context context) {
-        return deps.getSetting(context, Settings.Global.CAPTIVE_PORTAL_HTTP_URL, DEFAULT_HTTP_URL);
+        return deps.getSettingFromResource(context, R.string.config_captive_portal_http_url,
+                Settings.Global.CAPTIVE_PORTAL_HTTP_URL, DEFAULT_HTTP_URL);
     }
 
     private URL[] makeCaptivePortalFallbackUrls() {
         try {
             String separator = ",";
-            String firstUrl = mDependencies.getSetting(mContext,
-                    Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
-            String joinedUrls = firstUrl + separator + mDependencies.getSetting(mContext,
-                    Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS,
-                    DEFAULT_OTHER_FALLBACK_URLS);
+            String firstUrl = mDependencies.getSettingFromResource(mContext,
+                    R.string.config_captive_portal_fallback_url,
+                            Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
+            String joinedUrls = firstUrl + separator + mDependencies.getSettingFromResource(
+                    mContext, R.string.config_captive_portal_other_fallback_urls,
+                            Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS,
+                            DEFAULT_OTHER_FALLBACK_URLS);
             List<URL> urls = new ArrayList<>();
             for (String s : joinedUrls.split(separator)) {
                 URL u = makeURL(s);
@@ -1065,8 +1072,9 @@ public class NetworkMonitor extends StateMachine {
 
     private CaptivePortalProbeSpec[] makeCaptivePortalFallbackProbeSpecs() {
         try {
-            final String settingsValue = mDependencies.getSetting(
-                    mContext, Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS, null);
+            final String settingsValue = mDependencies.getSettingFromResource(
+                    mContext, R.string.config_captive_portal_fallback_probe_specs,
+                            Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS, null);
             // Probe specs only used if configured in settings
             if (TextUtils.isEmpty(settingsValue)) {
                 return null;
@@ -1538,6 +1546,26 @@ public class NetworkMonitor extends StateMachine {
         public String getSetting(Context context, String symbol, String defaultValue) {
             final String value = Settings.Global.getString(context.getContentResolver(), symbol);
             return value != null ? value : defaultValue;
+        }
+
+        /**
+         * Reads a setting from the resource. Unless it's available it will be fetched from the
+         * provider or from code defined default value.
+         *
+         * @param context      The context
+         * @param resource     The resource id
+         * @param symbol       The symbol in the settings provider
+         * @param defaultValue The default as defined in code
+         * @return The best available value
+         */
+        @Nullable
+        public String getSettingFromResource(@NonNull final Context context,
+                                             @StringRes int resource, @NonNull String symbol,
+                                             @Nullable String defaultValue) {
+            String value = context.getResources().getString(resource);
+            // Get the value in preferred order, resource > symbol > defaultValue
+            value = TextUtils.isEmpty(value) ? getSetting(context, symbol, defaultValue) :  value;
+            return value;
         }
 
         public static final Dependencies DEFAULT = new Dependencies();

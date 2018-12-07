@@ -3522,4 +3522,19 @@
     <!-- Component name for default assistant on this device -->
     <string name="config_defaultAssistantComponentName"></string>
 
+    <!-- Captive portal http url -->
+    <string name="config_captive_portal_http_url" translatable="false"></string>
+
+    <!-- Captive portal https url -->
+    <string name="config_captive_portal_https_url" translatable="false"></string>
+
+    <!-- Captive portal fallback url -->
+    <string name="config_captive_portal_fallback_url" translatable="false"></string>
+
+    <!-- Captive portal other fallback urls -->
+    <string name="config_captive_portal_other_fallback_urls" translatable="false"></string>
+
+    <!-- Captive portal fallback probe specs -->
+    <string name="config_captive_portal_fallback_probe_specs" translatable="false"></string>
+
 </resources>
