@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab018f0_78111978",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-07T10:11:23Z",
+      "side": 1,
+      "message": "I think we could further simplify this by doing the GetByteArrayRegion() directly into the program_and_data buffer, eliminating the vector for data and the ScopedByteArrayRO for program.\n\nLike this:\n\n  std::vector\u003cuint8_t\u003e buf(program_len + data_len, 0);\n  env-\u003eGetByteArrayRegion(jprogram, 0, program_len, reinterpret_cast\u003cjbyte*\u003e(buf.data());\n  if (jdata) {\n      env-\u003eGetByteArrayRegion(jdata, 0, data_len, reinterpret_cast\u003cjbyte*\u003e(mem.data() + program_len));\n  }\n\nI renamed program_and_data to buf because this way everything fits on one line, but feel free to keep the old name of course.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 89
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a3b074_ba755eb0",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-07T10:11:23Z",
+      "side": 1,
+      "message": "We can use the same trick to simplify this.",
+      "range": {
+        "startLine": 198,
+        "startChar": 5,
+        "endLine": 198,
+        "endChar": 98
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30338f8_79d2b1ff",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-07T10:11:23Z",
+      "side": 1,
+      "message": "The memcpy is identical in both the true and false cases... it could be simplified to:\n\n  memcpy(data.get(), program_and_data.data() + apf_program_len, data_len);\n  return static_cast\u003cbool\u003e(result);  // not sure we need the cast...\n\nBut actually you also don\u0027t even need the memcpy() if you replace the ScopedByteArrayRW() with SetByteArrayRegion(), as you\u0027re already doing in com_android_server_ApfTest_apfSimulate:\n\n  env-\u003eSetByteArrayRegion(jdata, 0, data_len,\n                          reinterpret_cast\u003cjbyte*\u003e(buf.data() + program_len));\n  return static_cast\u003cbool\u003e(result);",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
