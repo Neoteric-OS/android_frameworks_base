@@ -70,6 +70,30 @@
       "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0507ed_175a764b",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1353558
+      },
+      "writtenOn": "2018-12-07T05:33:50Z",
+      "side": 1,
+      "message": "Hi Vishnu,\nNeed your help, I don\u0027t get the point of \"builder\" in \"Please modify the solution to set the container layer to false in builder\"\ndo you mean set container layer false in setColorLayer() funtion in SurfaceControl.java?\nI try to modify it , it will depend on GOOGLE\u0027s change :\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/797252\n\nso can google modify it（SurfaceControl.java） directly as one patch ? then I will provide the change under services/core/java/com/android/server/wm/\n\nIf I don\u0027t understand it correctly, please help to point it out, thank you.",
+      "parentUuid": "7430d8e1_61f1427b",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
