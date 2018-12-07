@@ -48,10 +48,12 @@ import android.app.BroadcastOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.ConnectionInfo;
@@ -64,6 +66,8 @@ import android.net.INetdEventCallback;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
+import android.net.INetworkStackConnector;
+import android.net.INetworkStackRequest;
 import android.net.INetworkStatsService;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
@@ -442,6 +446,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private static final int EVENT_DATA_SAVER_CHANGED = 40;
 
+    /**
+     * Used to handle a request for the connectivity app from any client.
+     */
+    private static final int EVENT_NETWORK_STACK_REQUEST = 41;
+
     private static String eventName(int what) {
         return sMagicDecoderRing.get(what, Integer.toString(what));
     }
@@ -540,6 +549,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
+
+    // To be accessed only on the handler thread
+    private INetworkStackConnector mNetworkStackConnector;
+    private final ArrayList<INetworkStackRequest> mPendingNetStackRequests = new ArrayList<>();
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -1964,6 +1977,79 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private void handleNetworkStackRequest(INetworkStackRequest req) {
+        if (mNetworkStackConnector != null) {
+            try {
+                req.onNetworkingAppConnected(mNetworkStackConnector.asBinder());
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        } else {
+            mPendingNetStackRequests.add(req);
+        }
+    }
+
+    private void requestNetworkStack(INetworkStackRequest.Stub req) {
+        final INetworkStackRequest reqInterface = INetworkStackRequest.Stub.asInterface(req);
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_STACK_REQUEST, reqInterface));
+    }
+
+    private void notifyAppConnected() {
+        for (INetworkStackRequest r : mPendingNetStackRequests) {
+            try {
+                r.onNetworkingAppConnected(mNetworkStackConnector.asBinder());
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        }
+        mPendingNetStackRequests.clear();
+    }
+
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mNetworkStackConnector = INetworkStackConnector.Stub.asInterface(service);
+            notifyAppConnected();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Slog.wtf(TAG, "Lost network stack service");
+        }
+    };
+
+    private void startNetworkStackApp() {
+        // Try to bind in-process if the library is available
+        IBinder connector = null;
+        ReflectiveOperationException inProcessStackError = null;
+        try {
+          final Class service = Class.forName(
+                  "com.android.server.networkstack.NetworkStackService");
+          connector = (IBinder) service.getMethod("makeConnector").invoke(null);
+        } catch (ReflectiveOperationException e) {
+            inProcessStackError = e;
+          // Normal behavior if stack is provided by the app: fall through
+        }
+
+        if (connector != null) {
+            mNetworkStackConnector = INetworkStackConnector.Stub.asInterface(connector);
+            notifyAppConnected();
+        } else {
+            // Start the network stack process if the device does not use an in-process library
+            final Intent intent = new Intent(INetworkStackConnector.class.getName());
+            final ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
+            intent.setComponent(comp);
+
+            if (comp == null || !mContext.bindServiceAsUser(intent, mServiceConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT, mHandler, UserHandle.SYSTEM)) {
+                Slog.wtf(TAG,
+                        "Could not bind to network stack in-process, or in app with " + intent);
+                Slog.wtf(TAG, "In-process bind error was: ", inProcessStackError);
+                // TODO: crash/reboot system server if no network stack after a timeout ?
+            }
+        }
+    }
+
     void systemReady() {
         mProxyTracker.loadGlobalProxy();
         registerNetdEventCallback();
@@ -1986,6 +2072,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
 
         mPermissionMonitor.startMonitoring();
+        startNetworkStackApp();
     }
 
     /**
@@ -2241,6 +2328,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         pw.println();
         pw.decreaseIndent();
+
+        pw.println("NetworkStack status: "
+                + (mNetworkStackConnector == null ? "not connected" : "connected"));
+        pw.println("NetworkStack requests count: " + mPendingNetStackRequests.size());
 
         pw.println("Network Requests:");
         pw.increaseIndent();
@@ -3324,6 +3415,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_DATA_SAVER_CHANGED:
                     handleRestrictBackgroundChanged(toBool(msg.arg1));
+                    break;
+                case EVENT_NETWORK_STACK_REQUEST:
+                    handleNetworkStackRequest((INetworkStackRequest) msg.obj);
                     break;
             }
         }
