@@ -29,6 +29,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources.Theme;
 import android.database.sqlite.SQLiteCompatibilityWalFlags;
 import android.database.sqlite.SQLiteGlobal;
+import android.net.NetworkStack;
 import android.os.BaseBundle;
 import android.os.Binder;
 import android.os.Build;
@@ -1191,6 +1192,15 @@ public final class SystemServer {
                 networkPolicy.bindConnectivityManager(connectivity);
             } catch (Throwable e) {
                 reportWtf("starting Connectivity Service", e);
+            }
+            traceEnd();
+
+            traceBeginAndSlog("StartNetworkStack");
+            try {
+                final NetworkStack networkStack = context.getSystemService(NetworkStack.class);
+                networkStack.start();
+            } catch (Throwable e) {
+                reportWtf("starting Network Stack", e);
             }
             traceEnd();
 

@@ -916,6 +916,21 @@ static jlong CalculateCapabilities(JNIEnv* env, jint uid, jint gid, jintArray gi
   }
 
   /*
+   *  Grant the following capabilities to the network stack user:
+   *    - CAP_NET_ADMIN
+   *    - CAP_NET_BROADCAST
+   *    - CAP_NET_BIND_SERVICE
+   *    - CAP_NET_RAW
+   */
+
+  if (multiuser_get_app_id(uid) == AID_NETWORK_STACK) {
+    capabilities |= (1LL << CAP_NET_ADMIN);
+    capabilities |= (1LL << CAP_NET_BROADCAST);
+    capabilities |= (1LL << CAP_NET_BIND_SERVICE);
+    capabilities |= (1LL << CAP_NET_RAW);
+  }
+
+  /*
    * Grant CAP_BLOCK_SUSPEND to processes that belong to GID "wakelock"
    */
 
