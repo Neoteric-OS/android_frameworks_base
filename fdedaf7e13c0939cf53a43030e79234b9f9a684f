@@ -260,6 +260,30 @@
       "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efa900f3_093d341e",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-12-07T13:50:28Z",
+      "side": 1,
+      "message": "Hopfully will be clear enough once cl/224495134 is in.",
+      "parentUuid": "6c481db6_59b60342",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
