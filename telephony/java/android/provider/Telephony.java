@@ -2672,6 +2672,19 @@ public final class Telephony {
         public static final Uri CONTENT_URI = Uri.parse("content://telephony/carriers");
 
         /**
+         * The {@code content://} style URL for this table. Used for APN query based on current
+         * subscription. Instead of specifying carrier matching information in the selection,
+         * this API will return all matching APNs from current subscription carrier and queries
+         * will be applied on top of that. If there is no match for MVNO (Mobile Virtual Network
+         * Operator) APNs, return APNs from its MNO (based on mccmnc) instead. For MSIM, this will
+         * return APNs for the default subscription
+         * {@link SubscriptionManager#getDefaultSubscriptionId()}.To specify subId for MSIM,
+         * use {@link SubscriptionManager#getUriForSubscriptionId()}.
+         */
+        public static final Uri SIM_APN_LIST = Uri.parse(
+                "content://telephony/carriers/sim_apn_list");
+
+        /**
          * The {@code content://} style URL to be called from DevicePolicyManagerService,
          * can manage DPC-owned APNs.
          * @hide
@@ -2693,13 +2706,6 @@ public final class Telephony {
          */
         public static final Uri ENFORCE_MANAGED_URI = Uri.parse(
                 "content://telephony/carriers/enforce_managed");
-
-        /**
-         * The {@code content://} style URL to be called from Telephony to query current APNs.
-         * @hide
-         */
-        public static final Uri SIM_APN_LIST = Uri.parse(
-                "content://telephony/carriers/sim_apn_list");
 
         /**
          * The column name for ENFORCE_MANAGED_URI, indicates whether DPC-owned APNs are enforced.
@@ -2775,18 +2781,27 @@ public final class Telephony {
         /**
          * Mobile Country Code (MCC).
          * <P>Type: TEXT</P>
+         * @deprecated For Q, keep data in the database to serve as a middle ground for those OEM
+         * APNs which can’t find a matching carrier id, but in the future data will be cleared and
+         * column will be deprecated in the TelephonyProvider. Use {@link #SIM_APN_LIST} instead.
          */
         public static final String MCC = "mcc";
 
         /**
          * Mobile Network Code (MNC).
          * <P>Type: TEXT</P>
+         * @deprecated For Q, keep data in the database to serve as a middle ground for those OEM
+         * APNs which can’t find a matching carrier id, but in the future data will be cleared and
+         * column will be deprecated in the TelephonyProvider. Use {@link #SIM_APN_LIST} instead.
          */
         public static final String MNC = "mnc";
 
         /**
          * Numeric operator ID (as String). Usually {@code MCC + MNC}.
          * <P>Type: TEXT</P>
+         * @deprecated For Q, keep data in the database to serve as a middle ground for those OEM
+         * APNs which can’t find a matching carrier id, but in the future data will be cleared and
+         * column will be deprecated in the TelephonyProvider. Use {@link #SIM_APN_LIST} instead.
          */
         public static final String NUMERIC = "numeric";
 
@@ -2867,6 +2882,9 @@ public final class Telephony {
          * MVNO type:
          * {@code SPN (Service Provider Name), IMSI, GID (Group Identifier Level 1)}.
          * <P>Type: TEXT</P>
+         * @deprecated For Q, keep data in the database to serve as a middle ground for those OEM
+         * APNs which can’t find a matching carrier id, but in the future data will be cleared and
+         * column will be deprecated in the TelephonyProvider. Use {@link #SIM_APN_LIST} instead.
          */
         public static final String MVNO_TYPE = "mvno_type";
 
@@ -2879,6 +2897,9 @@ public final class Telephony {
          *     <li>GID: 4E, 33, ...</li>
          * </ul>
          * <P>Type: TEXT</P>
+         * @deprecated For Q, keep data in the database to serve as a middle ground for those OEM
+         * APNs which can’t find a matching carrier id, but in the future data will be cleared and
+         * column will be deprecated in the TelephonyProvider. Use {@link #SIM_APN_LIST} instead.
          */
         public static final String MVNO_MATCH_DATA = "mvno_match_data";
 
