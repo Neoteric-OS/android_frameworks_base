@@ -108,7 +108,6 @@ import android.net.VpnService;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
-import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
@@ -6702,9 +6701,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public String getCaptivePortalServerUrl() {
         enforceConnectivityInternalPermission();
-        final String defaultUrl = mContext.getResources().getString(
+        final String settingUrl = Settings.Global.getString(
+                mContext.getContentResolver(),
+                Settings.Global.CAPTIVE_PORTAL_HTTP_URL);
+        if (settingUrl != null) {
+            return settingUrl;
+        }
+
+        return mContext.getResources().getString(
                 R.string.config_networkDefaultCaptivePortalServerUrl);
-        return NetworkMonitorUtils.getCaptivePortalServerHttpUrl(mContext, defaultUrl);
     }
 
     @Override
