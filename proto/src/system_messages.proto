@@ -231,6 +231,8 @@ message SystemMessage {
     NOTE_NETWORK_LOST_INTERNET = 742;
     // The system default network switched to a different network
     NOTE_NETWORK_SWITCH = 743;
+    // A partial connectivity network was selected by the user
+    NOTE_NETWORK_PARTIAL_CONNECTIVITY = 744;
 
     // Notify the user that their work profile has been deleted
     // Package: android
