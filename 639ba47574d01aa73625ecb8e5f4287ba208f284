@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b68f7c89_aeb50670",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-12-07T20:15:41Z",
+      "side": 1,
+      "message": "Question: if so, why wouldn\u0027t you use @UnsupportedAppUsage instead @SystemApi",
+      "range": {
+        "startLine": 214,
+        "startChar": 76,
+        "endLine": 215,
+        "endChar": 33
+      },
+      "revId": "639ba47574d01aa73625ecb8e5f4287ba208f284",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
