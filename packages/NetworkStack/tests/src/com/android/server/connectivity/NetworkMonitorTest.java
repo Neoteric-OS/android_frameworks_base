@@ -144,6 +144,10 @@ public class NetworkMonitorTest {
         when(mDependencies.getCaptivePortalServerHttpUrl(any())).thenReturn(TEST_HTTP_URL);
         when(mDependencies.getSetting(any(), eq(Settings.Global.CAPTIVE_PORTAL_HTTPS_URL),
                 anyString())).thenReturn(TEST_HTTPS_URL);
+        when(mDependencies.getSettingFromResource(any(), anyInt(),
+                eq(Settings.Global.CAPTIVE_PORTAL_HTTPS_URL
+                ))).thenReturn(TEST_HTTPS_URL);
+
         doReturn(mNetwork).when(mNetwork).getPrivateDnsBypassingCopy();
 
         when(mContext.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(mCm);
@@ -547,18 +551,21 @@ public class NetworkMonitorTest {
     }
 
     private void setFallbackUrl(String url) {
-        when(mDependencies.getSetting(any(),
-                eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL), any())).thenReturn(url);
+        when(mDependencies.getSettingFromResource(any(), anyInt(),
+                eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL
+                ))).thenReturn(url);
     }
 
     private void setOtherFallbackUrls(String urls) {
-        when(mDependencies.getSetting(any(),
-                eq(Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS), any())).thenReturn(urls);
+        when(mDependencies.getSettingFromResource(any(), anyInt(),
+                eq(Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS
+                ))).thenReturn(urls);
     }
 
     private void setFallbackSpecs(String specs) {
-        when(mDependencies.getSetting(any(),
-                eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS), any())).thenReturn(specs);
+        when(mDependencies.getSettingFromResource(any(), anyInt(),
+                eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS
+                ))).thenReturn(specs);
     }
 
     private void setCaptivePortalMode(int mode) {
