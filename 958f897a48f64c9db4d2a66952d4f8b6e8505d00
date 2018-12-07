@@ -94,6 +94,30 @@
       "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c52d2d_c58fc261",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2018-12-07T17:58:43Z",
+      "side": 1,
+      "message": "I uploaded aosp/844796. Please feel free to test with it and make any necessary changes. I also added a setBufferLayer() api which you can use in WindowSurfaceController.java to make the code more clear",
+      "parentUuid": "2e0507ed_175a764b",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
