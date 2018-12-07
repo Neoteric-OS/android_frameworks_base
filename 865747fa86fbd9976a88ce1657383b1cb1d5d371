@@ -117,6 +117,70 @@
       "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a922f94_3234c53d",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-07T00:39:54Z",
+      "side": 1,
+      "message": "Ah good! Please add a comment to getTetherStats explaining that it doesn\u0027t double-count interface traffic.",
+      "parentUuid": "5e85b0b9_3bdc785f",
+      "range": {
+        "startLine": 948,
+        "startChar": 19,
+        "endLine": 948,
+        "endChar": 52
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec3a4f40_6074bcb8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-07T00:39:54Z",
+      "side": 1,
+      "message": "For readability, please try to keep indented blocks as small as possible. In this case that would mean:\n\n    final NetworkStats tetherSnapshot;\n    try {\n        tetherSnapshot \u003d getNetworkStatsTethering(STATS_PER_IFACE);\n    } catch (RemoteException e) {\n        Slog.w(TAG, \"Error get TetherStats: \" + e);\n        return 0;\n    } finally {\n        Binder.restoreCallingIdentity(token);\n    }\n\nHopefully the compiler is smart enough not to complain that the final variable is not initialized.",
+      "range": {
+        "startLine": 964,
+        "startChar": 0,
+        "endLine": 965,
+        "endChar": 90
+      },
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a8a6d9_ed03f1f5",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-07T00:39:54Z",
+      "side": 1,
+      "message": "Please limit line length to 100 characters.",
+      "revId": "865747fa86fbd9976a88ce1657383b1cb1d5d371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
