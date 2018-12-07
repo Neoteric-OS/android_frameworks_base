@@ -3530,4 +3530,18 @@
     <!-- Component name for default assistant on this device -->
     <string name="config_defaultAssistantComponentName"></string>
 
+    <!-- Captive portal http url -->
+    <string name="config_captive_portal_http_url" translatable="false">http://connectivitycheck.gstatic.com/generate_204</string>
+
+    <!-- Captive portal https url -->
+    <string name="config_captive_portal_https_url" translatable="false">https://www.google.com/generate_204</string>
+
+    <!-- Captive portal fallback url -->
+    <string name="config_captive_portal_fallback_url" translatable="false">http://www.google.com/gen_204</string>
+
+    <!-- Captive portal other fallback urls -->
+    <string name="config_captive_portal_other_fallback_urls" translatable="false">http://play.googleapis.com/generate_204</string>
+
+    <!-- Captive portal fallback probe specs -->
+    <string name="config_captive_portal_fallback_probe_specs" translatable="false"></string>
 </resources>
