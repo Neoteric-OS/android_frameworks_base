@@ -398,6 +398,15 @@ public class ConnectivityManager {
             "android.net.conn.PROMPT_LOST_VALIDATION";
 
     /**
+     * Action used to display a dialog that asks the user whether to connect to a network that is
+     * partial connectivity. This intent is used to start the dialog in settings via startActivity.
+     *
+     * @hide
+     */
+    public static final String ACTION_PROMPT_PARTIAL_CONNECTIVITY =
+            "android.net.conn.PROMPT_PARTIAL_CONNECTIVITY";
+
+    /**
      * Invalid tethering type.
      * @see #startTethering(int, boolean, OnStartTetheringCallback)
      * @hide

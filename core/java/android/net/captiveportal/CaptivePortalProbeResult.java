@@ -35,6 +35,7 @@ public final class CaptivePortalProbeResult {
     public final String redirectUrl;      // Redirect destination returned from Internet probe.
     public final String detectUrl;        // URL where a 204 response code indicates
                                           // captive portal has been appeased.
+    private boolean mPartialConnectivity = false;
     @Nullable
     public final CaptivePortalProbeSpec probeSpec;
 
@@ -64,5 +65,14 @@ public final class CaptivePortalProbeResult {
 
     public boolean isFailed() {
         return !isSuccessful() && !isPortal();
+    }
+
+    // This method should be called by https probe.
+    public void setPartialConnectivity(boolean partialConnectivity) {
+        mPartialConnectivity = partialConnectivity;
+    }
+
+    public boolean isPartialConnectivity() {
+        return mPartialConnectivity;
     }
 }

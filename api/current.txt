@@ -27556,6 +27556,7 @@ package android.net {
     field public static final int NET_CAPABILITY_NOT_ROAMING = 18; // 0x12
     field public static final int NET_CAPABILITY_NOT_SUSPENDED = 21; // 0x15
     field public static final int NET_CAPABILITY_NOT_VPN = 15; // 0xf
+    field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 23; // 0x17
     field public static final int NET_CAPABILITY_RCS = 8; // 0x8
     field public static final int NET_CAPABILITY_SUPL = 1; // 0x1
     field public static final int NET_CAPABILITY_TRUSTED = 14; // 0xe
