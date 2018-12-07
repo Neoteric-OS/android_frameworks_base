@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2842a0db_58f21a39",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-12-07T11:45:01Z",
+      "side": 1,
+      "message": "yeah, I worry that \"public API\" may be confusing, as things with the \"public\" (Java) modifier can still not be in the public SDK.\n\nI could add a link to developer.android.com to make it more explicit?",
+      "parentUuid": "9590dd24_915ef9b7",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b322ba47_21493f68",
         "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2018-12-07T11:37:36Z",
       "side": 1,
       "message": "isn\u0027t goo.gl deprecated? we had a \u0027g.co\u0027 link in the Toasts. should be in the history somewhere.",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1213ddd6_f416f9b9",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-12-07T11:45:01Z",
+      "side": 1,
+      "message": "Yes, just re-using a link I created for GDD. g.co probably better, I\u0027ll create a new one.",
+      "parentUuid": "950f96cb_c6eb561b",
       "range": {
         "startLine": 41,
         "startChar": 19,
