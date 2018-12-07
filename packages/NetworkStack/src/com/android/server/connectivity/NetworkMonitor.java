@@ -31,7 +31,9 @@ import static android.net.metrics.ValidationProbeEvent.DNS_SUCCESS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_FALLBACK;
 import static android.net.metrics.ValidationProbeEvent.PROBE_PRIVDNS;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.StringRes;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -78,6 +80,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Protocol;
@@ -109,13 +112,6 @@ public class NetworkMonitor extends StateMachine {
     private static final boolean DBG  = true;
     private static final boolean VDBG = false;
     private static final boolean VDBG_STALL = Log.isLoggable(TAG, Log.DEBUG);
-    // Default configuration values for captive portal detection probes.
-    // TODO: append a random length parameter to the default HTTPS url.
-    // TODO: randomize browser version ids in the default User-Agent String.
-    private static final String DEFAULT_HTTPS_URL = "https://www.google.com/generate_204";
-    private static final String DEFAULT_FALLBACK_URL  = "http://www.google.com/gen_204";
-    private static final String DEFAULT_OTHER_FALLBACK_URLS =
-            "http://play.googleapis.com/generate_204";
     private static final String DEFAULT_USER_AGENT    = "Mozilla/5.0 (X11; Linux x86_64) "
                                                       + "AppleWebKit/537.36 (KHTML, like Gecko) "
                                                       + "Chrome/60.0.3112.32 Safari/537.36";
@@ -1094,8 +1090,8 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private String getCaptivePortalServerHttpsUrl() {
-        return mDependencies.getSetting(mContext,
-                Settings.Global.CAPTIVE_PORTAL_HTTPS_URL, DEFAULT_HTTPS_URL);
+        return mDependencies.getSettingFromResource(mContext,
+                R.string.config_captive_portal_https_url, Settings.Global.CAPTIVE_PORTAL_HTTPS_URL);
     }
 
     private int getConsecutiveDnsTimeoutThreshold() {
@@ -1124,11 +1120,12 @@ public class NetworkMonitor extends StateMachine {
     private URL[] makeCaptivePortalFallbackUrls() {
         try {
             String separator = ",";
-            String firstUrl = mDependencies.getSetting(mContext,
-                    Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
-            String joinedUrls = firstUrl + separator + mDependencies.getSetting(mContext,
-                    Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS,
-                    DEFAULT_OTHER_FALLBACK_URLS);
+            String firstUrl = mDependencies.getSettingFromResource(mContext,
+                    R.string.config_captive_portal_fallback_url,
+                    Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL);
+            String joinedUrls = firstUrl + separator + mDependencies.getSettingFromResource(
+                    mContext, R.string.config_captive_portal_other_fallback_urls,
+                    Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS);
             List<URL> urls = new ArrayList<>();
             for (String s : joinedUrls.split(separator)) {
                 URL u = makeURL(s);
@@ -1150,8 +1147,9 @@ public class NetworkMonitor extends StateMachine {
 
     private CaptivePortalProbeSpec[] makeCaptivePortalFallbackProbeSpecs() {
         try {
-            final String settingsValue = mDependencies.getSetting(
-                    mContext, Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS, null);
+            final String settingsValue = mDependencies.getSettingFromResource(
+                    mContext, R.string.config_captive_portal_fallback_probe_specs,
+                    Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS);
             // Probe specs only used if configured in settings
             if (TextUtils.isEmpty(settingsValue)) {
                 return null;
@@ -1639,6 +1637,22 @@ public class NetworkMonitor extends StateMachine {
         public String getSetting(Context context, String symbol, String defaultValue) {
             final String value = Settings.Global.getString(context.getContentResolver(), symbol);
             return value != null ? value : defaultValue;
+        }
+
+        /**
+         * Read a setting from a resource
+         * If a provider value is set it will override the resource.
+         *
+         * @param context The context
+         * @param resource The resource id
+         * @param symbol The symbol in the settings provider
+         * @return The best available value
+         */
+        @Nullable
+        public String getSettingFromResource(@NonNull final Context context,
+                                             @StringRes int resource, @NonNull String symbol) {
+            // For emergency reasons we will prioritize the provider setting
+            return getSetting(context, symbol, context.getResources().getString(resource));
         }
 
         public static final Dependencies DEFAULT = new Dependencies();
