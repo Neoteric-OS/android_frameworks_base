@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9590dd24_915ef9b7",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-12-07T11:37:36Z",
+      "side": 1,
+      "message": "I would be inclined to use \u0027public API\u0027 here, but i understand it brings in a new term. A method being a \"part of SDK\" sounds weird, but maybe that\u0027s the least confusing way of saying it.",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b322ba47_21493f68",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-12-07T11:37:36Z",
+      "side": 1,
+      "message": "that/which",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950f96cb_c6eb561b",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-12-07T11:37:36Z",
+      "side": 1,
+      "message": "isn\u0027t goo.gl deprecated? we had a \u0027g.co\u0027 link in the Toasts. should be in the history somewhere.",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "fdedaf7e13c0939cf53a43030e79234b9f9a684f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
