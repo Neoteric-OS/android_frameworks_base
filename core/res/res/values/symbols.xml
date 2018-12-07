@@ -3422,4 +3422,12 @@
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index3" />
 
   <java-symbol type="string" name="config_defaultAssistantComponentName" />
+
+  <!-- For captive portal -->
+  <java-symbol type="string" name="config_captive_portal_http_url" />
+  <java-symbol type="string" name="config_captive_portal_https_url" />
+  <java-symbol type="string" name="config_captive_portal_fallback_url" />
+  <java-symbol type="string" name="config_captive_portal_other_fallback_urls" />
+  <java-symbol type="string" name="config_captive_portal_fallback_probe_specs" />
+
 </resources>
