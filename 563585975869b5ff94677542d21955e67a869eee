@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a945e6f_4ba13da5",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-12-10T10:54:13Z",
+      "side": 1,
+      "message": "nit: if (!GetBootProperty...",
+      "range": {
+        "startLine": 277,
+        "startChar": 52,
+        "endLine": 277,
+        "endChar": 61
+      },
+      "revId": "563585975869b5ff94677542d21955e67a869eee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
