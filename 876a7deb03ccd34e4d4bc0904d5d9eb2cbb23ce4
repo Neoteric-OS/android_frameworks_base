@@ -52,6 +52,24 @@
       "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34d00aed_276c57d7",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1064128
+      },
+      "writtenOn": "2018-12-10T17:25:27Z",
+      "side": 1,
+      "message": "But seriously, we shouldn\u0027t use persist.core.enabled.  \u0027core\u0027 is way too generic of a term and ignoring persist, that next position is meant to form a sort of namespace.\n\nIf this is ART specific, why isn\u0027t this re-using persist.dalvik as the namespace?  persist.dalvik.core_dump would be a much better name.  Or persist.dalvik.core_dump.enabled if you don\u0027t think \u0027enabled\u0027 is redundant.",
+      "parentUuid": "799f5fdc_b118b049",
+      "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
