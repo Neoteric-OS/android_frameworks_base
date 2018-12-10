@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f628e9bf_9785f078",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-10T21:59:01Z",
+      "side": 1,
+      "message": "Elaborate more here. Total capacity of SMS storage on the SIM card or the remaining SMS capacity on the ICC card? Also, this should probably be \"Get the remaining capacity count of SMS on RUIM and UICC cards.\" (specify which types of SIM cards this API will work for.)",
+      "range": {
+        "startLine": 1386,
+        "startChar": 7,
+        "endLine": 1386,
+        "endChar": 48
+      },
+      "revId": "cb48f81b8848361cfd57e79dbcd6aa12fa4ac9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c4f63e_776be5b1",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-10T21:59:01Z",
+      "side": 1,
+      "message": "Update this comment as well.",
+      "range": {
+        "startLine": 1388,
+        "startChar": 15,
+        "endLine": 1388,
+        "endChar": 52
+      },
+      "revId": "cb48f81b8848361cfd57e79dbcd6aa12fa4ac9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2ebd20_c2435117",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-10T21:59:01Z",
+      "side": 1,
+      "message": "Add annotation for \"@RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)\" here.",
+      "range": {
+        "startLine": 1392,
+        "startChar": 15,
+        "endLine": 1392,
+        "endChar": 34
+      },
+      "revId": "cb48f81b8848361cfd57e79dbcd6aa12fa4ac9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
