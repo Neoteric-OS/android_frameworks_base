@@ -88,6 +88,24 @@
       "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a40ba69_01d87422",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2018-12-10T20:37:05Z",
+      "side": 1,
+      "message": "Given this is in the zygote and there is already a ro.zygote branch, then how about persist.zygote.core_dump?\n\n\u003cyou choice here\u003e",
+      "parentUuid": "34d00aed_276c57d7",
+      "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
