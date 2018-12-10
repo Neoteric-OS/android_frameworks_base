@@ -70,6 +70,24 @@
       "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88e38f8_1fb98257",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-12-10T19:42:42Z",
+      "side": 1,
+      "message": "This isn\u0027t about ART, though. So the \"dalvik\" namespace does not fit, either. This is about \"native debuggability\" of \"app\" processes.",
+      "parentUuid": "34d00aed_276c57d7",
+      "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
