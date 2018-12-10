@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cda9fca8_c682be5d",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1163305
+      },
+      "writtenOn": "2018-12-10T02:24:47Z",
+      "side": 1,
+      "message": "String.startsWith() should be more appropriate, but it is not a matter.",
+      "range": {
+        "startLine": 381,
+        "startChar": 34,
+        "endLine": 381,
+        "endChar": 42
+      },
+      "revId": "93caf27d8774e273d1b6f69e8286d50340b7c7a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
