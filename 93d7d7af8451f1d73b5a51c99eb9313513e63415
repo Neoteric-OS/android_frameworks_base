@@ -22,6 +22,29 @@
       "revId": "93d7d7af8451f1d73b5a51c99eb9313513e63415",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07da5e1d_122d6cce",
+        "filename": "core/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-10T13:11:42Z",
+      "side": 1,
+      "message": "If mFd is checked from another thread like this, should it be made volatile?",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 44
+      },
+      "revId": "93d7d7af8451f1d73b5a51c99eb9313513e63415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
