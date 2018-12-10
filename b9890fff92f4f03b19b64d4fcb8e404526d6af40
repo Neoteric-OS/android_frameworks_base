@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa7404fc_4eb66e16",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-10T14:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab018f0_78111978",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 89
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a3b074_ba755eb0",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d684939a_230f92a1",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-10T14:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a3b074_ba755eb0",
+      "range": {
+        "startLine": 198,
+        "startChar": 5,
+        "endLine": 198,
+        "endChar": 98
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30338f8_79d2b1ff",
         "filename": "tests/net/jni/apf_jni.cpp",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1aa36e_490a4682",
+        "filename": "tests/net/jni/apf_jni.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-10T14:09:05Z",
+      "side": 1,
+      "message": "dropsAllPackets() asserts true to determine this test case is pass or failure. If it\u0027s simplified to you mentioned above, it needs to have another variable(like patchset 3) to know is there any packet passes the filter(we expect all packets should be dropped.).\n\nWe can know which packet passes filter by the APF counter if we return false immediately.\n\nThe reason to write the data back in true case is the documentation of dropsAllPackets() says \"populates data[] {@code data} with the APF counters\"(I add log in ApfTest.java). It could be removed but the documentation should say \"only populates the counters on failure\".",
+      "parentUuid": "a30338f8_79d2b1ff",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "b9890fff92f4f03b19b64d4fcb8e404526d6af40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
