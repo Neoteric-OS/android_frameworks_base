@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6833a3_280211a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-10T11:31:14Z",
+      "side": 1,
+      "message": "commit message length is 65 char max suggested by lorenzo.",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "b1ec645ac43514a07bd4f76892b0b5abe8bfab2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c019f54_7ae7b21d",
+        "filename": "tests/net/java/android/net/dhcp/DhcpPacketTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-10T11:31:14Z",
+      "side": 1,
+      "message": "Should be unused since above import already cover it?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "b1ec645ac43514a07bd4f76892b0b5abe8bfab2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
