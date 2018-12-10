@@ -142,6 +142,24 @@
       "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f7c0c9_9b8c57a0",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2018-12-10T21:05:50Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "5a519730_d60ef8e8",
+      "revId": "876a7deb03ccd34e4d4bc0904d5d9eb2cbb23ce4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
