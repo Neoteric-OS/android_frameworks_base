@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66529ed8_c1aa5f46",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1259546
+      },
+      "writtenOn": "2018-12-11T09:34:08Z",
+      "side": 1,
+      "message": "We have observed on the market devices supporting off host CE to both SIM1 and SIM2, while most devices only support it to SIM1 at the moment.\n\nwhat about creating \nFEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC1 \u003d\u003d\u003eSIM1\nFEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC2 \u003d\u003d\u003eSIM2\n\nThis would allow an app to be more confident about SE that support CardEmulation on dual SIM devices.\n\nThe aim is not to impose OEMs to support CE to both SIM1 \u0026 SIM2 but to allow applications to detect precisely which slot UICC support CE.",
+      "range": {
+        "startLine": 509,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 37
+      },
+      "revId": "21f1717046586fe3e4073f1bb678b5465af1a411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
