@@ -1541,7 +1541,7 @@ droidstubs {
     ],
     installable: false,
     no_framework_libs: true,
-    annotations_enabled: true,
+    annotations_enabled: false,
     previous_api: ":last-released-public-api",
     merge_annotations_dirs: [
         "metalava-manual",
