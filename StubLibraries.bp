@@ -440,7 +440,7 @@ droidstubs {
     ],
     installable: false,
     sdk_version: "core_platform",
-    annotations_enabled: true,
+    annotations_enabled: false,
     previous_api: ":android.api.public.latest",
     merge_annotations_dirs: [
         "metalava-manual",
