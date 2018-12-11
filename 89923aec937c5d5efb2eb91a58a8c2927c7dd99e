@@ -141,6 +141,29 @@
     },
     {
       "key": {
+        "uuid": "7a9b01f2_72ad6328",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2018-12-11T10:02:27Z",
+      "side": 1,
+      "message": "Amruth defined downlink and uplink quality level at QC IMS HAL.\nCould you separate them as well?",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14081392_f75ecc56",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
