@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "749be65e_4482cab6",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2688,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-11T21:15:14Z",
+      "side": 1,
+      "message": "either we define a new URL with SUBID or we have a public API getUriForSubscriptionId() but that might not work for all URLs because some are URL/subid/# some are URL/*\nI personally felt having a getUriForSubscriptionId might be more useful for all APN related content, but we need to be careful to make sure its really working",
+      "parentUuid": "eff376ff_4fb74e04",
+      "range": {
+        "startLine": 2682,
+        "startChar": 9,
+        "endLine": 2688,
+        "endChar": 11
+      },
+      "revId": "2ab7c94ed38294c9431a60c60b4472717b2a6153",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a73443a_c6ebfad4",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 3
