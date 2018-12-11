@@ -1169,6 +1169,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
         @Override
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
+            close();
             mService = null;
             mHandler.sendMessage(mHandler.obtainMessage(
                     MESSAGE_HEADSET_SERVICE_DISCONNECTED));
