@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc113257_25bf8554",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you should use a String here if it\u0027s going to be compressed -- use a byte[] instead and specify that it\u0027s ASCII/UTF8-encoded text if not compressed?",
+      "range": {
+        "startLine": 245,
+        "startChar": 51,
+        "endLine": 245,
+        "endChar": 57
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178aa8b3_cf001e86",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "Parcelable classes should be final",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 12
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4b5d97_bf1e0715",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "extraneous?",
+      "range": {
+        "startLine": 120,
+        "startChar": 90,
+        "endLine": 120,
+        "endChar": 91
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ef4f19_977d8037",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "the?",
+      "range": {
+        "startLine": 132,
+        "startChar": 85,
+        "endLine": 132,
+        "endChar": 88
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf22e485_6ac44629",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "Any reason for using a string array? Vendor request? I generally find lists to be easier to deal with",
+      "range": {
+        "startLine": 242,
+        "startChar": 20,
+        "endLine": 242,
+        "endChar": 28
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e47e9e_6444ee50",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "Start it at 1 in case you have to put this into a metrics proto at some point",
+      "range": {
+        "startLine": 115,
+        "startChar": 51,
+        "endLine": 115,
+        "endChar": 52
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c580c039_548c1c8d",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "Adapter",
+      "range": {
+        "startLine": 191,
+        "startChar": 44,
+        "endLine": 191,
+        "endChar": 51
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c09e013_8c123475",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "link",
+      "range": {
+        "startLine": 42,
+        "startChar": 60,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2715687_cbacec8d",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 52,
+        "startChar": 92,
+        "endLine": 52,
+        "endChar": 93
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af26846_1ac84dc8",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "CAPABILITY_TYPE_",
+      "range": {
+        "startLine": 59,
+        "startChar": 26,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97ddcdb_a63f3e3d",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "add in a flag\u003dtrue",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585ce0db_a745c2ed",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "isn\u0027t this specific to presence?",
+      "range": {
+        "startLine": 68,
+        "startChar": 49,
+        "endLine": 68,
+        "endChar": 71
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e4d40f_cf22d451",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "link",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe91c427_2815401d",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "what\u0027s it?",
+      "range": {
+        "startLine": 165,
+        "startChar": 50,
+        "endLine": 165,
+        "endChar": 52
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a1efa7_079d1977",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "Do you need a constructor if it\u0027s just calling the super-constructor?",
+      "range": {
+        "startLine": 195,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 5
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94556a2c_b6c1325e",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsConfigImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "see other comment about datatype",
+      "range": {
+        "startLine": 399,
+        "startChar": 51,
+        "endLine": 399,
+        "endChar": 57
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b61a94_0537f148",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-12-11T23:42:40Z",
+      "side": 1,
+      "message": "unknown should be 0 in case you want it in a proto.",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "ad3876983ccccfc2ea3cfc94a73f53a23206448c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
