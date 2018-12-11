@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23211fde_620d4aaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T08:01:11Z",
+      "side": 1,
+      "message": "Done - but go/commit says that the first line should be 60 characters, but the description should wrap at \"about 76 characters or so\".",
+      "parentUuid": "137554d4_06c721e5",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "93d7d7af8451f1d73b5a51c99eb9313513e63415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07da5e1d_122d6cce",
         "filename": "core/java/android/net/util/FdEventsReader.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-12-10T13:11:42Z",
       "side": 1,
       "message": "If mFd is checked from another thread like this, should it be made volatile?",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 44
+      },
+      "revId": "93d7d7af8451f1d73b5a51c99eb9313513e63415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21def7b_693afa61",
+        "filename": "core/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T08:01:11Z",
+      "side": 1,
+      "message": "I think this private method is only called on the mHandler thread, did you find a path where mFd can be used from another thread ?",
+      "parentUuid": "07da5e1d_122d6cce",
       "range": {
         "startLine": 221,
         "startChar": 8,
