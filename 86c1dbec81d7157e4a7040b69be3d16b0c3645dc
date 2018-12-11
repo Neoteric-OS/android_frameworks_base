@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c23cf51_bf50db57",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2018-12-11T17:14:13Z",
+      "side": 1,
+      "message": "I guess this doesn\u0027t work if the list elements are shuffled? But worst case you are just over-estimating the result so not a huge deal. Alternatively maybe we should really compare the UidRange set, like make NetworkCapabilities.setUids() returns a boolean indicating if anything changed? And use that to gate the sendNetworkCapabilities call.",
+      "range": {
+        "startLine": 1123,
+        "startChar": 13,
+        "endLine": 1123,
+        "endChar": 27
+      },
+      "revId": "86c1dbec81d7157e4a7040b69be3d16b0c3645dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
