@@ -1,12 +1,14 @@
 package com.android.server.networkstack;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.Service;
 import android.content.Intent;
 import android.net.INetworkStackConnector;
-import android.os.Binder;
 import android.os.IBinder;
-import android.os.Process;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * Android service used to start the network stack when bound to via an intent.
@@ -38,6 +40,13 @@ public class NetworkStackService extends Service {
         @Override
         public int getInterfaceVersion() {
             return INetworkStackConnector.VERSION;
+        }
+
+        @Override
+        protected void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter fout,
+                @Nullable String[] args) {
+            // TODO: dump logs here
+            super.dump(fd, fout, args);
         }
     }
 }

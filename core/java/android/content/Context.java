@@ -3495,6 +3495,15 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.NetworkStackConnector} for communicating with the network stack
+     * @hide
+     * @see #getSystemService(String)
+     * @see android.net.NetworkStackConnector
+     */
+    public static final String NETWORK_STACK_SERVICE = "network_stack";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.net.IpSecManager} for encrypting Sockets or Networks with
      * IPSec.
      *
