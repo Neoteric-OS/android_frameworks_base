@@ -22,6 +22,30 @@
       "revId": "21f1717046586fe3e4073f1bb678b5465af1a411",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0426c4f1_2792f591",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-12-11T20:21:25Z",
+      "side": 1,
+      "message": "IIRC the implementations which support multiple SIM cards, the SWP connection exists on both, but only one of them is active at a given time. Having a feature which doesn\u0027t cleanly manage that is something we wouldn\u0027t want to implement. I would say have this feature to just indicate if SIM or eSE based payments are supported by the device. Determining which SIM is currently active and permitted to use the NFC is outside the scope of this implementation.",
+      "parentUuid": "66529ed8_c1aa5f46",
+      "range": {
+        "startLine": 509,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 37
+      },
+      "revId": "21f1717046586fe3e4073f1bb678b5465af1a411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
