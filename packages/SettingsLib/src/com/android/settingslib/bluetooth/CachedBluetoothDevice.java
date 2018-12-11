@@ -1200,6 +1200,15 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     }
 
     /**
+     * @return {@code true} if {@code cachedBluetoothDevice} is a2dp sink device
+     */
+    public boolean isA2dpSinkDevice() {
+        A2dpSinkProfile ad2pSinkProfile = mProfileManager.getA2dpSinkProfile();
+        return a2dpSinkProfile != null && a2dpSinkProfile.getConnectionStatus(mDevice)
+                == BluetoothProfile.STATE_CONNECTED;
+    }
+
+    /**
      * @return {@code true} if {@code cachedBluetoothDevice} is HFP device
      */
     public boolean isHfpDevice() {
