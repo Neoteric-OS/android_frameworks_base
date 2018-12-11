@@ -3493,6 +3493,9 @@ public abstract class Context {
      */
     public static final String CONNECTIVITY_SERVICE = "connectivity";
 
+    /** @hide */
+    public static final String NETWORK_STACK_SERVICE = "network_stack";
+
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.net.IpSecManager} for encrypting Sockets or Networks with

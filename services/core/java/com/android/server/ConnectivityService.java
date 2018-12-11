@@ -37,6 +37,8 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
+import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_HIGH;
+import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_NORMAL;
 import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
@@ -1993,7 +1995,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_STACK_REQUEST, req));
     }
 
-    private void notifyAppConnected() {
+    @VisibleForTesting
+    protected void notifyAppConnected(NetworkStackConnector connector) {
+        mNetworkStackConnector = connector;
         for (NetworkStackRequest r : mPendingNetStackRequests) {
             r.onNetworkStackConnected(mNetworkStackConnector);
         }
@@ -2003,9 +2007,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mNetworkStackConnector = new NetworkStackConnector(
+            final NetworkStackConnector connector = new NetworkStackConnector(
                     INetworkStackConnector.Stub.asInterface(service));
-            notifyAppConnected();
+            ServiceManager.addService(Context.NETWORK_STACK_SERVICE, service, true,
+                    DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
+            notifyAppConnected(connector);
         }
 
         @Override
@@ -2014,7 +2020,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     };
 
-    private void startNetworkStackApp() {
+    @VisibleForTesting
+    protected void startNetworkStackApp() {
         // Try to bind in-process if the library is available
         IBinder connector = null;
         ReflectiveOperationException inProcessStackError = null;
@@ -2028,9 +2035,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (connector != null) {
-            mNetworkStackConnector = new NetworkStackConnector(
-                    INetworkStackConnector.Stub.asInterface(connector));
-            notifyAppConnected();
+            notifyAppConnected(new NetworkStackConnector(
+                    INetworkStackConnector.Stub.asInterface(connector)));
         } else {
             // Start the network stack process if the device does not use an in-process library
             final Intent intent = new Intent(INetworkStackConnector.class.getName());

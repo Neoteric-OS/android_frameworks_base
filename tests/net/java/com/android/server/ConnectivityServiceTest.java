@@ -114,6 +114,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
+import android.net.NetworkStackConnector;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
@@ -230,6 +231,7 @@ public class ConnectivityServiceTest {
     @Mock INetworkStatsService mStatsService;
     @Mock INetworkPolicyManager mNpm;
     @Mock INetd mMockNetd;
+    @Mock NetworkStackConnector mNetworkStackConnector;
 
     private ArgumentCaptor<String[]> mStringArrayCaptor = ArgumentCaptor.forClass(String[].class);
 
@@ -1015,6 +1017,11 @@ public class ConnectivityServiceTest {
 
         @Override
         protected void registerNetdEventCallback() {
+        }
+
+        @Override
+        protected void startNetworkStackApp() {
+            notifyAppConnected(mNetworkStackConnector);
         }
 
         public WrappedNetworkMonitor getLastCreatedWrappedNetworkMonitor() {
