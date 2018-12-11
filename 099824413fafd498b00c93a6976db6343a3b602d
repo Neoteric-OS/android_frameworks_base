@@ -22,6 +22,30 @@
       "revId": "099824413fafd498b00c93a6976db6343a3b602d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43a5572_e337ed35",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-12-11T12:31:56Z",
+      "side": 1,
+      "message": "It can be checked on GSMA TS.25 \"mobile network codes and names\" list.\nI\u0027ve attached the list file in b/117863016, please refer to b/117863016 for detail and additional information.",
+      "parentUuid": "63cfd107_b4a941d3",
+      "range": {
+        "startLine": 3521,
+        "startChar": 15,
+        "endLine": 3521,
+        "endChar": 24
+      },
+      "revId": "099824413fafd498b00c93a6976db6343a3b602d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
