@@ -2295,13 +2295,13 @@ int Link(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
   // Populate the set of extra packages for which to generate R.java.
   for (std::string& extra_package : extra_java_packages) {
     // A given package can actually be a colon separated list of packages.
-    for (StringPiece package : util::Split(extra_package, ':')) {
+    for (const StringPiece& package : util::Split(extra_package, ':')) {
       options.extra_java_packages.insert(package.to_string());
     }
   }
 
   if (product_list) {
-    for (StringPiece product : util::Tokenize(product_list.value(), ',')) {
+    for (const StringPiece& product : util::Tokenize(product_list.value(), ',')) {
       if (product != "" && product != "default") {
         options.products.insert(product.to_string());
       }

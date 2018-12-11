@@ -224,7 +224,7 @@ static int write_stats_log_cpp(FILE *out, const Atoms &atoms,
         for (vector<java_type_t>::const_iterator arg = signature->begin();
             arg != signature->end(); arg++) {
             if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     if (chainField.javaType == JAVA_TYPE_STRING) {
                             fprintf(out, ", const std::vector<%s>& %s",
                                  cpp_type_name(chainField.javaType),
@@ -306,7 +306,7 @@ static int write_stats_log_cpp(FILE *out, const Atoms &atoms,
        for (vector<java_type_t>::const_iterator arg = signature->begin();
            arg != signature->end(); arg++) {
            if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-               for (auto chainField : attributionDecl.fields) {
+               for (const auto& chainField : attributionDecl.fields) {
                    if (chainField.javaType == JAVA_TYPE_STRING) {
                            fprintf(out, ", const std::vector<%s>& %s",
                                 cpp_type_name(chainField.javaType),
@@ -334,7 +334,7 @@ static int write_stats_log_cpp(FILE *out, const Atoms &atoms,
        for (vector<java_type_t>::const_iterator arg = signature->begin();
            arg != signature->end(); arg++) {
            if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-               for (auto chainField : attributionDecl.fields) {
+               for (const auto& chainField : attributionDecl.fields) {
                    if (chainField.javaType == JAVA_TYPE_STRING) {
                            fprintf(out, ", %s",
                                 chainField.name.c_str());
@@ -480,7 +480,7 @@ static void write_cpp_usage(
     for (vector<AtomField>::const_iterator field = atom.fields.begin();
             field != atom.fields.end(); field++) {
         if (field->javaType == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-            for (auto chainField : attributionDecl.fields) {
+            for (const auto& chainField : attributionDecl.fields) {
                 if (chainField.javaType == JAVA_TYPE_STRING) {
                     fprintf(out, ", const std::vector<%s>& %s",
                          cpp_type_name(chainField.javaType),
@@ -508,7 +508,7 @@ static void write_cpp_method_header(
         for (vector<java_type_t>::const_iterator arg = signature->begin();
             arg != signature->end(); arg++) {
             if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     if (chainField.javaType == JAVA_TYPE_STRING) {
                         fprintf(out, ", const std::vector<%s>& %s",
                             cpp_type_name(chainField.javaType), chainField.name.c_str());
@@ -649,7 +649,7 @@ static void write_java_method(
         for (vector<java_type_t>::const_iterator arg = signature->begin();
             arg != signature->end(); arg++) {
             if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     fprintf(out, ", %s[] %s",
                         java_type_name(chainField.javaType), chainField.name.c_str());
                 }
@@ -905,7 +905,7 @@ jni_function_signature(const vector<java_type_t>& signature, const AtomDecl &att
     for (vector<java_type_t>::const_iterator arg = signature.begin();
         arg != signature.end(); arg++) {
         if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-            for (auto chainField : attributionDecl.fields) {
+            for (const auto& chainField : attributionDecl.fields) {
                 result += "[";
                 result += java_type_signature(chainField.javaType);
             }
@@ -933,7 +933,7 @@ write_stats_log_jni(FILE* out, const string& java_method_name, const string& cpp
         for (vector<java_type_t>::const_iterator arg = signature->begin();
                 arg != signature->end(); arg++) {
             if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     fprintf(out, ", %s %s", jni_array_type_name(chainField.javaType),
                         chainField.name.c_str());
                 }
@@ -962,7 +962,7 @@ write_stats_log_jni(FILE* out, const string& java_method_name, const string& cpp
                 fprintf(out, "    }\n");
             } else if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
                 hadStringOrChain = true;
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     fprintf(out, "    size_t %s_length = env->GetArrayLength(%s);\n",
                         chainField.name.c_str(), chainField.name.c_str());
                     if (chainField.name != attributionDecl.fields.front().name) {
@@ -1016,7 +1016,7 @@ write_stats_log_jni(FILE* out, const string& java_method_name, const string& cpp
         for (vector<java_type_t>::const_iterator arg = signature->begin();
                 arg != signature->end(); arg++) {
             if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     if (chainField.javaType == JAVA_TYPE_INT) {
                         fprintf(out, ", (const %s*)%s_array, %s_length",
                             cpp_type_name(chainField.javaType),
@@ -1044,7 +1044,7 @@ write_stats_log_jni(FILE* out, const string& java_method_name, const string& cpp
                         argIndex, argIndex);
                 fprintf(out, "    }\n");
             } else if (*arg == JAVA_TYPE_ATTRIBUTION_CHAIN) {
-                for (auto chainField : attributionDecl.fields) {
+                for (const auto& chainField : attributionDecl.fields) {
                     if (chainField.javaType == JAVA_TYPE_INT) {
                         fprintf(out, "    env->ReleaseIntArrayElements(%s, %s_array, 0);\n",
                             chainField.name.c_str(), chainField.name.c_str());

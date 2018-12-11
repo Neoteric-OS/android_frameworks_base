@@ -122,7 +122,7 @@ void Flags::Usage(const StringPiece& command, std::ostream* out) {
     // the first line) followed by the description line. This will make sure
     // that multiline
     // descriptions are still right justified and aligned.
-    for (StringPiece line : util::Tokenize(flag.description, '\n')) {
+    for (const StringPiece& line : util::Tokenize(flag.description, '\n')) {
       *out << " " << std::setw(kWidth) << std::left << argline << line << "\n";
       argline = " ";
     }
