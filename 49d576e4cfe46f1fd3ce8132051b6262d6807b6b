@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4adcf4ad_6ff53ffb",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T11:09:05Z",
+      "side": 1,
+      "message": "I understand you don\u0027t support setting the exclusion list or PAC file URL in UI, but I think they should still be encoded and decoded. Importantly, if it is going to be possible to set this programmatically later it would be surprising that the fields are not decoded.",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 23
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc881ff_82c7eea7",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T11:09:05Z",
+      "side": 1,
+      "message": "What if the host or port contains a \u0027\\0\u0027 ?\nHere, the decoding code will test for length and catch any exception so it\u0027s probably safe, but you should probably at least write a comment (or possibly the code to actually reject a proxyinfo that contains a \\0 in either of these values, or better yet somehow escape it).",
+      "range": {
+        "startLine": 192,
+        "startChar": 58,
+        "endLine": 192,
+        "endChar": 65
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d8a1d6_d31a54a0",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T11:09:05Z",
+      "side": 1,
+      "message": "So if there is a host, but the port is 0, we simply don\u0027t change the previous value ? That sounds counter-intuitive.\n\nHonestly I think this should simply read\n\nsynchronized (mProxyLock) {\n  mVPNProxy \u003d proxyInfo;\n}",
+      "range": {
+        "startLine": 343,
+        "startChar": 12,
+        "endLine": 343,
+        "endChar": 86
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
