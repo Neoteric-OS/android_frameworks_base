@@ -22,20 +22,25 @@ import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
+import android.provider.Settings.Global;
 import android.util.Slog;
 import android.util.SparseArray;
+
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.IoThreadOnly;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.DevicePollingCallback;
+
+import libcore.util.EmptyArray;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.concurrent.ArrayBlockingQueue;
-import libcore.util.EmptyArray;
+import java.util.function.Predicate;
+
 import sun.util.locale.LanguageTag;
 
 /**
@@ -463,6 +468,14 @@ final class HdmiCecController {
         if (candidates.isEmpty()) {
             if (callback != null) {
                 HdmiLogger.debug("[P]:AllocatedAddress=%s", allocated.toString());
+                callback.onPollingFinished(allocated);
+            }
+            return;
+        }
+
+        if (!mService.readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true)) {
+            Slog.w(TAG, "runDevicePolling CEC Off");
+            if (callback != null) {
                 callback.onPollingFinished(allocated);
             }
             return;

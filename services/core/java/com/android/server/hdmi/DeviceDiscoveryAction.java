@@ -17,6 +17,7 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.provider.Settings.Global;
 import android.util.Slog;
 
 import com.android.internal.util.Preconditions;
@@ -89,6 +90,8 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
     private final DeviceDiscoveryCallback mCallback;
     private int mProcessedDeviceCount = 0;
     private int mTimeoutRetry = 0;
+    private final HdmiControlService mService;
+    private final HdmiCecLocalDevice mSource;
 
     /**
      * Constructor.
@@ -97,6 +100,8 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
      */
     DeviceDiscoveryAction(HdmiCecLocalDevice source, DeviceDiscoveryCallback callback) {
         super(source);
+        mSource = source;
+        mService = mSource.getService();
         mCallback = Preconditions.checkNotNull(callback);
     }
 
@@ -111,6 +116,11 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
                 if (ackedAddress.isEmpty()) {
                     Slog.v(TAG, "No device is detected.");
                     wrapUpAndFinish();
+                    return;
+                }
+
+                if (!mService.readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true)) {
+                    Slog.w(TAG, "onPollingFinished CEC Off");
                     return;
                 }
 
