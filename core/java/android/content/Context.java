@@ -4185,6 +4185,15 @@ public abstract class Context {
     public static final String STATS_MANAGER = "stats";
 
     /**
+     * Service to capture a bugreport.
+     * @see #getSystemService(String)
+     * @see android.os.BugreportManager
+     * @hide
+     */
+    @SystemApi
+    public static final String BUGREPORT_SERVICE = "bugreport";
+
+    /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link
      * android.content.om.OverlayManager} for managing overlay packages.
      *

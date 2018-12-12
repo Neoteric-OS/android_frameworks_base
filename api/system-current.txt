@@ -852,6 +852,7 @@ package android.content {
     method public abstract void sendBroadcastAsUser(android.content.Intent, android.os.UserHandle, java.lang.String, android.os.Bundle);
     method public abstract void sendOrderedBroadcast(android.content.Intent, java.lang.String, android.os.Bundle, android.content.BroadcastReceiver, android.os.Handler, int, java.lang.String, android.os.Bundle);
     field public static final java.lang.String BACKUP_SERVICE = "backup";
+    field public static final java.lang.String BUGREPORT_SERVICE = "bugreport";
     field public static final java.lang.String CONTEXTHUB_SERVICE = "contexthub";
     field public static final java.lang.String EUICC_CARD_SERVICE = "euicc_card";
     field public static final java.lang.String HDMI_CONTROL_SERVICE = "hdmi_control";
@@ -3667,6 +3668,23 @@ package android.os {
   public class BatteryManager {
     field public static final java.lang.String EXTRA_EVENTS = "android.os.extra.EVENTS";
     field public static final java.lang.String EXTRA_EVENT_TIMESTAMP = "android.os.extra.EVENT_TIMESTAMP";
+  }
+
+  public class BugreportManager {
+    ctor public BugreportManager(android.content.Context);
+    method public void startBugreport(android.os.BugreportParams, android.os.BugreportManager.BugreportListener);
+  }
+
+  public static abstract interface BugreportManager.BugreportListener {
+  }
+
+  public class BugreportParams {
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_FULL;
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_INTERACTIVE;
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_REMOTE;
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_TELEPHONY;
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_WEAR;
+    field public static final android.os.BugreportParams BUGREPORT_PARAMS_WIFI;
   }
 
   public final class ConfigUpdate {

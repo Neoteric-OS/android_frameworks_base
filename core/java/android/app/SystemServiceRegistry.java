@@ -106,6 +106,7 @@ import android.net.wifi.rtt.WifiRttManager;
 import android.nfc.NfcManager;
 import android.os.BatteryManager;
 import android.os.BatteryStats;
+import android.os.BugreportManager;
 import android.os.Build;
 import android.os.DeviceIdleManager;
 import android.os.DropBoxManager;
@@ -950,6 +951,14 @@ final class SystemServiceRegistry {
             public IncidentManager createService(ContextImpl ctx) throws ServiceNotFoundException {
                 return new IncidentManager(ctx);
             }});
+
+        registerService(Context.BUGREPORT_SERVICE, BugreportManager.class,
+                new CachedServiceFetcher<BugreportManager>() {
+                    @Override
+                    public BugreportManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        return new BugreportManager(ctx);
+                    }});
 
         registerService(Context.AUTOFILL_MANAGER_SERVICE, AutofillManager.class,
                 new CachedServiceFetcher<AutofillManager>() {
