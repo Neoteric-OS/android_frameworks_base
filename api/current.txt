@@ -40855,6 +40855,7 @@ package android.system {
     field public static final int SIOCGIFBRDADDR;
     field public static final int SIOCGIFDSTADDR;
     field public static final int SIOCGIFNETMASK;
+    field public static final int SOCK_CLOEXEC;
     field public static final int SOCK_DGRAM;
     field public static final int SOCK_RAW;
     field public static final int SOCK_SEQPACKET;
