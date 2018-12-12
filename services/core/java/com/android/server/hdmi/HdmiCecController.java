@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.os.SystemProperties;
+import android.provider.Settings.Global;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -489,6 +490,14 @@ final class HdmiCecController {
         if (candidates.isEmpty()) {
             if (callback != null) {
                 HdmiLogger.debug("[P]:AllocatedAddress=%s", allocated.toString());
+                callback.onPollingFinished(allocated);
+            }
+            return;
+        }
+
+        if (!mService.readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true)) {
+            Slog.w(TAG, "runDevicePolling CEC Off");
+            if (callback != null) {
                 callback.onPollingFinished(allocated);
             }
             return;

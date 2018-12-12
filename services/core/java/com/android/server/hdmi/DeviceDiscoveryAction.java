@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.provider.Settings.Global;
 import android.util.Slog;
 
 import com.android.internal.util.Preconditions;
@@ -130,6 +131,12 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
                 if (ackedAddress.isEmpty()) {
                     Slog.v(TAG, "No device is detected.");
                     wrapUpAndFinish();
+                    return;
+                }
+
+                if (!localDevice().getService()
+                        .readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true)) {
+                    Slog.w(TAG, "onPollingFinished CEC Off");
                     return;
                 }
 
