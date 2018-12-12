@@ -803,6 +803,7 @@ package android.content {
     method public abstract void sendBroadcastAsUser(android.content.Intent, android.os.UserHandle, java.lang.String, android.os.Bundle);
     method public abstract void sendOrderedBroadcast(android.content.Intent, java.lang.String, android.os.Bundle, android.content.BroadcastReceiver, android.os.Handler, int, java.lang.String, android.os.Bundle);
     field public static final java.lang.String BACKUP_SERVICE = "backup";
+    field public static final java.lang.String BUGREPORT_SERVICE = "bugreport";
     field public static final java.lang.String CONTEXTHUB_SERVICE = "contexthub";
     field public static final java.lang.String EUICC_CARD_SERVICE = "euicc_card";
     field public static final java.lang.String HDMI_CONTROL_SERVICE = "hdmi_control";
@@ -3623,6 +3624,35 @@ package android.os {
   public class BatteryManager {
     field public static final java.lang.String EXTRA_EVENTS = "android.os.extra.EVENTS";
     field public static final java.lang.String EXTRA_EVENT_TIMESTAMP = "android.os.extra.EVENT_TIMESTAMP";
+  }
+
+  public class BugreportManager {
+    method public void startBugreport(java.io.FileDescriptor, java.io.FileDescriptor, android.os.BugreportParams, android.os.BugreportManager.BugreportListener);
+  }
+
+  public static abstract interface BugreportManager.BugreportListener {
+    method public abstract void onError(int);
+    method public abstract void onFinished(long, java.lang.String, java.lang.String);
+    method public abstract void onProgress(float);
+    field public static final int BUGREPORT_ERROR_INVALID_INPUT = 1; // 0x1
+    field public static final int BUGREPORT_ERROR_RUNTIME = 2; // 0x2
+  }
+
+  public static abstract class BugreportManager.BugreportListener.BugreportErrorCode implements java.lang.annotation.Annotation {
+  }
+
+  public final class BugreportParams {
+    ctor public BugreportParams(int);
+    method public int getMode();
+    field public static final int BUGREPORT_MODE_FULL = 0; // 0x0
+    field public static final int BUGREPORT_MODE_INTERACTIVE = 1; // 0x1
+    field public static final int BUGREPORT_MODE_REMOTE = 2; // 0x2
+    field public static final int BUGREPORT_MODE_TELEPHONY = 4; // 0x4
+    field public static final int BUGREPORT_MODE_WEAR = 3; // 0x3
+    field public static final int BUGREPORT_MODE_WIFI = 5; // 0x5
+  }
+
+  public static abstract class BugreportParams.BugreportMode implements java.lang.annotation.Annotation {
   }
 
   public final class ConfigUpdate {
