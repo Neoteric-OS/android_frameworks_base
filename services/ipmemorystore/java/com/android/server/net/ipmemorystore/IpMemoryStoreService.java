@@ -19,6 +19,7 @@ package com.android.server.net.ipmemorystore;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.IIpMemoryStore;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
@@ -37,10 +38,23 @@ import android.net.ipmemorystore.NetworkAttributesParceled;
  * @hide
  */
 public class IpMemoryStoreService extends IIpMemoryStore.Stub {
+    @NonNull
     final Context mContext;
+    @NonNull
+    final SQLiteDatabase mDb;
 
+    // Note that constructing the service will access the disk and block
+    // for some time, but it should make no difference to the clients. Because
+    // the interface is one-way, clients fire and forget requests, and the callback
+    // will get called eventually in any case, and the framework will wait for the
+    // service to be created to deliver subsequent requests.
+    // Avoiding this would mean the mDb member can't be final nor can it be non-null,
+    // which means the service would have to test for nullity and allow for a wait
+    // at every single access, which would make the code a lot more complex.
     public IpMemoryStoreService(@NonNull final Context context) {
         mContext = context;
+        final IpMemoryStoreDatabase.DbHelper helper = new IpMemoryStoreDatabase.DbHelper(context);
+        mDb = helper.getWritableDatabase();
     }
 
     /**
