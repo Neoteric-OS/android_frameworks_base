@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98778dcf_a61ca77a",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2018-12-12T22:05:39Z",
+      "side": 0,
+      "message": "You need to replace this with libunwindstack. Unfortunately, you won\u0027t get a compile time failure, just a failure to load a library when this test runs.\n\nThis test appears to have been broken for a very long time, which is why the fact that it doesn\u0027t have libunwindstack has not been noticed (b/111736653).",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "a36a69a9e68e4e4397f426089f6e8cb0fe5e6634",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
