@@ -9,4 +9,4 @@ reminv@google.com
 satk@google.com
 silberst@google.com
 
-per-file SSL*, Uri*, Url* = flooey@google.com, narayan@google.com, tobiast@google.com
+per-file SSL*, Uri*, Url*, InetAddresses.java, NetworkUtils.java = flooey@google.com, narayan@google.com, tobiast@google.com
