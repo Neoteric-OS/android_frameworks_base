@@ -22,6 +22,30 @@
       "revId": "294a630303eafccb4aba9ffd5e41b0333a441892",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6121da1_a0927f21",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-12-12T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95d3d50_5c9e6c33",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "294a630303eafccb4aba9ffd5e41b0333a441892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
