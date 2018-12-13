@@ -58,4 +58,12 @@ public class Status implements Parcelable {
             return new Status[size];
         }
     };
+
+    /** Pretty print */
+    public String toString() {
+        switch (resultCode) {
+            case SUCCESS: return "SUCCESS";
+            default: return "Unknown value ?!";
+        }
+    }
 }
