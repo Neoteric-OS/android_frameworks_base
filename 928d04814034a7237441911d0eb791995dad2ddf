@@ -94,6 +94,30 @@
       "revId": "928d04814034a7237441911d0eb791995dad2ddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c481ab8_dc876686",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:57:42Z",
+      "side": 1,
+      "message": "If we can\u0027t think of a case that used to be bad, then yes I suppose so.",
+      "parentUuid": "f6fa89f0_de96f5ec",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
