@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1977300_94e1da17",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-12-13T02:19:05Z",
+      "side": 1,
+      "message": "Looks like NetworkInfo takes a network type. I could give it an existing type, but I wanted to make sure there is minimal overlap if possible. Added a TODO to remove this",
+      "parentUuid": "0d9406aa_473529f4",
+      "range": {
+        "startLine": 653,
+        "startChar": 0,
+        "endLine": 660,
+        "endChar": 43
+      },
+      "revId": "b3e9fb777865990623194e25fb7712f5fa2d5f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1069dd1c_8cba15e8",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "b3e9fb777865990623194e25fb7712f5fa2d5f03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b570b5d_e01c7ddf",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-12-13T02:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1069dd1c_8cba15e8",
+      "range": {
+        "startLine": 637,
+        "startChar": 47,
+        "endLine": 637,
+        "endChar": 50
+      },
+      "revId": "b3e9fb777865990623194e25fb7712f5fa2d5f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
