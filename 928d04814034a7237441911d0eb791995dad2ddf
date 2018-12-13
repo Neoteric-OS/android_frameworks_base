@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec086446_717ec211",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2018-12-13T08:56:52Z",
+      "side": 1,
+      "message": "Yes, the networkagents don\u0027t send LP with private dns for current design.\nSo...I wonder if we really need this test?",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
