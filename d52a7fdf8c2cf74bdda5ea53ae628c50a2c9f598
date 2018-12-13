@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24afbd7a_b08f508b",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T12:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344af6b6_a05c0bbd",
+      "range": {
+        "startLine": 960,
+        "startChar": 52,
+        "endLine": 960,
+        "endChar": 55
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5fa9eb_30b5b236",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "df73ddd6_2a23d99f",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T12:59:03Z",
+      "side": 1,
+      "message": "I\u0027ll check on the native side. Also does anyone know if @RequiresPermission enforces a permission?",
+      "parentUuid": "eb5fa9eb_30b5b236",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a06781_6d7d218a",
         "filename": "core/java/android/os/BugreportParams.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-12-13T11:51:09Z",
       "side": 1,
       "message": "I think it would be acceptable to have this be an inner class of BugreportManager. Or, maybe even just have the ints in there directly and pass the int param into the startBugreport() directly? That avoids pre-creating all of these static classes. Eg:\n\nBugreportManager.startBugreport(..., BugreportManager.MODE_FULL, ...)?",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80fab47_22d051f9",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T12:59:03Z",
+      "side": 1,
+      "message": "I want to remove the int modes in the future (will try for Q, but most likely next release), and provide flags like take_screenshot, add_wifi_section, while keeping the prefilled options etc. So I didn\u0027t want to expose the int modes in the API. This was an explicit effort to hide the modes while giving people a way to specify what options they want. Later I can swap out the implementation of BUGREPORT_PARAMS_FULL to use flags and not int mode, without affecting API.\n\nIs the extra objects the concern? Can make them factory methods instead.",
+      "parentUuid": "72a06781_6d7d218a",
       "range": {
         "startLine": 30,
         "startChar": 13,
@@ -91,6 +163,30 @@
       "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a21b8a_9c193642",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T12:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ba8976_65c2fd25",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
