@@ -46,6 +46,30 @@
       "revId": "928d04814034a7237441911d0eb791995dad2ddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58c812c_cd8158de",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:20:01Z",
+      "side": 1,
+      "message": "Mark also points out that, not only this is unrealistic, this is actually unexpected/illegal in the current design and would break if we were sending such LP in reality.\n\nMaybe we just want to drop this patch then, as Lucas suggested.\n\nIf I\u0027m right in thinking there didn\u0027t use to be a case where the callbacks were sent in error, or not sent when they should have, then maybe there is nothing to test for and we should drop.",
+      "parentUuid": "87639489_881b2934",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
