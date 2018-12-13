@@ -22,6 +22,30 @@
       "revId": "b5c149d03cb35f059a74efbc040fba3b7ca2845b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e2147a_2c220941",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4117,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2018-12-13T09:28:31Z",
+      "side": 1,
+      "message": "Sorry, it should be aosp/849396.",
+      "parentUuid": "9938b599_49f45694",
+      "range": {
+        "startLine": 4117,
+        "startChar": 8,
+        "endLine": 4117,
+        "endChar": 22
+      },
+      "revId": "b5c149d03cb35f059a74efbc040fba3b7ca2845b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
