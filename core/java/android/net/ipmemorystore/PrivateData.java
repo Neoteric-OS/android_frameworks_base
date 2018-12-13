@@ -96,4 +96,15 @@ public class PrivateData implements Parcelable {
             return new PrivateData[size];
         }
     };
+
+    /** Pretty print */
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PrivateData : [");
+        final int limit = data.limit();
+        for (int i = 0; i < limit; ++i) {
+            sb.append(String.format("%02X", data.get(i)));
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }

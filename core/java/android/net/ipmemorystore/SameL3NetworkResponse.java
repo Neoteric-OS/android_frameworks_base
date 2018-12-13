@@ -137,4 +137,18 @@ public class SameL3NetworkResponse implements Parcelable {
                     return new SameL3NetworkResponse[size];
                 }
             };
+
+    /** Pretty print */
+    public String toString() {
+        switch (getNetworkSameness()) {
+            case NETWORK_SAME:
+                return "\"" + l2Key1 + "\" same L3 network as \"" + l2Key2 + "\"";
+            case NETWORK_DIFFERENT:
+                return "\"" + l2Key1 + "\" different L3 network from \"" + l2Key2 + "\"";
+            case NETWORK_HAS_NEVER_CONNECTED:
+                return "\"" + l2Key1 + "\" can't be tested against \"" + l2Key2 + "\"";
+            default:
+                return "Buggy sameness value ? \"" + l2Key1 + "\", \"" + l2Key2 + "\"";
+        }
+    }
 }

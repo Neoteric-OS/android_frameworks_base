@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * A POD object to represent attributes of a single L2 network entry.
@@ -209,4 +210,51 @@ public class NetworkAttributes implements Parcelable {
             return new NetworkAttributes[size];
         }
     };
+
+    /** Pretty print */
+    public String toString() {
+        final StringJoiner resultJoiner = new StringJoiner(" ", "{", "}");
+        final ArrayList<String> nullFields = new ArrayList<>();
+
+        if (null != assignedV4Address) {
+            resultJoiner.add("assignedV4Address :");
+            resultJoiner.add(assignedV4Address.toString());
+        } else {
+            nullFields.add("assignedV4Address");
+        }
+
+        if (null != groupHint) {
+            resultJoiner.add("groupHint :");
+            resultJoiner.add(groupHint);
+        } else {
+            nullFields.add("groupHint");
+        }
+
+        if (null != dnsAddresses) {
+            resultJoiner.add("dnsAddresses : [");
+            for (final InetAddress addr : dnsAddresses) {
+                resultJoiner.add(addr.getHostAddress());
+            }
+            resultJoiner.add("]");
+        } else {
+            nullFields.add("dnsAddresses");
+        }
+
+        if (null != mtu) {
+            resultJoiner.add("mtu :");
+            resultJoiner.add(mtu.toString());
+        } else {
+            nullFields.add("mtu");
+        }
+
+        if (!nullFields.isEmpty()) {
+            resultJoiner.add("; Null fields : [");
+            for (final String field : nullFields) {
+                resultJoiner.add(field);
+            }
+            resultJoiner.add("]");
+        }
+
+        return resultJoiner.toString();
+    }
 }
