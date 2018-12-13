@@ -22,6 +22,30 @@
       "revId": "928d04814034a7237441911d0eb791995dad2ddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87639489_881b2934",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:08:54Z",
+      "side": 1,
+      "message": "Ideally I would like to have a realistic test for callbacks, but unfortunately I do not think there used to be any real case where the callbacks used to be broken before the fix, so I couldn\u0027t find a better test that would have failed before the fix but succeeds now. The advantage of this is that it\u0027s within spec and it fails before the fix. But if you can think of any test that has these properties and also do happen in reality, I\u0027d be happy to replace this test with it",
+      "parentUuid": "ec086446_717ec211",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
