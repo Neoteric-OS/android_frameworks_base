@@ -96,6 +96,53 @@
     },
     {
       "key": {
+        "uuid": "de5eab6a_b14397d5",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T13:33:34Z",
+      "side": 1,
+      "message": "Ah, for some reason I thought this was the implementation of the binder call already. Doing it there (if that\u0027s in native) makes sense; the one reason to also do it here is that a side-effect of calling this without permission is that the service will be started even if you don\u0027t have permission. Which reminded me of something else - see comment below.",
+      "parentUuid": "df73ddd6_2a23d99f",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "235249a9_bb999bb7",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T13:33:34Z",
+      "side": 1,
+      "message": "the above reminded me - if this is called from an app context, I don\u0027t think you will be allowed to set system properties like this. We may need to have an intermediate in system_server.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a06781_6d7d218a",
         "filename": "core/java/android/os/BugreportParams.java",
         "patchSetId": 2
@@ -131,6 +178,30 @@
       "side": 1,
       "message": "I want to remove the int modes in the future (will try for Q, but most likely next release), and provide flags like take_screenshot, add_wifi_section, while keeping the prefilled options etc. So I didn\u0027t want to expose the int modes in the API. This was an explicit effort to hide the modes while giving people a way to specify what options they want. Later I can swap out the implementation of BUGREPORT_PARAMS_FULL to use flags and not int mode, without affecting API.\n\nIs the extra objects the concern? Can make them factory methods instead.",
       "parentUuid": "72a06781_6d7d218a",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2b3f8f_a41c4496",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T13:33:34Z",
+      "side": 1,
+      "message": "Ah ok, if your goal was to not make that part of the API this seems fine. I think I\u0027d lean more towards factory methods, since requesting bugreports is not a typical usecase on an end-users device? But if this will likely change anyway, it probably doesn\u0027t matter too much.",
+      "parentUuid": "b80fab47_22d051f9",
       "range": {
         "startLine": 30,
         "startChar": 13,
