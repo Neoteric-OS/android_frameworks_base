@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cee3d8a0_be977ba3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-13T03:30:25Z",
+      "side": 1,
+      "message": "I see you also modify the SettingsBackupTest.java I suppose you should also do the test.\nShould we also add SettingsBackupTest into Test?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "6c5ac208b97a2bd8ef925420f84d3b3f367c0873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89490468_72ee0d12",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10478,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-13T03:30:25Z",
+      "side": 1,
+      "message": "Not a strong option.\nDo you want to have the same prefix \"DATA_STALL\" or you prefer current one?",
+      "range": {
+        "startLine": 10478,
+        "startChar": 35,
+        "endLine": 10478,
+        "endChar": 57
+      },
+      "revId": "6c5ac208b97a2bd8ef925420f84d3b3f367c0873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
