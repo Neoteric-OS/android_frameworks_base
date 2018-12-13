@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344af6b6_a05c0bbd",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T11:51:09Z",
+      "side": 1,
+      "message": "I think most other services use ctx.getOuterContext(), though I haven\u0027t yet understood the difference. Something to ask Amith/Dianne.",
+      "range": {
+        "startLine": 960,
+        "startChar": 52,
+        "endLine": 960,
+        "endChar": 55
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5fa9eb_30b5b236",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T11:51:09Z",
+      "side": 1,
+      "message": "// TODO for checking the permission?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a06781_6d7d218a",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T11:51:09Z",
+      "side": 1,
+      "message": "I think it would be acceptable to have this be an inner class of BugreportManager. Or, maybe even just have the ints in there directly and pass the int param into the startBugreport() directly? That avoids pre-creating all of these static classes. Eg:\n\nBugreportManager.startBugreport(..., BugreportManager.MODE_FULL, ...)?",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ba8976_65c2fd25",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-13T11:51:09Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
