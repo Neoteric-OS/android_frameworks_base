@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f4dfd7_6fe189a8",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-13T21:07:10Z",
+      "side": 1,
+      "message": "without permission check, I guess apps can still access it through reflection, My understanding is all @SystemAPI should be permission protected and if we really want to discourage the usage from outside.",
+      "range": {
+        "startLine": 214,
+        "startChar": 6,
+        "endLine": 214,
+        "endChar": 40
+      },
+      "revId": "dd50bdd210fa01a2324eb334f95f960e040b0944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32839d5_91a940db",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-13T21:07:10Z",
+      "side": 1,
+      "message": "Maybe consider adding an error log if we detected there are more 2 reported?",
+      "range": {
+        "startLine": 222,
+        "startChar": 47,
+        "endLine": 222,
+        "endChar": 99
+      },
+      "revId": "dd50bdd210fa01a2324eb334f95f960e040b0944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

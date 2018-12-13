@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5743fb_46790e62",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-13T21:07:10Z",
+      "side": 0,
+      "message": "add this back?",
+      "revId": "e30de4632b38b88d2ab9b8ad7efbe890dcea4b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
