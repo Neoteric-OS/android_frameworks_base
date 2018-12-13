@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "00823c55_8ef3a140",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T14:09:19Z",
+      "side": 1,
+      "message": "If RequiresPermission is only an informative annotation, I\u0027ll check permission here. Left a TODO.",
+      "parentUuid": "de5eab6a_b14397d5",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235249a9_bb999bb7",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa7c34_0ad9ee36",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T14:09:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "235249a9_bb999bb7",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +259,30 @@
       "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e1701a_00ed9b8f",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-13T14:09:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2b3f8f_a41c4496",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "d52a7fdf8c2cf74bdda5ea53ae628c50a2c9f598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
