@@ -71,6 +71,11 @@ public class NetworkMisc implements Parcelable {
      */
     public boolean skip464xlat;
 
+    /**
+     * Set when the network becomes default network.
+     */
+    public boolean wasDefault;
+
     public NetworkMisc() {
     }
 
@@ -82,6 +87,7 @@ public class NetworkMisc implements Parcelable {
             subscriberId = nm.subscriberId;
             provisioningNotificationDisabled = nm.provisioningNotificationDisabled;
             skip464xlat = nm.skip464xlat;
+            wasDefault = nm.wasDefault;
         }
     }
 
@@ -98,6 +104,7 @@ public class NetworkMisc implements Parcelable {
         out.writeString(subscriberId);
         out.writeInt(provisioningNotificationDisabled ? 1 : 0);
         out.writeInt(skip464xlat ? 1 : 0);
+        out.writeInt(wasDefault ? 1 : 0);
     }
 
     public static final Creator<NetworkMisc> CREATOR = new Creator<NetworkMisc>() {
@@ -110,6 +117,7 @@ public class NetworkMisc implements Parcelable {
             networkMisc.subscriberId = in.readString();
             networkMisc.provisioningNotificationDisabled = in.readInt() != 0;
             networkMisc.skip464xlat = in.readInt() != 0;
+            networkMisc.wasDefault = in.readInt() != 0;
             return networkMisc;
         }
 
