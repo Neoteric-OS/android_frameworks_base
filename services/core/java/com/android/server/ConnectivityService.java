@@ -232,6 +232,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // connect anyway?" dialog after the user selects a network that doesn't validate.
     private static final int PROMPT_UNVALIDATED_DELAY_MS = 8 * 1000;
 
+    // Default boot score when new network compares to previous default network
+    private static final int DEFAULT_BOOST_SCORE = 5;
+
     // Default to 30s linger time-out. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
@@ -5325,6 +5328,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
+        newNetwork.networkMisc.wasDefault = true;
     }
 
     private void processListenRequests(NetworkAgentInfo nai, boolean capabilitiesChanged) {
@@ -5425,7 +5429,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             (currentNetwork != null ? currentNetwork.getCurrentScore() : 0) +
                             ", newScore = " + score);
                 }
-                if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
+                if (currentNetwork == null ||
+                       (currentNetwork.networkMisc.wasDefault ? DEFAULT_BOOST_SCORE : 0) +
+                           currentNetwork.getCurrentScore() < score) {
                     if (VDBG) log("rematch for " + newNetwork.name());
                     if (currentNetwork != null) {
                         if (VDBG || DDBG){
