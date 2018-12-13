@@ -50,6 +50,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
+import android.sysprop.TelephonyProperties;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
@@ -79,7 +80,6 @@ import com.android.internal.colorextraction.drawable.GradientDrawable;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.telephony.TelephonyIntents;
-import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.widget.LockPatternUtils;
@@ -276,8 +276,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 R.string.global_actions_airplane_mode_off_status) {
 
             void onToggle(boolean on) {
-                if (mHasTelephony && Boolean.parseBoolean(
-                        SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
+                if (mHasTelephony && TelephonyProperties.in_ecm_mode().orElse(false)) {
                     mIsWaitingForEcmExit = true;
                     // Launch ECM exit dialog
                     Intent ecmDialogIntent =
@@ -294,8 +293,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 if (!mHasTelephony) return;
 
                 // In ECM mode airplane state cannot be changed
-                if (!(Boolean.parseBoolean(
-                        SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE)))) {
+                if (!TelephonyProperties.in_ecm_mode().orElse(false)) {
                     mState = buttonOn ? State.TurningOn : State.TurningOff;
                     mAirplaneState = mState;
                 }

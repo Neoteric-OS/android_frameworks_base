@@ -16,8 +16,6 @@
 
 package com.android.internal.location;
 
-import java.io.UnsupportedEncodingException;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,21 +23,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.LocationManager;
 import android.location.INetInitiatedListener;
-import android.telephony.TelephonyManager;
-import android.telephony.PhoneNumberUtils;
-import android.telephony.PhoneStateListener;
-import android.os.Bundle;
+import android.location.LocationManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
-import android.os.SystemProperties;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.R;
+import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.telephony.GsmAlphabet;
-import com.android.internal.telephony.TelephonyProperties;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * A GPS Network-initiated Handler class used by LocationManager.
@@ -153,7 +150,7 @@ public class GpsNetInitiatedHandler {
                        be set to false by mPhoneStateListener when the emergency call ends.
                    For checking if it is in emergency call back mode:
                        Emergency call back mode will be checked by reading system properties
-                       when necessary: SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE)
+                       when necessary: android.sysprop.TelephonyProperties.in_ecm_mode()
                 */
                 setInEmergency(PhoneNumberUtils.isEmergencyNumber(phoneNumber));
                 if (DEBUG) Log.v(TAG, "ACTION_NEW_OUTGOING_CALL - " + getInEmergency());

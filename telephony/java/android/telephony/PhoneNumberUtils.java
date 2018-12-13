@@ -16,24 +16,18 @@
 
 package android.telephony;
 
-import com.android.i18n.phonenumbers.NumberParseException;
-import com.android.i18n.phonenumbers.PhoneNumberUtil;
-import com.android.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
-import com.android.i18n.phonenumbers.Phonenumber.PhoneNumber;
-import com.android.i18n.phonenumbers.ShortNumberInfo;
-
 import android.annotation.IntDef;
 import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.CountryDetector;
 import android.net.Uri;
-import android.os.SystemProperties;
 import android.os.PersistableBundle;
+import android.os.SystemProperties;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
+import android.sysprop.TelephonyProperties;
 import android.telecom.PhoneAccount;
 import android.text.Editable;
 import android.text.Spannable;
@@ -42,7 +36,11 @@ import android.text.TextUtils;
 import android.text.style.TtsSpan;
 import android.util.SparseIntArray;
 
-import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_IDP_STRING;
+import com.android.i18n.phonenumbers.NumberParseException;
+import com.android.i18n.phonenumbers.PhoneNumberUtil;
+import com.android.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.android.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import com.android.i18n.phonenumbers.ShortNumberInfo;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -2666,7 +2664,7 @@ public class PhoneNumberUtils {
             ps = NANP_IDP_STRING;
         } else {
             // in case, there is no IDD is found, we shouldn't convert it.
-            ps = SystemProperties.get(PROPERTY_OPERATOR_IDP_STRING, PLUS_SIGN_STRING);
+            ps = TelephonyProperties.operator_idp_string().orElse(PLUS_SIGN_STRING);
         }
         return ps;
     }
