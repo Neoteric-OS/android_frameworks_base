@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ddc1d0_4856a213",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-12-13T17:49:52Z",
+      "side": 1,
+      "message": "Do we have a slightly better fleshed out version of this class ? I don\u0027t think we\u0027re going to gain very much by submitting this change if it\u0027s likely we\u0027ll need a subsequent API revision to complete the API for this interface.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "3dfd7afc612c4f39a0a20732689bb6a59d8b78bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e3131c_ce4f28de",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-12-13T17:49:52Z",
+      "side": 1,
+      "message": "this really feels like it should be an enum... why isn\u0027t it one ? Is this related to the android rules against enums ? If so, I\u0027ll note that adding a bunch of static methods is going to bloat the code size anyway so we\u0027ve lost type safety and gained not very much (",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "3dfd7afc612c4f39a0a20732689bb6a59d8b78bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
