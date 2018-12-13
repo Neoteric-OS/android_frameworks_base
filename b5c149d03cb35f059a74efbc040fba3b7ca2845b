@@ -46,6 +46,30 @@
       "revId": "b5c149d03cb35f059a74efbc040fba3b7ca2845b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2d0d7e_e9a3738d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:34:51Z",
+      "side": 1,
+      "message": "You are absolutely right but the goal of this change is to get the code exactly equivalent with the test that was added in P in ag/5718207.\n\nIf aosp/849396 finally gets sumbitted then I\u0027d want it to cherry-pick cleanly to P.",
+      "parentUuid": "b8e2147a_2c220941",
+      "range": {
+        "startLine": 4117,
+        "startChar": 8,
+        "endLine": 4117,
+        "endChar": 22
+      },
+      "revId": "b5c149d03cb35f059a74efbc040fba3b7ca2845b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
