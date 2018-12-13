@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9938b599_49f45694",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4117,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2018-12-13T09:27:24Z",
+      "side": 1,
+      "message": "I think it\u0027s better to insert \"cellNetworkCallback.assertNoCallback();\" under this line.\nJust like what you do in ag/849396.\nBecause it\u0027s unexpected to receive the callback, right?",
+      "range": {
+        "startLine": 4117,
+        "startChar": 8,
+        "endLine": 4117,
+        "endChar": 22
+      },
+      "revId": "b5c149d03cb35f059a74efbc040fba3b7ca2845b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
