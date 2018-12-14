@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8cb28b8_ba4b63bd",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-12-14T17:15:04Z",
+      "side": 1,
+      "message": "Probably, although for whatever reason I like that the meta-type isn\u0027t directly exposed. I\u0027ll consider this for a future cleanup, since it looks like the Value class has grown a bit more than I initially expected.",
+      "parentUuid": "06a6585a_407ccb82",
+      "revId": "562caa685fd4681d5a6c58d968372aacec8f21ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5663eb34_b7c2e6fd",
         "filename": "startop/view_compiler/dex_builder.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "562caa685fd4681d5a6c58d968372aacec8f21ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8d5ceb_7f4932fd",
+        "filename": "startop/view_compiler/dex_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-12-14T17:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5663eb34_b7c2e6fd",
+      "revId": "562caa685fd4681d5a6c58d968372aacec8f21ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
