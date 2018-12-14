@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e803667_55141d66",
+        "filename": "core/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-14T08:23:31Z",
+      "side": 0,
+      "message": "Is it possible not to move this to frameworks/base? It doesn\u0027t look like there are any callers outside of networking code.",
+      "revId": "fad9571dc59e822d6d59ad163b55799de9d1bc34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

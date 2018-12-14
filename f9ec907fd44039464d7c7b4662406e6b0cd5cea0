@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc06665d_129f3a41",
+        "filename": "core/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-14T08:23:31Z",
+      "side": 1,
+      "message": "Per discussion, suggest not moving this to frameworks/base/core and instead just tactically adding to f/b/services/core small file with constants that need to be accessible out of the mainline module. Those are basically all in NetworkDiagnostics and Tethering. (Not sure what to do with TetheringTest but if it takes more than 5 minutes to figure it out we can just inline whatever constants we want into there.)",
+      "revId": "f9ec907fd44039464d7c7b4662406e6b0cd5cea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72967ae7_681770d8",
+        "filename": "core/java/android/net/util/SharedLog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-14T08:23:31Z",
+      "side": 1,
+      "message": "Per in-person discussion, maybe make a copy of this to be used in non-updatable code? When Tethering is mainlined, that copy will (hopefully :-)) go away.",
+      "revId": "f9ec907fd44039464d7c7b4662406e6b0cd5cea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
