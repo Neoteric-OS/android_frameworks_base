@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660f17ef_0033fd66",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6928,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2018-12-14T18:16:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t make any sense to me. In the case\n\nkeyguardDelegate !\u003d null \u0026\u0026 !hasKeyguard it would have gone into the else block before with the exact same result",
+      "revId": "08a29071a99cdf500d4b803c041675677de35e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
