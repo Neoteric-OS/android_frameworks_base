@@ -390,6 +390,13 @@ public class Vpn {
     }
 
     /**
+     * Returns whether VPN is configured as always-on.
+     */
+    public boolean getAlwaysOn() {
+        return mAlwaysOn;
+    }
+
+    /**
      * Checks if a VPN app supports always-on mode.
      *
      * In order to support the always-on feature, an app has to
