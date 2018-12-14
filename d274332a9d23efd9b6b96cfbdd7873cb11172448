@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65050fad_1f2ab765",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-14T21:51:48Z",
+      "side": 0,
+      "message": "Does this need to be done always? If so, (implied by the CallSuper in the previous patchset), I think we would have to use a pattern like :\n\npublic final void close() {\n    mdDataCallListChangedCallbacks.clear();\n    onClose();\n}\n\n// implementers should extend this callback to perform actions during a close.\npublic void onClose() {}",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 41
+      },
+      "revId": "d274332a9d23efd9b6b96cfbdd7873cb11172448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
