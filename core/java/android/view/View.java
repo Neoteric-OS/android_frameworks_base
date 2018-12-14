@@ -14078,6 +14078,18 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         mAttachInfo.mUnbufferedDispatchRequested = true;
     }
 
+    /**
+     * Request immediate dispatch of all input events to this View.
+     *
+     * <p class="note">This api is not intended for most applications. Buffered dispatch
+     * provides many of benefits, and just requesting unbuffered dispatch on most input event
+     * streams will not improve your input latency. Side effects include: increased latency,
+     * jittery scrolls and inability to take advantage of system resampling. </p>
+     */
+    public final void requestImmediateDispatch() {
+        mAttachInfo.mImmediateInputRequested = true;
+    }
+
     private boolean hasSize() {
         return (mBottom > mTop) && (mRight > mLeft);
     }
@@ -26734,6 +26746,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          * event stream.
          */
         boolean mUnbufferedDispatchRequested;
+
+        /**
+         * Indicates whether the view has requested immediate input dispatching.
+         */
+        boolean mImmediateInputRequested;
 
         /**
          * Indicates that ViewAncestor should trigger a global layout change
