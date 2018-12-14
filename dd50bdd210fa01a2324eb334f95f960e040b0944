@@ -45,6 +45,29 @@
       "revId": "dd50bdd210fa01a2324eb334f95f960e040b0944",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e7dfd5_c87d8303",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-14T18:52:46Z",
+      "side": 1,
+      "message": "there is no NR?",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 46
+      },
+      "revId": "dd50bdd210fa01a2324eb334f95f960e040b0944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
