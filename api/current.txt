@@ -41934,6 +41934,7 @@ package android.telecom {
 
   public static final class VideoProfile.CameraCapabilities implements android.os.Parcelable {
     ctor public VideoProfile.CameraCapabilities(int, int);
+    ctor public VideoProfile.CameraCapabilities(int, int, boolean, float);
     method public int describeContents();
     method public int getHeight();
     method public int getWidth();
