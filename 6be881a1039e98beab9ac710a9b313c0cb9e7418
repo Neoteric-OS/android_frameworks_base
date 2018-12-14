@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c217e0_e041ce1f",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4203,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "Don\u0027t you need to add a new entry on system/sepolicy/private/service_contexts for it?",
+      "range": {
+        "startLine": 4203,
+        "startChar": 52,
+        "endLine": 4203,
+        "endChar": 61
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4472fe_ac8d143b",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "/** @hide */?",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ddfc768_b4fc8b23",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "nit: on new code, we\u0027re explicitly using @NonNull / @Nullable - could you please add it here (and in all other places in this CL)?",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2735e0fb_174550d3",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "shouldn\u0027t we make it float to be more fine-grained?",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be90b5f7_2b512a70",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "document the possible values on @param (as the annotation is not passed along)",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8ea2c7_047385ba",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "@Nullable for these 2",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe9dcef_f89fb220",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "add b/ on TODOs?",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab883f35_cb2c86bc",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "nit: empty line before it",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e6950a_5df99f68",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 7
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c03b1f_a4c5752e",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2018-12-14T19:28:14Z",
+      "side": 1,
+      "message": "nit: Please don’t write a javadoc without a summary. It’s ok to remove tags when redundant (or include them in the summary),  but there should always be a first-sentence summary.\n\nI\u0027d just say \"Returns the options ...\n\n(same below)",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
