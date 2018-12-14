@@ -240,6 +240,30 @@ public class VpnTest {
     }
 
     @Test
+    public void testGetAlwaysAndOnGetLockDown() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+
+        // Default state.
+        assertFalse(vpn.getAlwaysOn());
+        assertFalse(vpn.getLockdown());
+
+        // Set always-on without lockdown.
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false));
+        assertTrue(vpn.getAlwaysOn());
+        assertFalse(vpn.getLockdown());
+
+        // Set always-on with lockdown.
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true));
+        assertTrue(vpn.getAlwaysOn());
+        assertTrue(vpn.getLockdown());
+
+        // Remove always-on configuration.
+        assertTrue(vpn.setAlwaysOnPackage(null, false));
+        assertFalse(vpn.getAlwaysOn());
+        assertFalse(vpn.getLockdown());
+    }
+
+    @Test
     public void testLockdownChangingPackage() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = UidRange.createForUser(primaryUser.id);
