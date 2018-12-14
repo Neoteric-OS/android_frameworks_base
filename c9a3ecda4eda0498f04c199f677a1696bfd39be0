@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a75b7cbe_b7a097d7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2018-12-14T19:32:18Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 3018,
+        "startChar": 9,
+        "endLine": 3018,
+        "endChar": 22
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c5c479f_e5e4ba46",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 2
@@ -46,6 +69,53 @@
       "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e14106d2_7bdf71f8",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2018-12-14T19:32:18Z",
+      "side": 1,
+      "message": "Not fully convinced that \"batch operation\" is the correct name. Looking at the rest of code, it seems that only read is done in batch, but not write.\nI think it would be preferable to call it something like \"config_sim_phonebook_in_modem\". And the description below can indicate that this boolean indicates if modem has support to return the entire parsed SIM phonebook.",
+      "parentUuid": "ceeb720e_daaeb3a1",
+      "range": {
+        "startLine": 3019,
+        "startChar": 16,
+        "endLine": 3019,
+        "endChar": 52
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ee2b53_4d206e1d",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3072,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2018-12-14T19:32:18Z",
+      "side": 1,
+      "message": "Same comment as in config.xml",
+      "range": {
+        "startLine": 3072,
+        "startChar": 54,
+        "endLine": 3072,
+        "endChar": 59
+      },
+      "revId": "c9a3ecda4eda0498f04c199f677a1696bfd39be0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
