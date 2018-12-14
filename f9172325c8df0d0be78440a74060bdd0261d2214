@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fae3b89_6167116d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-12-14T13:36:03Z",
+      "side": 1,
+      "message": "Merged-In: I9dbd1b6dea92f7441efb6d0a579efd13bc0e5139\n\n?",
+      "revId": "f9172325c8df0d0be78440a74060bdd0261d2214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
