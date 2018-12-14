@@ -16,6 +16,24 @@
       "revId": "e1e22324937f88d9d39a46e298b84d7e2f0854a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54e09e3_c0df9f60",
+        "filename": "media/java/android/mtp/MtpStorageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1180253
+      },
+      "writtenOn": "2018-12-14T03:04:21Z",
+      "side": 1,
+      "message": "Test pass. \nI will revert this change and cherry pick  your two changes to our code.",
+      "parentUuid": "6fa17f2d_ca6c7382",
+      "revId": "e1e22324937f88d9d39a46e298b84d7e2f0854a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
