@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70c2080_97e4959f",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14075,
+      "author": {
+        "id": 1138158
+      },
+      "writtenOn": "2018-12-14T21:38:15Z",
+      "side": 1,
+      "message": "requestUnbufferedDispatch(MotionEvent event) and requestImmediateDispatch() are very similar, except the AOSP requestUnbufferedDispatch is limited to touch events; \"Unbuffered\" has same meaning\"Immediate\" except the fields were added independently.   The naming of our added function could make clear the similarities and differences, like requestUnbufferedDispatchForAllInput()\n\nApart from the name, I am OK that the added function does not take a MotionEvent parameter and affects all input on the View after, because for button presses, each gamepad button DOWN event should have good latency; though I haven\u0027t verified that DOWN events are in fact buffered; I can check that.\n\n1 important usecase is gamepad button and analog stick latency for GFN/Gamestream.  For this usecase input should not be buffered until to VSYNC, because input is streamed to server.",
+      "revId": "b6f2a0a0a0b544378d38194e7ab8368a3b6cb4f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
