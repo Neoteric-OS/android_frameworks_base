@@ -16,6 +16,24 @@
       "revId": "b6f2a0a0a0b544378d38194e7ab8368a3b6cb4f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9954991_7e1047b6",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14075,
+      "author": {
+        "id": 1138158
+      },
+      "writtenOn": "2018-12-14T22:20:49Z",
+      "side": 1,
+      "message": "I checked behavior in systrace, and gamepad button presses is already not buffered to Choreograph  VSYNC (as opposed to analog stick motion, which is buffered)\n\nSo a possible version of this change would be to add a new function which retains the MotionEvent argument, and just remove the !event.isTouchEvent() condition.\n\nI prefer adding a new function over removing the condition in the existing requestUnbufferedDispatch(), to not change behavior.",
+      "parentUuid": "c70c2080_97e4959f",
+      "revId": "b6f2a0a0a0b544378d38194e7ab8368a3b6cb4f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
