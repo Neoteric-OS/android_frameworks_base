@@ -142,6 +142,30 @@
       "revId": "928d04814034a7237441911d0eb791995dad2ddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "421a93f4_06cb1164",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-14T01:44:17Z",
+      "side": 1,
+      "message": "Well actually. It\u0027s so simple I can\u0027t believe I didn\u0027t think of it.\n\nAfter the same LP is sent in line 4116, the stored LP erroneously doesn\u0027t have the private DNS list. Therefore if in 4122 I turn of private DNS with the helper setPrivateDnsSettings, the old code should run afoul of the equals() test and not send the callback, while the fixed code should send it.\nI\u0027ll make sure that this is accurate and update this test.\n\nIt\u0027s always in the shower that you think of things 🤔",
+      "parentUuid": "5db3883e_97620ce8",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
