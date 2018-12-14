@@ -22,6 +22,30 @@
       "revId": "d274332a9d23efd9b6b96cfbdd7873cb11172448",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b7bcf2_29bdc8c0",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-12-14T23:02:00Z",
+      "side": 0,
+      "message": "That\u0027s what I did earlier but I realized that we don\u0027t actually need to clear that map, so there will be nothing to do in the base class.",
+      "parentUuid": "65050fad_1f2ab765",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 41
+      },
+      "revId": "d274332a9d23efd9b6b96cfbdd7873cb11172448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
