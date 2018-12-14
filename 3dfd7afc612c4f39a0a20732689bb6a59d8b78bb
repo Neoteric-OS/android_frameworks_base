@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55283c25_47a9a276",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-14T12:07:14Z",
+      "side": 1,
+      "message": "Yes now I do, after the sepolicy discussion. There\u0027s most likely going to be further iterations though, so I would not consider this to be final.",
+      "parentUuid": "56ddc1d0_4856a213",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "3dfd7afc612c4f39a0a20732689bb6a59d8b78bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e3131c_ce4f28de",
         "filename": "core/java/android/os/BugreportParams.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3dfd7afc612c4f39a0a20732689bb6a59d8b78bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6115585f_5b85a7f4",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2018-12-14T12:07:14Z",
+      "side": 1,
+      "message": "Not related to rule re enums. It\u0027s because the enum works internally but is not very nice in an API context because it is a little adhoc as to how the options are bundled together and gives the caller little control over the options.\n\nInstead, we can add the options dumpstate accepts in the params. It cannot be done right away because we need to do further refactoring to figure out the right set of options to expose. I didn\u0027t want to add an enum to API only to take it away later, possibly in next release.\n\nComments on line 41 refer to this. Also see the commit message and discussion with maco@ in previous patchset for some more context.\n\nWhat do you think?",
+      "parentUuid": "02e3131c_ce4f28de",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "3dfd7afc612c4f39a0a20732689bb6a59d8b78bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
