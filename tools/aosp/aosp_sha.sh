@@ -19,6 +19,10 @@ else
         echo "If your change contains no confidential details (such as security fixes), please"
         echo "upload and merge this change at https://android-review.googlesource.com/."
         echo
-        exit 1
+        if [ "$3" = "WARNING_ONLY" ]; then
+            exit 77
+        else
+            exit 1
+        fi
     fi
 fi
