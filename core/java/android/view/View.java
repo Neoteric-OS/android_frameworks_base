@@ -14078,6 +14078,23 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         mAttachInfo.mUnbufferedDispatchRequested = true;
     }
 
+    /**
+     * Request unbuffered dispatch of all input events to this View.
+     *
+     * <p class="note"> This api is not intended for most applications. Buffered dispatch
+     * provides many of benefits, and just requesting unbuffered dispatch on most input event
+     * streams will not improve your input latency. Side effects include: increased latency,
+     * jittery scrolls and inability to take advantage of system resampling. </p>
+     */
+    public final void requestUnbufferedDispatchAll(MotionEvent event) {
+        final int action = event.getAction();
+        if (mAttachInfo == null
+                || action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_MOVE ) {
+            return;
+        }
+        mAttachInfo.mUnbufferedDispatchAllRequested = true;
+    }
+
     private boolean hasSize() {
         return (mBottom > mTop) && (mRight > mLeft);
     }
@@ -26734,6 +26751,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          * event stream.
          */
         boolean mUnbufferedDispatchRequested;
+
+        /**
+         * Indicates whether the view has requested unbuffered input dispatching for all input source.
+         */
+        boolean mUnbufferedDispatchAllRequested = false;
 
         /**
          * Indicates that ViewAncestor should trigger a global layout change
