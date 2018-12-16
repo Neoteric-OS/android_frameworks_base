@@ -166,6 +166,30 @@
       "revId": "928d04814034a7237441911d0eb791995dad2ddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5045eca_f23a7118",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4123,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-16T12:35:18Z",
+      "side": 1,
+      "message": "If this is just for private DNS check, I think this is fine. The problem we talk in person is related to clatd. For clatd, the stacked linkproperties just check iface name. If the iface don\u0027t change, it would not apply the new one. So we don\u0027t expect cell network agent update stacked linkproperties.",
+      "parentUuid": "421a93f4_06cb1164",
+      "range": {
+        "startLine": 4122,
+        "startChar": 11,
+        "endLine": 4123,
+        "endChar": 44
+      },
+      "revId": "928d04814034a7237441911d0eb791995dad2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
