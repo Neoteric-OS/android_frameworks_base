@@ -16,6 +16,24 @@
       "revId": "08a29071a99cdf500d4b803c041675677de35e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c716d6_1735fb7d",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6928,
+      "author": {
+        "id": 1411826
+      },
+      "writtenOn": "2018-12-17T02:54:05Z",
+      "side": 1,
+      "message": "Yes, it should go to else block(Line:6931), but it should update screenState for keyguardDelegate in that else block(Line:6931) if keyguardDelegate is not null. Otherwise, keyguardDelegate will never know correct screen state while screening on. That\u0027s why it needs to update screen state within if block(Line:6922).",
+      "parentUuid": "660f17ef_0033fd66",
+      "revId": "08a29071a99cdf500d4b803c041675677de35e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
