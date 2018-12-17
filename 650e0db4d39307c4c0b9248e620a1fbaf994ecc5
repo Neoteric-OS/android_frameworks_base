@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0d3b51ba_b119ebf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1315892
+      },
+      "writtenOn": "2018-12-17T09:15:34Z",
+      "side": 1,
+      "message": "This issue is seen in the IVI device when connecting to a Reference phone like Pixel",
+      "parentUuid": "b4ceb209_b5c1401b",
+      "range": {
+        "startLine": 7,
+        "startChar": 61,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "650e0db4d39307c4c0b9248e620a1fbaf994ecc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ad7992_dab2cb8f",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
         "patchSetId": 1
