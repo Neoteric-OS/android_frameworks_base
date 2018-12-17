@@ -17,6 +17,7 @@
 package android.util;
 
 import android.annotation.UnsupportedAppUsage;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -55,17 +56,26 @@ public final class LocalLog {
 
     @UnsupportedAppUsage
     public synchronized void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        dump(pw);
+    }
+
+    @UnsupportedAppUsage
+    public synchronized void dump(PrintWriter pw) {
         Iterator<String> itr = mLog.iterator();
         while (itr.hasNext()) {
             pw.println(itr.next());
         }
     }
 
-    public synchronized void reverseDump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public synchronized void reverseDump(PrintWriter pw) {
         Iterator<String> itr = mLog.descendingIterator();
         while (itr.hasNext()) {
             pw.println(itr.next());
         }
+    }
+
+    public synchronized void reverseDump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        reverseDump(pw);
     }
 
     public static class ReadOnlyLocalLog {
@@ -74,11 +84,18 @@ public final class LocalLog {
             mLog = log;
         }
         @UnsupportedAppUsage
+        public void dump(PrintWriter pw) {
+            mLog.dump(pw);
+        }
+        @UnsupportedAppUsage
         public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
-            mLog.dump(fd, pw, args);
+            mLog.dump(pw);
+        }
+        public void reverseDump(PrintWriter pw) {
+            mLog.reverseDump(pw);
         }
         public void reverseDump(FileDescriptor fd, PrintWriter pw, String[] args) {
-            mLog.reverseDump(fd, pw, args);
+            mLog.reverseDump(pw);
         }
     }
 
