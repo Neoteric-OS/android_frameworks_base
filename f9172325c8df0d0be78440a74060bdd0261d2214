@@ -70,6 +70,24 @@
       "revId": "f9172325c8df0d0be78440a74060bdd0261d2214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97eff57_f71e991f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-12-17T12:11:22Z",
+      "side": 1,
+      "message": "Doh! Forgot to upload the change!",
+      "parentUuid": "86217269_80984d88",
+      "revId": "f9172325c8df0d0be78440a74060bdd0261d2214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
