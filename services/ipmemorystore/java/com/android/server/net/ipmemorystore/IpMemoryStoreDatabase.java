@@ -17,9 +17,18 @@
 package com.android.server.net.ipmemorystore;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.NetworkUtils;
+import android.net.ipmemorystore.NetworkAttributes;
+
+import java.io.ByteArrayOutputStream;
+import java.net.InetAddress;
+import java.util.List;
 
 /**
  * Encapsulating class for using the SQLite database backing the memory store.
@@ -134,5 +143,105 @@ public class IpMemoryStoreDatabase {
             db.execSQL(PrivateDataContract.DROP_TABLE);
             onCreate(db);
         }
+    }
+
+    @NonNull
+    private static byte[] encodeAddressList(@NonNull final List<InetAddress> addresses) {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        for (final InetAddress address : addresses) {
+            final byte[] b = address.getAddress();
+            os.write(b.length);
+            os.write(b, 0, b.length);
+        }
+        return os.toByteArray();
+    }
+
+    // Convert a NetworkAttributes object to content values to store them in a table compliant
+    // with the contract defined in NetworkAttributesContract.
+    @NonNull
+    private static ContentValues toContentValues(@NonNull final String key,
+            @Nullable final NetworkAttributes attributes, final long expiry) {
+        final ContentValues values = new ContentValues();
+        values.put(NetworkAttributesContract.COLUMNNAME_L2KEY, key);
+        values.put(NetworkAttributesContract.COLUMNNAME_EXPIRYDATE, expiry);
+        if (null != attributes) {
+            if (null != attributes.assignedV4Address) {
+                values.put(NetworkAttributesContract.COLUMNNAME_ASSIGNEDV4ADDRESS,
+                        NetworkUtils.inet4AddressToIntHTH(attributes.assignedV4Address));
+            }
+            if (null != attributes.groupHint) {
+                values.put(NetworkAttributesContract.COLUMNNAME_GROUPHINT, attributes.groupHint);
+            }
+            if (null != attributes.dnsAddresses) {
+                values.put(NetworkAttributesContract.COLUMNNAME_DNSADDRESSES,
+                        encodeAddressList(attributes.dnsAddresses));
+            }
+            if (null != attributes.mtu) {
+                values.put(NetworkAttributesContract.COLUMNNAME_MTU, attributes.mtu);
+            } else {
+                // Negative MTU is invalid : using -1 to represent a non-existent value.
+                values.put(NetworkAttributesContract.COLUMNNAME_MTU, -1);
+            }
+        }
+        return values;
+    }
+
+    // Convert a byte array into content values to store it in a table compliant with the
+    // contract defined in PrivateDataContract.
+    @NonNull
+    private static ContentValues toContentValues(@NonNull final String key,
+            @NonNull final String clientId, @NonNull final String name,
+            @NonNull final byte[] data) {
+        final ContentValues values = new ContentValues();
+        values.put(PrivateDataContract.COLUMNNAME_L2KEY, key);
+        values.put(PrivateDataContract.COLUMNNAME_CLIENT, clientId);
+        values.put(PrivateDataContract.COLUMNNAME_DATANAME, name);
+        values.put(PrivateDataContract.COLUMNNAME_DATA, data);
+        return values;
+    }
+
+    private static final String[] EXPIRY_COLUMN = new String[] {
+        NetworkAttributesContract.COLUMNNAME_EXPIRYDATE
+    };
+    static final int EXPIRY_ERROR = -1; // Legal values for expiry are positive
+
+    // Returns the expiry date of the specified row, or one of the error codes above if the
+    // row is not found or some other error
+    static long getExpiry(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                EXPIRY_COLUMN, // columns
+                NetworkAttributesContract.COLUMNNAME_L2KEY + " = ?", // selection
+                new String[] { key }, // selectionArgs
+                null, // groupBy
+                null, // having
+                null // orderBy
+        );
+        // L2KEY is the primary key ; it should not be possible to get more than one
+        // result here. 0 results means the key was not found.
+        if (cursor.getCount() != 1) return EXPIRY_ERROR;
+        return cursor.getLong(0); // index in the EXPIRY_COLUMN array
+    }
+
+    static final int RELEVANCE_ERROR = -1; // Legal values for relevance are positive
+
+    // Returns the relevance of the specified row, or one of the error codes above if the
+    // row is not found or some other error
+    static int getRelevance(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        final long expiry = getExpiry(db, key);
+        return expiry < 0 ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+    }
+
+    // If the attributes are null, this will only write the expiry.
+    static void storeNetworkAttributes(@NonNull final SQLiteDatabase db, @NonNull final String key,
+            final long expiry, @Nullable final NetworkAttributes attributes) {
+        db.insertWithOnConflict(NetworkAttributesContract.TABLENAME, null,
+                toContentValues(key, attributes, expiry), SQLiteDatabase.CONFLICT_REPLACE);
+    }
+
+    static void storeBlob(@NonNull final SQLiteDatabase db, @NonNull final String key,
+            @NonNull final String clientId, @NonNull final String name,
+            @NonNull final byte[] data) {
+        db.insertWithOnConflict(PrivateDataContract.TABLENAME, null,
+                toContentValues(key, clientId, name, data), SQLiteDatabase.CONFLICT_REPLACE);
     }
 }
