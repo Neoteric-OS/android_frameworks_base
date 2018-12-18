@@ -1207,6 +1207,7 @@ public class SmsMessage extends SmsMessageBase {
 
         int encodingType = ENCODING_UNKNOWN;
 
+        Resources r = Resources.getSystem();
         // Look up the data encoding scheme
         if ((mDataCodingScheme & 0x80) == 0) {
             userDataCompressed = (0 != (mDataCodingScheme & 0x20));
@@ -1228,7 +1229,6 @@ public class SmsMessage extends SmsMessageBase {
                 case 1: // 8 bit data
                     //Support decoding the user data payload as pack GSM 8-bit (a GSM alphabet string
                     //that's stored in 8-bit unpacked format) characters.
-                    Resources r = Resources.getSystem();
                     if (r.getBoolean(com.android.internal.
                             R.bool.config_sms_decode_gsm_8bit_data)) {
                         encodingType = ENCODING_8BIT;
@@ -1238,7 +1238,17 @@ public class SmsMessage extends SmsMessageBase {
                 case 3: // reserved
                     Rlog.w(LOG_TAG, "1 - Unsupported SMS data coding scheme "
                             + (mDataCodingScheme & 0xff));
-                    encodingType = ENCODING_8BIT;
+                        try {
+                            encodingType =
+                                    r.getInteger(
+                                            com.android
+                                                    .internal
+                                                    .R
+                                                    .integer
+                                                    .default_reserved_data_coding_scheme);
+                        } catch (Resources.NotFoundException e) {
+                            encodingType = ENCODING_8BIT;
+                        }
                     break;
                 }
             }
@@ -1392,7 +1402,6 @@ public class SmsMessage extends SmsMessageBase {
         case ENCODING_8BIT:
             //Support decoding the user data payload as pack GSM 8-bit (a GSM alphabet string
             //that's stored in 8-bit unpacked format) characters.
-            Resources r = Resources.getSystem();
             if (r.getBoolean(com.android.internal.
                     R.bool.config_sms_decode_gsm_8bit_data)) {
                 mMessageBody = p.getUserDataGSM8bit(count);
