@@ -45,6 +45,30 @@
       "revId": "495e40d8d22c3c0834140be964a6425059c83460",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae1e17c_1b05433b",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5005,
+      "author": {
+        "id": 1138158
+      },
+      "writtenOn": "2018-12-18T21:59:48Z",
+      "side": 1,
+      "message": "1 challenge if were to add variable mUnbufferedInputDispatchAll and clear it here after each gesture, is that multiple MotionEvents (including from different sources like touch, gamepad) could potentially happen, and this only maintains 1 variable is cleared on isTerminalInputEvent() , not 1 variable for each MotionEvent stream .\n\nThat isn\u0027t an issue current mUnbufferedInputDispatch really has to deal with, because of the limit to only touch events.",
+      "parentUuid": "1a707cfe_b6deddc7",
+      "range": {
+        "startLine": 5005,
+        "startChar": 16,
+        "endLine": 5005,
+        "endChar": 49
+      },
+      "revId": "495e40d8d22c3c0834140be964a6425059c83460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
