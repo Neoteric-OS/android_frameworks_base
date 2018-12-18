@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/** Unit tests for {@link IpMemoryStoreServiceTest}. */
+/** Unit tests for {@link IpMemoryStoreService}. */
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class IpMemoryStoreServiceTest {

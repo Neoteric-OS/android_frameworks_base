@@ -16,6 +16,8 @@
 
 package com.android.server.net.ipmemorystore;
 
+import static com.android.server.net.ipmemorystore.IpMemoryStoreDatabase.EXPIRY_ERROR;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
@@ -28,6 +30,8 @@ import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
 import android.net.ipmemorystore.IOnSameNetworkResponseListener;
 import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributesParceled;
+import android.os.RemoteException;
+import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,6 +45,9 @@ import java.util.concurrent.Executors;
  * @hide
  */
 public class IpMemoryStoreService extends IIpMemoryStore.Stub {
+    private static final String TAG = IpMemoryStoreService.class.getSimpleName();
+    private static final boolean DBG = true;
+
     private static final int MAX_CONCURRENT_THREADS = 4;
 
     @NonNull
@@ -107,7 +114,28 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
     public void storeNetworkAttributes(@NonNull final String l2Key,
             @NonNull final NetworkAttributesParceled attributes,
             @Nullable final IOnStatusListener listener) {
-        // TODO : implement this
+        mExecutor.execute(() -> {
+            try {
+                final String key = null != l2Key ? l2Key : findL2KeySync(attributes);
+                final long oldExpiry = IpMemoryStoreDatabase.getExpiry(mDb, key);
+                final long newExpiry = RelevanceUtils.bumpExpiryDate(
+                        oldExpiry == EXPIRY_ERROR ? System.currentTimeMillis() : oldExpiry);
+                IpMemoryStoreDatabase.storeData(mDb, key, newExpiry, attributes);
+                listener.onL2KeyResponse(key);
+                return;
+            } catch (Exception e) {
+                if (DBG) {
+                    Log.e(TAG, "Exception while storing for key {"
+                            + (null == l2Key ? "null" : l2Key)
+                            + "} NetworkAttributes " + attributes, e);
+                }
+            }
+            try {
+                listener.onL2KeyResponse(null);
+            } catch (final RemoteException e) {
+                // Client at the other end died
+            }
+        });
     }
 
     /**
@@ -146,6 +174,10 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
     public void findL2Key(@NonNull final NetworkAttributesParceled attributes,
             @NonNull final IOnL2KeyResponseListener listener) {
         // TODO : implement this
+    }
+
+    private String findL2KeySync(@NonNull final NetworkAttributes attributes) {
+        throw new UnsupportedOperationException("Not implemented yet (try again later)");
     }
 
     /**
