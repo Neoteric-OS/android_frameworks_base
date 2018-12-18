@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "3f918186_21cf5e72",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2018-12-18T01:31:49Z",
+      "side": 1,
+      "message": "Values should be similar to ones in ImsStreamMediaProfile. Can that be used here ?",
+      "parentUuid": "1bd68c3d_c8c2c83c",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7262dcdd_684dd3b1",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -152,6 +176,30 @@
       "writtenOn": "2018-12-11T10:02:27Z",
       "side": 1,
       "message": "Amruth defined downlink and uplink quality level at QC IMS HAL.\nCould you separate them as well?",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb07754_cc6b8a1f",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2018-12-18T01:31:49Z",
+      "side": 1,
+      "message": "yes , this should have UL and DL level",
+      "parentUuid": "7a9b01f2_72ad6328",
       "range": {
         "startLine": 82,
         "startChar": 16,
