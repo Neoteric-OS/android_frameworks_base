@@ -16,6 +16,13 @@
 
 package com.android.server.net.ipmemorystore;
 
+import static android.net.ipmemorystore.Status.ERROR_DATABASE_CANNOT_BE_OPENED;
+import static android.net.ipmemorystore.Status.ERROR_GENERIC;
+import static android.net.ipmemorystore.Status.ERROR_ILLEGAL_ARGUMENT;
+import static android.net.ipmemorystore.Status.SUCCESS;
+
+import static com.android.server.net.ipmemorystore.IpMemoryStoreDatabase.EXPIRY_ERROR;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
@@ -28,7 +35,11 @@ import android.net.ipmemorystore.IOnL2KeyResponseListener;
 import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
 import android.net.ipmemorystore.IOnSameNetworkResponseListener;
 import android.net.ipmemorystore.IOnStatusListener;
+import android.net.ipmemorystore.NetworkAttributes;
 import android.net.ipmemorystore.NetworkAttributesParceled;
+import android.net.ipmemorystore.Status;
+import android.net.ipmemorystore.StatusParceled;
+import android.os.RemoteException;
 import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
@@ -45,6 +56,7 @@ import java.util.concurrent.Executors;
 public class IpMemoryStoreService extends IIpMemoryStore.Stub {
     private static final String TAG = IpMemoryStoreService.class.getSimpleName();
     private static final int MAX_CONCURRENT_THREADS = 4;
+    private static final boolean DBG = true;
 
     @NonNull
     final Context mContext;
@@ -113,6 +125,11 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         mDb.close();
     }
 
+    /** Helper function to make a status object */
+    private StatusParceled makeStatus(final int code) {
+        return new Status(code).toParcelable();
+    }
+
     /**
      * Store network attributes for a given L2 key.
      *
@@ -127,11 +144,43 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
      * Through the listener, returns the L2 key. This is useful if the L2 key was not specified.
      * If the call failed, the L2 key will be null.
      */
+    // Note that while l2Key and attributes are non-null in spirit, they are received from
+    // another process. If the remote process decides to ignore everything and send null, this
+    // process should still not crash.
     @Override
-    public void storeNetworkAttributes(@NonNull final String l2Key,
-            @NonNull final NetworkAttributesParceled attributes,
+    public void storeNetworkAttributes(@Nullable final String l2Key,
+            @Nullable final NetworkAttributesParceled attributes,
             @Nullable final IOnStatusListener listener) {
-        // TODO : implement this.
+        mExecutor.execute(() -> {
+            try {
+                final int code = storeNetworkAttributesSync(l2Key, attributes);
+                if (null != listener) listener.onComplete(makeStatus(code));
+            } catch (final RemoteException e) {
+                // Client at the other end died
+            }
+        });
+    }
+
+    /** Helper method for storeNetworkAttributes. Returns a success code from Status.*. */
+    private int storeNetworkAttributesSync(@NonNull final String l2Key,
+            @NonNull final NetworkAttributesParceled attributes) {
+        if (null != mDb) return ERROR_DATABASE_CANNOT_BE_OPENED;
+        if (null == l2Key || null == attributes) return ERROR_ILLEGAL_ARGUMENT;
+        try {
+            final long oldExpiry = IpMemoryStoreDatabase.getExpiry(mDb, l2Key);
+            final long newExpiry = RelevanceUtils.bumpExpiryDate(
+                    oldExpiry == EXPIRY_ERROR ? System.currentTimeMillis() : oldExpiry);
+            IpMemoryStoreDatabase.storeData(mDb, l2Key, newExpiry,
+                    new NetworkAttributes(attributes));
+            return SUCCESS;
+        } catch (Exception e) {
+            if (DBG) {
+                Log.e(TAG, "Exception while storing for key {"
+                        + (null == l2Key ? "null" : l2Key)
+                        + "} NetworkAttributes " + attributes, e);
+            }
+        }
+        return ERROR_GENERIC;
     }
 
     /**

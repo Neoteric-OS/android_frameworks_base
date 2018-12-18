@@ -17,9 +17,13 @@
 package com.android.server.net.ipmemorystore;
 
 import android.annotation.NonNull;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.text.TextUtils;
 
 /**
  * Encapsulating class for using the SQLite database backing the memory store.
@@ -132,5 +136,66 @@ public class IpMemoryStoreDatabase {
             db.execSQL(PrivateDataContract.DROP_TABLE);
             onCreate(db);
         }
+    }
+
+    static ContentValues toContentValues(@NonNull final NetworkAttributes attributes) {
+        final ContentValues values = new ContentValues();
+        if (null != attributes.assignedV4Address) {
+            values.put(NetworkAttributesContract.COLUMNNAME_ASSIGNEDV4ADDRESS,
+                    attributes.assignedV4Address.toString());
+        }
+
+        if (null != attributes.groupHint) {
+            values.put(NetworkAttributesContract.COLUMNNAME_GROUPHINT, attributes.groupHint);
+        }
+
+        if (null != attributes.dnsAddresses) {
+            values.put(NetworkAttributesContract.COLUMNNAME_DNSADDRESSES,
+                    TextUtils.join(",", attributes.dnsAddresses));
+        }
+
+        if (null != attributes.mtu) {
+            values.put(NetworkAttributesContract.COLUMNNAME_MTU, attributes.mtu);
+        }
+
+        return values;
+    }
+
+    private static final String[] EXPIRY_COLUMN = new String[] {
+        NetworkAttributesContract.COLUMNNAME_EXPIRYDATE
+    };
+    static final int EXPIRY_ERROR = -1; // Legal values for expiry are positive
+
+    // Returns the expiry date of the specified row, or one of the error codes above if the
+    // row is not found or some other error
+    static long getExpiry(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                EXPIRY_COLUMN, // columns
+                NetworkAttributesContract.COLUMNNAME_L2KEY, // selection
+                null, // selectionArgs, null because no arguments in the selection
+                null, // groupBy
+                null, // having
+                null // orderBy
+        );
+        // L2KEY is the primary key ; it should not be possible to get more than one
+        // result here. 0 results means the key was not found.
+        if (cursor.getCount() != 1) return EXPIRY_ERROR;
+        return cursor.getLong(0); // index in the EXPIRY_COLUMN array
+    }
+
+    static final int RELEVANCE_ERROR = -1; // Legal values for relevance are positive
+
+    // Returns the relevance of the specified row, or one of the error codes above if the
+    // row is not found or some other error
+    static int getRelevance(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        final long expiry = getExpiry(db, key);
+        return expiry < 0 ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+    }
+
+
+    static void storeData(@NonNull final SQLiteDatabase db, @NonNull final String key,
+            final long expiry, @NonNull final NetworkAttributes attributes) {
+        db.insertWithOnConflict(NetworkAttributesContract.TABLENAME, null,
+                toContentValues(attributes), SQLiteDatabase.CONFLICT_REPLACE);
     }
 }
