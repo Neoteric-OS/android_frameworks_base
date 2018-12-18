@@ -18,6 +18,8 @@ package android.net.ipmemorystore;
 
 import android.annotation.NonNull;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
  * A parcelable status representing the result of an operation.
  * Parcels as StatusParceled.
@@ -26,7 +28,9 @@ import android.annotation.NonNull;
 public class Status {
     public static final int SUCCESS = 0;
 
-    public static final int ERROR_DATABASE_CANNOT_BE_OPENED = -1;
+    public static final int ERROR_GENERIC = -1;
+    public static final int ERROR_ILLEGAL_ARGUMENT = -2;
+    public static final int ERROR_DATABASE_CANNOT_BE_OPENED = -3;
 
     public final int resultCode;
 
@@ -34,7 +38,8 @@ public class Status {
         this.resultCode = resultCode;
     }
 
-    Status(@NonNull final StatusParcelable parcelable) {
+    @VisibleForTesting
+    public Status(@NonNull final StatusParcelable parcelable) {
         this(parcelable.resultCode);
     }
 
