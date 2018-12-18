@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ac7e70_c4740f5d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2684,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-18T16:49:20Z",
+      "side": 1,
+      "message": "Since this a public API, suggest name as follows to be more consistent:\nSIM_APN_URI",
+      "range": {
+        "startLine": 2684,
+        "startChar": 32,
+        "endLine": 2684,
+        "endChar": 44
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cec070_d1698dd5",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-18T16:49:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure I see the value in providing this public static function?  You\u0027re saving 2 characters of typing, and I don\u0027t know that its clarifying anything.\n\nTelephony.getUriForSubscriptionId(SIM_APN_URI, subId)\nvs\nUri.withAppendedPath(SIM_APN_URI, String.valueOf(subId)",
+      "range": {
+        "startLine": 3113,
+        "startChar": 8,
+        "endLine": 3122,
+        "endChar": 9
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

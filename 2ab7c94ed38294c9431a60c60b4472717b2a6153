@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a9f7106e_1381b37d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-18T16:49:20Z",
+      "side": 1,
+      "message": "As mentioned below; I don\u0027t see  there being a value in having this static function, and it shouldn\u0027t be mentioned in the Javadoc like this.\nYou can provide the code snippet, but I don\u0027t see how the function adds much.\nUri.withAppendedPath(....)",
+      "range": {
+        "startLine": 2683,
+        "startChar": 17,
+        "endLine": 2686,
+        "endChar": 12
+      },
+      "revId": "2ab7c94ed38294c9431a60c60b4472717b2a6153",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eff376ff_4fb74e04",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 3
