@@ -46,6 +46,8 @@ public final class NetworkEvent implements Parcelable {
 
     public static final int NETWORK_CONSECUTIVE_DNS_TIMEOUT_FOUND = 12;
 
+    public static final int NETWORK_PARTIAL_CONNECTIVITY = 13;
+
     @IntDef(value = {
             NETWORK_CONNECTED,
             NETWORK_VALIDATED,
@@ -59,6 +61,7 @@ public final class NetworkEvent implements Parcelable {
             NETWORK_FIRST_VALIDATION_PORTAL_FOUND,
             NETWORK_REVALIDATION_PORTAL_FOUND,
             NETWORK_CONSECUTIVE_DNS_TIMEOUT_FOUND,
+            NETWORK_PARTIAL_CONNECTIVITY,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface EventType {}

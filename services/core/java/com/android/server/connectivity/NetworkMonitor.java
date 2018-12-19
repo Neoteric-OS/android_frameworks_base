@@ -155,6 +155,11 @@ public class NetworkMonitor extends StateMachine {
     // 2. a captive portal and the user did not want to use it, or
     // 3. a broken network (e.g. DNS failed, connect failed, HTTP request failed).
     public static final int NETWORK_TEST_RESULT_INVALID = 1;
+    // After a network has been tested, this result can be sent with EVENT_NETWORK_TESTED.
+    // The network should be used as a default internet connection.  It was found to be a partial
+    // connectivity network which can get the pass result for http probe but get the failed result
+    // for https probe.
+    public static final int NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY = 2;
 
     private static final int BASE = Protocol.BASE_NETWORK_MONITOR;
 
@@ -249,6 +254,12 @@ public class NetworkMonitor extends StateMachine {
      */
     public static final int EVENT_DNS_NOTIFICATION = BASE + 17;
 
+    /**
+     * ConnectivityService notifies NetworkMonitor that user accepts this partial connectivity
+     * network.
+     */
+    public static final int EVENT_USER_ACCEPTS_PARTIAL_CONNECTIVITY = BASE + 18;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
     private static final int MAX_REEVALUATE_DELAY_MS = 10*60*1000;
@@ -303,6 +314,9 @@ public class NetworkMonitor extends StateMachine {
     private boolean mUserDoesNotWant = false;
     // Avoids surfacing "Sign in to network" notification.
     private boolean mDontDisplaySigninNotification = false;
+    // To distinguish the network is really valid or just user accpet it as valid, and refer to
+    // it to decide if there is needed to add NET_CAPABILITY_PARTIAL_CONNECTIVITY or not.
+    private boolean mPartialValid = false;
 
     public boolean systemReady = false;
 
@@ -438,6 +452,11 @@ public class NetworkMonitor extends StateMachine {
                 EVENT_NETWORK_TESTED, NETWORK_TEST_RESULT_INVALID, mNetId, obj));
     }
 
+    private void notifyNetworkTestResultPartialConnectivity() {
+        mConnectivityServiceHandler.sendMessage(obtainMessage(
+                EVENT_NETWORK_TESTED, NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY, mNetId, null));
+    }
+
     // DefaultState is the parent of all States.  It exists only to handle CMD_* messages but
     // does not entail any real state (hence no enter() or exit() routines).
     private class DefaultState extends State {
@@ -540,6 +559,10 @@ public class NetworkMonitor extends StateMachine {
                 case EVENT_DNS_NOTIFICATION:
                     mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
                     break;
+                case EVENT_USER_ACCEPTS_PARTIAL_CONNECTIVITY:
+                    mPartialValid = true;
+                    removeMessages(CMD_REEVALUATE);
+                    transitionTo(mValidatedState);
                 default:
                     break;
             }
@@ -557,7 +580,8 @@ public class NetworkMonitor extends StateMachine {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
             mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
-                    NETWORK_TEST_RESULT_VALID, mNetId, null));
+                    NETWORK_TEST_RESULT_VALID, mNetId, mPartialValid));
+            mPartialValid = false;
             mValidations++;
         }
 
@@ -902,7 +926,18 @@ public class NetworkMonitor extends StateMachine {
                     final CaptivePortalProbeResult probeResult =
                             (CaptivePortalProbeResult) message.obj;
                     mLastProbeTime = SystemClock.elapsedRealtime();
-                    if (probeResult.isSuccessful()) {
+                    if (probeResult.isPartialConnectivity()) {
+                        logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
+                        // In order to keep a consistent behavior, treat partial connectivity as
+                        // validated network if user already accpeted this network.
+                        if (mNetworkAgentInfo.acceptPartialConnectivity) {
+                            mPartialValid = true;
+                            transitionTo(mValidatedState);
+                        } else {
+                            notifyNetworkTestResultPartialConnectivity();
+                            transitionTo(mWaitingForNextProbeState);
+                        }
+                    } else if (probeResult.isSuccessful()) {
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
@@ -917,6 +952,7 @@ public class NetworkMonitor extends StateMachine {
                     }
                     return HANDLED;
                 case EVENT_DNS_NOTIFICATION:
+                case EVENT_USER_ACCEPTS_PARTIAL_CONNECTIVITY:
                     // Leave the event to DefaultState to record correct dns timestamp.
                     return NOT_HANDLED;
                 default:
@@ -1359,10 +1395,11 @@ public class NetworkMonitor extends StateMachine {
         // If we have new-style probe specs, use those. Otherwise, use the fallback URLs.
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
         final URL fallbackUrl = (probeSpec != null) ? probeSpec.getUrl() : nextFallbackUrl();
+        CaptivePortalProbeResult fallbackProbe = null;
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (result.isPortal()) {
-                return result;
+            fallbackProbe = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
+            if (fallbackProbe.isPortal()) {
+                return fallbackProbe;
             }
         }
         // Otherwise wait until http and https probes completes and use their results.
@@ -1372,6 +1409,11 @@ public class NetworkMonitor extends StateMachine {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            if ((httpProbe.result().isSuccessful()
+                    || (fallbackProbe != null && fallbackProbe.isSuccessful()))
+                    && httpsProbe.result().isFailed()) {
+                return CaptivePortalProbeResult.PARTIAL;
+            }
             return httpsProbe.result();
         } catch (InterruptedException e) {
             validationLog("Error: http or https probe wait interrupted!");
