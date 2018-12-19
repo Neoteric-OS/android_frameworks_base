@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd93b0d_e3c732f1",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-19T10:49:05Z",
+      "side": 1,
+      "message": "Can we use shorthand e.g. \"v4addr\", \"dns\" for them?",
+      "range": {
+        "startLine": 220,
+        "startChar": 30,
+        "endLine": 220,
+        "endChar": 47
+      },
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc282b05_760f6bed",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-19T10:49:05Z",
+      "side": 1,
+      "message": "Do we need to prevent it from printing raw data in user build?\nIf it is called and printed on log unintended, maybe PII will be leaked from this.",
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
