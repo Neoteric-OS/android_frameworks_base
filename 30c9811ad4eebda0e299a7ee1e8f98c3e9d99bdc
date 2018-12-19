@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c78dc907_f862d92d",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-19T09:15:41Z",
+      "side": 1,
+      "message": "\"Brodcast\" is misspelled; should be \"Broadcast\".\n\nPersonally I find this name to be too long. \"BroadcastResponse\"? Also I\u0027m not sure that the extra clarity of the enum provides a lot of value; the previous booleans were fine by me. But I don\u0027t feel strongly about it.",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "30c9811ad4eebda0e299a7ee1e8f98c3e9d99bdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
