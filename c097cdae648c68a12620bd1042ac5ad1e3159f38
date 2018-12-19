@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2add8f04_e6cfd9af",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "Even if you don\u0027t change the method name, please have docs and logs spell out the full \"unsolicited\"",
+      "range": {
+        "startLine": 400,
+        "startChar": 44,
+        "endLine": 400,
+        "endChar": 49
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0b829c_5bb576d7",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "on",
+      "range": {
+        "startLine": 442,
+        "startChar": 33,
+        "endLine": 442,
+        "endChar": 35
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5adf15a_785a6521",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "I think this should be static",
+      "range": {
+        "startLine": 761,
+        "startChar": 16,
+        "endLine": 761,
+        "endChar": 33
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1abd731_53b3b1a7",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "I think you can simplify this to just\n\n  try {\n    notifyAddressUpdated(ifName, new LinkAddress(addr, flags, scope));\n  } catch (IllegalArgumentException e) {\n    // Malformed/invalid IP address.\n    throw new IllegalStateException(e);\n  }\n\nIt should be the *exact* same thing.",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 814,
+        "endChar": 50
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c227bf0b_2ca9127d",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "Join declaration with assignment",
+      "range": {
+        "startLine": 861,
+        "startChar": 16,
+        "endLine": 862,
+        "endChar": 73
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ba9c1b_7a258132",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-19T07:46:10Z",
+      "side": 1,
+      "message": "Any specific reason for this change ? I\u0027m not opposed to it but at least please make the boolean final.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 28,
+        "endLine": 1066,
+        "endChar": 74
+      },
+      "revId": "c097cdae648c68a12620bd1042ac5ad1e3159f38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
