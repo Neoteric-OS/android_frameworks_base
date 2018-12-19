@@ -25,6 +25,98 @@
     },
     {
       "key": {
+        "uuid": "907296db_b25251cb",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-19T06:47:53Z",
+      "side": 1,
+      "message": "MNC",
+      "range": {
+        "startLine": 2794,
+        "startChar": 79,
+        "endLine": 2794,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad51cfc_fff99292",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-19T06:47:53Z",
+      "side": 1,
+      "message": "Numeric",
+      "range": {
+        "startLine": 2803,
+        "startChar": 79,
+        "endLine": 2803,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16be5132_b5898322",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-19T06:47:53Z",
+      "side": 1,
+      "message": "MVNO_TYPE",
+      "range": {
+        "startLine": 2886,
+        "startChar": 79,
+        "endLine": 2886,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67260712_0dc9a8cc",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-19T06:47:53Z",
+      "side": 1,
+      "message": "same...",
+      "range": {
+        "startLine": 2901,
+        "startChar": 79,
+        "endLine": 2901,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6cec070_d1698dd5",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -36,6 +128,30 @@
       "writtenOn": "2018-12-18T16:49:20Z",
       "side": 1,
       "message": "I\u0027m not sure I see the value in providing this public static function?  You\u0027re saving 2 characters of typing, and I don\u0027t know that its clarifying anything.\n\nTelephony.getUriForSubscriptionId(SIM_APN_URI, subId)\nvs\nUri.withAppendedPath(SIM_APN_URI, String.valueOf(subId)",
+      "range": {
+        "startLine": 3113,
+        "startChar": 8,
+        "endLine": 3122,
+        "endChar": 9
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498745ec_251c3eba",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-19T06:47:53Z",
+      "side": 1,
+      "message": "other telephony URIs also supports msim, making an API for all use cases might be helpful or as you suggested add comment for each one with code snippets (Uri.withAppendedPath(SIM_APN_URI, String.valueOf(subId)) please don\u0027t copy the whole function in the comment.",
+      "parentUuid": "a6cec070_d1698dd5",
       "range": {
         "startLine": 3113,
         "startChar": 8,
