@@ -39,6 +39,24 @@
       "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85524cfd_8b577794",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-19T10:54:34Z",
+      "side": 1,
+      "message": "Also, how much is the limit of data?\nIs it better if we just print a few bytes in the beginning and the length of it, or hashcode?",
+      "parentUuid": "fc282b05_760f6bed",
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
