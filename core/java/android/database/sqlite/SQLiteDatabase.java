@@ -717,6 +717,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @return the newly opened database
      * @throws SQLiteException if the database cannot be opened
      */
+    @NonNull
     public static SQLiteDatabase openDatabase(@NonNull String path, @Nullable CursorFactory factory,
             @DatabaseOpenFlags int flags) {
         return openDatabase(path, factory, flags, null);
@@ -732,11 +733,13 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @return the newly opened database
      * @throws SQLiteException if the database cannot be opened
      */
+    @NonNull
     public static SQLiteDatabase openDatabase(@NonNull File path,
             @NonNull OpenParams openParams) {
         return openDatabase(path.getPath(), openParams);
     }
 
+    @NonNull
     @UnsupportedAppUsage
     private static SQLiteDatabase openDatabase(@NonNull String path,
             @NonNull OpenParams openParams) {
@@ -768,6 +771,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @return the newly opened database
      * @throws SQLiteException if the database cannot be opened
      */
+    @NonNull
     public static SQLiteDatabase openDatabase(@NonNull String path, @Nullable CursorFactory factory,
             @DatabaseOpenFlags int flags, @Nullable DatabaseErrorHandler errorHandler) {
         SQLiteDatabase db = new SQLiteDatabase(path, flags, factory, errorHandler, -1, -1, -1, null,
@@ -779,6 +783,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
     /**
      * Equivalent to openDatabase(file.getPath(), factory, CREATE_IF_NECESSARY).
      */
+    @NonNull
     public static SQLiteDatabase openOrCreateDatabase(@NonNull File file,
             @Nullable CursorFactory factory) {
         return openOrCreateDatabase(file.getPath(), factory);
@@ -787,6 +792,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
     /**
      * Equivalent to openDatabase(path, factory, CREATE_IF_NECESSARY).
      */
+    @NonNull
     public static SQLiteDatabase openOrCreateDatabase(@NonNull String path,
             @Nullable CursorFactory factory) {
         return openDatabase(path, factory, CREATE_IF_NECESSARY, null);
@@ -795,6 +801,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
     /**
      * Equivalent to openDatabase(path, factory, CREATE_IF_NECESSARY, errorHandler).
      */
+    @NonNull
     public static SQLiteDatabase openOrCreateDatabase(@NonNull String path,
             @Nullable CursorFactory factory, @Nullable DatabaseErrorHandler errorHandler) {
         return openDatabase(path, factory, CREATE_IF_NECESSARY, errorHandler);

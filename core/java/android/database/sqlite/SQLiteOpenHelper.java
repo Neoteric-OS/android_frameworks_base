@@ -172,6 +172,7 @@ public abstract class SQLiteOpenHelper {
      * Return the name of the SQLite database being opened, as given to
      * the constructor.
      */
+    @Nullable
     public String getDatabaseName() {
         return mName;
     }
@@ -295,6 +296,7 @@ public abstract class SQLiteOpenHelper {
      * @throws SQLiteException if the database cannot be opened for writing
      * @return a read/write database object valid until {@link #close} is called
      */
+    @NonNull
     public SQLiteDatabase getWritableDatabase() {
         synchronized (this) {
             return getDatabaseLocked(true);
@@ -319,12 +321,14 @@ public abstract class SQLiteOpenHelper {
      * @return a database object valid until {@link #getWritableDatabase}
      *     or {@link #close} is called.
      */
+    @NonNull
     public SQLiteDatabase getReadableDatabase() {
         synchronized (this) {
             return getDatabaseLocked(false);
         }
     }
 
+    @NonNull
     private SQLiteDatabase getDatabaseLocked(boolean writable) {
         if (mDatabase != null) {
             if (!mDatabase.isOpen()) {
@@ -458,7 +462,7 @@ public abstract class SQLiteOpenHelper {
      *
      * @param db The database.
      */
-    public void onConfigure(SQLiteDatabase db) {}
+    public void onConfigure(@NonNull SQLiteDatabase db) {}
 
     /**
      * Called before the database is deleted when the version returned by
@@ -471,7 +475,7 @@ public abstract class SQLiteOpenHelper {
      * @see #SQLiteOpenHelper(Context, String, CursorFactory, int, int, DatabaseErrorHandler)
      * @hide
      */
-    public void onBeforeDelete(SQLiteDatabase db) {
+    public void onBeforeDelete(@NonNull SQLiteDatabase db) {
     }
 
     /**
@@ -480,7 +484,7 @@ public abstract class SQLiteOpenHelper {
      *
      * @param db The database.
      */
-    public abstract void onCreate(SQLiteDatabase db);
+    public abstract void onCreate(@NonNull SQLiteDatabase db);
 
     /**
      * Called when the database needs to be upgraded. The implementation
@@ -502,7 +506,7 @@ public abstract class SQLiteOpenHelper {
      * @param oldVersion The old database version.
      * @param newVersion The new database version.
      */
-    public abstract void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
+    public abstract void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion);
 
     /**
      * Called when the database needs to be downgraded. This is strictly similar to
@@ -520,7 +524,7 @@ public abstract class SQLiteOpenHelper {
      * @param oldVersion The old database version.
      * @param newVersion The new database version.
      */
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onDowngrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
         throw new SQLiteException("Can't downgrade database from version " +
                 oldVersion + " to " + newVersion);
     }
@@ -538,5 +542,5 @@ public abstract class SQLiteOpenHelper {
      *
      * @param db The database.
      */
-    public void onOpen(SQLiteDatabase db) {}
+    public void onOpen(@NonNull SQLiteDatabase db) {}
 }
