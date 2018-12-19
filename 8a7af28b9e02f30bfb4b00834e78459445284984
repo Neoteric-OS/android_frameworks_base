@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635f1d64_0ac314e3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-19T13:59:06Z",
+      "side": 1,
+      "message": "It will return the list of tasks that never commenced execution. We are not going to handle them or handle in following commits?\n\nLook like we may lost something unfinished? Will we?",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "8a7af28b9e02f30bfb4b00834e78459445284984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
