@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f969203_cd9cf5fb",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2687,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-12-20T06:40:37Z",
+      "side": 1,
+      "message": "maybe SIM_APN_URI? otherwise LGTM",
+      "range": {
+        "startLine": 2687,
+        "startChar": 32,
+        "endLine": 2687,
+        "endChar": 48
+      },
+      "revId": "7609fcd40074f1b54bb843a647fff346f7e7879a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
