@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c30c5d2_f9011f49",
+        "filename": "libs/hwui/service/GraphicsStatsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2018-12-20T13:33:52Z",
+      "side": 1,
+      "message": "Use spaces instead of tabs.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 1
+      },
+      "revId": "2d4f8ee5b48b185da33441c3b8b7316237fbe239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
