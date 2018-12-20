@@ -149,6 +149,12 @@ public class ApnSetting implements Parcelable {
     public static final int PROTOCOL_IPV4V6 = 2;
     /** Protocol type for PPP. */
     public static final int PROTOCOL_PPP = 3;
+    /** Protocol type for Non-IP. */
+    public static final int PROTOCOL_NON_IP = 4;
+    /** Protocol type for Ethernet. */
+    public static final int PROTOCOL_ETHERNET = 5;
+    /** Protocol type for Unstructured. */
+    public static final int PROTOCOL_UNSTRUCTURED = 6;
 
     /** @hide */
     @IntDef(prefix = { "PROTOCOL_" }, value = {
@@ -156,6 +162,9 @@ public class ApnSetting implements Parcelable {
         PROTOCOL_IPV6,
         PROTOCOL_IPV4V6,
         PROTOCOL_PPP,
+        PROTOCOL_NON_IP,
+        PROTOCOL_ETHERNET,
+        PROTOCOL_UNSTRUCTURED,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ProtocolType {}
@@ -217,11 +226,17 @@ public class ApnSetting implements Parcelable {
         PROTOCOL_STRING_MAP.put("IPV6", PROTOCOL_IPV6);
         PROTOCOL_STRING_MAP.put("IPV4V6", PROTOCOL_IPV4V6);
         PROTOCOL_STRING_MAP.put("PPP", PROTOCOL_PPP);
+        PROTOCOL_STRING_MAP.put("NON-IP", PROTOCOL_NON_IP);
+        PROTOCOL_STRING_MAP.put("ETHERNET", PROTOCOL_ETHERNET);
+        PROTOCOL_STRING_MAP.put("UNSTRUCTURED", PROTOCOL_UNSTRUCTURED);
         PROTOCOL_INT_MAP = new ArrayMap<Integer, String>();
         PROTOCOL_INT_MAP.put(PROTOCOL_IP, "IP");
         PROTOCOL_INT_MAP.put(PROTOCOL_IPV6, "IPV6");
         PROTOCOL_INT_MAP.put(PROTOCOL_IPV4V6, "IPV4V6");
         PROTOCOL_INT_MAP.put(PROTOCOL_PPP, "PPP");
+        PROTOCOL_INT_MAP.put(PROTOCOL_NON_IP, "NON-IP");
+        PROTOCOL_INT_MAP.put(PROTOCOL_ETHERNET, "ETHERNET");
+        PROTOCOL_INT_MAP.put(PROTOCOL_UNSTRUCTURED, "UNSTRUCTURED");
 
         MVNO_TYPE_STRING_MAP = new ArrayMap<String, Integer>();
         MVNO_TYPE_STRING_MAP.put("spn", MVNO_TYPE_SPN);
