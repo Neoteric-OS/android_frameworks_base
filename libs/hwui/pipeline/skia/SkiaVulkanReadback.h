@@ -24,7 +24,7 @@ namespace skiapipeline {
 
 class SkiaVulkanReadback : public Readback {
 public:
-    SkiaVulkanReadback(renderthread::RenderThread& thread) : Readback(thread) {}
+    explicit SkiaVulkanReadback(renderthread::RenderThread& thread) : Readback(thread) {}
 
     virtual CopyResult copySurfaceInto(Surface& surface, const Rect& srcRect,
             SkBitmap* bitmap) override {
