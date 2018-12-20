@@ -49,7 +49,7 @@ private:
 
 class OpenGLReadbackImpl : public OpenGLReadback {
 public:
-    OpenGLReadbackImpl(renderthread::RenderThread& thread) : OpenGLReadback(thread) {}
+    explicit OpenGLReadbackImpl(renderthread::RenderThread& thread) : OpenGLReadback(thread) {}
 
     /**
      * Copies the layer's contents into the provided bitmap.
