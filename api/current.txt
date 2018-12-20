@@ -40421,6 +40421,17 @@ package android.speech.tts {
 
 }
 
+package android.sysprop {
+
+  public final class CameraProperties {
+    method public static java.util.Optional<java.lang.Boolean> capture_debug_ui();
+    method public static java.util.Optional<java.lang.Boolean> capture_dng();
+    method public static java.util.Optional<java.lang.Boolean> frame_log();
+    method public static java.util.Optional<java.lang.Boolean> write_capture_data();
+  }
+
+}
+
 package android.system {
 
   public final class ErrnoException extends java.lang.Exception {
