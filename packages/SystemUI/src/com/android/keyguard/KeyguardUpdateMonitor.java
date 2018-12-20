@@ -92,6 +92,7 @@ import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -241,6 +242,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
     private int mHardwareUnavailableRetryCount = 0;
     private static final int HW_UNAVAILABLE_TIMEOUT = 3000; // ms
     private static final int HW_UNAVAILABLE_RETRY_MAX = 3;
+
+    // if sim pin has already unlocked
+    private static HashSet<Integer> mSimUnlocked = new HashSet<>();
 
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -420,6 +424,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 KeyguardUpdateMonitorCallback cb = mCallbacks.get(j).get();
                 if (cb != null) {
                     cb.onSimStateChanged(data.subId, data.slotId, data.simState);
+                    if (mSimUnlocked.contains(data.subId) && data.simState != State.PIN_REQUIRED) {
+                        mSimUnlocked.remove(data.subId);
+                    }
                 }
             }
         }
@@ -1557,6 +1564,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
                 if (cb != null) {
                     cb.onSimStateChanged(subId, slotId, state);
+                    if (mSimUnlocked.contains(subId) && state != State.PIN_REQUIRED) {
+                        mSimUnlocked.remove(subId);
+                    }
                 }
             }
         }
@@ -1740,6 +1750,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         for (Entry<Integer, SimData> data : mSimDatas.entrySet()) {
             final SimData state = data.getValue();
             callback.onSimStateChanged(state.subId, state.slotId, state.simState);
+            if (mSimUnlocked.contains(state.subId) && state.simState != State.PIN_REQUIRED) {
+                mSimUnlocked.remove(state.subId);
+            }
         }
     }
 
@@ -1770,6 +1783,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         if (DEBUG_SIM_STATES) Log.v(TAG, "reportSimUnlocked(subId=" + subId + ")");
         int slotId = SubscriptionManager.getSlotIndex(subId);
         handleSimStateChange(subId, slotId, State.READY);
+        mSimUnlocked.add(subId);
     }
 
     /**
@@ -1951,8 +1965,12 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
             final int id = info.getSubscriptionId();
             int slotId = SubscriptionManager.getSlotIndex(id);
             if (state == getSimState(id) && bestSlotId > slotId ) {
-                resultId = id;
-                bestSlotId = slotId;
+                if (!mSimUnlocked.contains(id)) {
+                    resultId = id;
+                    bestSlotId = slotId;
+                } else {
+                    Log.d(TAG, "getNextSubIdForState ignore subid " +  id +  " as it's reported as unlocked");
+                }
             }
         }
         return resultId;
