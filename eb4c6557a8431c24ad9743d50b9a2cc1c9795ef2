@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219e97df_7e454fa1",
+        "filename": "startop/view_compiler/dex_layout_compiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-12-20T01:49:19Z",
+      "side": 1,
+      "message": "What\u0027s the reason for using anonymous namespace here?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 11
+      },
+      "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e490e7_f89cce06",
+        "filename": "startop/view_compiler/dex_layout_compiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-12-20T01:49:19Z",
+      "side": 1,
+      "message": "Why does this return a value? Also I would consider doing something like\nReleaseRegister(dex::Value reg) and using a free list to enable having overlapping register ranges.",
+      "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
