@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24d43a73_2c6f5d2c",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2684,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ac7e70_c4740f5d",
+      "range": {
+        "startLine": 2684,
+        "startChar": 32,
+        "endLine": 2684,
+        "endChar": 44
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907296db_b25251cb",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5fe016_468ac312",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907296db_b25251cb",
+      "range": {
+        "startLine": 2794,
+        "startChar": 79,
+        "endLine": 2794,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd2517a3_cffb262f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad51cfc_fff99292",
+      "range": {
+        "startLine": 2803,
+        "startChar": 79,
+        "endLine": 2803,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16be5132_b5898322",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f5212a20_dc7ac738",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16be5132_b5898322",
+      "range": {
+        "startLine": 2886,
+        "startChar": 79,
+        "endLine": 2886,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67260712_0dc9a8cc",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6641e221_e8997a8c",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67260712_0dc9a8cc",
+      "range": {
+        "startLine": 2901,
+        "startChar": 79,
+        "endLine": 2901,
+        "endChar": 82
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +272,30 @@
       "side": 1,
       "message": "other telephony URIs also supports msim, making an API for all use cases might be helpful or as you suggested add comment for each one with code snippets (Uri.withAppendedPath(SIM_APN_URI, String.valueOf(subId)) please don\u0027t copy the whole function in the comment.",
       "parentUuid": "a6cec070_d1698dd5",
+      "range": {
+        "startLine": 3113,
+        "startChar": 8,
+        "endLine": 3122,
+        "endChar": 9
+      },
+      "revId": "3d14de34f6554674fda5a2a15e70529776eb00a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d16a1a_ece93842",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-12-20T14:58:34Z",
+      "side": 1,
+      "message": "Drop and add in comment",
+      "parentUuid": "498745ec_251c3eba",
       "range": {
         "startLine": 3113,
         "startChar": 8,
