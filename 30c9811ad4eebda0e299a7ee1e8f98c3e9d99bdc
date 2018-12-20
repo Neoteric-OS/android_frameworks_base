@@ -22,6 +22,30 @@
       "revId": "30c9811ad4eebda0e299a7ee1e8f98c3e9d99bdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83953fbd_e5bd1978",
+        "filename": "services/core/java/com/android/server/connectivity/PacManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-20T08:24:10Z",
+      "side": 1,
+      "message": "Absolutely with you ; that\u0027s why PT17.5 reverts to booleans. The reason I\u0027ve gone this convoluted route is clear in l.174 : \"Returns true when the broadcast should not be sent\". I got this wrong twice during the refactoring and decided to invert the confusing boolean direction, but the patch was so confusing that I split it into this patch converting it to a super explicit enum, and another converting it back to a boolean.\n\nWill rename the enum for this patch",
+      "parentUuid": "c78dc907_f862d92d",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "30c9811ad4eebda0e299a7ee1e8f98c3e9d99bdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
