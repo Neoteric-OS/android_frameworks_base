@@ -118,6 +118,30 @@
       "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb5a050_8b491e08",
+        "filename": "services/core/java/com/android/server/wm/Dimmer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2018-12-20T22:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c52d2d_c58fc261",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 41
+      },
+      "revId": "958f897a48f64c9db4d2a66952d4f8b6e8505d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
