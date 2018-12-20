@@ -87,9 +87,6 @@ public class PackageDexOptimizer {
     // One minute over PM WATCHDOG_TIMEOUT
     private static final long WAKELOCK_TIMEOUT_MS = WATCHDOG_TIMEOUT + 1000 * 60;
 
-    /** Special library name that skips shared libraries check during compilation. */
-    public static final String SKIP_SHARED_LIBRARY_CHECK = "&";
-
     @GuardedBy("mInstallLock")
     private final Installer mInstaller;
     private final Object mInstallLock;
@@ -399,21 +396,21 @@ public class PackageDexOptimizer {
             Slog.e(TAG, "Could not infer CE/DE storage for package " + info.packageName);
             return DEX_OPT_FAILED;
         }
-        Log.d(TAG, "Running dexopt on: " + path
-                + " pkg=" + info.packageName + " isa=" + dexUseInfo.getLoaderIsas()
-                + " dexoptFlags=" + printDexoptFlags(dexoptFlags)
-                + " target-filter=" + compilerFilter);
-
         String classLoaderContext;
         if (dexUseInfo.isUnknownClassLoaderContext() || dexUseInfo.isVariableClassLoaderContext()) {
-            // If we have an unknown (not yet set), or a variable class loader chain, compile
-            // without a context and mark the oat file with SKIP_SHARED_LIBRARY_CHECK. Note that
-            // this might lead to a incorrect compilation.
-            // TODO(calin): We should just extract in this case.
-            classLoaderContext = SKIP_SHARED_LIBRARY_CHECK;
+            // If we have an unknown (not yet set), or a variable class loader chain. Just extract
+            // the dex file.
+            compilerFilter = "extract";
         } else {
             classLoaderContext = dexUseInfo.getClassLoaderContext();
         }
+
+        Log.d(TAG, "Running dexopt on: " + path
+                + " pkg=" + info.packageName + " isa=" + dexUseInfo.getLoaderIsas()
+                + " dexoptFlags=" + printDexoptFlags(dexoptFlags)
+                + " target-filter=" + compilerFilter
+                + " class-loader-context=" + classLoaderContext);
+
 
         int reason = options.getCompilationReason();
         try {
