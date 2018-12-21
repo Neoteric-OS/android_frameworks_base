@@ -43274,10 +43274,13 @@ package android.telephony.data {
     field public static final int MVNO_TYPE_ICCID = 3; // 0x3
     field public static final int MVNO_TYPE_IMSI = 1; // 0x1
     field public static final int MVNO_TYPE_SPN = 0; // 0x0
+    field public static final int PROTOCOL_ETHERNET = 5; // 0x5
     field public static final int PROTOCOL_IP = 0; // 0x0
     field public static final int PROTOCOL_IPV4V6 = 2; // 0x2
     field public static final int PROTOCOL_IPV6 = 1; // 0x1
+    field public static final int PROTOCOL_NON_IP = 4; // 0x4
     field public static final int PROTOCOL_PPP = 3; // 0x3
+    field public static final int PROTOCOL_UNSTRUCTURED = 6; // 0x6
     field public static final int TYPE_CBS = 128; // 0x80
     field public static final int TYPE_DEFAULT = 1; // 0x1
     field public static final int TYPE_DUN = 8; // 0x8
