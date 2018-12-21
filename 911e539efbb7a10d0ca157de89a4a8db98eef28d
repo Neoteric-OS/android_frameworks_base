@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "80c380c6_27ec0074",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-12-21T22:50:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e20f311e_5dab7c3a",
+      "range": {
+        "startLine": 1877,
+        "startChar": 19,
+        "endLine": 1877,
+        "endChar": 53
+      },
+      "revId": "911e539efbb7a10d0ca157de89a4a8db98eef28d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94cd3447_e1fbcea0",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 5
@@ -155,6 +179,30 @@
       "revId": "911e539efbb7a10d0ca157de89a4a8db98eef28d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bf01da_53043e1b",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-12-21T22:50:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4dc6e8bf_21a8d3c7",
+      "range": {
+        "startLine": 143,
+        "startChar": 66,
+        "endLine": 143,
+        "endChar": 80
+      },
+      "revId": "911e539efbb7a10d0ca157de89a4a8db98eef28d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
