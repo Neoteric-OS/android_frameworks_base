@@ -81,6 +81,24 @@
       "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6cd248_64691d82",
+        "filename": "startop/view_compiler/dex_layout_compiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-12-21T19:42:17Z",
+      "side": 1,
+      "message": "Sounds good, free list is not really required yet.",
+      "parentUuid": "52fbf2ba_d44ddb3e",
+      "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
