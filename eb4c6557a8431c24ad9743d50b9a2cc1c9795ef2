@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9da08e63_38b5a2ca",
+        "filename": "startop/view_compiler/dex_layout_compiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-12-21T19:40:33Z",
+      "side": 1,
+      "message": "It\u0027s a habit I picked up from V8/Chrome. It does the same thing as making this function static, so that it won\u0027t be visible from other files.\n\nhttps://stackoverflow.com/questions/154469/unnamed-anonymous-namespaces-vs-static-functions",
+      "parentUuid": "219e97df_7e454fa1",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 11
+      },
+      "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e490e7_f89cce06",
         "filename": "startop/view_compiler/dex_layout_compiler.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-12-20T01:49:19Z",
       "side": 1,
       "message": "Why does this return a value? Also I would consider doing something like\nReleaseRegister(dex::Value reg) and using a free list to enable having overlapping register ranges.",
+      "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fbf2ba_d44ddb3e",
+        "filename": "startop/view_compiler/dex_layout_compiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-12-21T19:40:33Z",
+      "side": 1,
+      "message": "The return is left over from an earlier attempt to be clever. The idea was to call ReleaseRegister and it would give you the register holding the view you were working on. I\u0027ve changed it to be void.\n\nI went with a stack since we process views in stack order, although I agree that the freelist is more general. What about saving this for a future refactoring?",
+      "parentUuid": "a2e490e7_f89cce06",
       "revId": "eb4c6557a8431c24ad9743d50b9a2cc1c9795ef2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
