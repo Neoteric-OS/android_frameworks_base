@@ -308,4 +308,6 @@ cc_library_shared {
         // GraphicsJNI.h includes hwui headers
         "libhwui",
     ],
+
+    native_coverage: false,
 }
