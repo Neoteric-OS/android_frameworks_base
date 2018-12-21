@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94cd3447_e1fbcea0",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-12-21T17:04:47Z",
+      "side": 1,
+      "message": "I was not able to find this, is that a typo?",
+      "range": {
+        "startLine": 143,
+        "startChar": 66,
+        "endLine": 143,
+        "endChar": 80
+      },
+      "revId": "911e539efbb7a10d0ca157de89a4a8db98eef28d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
