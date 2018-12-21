@@ -87,6 +87,8 @@ cc_library_shared {
         // android_mtp_MtpDatabase.cpp until they are fixed.
         "-Wno-error=implicit-fallthrough",
     ],
+
+    native_coverage: false,
 }
 
 cc_library_shared {
@@ -174,6 +176,8 @@ cc_library_shared {
     ],
 
     ldflags: ["-Wl,--exclude-libs=ALL"],
+
+    native_coverage: false,
 }
 
 subdirs = [
