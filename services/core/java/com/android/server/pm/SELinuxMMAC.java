@@ -81,6 +81,13 @@ public final class SELinuxMMAC {
         sMacPermissions.add(new File(
             Environment.getRootDirectory(), "/etc/selinux/plat_mac_permissions.xml"));
 
+        // Product mac permissions (optional).
+        final File productMacPermission = new File(
+            Environment.getProductDirectory(), "/etc/selinux/product_mac_permissions.xml");
+        if (productMacPermission.exists()) {
+            sMacPermissions.add(productMacPermission);
+        }
+
         // Vendor mac permissions.
         // The filename has been renamed from nonplat_mac_permissions to
         // vendor_mac_permissions. Either of them should exist.
