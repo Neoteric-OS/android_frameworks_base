@@ -51,7 +51,7 @@ public class InstallCarrierAppActivity extends Activity implements View.OnClickL
         // Setup theme for aosp/pixel
         setTheme(
                 WizardManagerHelper.getThemeRes(
-                        SetupWizardProperties.theme().orElse(""),
+                        SetupWizardProperties.theme().orElse(null),
                         R.style.SuwThemeGlif_Light
                 )
         );
