@@ -1001,6 +1001,11 @@ public abstract class PanelView extends FrameLayout {
 
     public void expand(final boolean animate) {
         if (!isFullyCollapsed() && !isCollapsing()) {
+            // Expanded but current not visible, update if need
+            if (mStatusBar.getBarState() == StatusBarState.KEYGUARD
+                    && getVisibility() != View.VISIBLE) {
+                notifyBarPanelExpansionChanged();
+            }
             return;
         }
 
