@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d380d28_9ea34878",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-25T03:15:17Z",
+      "side": 1,
+      "message": "Nit: we generally do not add indentation for another line of parameters. I can also prepare a formatting CL later if that\u0027s more convenient.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 16,
+        "endLine": 1008,
+        "endChar": 23
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "986288d6_14c4d0b7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-25T03:15:17Z",
+      "side": 1,
+      "message": "Nit: generally only one space is used after @param in javadoc, without column-alignment. I can prepare a formatting CL later if that\u0027s more convenient.",
+      "range": {
+        "startLine": 1555,
+        "startChar": 25,
+        "endLine": 1555,
+        "endChar": 31
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
