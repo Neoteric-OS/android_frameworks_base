@@ -3165,6 +3165,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateNotificationViews();
         mMediaManager.clearCurrentMediaNotification();
         setLockscreenUser(newUserId);
+        //Update notification panel visibilities
+        mNotificationPanel.notifyBarPanelExpansionChanged();
     }
 
     @Override
