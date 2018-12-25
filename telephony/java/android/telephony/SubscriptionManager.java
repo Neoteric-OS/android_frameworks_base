@@ -729,6 +729,16 @@ public class SubscriptionManager {
     @SystemApi
     public static final int PROFILE_CLASS_DEFAULT = PROFILE_CLASS_UNSET;
 
+    public static final int SUBINFO_CHANGE_TYPE_DISPLAY_NAME =  0x00000001;
+    public static final int SUBINFO_CHANGE_TYPE_CARRIER_NAME =  0x00000002;
+    public static final int SUBINFO_CHANGE_TYPE_ICC_ID =  0x00000004;
+    public static final int SUBINFO_CHANGE_TYPE_NAME_SOURCE =  0x00000008;
+    public static final int SUBINFO_CHANGE_TYPE_NAME_COLOR = 0x00000010;
+    public static final int SUBINFO_CHANGE_TYPE_NUMBER = 0x00000020;
+    public static final int SUBINFO_CHANGE_TYPE_DATA_ROAMING = 0x00000040;
+    public static final int SUBINFO_CHANGE_TYPE_MCC_MNC = 0x00000080;
+    public static final int SUBINFO_CHANGE_TYPE_ALL =  Integer.MAX_VALUE;
+
     /**
      * Broadcast Action: The user has changed one of the default subs related to
      * data, phone calls, or sms</p>
@@ -923,10 +933,14 @@ public class SubscriptionManager {
      *                 onSubscriptionsChanged overridden.
      */
     public void addOnSubscriptionsChangedListener(OnSubscriptionsChangedListener listener) {
+        addOnSubscriptionsChangedListener(listener, SUBINFO_CHANGE_TYPE_ALL);
+    }
+
+    public void addOnSubscriptionsChangedListener (OnSubscriptionsChangedListener listener, int subChangeTypes) {
         String pkgName = mContext != null ? mContext.getOpPackageName() : "<unknown>";
         if (DBG) {
             logd("register OnSubscriptionsChangedListener pkgName=" + pkgName
-                    + " listener=" + listener);
+                    + " listener=" + listener + " subChangeTypes = " + subChangeTypes);
         }
         try {
             // We use the TelephonyRegistry as it runs in the system and thus is always
@@ -934,7 +948,7 @@ public class SubscriptionManager {
             ITelephonyRegistry tr = ITelephonyRegistry.Stub.asInterface(ServiceManager.getService(
                     "telephony.registry"));
             if (tr != null) {
-                tr.addOnSubscriptionsChangedListener(pkgName, listener.callback);
+                tr.addOnSubscriptionsChangedListener(pkgName, listener.callback, subChangeTypes);
             }
         } catch (RemoteException ex) {
             Log.e(LOG_TAG, "Remote exception ITelephonyRegistry " + ex);
