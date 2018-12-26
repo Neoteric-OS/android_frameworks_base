@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e31ba582_a346f90c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T09:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ea2636_34221031",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "8a7af28b9e02f30bfb4b00834e78459445284984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635f1d64_0ac314e3",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8a7af28b9e02f30bfb4b00834e78459445284984",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb35a6e_d9a72fba",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T09:51:50Z",
+      "side": 1,
+      "message": "No, we are not going to handle them.\nWhile there is no plan to actually call this method, it\u0027s provided for completeness. The only reason I can think of to call it is to prepare for an emergency shutdown, where the whole system is going down ; this will not be called to, say, reclaim memory : the memory store is, after all, a system service, and those never go away.\nIn any case, calling this method explicitly indicates we don\u0027t care about the potential queued requests, so they should be dropped and the ones in progress should be canceled if possible. Added a comment.",
+      "parentUuid": "635f1d64_0ac314e3",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "8a7af28b9e02f30bfb4b00834e78459445284984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
