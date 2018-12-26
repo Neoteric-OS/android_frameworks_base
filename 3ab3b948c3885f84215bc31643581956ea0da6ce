@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20e7cf6_e1d336b2",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T06:27:12Z",
+      "side": 1,
+      "message": "@Override ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "3ab3b948c3885f84215bc31643581956ea0da6ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
