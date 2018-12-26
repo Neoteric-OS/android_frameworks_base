@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c023e101_6c640bd3",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T09:51:54Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "9bd93b0d_e3c732f1",
+      "range": {
+        "startLine": 220,
+        "startChar": 30,
+        "endLine": 220,
+        "endChar": 47
+      },
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc282b05_760f6bed",
         "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
         "patchSetId": 2
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "I also think it would be best to have a limit for the length of what is printed (so maybe stop after X bytes).\nFor preventing printing on user builds, maybe this should be the caller\u0027s responsibility ?",
       "parentUuid": "85524cfd_8b577794",
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226a3864_b899ecf0",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T09:51:54Z",
+      "side": 1,
+      "message": "Agree with Rémi about user builds. This is only a capability and it\u0027s a toString() so I think it would be strange to have toString() return an empty string because the build type is the wrong one.\n\nPoint taken on the length. Made it so that it shows at most 16 bytes at the start, and 8 at the end.",
+      "parentUuid": "9267ff8c_3eddcb07",
       "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
