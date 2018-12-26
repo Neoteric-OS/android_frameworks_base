@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f618f0ae_6e73d23d",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1159753
+      },
+      "writtenOn": "2018-12-26T09:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adcf4ad_6ff53ffb",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 23
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc881ff_82c7eea7",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-12-12T11:09:05Z",
       "side": 1,
       "message": "What if the host or port contains a \u0027\\0\u0027 ?\nHere, the decoding code will test for length and catch any exception so it\u0027s probably safe, but you should probably at least write a comment (or possibly the code to actually reject a proxyinfo that contains a \\0 in either of these values, or better yet somehow escape it).",
+      "range": {
+        "startLine": 192,
+        "startChar": 58,
+        "endLine": 192,
+        "endChar": 65
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3955e05_cf484060",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1159753
+      },
+      "writtenOn": "2018-12-26T09:03:48Z",
+      "side": 1,
+      "message": "The interface ensures no \u0027\\0\u0027 in host or port.",
+      "parentUuid": "5bc881ff_82c7eea7",
       "range": {
         "startLine": 192,
         "startChar": 58,
@@ -68,6 +116,30 @@
       "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef1fb58_b31877b2",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1159753
+      },
+      "writtenOn": "2018-12-26T09:03:48Z",
+      "side": 1,
+      "message": "agree, fixed.",
+      "parentUuid": "07d8a1d6_d31a54a0",
+      "range": {
+        "startLine": 343,
+        "startChar": 12,
+        "endLine": 343,
+        "endChar": 86
+      },
+      "revId": "49d576e4cfe46f1fd3ce8132051b6262d6807b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
