@@ -26,8 +26,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.NetworkUtils;
 import android.net.ipmemorystore.NetworkAttributes;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -156,6 +159,21 @@ public class IpMemoryStoreDatabase {
         return os.toByteArray();
     }
 
+    @NonNull
+    private static ArrayList<InetAddress> decodeAddressList(@NonNull final byte[] encoded) {
+        final ByteArrayInputStream is = new ByteArrayInputStream(encoded);
+        final ArrayList<InetAddress> addresses = new ArrayList<>();
+        int d = -1;
+        while ((d = is.read()) != -1) {
+            final byte[] bytes = new byte[d];
+            is.read(bytes, 0, d);
+            try {
+                addresses.add(InetAddress.getByAddress(bytes));
+            } catch (UnknownHostException e) { /* Hopefully impossible */ }
+        }
+        return addresses;
+    }
+
     // Convert a NetworkAttributes object to content values to store them in a table compliant
     // with the contract defined in NetworkAttributesContract.
     @NonNull
@@ -244,5 +262,68 @@ public class IpMemoryStoreDatabase {
             @NonNull final byte[] data) {
         db.insertWithOnConflict(PrivateDataContract.TABLENAME, null,
                 toContentValues(key, clientId, name, data), SQLiteDatabase.CONFLICT_REPLACE);
+    }
+
+    @Nullable
+    static NetworkAttributes retrieveNetworkAttributes(@NonNull final SQLiteDatabase db,
+            @NonNull final String key) {
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns, null means everything
+                NetworkAttributesContract.COLUMNNAME_L2KEY + " = ?", // selection
+                new String[] { key }, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        // L2KEY is the primary key ; it should not be possible to get more than one
+        // result here. 0 results means the key was not found.
+        if (cursor.getCount() != 1) return null;
+
+        // Make sure the data hasn't expired
+        final long expiry = cursor.getLong(
+                cursor.getColumnIndex(NetworkAttributesContract.COLUMNNAME_EXPIRYDATE));
+        if (expiry > System.currentTimeMillis()) return null;
+
+        final NetworkAttributes.Builder builder = new NetworkAttributes.Builder();
+        final int assignedV4AddressInt = cursor.getInt(
+                cursor.getColumnIndex(NetworkAttributesContract.COLUMNNAME_ASSIGNEDV4ADDRESS));
+        final String groupHint = cursor.getString(
+                cursor.getColumnIndex(NetworkAttributesContract.COLUMNNAME_GROUPHINT));
+        final byte[] dnsAddressesBlob = cursor.getBlob(
+                cursor.getColumnIndex(NetworkAttributesContract.COLUMNNAME_DNSADDRESSES));
+        final int mtu = cursor.getInt(
+                cursor.getColumnIndex(NetworkAttributesContract.COLUMNNAME_MTU));
+        if (0 != assignedV4AddressInt) {
+            builder.setAssignedAddress(NetworkUtils.intToInet4AddressHTH(assignedV4AddressInt));
+        }
+        builder.setGroupHint(groupHint);
+        if (null != dnsAddressesBlob) {
+            builder.setDnsAddresses(decodeAddressList(dnsAddressesBlob));
+        }
+        if (mtu >= 0) {
+            builder.setMtu(mtu);
+        }
+        return builder.build();
+    }
+
+    private static final String[] DATA_COLUMN = new String[] {
+            PrivateDataContract.COLUMNNAME_DATA
+    };
+    @Nullable
+    static byte[] retrieveBlob(@NonNull final SQLiteDatabase db, @NonNull final String key,
+            @NonNull final String clientId, @NonNull final String name) {
+        final Cursor cursor = db.query(PrivateDataContract.TABLENAME,
+                DATA_COLUMN, // columns
+                PrivateDataContract.COLUMNNAME_L2KEY + " = ? AND " // selection
+                + PrivateDataContract.COLUMNNAME_CLIENT + " = ? AND "
+                + PrivateDataContract.COLUMNNAME_DATANAME + " = ?",
+                new String[] { key, clientId, name }, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        // The query above is querying by (composite) primary key, so it should not be possible to
+        // get more than one result here. 0 results means the key was not found.
+        if (cursor.getCount() != 1) return null;
+        cursor.moveToFirst();
+        return cursor.getBlob(0); // index in the DATA_COLUMN array
     }
 }

@@ -16,6 +16,8 @@
 
 package com.android.server.net.ipmemorystore;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -23,6 +25,7 @@ import static org.mockito.Mockito.doReturn;
 
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
+import android.net.ipmemorystore.IOnBlobRetrievedListener;
 import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributes;
 import android.net.ipmemorystore.Status;
@@ -43,6 +46,7 @@ import org.mockito.MockitoAnnotations;
 import java.io.File;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -92,6 +96,26 @@ public class IpMemoryStoreServiceTest {
         };
     }
 
+    /** Helper method to make an IOnBlobRetrievedListener */
+    private interface OnBlobRetrievedListener {
+        void onBlobRetrieved(Status status, String l2Key, String name, byte[] data);
+    }
+    private IOnBlobRetrievedListener onBlobRetrieved(final OnBlobRetrievedListener functor) {
+        return new IOnBlobRetrievedListener() {
+            @Override
+            public void onBlobRetrieved(final StatusParcelable statusParcelable,
+                    final String l2Key, final String name, final Blob blob) throws RemoteException {
+                functor.onBlobRetrieved(new Status(statusParcelable), l2Key, name,
+                        null == blob ? null : blob.data);
+            }
+
+            @Override
+            public IBinder asBinder() {
+                return null;
+            }
+        };
+    }
+
     @Test
     public void testNetworkAttributes() {
         final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
@@ -113,6 +137,8 @@ public class IpMemoryStoreServiceTest {
         } catch (InterruptedException e) {
             fail("Did not complete storing attributes");
         }
+
+        // TODO : retrieve the attributes
     }
 
     @Test
@@ -120,17 +146,49 @@ public class IpMemoryStoreServiceTest {
         final Blob b = new Blob();
         b.data = new byte[] { -3, 6, 8, -9, 12, -128, 0, 89, 112, 91, -34 };
         final String l2Key = UUID.randomUUID().toString();
-        final CountDownLatch latch = new CountDownLatch(1);
+        final CountDownLatch storeLatch = new CountDownLatch(1);
         mService.storeBlob(l2Key, TEST_CLIENT_ID, TEST_DATA_NAME, b,
                 onStatus(status -> {
                     assertTrue("Store status not successful : " + status.resultCode,
                             status.isSuccess());
-                    latch.countDown();
+                    storeLatch.countDown();
                 }));
         try {
-            latch.await(5000, TimeUnit.SECONDS);
+            storeLatch.await(5000, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             fail("Did not complete storing private data");
+        }
+
+        final CountDownLatch retrieveLatch = new CountDownLatch(1);
+        mService.retrieveBlob(l2Key, TEST_CLIENT_ID, TEST_DATA_NAME, onBlobRetrieved(
+                (status, key, name, data) -> {
+                    assertTrue("Retrieve blob status not successful : " + status.resultCode,
+                            status.isSuccess());
+                    assertEquals(l2Key, key);
+                    assertEquals(name, TEST_DATA_NAME);
+                    Arrays.equals(b.data, data);
+                    retrieveLatch.countDown();
+                }));
+        try {
+            retrieveLatch.await(5000, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            fail("Did not complete retrieving private data");
+        }
+
+        final CountDownLatch retrieveNothingLatch = new CountDownLatch(1);
+        mService.retrieveBlob(l2Key, TEST_CLIENT_ID, TEST_DATA_NAME + "2", onBlobRetrieved(
+                (status, key, name, data) -> {
+                    assertTrue("Retrieve blob status not successful : " + status.resultCode,
+                            status.isSuccess());
+                    assertEquals(l2Key, key);
+                    assertEquals(name, TEST_DATA_NAME + "2");
+                    assertNull(data);
+                    retrieveNothingLatch.countDown();
+                }));
+        try {
+            retrieveNothingLatch.await(5000, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            fail("Did not complete retrieving private data");
         }
     }
 
