@@ -66,6 +66,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
     public boolean inferred = false;
 
     private static final long DEFAULT_MTU = 1500;
+    private static final long VAL_UNINIT = 0;
 
     public static RecurrenceRule buildRule(int cycleDay, ZoneId cycleTimezone) {
         if (cycleDay != NetworkPolicy.CYCLE_NONE) {
@@ -182,6 +183,24 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
      */
     public boolean hasCycle() {
         return cycleRule.cycleIterator().hasNext();
+    }
+
+    /**
+     * Return the DateTimeZone of the start of a cycle
+     */
+    public long getStart() {
+        return hasCycle()
+               ? cycleRule.cycleIterator().next().getLower().toInstant().toEpochMilli()
+               : VAL_UNINIT;
+    }
+
+    /**
+     * Return the DateTimeZone of the end of a cycle
+     */
+    public long getEnd() {
+        return hasCycle()
+               ? cycleRule.cycleIterator().next().getUpper().toInstant().toEpochMilli()
+               : VAL_UNINIT;
     }
 
     @Override

@@ -202,7 +202,6 @@ import android.util.AtomicFile;
 import android.util.DataUnit;
 import android.util.IntArray;
 import android.util.Log;
-import android.util.Pair;
 import android.util.Range;
 import android.util.RecurrenceRule;
 import android.util.Slog;
@@ -1139,10 +1138,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             if (subId == INVALID_SUBSCRIPTION_ID) continue;
             if (!policy.hasCycle()) continue;
 
-            final Pair<ZonedDateTime, ZonedDateTime> cycle = NetworkPolicyManager
-                    .cycleIterator(policy).next();
-            final long cycleStart = cycle.first.toInstant().toEpochMilli();
-            final long cycleEnd = cycle.second.toInstant().toEpochMilli();
+            final long cycleStart = policy.getStart();
+            final long cycleEnd = policy.getEnd();
             final long totalBytes = getTotalBytes(policy.template, cycleStart, cycleEnd);
 
             // Carrier might want to manage notifications themselves
@@ -1648,10 +1645,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 continue;
             }
 
-            final Pair<ZonedDateTime, ZonedDateTime> cycle = NetworkPolicyManager
-                    .cycleIterator(policy).next();
-            final long start = cycle.first.toInstant().toEpochMilli();
-            final long end = cycle.second.toInstant().toEpochMilli();
+            final long start = policy.getStart();
+            final long end = policy.getEnd();
             final long totalBytes = getTotalBytes(policy.template, start, end);
 
             // disable data connection when over limit and not snoozed
@@ -1824,10 +1819,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             if (hasLimit || policy.metered) {
                 final long quotaBytes;
                 if (hasLimit && policy.hasCycle()) {
-                    final Pair<ZonedDateTime, ZonedDateTime> cycle = NetworkPolicyManager
-                            .cycleIterator(policy).next();
-                    final long start = cycle.first.toInstant().toEpochMilli();
-                    final long end = cycle.second.toInstant().toEpochMilli();
+                    final long start = policy.getStart();
+                    final long end = policy.getEnd();
                     final long totalBytes = getTotalBytes(policy.template, start, end);
 
                     if (policy.lastLimitSnooze >= start) {

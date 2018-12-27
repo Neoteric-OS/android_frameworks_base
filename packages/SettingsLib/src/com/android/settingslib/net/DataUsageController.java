@@ -38,11 +38,11 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.util.Pair;
+//import android.util.Pair;
 
 import com.android.internal.R;
 
-import java.time.ZonedDateTime;
+//import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Locale;
 
@@ -133,17 +133,9 @@ public class DataUsageController {
         try {
             final NetworkStatsHistory history = session.getHistoryForNetwork(template, FIELDS);
             final long now = System.currentTimeMillis();
-            final long start, end;
-            if (policy != null) {
-                final Pair<ZonedDateTime, ZonedDateTime> cycle = NetworkPolicyManager
-                        .cycleIterator(policy).next();
-                start = cycle.first.toInstant().toEpochMilli();
-                end = cycle.second.toInstant().toEpochMilli();
-            } else {
-                // period = last 4 wks
-                end = now;
-                start = now - DateUtils.WEEK_IN_MILLIS * 4;
-            }
+            final long start = policy != null && 0 < policy.getStart()
+                               ? policy.getStart() : now - DateUtils.WEEK_IN_MILLIS * 4;
+            final long end = policy != null && 0 < policy.getEnd() ? policy.getEnd() : now;
             final long callStart = System.currentTimeMillis();
             final NetworkStatsHistory.Entry entry = history.getValues(start, end, now, null);
             final long callEnd = System.currentTimeMillis();

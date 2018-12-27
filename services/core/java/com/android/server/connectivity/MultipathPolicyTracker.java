@@ -49,16 +49,14 @@ import android.net.NetworkRequest;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.StringNetworkSpecifier;
+import android.net.Uri;
 import android.os.BestClock;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.DataUnit;
 import android.util.DebugUtils;
-import android.util.Pair;
 import android.util.Range;
 import android.util.Slog;
 
@@ -74,7 +72,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -295,8 +292,7 @@ public class MultipathPolicyTracker {
             final NetworkPolicy[] policies = mNPM.getNetworkPolicies();
             for (NetworkPolicy policy : policies) {
                 if (policy.hasCycle() && policy.template.matches(identity)) {
-                    final long cycleStart = policy.cycleIterator().next().getLower()
-                            .toInstant().toEpochMilli();
+                    final long cycleStart = policy.getStart();
                     // Prefer user-defined warning, otherwise use hard limit
                     final long activeWarning = getActiveWarning(policy, cycleStart);
                     final long policyBytes = (activeWarning == WARNING_DISABLED)
