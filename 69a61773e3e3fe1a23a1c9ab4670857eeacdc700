@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea30920c_a42194f6",
+        "filename": "services/net/java/android/net/dhcp/DhcpLease.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-27T07:41:05Z",
+      "side": 1,
+      "message": "this ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "69a61773e3e3fe1a23a1c9ab4670857eeacdc700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff43f34_5b5c92e3",
+        "filename": "services/net/java/android/net/dhcp/DhcpServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-27T07:41:05Z",
+      "side": 1,
+      "message": "Any contraints ? Monotonous ? What about reboots ?",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "69a61773e3e3fe1a23a1c9ab4670857eeacdc700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
