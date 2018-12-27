@@ -73,12 +73,28 @@ public class DhcpResults extends StaticIpConfiguration {
     }
 
     /**
+     * iphone hotspot has two features : contains server host name and offer ip contains "172.20.10"
+     * @param vendorInfo vendor info we used to save server host name
+     * @return true if judge as iPhone hotspot
+     */
+    private boolean isIPhoneAp(String vendorInfo) {
+        if (vendorInfo.contains("ServerHostName:")) {
+            return ipAddress.getAddress() != null && ipAddress.getAddress().toString().contains("172.20.10");
+        }
+        return false;
+    }
+
+    /**
      * Test if this DHCP lease includes vendor hint that network link is
      * metered, and sensitive to heavy data transfers.
      */
     public boolean hasMeteredHint() {
         if (vendorInfo != null) {
-            return vendorInfo.contains("ANDROID_METERED");
+            if (vendorInfo.contains("ANDROID_METERED")) {
+                return true;
+            } else {
+                return isIPhoneAp(vendorInfo);
+            }
         } else {
             return false;
         }

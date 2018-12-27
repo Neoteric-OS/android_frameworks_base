@@ -60,6 +60,9 @@ import libcore.io.IoBridge;
 
 import static android.system.OsConstants.*;
 import static android.net.dhcp.DhcpPacket.*;
+import android.os.UserHandle;
+import java.util.Iterator;
+import java.net.InetAddress;
 
 /**
  * A DHCPv4 client.
@@ -88,9 +91,9 @@ public class DhcpClient extends StateMachine {
 
     private static final String TAG = "DhcpClient";
     private static final boolean DBG = true;
-    private static final boolean STATE_DBG = false;
-    private static final boolean MSG_DBG = false;
-    private static final boolean PACKET_DBG = false;
+    private static final boolean STATE_DBG = true;
+    private static final boolean MSG_DBG = true;
+    private static final boolean PACKET_DBG = true;
 
     // Timers and timeouts.
     private static final int SECONDS = 1000;
@@ -149,15 +152,16 @@ public class DhcpClient extends StateMachine {
     // DHCP parameters that we request.
     /* package */ static final byte[] REQUESTED_PARAMS = new byte[] {
         DHCP_SUBNET_MASK,
+        DHCP_STATIC_ROUTE, // add static route due to IOT issue
         DHCP_ROUTER,
         DHCP_DNS_SERVER,
         DHCP_DOMAIN_NAME,
-        DHCP_MTU,
+        // DHCP_MTU, // disable MTU due to IOT issue
         DHCP_BROADCAST_ADDRESS,  // TODO: currently ignored.
         DHCP_LEASE_TIME,
         DHCP_RENEWAL_TIME,
         DHCP_REBINDING_TIME,
-        DHCP_VENDOR_INFO,
+        // DHCP_VENDOR_INFO, // disable DHCP_VENDOR_INFO due to IOT issue
     };
 
     // DHCP flag that means "yes, we support unicast."
@@ -280,6 +284,7 @@ public class DhcpClient extends StateMachine {
 
         mHwAddr = mIface.macAddr.toByteArray();
         mInterfaceBroadcastAddr = new PacketSocketAddress(mIface.index, DhcpPacket.ETHER_BROADCAST);
+        mInterfaceBroadcastAddr.sll_protocol = 0x0800; // set proto to 0x0800 for readable in Wireshark
         return true;
     }
 
@@ -639,6 +644,9 @@ public class DhcpClient extends StateMachine {
                 case CMD_STOP_DHCP:
                     transitionTo(mStoppedState);
                     return HANDLED;
+                case CMD_RECEIVED_PACKET:
+                    sendDhcpOfferBroadcast((DhcpPacket) message.obj);
+                    return HANDLED;
                 default:
                     return NOT_HANDLED;
             }
@@ -701,7 +709,7 @@ public class DhcpClient extends StateMachine {
                     return HANDLED;
                 case CMD_RECEIVED_PACKET:
                     receivePacket((DhcpPacket) message.obj);
-                    return HANDLED;
+                    return !(message.obj instanceof DhcpOfferPacket);
                 case CMD_TIMEOUT:
                     timeout();
                     return HANDLED;
@@ -1030,5 +1038,53 @@ public class DhcpClient extends StateMachine {
 
     private void logState(String name, int durationMs) {
         mMetricsLog.log(mIfaceName, new DhcpClientEvent(name, durationMs));
+    }
+
+    private String dhcpResults2String(final DhcpResults dhcpResults) {
+        try {
+            if (dhcpResults != null && dhcpResults.ipAddress != null && dhcpResults.ipAddress.getAddress() != null && dhcpResults.dnsServers != null) {
+                StringBuilder sb = new StringBuilder();
+                String domains;
+                if (dhcpResults.domains == null) {
+                    domains = "";
+                } else {
+                    domains = dhcpResults.domains;
+                }
+                sb.append(domains).append("|");
+                sb.append(dhcpResults.ipAddress.getAddress().getHostAddress()).append("|");
+                sb.append(dhcpResults.ipAddress.getPrefixLength()).append("|");
+                sb.append(dhcpResults.ipAddress.getFlags()).append("|");
+                sb.append(dhcpResults.ipAddress.getScope()).append("|");
+                String hostAddress;
+                if (dhcpResults.gateway != null) {
+                    hostAddress = dhcpResults.gateway.getHostAddress();
+                } else {
+                    hostAddress = "";
+                }
+                sb.append(hostAddress).append("|");
+                final Iterator iterator = dhcpResults.dnsServers.iterator();
+                while (iterator.hasNext()) {
+                    sb.append(((InetAddress)iterator.next()).getHostAddress()).append("|");
+                }
+                if(DBG) Log.d(TAG, "dhcpResults2String results is " + sb.toString());
+                return sb.toString();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
+        if(DBG) Log.d(TAG, "dhcpResults2String results is null");
+        return "";
+    }
+
+    private void sendDhcpOfferBroadcast(final DhcpPacket dhcpPacket) {
+        if (dhcpPacket != null && dhcpPacket instanceof DhcpOfferPacket) {
+            Intent intent = new Intent("com.vivo.wifi.action.DHCP_OFFER_RECEIVED");
+            String dhcpResults2String = dhcpResults2String(dhcpPacket.toDhcpResults());
+            if(DBG) Log.d(TAG, "sendDhcpOfferBroadcast dhcpResults2String " + dhcpResults2String);
+            if (dhcpResults2String != null) {
+                intent.putExtra("com.vivo.wifi.DHCP_OFFER_RECEIVED_DATA", dhcpResults2String);
+                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+            }
+        }
     }
 }

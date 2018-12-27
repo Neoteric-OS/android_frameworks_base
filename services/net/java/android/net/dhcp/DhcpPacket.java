@@ -181,6 +181,11 @@ public abstract class DhcpPacket {
     protected Inet4Address mBroadcastAddress;
 
     /**
+     * DHCP Optional Type: DHCP Static Route
+     */
+    protected static final byte DHCP_STATIC_ROUTE = 33;
+
+    /**
      * DHCP Optional Type: Vendor specific information
      */
     protected static final byte DHCP_VENDOR_INFO = 43;
@@ -460,6 +465,13 @@ public abstract class DhcpPacket {
             buf.putShort((short) 0); // UDP checksum -- initially zero
         }
 
+        /* Some crappy DHCP servers think they have to obey the BOOTP minimum
+        * message length.
+        * They are wrong, but we should still cater for them. */
+        int bootpBeginOffset = 0;
+        int bootpEndOffset = 0;
+        bootpBeginOffset = buf.position();
+
         // DHCP payload
         buf.put(requestCode);
         buf.put((byte) 1); // Hardware Type: Ethernet
@@ -485,6 +497,20 @@ public abstract class DhcpPacket {
                      + 128);  // empty boot file name (128 bytes)
         buf.putInt(DHCP_MAGIC_COOKIE); // magic number
         finishPacket(buf);
+
+        /* Some crappy DHCP servers think they have to obey the BOOTP minimum
+        * message length.
+        * They are wrong, but we should still cater for them. */
+        bootpEndOffset = buf.position();
+        android.util.Log.e("DhcpPacket", "bootpBeginOffset:" + bootpBeginOffset + ", bootpEndOffset:" + bootpEndOffset);
+        int diffBytes = bootpEndOffset - bootpBeginOffset;
+        final int BOOTP_MESSAGE_LENTH_MIN = 300;
+        int needPadNum = BOOTP_MESSAGE_LENTH_MIN - diffBytes;
+        if ((needPadNum > 0) && (needPadNum < 300)) {
+            for(int i = 0; i < needPadNum; i++) {
+                buf.put((byte) 0);
+            }
+        }
 
         // round up to an even number of octets
         if ((buf.position() & 1) == 1) {
@@ -684,12 +710,31 @@ public abstract class DhcpPacket {
 
     private String getVendorId() {
         if (testOverrideVendorId != null) return testOverrideVendorId;
-        return "android-dhcp-" + Build.VERSION.RELEASE;
+        return "dhcpcd-" + Build.VERSION.RELEASE; // IOT issue
     }
 
     private String getHostname() {
         if (testOverrideHostname != null) return testOverrideHostname;
-        return SystemProperties.get("net.hostname");
+        String modelName = SystemProperties.get("ro.vivo.market.name");
+
+        if (isHostnameValid(modelName)) {
+            return modelName.replace(' ', '-');
+        }
+
+        String internetName = SystemProperties.get("ro.vivo.internet.name");
+        if (isHostnameValid(internetName)) {
+            android.util.Log.d("DhcpPacket", "use internetname");
+            return internetName.replace(' ', '-');
+        } else if (!TextUtils.isEmpty(modelName)) {
+            modelName = replaceInvalidStr(modelName);
+        }
+
+        if (!TextUtils.isEmpty(modelName)) {
+            android.util.Log.d("DhcpPacket", "use marketname without invalid char");
+            return modelName.replace(' ', '-');
+        }
+        android.util.Log.d("DhcpPacket", "use product name");
+        return SystemProperties.get("ro.product.model", "vivo-AP").replace(' ', '-');
     }
 
     /**
@@ -986,9 +1031,23 @@ public abstract class DhcpPacket {
         packet.get(clientMac);
 
         // skip over address padding (16 octets allocated)
+
+        // parse ServerHostName
+        packet.position(packet.position() + (16 - addrLen));
+        try {
+            String serverHostName = readAsciiString(packet, 64, false);
+            if (serverHostName != null) {
+                vendorInfo = "ServerHostName:" + serverHostName;
+            }
+        } catch (Exception e) {
+            android.util.Log.e("DhcpPacket", "read server host name from buffer error");
+        }
+        packet.position(packet.position() + 128);
+        /*
         packet.position(packet.position() + (16 - addrLen)
                         + 64    // skip server host name (64 chars)
                         + 128); // skip boot file name (128 chars)
+        */
 
         // Ensure this is a DHCP packet with a magic cookie, and not BOOTP. http://b/31850211
         if (packet.remaining() < 4) {
@@ -1360,5 +1419,39 @@ public abstract class DhcpPacket {
         pkt.mRequestedParams = requestedParams;
         ByteBuffer result = pkt.buildPacket(encap, DHCP_SERVER, DHCP_CLIENT);
         return result;
+    }
+
+    private boolean isHostnameValid(String hostname) {
+        if (hostname != null && hostname.length() > 0) {
+            for (int i = 0; i < hostname.length(); i++) {
+                if (!isValidHostNameChar(hostname.charAt(i))) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isValidHostNameChar(char c) {
+        if ((c >= 'A' && c <= 'Z') ||
+                (c >= 'a' && c <= 'z') ||
+                (c >= '0' && c <= '9') ||
+                c == '-' || c == '_' || c == ' ') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String replaceInvalidStr(String oldName) {
+        StringBuilder sb = new StringBuilder(oldName);
+        for (int i = 0; i < oldName.length(); i++) {
+            if (!isValidHostNameChar(oldName.charAt(i))) {
+                sb.setCharAt(i, ' ');
+            }
+        }
+        return sb.toString().trim();
     }
 }
