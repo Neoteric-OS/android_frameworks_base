@@ -16,32 +16,45 @@
 
 package com.android.server.connectivity;
 
-import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkStack.NETWORKSTACK_PACKAGE;
 
+import static com.android.server.ConnectivityService.EVENT_NETWORK_TESTED;
+import static com.android.server.ConnectivityService.EVENT_PRIVATE_DNS_CONFIG_RESOLVED;
+import static com.android.server.ConnectivityService.EVENT_PROVISIONING_NOTIFICATION;
+import static com.android.server.ConnectivityService.PROVISIONING_NOTIFICATION_HIDE;
+import static com.android.server.ConnectivityService.PROVISIONING_NOTIFICATION_SHOW;
+
+import android.annotation.Nullable;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.net.INetworkMonitor;
+import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.net.NetworkRequest;
+import android.net.NetworkStack;
 import android.net.NetworkState;
+import android.net.PrivateDnsConfigParcel;
+import android.net.shared.PrivateDnsConfig;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
-import com.android.server.connectivity.NetworkMonitor;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -126,7 +139,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public LinkProperties linkProperties;
     // This should only be modified via ConnectivityService.updateCapabilities().
     public NetworkCapabilities networkCapabilities;
-    public final NetworkMonitor networkMonitor;
+    public INetworkMonitor networkMonitor;
     public final NetworkMisc networkMisc;
     // Indicates if netd has been told to create this Network. From this point on the appropriate
     // routing rules are setup and routes are added so packets can begin flowing over the Network.
@@ -196,6 +209,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
      */
     public static final int EVENT_NETWORK_LINGER_COMPLETE = 1001;
 
+    /**
+     * Inform ConnectivityService that the NetworkAgentInfo is initialized, after obtaining a
+     * NetworkMonitor in particular.
+     */
+    public static final int EVENT_NETWORK_AGENT_INFO_READY = 1002;
+
     // All linger timers for this network, sorted by expiry time. A linger timer is added whenever
     // a request is moved to a network with a better score, regardless of whether the network is or
     // was lingering or not.
@@ -242,12 +261,62 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
     private final ConnectivityService mConnService;
+    private final INetworkMonitorCallbacks mNetworkMonitorCallback;
     private final Context mContext;
     private final Handler mHandler;
 
+    private class NetworkMonitorCallbacks extends INetworkMonitorCallbacks.Stub {
+        @Override
+        public void onNetworkMonitorCreated(INetworkMonitor networkMonitor) {
+            mHandler.post(() -> {
+                NetworkAgentInfo.this.networkMonitor = networkMonitor;
+                mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_AGENT_INFO_READY,
+                        NetworkAgentInfo.this));
+            });
+        }
+
+        @Override
+        public void notifyNetworkTested(int testResult, @Nullable String redirectUrl) {
+            mHandler.sendMessage(mHandler.obtainMessage(EVENT_NETWORK_TESTED,
+                    testResult, network.netId, redirectUrl));
+        }
+
+        @Override
+        public void notifyPrivateDnsConfigResolved(PrivateDnsConfigParcel config) {
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PRIVATE_DNS_CONFIG_RESOLVED,
+                    0, network.netId, PrivateDnsConfig.fromParcel(config)));
+        }
+
+        @Override
+        public void showProvisioningNotification(String action) {
+            final Intent intent = new Intent(action);
+            intent.setPackage(NETWORKSTACK_PACKAGE);
+
+            final PendingIntent pendingIntent;
+            // Only the system server can register notifications with package "android"
+            final long token = Binder.clearCallingIdentity();
+            try {
+                pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PROVISIONING_NOTIFICATION, PROVISIONING_NOTIFICATION_SHOW, network.netId,
+                    pendingIntent));
+        }
+
+        @Override
+        public void hideProvisioningNotification() {
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    EVENT_PROVISIONING_NOTIFICATION, PROVISIONING_NOTIFICATION_HIDE,
+                    network.netId));
+        }
+    }
+
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context, Handler handler,
-            NetworkMisc misc, NetworkRequest defaultRequest, ConnectivityService connService) {
+            NetworkMisc misc, ConnectivityService connService) {
         this.messenger = messenger;
         asyncChannel = ac;
         network = net;
@@ -258,8 +327,13 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         mConnService = connService;
         mContext = context;
         mHandler = handler;
-        networkMonitor = mConnService.createNetworkMonitor(context, handler, this, defaultRequest);
         networkMisc = misc;
+        mNetworkMonitorCallback = new NetworkMonitorCallbacks();
+
+        final String name = TextUtils.isEmpty(info.getExtraInfo())
+                ? networkCapabilities.getSSID() : info.getExtraInfo();
+        context.getSystemService(NetworkStack.class)
+                .makeNetworkMonitor(network, name, mNetworkMonitorCallback);
     }
 
     public ConnectivityService connService() {
@@ -276,6 +350,18 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public Network network() {
         return network;
+    }
+
+    /**
+     * Start the NetworkMonitor associated with this NetworkAgentInfo.
+     * This should be called after the NetworkAgent is registered.
+     */
+    public void startNetworkMonitor() {
+        try {
+            networkMonitor.start();
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
     }
 
     // Functions for manipulating the requests satisfied by this network.

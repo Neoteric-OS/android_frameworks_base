@@ -15,13 +15,18 @@
  */
 package android.net;
 
-import android.net.INetworkMonitorCallbacks;
-import android.net.dhcp.DhcpServingParamsParcel;
-import android.net.dhcp.IDhcpServerCallbacks;
+import android.net.PrivateDnsConfigParcel;
 
 /** @hide */
-oneway interface INetworkStackConnector {
-    void makeDhcpServer(in String ifName, in DhcpServingParamsParcel params,
-        in IDhcpServerCallbacks cb);
-    void makeNetworkMonitor(int netId, String name, in INetworkMonitorCallbacks cb);
+oneway interface INetworkMonitor {
+    void start();
+    void launchCaptivePortalApp();
+    void forceReevaluation(int uid);
+    void notifyPrivateDnsChanged(in PrivateDnsConfigParcel config);
+    void notifyDnsResponse(int returnCode);
+    void notifySystemReady();
+    void notifyNetworkConnected();
+    void notifyNetworkDisconnected();
+    void notifyLinkPropertiesChanged();
+    void notifyNetworkCapabilitiesChanged();
 }
