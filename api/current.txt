@@ -27244,6 +27244,7 @@ package android.net {
     method public boolean isActiveNetworkMetered();
     method public boolean isDefaultNetworkActive();
     method public static deprecated boolean isNetworkTypeValid(int);
+    method public android.net.SocketKeepalive makeSocketKeepalive(android.net.Network, android.net.IpSecManager.UdpEncapsulationSocket, java.net.InetAddress, java.net.InetAddress, java.util.concurrent.Executor, android.net.SocketKeepalive.Callback);
     method public void registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback);
     method public void registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
     method public void registerNetworkCallback(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
@@ -27709,6 +27710,30 @@ package android.net {
   public final class SSLSessionCache {
     ctor public SSLSessionCache(java.io.File) throws java.io.IOException;
     ctor public SSLSessionCache(android.content.Context);
+  }
+
+  public abstract class SocketKeepalive implements java.lang.AutoCloseable {
+    method public void close();
+    method public abstract void start(int);
+    method public void stop();
+    field public static final int ERROR_HARDWARE_ERROR = -31; // 0xffffffe1
+    field public static final int ERROR_HARDWARE_UNSUPPORTED = -30; // 0xffffffe2
+    field public static final int ERROR_INVALID_INTERVAL = -24; // 0xffffffe8
+    field public static final int ERROR_INVALID_IP_ADDRESS = -21; // 0xffffffeb
+    field public static final int ERROR_INVALID_LENGTH = -23; // 0xffffffe9
+    field public static final int ERROR_INVALID_NETWORK = -20; // 0xffffffec
+    field public static final int ERROR_INVALID_PORT = -22; // 0xffffffea
+    field public static final int ERROR_INVALID_SOCKET = -25; // 0xffffffe7
+    field public static final int ERROR_SOCKET_NOT_IDLE = -26; // 0xffffffe6
+    field public static final int MIN_INTERVAL = 10; // 0xa
+  }
+
+  public static class SocketKeepalive.Callback {
+    ctor public SocketKeepalive.Callback();
+    method public void onDataReceived();
+    method public void onError(int);
+    method public void onStarted();
+    method public void onStopped();
   }
 
   public class TrafficStats {
