@@ -71,6 +71,18 @@ public class NetworkUtils {
             throws SocketException;
 
     /**
+     * Attaches a socket filter that drops all of incoming packets.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    public static native void attachDropAllBPFFilter(FileDescriptor fd) throws SocketException;
+
+    /**
+     * Detaches a socket filter.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    public static native void detachBPFFilter(FileDescriptor fd) throws SocketException;
+
+    /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.
@@ -458,4 +470,13 @@ public class NetworkUtils {
         }
         return routedIPCount;
     }
+
+    /**
+     * Get the tcp repair window associated with the {@code fd}.
+     *
+     * @param fd the tcp socket's {@link FileDescriptor}.
+     * @return a {@link TcpRepairWindow} object indicates tcp window size.
+     */
+    public static native TcpRepairWindow getTcpRepairWindow(FileDescriptor fd)
+            throws ErrnoException;
 }
