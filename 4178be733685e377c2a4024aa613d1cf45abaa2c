@@ -22,6 +22,30 @@
       "revId": "4178be733685e377c2a4024aa613d1cf45abaa2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b346eedc_498d9c04",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-27T13:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7186a9_6648e545",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "4178be733685e377c2a4024aa613d1cf45abaa2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
