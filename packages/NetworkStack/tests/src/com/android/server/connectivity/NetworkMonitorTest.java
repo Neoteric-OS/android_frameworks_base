@@ -31,15 +31,15 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.LinkProperties;
+import android.net.INetworkMonitorCallbacks;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
+import android.net.util.SharedLog;
 import android.net.wifi.WifiManager;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
@@ -68,12 +68,11 @@ public class NetworkMonitorTest {
     private static final String LOCATION_HEADER = "location";
 
     private @Mock Context mContext;
-    private @Mock Handler mHandler;
     private @Mock IpConnectivityLog mLogger;
-    private @Mock NetworkAgentInfo mAgent;
-    private @Mock NetworkAgentInfo mNotMeteredAgent;
+    private @Mock SharedLog mValidationLogger;
     private @Mock NetworkInfo mNetworkInfo;
     private @Mock NetworkRequest mRequest;
+    private @Mock ConnectivityManager mCm;
     private @Mock TelephonyManager mTelephony;
     private @Mock WifiManager mWifi;
     private @Mock Network mNetwork;
@@ -83,6 +82,7 @@ public class NetworkMonitorTest {
     private @Mock HttpURLConnection mOtherFallbackConnection;
     private @Mock Random mRandom;
     private @Mock NetworkMonitor.Dependencies mDependencies;
+    private @Mock INetworkMonitorCallbacks mCallbacks;
 
     private static final String TEST_HTTP_URL = "http://www.google.com/gen_204";
     private static final String TEST_HTTPS_URL = "https://www.google.com/gen_204";
@@ -93,22 +93,16 @@ public class NetworkMonitorTest {
     private static final int RETURN_CODE_DNS_SUCCESS = 0;
     private static final int RETURN_CODE_DNS_TIMEOUT = 255;
 
+    private static final NetworkCapabilities METERED_CAPABILITIES = new NetworkCapabilities()
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+
+    private static final NetworkCapabilities NOT_METERED_CAPABILITIES = new NetworkCapabilities()
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-        mAgent.linkProperties = new LinkProperties();
-        mAgent.networkCapabilities = new NetworkCapabilities()
-                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
-        mAgent.networkInfo = mNetworkInfo;
-
-        mNotMeteredAgent.linkProperties = new LinkProperties();
-        mNotMeteredAgent.networkCapabilities = new NetworkCapabilities()
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
-        mNotMeteredAgent.networkInfo = mNetworkInfo;
-
-        when(mAgent.network()).thenReturn(mNetwork);
-        when(mDependencies.getNetwork(any())).thenReturn(mNetwork);
         when(mDependencies.getRandom()).thenReturn(mRandom);
         when(mDependencies.getSetting(any(), eq(Settings.Global.CAPTIVE_PORTAL_MODE), anyInt()))
                 .thenReturn(Settings.Global.CAPTIVE_PORTAL_MODE_PROMPT);
@@ -120,6 +114,7 @@ public class NetworkMonitorTest {
                 anyString())).thenReturn(TEST_HTTPS_URL);
         when(mNetwork.getPrivateDnsBypassingCopy()).thenReturn(mNetwork);
 
+        when(mContext.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(mCm);
         when(mContext.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(mTelephony);
         when(mContext.getSystemService(Context.WIFI_SERVICE)).thenReturn(mWifi);
 
@@ -160,10 +155,10 @@ public class NetworkMonitorTest {
     private class WrappedNetworkMonitor extends NetworkMonitor {
         private long mProbeTime = 0;
 
-        WrappedNetworkMonitor(Context context, Handler handler,
-                NetworkAgentInfo networkAgentInfo, NetworkRequest defaultRequest,
+        WrappedNetworkMonitor(Context context, Network network, NetworkRequest defaultRequest,
                 IpConnectivityLog logger, Dependencies deps) {
-                super(context, handler, networkAgentInfo, defaultRequest, logger, deps);
+                super(context, mCallbacks, network, defaultRequest, logger,
+                        new SharedLog("test_nm"), deps);
         }
 
         @Override
@@ -176,19 +171,26 @@ public class NetworkMonitorTest {
         }
     }
 
-    WrappedNetworkMonitor makeMeteredWrappedNetworkMonitor() {
-        return new WrappedNetworkMonitor(
-                mContext, mHandler, mAgent, mRequest, mLogger, mDependencies);
+    private WrappedNetworkMonitor makeMeteredWrappedNetworkMonitor() {
+        final WrappedNetworkMonitor nm = new WrappedNetworkMonitor(
+                mContext, mNetwork, mRequest, mLogger, mDependencies);
+        when(mCm.getNetworkCapabilities(any())).thenReturn(METERED_CAPABILITIES);
+        nm.start();
+        return nm;
     }
 
-    WrappedNetworkMonitor makeNotMeteredWrappedNetworkMonitor() {
-        return new WrappedNetworkMonitor(
-                mContext, mHandler, mNotMeteredAgent, mRequest, mLogger, mDependencies);
+    private WrappedNetworkMonitor makeNotMeteredWrappedNetworkMonitor() {
+        final WrappedNetworkMonitor nm = new WrappedNetworkMonitor(
+                mContext, mNetwork, mRequest, mLogger, mDependencies);
+        when(mCm.getNetworkCapabilities(any())).thenReturn(NOT_METERED_CAPABILITIES);
+        nm.start();
+        return nm;
     }
 
-    NetworkMonitor makeMonitor() {
+    private NetworkMonitor makeMonitor() {
         return new NetworkMonitor(
-                mContext, mHandler, mAgent, mRequest, mLogger, mDependencies);
+                mContext, mCallbacks, mNetwork, mRequest, mLogger, mValidationLogger,
+                mDependencies);
     }
 
     @Test
