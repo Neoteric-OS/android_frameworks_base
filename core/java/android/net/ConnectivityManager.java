@@ -398,6 +398,15 @@ public class ConnectivityManager {
             "android.net.conn.PROMPT_LOST_VALIDATION";
 
     /**
+     * Action used to display a dialog that asks the user whether to connect to a network that is
+     * partial connectivity. This intent is used to start the dialog in settings via startActivity.
+     *
+     * @hide
+     */
+    public static final String ACTION_PROMPT_PARTIAL_CONNECTIVITY =
+            "android.net.conn.PROMPT_PARTIAL_CONNECTIVITY";
+
+    /**
      * Invalid tethering type.
      * @see #startTethering(int, boolean, OnStartTetheringCallback)
      * @hide
@@ -3610,6 +3619,29 @@ public class ConnectivityManager {
     public void setAcceptUnvalidated(Network network, boolean accept, boolean always) {
         try {
             mService.setAcceptUnvalidated(network, accept, always);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Informs the system whether it should switch to {@code network} regardless of whether it is
+     * validated or not. If {@code accept} is true, and the network was explicitly selected by the
+     * user (e.g., by selecting a Wi-Fi network in the Settings app), then the network will become
+     * the system default network regardless of any other network that's currently connected. If
+     * {@code always} is true, then the choice is remembered, so that the next time the user
+     * connects to this network, the system will switch to it.
+     *
+     * @param network The network to accept.
+     * @param accept Whether to accept the network even if unvalidated.
+     * @param always Whether to remember this choice in the future.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.CONNECTIVITY_INTERNAL)
+    public void setAcceptPartialConnectivity(Network network, boolean accept, boolean always) {
+        try {
+            mService.setAcceptPartialConnectivity(network, accept, always);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
