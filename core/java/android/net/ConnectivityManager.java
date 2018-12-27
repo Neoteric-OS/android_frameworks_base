@@ -15,7 +15,9 @@
  */
 package android.net;
 
+import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
@@ -26,6 +28,8 @@ import android.annotation.UnsupportedAppUsage;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.IpSecManager.UdpEncapsulationSocket;
+import android.net.SocketKeepalive.Callback;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -63,6 +67,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 /**
  * Class that answers queries about the state of network connectivity. It also
@@ -1789,6 +1794,29 @@ public class ConnectivityManager {
             return null;
         }
         return k;
+    }
+
+    /**
+     * Request that keepalives be started on a IPsec NAT-T socket. The socket must be bound.
+     *
+     * @param network The {@link Network} the application was attempting to use.
+     * @param socket The socket needs to keepalive.
+     * @param source The source address of the {@link UdpEncapsulationSocket}.
+     * @param destination The destination address of the {@link UdpEncapsulationSocket}.
+     * @param executor The executor on which callback will be invoked.
+     * @param callback A {@link SocketKeepalive.Callback}. Used for notifications about keepalive
+     *        changes. Should be extended by applications wanting notifications.
+     *
+     * @return A {@link SocketKeepalive} object, which can be used to control this keepalive object.
+     **/
+    public SocketKeepalive makeSocketKeepalive(@NonNull Network network,
+            @NonNull UdpEncapsulationSocket socket,
+            @NonNull InetAddress source,
+            @NonNull InetAddress destination,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull Callback callback) {
+        return new NattSocketKeepalive(mService, network, socket, source, destination, executor,
+                callback);
     }
 
     /**
