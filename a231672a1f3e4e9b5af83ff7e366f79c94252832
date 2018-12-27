@@ -117,6 +117,24 @@
       "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631d9bff_e6c14d50",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-27T04:49:04Z",
+      "side": 1,
+      "message": "also agreed, thanks for explanation.",
+      "parentUuid": "226a3864_b899ecf0",
+      "revId": "a231672a1f3e4e9b5af83ff7e366f79c94252832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
