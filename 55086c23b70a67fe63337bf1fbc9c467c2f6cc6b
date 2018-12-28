@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03d1c8b_10d9d36f",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-28T00:37:28Z",
+      "side": 1,
+      "message": "5000 seconds is an really long time",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "55086c23b70a67fe63337bf1fbc9c467c2f6cc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
