@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af461d04_91190243",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-12-28T00:48:32Z",
+      "side": 1,
+      "message": "Why use 0x04000000 here? Shouldn\u0027t the next capability value be 0x02000000 as commented?",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 76
+      },
+      "revId": "2c6124f22d293d3eb557c8c8f671ec81017c4960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6938d875_f6cb71dc",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-12-28T00:48:32Z",
+      "side": 1,
+      "message": "Same here, why it\u0027s 0x08000000 instead of 0x04000000?",
+      "range": {
+        "startLine": 347,
+        "startChar": 60,
+        "endLine": 347,
+        "endChar": 71
+      },
+      "revId": "2c6124f22d293d3eb557c8c8f671ec81017c4960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
