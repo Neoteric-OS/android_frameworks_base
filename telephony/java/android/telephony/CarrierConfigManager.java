@@ -2260,6 +2260,36 @@ public class CarrierConfigManager {
             "undelivered_sms_message_expiration_time";
 
     /**
+     * Defines carrier-specific Network capabilities which disable 464xlat.
+     * If {@link NetworkCapabilities} satisfies either items in the list,
+     * {@link NetworkMisc#skip464xlat} in {@link NetworkAgent} is set true.
+     *
+     * String array consists of integer as capability in {@link NetworkCapabilities}
+     * and be splitted into ",".
+     * Disable 464xlat when a capability satisfies all given capabilities in the item.
+     * Given capability can have prefix "!" which means the capability should *NOT* have.
+     * Format:
+     * {
+     *     "capability_1,capability_2,!capability_3",
+     *     "capability_2"
+     * }
+     * Example:
+     * {@link NetworkMisc#skip464xlat} is true
+     * if the network has {@link NetworkCapabilities#NET_CAPABILITY_IMS} and
+     * has not {@link NetworkCapabilities#NET_CAPABILITY_INTERNET}, or
+     * the network has {@link NetworkCapabilities#NET_CAPABILITY_CBS}
+     * <string-array name="skip464xlat_capabilities_string_array" num="2">
+     *     <item value="4,!12" />
+     *     <item value="5" />
+     * </string-array>
+     *
+     * See {@link NetworkMisc#skip464xlat}.
+     * @hide
+     */
+    public static final String KEY_SKIP_464XLAT_CAPABILITIES_STRING_ARRAY =
+            "skip464xlat_capabilities_string_array";
+
+    /**
      * Support for the original string display of CDMA MO call.
      * By default, it is disabled.
      * @hide
@@ -2735,6 +2765,12 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSSNR_INT, 45);
         /* Default value is minimum RSSNR level needed for SIGNAL_STRENGTH_MODERATE */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT, 10);
+        sDefaults.putStringArray(KEY_SKIP_464XLAT_CAPABILITIES_STRING_ARRAY,
+                new String[]{
+                        "4,!12"
+                        //4: NET_CAPABILITY_IMS
+                        //12: NET_CAPABILITY_INTERNET
+                });
     }
 
     /**
