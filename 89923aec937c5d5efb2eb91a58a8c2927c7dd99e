@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b695c641_da1309a2",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "update: I\u0027m going to just leave it in the mCallQuality. Doesn\u0027t make sense to have it in two places, and it\u0027s simpler because when its reported from the modem it goes straight into the CallQuality object.",
+      "parentUuid": "1be9c44c_860f69a9",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd4be7bf_495a7ece",
         "filename": "telephony/java/android/telephony/CallAttributes.java",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e12dcbdb_f0eef1a2",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd4be7bf_495a7ece",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e007c6b3_811146f7",
         "filename": "telephony/java/android/telephony/CallAttributes.java",
         "patchSetId": 3
@@ -92,6 +140,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2b30d7_464cae4c",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "okay, I removed the setters",
+      "parentUuid": "e007c6b3_811146f7",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f443b351_c7052f3e",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "3f918186_21cf5e72",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7262dcdd_684dd3b1",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -162,6 +258,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43aa22b3_acc9ba53",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7262dcdd_684dd3b1",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "000bbdb0_6981d57f",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdb07754_cc6b8a1f",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14081392_f75ecc56",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -232,6 +376,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7ea391_03c37fb6",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14081392_f75ecc56",
+      "range": {
+        "startLine": 153,
+        "startChar": 15,
+        "endLine": 153,
+        "endChar": 37
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "36f4986a_d35038c2",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f347c0_75a0f40c",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c63ea927_08d8422d",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -278,6 +470,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb227df0_fe0de11e",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c63ea927_08d8422d",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "98eb607a_833f8375",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "This should match the telecom call id, like the one used in CallsManager (https://cs.corp.google.com/android/packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java?type\u003dcs\u0026q\u003dtelecomm+callid\u0026sq\u003dpackage:android\u0026g\u003d0\u0026l\u003d280).",
+      "parentUuid": "936cc70b_2b60787f",
+      "range": {
+        "startLine": 190,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "949f5cbf_44b304a8",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 3
@@ -348,6 +588,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff643cd_86ebf651",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "949f5cbf_44b304a8",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 5
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -398,6 +662,30 @@
     },
     {
       "key": {
+        "uuid": "c7bcdff3_15c7230e",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "142e7ac2_2b44efc9",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 14
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321f2632_9db69608",
         "filename": "telephony/java/android/telephony/PhoneStateListener.java",
         "patchSetId": 3
@@ -418,6 +706,30 @@
       "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34abca1a_e0a6950b",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-28T16:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321f2632_9db69608",
+      "range": {
+        "startLine": 653,
+        "startChar": 33,
+        "endLine": 653,
+        "endChar": 56
+      },
+      "revId": "89923aec937c5d5efb2eb91a58a8c2927c7dd99e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
