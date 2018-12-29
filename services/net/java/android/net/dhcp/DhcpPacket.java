@@ -460,6 +460,10 @@ public abstract class DhcpPacket {
             buf.putShort((short) 0); // UDP checksum -- initially zero
         }
 
+        int bootpBeginOffset = 0;
+        int bootpEndOffset = 0;
+        bootpBeginOffset = buf.position();
+
         // DHCP payload
         buf.put(requestCode);
         buf.put((byte) 1); // Hardware Type: Ethernet
@@ -485,6 +489,17 @@ public abstract class DhcpPacket {
                      + 128);  // empty boot file name (128 bytes)
         buf.putInt(DHCP_MAGIC_COOKIE); // magic number
         finishPacket(buf);
+
+        bootpEndOffset = buf.position();
+        android.util.Log.e("DhcpPacket", "bootpBeginOffset:" + bootpBeginOffset + ", bootpEndOffset:" + bootpEndOffset);
+        int diffBytes = bootpEndOffset - bootpBeginOffset;
+        final int BOOTP_MESSAGE_LENTH_MIN = 300;
+        int needPadNum = BOOTP_MESSAGE_LENTH_MIN - diffBytes;
+        if ((needPadNum > 0) && (needPadNum < 300)) {
+            for(int i = 0; i < needPadNum; i++) {
+                buf.put((byte) 0);
+            }
+        }
 
         // round up to an even number of octets
         if ((buf.position() & 1) == 1) {
