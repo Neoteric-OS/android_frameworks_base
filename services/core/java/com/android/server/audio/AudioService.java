@@ -6175,6 +6175,14 @@ public class AudioService extends IAudioService.Stub
                 Slog.i(TAG, "deviceSpec:" + deviceSpec + " is(already)Connected:" + isConnected);
             }
             if (connect && !isConnected) {
+                if (AudioSystem.getDeviceConnectionState(device, address) ==
+                        AudioSystem.DEVICE_STATE_AVAILABLE) {
+                    mConnectedDevices.put(deviceKey,
+                            new DeviceListSpec(device, deviceName, address));
+                    sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
+                            device, 0, null, 0);
+                    return true;
+                }
                 final int res = AudioSystem.setDeviceConnectionState(device,
                         AudioSystem.DEVICE_STATE_AVAILABLE, address, deviceName);
                 if (res != AudioSystem.AUDIO_STATUS_OK) {
