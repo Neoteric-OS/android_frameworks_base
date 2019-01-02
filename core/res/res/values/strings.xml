@@ -3202,6 +3202,12 @@
     <!-- A notification is shown when the user connects to a Wi-Fi network and the system detects that that network has no Internet access. This is the notification's message. -->
     <string name="wifi_no_internet_detailed">Tap for options</string>
 
+    <!-- A notification is shown when the user connects to a network that doesn't have access to some services (e.g. Push notifications may not work). This is the notification's title. [CHAR LIMIT=50] -->
+    <string name="partial_connectivity">[Network] has limited connectivity</string>
+
+    <!-- A notification is shown when the user connects to a network that doesn't have access to some services (e.g. Push notifications may not work). This is the notification's message. [CHAR LIMIT=50] -->
+    <string name="partial_connectivity_detailed">Tap to connect anyway</string>
+
     <!-- A notification is shown when the user's softap config has been changed due to underlying
          hardware restrictions. This is the notifications's title.
          [CHAR_LIMIT=NONE] -->

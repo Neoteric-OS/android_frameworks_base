@@ -390,6 +390,19 @@ public class NetworkMonitorTest {
         assertFalse(wrappedMonitor.isDataStall());
     }
 
+    @Test
+    public void testIsPartialConnectivity() throws IOException {
+        setStatus(mHttpsConnection, 500);
+        setStatus(mHttpConnection, 204);
+        setStatus(mFallbackConnection, 500);
+        assertPartialConnectivity(makeMonitor().isCaptivePortal());
+
+        setStatus(mHttpsConnection, 500);
+        setStatus(mHttpConnection, 500);
+        setStatus(mFallbackConnection, 204);
+        assertPartialConnectivity(makeMonitor().isCaptivePortal());
+    }
+
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
         for (int i = 0; i < count; i++) {
             wrappedMonitor.getDnsStallDetector().accumulateConsecutiveDnsTimeoutCount(
@@ -456,6 +469,10 @@ public class NetworkMonitorTest {
         assertFalse(result.isPortal());
         assertTrue(result.isFailed());
         assertFalse(result.isSuccessful());
+    }
+
+    private void assertPartialConnectivity(CaptivePortalProbeResult result) {
+        assertTrue(result.isPartialConnectivity());
     }
 
     private void setSslException(HttpURLConnection connection) throws IOException {
