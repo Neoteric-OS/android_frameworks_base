@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246f622d_a32eae54",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21959,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-01-03T18:03:00Z",
+      "side": 1,
+      "message": "nit: two spaces",
+      "range": {
+        "startLine": 21959,
+        "startChar": 55,
+        "endLine": 21959,
+        "endChar": 56
+      },
+      "revId": "ccad9e5782ba8d51afc52e8234b321c60f45f70d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
