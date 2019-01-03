@@ -135,7 +135,7 @@ public abstract class SocketKeepalive implements AutoCloseable {
             @Override
             public void handleMessage(Message message) {
                 switch (message.what) {
-                    case NetworkAgent.EVENT_PACKET_KEEPALIVE:
+                    case NetworkAgent.EVENT_SOCKET_KEEPALIVE:
                         final int status = message.arg2;
                         try {
                             if (status == SUCCESS) {

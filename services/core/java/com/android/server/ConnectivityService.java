@@ -59,7 +59,6 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
-import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.IConnectivityManager;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetd;
@@ -92,6 +91,7 @@ import android.net.NetworkWatchlistManager;
 import android.net.PrivateDnsConfigParcel;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
+import android.net.SocketKeepalive;
 import android.net.UidRange;
 import android.net.Uri;
 import android.net.VpnService;
@@ -2473,8 +2473,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     nai.networkMisc.acceptUnvalidated = msg.arg1 == 1;
                     break;
                 }
-                case NetworkAgent.EVENT_PACKET_KEEPALIVE: {
-                    mKeepaliveTracker.handleEventPacketKeepalive(nai, msg);
+                case NetworkAgent.EVENT_SOCKET_KEEPALIVE: {
+                    mKeepaliveTracker.handleEventSocketKeepalive(nai, msg);
                     break;
                 }
             }
@@ -2834,8 +2834,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // sending all CALLBACK_LOST messages (for requests, not listens) at the end
         // of rematchAllNetworksAndRequests
         notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_LOST);
-        mKeepaliveTracker.handleStopAllKeepalives(nai,
-                ConnectivityManager.PacketKeepalive.ERROR_INVALID_NETWORK);
+        mKeepaliveTracker.handleStopAllKeepalives(nai, SocketKeepalive.ERROR_INVALID_NETWORK);
         for (String iface : nai.linkProperties.getAllInterfaceNames()) {
             // Disable wakeup packet monitoring for each interface.
             wakeupModifyInterface(iface, nai.networkCapabilities, false);
@@ -3427,12 +3426,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 // Sent by KeepaliveTracker to process an app request on the state machine thread.
-                case NetworkAgent.CMD_START_PACKET_KEEPALIVE: {
+                case NetworkAgent.CMD_START_SOCKET_KEEPALIVE: {
                     mKeepaliveTracker.handleStartKeepalive(msg);
                     break;
                 }
                 // Sent by KeepaliveTracker to process an app request on the state machine thread.
-                case NetworkAgent.CMD_STOP_PACKET_KEEPALIVE: {
+                case NetworkAgent.CMD_STOP_SOCKET_KEEPALIVE: {
                     NetworkAgentInfo nai = getNetworkAgentInfoForNetwork((Network) msg.obj);
                     int slot = msg.arg1;
                     int reason = msg.arg2;
@@ -6251,7 +6250,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mKeepaliveTracker.startNattKeepalive(
                 getNetworkAgentInfoForNetwork(network),
                 intervalSeconds, messenger, binder,
-                srcAddr, srcPort, dstAddr, ConnectivityManager.PacketKeepalive.NATT_PORT);
+                srcAddr, srcPort, dstAddr, NattSocketKeepalive.NATT_PORT);
     }
 
     @Override
@@ -6268,7 +6267,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public void stopKeepalive(Network network, int slot) {
         mHandler.sendMessage(mHandler.obtainMessage(
-                NetworkAgent.CMD_STOP_PACKET_KEEPALIVE, slot, PacketKeepalive.SUCCESS, network));
+                NetworkAgent.CMD_STOP_SOCKET_KEEPALIVE, slot, SocketKeepalive.SUCCESS, network));
     }
 
     @Override
