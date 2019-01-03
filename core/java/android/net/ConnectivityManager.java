@@ -1763,7 +1763,7 @@ public class ConnectivityManager {
                 @Override
                 public void handleMessage(Message message) {
                     switch (message.what) {
-                        case NetworkAgent.EVENT_PACKET_KEEPALIVE:
+                        case NetworkAgent.EVENT_SOCKET_KEEPALIVE:
                             int error = message.arg2;
                             try {
                                 if (error == SUCCESS) {

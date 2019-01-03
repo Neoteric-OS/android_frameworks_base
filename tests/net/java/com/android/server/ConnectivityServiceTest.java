@@ -446,17 +446,17 @@ public class ConnectivityServiceTest {
                 public void unwanted() { mDisconnected.open(); }
 
                 @Override
-                public void startPacketKeepalive(Message msg) {
+                public void startSocketKeepalive(Message msg) {
                     int slot = msg.arg1;
                     if (mExpectedKeepaliveSlot != null) {
                         assertEquals((int) mExpectedKeepaliveSlot, slot);
                     }
-                    onPacketKeepaliveEvent(slot, mStartKeepaliveError);
+                    onSocketKeepaliveEvent(slot, mStartKeepaliveError);
                 }
 
                 @Override
-                public void stopPacketKeepalive(Message msg) {
-                    onPacketKeepaliveEvent(msg.arg1, mStopKeepaliveError);
+                public void stopSocketKeepalive(Message msg) {
+                    onSocketKeepaliveEvent(msg.arg1, mStopKeepaliveError);
                 }
 
                 @Override
