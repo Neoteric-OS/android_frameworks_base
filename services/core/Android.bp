@@ -76,3 +76,9 @@ prebuilt_etc {
     name: "gps_debug.conf",
     src: "java/com/android/server/location/gps_debug.conf",
 }
+
+xsd_config {
+    name: "default-permissions",
+    srcs: ["default-permissions.xsd"],
+    package_name: "com.android.server.pm.permission",
+}
