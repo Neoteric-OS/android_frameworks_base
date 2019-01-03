@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ff1344f_336562e3",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-03T13:17:54Z",
+      "side": 1,
+      "message": "Update to 2019?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96934bb3_310b6807",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-03T13:17:54Z",
+      "side": 1,
+      "message": "I understand those definitions are copied from ConnectivtyManager.\nBut could we have a comment to explain why we define it as -10? Refer to somewhere or something?",
+      "range": {
+        "startLine": 54,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d7a5c3_24d7e8fa",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-03T13:17:54Z",
+      "side": 1,
+      "message": "How about the definition in ConnectivityManager.PacketKeepalive? They looks like duplicate definitions to me. If we do not plan to remove shortly, should we add a ToDo? Or definition in ConnectivityManager could be updated to something like \n\npublic static final int ERROR_INVALID_NETWORK \u003d SocketKeepalive.ERROR_INVALID_NETWORK",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a977fc0_aecd1513",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-03T13:17:54Z",
+      "side": 1,
+      "message": "I do not quite understand the comment. Does this mean the first packet will be sent after onStarted being called?\n\nBehave like this?\n            now                                             interval\n   |_________*________________________^________________________|\n  start    onStarted              packet sent\n\nWe mention it here means the first packet will be guaranteed to be sent after onStarted?",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 17
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
