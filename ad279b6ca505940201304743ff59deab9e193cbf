@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20a74128_ab0c7b21",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-04T10:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff1344f_336562e3",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96934bb3_310b6807",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-03T13:17:54Z",
       "side": 1,
       "message": "I understand those definitions are copied from ConnectivtyManager.\nBut could we have a comment to explain why we define it as -10? Refer to somewhere or something?",
+      "range": {
+        "startLine": 54,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0dff1f_e07ea59e",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-04T10:53:09Z",
+      "side": 1,
+      "message": "for now we just need backward compability with PacketKeepalive.\nBecause internally we still use old constant until KA02.\nBut I think the originally idea was properly gap different type of error codes.",
+      "parentUuid": "96934bb3_310b6807",
       "range": {
         "startLine": 54,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "69127867_33a4c258",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-04T10:53:09Z",
+      "side": 1,
+      "message": "yes, we are planning to remove packetKeepalive.\nI\u0027ve added note that in PacketKeepalive javadoc.",
+      "parentUuid": "52d7a5c3_24d7e8fa",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a977fc0_aecd1513",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-03T13:17:54Z",
       "side": 1,
       "message": "I do not quite understand the comment. Does this mean the first packet will be sent after onStarted being called?\n\nBehave like this?\n            now                                             interval\n   |_________*________________________^________________________|\n  start    onStarted              packet sent\n\nWe mention it here means the first packet will be guaranteed to be sent after onStarted?",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 17
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9c921d_5bf2f3ce",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-04T10:53:09Z",
+      "side": 1,
+      "message": "I think first packet cannot be guaranteed to be sent before/after onStarted due to the message propergation delay. \n+lorenzo@, do you know what is the idea when you firstly write down this?",
+      "parentUuid": "0a977fc0_aecd1513",
       "range": {
         "startLine": 139,
         "startChar": 7,
