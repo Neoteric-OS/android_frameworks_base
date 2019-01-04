@@ -988,8 +988,9 @@ class RootWindowContainer extends WindowContainer<DisplayContent> {
         return doRequest;
     }
 
-    private static int toBrightnessOverride(float value) {
-        return (int)(value * PowerManager.BRIGHTNESS_ON);
+    private int toBrightnessOverride(float value) {
+        return Math.max((int) (value * PowerManager.BRIGHTNESS_ON),
+                mService.mPowerManager.getMinimumScreenBrightnessSetting());
     }
 
     private final class MyHandler extends Handler {
