@@ -126,6 +126,8 @@
     <value>0</value>
   </array>
   <item name="modem.controller.voltage">0</item>
+  <item name="modem.controller.temp_shutdown_preprod">62</item>
+  <item name="modem.controller.temp_shutdown_prod">62</item>
 
   <!-- GPS related values. Default is 0.-->
   <array name="gps.signalqualitybased"> <!-- Strength 0 to 1 -->

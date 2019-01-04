@@ -12998,6 +12998,12 @@ public class BatteryStatsImpl extends BatteryStats {
             txTimeMs[i] = counter.getTxTimeCounters()[i].getCountLocked(which);
             totalTxTimeMs += txTimeMs[i];
         }
+        long[] deviceShutdownTemperatureC =
+                new long[BatteryStats.NUM_SHUTDOWN_TEMPERATURE_VERSIONS];
+        deviceShutdownTemperatureC[0] = (long) mPowerProfile.getAveragePower(
+                        PowerProfile.POWER_MODEM_CONTROLLER_TEMP_SHUTDOWN_PREPROD);
+        deviceShutdownTemperatureC[1] = (long) mPowerProfile.getAveragePower(
+                PowerProfile.POWER_MODEM_CONTROLLER_TEMP_SHUTDOWN_PROD);
         s.setLoggingDurationMs(computeBatteryRealtime(rawRealTime, which) / 1000);
         s.setKernelActiveTimeMs(getMobileRadioActiveTime(rawRealTime, which) / 1000);
         s.setNumPacketsTx(getNetworkActivityPackets(NETWORK_MOBILE_TX_DATA, which));
@@ -13011,6 +13017,7 @@ public class BatteryStatsImpl extends BatteryStats {
         s.setTimeInRatMs(timeInRatMs);
         s.setTimeInRxSignalStrengthLevelMs(timeInRxSignalStrengthLevelMs);
         s.setTxTimeMs(txTimeMs);
+        s.setDeviceShutdownTemperatureC(deviceShutdownTemperatureC);
         return s;
     }
 

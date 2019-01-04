@@ -259,6 +259,8 @@ public abstract class BatteryStats implements Parcelable {
     private static final long BYTES_PER_MB = 1048576; // 1024^2
     private static final long BYTES_PER_GB = 1073741824; //1024^3
 
+    public static final int NUM_SHUTDOWN_TEMPERATURE_VERSIONS = 2;
+
     private static final String VERSION_DATA = "vers";
     private static final String UID_DATA = "uid";
     private static final String WAKEUP_ALARM_DATA = "wua";

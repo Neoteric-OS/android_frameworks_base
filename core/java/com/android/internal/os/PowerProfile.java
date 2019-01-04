@@ -103,6 +103,10 @@ public class PowerProfile {
     public static final String POWER_MODEM_CONTROLLER_TX = "modem.controller.tx";
     public static final String POWER_MODEM_CONTROLLER_OPERATING_VOLTAGE =
             "modem.controller.voltage";
+    public static final String POWER_MODEM_CONTROLLER_TEMP_SHUTDOWN_PREPROD =
+            "modem.controller.temp_shutdown_preprod";
+    public static final String POWER_MODEM_CONTROLLER_TEMP_SHUTDOWN_PROD =
+            "modem.controller.temp_shutdown_prod";
 
     /**
      * Power consumption when GPS is on.
@@ -274,7 +278,6 @@ public class PowerProfile {
 
                 String element = parser.getName();
                 if (element == null) break;
-
                 if (parsingArray && !element.equals(TAG_ARRAYITEM)) {
                     // Finish array
                     sPowerArrayMap.put(arrayName, array.toArray(new Double[array.size()]));

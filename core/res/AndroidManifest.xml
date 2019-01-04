@@ -607,6 +607,11 @@
 
     <protected-broadcast android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED_INTERNAL" />
 
+    <protected-broadcast android:name="android.intent.action.DEVICE_CUSTOMIZATION_READY" />
+
+    <!-- Added for Temperature Modem Power Metrics Collection -->
+    <protected-broadcast android:name="com.android.internal.telephony.metrics.ThermalMetrics" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
