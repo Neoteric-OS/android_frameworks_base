@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4159a95_2d359d03",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4203,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Do I? I\u0027ll go with your suggestion. I thought service_contexts is for binder service, and the binder service behind this already exists. Fwiw I can trigger call BugreportManager service from system server and invoke the binder method via startBugreport as well. Is service_contexts needed for apps/outside system server?",
+      "parentUuid": "03c217e0_e041ce1f",
+      "range": {
+        "startLine": 4203,
+        "startChar": 52,
+        "endLine": 4203,
+        "endChar": 61
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b4472fe_ac8d143b",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 7
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "447942a4_140d4cb4",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ddfc768_b4fc8b23",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7389c92_aed285fe",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4472fe_ac8d143b",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2735e0fb_174550d3",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa332c6c_c98ae056",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2735e0fb_174550d3",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "89b00724_84b3030d",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be90b5f7_2b512a70",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8ea2c7_047385ba",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168c8fe2_1b12fd9b",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a8ea2c7_047385ba",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "aead645c_f49a356a",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done. Is the TODO necessary btw? Or is @RequiresPermission automatically enforced?",
+      "parentUuid": "efe9dcef_f89fb220",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab883f35_cb2c86bc",
         "filename": "core/java/android/os/BugreportParams.java",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3386d889_cd3cf376",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab883f35_cb2c86bc",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "7d182bf4_b681a2c8",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15e6950a_5df99f68",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 7
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c03b1f_a4c5752e",
         "filename": "core/java/android/os/BugreportParams.java",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d2a108_4f0092ee",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-04T15:43:39Z",
+      "side": 1,
+      "message": "switched to enums",
+      "parentUuid": "75c03b1f_a4c5752e",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
