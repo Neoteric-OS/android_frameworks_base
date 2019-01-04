@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739700e9_a4cceef0",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-04T10:48:57Z",
+      "side": 1,
+      "message": "What is the memory cost of this thread? Might we want to use the per-app singleton ConnectivityThread instead? Given the comment below about Executor possibly blocking, that might not be safe.",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 54
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66421c8a_334c8331",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-04T10:48:57Z",
+      "side": 1,
+      "message": "Beware of threading here. One difference between Executor and Handler is that executors are allowed to execute their runnables inline, which will block the calling thread. Given that you\u0027ve created a Handler thread here, this might be OK.\n\nA great doc on Executors and how to use them in Android code is:\n\nhttps://docs.google.com/document/d/1VItf9hyqG6Zh0u3LVUNbfTUT1ErTzo0xYioUuTaOJj4/edit#",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
