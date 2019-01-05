@@ -60,6 +60,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
@@ -184,6 +185,9 @@ public class DhcpClient extends StateMachine {
     // DHCP flag that means "yes, we support unicast."
     private static final boolean DO_UNICAST   = false;
 
+    // DHCP Rapid Commit Flag
+    private static boolean sRapidCommitEnabled;
+
     // System services / libraries we use.
     private final Context mContext;
     private final Random mRandom;
@@ -290,6 +294,32 @@ public class DhcpClient extends StateMachine {
         client.mIface = ifParams;
         client.start();
         return client;
+    }
+
+    /**
+     * Fetch DHCP Rapid Commit experimental flag to check whether to support
+     * Rapid Commit option.
+     */
+    public static boolean isRapidCommitEnabled() {
+        // TODO: call DeviceConfig.getProperty(DeviceConfig.NAMESPACE,
+        //                    DeviceConfig.PROPERTY);
+        // to fetch the dynamic flag value after merging the DeviceConfig class
+        // in AOSP repo. So far always return false.
+        return sRapidCommitEnabled;
+    }
+
+    /**
+     * set DHCP Rapid Commit experimental flag, just for testing.
+     */
+    @VisibleForTesting
+    public static void setRapidCommitOption(boolean rapidCommitEnabled) {
+        sRapidCommitEnabled = rapidCommitEnabled;
+    }
+
+    private void confirmDhcpLease(DhcpPacket packet, DhcpResults results, State nextState) {
+        setDhcpLeaseExpiry(packet);
+        acceptDhcpResults(results, "Confirmed");
+        transitionTo(nextState);
     }
 
     private boolean initInterface() {
@@ -794,11 +824,30 @@ public class DhcpClient extends StateMachine {
 
         protected void receivePacket(DhcpPacket packet) {
             if (!isValidPacket(packet)) return;
-            if (!(packet instanceof DhcpOfferPacket)) return;
-            mOffer = packet.toDhcpResults();
-            if (mOffer != null) {
-                Log.d(TAG, "Got pending lease: " + mOffer);
-                transitionTo(mDhcpRequestingState);
+
+            // 1. received the DHCPOFFER packet, process it by following RFC2131.
+            // 2. received the DHCPACK packet from DHCP Servers who support Rapid
+            //    Commit option, process it by following RFC4039.
+            if (packet instanceof DhcpOfferPacket) {
+                mOffer = packet.toDhcpResults();
+                if (mOffer != null) {
+                    Log.d(TAG, "Got pending lease: " + mOffer);
+                    transitionTo(mDhcpRequestingState);
+                }
+            } else if (packet instanceof DhcpAckPacket) {
+                if (sRapidCommitEnabled) {
+                    // If received DHCPACK packet w/o Rapid Commit option in this state,
+                    // just drop it and wait for the next DHCPOFFER packet or DHCPACK w/
+                    // Rapid Commit option.
+                    if (packet.mRapidCommit) {
+                        Log.d(TAG, "Got DHCPACK w/ rapid commit option");
+                        DhcpResults results = packet.toDhcpResults();
+                        if (results != null) {
+                            Log.d(TAG, "Got rapid lease: " + results);
+                            confirmDhcpLease(packet, results, mConfiguringInterfaceState);
+                        }
+                    }
+                }
             }
         }
     }
@@ -825,9 +874,7 @@ public class DhcpClient extends StateMachine {
             if ((packet instanceof DhcpAckPacket)) {
                 DhcpResults results = packet.toDhcpResults();
                 if (results != null) {
-                    setDhcpLeaseExpiry(packet);
-                    acceptDhcpResults(results, "Confirmed");
-                    transitionTo(mConfiguringInterfaceState);
+                    confirmDhcpLease(packet, results, mConfiguringInterfaceState);
                 }
             } else if (packet instanceof DhcpNakPacket) {
                 // TODO: Wait a while before returning into INIT state.

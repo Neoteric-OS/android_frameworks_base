@@ -43,6 +43,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.android.internal.util.HexDump;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,6 +61,11 @@ public final class DhcpPacketL3WrapperTest {
     public void setUp() {
         DhcpPacket.testOverrideVendorId = "android-dhcp-???";
         DhcpPacket.testOverrideHostname = "android-01234567890abcde";
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        DhcpClient.setRapidCommitOption(false);
     }
 
     private static Inet4Address v4Address(String addrString) throws IllegalArgumentException {
@@ -267,13 +273,14 @@ public final class DhcpPacketL3WrapperTest {
     }
 
     @Test
-    public void testBuildPacket() throws Exception {
+    public void testBuildDiscoverPacket() throws Exception {
         short secs = 7;
         int transactionId = 0xdeadbeef;
         byte[] hwaddr = {
                 (byte) 0xda, (byte) 0x01, (byte) 0x19, (byte) 0x5b, (byte) 0xb1, (byte) 0x7a
         };
 
+        DhcpClient.setRapidCommitOption(false);
         DhcpPacket packet = DhcpPacket.buildDiscoverPacket(
                 transactionId, secs, hwaddr, false /* do unicast */, DhcpClient.REQUESTED_PARAMS);
         ByteBuffer packetBuffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
@@ -331,6 +338,93 @@ public final class DhcpPacketL3WrapperTest {
                 DHCP_RENEWAL_TIME,
                 DHCP_REBINDING_TIME,
                 DHCP_VENDOR_INFO,
+                // End options.
+                (byte) 0xff,
+                // Our packets are always of even length. TODO: find out why and possibly fix it.
+                (byte) 0x00
+        };
+        byte[] expected = new byte[DhcpPacketL3Wrapper.MIN_PACKET_LENGTH_L3 + options.length];
+        assertTrue((expected.length & 1) == 0);
+        System.arraycopy(headers, 0, expected, 0, headers.length);
+        System.arraycopy(
+                options, 0, expected, DhcpPacketL3Wrapper.MIN_PACKET_LENGTH_L3, options.length);
+
+        byte[] actual = new byte[packetBuffer.limit()];
+        packetBuffer.get(actual);
+        String msg =
+                "Expected:\n  " + Arrays.toString(expected)
+                        + "\nActual:\n  " + Arrays.toString(actual);
+        assertTrue(msg, Arrays.equals(expected, actual));
+    }
+
+    @Test
+    public void testBuildDiscoverPacketWithRapidCommitOption() throws Exception {
+        short secs = 7;
+        int transactionId = 0xdeadbeef;
+        byte[] hwaddr = {
+                (byte) 0xda, (byte) 0x01, (byte) 0x19, (byte) 0x5b, (byte) 0xb1, (byte) 0x7a
+        };
+
+        DhcpClient.setRapidCommitOption(true);
+        DhcpPacket packet = DhcpPacket.buildDiscoverPacket(
+                transactionId, secs, hwaddr, false /* do unicast */, DhcpClient.REQUESTED_PARAMS);
+        ByteBuffer packetBuffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
+                INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
+                .buildPacket();
+
+        byte[] headers = new byte[]{
+                // IP header.
+                (byte) 0x45, (byte) 0x10, (byte) 0x01, (byte) 0x58,
+                (byte) 0x00, (byte) 0x00, (byte) 0x40, (byte) 0x00,
+                (byte) 0x40, (byte) 0x11, (byte) 0x39, (byte) 0x86,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
+                // UDP header.
+                (byte) 0x00, (byte) 0x44, (byte) 0x00, (byte) 0x43,
+                (byte) 0x01, (byte) 0x44, (byte) 0x1a, (byte) 0x46,
+                // BOOTP.
+                (byte) 0x01, (byte) 0x01, (byte) 0x06, (byte) 0x00,
+                (byte) 0xde, (byte) 0xad, (byte) 0xbe, (byte) 0xef,
+                (byte) 0x00, (byte) 0x07, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0xda, (byte) 0x01, (byte) 0x19, (byte) 0x5b,
+                (byte) 0xb1, (byte) 0x7a
+        };
+        byte[] options = new byte[]{
+                // Magic cookie 0x63825363.
+                (byte) 0x63, (byte) 0x82, (byte) 0x53, (byte) 0x63,
+                // Message type DISCOVER.
+                (byte) 0x35, (byte) 0x01, (byte) 0x01,
+                // Client identifier Ethernet, da:01:19:5b:b1:7a.
+                (byte) 0x3d, (byte) 0x07,
+                (byte) 0x01,
+                (byte) 0xda, (byte) 0x01, (byte) 0x19, (byte) 0x5b, (byte) 0xb1, (byte) 0x7a,
+                // Max message size 1500.
+                (byte) 0x39, (byte) 0x02, (byte) 0x05, (byte) 0xdc,
+                // Version "android-dhcp-???".
+                (byte) 0x3c, (byte) 0x10,
+                'a', 'n', 'd', 'r', 'o', 'i', 'd', '-', 'd', 'h', 'c', 'p', '-', '?', '?', '?',
+                // Hostname "android-01234567890abcde"
+                (byte) 0x0c, (byte) 0x18,
+                'a', 'n', 'd', 'r', 'o', 'i', 'd', '-',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e',
+                // Requested parameter list.
+                (byte) 0x37, (byte) 0x0a,
+                DHCP_SUBNET_MASK,
+                DHCP_ROUTER,
+                DHCP_DNS_SERVER,
+                DHCP_DOMAIN_NAME,
+                DHCP_MTU,
+                DHCP_BROADCAST_ADDRESS,
+                DHCP_LEASE_TIME,
+                DHCP_RENEWAL_TIME,
+                DHCP_REBINDING_TIME,
+                DHCP_VENDOR_INFO,
+                // Rapid Commit
+                (byte) 0x50, (byte) 0x00,
                 // End options.
                 (byte) 0xff,
                 // Our packets are always of even length. TODO: find out why and possibly fix it.
