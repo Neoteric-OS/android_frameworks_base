@@ -292,6 +292,22 @@ public class DhcpClient extends StateMachine {
         return client;
     }
 
+    /**
+     * check whether or not to support DHCP Rapid Commit option.
+     */
+    public boolean isRapidCommitEnabled() {
+        // TODO: call DeviceConfig.getProperty(DeviceConfig.NAMESPACE,
+        //                    DeviceConfig.PROPERTY);
+        // to fetch the dynamic flag value after merging the DeviceConfig class
+        // in AOSP repo. So far always return false.
+        return false;
+    }
+
+    private void confirmDhcpLease(DhcpPacket packet, DhcpResults results) {
+        setDhcpLeaseExpiry(packet);
+        acceptDhcpResults(results, "Confirmed");
+    }
+
     private boolean initInterface() {
         if (mIface == null) mIface = InterfaceParams.getByName(mIfaceName);
         if (mIface == null) {
@@ -439,7 +455,7 @@ public class DhcpClient extends StateMachine {
 
     private boolean sendDiscoverPacket() {
         DhcpPacket packet = DhcpPacket.buildDiscoverPacket(mTransactionId, getSecs(), mHwAddr,
-                DO_UNICAST, REQUESTED_PARAMS);
+                DO_UNICAST, REQUESTED_PARAMS, isRapidCommitEnabled());
 
         final ByteBuffer buffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
                 INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
@@ -794,11 +810,28 @@ public class DhcpClient extends StateMachine {
 
         protected void receivePacket(DhcpPacket packet) {
             if (!isValidPacket(packet)) return;
-            if (!(packet instanceof DhcpOfferPacket)) return;
-            mOffer = packet.toDhcpResults();
-            if (mOffer != null) {
-                Log.d(TAG, "Got pending lease: " + mOffer);
-                transitionTo(mDhcpRequestingState);
+
+            // 1. received the DHCPOFFER packet, process it by following RFC2131.
+            // 2. received the DHCPACK packet from DHCP Servers who support Rapid
+            //    Commit option, process it by following RFC4039.
+            if (packet instanceof DhcpOfferPacket) {
+                mOffer = packet.toDhcpResults();
+                if (mOffer != null) {
+                    Log.d(TAG, "Got pending lease: " + mOffer);
+                    transitionTo(mDhcpRequestingState);
+                }
+            } else if (packet instanceof DhcpAckPacket) {
+                // If received DHCPACK packet w/o Rapid Commit option in this state,
+                // just drop it and wait for the next DHCPOFFER packet or DHCPACK w/
+                // Rapid Commit option.
+                if (!isRapidCommitEnabled() || !packet.mRapidCommit) return;
+                Log.d(TAG, "Got DHCPACK w/ rapid commit option");
+                DhcpResults results = packet.toDhcpResults();
+                if (results != null) {
+                    Log.d(TAG, "Got rapid lease: " + results);
+                    confirmDhcpLease(packet, results);
+                    transitionTo(mConfiguringInterfaceState);
+                }
             }
         }
     }
@@ -825,8 +858,7 @@ public class DhcpClient extends StateMachine {
             if ((packet instanceof DhcpAckPacket)) {
                 DhcpResults results = packet.toDhcpResults();
                 if (results != null) {
-                    setDhcpLeaseExpiry(packet);
-                    acceptDhcpResults(results, "Confirmed");
+                    confirmDhcpLease(packet, results);
                     transitionTo(mConfiguringInterfaceState);
                 }
             } else if (packet instanceof DhcpNakPacket) {

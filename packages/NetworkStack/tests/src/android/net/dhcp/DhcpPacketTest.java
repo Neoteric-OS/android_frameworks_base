@@ -910,7 +910,8 @@ public class DhcpPacketTest {
         };
 
         DhcpPacket packet = DhcpPacket.buildDiscoverPacket(
-                transactionId, secs, hwaddr, false /* do unicast */, DhcpClient.REQUESTED_PARAMS);
+                transactionId, secs, hwaddr, false /* do unicast */, DhcpClient.REQUESTED_PARAMS,
+                false /* rapid commit */);
         ByteBuffer packetBuffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
                 INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
                 .buildL2Packet(hwaddr);

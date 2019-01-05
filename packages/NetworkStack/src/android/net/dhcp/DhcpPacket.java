@@ -240,6 +240,12 @@ public abstract class DhcpPacket {
     protected byte[] mClientId;
 
     /**
+     * DHCP zero-length Optional Type: Rapid Commit
+     */
+    protected static final byte DHCP_RAPID_COMMIT = 80;
+    protected boolean mRapidCommit;
+
+    /**
      * DHCP zero-length option code: pad
      */
     protected static final byte DHCP_OPTION_PAD = 0x00;
@@ -428,6 +434,14 @@ public abstract class DhcpPacket {
         buf.put(type);
         buf.put((byte) 1);
         buf.put(value);
+    }
+
+    /**
+     * Adds an optional parameter containing zero-length value.
+     */
+    protected static void addTlv(ByteBuffer buf, byte type) {
+        buf.put(type);
+        buf.put((byte) 0);
     }
 
     /**
@@ -675,6 +689,7 @@ public abstract class DhcpPacket {
         Inet4Address netMask = null;
         String message = null;
         String vendorId = null;
+        boolean rapidCommit = false;
         String vendorInfo = null;
         byte[] expectedParams = null;
         String hostName = null;
@@ -855,6 +870,10 @@ public abstract class DhcpPacket {
                             // Embedded nulls are safe as this does not get passed to netd.
                             vendorInfo = readAsciiString(packet, optionLen, true);
                             break;
+                        case DHCP_RAPID_COMMIT:
+                            expectedLen = 0;
+                            rapidCommit = true;
+                            break;
                         default:
                             // ignore any other parameters
                             for (int i = 0; i < optionLen; i++) {
@@ -945,6 +964,7 @@ public abstract class DhcpPacket {
         newPacket.mT2 = T2;
         newPacket.mVendorId = vendorId;
         newPacket.mVendorInfo = vendorInfo;
+        newPacket.mRapidCommit = rapidCommit;
         return newPacket;
     }
 
@@ -1030,10 +1050,12 @@ public abstract class DhcpPacket {
      * parameters.
      */
     public static DhcpDiscoverPacket buildDiscoverPacket(int transactionId,
-            short secs, byte[] clientMac, boolean broadcast, byte[] expectedParams) {
+            short secs, byte[] clientMac, boolean broadcast, byte[] expectedParams,
+            boolean rapidCommit) {
         DhcpDiscoverPacket pkt = new DhcpDiscoverPacket(transactionId, secs,
                 INADDR_ANY /* relayIp */, clientMac, broadcast);
         pkt.mRequestedParams = expectedParams;
+        pkt.mRapidCommit = rapidCommit;
 
         return pkt;
     }
