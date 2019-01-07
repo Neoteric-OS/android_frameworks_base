@@ -22,6 +22,30 @@
       "revId": "be3edd4c224b0aac822fdab1679904e9dccb2340",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2c38d7_9e2c71fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-01-07T17:16:46Z",
+      "side": 1,
+      "message": "I guess GTS won\u0027t run on AOSP build. Do you know if the test runs in treehugger?\n\nOtherwise, I may try to run the test go/forrest-ui (I never use the tool before).",
+      "parentUuid": "341fce09_b2cc044b",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "be3edd4c224b0aac822fdab1679904e9dccb2340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
