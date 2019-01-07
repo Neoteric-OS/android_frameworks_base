@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341fce09_b2cc044b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-01-07T16:37:05Z",
+      "side": 1,
+      "message": "Can you also run the GTS test: com.google.android.gts.devicepolicy.DeviceOwnerTest#testProxyPacProxyTest",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "be3edd4c224b0aac822fdab1679904e9dccb2340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
