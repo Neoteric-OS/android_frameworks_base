@@ -162,6 +162,7 @@ interface IConnectivityManager
     void releaseNetworkRequest(in NetworkRequest networkRequest);
 
     void setAcceptUnvalidated(in Network network, boolean accept, boolean always);
+    void setAcceptPartialConnectivity(in Network network, boolean accept, boolean always);
     void setAvoidUnvalidated(in Network network);
     void startCaptivePortalApp(in Network network);
 

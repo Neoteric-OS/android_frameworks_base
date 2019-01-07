@@ -26,10 +26,13 @@ public final class CaptivePortalProbeResult {
     public static final int SUCCESS_CODE = 204;
     public static final int FAILED_CODE = 599;
     public static final int PORTAL_CODE = 302;
+    public static final int PARTIAL_CODE = -1;
 
     public static final CaptivePortalProbeResult FAILED = new CaptivePortalProbeResult(FAILED_CODE);
     public static final CaptivePortalProbeResult SUCCESS =
             new CaptivePortalProbeResult(SUCCESS_CODE);
+    public static final CaptivePortalProbeResult PARTIAL =
+            new CaptivePortalProbeResult(PARTIAL_CODE);
 
     private final int mHttpResponseCode;  // HTTP response code returned from Internet probe.
     public final String redirectUrl;      // Redirect destination returned from Internet probe.
@@ -64,5 +67,9 @@ public final class CaptivePortalProbeResult {
 
     public boolean isFailed() {
         return !isSuccessful() && !isPortal();
+    }
+
+    public boolean isPartialConnectivity() {
+        return mHttpResponseCode == PARTIAL_CODE;
     }
 }
