@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f66a47f_543e20ee",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-07T10:23:10Z",
+      "side": 1,
+      "message": "Just FYI: This should be called MANAGE_LIVE_IMAGE instead of LIVE_IMAGE.",
+      "range": {
+        "startLine": 1685,
+        "startChar": 49,
+        "endLine": 1685,
+        "endChar": 59
+      },
+      "revId": "c83a8c2dc4bf643c50c095a0c1142b6eb625e03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
