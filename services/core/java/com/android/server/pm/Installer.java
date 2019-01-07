@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.content.Context;
+import android.content.pm.PackageParser.Package;
 import android.content.pm.PackageStats;
 import android.os.Build;
 import android.os.IBinder;
@@ -587,6 +588,14 @@ public class Installer extends SystemService {
             }
         }
         throw new InstallerException("Invalid instruction set: " + instructionSet);
+    }
+
+    public boolean compileLayouts(String apkPath, String packageName, String outDexFile) {
+        try {
+            return mInstalld.compileLayouts(apkPath, packageName, outDexFile);
+        } catch (RemoteException e) {
+            return false;
+        }
     }
 
     public static class InstallerException extends Exception {
