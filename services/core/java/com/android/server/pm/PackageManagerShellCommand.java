@@ -179,6 +179,8 @@ class PackageManagerShellCommand extends ShellCommand {
                     return runMovePrimaryStorage();
                 case "compile":
                     return runCompile();
+                case "compile-layouts":
+                    return runCompileLayouts();
                 case "reconcile-secondary-dex-files":
                     return runreconcileSecondaryDexFiles();
                 case "force-dex-opt":
@@ -1298,6 +1300,18 @@ class PackageManagerShellCommand extends ShellCommand {
             pw.println();
             return 1;
         }
+    }
+
+    private int runCompileLayouts() throws RemoteException {
+        final PrintWriter pw = getOutPrintWriter();
+        final String packageName = getNextArg();
+
+        if (packageName == null) {
+            pw.println("Error: package name not specified");
+            return 1;
+        }
+
+        return mInterface.compileLayouts(packageName) ? 0 : 1;
     }
 
     private int runreconcileSecondaryDexFiles() throws RemoteException {
@@ -2908,6 +2922,9 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      --check-prof (true | false): look at profiles when doing dexopt?");
         pw.println("      --secondary-dex: compile app secondary dex files");
         pw.println("      --split SPLIT: compile only the given split name");
+        pw.println("");
+        pw.println("  compile-layouts TARGET-PACKAGE");
+        pw.println("    Trigger compilation of layout resources in TARGET-PACKAGE");
         pw.println("");
         pw.println("  force-dex-opt PACKAGE");
         pw.println("    Force immediate execution of dex opt for the given PACKAGE.");

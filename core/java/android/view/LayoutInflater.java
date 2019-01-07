@@ -389,8 +389,9 @@ public abstract class LayoutInflater {
 
     private void initPrecompiledViews() {
         try {
-            mUseCompiledView =
-                android.os.SystemProperties.getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false);
+            // mUseCompiledView =
+            //     android.os.SystemProperties.getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false);
+            mUseCompiledView = true;
             if (mUseCompiledView) {
                 mPrecompiledClassLoader = mContext.getClassLoader();
                 String dexFile = mContext.getCodeCacheDir() + COMPILED_VIEW_DEX_FILE_NAME;
@@ -488,6 +489,8 @@ public abstract class LayoutInflater {
         // Try to inflate using a precompiled layout.
         String pkg = res.getResourcePackageName(resource);
         String layout = res.getResourceEntryName(resource);
+
+        Log.i(TAG, "inflating " + pkg + "#" + layout + "from precompiled layout");
 
         try {
             Class clazz = mPrecompiledClassLoader.loadClass("" + pkg + ".CompiledView");
