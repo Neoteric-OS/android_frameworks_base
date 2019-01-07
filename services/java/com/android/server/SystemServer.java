@@ -749,6 +749,7 @@ public final class SystemServer {
     private void startOtherServices() {
         final Context context = mSystemContext;
         VibratorService vibrator = null;
+        LiveImageService liveimage = null;
         IStorageManager storageManager = null;
         NetworkManagementService networkManagement = null;
         IpSecService ipSecService = null;
@@ -856,6 +857,11 @@ public final class SystemServer {
             traceBeginAndSlog("StartVibratorService");
             vibrator = new VibratorService(context);
             ServiceManager.addService("vibrator", vibrator);
+            traceEnd();
+
+            traceBeginAndSlog("StartLiveImageService");
+            liveimage = new LiveImageService(context);
+            ServiceManager.addService("liveimage", liveimage);
             traceEnd();
 
             if (!isWatch) {
