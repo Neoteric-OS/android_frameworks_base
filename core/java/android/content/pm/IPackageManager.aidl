@@ -538,6 +538,11 @@ interface IPackageManager {
      */
     void dumpProfiles(String packageName);
 
+    /**
+     * Ask the package manager to compile layouts in the given package.
+     */
+    boolean compileLayouts(String packageName);
+
     void forceDexOpt(String packageName);
 
     /**

@@ -450,6 +450,9 @@ public class PackageManagerService extends IPackageManager.Stub
     private static final boolean ENABLE_FREE_CACHE_V2 =
             SystemProperties.getBoolean("fw.free_cache_v2", true);
 
+    private static final boolean PRECOMPILED_LAYOUT_ENABLED =
+            SystemProperties.getBoolean("view.precompiled_layout_enabled", false);
+
     private static final int RADIO_UID = Process.PHONE_UID;
     private static final int LOG_UID = Process.LOG_UID;
     private static final int NFC_UID = Process.NFC_UID;
@@ -9177,6 +9180,10 @@ public class PackageManagerService extends IPackageManager.Stub
                 pkgCompilationReason = PackageManagerService.REASON_BACKGROUND_DEXOPT;
             }
 
+            if (PRECOMPILED_LAYOUT_ENABLED) {
+                mArtManagerService.compileLayouts(pkg);
+            }
+
             // checkProfiles is false to avoid merging profiles during boot which
             // might interfere with background compilation (b/28612421).
             // Unfortunately this will also means that "pm.dexopt.boot=speed-profile" will
@@ -9574,6 +9581,21 @@ public class PackageManagerService extends IPackageManager.Stub
             mArtManagerService.dumpProfiles(pkg);
             Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
         }
+    }
+    
+    /**
+     * Ask the package manager to compile layouts in the given package.
+     */
+    @Override
+    public boolean compileLayouts(String packageName) {
+        PackageParser.Package pkg;
+        synchronized (mPackages) {
+            pkg = mPackages.get(packageName);
+            if (pkg == null) {
+                return false;
+            }
+        }
+        return mArtManagerService.compileLayouts(pkg);
     }
 
     @Override
@@ -17739,6 +17761,13 @@ public class PackageManagerService extends IPackageManager.Stub
                 && ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0);
 
         if (performDexopt) {
+            // Compile the layout resources.
+            if (PRECOMPILED_LAYOUT_ENABLED) {
+                Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "compileLayouts");
+                mArtManagerService.compileLayouts(pkg);
+                Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
+            }
+
             Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "dexopt");
             // Do not run PackageDexOptimizer through the local performDexOpt
             // method because `pkg` may not be in `mPackages` yet.
