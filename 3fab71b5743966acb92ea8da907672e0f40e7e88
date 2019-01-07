@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7c48c2_dd16995d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T14:59:07Z",
+      "side": 1,
+      "message": "Typo, control",
+      "revId": "3fab71b5743966acb92ea8da907672e0f40e7e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faeecc94_a4ae03dc",
+        "filename": "native/android/net.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T14:59:07Z",
+      "side": 1,
+      "message": "Limit lines to 100 characters.",
+      "range": {
+        "startLine": 101,
+        "startChar": 77,
+        "endLine": 101,
+        "endChar": 106
+      },
+      "revId": "3fab71b5743966acb92ea8da907672e0f40e7e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
