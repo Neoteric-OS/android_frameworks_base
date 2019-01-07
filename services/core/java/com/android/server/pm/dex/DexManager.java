@@ -23,6 +23,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageParser;
 import android.database.ContentObserver;
+import android.os.Binder;
 import android.os.Build;
 import android.os.FileUtils;
 import android.os.RemoteException;

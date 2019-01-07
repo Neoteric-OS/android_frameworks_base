@@ -317,6 +317,7 @@ import com.android.server.pm.dex.DexLogger;
 import com.android.server.pm.dex.DexManager;
 import com.android.server.pm.dex.DexoptOptions;
 import com.android.server.pm.dex.PackageDexUsage;
+import com.android.server.pm.dex.ViewCompiler;
 import com.android.server.pm.permission.BasePermission;
 import com.android.server.pm.permission.DefaultPermissionGrantPolicy;
 import com.android.server.pm.permission.DefaultPermissionGrantPolicy.DefaultPermissionGrantedCallback;
@@ -449,6 +450,9 @@ public class PackageManagerService extends IPackageManager.Stub
 
     private static final boolean ENABLE_FREE_CACHE_V2 =
             SystemProperties.getBoolean("fw.free_cache_v2", true);
+
+    private static final boolean PRECOMPILED_LAYOUT_ENABLED =
+            SystemProperties.getBoolean("view.precompiled_layout_enabled", false);
 
     private static final int RADIO_UID = Process.PHONE_UID;
     private static final int LOG_UID = Process.LOG_UID;
@@ -959,6 +963,8 @@ public class PackageManagerService extends IPackageManager.Stub
     // DexManager handles the usage of dex files (e.g. secondary files, whether or not a package
     // is used by other apps).
     private final DexManager mDexManager;
+
+    private final ViewCompiler mViewCompiler;
 
     private AtomicInteger mNextMoveId = new AtomicInteger();
     private final MoveCallbacks mMoveCallbacks;
@@ -2498,6 +2504,8 @@ public class PackageManagerService extends IPackageManager.Stub
                 dexManagerListener);
         mArtManagerService = new ArtManagerService(mContext, this, installer, mInstallLock);
         mMoveCallbacks = new MoveCallbacks(FgThread.get().getLooper());
+
+        mViewCompiler = new ViewCompiler(mInstallLock, mInstaller);
 
         mOnPermissionChangeListeners = new OnPermissionChangeListeners(
                 FgThread.get().getLooper());
@@ -9177,6 +9185,10 @@ public class PackageManagerService extends IPackageManager.Stub
                 pkgCompilationReason = PackageManagerService.REASON_BACKGROUND_DEXOPT;
             }
 
+            if (PRECOMPILED_LAYOUT_ENABLED) {
+              mViewCompiler.compileLayouts(pkg);
+            }
+
             // checkProfiles is false to avoid merging profiles during boot which
             // might interfere with background compilation (b/28612421).
             // Unfortunately this will also means that "pm.dexopt.boot=speed-profile" will
@@ -9311,7 +9323,22 @@ public class PackageManagerService extends IPackageManager.Stub
         return performDexOpt(new DexoptOptions(packageName, compilerFilter, flags));
     }
 
-    /*package*/ boolean performDexOpt(DexoptOptions options) {
+  /**
+   * Ask the package manager to compile layouts in the given package.
+   */
+  @Override
+  public boolean compileLayouts(String packageName) {
+    PackageParser.Package pkg;
+    synchronized (mPackages) {
+      pkg = mPackages.get(packageName);
+      if (pkg == null) {
+        return false;
+      }
+    }
+    return mViewCompiler.compileLayouts(pkg);
+  }
+
+  /*package*/ boolean performDexOpt(DexoptOptions options) {
         if (getInstantAppPackageName(Binder.getCallingUid()) != null) {
             return false;
         } else if (isInstantApp(options.getPackageName(), UserHandle.getCallingUserId())) {
@@ -17739,6 +17766,13 @@ public class PackageManagerService extends IPackageManager.Stub
                 && ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0);
 
         if (performDexopt) {
+            // Compile the layout resources.
+            if (PRECOMPILED_LAYOUT_ENABLED) {
+              Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "compileLayouts");
+              mViewCompiler.compileLayouts(pkg);
+              Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
+            }
+
             Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "dexopt");
             // Do not run PackageDexOptimizer through the local performDexOpt
             // method because `pkg` may not be in `mPackages` yet.
