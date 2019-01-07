@@ -9083,6 +9083,10 @@ public class PackageManagerService extends IPackageManager.Stub
 
             boolean useProfileForDexopt = false;
 
+            if (SystemProperties.getBoolean("view.precompiled_layout_enabled", false)) {
+              compileLayouts(pkg.packageName);
+            }
+
             if ((isFirstBoot() || isUpgrade()) && isSystemApp(pkg)) {
                 // Copy over initial preopt profiles since we won't get any JIT samples for methods
                 // that are already compiled.
@@ -9311,7 +9315,41 @@ public class PackageManagerService extends IPackageManager.Stub
         return performDexOpt(new DexoptOptions(packageName, compilerFilter, flags));
     }
 
-    /*package*/ boolean performDexOpt(DexoptOptions options) {
+  /**
+   * Ask the package manager to compile layouts in the given package.
+   */
+  @Override
+  public boolean compileLayouts(String packageName) {
+    try {
+      PackageParser.Package pkg;
+      synchronized (mPackages) {
+        pkg = mPackages.get(packageName);
+        if (pkg == null) {
+          return false;
+        }
+        mPackageUsage.maybeWriteAsync(mPackages);
+      }
+      final String apkPath = pkg.baseCodePath;
+      final ApplicationInfo appInfo = pkg.applicationInfo;
+      final String outDexFile = appInfo.dataDir + "/code_cache/compiled_view.dex";
+      Log.i("PackageManager",
+          "Compiling layouts in " + packageName + " (" + apkPath + ") to " + outDexFile);
+      long callingId = Binder.clearCallingIdentity();
+      try {
+        synchronized (mInstallLock) {
+          return mInstaller.compileLayouts(apkPath, packageName, outDexFile);
+        }
+      } finally {
+        Binder.restoreCallingIdentity(callingId);
+      }
+    }
+    catch (Throwable e) {
+      Log.e("PackageManager", "Failed to compile layouts", e);
+      return false;
+    }
+  }
+
+  /*package*/ boolean performDexOpt(DexoptOptions options) {
         if (getInstantAppPackageName(Binder.getCallingUid()) != null) {
             return false;
         } else if (isInstantApp(options.getPackageName(), UserHandle.getCallingUserId())) {
@@ -17709,6 +17747,11 @@ public class PackageManagerService extends IPackageManager.Stub
         // can be used for optimizations.
         mArtManagerService.prepareAppProfiles(pkg, resolveUserIds(args.user.getIdentifier()),
                 /* updateReferenceProfileContent= */ true);
+
+        // Compile the views.
+        if (SystemProperties.getBoolean("view.precompiled_layout_enabled", false)) {
+          compileLayouts(pkgName);
+        }
 
         // Check whether we need to dexopt the app.
         //
