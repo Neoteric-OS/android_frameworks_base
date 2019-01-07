@@ -1146,6 +1146,7 @@ class PackageManagerShellCommand extends ShellCommand {
         String checkProfilesRaw = null;
         boolean secondaryDex = false;
         String split = null;
+        boolean compileLayouts = false;
 
         String opt;
         while ((opt = getNextOption()) != null) {
@@ -1164,6 +1165,9 @@ class PackageManagerShellCommand extends ShellCommand {
                     break;
                 case "-r":
                     compilationReason = getNextArgRequired();
+                    break;
+              case "--compile-layouts":
+                    compileLayouts = true;
                     break;
                 case "--check-prof":
                     checkProfilesRaw = getNextArgRequired();
@@ -1196,14 +1200,16 @@ class PackageManagerShellCommand extends ShellCommand {
             }
         }
 
-        if (compilerFilter != null && compilationReason != null) {
-            pw.println("Cannot use compilation filter (\"-m\") and compilation reason (\"-r\") " +
-                    "at the same time");
-            return 1;
-        }
-        if (compilerFilter == null && compilationReason == null) {
-            pw.println("Cannot run without any of compilation filter (\"-m\") and compilation " +
-                    "reason (\"-r\") at the same time");
+        final boolean compilerFilterGiven = compilerFilter != null;
+        final boolean compilationReasonGiven = compilationReason != null;
+        // Make sure exactly one of -m, -r, or --compile-layouts is given.
+        if ((!compilerFilterGiven && !compilationReasonGiven && !compileLayouts)
+            || (!compilerFilterGiven && compilationReasonGiven && compileLayouts)
+            || (compilerFilterGiven && !compilationReasonGiven && compileLayouts)
+            || (compilerFilterGiven && compilationReasonGiven && !compileLayouts)
+            || (compilerFilterGiven && compilationReasonGiven && compileLayouts)) {
+            pw.println("Must specify exactly one of compilation filter (\"-m\"), compilation " +
+                    "reason (\"-r\"), or compile layouts (\"--compile-layouts\")");
             return 1;
         }
 
@@ -1217,15 +1223,16 @@ class PackageManagerShellCommand extends ShellCommand {
             return 1;
         }
 
-        String targetCompilerFilter;
-        if (compilerFilter != null) {
+        String targetCompilerFilter = null;
+        if (compilerFilterGiven) {
             if (!DexFile.isValidCompilerFilter(compilerFilter)) {
                 pw.println("Error: \"" + compilerFilter +
                         "\" is not a valid compilation filter.");
                 return 1;
             }
             targetCompilerFilter = compilerFilter;
-        } else {
+        }
+        if (compilationReasonGiven) {
             int reason = -1;
             for (int i = 0; i < PackageManagerServiceCompilerMapping.REASON_STRINGS.length; i++) {
                 if (PackageManagerServiceCompilerMapping.REASON_STRINGS[i].equals(
@@ -1267,12 +1274,17 @@ class PackageManagerShellCommand extends ShellCommand {
                 pw.flush();
             }
 
-            boolean result = secondaryDex
+            boolean result = true;
+            if (compileLayouts) {
+                result = mInterface.compileLayouts(packageName);
+            } else {
+                result = secondaryDex
                     ? mInterface.performDexOptSecondary(packageName,
                             targetCompilerFilter, forceCompilation)
                     : mInterface.performDexOptMode(packageName,
                             checkProfiles, targetCompilerFilter, forceCompilation,
                             true /* bootComplete */, split);
+            }
             if (!result) {
                 failedPackages.add(packageName);
             }
@@ -2908,6 +2920,7 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      --check-prof (true | false): look at profiles when doing dexopt?");
         pw.println("      --secondary-dex: compile app secondary dex files");
         pw.println("      --split SPLIT: compile only the given split name");
+        pw.println("      --compile-layouts: compile layout resources for faster inflation");
         pw.println("");
         pw.println("  force-dex-opt PACKAGE");
         pw.println("    Force immediate execution of dex opt for the given PACKAGE.");
