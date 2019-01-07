@@ -758,6 +758,7 @@ public final class SystemServer {
     private void startOtherServices() {
         final Context context = mSystemContext;
         VibratorService vibrator = null;
+        AndroidOnTapService androidOnTap = null;
         IStorageManager storageManager = null;
         NetworkManagementService networkManagement = null;
         IpSecService ipSecService = null;
@@ -865,6 +866,11 @@ public final class SystemServer {
             traceBeginAndSlog("StartVibratorService");
             vibrator = new VibratorService(context);
             ServiceManager.addService("vibrator", vibrator);
+            traceEnd();
+
+            traceBeginAndSlog("StartAndroidOnTapService");
+            androidOnTap = new AndroidOnTapService(context);
+            ServiceManager.addService("android_on_tap", androidOnTap);
             traceEnd();
 
             if (!isWatch) {
