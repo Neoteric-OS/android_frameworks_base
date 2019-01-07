@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7086fc15_e5b9269d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2489,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 0,
+      "message": "Can we move this to NetworkMonitorTest?",
+      "range": {
+        "startLine": 2488,
+        "startChar": 0,
+        "endLine": 2489,
+        "endChar": 86
+      },
+      "revId": "12d681abf6b47065edaa0cb88344e8251f7c8452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7777bc8c_92b03b22",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2494,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 0,
+      "message": "Ditto, might be worth adding this to NetworkMonitorTest.",
+      "range": {
+        "startLine": 2493,
+        "startChar": 0,
+        "endLine": 2494,
+        "endChar": 41
+      },
+      "revId": "12d681abf6b47065edaa0cb88344e8251f7c8452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

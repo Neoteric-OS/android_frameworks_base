@@ -1,0 +1,619 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd0e6bc_052d9b0a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Maybe add a comment to explain that this is not racy because the default request is final?",
+      "range": {
+        "startLine": 2044,
+        "startChar": 14,
+        "endLine": 2044,
+        "endChar": 16
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb364bb_3e517746",
+        "filename": "core/java/android/net/INetworkStackConnector.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Traditionally we\u0027ve avoided exposing raw netIds in any sort of API because doing so would preclude us from changing the implementation of the Network class to something else. That\u0027s why we added the network handle. See Network#getNetworkHandle.\n\nIn this case, though, given that the bulk of the code that understands netIds is in the non-updatable system, and the module is presumed newer than the system, it\u0027s probably fine to use a netId here: once the system is upgraded, we\u0027ll be able to upgrade the module as well.\n\nAnother option would be to make a ParcelableNetwork class and have Network contain a ParcelableNetwork instead of an int.",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950852dc_6c3f1156",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "PACKAGE_NAME?",
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36dd2c63_eeb7a89a",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "INetworkMonitor?",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65791176_d78c2bad",
+        "filename": "core/java/android/net/PrivateDnsConfigParcel.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Care to file a bug to add a parcelable IP address class?",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eded58c_f5d665c5",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "We should delete this at the earliest possible opportunity.",
+      "range": {
+        "startLine": 262,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 42
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0ae0a8_cf9c4764",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "I suspect we never use this, since it\u0027s the state machine name and not the log tag, but still, it should be TAG + \"/\" + network.netId.",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 46
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6c77d8_8fe858fb",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Per in-person: if we\u0027re not yet at the point where we can delete this, let\u0027s add a null check, so the network stack process doesn\u0027t crash if the network is disconnected.",
+      "range": {
+        "startLine": 436,
+        "startChar": 28,
+        "endLine": 436,
+        "endChar": 29
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a7700b_b921d1e6",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 445,
+        "startChar": 33,
+        "endLine": 445,
+        "endChar": 34
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6647625b_8d14b2c0",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Remove? So you\u0027ll get NetworkMonitor/100 for netId 100.",
+      "range": {
+        "startLine": 458,
+        "startChar": 31,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe6c470_c241292a",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "TODO: delete.",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 511,
+        "endChar": 72
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db12d6f3_9908d5d1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "This should move out of this class and stay in the system server, right?",
+      "range": {
+        "startLine": 1105,
+        "startChar": 0,
+        "endLine": 1107,
+        "endChar": 5
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6a905f_964daf08",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1483,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Will this throw if the app does not have the location permission, or if the user revokes the permission?",
+      "range": {
+        "startLine": 1483,
+        "startChar": 51,
+        "endLine": 1483,
+        "endChar": 71
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ebd2da_76697699",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "return;",
+      "range": {
+        "startLine": 1537,
+        "startChar": 12,
+        "endLine": 1537,
+        "endChar": 94
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5f7cc2_fdc5f663",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Can this be lower than 10s? This sort of thing should always be well below 1 second.",
+      "range": {
+        "startLine": 106,
+        "startChar": 50,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaa2d69_f66fea48",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Until we remove these, suggest adding a comment:\n\n    // Default values. Individual tests can override these.",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 81
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4e944e_e3a4b9ea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4823,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "This comment should explain what happens if the network disconnects or sends any other event before the NetworkMonitor arrives. This is not a problem, because nothing can arrive from the NetworkAgent until we call nai.asyncChannel.connect(), which only happens when we call handlerRegisterNetworkAgent.",
+      "range": {
+        "startLine": 4823,
+        "startChar": 0,
+        "endLine": 4823,
+        "endChar": 97
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12321c03_fa4672e6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4849,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Per in-person: we should probably do this before we call nai.asyncChannel.connect(). This is so that if we get a message from the NetworkAgent that would cause us to ask NetworkMonitor to do something, we\u0027d send a message to a state machine that is not yet started, and it would crash.",
+      "range": {
+        "startLine": 4848,
+        "startChar": 0,
+        "endLine": 4849,
+        "endChar": 34
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69fa617_de99f475",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5782,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "We need to ensure that the ordering of this message with respect to notifyLinkPropertiesChanged is correct. As soon as NetworkMonitor receives this one, it will enter EvaluatingState and fetch the LinkProperties. If we haven\u0027t already sent it notifyLinkPropertiesChanged, then it could use the wrong LinkProperties.\n\nLooks like the code is correct now, but we might want to add a comment explaining that we must only send the connect command after updating the LinkProperties.",
+      "range": {
+        "startLine": 5782,
+        "startChar": 44,
+        "endLine": 5782,
+        "endChar": 66
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a668b6_76306b25",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Package-private? private?",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 10
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9b96cb_3095cd96",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Per in-person, maybe move to ConnectivityService.java? It looks like you\u0027d have to add a mNetworkAgentInfo member here, and create this callback with \"new NetworkMonitorCallbacks(nai)\".",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 81
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb7eabc_9f5dba26",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Per in-person conversation, once the Sony CL to fetch the default URL from resources is merged, we should remove this entirely and have the default always be the resource.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 64
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d817a0_141b22f4",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "This is used to communicate back to CS, right? Should it be a stable AIDL constant?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c15217_3fc0c905",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "Can we avoid adding all these \"throws Exception\"? Maybe by putting a:\n\n    try {\n        ...\n    } catch (RemoteException e) {\n        fail(\"...\");\n    }\n\n?",
+      "range": {
+        "startLine": 344,
+        "startChar": 34,
+        "endLine": 344,
+        "endChar": 50
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e35fbd_22ff1a14",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "For readability and unindentation purposes, can you factor this out to a member function?",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 25
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc33995_2647b0cf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": ",  // tag",
+      "range": {
+        "startLine": 498,
+        "startChar": 25,
+        "endLine": 498,
+        "endChar": 26
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b68b0a6_708fcbb3",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T09:42:04Z",
+      "side": 1,
+      "message": "s/shared/mainline/ , I wonder?",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
