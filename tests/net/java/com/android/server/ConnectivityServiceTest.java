@@ -16,6 +16,13 @@
 
 package com.android.server;
 
+import static android.Manifest.permission.CHANGE_NETWORK_STATE;
+import static android.Manifest.permission.NETWORK_STACK;
+import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_OEM;
+import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_PRODUCT;
+import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_VENDOR;
+import static android.content.pm.PackageManager.GET_PERMISSIONS;
+import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
@@ -70,6 +77,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.AdditionalMatchers.aryEq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -94,6 +103,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
@@ -146,6 +158,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
@@ -247,6 +260,8 @@ public class ConnectivityServiceTest {
     @Mock INetworkPolicyManager mNpm;
     @Mock INetd mMockNetd;
     @Mock NetworkStackClient mNetworkStack;
+    @Mock PackageManager mPackageManager;
+    @Mock UserManager mUserManager;
 
     private ArgumentCaptor<String[]> mStringArrayCaptor = ArgumentCaptor.forClass(String[].class);
 
@@ -317,6 +332,7 @@ public class ConnectivityServiceTest {
             if (Context.CONNECTIVITY_SERVICE.equals(name)) return mCm;
             if (Context.NOTIFICATION_SERVICE.equals(name)) return mock(NotificationManager.class);
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
+            if (Context.USER_SERVICE.equals(name)) return mUserManager;
             return super.getSystemService(name);
         }
 
@@ -328,6 +344,11 @@ public class ConnectivityServiceTest {
         @Override
         public Resources getResources() {
             return mResources;
+        }
+
+        @Override
+        public PackageManager getPackageManager() {
+            return mPackageManager;
         }
     }
 
@@ -998,8 +1019,7 @@ public class ConnectivityServiceTest {
         public WrappedConnectivityService(Context context, INetworkManagementService netManager,
                 INetworkStatsService statsService, INetworkPolicyManager policyManager,
                 IpConnectivityLog log, INetd netd) {
-            super(context, netManager, statsService, policyManager, log);
-            mNetd = netd;
+            super(context, netManager, statsService, policyManager, log, netd);
             mLingerDelayMs = TEST_LINGER_DELAY_MS;
         }
 
@@ -5328,5 +5348,49 @@ public class ConnectivityServiceTest {
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
         assertEquals(testProxyInfo, mService.getProxyForNetwork(mWiFiNetworkAgent.getNetwork()));
         assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
+    }
+
+    @Test
+    public void testFullyRoutedVpnResultsInInterfaceFilteringRules() throws Exception {
+        final int vpnUser = 10;
+        final int vpnUid = UserHandle.getUid(vpnUser, 10043);
+        final int appUid1 = UserHandle.getUid(vpnUser, 10043);
+
+        when(mPackageManager.getInstalledPackages(eq(GET_PERMISSIONS | MATCH_ANY_USER))).thenReturn(
+                Arrays.asList(new PackageInfo[] {
+                        buildPackageInfo(/* SYSTEM */ false, appUid1, vpnUser),
+                        buildPackageInfo(/* SYSTEM */ false, vpnUid, vpnUser)
+                }));
+
+
+        //1. Estabnlish a VPN connection
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("tun0");
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
+        final MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN, lp);
+        vpnNetworkAgent.getNetworkCapabilities().setEstablishingVpnAppUid(vpnUid);
+        mMockVpn.setNetworkAgent(vpnNetworkAgent);
+        Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(vpnUser));
+        mMockVpn.setUids(vpnRange);
+        vpnNetworkAgent.connect(true);
+        mMockVpn.connect();
+        vpnNetworkAgent.setUids(vpnRange);
+
+        verify(mMockNetd).firewallAddUidInterfaceRules(eq("tun0"), aryEq(new int[] {appUid1}));
+
+        vpnNetworkAgent.disconnect();
+
+        verify(mMockNetd).firewallRemoveUidInterfaceRules(aryEq(new int[] {appUid1}));
+    }
+
+
+
+    private static PackageInfo buildPackageInfo(boolean hasSystemPermission, int uid, int userId) {
+        final PackageInfo packageInfo = new PackageInfo();
+        packageInfo.requestedPermissions = new String[0];
+        packageInfo.applicationInfo = new ApplicationInfo();
+        packageInfo.applicationInfo.privateFlags = 0;
+        packageInfo.applicationInfo.uid = UserHandle.getUid(userId, UserHandle.getAppId(uid));
+        return packageInfo;
     }
 }

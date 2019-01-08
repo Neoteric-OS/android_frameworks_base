@@ -36,9 +36,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserInfo;
 import android.net.INetd;
-import android.net.util.NetdService;
+import android.net.UidRange;
 import android.os.Build;
-import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -49,16 +48,21 @@ import android.util.SparseIntArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.LocalServices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 /**
  * A utility class to inform Netd of UID permisisons.
@@ -76,13 +80,26 @@ public class PermissionMonitor {
     private final Context mContext;
     private final PackageManager mPackageManager;
     private final UserManager mUserManager;
-    private final INetworkManagementService mNetd;
+    private final INetd mNetd;
 
     // Values are User IDs.
+    @GuardedBy("this")
     private final Set<Integer> mUsers = new HashSet<>();
 
     // Keys are App IDs. Values are true for SYSTEM permission and false for NETWORK permission.
+    @GuardedBy("this")
     private final Map<Integer, Boolean> mApps = new HashMap<>();
+
+    // Keys are active non-bypassable and fully-routed VPN's interface name, Values are uid ranges
+    // for apps under the VPN
+    @GuardedBy("this")
+    private final Map<String, Set<UidRange>> mVpnUidRanges = new HashMap<>();
+
+    // A set of appIds for apps across all users on the device. We track appIds instead of uids
+    // directly to reduce its size and also eliminate the need to update this set when user is
+    // added/removed.
+    @GuardedBy("this")
+    private final Set<Integer> mAllApps = new HashSet<>();
 
     // Keys are App packageNames, Values are app uids. . We need to keep track of this information
     // because PackageListObserver#onPackageRemoved does not pass the UID.
@@ -137,10 +154,10 @@ public class PermissionMonitor {
         }
     }
 
-    public PermissionMonitor(Context context, INetworkManagementService netd) {
+    public PermissionMonitor(Context context, INetd netd) {
         mContext = context;
         mPackageManager = context.getPackageManager();
-        mUserManager = UserManager.get(context);
+        mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         mNetd = netd;
     }
 
@@ -165,10 +182,12 @@ public class PermissionMonitor {
         SparseIntArray netdPermsUids = new SparseIntArray();
 
         for (PackageInfo app : apps) {
+            log("app: " + app + " uid = " + app.applicationInfo.uid);
             int uid = app.applicationInfo != null ? app.applicationInfo.uid : INVALID_UID;
             if (uid < 0) {
                 continue;
             }
+            mAllApps.add(UserHandle.getAppId(uid));
 
             boolean isNetwork = hasNetworkPermission(app);
             boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
@@ -277,10 +296,11 @@ public class PermissionMonitor {
         }
     }
 
-    private int[] toIntArray(List<Integer> list) {
+    private int[] toIntArray(Collection<Integer> list) {
         int[] array = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            array[i] = list.get(i);
+        int i = 0;
+        for (Integer item : list) {
+            array[i++] = item;
         }
         return array;
     }
@@ -296,11 +316,11 @@ public class PermissionMonitor {
         }
         try {
             if (add) {
-                mNetd.setPermission("NETWORK", toIntArray(network));
-                mNetd.setPermission("SYSTEM", toIntArray(system));
+                mNetd.networkSetPermissionForUser(INetd.PERMISSION_NETWORK, toIntArray(network));
+                mNetd.networkSetPermissionForUser(INetd.PERMISSION_SYSTEM, toIntArray(system));
             } else {
-                mNetd.clearPermission(toIntArray(network));
-                mNetd.clearPermission(toIntArray(system));
+                mNetd.networkClearPermissionForUser(toIntArray(network));
+                mNetd.networkClearPermissionForUser(toIntArray(system));
             }
         } catch (RemoteException e) {
             loge("Exception when updating permissions: " + e);
@@ -373,6 +393,7 @@ public class PermissionMonitor {
      * @hide
      */
     public synchronized void onPackageAdded(String packageName, int uid) {
+        log("onPackageAdded: " + packageName + " uid: " + uid);
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
         final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName);
@@ -383,6 +404,19 @@ public class PermissionMonitor {
             apps.put(uid, permission);
             update(mUsers, apps, true);
         }
+
+        // If the newly-installed package falls within some VPN's uid range, update Netd with it.
+        // This needs to happen after the mApps update above, since removeBypassableUids() depends
+        // on mApps to check if the package can bypass VPN.
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            if (containsUid(vpn.getValue(), uid)) {
+                final Set<Integer> changedUids = new HashSet<>();
+                changedUids.add(uid);
+                removeBypassableUids(changedUids, /* vpnAppUid */ -1);
+                updateVpnUids(vpn.getKey(), changedUids, true);
+            }
+        }
+        mAllApps.add(UserHandle.getAppId(uid));
     }
 
     /**
@@ -393,8 +427,26 @@ public class PermissionMonitor {
      * @hide
      */
     public synchronized void onPackageRemoved(int uid) {
-        Map<Integer, Boolean> apps = new HashMap<>();
+        log("onPackageRemoved: uid = " + uid);
+        // If the newly-removed package falls within some VPN's uid range, update Netd with it.
+        // This needs to happen before the mApps update below, since removeBypassableUids() depends
+        // on mApps to check if the package can bypass VPN.
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            if (containsUid(vpn.getValue(), uid)) {
+                final Set<Integer> changedUids = new HashSet<>();
+                changedUids.add(uid);
+                removeBypassableUids(changedUids, /* vpnAppUid */ -1);
+                updateVpnUids(vpn.getKey(), changedUids, false);
+            }
+        }
+        // If the package has been removed from all users on the device, clear it form mAllApps.
+        if (mPackageManager.getNameForUid(uid) == null) {
+            mAllApps.remove(UserHandle.getAppId(uid));
+        } else {
+            log("Keep mAllApps since app is still installed on some user");
+        }
 
+        Map<Integer, Boolean> apps = new HashMap<>();
         Boolean permission = null;
         String[] packages = mPackageManager.getPackagesForUid(uid);
         if (packages != null && packages.length > 0) {
@@ -446,6 +498,129 @@ public class PermissionMonitor {
     }
 
     /**
+     * Called when a new set of UID ranges are added to an active VPN network
+     *
+     * @param ifName The active VPN network's interface name
+     * @param rangesToAdd The new UID ranges to be added to the network
+     * @param vpnAppUid The uid of the VPN app
+     */
+    public synchronized void onVpnUidRangesAdded(@NonNull String ifName, Set<UidRange> rangesToAdd,
+            int vpnAppUid) {
+        log("onVpnUidRangesAdded: ifName = " + ifName + " range: "
+            + String.join(",", rangesToAdd.stream().map(UidRange::toString).toArray(String[]::new)));
+
+        // Calculate the list of new app uids under the VPN due to the new UID ranges and update
+        // Netd about them. Because mAllApps only contains appIds instead of uids. we might
+        // overestimate if an app is not installed on the user on which the VPN is running, but
+        // that's OK.
+        final Set<Integer> changedUids = intersectUids(rangesToAdd, mAllApps);
+        removeBypassableUids(changedUids, vpnAppUid);
+        updateVpnUids(ifName, changedUids, true);
+        if (mVpnUidRanges.containsKey(ifName)) {
+            mVpnUidRanges.get(ifName).addAll(rangesToAdd);
+        } else {
+            mVpnUidRanges.put(ifName, new HashSet<UidRange>(rangesToAdd));
+        }
+    }
+
+    /**
+     * Called when a set of UID ranges are removed from an active VPN network
+     *
+     * @param ifName The VPN network's interface name
+     * @param rangesToRemove Existing UID ranges to be removed from the VPN network
+     * @param vpnAppUid The uid of the VPN app
+     */
+    public synchronized void onVpnUidRangesRemoved(@NonNull String ifName,
+            Set<UidRange> rangesToRemove, int vpnAppUid) {
+        log("onVpnUidRangesRemoved: ifName = " + ifName + " range: "
+                + String.join(",", rangesToRemove.stream().map(UidRange::toString).toArray(String[]::new)));
+
+        // Calculate the list of app uids that are no longer under the VPN due to the removed UID
+        // ranges and update Netd about them.
+        final Set<Integer> changedUids = intersectUids(rangesToRemove, mAllApps);
+        removeBypassableUids(changedUids, vpnAppUid);
+        updateVpnUids(ifName, changedUids, false);
+        Set<UidRange> existingRanges = mVpnUidRanges.getOrDefault(ifName, null);
+        if (existingRanges == null) {
+            loge("Attempt to remove unknown vpn uid Range ifname = " + ifName);
+            return;
+        }
+        existingRanges.removeAll(rangesToRemove);
+        if (existingRanges.size() == 0) {
+            mVpnUidRanges.remove(ifName);
+        }
+    }
+
+    /**
+     * Compute the intersection of a set of UidRanges and appIds. Returns a set of uids
+     * that satisfies:
+     *   1. falls into one of the UidRange
+     *   2. matches one of the appIds
+     */
+    private Set<Integer> intersectUids(Set<UidRange> ranges, Set<Integer> appIds) {
+        Set<Integer> result = new HashSet<>();
+        for (UidRange range : ranges) {
+            final int userId = range.getStartUser();
+            for (int appId : appIds) {
+                final int uid = UserHandle.getUid(userId, appId);
+                if (range.contains(uid)) {
+                    result.add(uid);
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean containsUid(Set<UidRange> ranges, int uid) {
+        for (UidRange range : ranges) {
+            if (range.contains(uid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Remove all apps which can elect to bypass the VPN from the list of uids
+     *
+     * An app can elect to bypass the VPN if it hold SYSTEM permission, or if its the active VPN
+     * app itself.
+     *
+     * @param uids The list of uids to operate on
+     * @param vpnAppUid The uid of the VPN app
+     */
+    private void removeBypassableUids(Set<Integer> uids, int vpnAppUid) {
+        uids.remove(vpnAppUid);
+        uids.removeIf(uid -> mApps.getOrDefault(uid, NETWORK) == SYSTEM);
+    }
+
+    /**
+     * Update netd about the list of uids that are under an active VPN connection which they cannot
+     * bypass.
+     *
+     * This is to instruct netd to set up appropriate fitering rules for these uids, such that they
+     * can only receive ingress packets from the VPN's tunnel interface (and loopback).
+     *
+     * @param ifName the interface name of the active VPN connection
+     * @param add {@code true} if the uids are to be added to the interface, {@code false} if they
+     *        are to be removed from the interface.
+     */
+    private void updateVpnUids(String ifName, Set<Integer> uids, boolean add) {
+        if (uids.size() == 0) {
+            return;
+        }
+        try {
+            if (add) {
+                mNetd.firewallAddUidInterfaceRules(ifName, toIntArray(uids));
+            } else {
+                mNetd.firewallRemoveUidInterfaceRules(toIntArray(uids));
+            }
+        } catch (RemoteException e) {
+            loge("Exception when updating permissions: ", e);
+        }
+    }
+
+    /**
      * Called by PackageListObserver when a package is installed/uninstalled. Send the updated
      * permission information to netd.
      *
@@ -470,8 +645,7 @@ public class PermissionMonitor {
      * @hide
      */
     private void sendPackagePermissionsToNetd(SparseIntArray netdPermissionsAppIds) {
-        INetd netdService = NetdService.getInstance();
-        if (netdService == null) {
+        if (mNetd == null) {
             Log.e(TAG, "Failed to get the netd service");
             return;
         }
@@ -502,24 +676,34 @@ public class PermissionMonitor {
         try {
             // TODO: add a lock inside netd to protect IPC trafficSetNetPermForUids()
             if (allPermissionAppIds.size() != 0) {
-                netdService.trafficSetNetPermForUids(
+                mNetd.trafficSetNetPermForUids(
                         INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS,
                         ArrayUtils.convertToIntArray(allPermissionAppIds));
             }
             if (internetPermissionAppIds.size() != 0) {
-                netdService.trafficSetNetPermForUids(INetd.PERMISSION_INTERNET,
+                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_INTERNET,
                         ArrayUtils.convertToIntArray(internetPermissionAppIds));
             }
             if (updateStatsPermissionAppIds.size() != 0) {
-                netdService.trafficSetNetPermForUids(INetd.PERMISSION_UPDATE_DEVICE_STATS,
+                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_UPDATE_DEVICE_STATS,
                         ArrayUtils.convertToIntArray(updateStatsPermissionAppIds));
             }
             if (uninstalledAppIds.size() != 0) {
-                netdService.trafficSetNetPermForUids(INetd.NO_PERMISSIONS,
+                mNetd.trafficSetNetPermForUids(INetd.NO_PERMISSIONS,
                         ArrayUtils.convertToIntArray(uninstalledAppIds));
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Pass appId list of special permission failed." + e);
+        }
+    }
+
+    public void dump(IndentingPrintWriter pw) {
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            pw.println("VPN: " + vpn.getKey());
+            Set<UidRange> ranges = vpn.getValue();
+            pw.println("uids: " + ranges.stream().map(n -> n.toString())
+                    .collect(Collectors.joining(",")));
+            pw.println();
         }
     }
 
