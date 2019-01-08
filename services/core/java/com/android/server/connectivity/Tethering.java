@@ -1155,18 +1155,25 @@ public class Tethering extends BaseNetworkObserver {
                 transitionTo(mSetIpForwardingEnabledErrorState);
                 return false;
             }
+
+            if (!cfg.enableLegacyDhcpServer && !cfg.enableLegacyDnsProxyServer) {
+                mLog.log("SET master tether settings: ON");
+                return true;
+            }
+
             // TODO: Randomize DHCPv4 ranges, especially in hotspot mode.
             // Legacy DHCP server is disabled if passed an empty ranges array
             final String[] dhcpRanges = cfg.enableLegacyDhcpServer
                     ? cfg.legacyDhcpRanges
                     : new String[0];
+
             try {
                 // TODO: Find a more accurate method name (startDHCPv4()?).
-                mNMService.startTethering(dhcpRanges);
+                mNMService.startTetheringLegacy(cfg.enableLegacyDnsProxyServer, dhcpRanges);
             } catch (Exception e) {
                 try {
                     mNMService.stopTethering();
-                    mNMService.startTethering(dhcpRanges);
+                    mNMService.startTetheringLegacy(cfg.enableLegacyDnsProxyServer, dhcpRanges);
                 } catch (Exception ee) {
                     mLog.e(ee);
                     transitionTo(mStartTetheringErrorState);
@@ -1178,12 +1185,14 @@ public class Tethering extends BaseNetworkObserver {
         }
 
         protected boolean turnOffMasterTetherSettings() {
-            try {
-                mNMService.stopTethering();
-            } catch (Exception e) {
-                mLog.e(e);
-                transitionTo(mStopTetheringErrorState);
-                return false;
+            if (mConfig.enableLegacyDhcpServer || mConfig.enableLegacyDnsProxyServer) {
+                try {
+                    mNMService.stopTethering();
+                } catch (Exception e) {
+                    mLog.e(e);
+                    transitionTo(mStopTetheringErrorState);
+                    return false;
+                }
             }
             try {
                 mNMService.setIpForwardingEnabled(false);
@@ -1230,7 +1239,7 @@ public class Tethering extends BaseNetworkObserver {
                 mLog.i("Found upstream interface(s): " + ifaces);
             }
 
-            if (ifaces != null) {
+            if (ifaces != null && mConfig.enableLegacyDnsProxyServer) {
                 setDnsForwarders(ns.network, ns.linkProperties);
             }
             notifyDownstreamsOfNewUpstreamIface(ifaces);
@@ -1572,9 +1581,11 @@ public class Tethering extends BaseNetworkObserver {
             public void enter() {
                 Log.e(TAG, "Error in setDnsForwarders");
                 notify(IpServer.CMD_SET_DNS_FORWARDERS_ERROR);
-                try {
-                    mNMService.stopTethering();
-                } catch (Exception e) {}
+                if (mConfig.enableLegacyDhcpServer || mConfig.enableLegacyDnsProxyServer) {
+                    try {
+                        mNMService.stopTethering();
+                    } catch (Exception e) { }
+                }
                 try {
                     mNMService.setIpForwardingEnabled(false);
                 } catch (Exception e) {}
@@ -1837,6 +1848,7 @@ public class Tethering extends BaseNetworkObserver {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
+                             mConfig.enableLegacyDnsProxyServer,
                              mDeps.getIpServerDependencies(mContext)));
         mTetherStates.put(iface, tetherState);
         tetherState.ipServer.start();
