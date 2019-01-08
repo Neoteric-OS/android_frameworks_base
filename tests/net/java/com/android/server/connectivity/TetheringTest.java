@@ -35,12 +35,14 @@ import static android.net.wifi.WifiManager.IFACE_IP_MODE_LOCAL_ONLY;
 import static android.net.wifi.WifiManager.IFACE_IP_MODE_TETHERED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
+import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DNSPROXY_SERVER;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -355,6 +357,7 @@ public class TetheringTest {
         mContentResolver = new MockContentResolver(mServiceContext);
         mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
         Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DHCP_SERVER, 0);
+        Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DNSPROXY_SERVER, 1);
         mIntents = new Vector<>();
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -502,7 +505,7 @@ public class TetheringTest {
         verifyInterfaceServingModeStarted();
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
+        verify(mNMService, times(1)).startTetheringLegacy(anyBoolean(), any(String[].class));
         verifyNoMoreInteractions(mNMService);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_LOCAL_ONLY);
@@ -574,6 +577,7 @@ public class TetheringTest {
     @Test
     public void workingMobileUsbTethering_IPv4LegacyDhcp() {
         Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DHCP_SERVER, 1);
+        Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DNSPROXY_SERVER, 1);
         mTethering = makeTethering();
         final NetworkState upstreamState = buildMobileIPv4UpstreamState();
         runUsbTethering(upstreamState);
@@ -736,7 +740,7 @@ public class TetheringTest {
         verifyInterfaceServingModeStarted();
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
+        verify(mNMService, times(1)).startTetheringLegacy(anyBoolean(), any(String[].class));
         verifyNoMoreInteractions(mNMService);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_TETHERED);
@@ -819,7 +823,7 @@ public class TetheringTest {
         // This is called, but will throw.
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
         // This never gets called because of the exception thrown above.
-        verify(mNMService, times(0)).startTethering(any(String[].class));
+        verify(mNMService, times(0)).startTetheringLegacy(anyBoolean(), any(String[].class));
         // When the master state machine transitions to an error state it tells
         // downstream interfaces, which causes us to tell Wi-Fi about the error
         // so it can take down AP mode.
