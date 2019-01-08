@@ -810,13 +810,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
             INetworkStatsService statsService, INetworkPolicyManager policyManager) {
-        this(context, netManager, statsService, policyManager, new IpConnectivityLog());
+        this(context, netManager, statsService, policyManager, new IpConnectivityLog(),
+                NetdService.getInstance());
     }
 
     @VisibleForTesting
     protected ConnectivityService(Context context, INetworkManagementService netManager,
             INetworkStatsService statsService, INetworkPolicyManager policyManager,
-            IpConnectivityLog logger) {
+            IpConnectivityLog logger, INetd netd) {
         if (DBG) log("ConnectivityService starting up");
 
         mSystemProperties = getSystemProperties();
@@ -855,7 +856,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 "missing NetworkPolicyManagerInternal");
         mProxyTracker = makeProxyTracker();
 
-        mNetd = NetdService.getInstance();
+        mNetd = netd;
         mKeyStore = KeyStore.getInstance();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -941,7 +942,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mTethering = makeTethering();
 
-        mPermissionMonitor = new PermissionMonitor(mContext, mNMS);
+        mPermissionMonitor = new PermissionMonitor(mContext, mNetd);
 
         // Set up the listener for user state for creating user VPNs.
         // Should run on mHandler to avoid any races.
@@ -2408,6 +2409,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println("NetworkStackClient logs:");
         pw.increaseIndent();
         NetworkStackClient.getInstance().dump(pw);
+        pw.decreaseIndent();
+
+        pw.println();
+        pw.println("Permission Monitor:");
+        pw.increaseIndent();
+        mPermissionMonitor.dump(pw);
+        pw.decreaseIndent();
     }
 
     private void dumpNetworks(IndentingPrintWriter pw) {
@@ -5444,6 +5452,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
 
         updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
+
+        // update filtering rules
+        final boolean needsToRemoveOldFiltering = shouldApplyInterfaceFiltering(
+                networkAgent, oldLp);
+        final boolean needsToAddNewFiltering = shouldApplyInterfaceFiltering(
+                networkAgent, newLp);
+        if (needsToRemoveOldFiltering || needsToAddNewFiltering) {
+            final String oldIf = oldLp != null ? oldLp.getInterfaceName() : null;
+            final String newIf = oldLp != null ? newLp.getInterfaceName() : null;
+            if (!Objects.equals(oldIf, newIf)) {
+                final Set<UidRange> ranges = networkAgent.networkCapabilities.getUids();
+                final int vpnAppUid = networkAgent.networkCapabilities.getEstablishingVpnAppUid();
+                if (oldIf != null && needsToRemoveOldFiltering) {
+                    mPermissionMonitor.onVpnUidRangesRemoved(oldIf, ranges, vpnAppUid);
+                }
+                if (newIf != null && needsToAddNewFiltering) {
+                    mPermissionMonitor.onVpnUidRangesAdded(newIf, ranges, vpnAppUid);
+                }
+            }
+        }
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
@@ -5756,6 +5784,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    /**
+     * Returns whether ingress interface filtering should be applied on the given network
+     *
+     * Ingress interface filtering enforces that all apps under the given network can only
+     * receive packets from the network's interface (and loopback). This is important for
+     * VPNs because we don't want apps that cannot bypass a fully-routed VPN to be able to
+     * receive packets from any non-VPN interfaces.
+     *
+     * As a result, this method should return true iff
+     *  1. the network is an app VPN (not legacy VPN)
+     *  2. the VPN does not allow bypass
+     *  3. the VPN is fully-routed
+     *
+     * @See INetd#firewallAddUidInterfaceRules
+     * @See INetd#firewallRemoveUidInterfaceRules
+     */
+    private boolean shouldApplyInterfaceFiltering(NetworkAgentInfo nai, LinkProperties lp) {
+        if (nai == null || lp == null) return false;
+        return nai.isVPN()
+                && nai.networkCapabilities.getEstablishingVpnAppUid() != Process.SYSTEM_UID
+                && !nai.networkMisc.allowBypass
+                && (lp.hasIPv4DefaultRoute() || lp.hasIPv6DefaultRoute());
+    }
+
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
@@ -5768,19 +5820,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
         newRanges.removeAll(prevRangesCopy);
 
         try {
+            final boolean shouldFilter = shouldApplyInterfaceFiltering(nai, nai.linkProperties);
+            final String ifname = nai.linkProperties.getInterfaceName();
             if (!newRanges.isEmpty()) {
                 final UidRange[] addedRangesArray = new UidRange[newRanges.size()];
                 newRanges.toArray(addedRangesArray);
                 mNMS.addVpnUidRanges(nai.network.netId, addedRangesArray);
+                if (shouldFilter && ifname != null) {
+                    mPermissionMonitor.onVpnUidRangesAdded(ifname, newRanges,
+                            newNc.getEstablishingVpnAppUid());
+                }
             }
             if (!prevRanges.isEmpty()) {
                 final UidRange[] removedRangesArray = new UidRange[prevRanges.size()];
                 prevRanges.toArray(removedRangesArray);
                 mNMS.removeVpnUidRanges(nai.network.netId, removedRangesArray);
+                if (shouldFilter && ifname != null) {
+                    mPermissionMonitor.onVpnUidRangesRemoved(ifname, prevRanges,
+                            prevNc.getEstablishingVpnAppUid());
+                }
             }
         } catch (Exception e) {
             // Never crash!
-            loge("Exception in updateUids: " + e);
+            loge("Exception in updateUids: ", e);
         }
     }
 
