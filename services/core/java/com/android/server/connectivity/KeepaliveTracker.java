@@ -17,6 +17,8 @@
 package com.android.server.connectivity;
 
 import static android.net.NattSocketKeepalive.NATT_PORT;
+import static android.net.NetworkAgent.CMD_ADD_KEEPALIVE_PACKET_FILTER;
+import static android.net.NetworkAgent.CMD_REMOVE_KEEPALIVE_PACKET_FILTER;
 import static android.net.NetworkAgent.CMD_START_SOCKET_KEEPALIVE;
 import static android.net.NetworkAgent.CMD_STOP_SOCKET_KEEPALIVE;
 import static android.net.NetworkAgent.EVENT_SOCKET_KEEPALIVE;
@@ -36,6 +38,8 @@ import android.net.KeepalivePacketData;
 import android.net.NattKeepalivePacketData;
 import android.net.NetworkAgent;
 import android.net.NetworkUtils;
+import android.net.TcpKeepalivePacketData;
+import android.net.TcpKeepalivePacketData.TcpSocketInfo;
 import android.net.util.IpUtils;
 import android.os.Binder;
 import android.os.Handler;
@@ -77,9 +81,11 @@ public class KeepaliveTracker {
     private final HashMap <NetworkAgentInfo, HashMap<Integer, KeepaliveInfo>> mKeepalives =
             new HashMap<> ();
     private final Handler mConnectivityServiceHandler;
+    private final TcpKeepaliveController mTcp;
 
     public KeepaliveTracker(Handler handler) {
         mConnectivityServiceHandler = handler;
+        mTcp = new TcpKeepaliveController(handler);
     }
 
     /**
@@ -95,6 +101,11 @@ public class KeepaliveTracker {
         private final int mUid;
         private final int mPid;
         private final NetworkAgentInfo mNai;
+        private final int mType;
+        private final FileDescriptor mFd;
+
+        public static final int TYPE_NATT = 1;
+        public static final int TYPE_TCP = 2;
 
         /** Keepalive slot. A small integer that identifies this keepalive among the ones handled
           * by this network. */
@@ -107,8 +118,13 @@ public class KeepaliveTracker {
         // Whether the keepalive is started or not.
         public boolean isStarted;
 
-        public KeepaliveInfo(Messenger messenger, IBinder binder, NetworkAgentInfo nai,
-                KeepalivePacketData packet, int interval) {
+        KeepaliveInfo(@NonNull Messenger messenger,
+                @NonNull IBinder binder,
+                @NonNull NetworkAgentInfo nai,
+                @NonNull KeepalivePacketData packet,
+                int interval,
+                int type,
+                @NonNull FileDescriptor fd) {
             mMessenger = messenger;
             mBinder = binder;
             mPid = Binder.getCallingPid();
@@ -117,6 +133,8 @@ public class KeepaliveTracker {
             mNai = nai;
             mPacket = packet;
             mInterval = interval;
+            mType = type;
+            mFd = fd;
 
             try {
                 mBinder.linkToDeath(this, 0);
@@ -146,6 +164,10 @@ public class KeepaliveTracker {
 
         /** Sends a message back to the application via its SocketKeepalive.Callback. */
         void notifyMessenger(int slot, int err) {
+            if (DBG) {
+                Log.d(TAG, "notify keepalive " + mSlot + " on " + mNai.network + " for "
+                        + err);
+            }
             KeepaliveTracker.this.notifyMessenger(mMessenger, slot, err);
         }
 
@@ -201,7 +223,23 @@ public class KeepaliveTracker {
             int error = isValid();
             if (error == SUCCESS) {
                 Log.d(TAG, "Starting keepalive " + mSlot + " on " + mNai.name());
-                mNai.asyncChannel.sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
+                switch (mType) {
+                    case TYPE_NATT:
+                        mNai.asyncChannel
+                                .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
+                        break;
+                    case TYPE_TCP:
+                        mTcp.startSocketMonitor(mFd, mMessenger, mSlot);
+                        mNai.asyncChannel
+                                .sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, 0 /* Unused */,
+                                        mPacket);
+                        // TODO: check result from apf and notify fail if needed.
+                        mNai.asyncChannel
+                                .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
+                        break;
+                    default:
+                        Log.wtf(TAG, "Starting keepalive with unknown type: " + mType);
+                }
             } else {
                 handleStopKeepalive(mNai, mSlot, error);
                 return;
@@ -217,7 +255,16 @@ public class KeepaliveTracker {
             }
             if (isStarted) {
                 Log.d(TAG, "Stopping keepalive " + mSlot + " on " + mNai.name());
-                mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
+                if (mType == TYPE_NATT) {
+                    mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
+                } else if (mType == TYPE_TCP) {
+                    mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
+                    mNai.asyncChannel.sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER,
+                            mSlot, mInterval, mPacket);
+                    mTcp.stopSocketMonitor(mSlot);
+                } else {
+                    Log.wtf(TAG, "Stoping keepalive with unknown type: " + mType);
+                }
             }
             // TODO: at the moment we unconditionally return failure here. In cases where the
             // NetworkAgent is alive, should we ask it to reply, so it can return failure?
@@ -378,7 +425,43 @@ public class KeepaliveTracker {
             notifyMessenger(messenger, NO_KEEPALIVE, e.error);
             return;
         }
-        KeepaliveInfo ki = new KeepaliveInfo(messenger, binder, nai, packet, intervalSeconds);
+        KeepaliveInfo ki = new KeepaliveInfo(messenger, binder, nai, packet, intervalSeconds,
+                KeepaliveInfo.TYPE_NATT, null);
+        Log.d(TAG, "Created keepalive: " + ki.toString());
+        mConnectivityServiceHandler.obtainMessage(
+                NetworkAgent.CMD_START_SOCKET_KEEPALIVE, ki).sendToTarget();
+    }
+
+    /**
+     * Called by ConnectivityService to start a TCP keepalive.
+     *
+     * In order to offload keepalive for application correctly, sequence number, ack number and
+     * other fields are needed to form the keepalive packet. Thus, this function synchronously
+     * turns the socket into repair mode to get the information. Also, after the socket has been
+     * turned into repair mode, the application cannot access the socket until turning back.
+     *
+     * See {@link android.net.SocketKeepalive}.
+     **/
+    public void startTcpKeepalive(@NonNull NetworkAgentInfo nai,
+            @NonNull FileDescriptor fd,
+            int intervalSeconds,
+            @NonNull Messenger messenger,
+            @NonNull IBinder binder) {
+        if (nai == null) {
+            notifyMessenger(messenger, NO_KEEPALIVE, ERROR_INVALID_NETWORK);
+            return;
+        }
+
+        TcpKeepalivePacketData packet = null;
+        try {
+            TcpSocketInfo tsi = TcpKeepaliveController.switchToMaintainMode(fd);
+            packet = TcpKeepalivePacketData.tcpKeepalivePacket(tsi);
+        } catch (KeepalivePacketData.InvalidPacketException e) {
+            notifyMessenger(messenger, NO_KEEPALIVE, e.error);
+            return;
+        }
+        KeepaliveInfo ki = new KeepaliveInfo(messenger, binder, nai, packet, intervalSeconds,
+                KeepaliveInfo.TYPE_TCP, fd);
         Log.d(TAG, "Created keepalive: " + ki.toString());
         mConnectivityServiceHandler.obtainMessage(
                 CMD_START_SOCKET_KEEPALIVE, ki).sendToTarget();

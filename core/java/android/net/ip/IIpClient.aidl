@@ -17,6 +17,8 @@ package android.net.ip;
 
 import android.net.ProxyInfoParcelable;
 import android.net.ProvisioningConfigurationParcelable;
+// FIXME: Make it structured.
+import android.net.TcpKeepalivePacketData;
 
 /** @hide */
 oneway interface IIpClient {
@@ -29,4 +31,6 @@ oneway interface IIpClient {
     void setTcpBufferSizes(in String tcpBufferSizes);
     void setHttpProxy(in ProxyInfoParcelable proxyInfo);
     void setMulticastFilter(boolean enabled);
+    void addKeepalivePacketFilter(int slot, in TcpKeepalivePacketData pkt);
+    void removeKeepalivePacketFilter(int slot);
 }

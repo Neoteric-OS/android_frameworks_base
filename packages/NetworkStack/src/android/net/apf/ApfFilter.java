@@ -39,6 +39,7 @@ import android.content.IntentFilter;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkUtils;
+import android.net.TcpKeepalivePacketData;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
 import android.net.ip.IpClient.IpClientCallbacksWrapper;
@@ -1490,6 +1491,29 @@ public class ApfFilter {
         mIPv4Address = addr;
         mIPv4PrefixLength = prefix;
         installNewProgramLocked();
+    }
+
+    /**
+     * Add keepalive packet filter.
+     *
+     * @param slot The index used to access the filter.
+     * @param pkt Parameters needed for compose the filter.
+     */
+    public synchronized void addKeepalivePacketFilter(int slot, TcpKeepalivePacketData pkt) {
+        // TODO: implement this.
+        Log.e(TAG, "APF function is not implemented: addKeepalivePacketFilter(" + slot
+                + ", " + pkt + ")");
+    }
+
+    /**
+     * Remove keepalive packet filter.
+     *
+     * @param slot The index used to access the filter.
+     */
+    public synchronized void removeKeepalivePacketFilter(int slot) {
+        // TODO: implement this.
+        Log.e(TAG, "APF function is not implemented: removeKeepalivePacketFilter(" + slot
+                + ")");
     }
 
     static public long counterValue(byte[] data, Counter counter)

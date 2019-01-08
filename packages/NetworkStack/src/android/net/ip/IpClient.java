@@ -33,6 +33,7 @@ import android.net.ProvisioningConfigurationParcelable;
 import android.net.ProxyInfo;
 import android.net.ProxyInfoParcelable;
 import android.net.RouteInfo;
+import android.net.TcpKeepalivePacketData;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
@@ -293,6 +294,8 @@ public class IpClient extends StateMachine {
     private static final int EVENT_PROVISIONING_TIMEOUT           = 10;
     private static final int EVENT_DHCPACTION_TIMEOUT             = 11;
     private static final int EVENT_READ_PACKET_FILTER_COMPLETE    = 12;
+    private static final int CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF = 13;
+    private static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF = 14;
 
     // Internal commands to use instead of trying to call transitionTo() inside
     // a given State's enter() method. Calling transitionTo() from enter/exit
@@ -642,6 +645,22 @@ public class IpClient extends StateMachine {
      */
     public void setMulticastFilter(boolean enabled) {
         sendMessage(CMD_SET_MULTICAST_FILTER, enabled);
+    }
+
+    /**
+     * Called by WifiStateMachine to add keepalive packet filter before setting up
+     * keepalive offload.
+     */
+    public void addKeepalivePacketFilter(int slot, @NonNull TcpKeepalivePacketData pkt) {
+        sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF, slot, 0 /* Unused */, pkt);
+    }
+
+    /**
+     * Called by WifiStateMachine to remove keepalive packet filter after stopping keepalive
+     * offload.
+     */
+    public void removeKeepalivePacketFilter(int slot) {
+        sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF, slot, 0 /* Unused */);
     }
 
     /**
@@ -1220,6 +1239,23 @@ public class IpClient extends StateMachine {
                 case CMD_SET_MULTICAST_FILTER:
                     mMulticastFiltering = (boolean) msg.obj;
                     break;
+
+                case CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF: {
+                    final int slot = msg.arg1;
+                    final TcpKeepalivePacketData pkt = (TcpKeepalivePacketData) msg.obj;
+                    if (mApfFilter != null) {
+                        mApfFilter.addKeepalivePacketFilter(slot, pkt);
+                    }
+                    break;
+                }
+
+                case CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF: {
+                    final int slot = msg.arg1;
+                    if (mApfFilter != null) {
+                        mApfFilter.removeKeepalivePacketFilter(slot);
+                    }
+                    break;
+                }
 
                 case DhcpClient.CMD_ON_QUIT:
                     // Everything is already stopped.
