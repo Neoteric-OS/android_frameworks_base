@@ -22,6 +22,7 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
+import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DNSPROXY_SERVER;
 
 import static com.android.server.connectivity.tethering.TetheringConfiguration.DUN_NOT_REQUIRED;
 import static com.android.server.connectivity.tethering.TetheringConfiguration.DUN_REQUIRED;
@@ -224,5 +225,21 @@ public class TetheringConfigurationTest {
 
         final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
         assertFalse(cfg.enableLegacyDhcpServer);
+    }
+
+    @Test
+    public void testNewDnsProxyServerDisabled() {
+        Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DNSPROXY_SERVER, 1);
+
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        assertTrue(cfg.enableLegacyDnsProxyServer);
+    }
+
+    @Test
+    public void testNewDnsProxyServerEnabled() {
+        Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DNSPROXY_SERVER, 0);
+
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        assertFalse(cfg.enableLegacyDnsProxyServer);
     }
 }
