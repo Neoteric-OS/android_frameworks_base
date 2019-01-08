@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "c7ba9ddf_9e68166e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "882e6ca8_1eedf672",
+      "range": {
+        "startLine": 1820,
+        "startChar": 67,
+        "endLine": 1820,
+        "endChar": 92
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "837cca77_037af44d",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b46b03e_91f72699",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -36,6 +83,30 @@
       "writtenOn": "2019-01-07T18:28:31Z",
       "side": 1,
       "message": "Why do we actually need a start method? RAII seems like a much tidier pattern, and it makes things like try-with-resources work as intended. Then people can do things like:\n\ntry (NattSocketKeepalive \u003d new NattSocketKeepalive(...)) {\n    // go to sleep here.\n    while(!recv(longTimeout)) {\n        doDpd();\n    }\n} except (DpdException dpdE) {\n    log(\"something went wrong\");\n}",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6b3c10_861d38d7",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Agree it is tidier pattern, but does it make people be less aware they are using ConnectivityService?\nAnd since we are still want people to do things inside callback,\nuse start also let people don\u0027t have to put every necessary params and callbacks everytime.\nBut I don\u0027t have strong opinion about this.\n+lorenzo@, any thoughts?",
+      "parentUuid": "6b46b03e_91f72699",
       "range": {
         "startLine": 46,
         "startChar": 4,
@@ -94,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "45b4727f_04333906",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "for now we just need to keep backward compability with PacketKeepalive.\nBecause internally we still use old constant until KA02.\nBut I think the originally idea was properly gap different type of error codes.\n+lorenzo@ to input original thoughts.\nDo we have any concern if rearrange this to continuous number in KA02?",
+      "parentUuid": "d9fe9a73_c84dce14",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40307fdc_d229593e",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -105,6 +200,30 @@
       "writtenOn": "2019-01-07T18:28:31Z",
       "side": 1,
       "message": "can we ditch the looper, the messenger and the whole lot? The wonderful thing about the Executor is that the user specifies the context on which their code is executed. It\u0027s fine for the post to happen on the Binder thread.",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b93784_59422d0f",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Thanks for the suggestion.\nAnd it is true if we can ditch that it would simplify the architecture.\nBut since the mCallback cannot be passed into ConnectivityService,\n Currently I don\u0027t see a way to invoke callbacks inside service e.g. \nmExecutor.execute(() -\u003e {\n    mCallback.onStarted();\n});\nDo you have any specific idea about it?",
+      "parentUuid": "40307fdc_d229593e",
       "range": {
         "startLine": 87,
         "startChar": 10,
@@ -140,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "4544279b_98d02e94",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9eb6f77c_efe53359",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 56
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c0ec68_e1e76045",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -160,6 +303,30 @@
       "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bded17_09a8a154",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13c0ec68_e1e76045",
+      "range": {
+        "startLine": 157,
+        "startChar": 35,
+        "endLine": 157,
+        "endChar": 46
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

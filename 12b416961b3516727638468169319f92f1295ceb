@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2dc730f3_c3fec8a5",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T08:05:27Z",
+      "side": 1,
+      "message": "Agree, for now it seems our best choice is\nConnectivityThread.getInstanceLooper().\nThen the implementation will probably look likes sCallbacks and sCallbackHandler in ConnectivityManager:\nhttps://cs.corp.google.com/android/frameworks/base/core/java/android/net/ConnectivityManager.java?q\u003dNetworkCallback\u0026g\u003d0\u0026l\u003d3107\nBut I\u0027m not sure how it affects garbage collection, need more time to dig out.",
+      "parentUuid": "739700e9_a4cceef0",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 54
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66421c8a_334c8331",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 3
