@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7655c89_e54599bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-08T10:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf7c48c2_dd16995d",
+      "revId": "3fab71b5743966acb92ea8da907672e0f40e7e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faeecc94_a4ae03dc",
         "filename": "native/android/net.c",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "3fab71b5743966acb92ea8da907672e0f40e7e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bb7759_af2d50f9",
+        "filename": "native/android/net.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-08T10:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faeecc94_a4ae03dc",
+      "range": {
+        "startLine": 101,
+        "startChar": 77,
+        "endLine": 101,
+        "endChar": 106
+      },
+      "revId": "3fab71b5743966acb92ea8da907672e0f40e7e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
