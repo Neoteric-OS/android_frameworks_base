@@ -27248,6 +27248,7 @@ package android.net {
     method public boolean isDefaultNetworkActive();
     method public static deprecated boolean isNetworkTypeValid(int);
     method public android.net.SocketKeepalive makeSocketKeepalive(android.net.Network, android.net.IpSecManager.UdpEncapsulationSocket, java.net.InetAddress, java.net.InetAddress, java.util.concurrent.Executor, android.net.SocketKeepalive.Callback);
+    method public android.net.SocketKeepalive makeSocketKeepalive(android.net.Network, java.net.Socket, java.util.concurrent.Executor, android.net.SocketKeepalive.Callback);
     method public void registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback);
     method public void registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
     method public void registerNetworkCallback(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);

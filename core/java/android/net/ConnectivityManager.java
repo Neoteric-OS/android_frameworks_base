@@ -64,6 +64,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1846,6 +1847,25 @@ public class ConnectivityManager {
             @NonNull Callback callback) {
         return new NattSocketKeepalive(mService, network, socket, source, destination, executor,
                 callback);
+    }
+
+    /**
+     * Request that keepalives be started on a TCP socket.
+     * The socket must be established.
+     *
+     * @param network The {@link Network} the application was attempting to use.
+     * @param socket The socket needs to keepalive.
+     * @param executor The executor on which callback will be invoked.
+     * @param callback A {@link SocketKeepalive.Callback}. Used for notifications about keepalive
+     *        changes. Should be extended by applications wanting notifications.
+     *
+     * @return A {@link SocketKeepalive} object, which can be used to control this keepalive object.
+     */
+    public SocketKeepalive makeSocketKeepalive(@NonNull Network network,
+            @NonNull Socket socket,
+            @NonNull Executor executor,
+            @NonNull Callback callback) {
+        return new TcpSocketKeepalive(mService, network, socket, executor, callback);
     }
 
     /**
