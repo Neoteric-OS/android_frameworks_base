@@ -209,6 +209,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.hardware.display.DisplayManager;
+import android.net.INetd;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
@@ -308,6 +309,7 @@ import com.android.server.ServiceThread;
 import com.android.server.SystemConfig;
 import com.android.server.SystemServerInitThreadPool;
 import com.android.server.Watchdog;
+import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.Settings.DatabaseVersion;
@@ -1979,6 +1981,9 @@ public class PackageManagerService extends IPackageManager.Stub
                         res.pkg, res.newUsers, grantedPermissions, callingUid,
                         mPermissionCallback);
             }
+
+            PermissionMonitor.processPackagePermissionsForNetd(res.uid,
+                    res.pkg.requestedPermissions);
 
             final boolean update = res.removedInfo != null
                     && res.removedInfo.removedPackage != null;
@@ -18310,6 +18315,19 @@ public class PackageManagerService extends IPackageManager.Stub
         return mKeepUninstalledPackages != null && mKeepUninstalledPackages.contains(packageName);
     }
 
+    void sendRemovedAppIdsToNetd(PackageRemovedInfo info) {
+        final SparseIntArray appIds = new SparseIntArray();
+        appIds.put(info.removedAppId, INetd.NO_PERMISSIONS);
+        if (info.removedChildPackages != null) {
+            int numRemovedPkgs = info.removedChildPackages.size();
+            for (int i = 0; i < numRemovedPgs; i++) {
+                RemovedPackageInfo childInfo = info.removedChildPackages.valueAt(i);
+                appIds.put(childInfo.removedAppId, INetd.NO_PERMISSIONS);
+            }
+        }
+        PermissionMonitor.sendPackagesPermissionsToNetd(appIds);
+    }
+
     /**
      *  This method is an internal method that could be get invoked either
      *  to delete an installed package or to clean up a failed installation.
@@ -18413,6 +18431,9 @@ public class PackageManagerService extends IPackageManager.Stub
                 }
             }
         }
+
+        // netd needs to manually remove the network permissions granted to the removed packages.
+        sendRemovedAppIdsToNetd(info);
 
         if (res) {
             final boolean killApp = (deleteFlags & PackageManager.DELETE_DONT_KILL_APP) == 0;
@@ -21298,6 +21319,8 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
 
         int[] grantPermissionsUserIds = EMPTY_INT_ARRAY;
 
+        final SparseIntArray netdPermissionsAppIds;
+
         synchronized (mPackages) {
             // Verify that all of the preferred activity components actually
             // exist.  It is possible for applications to be updated and at
@@ -21334,7 +21357,19 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
                             grantPermissionsUserIds, userId);
                 }
             }
+            // Retrieve the list of uids that have special permissions need to inform netd.
+            // The list will be sent to netd through IPC later outside the lock.
+            netdPermissionsAppIds = mSettings.getPermissionAppIdsForNetd();
         }
+
+        // Netd need all the app uids that have INTERNET permission or UPDATE_DEVICE_STATS
+        // permission
+        if (netdPermissionsAppIds != null) {
+            PermissionMonitor.sendPackagesPermissionsToNetd(netdPermissionsAppIds);
+        } else {
+            Slog.e(TAG, "netdPermissionsAppIds retrieved from mSettings is null");
+        }
+
         sUserManager.systemReady();
         // If we upgraded grant all default permissions before kicking off.
         for (int userId : grantPermissionsUserIds) {
