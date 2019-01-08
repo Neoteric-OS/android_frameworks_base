@@ -108,13 +108,16 @@ public class IpServerTest {
     private IpServer mIpServer;
 
     private void initStateMachine(int interfaceType) throws Exception {
-        initStateMachine(interfaceType, false /* usingLegacyDhcp */);
+        initStateMachine(interfaceType, false /* usingLegacyDhcp */,
+                true /* usingLegacyDnsProxy */);
     }
 
-    private void initStateMachine(int interfaceType, boolean usingLegacyDhcp) throws Exception {
+    private void initStateMachine(int interfaceType, boolean usingLegacyDhcp,
+            boolean usingLegacyDnsProxy) throws Exception {
         mIpServer = new IpServer(
                 IFACE_NAME, mLooper.getLooper(), interfaceType, mSharedLog,
-                mNMService, mStatsService, mCallback, usingLegacyDhcp, mDependencies);
+                mNMService, mStatsService, mCallback,
+                        usingLegacyDhcp, usingLegacyDnsProxy, mDependencies);
         mIpServer.start();
         // Starting the state machine always puts us in a consistent state and notifies
         // the rest of the world that we've changed from an unknown to available state.
@@ -141,12 +144,13 @@ public class IpServerTest {
 
     private void initTetheredStateMachine(int interfaceType, String upstreamIface)
             throws Exception {
-        initTetheredStateMachine(interfaceType, upstreamIface, false);
+        initTetheredStateMachine(interfaceType, upstreamIface, false /* usingLegacyDhcp */,
+                true /* usingLegacyDnsProxy */);
     }
 
     private void initTetheredStateMachine(int interfaceType, String upstreamIface,
-            boolean usingLegacyDhcp) throws Exception {
-        initStateMachine(interfaceType, usingLegacyDhcp);
+            boolean usingLegacyDhcp, boolean usingLegacyDnsProxy) throws Exception {
+        initStateMachine(interfaceType, usingLegacyDhcp, usingLegacyDnsProxy);
         dispatchCommand(IpServer.CMD_TETHER_REQUESTED, STATE_TETHERED);
         if (upstreamIface != null) {
             dispatchTetherConnectionChanged(upstreamIface);
@@ -164,7 +168,7 @@ public class IpServerTest {
     public void startsOutAvailable() {
         mIpServer = new IpServer(IFACE_NAME, mLooper.getLooper(),
                 TETHERING_BLUETOOTH, mSharedLog, mNMService, mStatsService, mCallback,
-                false /* usingLegacyDhcp */, mDependencies);
+                false /* usingLegacyDhcp */, true /* usingLegacyDnsProxy */, mDependencies);
         mIpServer.start();
         mLooper.dispatchAll();
         verify(mCallback).updateInterfaceState(
@@ -415,7 +419,8 @@ public class IpServerTest {
 
     @Test
     public void doesNotStartDhcpServerIfDisabled() throws Exception {
-        initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, true /* usingLegacyDhcp */);
+        initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE,
+                true /* usingLegacyDhcp */, true /* usingLegacyDnsProxy */);
         dispatchTetherConnectionChanged(UPSTREAM_IFACE);
 
         verify(mDependencies, never()).makeDhcpServer(any(), any(), any());
