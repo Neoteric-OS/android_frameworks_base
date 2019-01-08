@@ -46,6 +46,30 @@
       "revId": "be3edd4c224b0aac822fdab1679904e9dccb2340",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbe2a9c_8411aebb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-01-08T11:33:31Z",
+      "side": 1,
+      "message": "You could cherry-pick the whole topic to internal branch and run it there, not sure how much effort that is though.",
+      "parentUuid": "7e2c38d7_9e2c71fa",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "be3edd4c224b0aac822fdab1679904e9dccb2340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
