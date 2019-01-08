@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c16073_1fa60156",
+        "filename": "packages/services/PacProcessor/jni/com_android_pacprocessor_PacNative.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-01-08T11:57:27Z",
+      "side": 1,
+      "message": "Is this error message useful? The GetProxyForURL could be changed to return an error code and have a char16_t** final argument for the result.",
+      "range": {
+        "startLine": 104,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 35
+      },
+      "revId": "dbb1a2a8edd9a94fa6f8af10909d7869ac019244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
