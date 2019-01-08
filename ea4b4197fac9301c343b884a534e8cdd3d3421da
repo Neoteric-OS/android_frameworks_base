@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee020998_1ba40760",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T14:01:20Z",
+      "side": 1,
+      "message": "Is there any reason to keep these hardcoded default values here now that the values can be fetched for resources? Can we just move these values to config.xml and remove the defaultValue parameter to getSettingFromResource?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 92
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d380d28_9ea34878",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -234,6 +257,29 @@
       "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84f41505_257b34f6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T14:01:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the preferred order be first settings, then resource, then default? Otherwise it won\u0027t be possible to override the resource via a server push, making it impossible to update any of these values in the field without an OTA.",
+      "range": {
+        "startLine": 1567,
+        "startChar": 20,
+        "endLine": 1567,
+        "endChar": 97
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
