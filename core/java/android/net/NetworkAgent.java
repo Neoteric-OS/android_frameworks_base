@@ -192,6 +192,21 @@ public abstract class NetworkAgent extends Handler {
      */
     public static final int CMD_PREVENT_AUTOMATIC_RECONNECT = BASE + 15;
 
+    /**
+     * Sent by the KeepaliveTracker to NetworkAgent to add a packet filter.
+     *
+     * For TCP keepalive offloads, keepalive packets are sent by the firmware. However, because the
+     * remote site will send ACK packets in response to the keepalive packets, the firmware also
+     * needs to be configured to properly filter the ACKs to prevent the system from waking up.
+     */
+    public static final int CMD_ADD_KEEPALIVE_PACKET_FILTER = BASE + 16;
+
+    /**
+     * Sent by the KeepaliveTracker to NetworkAgent to remove a packet filter. See
+     * {@link #CMD_ADD_KEEPALIVE_PACKET_FILTER}.
+     */
+    public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
+
     public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
             NetworkCapabilities nc, LinkProperties lp, int score) {
         this(looper, context, logTag, ni, nc, lp, score, null);
@@ -310,6 +325,14 @@ public abstract class NetworkAgent extends Handler {
             }
             case CMD_PREVENT_AUTOMATIC_RECONNECT: {
                 preventAutomaticReconnect();
+                break;
+            }
+            case CMD_ADD_KEEPALIVE_PACKET_FILTER: {
+                addKeepalivePacketFilter(msg);
+                break;
+            }
+            case CMD_REMOVE_KEEPALIVE_PACKET_FILTER: {
+                removeKeepalivePacketFilter(msg);
                 break;
             }
         }
@@ -458,6 +481,24 @@ public abstract class NetworkAgent extends Handler {
      */
     public void onSocketKeepaliveEvent(int slot, int reason) {
         queueOrSendMessage(EVENT_SOCKET_KEEPALIVE, slot, reason);
+    }
+
+    /**
+     * Called by ConnectivityService to add specific packet filter to network hardware to block
+     * ACKs matching the sent keepalive packets. Implementations that support this feature must
+     * override this method.
+     */
+    protected void addKeepalivePacketFilter(Message msg) {
+        onSocketKeepaliveEvent(msg.arg1, SocketKeepalive.ERROR_HARDWARE_UNSUPPORTED);
+    }
+
+    /**
+     * Called by ConnectivityService to remove a packet filter installed with
+     * {@link #addKeepalivePacketFilter(Message)}. Implementations that support this feature
+     * must override this method.
+     */
+    protected void removeKeepalivePacketFilter(Message msg) {
+        onSocketKeepaliveEvent(msg.arg1, SocketKeepalive.ERROR_HARDWARE_UNSUPPORTED);
     }
 
     /**
