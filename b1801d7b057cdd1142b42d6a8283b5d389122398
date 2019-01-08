@@ -16,6 +16,24 @@
       "revId": "b1801d7b057cdd1142b42d6a8283b5d389122398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cfd665_2651acfc",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-08T21:28:42Z",
+      "side": 1,
+      "message": "Actually there is a NETWORK_TYPE_IWLAN constant. I must have lost it in the copy/paste. Will update",
+      "parentUuid": "210c75df_12d1c479",
+      "revId": "b1801d7b057cdd1142b42d6a8283b5d389122398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
