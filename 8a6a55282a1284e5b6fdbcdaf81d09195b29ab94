@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82e1a43f_f9209b49",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e70989f1_ac5f76c7",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17be3e71_7f31cdd6",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d41677_35b89f79",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17be3e71_7f31cdd6",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38f791e4_4d59c308",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be60a6db_0b7b9255",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 35
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e55d027_8c241bf5",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e530d2_5ac452e8",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e55d027_8c241bf5",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7b5e4ca9_294e0066",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "This is what the current listener looks like frameworks/native/cmds/dumpstate/binder/android/os/IDumpstateListener.aidl\n\nPrefer removing? I guess the caller can directly keep track of title and description as well. I think the current signature is a result of needing to pass info from system server to dumpstate service back into shell. I\u0027m not sure if we still need to. Maybe we do, but we will find out soon and then can put it back.\n\nIn that case can switch to 1 method onStatus() for error and this. wdyt?",
+      "parentUuid": "94729dcc_0b60d801",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "500e0103_7acdab8a",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2019-01-08T13:31:35Z",
       "side": 1,
       "message": "won\u0027t this attempt to set this property from arbitrary privileged processes result in an SELinux denial ? (or do you plan on getting rid of it later)",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 55
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccef598_c1c44b9e",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-08T13:59:39Z",
+      "side": 1,
+      "message": "No, I intend to keep this. This is a oneshot service. Do you mean that though this code is in system server process, it will run in the context of the calling app? How can we get around that?",
+      "parentUuid": "500e0103_7acdab8a",
       "range": {
         "startLine": 129,
         "startChar": 7,
