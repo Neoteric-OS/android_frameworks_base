@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77e2875_06350116",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1102318
+      },
+      "writtenOn": "2019-01-08T03:18:18Z",
+      "side": 1,
+      "message": "This patch has been moved to https://android-review.googlesource.com/c/platform/frameworks/base/+/863611",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "7af7a9627b314062fda620a9daf89453bfb15f55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
