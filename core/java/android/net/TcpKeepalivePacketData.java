@@ -36,7 +36,6 @@ import java.util.Objects;
  * Represents the actual tcp keep alive packets which will be used for hardware offload.
  * @hide
  */
-
 public class TcpKeepalivePacketData extends KeepalivePacketData {
     private static final String TAG = "TcpKeepalivePacketData";
 
