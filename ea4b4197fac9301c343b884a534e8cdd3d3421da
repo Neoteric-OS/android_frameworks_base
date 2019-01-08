@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a730d0a5_65afce3a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2019-01-08T15:56:00Z",
+      "side": 1,
+      "message": "Agree, there is no reason to keep these, was about to suggest a move in a later commit but since you suggest this I will do it now. Will move them to resources and remove the default value.",
+      "parentUuid": "ee020998_1ba40760",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 92
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d380d28_9ea34878",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "thanks, I am a bit unsure if checkstyle worked when I uploaded, I will fix this",
       "parentUuid": "2d380d28_9ea34878",
+      "range": {
+        "startLine": 1008,
+        "startChar": 16,
+        "endLine": 1008,
+        "endChar": 23
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d641c46f_e6f26f5e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2019-01-08T15:56:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1a6e41_1b7786f2",
       "range": {
         "startLine": 1008,
         "startChar": 16,
@@ -271,6 +319,30 @@
       "writtenOn": "2019-01-08T14:01:20Z",
       "side": 1,
       "message": "Shouldn\u0027t the preferred order be first settings, then resource, then default? Otherwise it won\u0027t be possible to override the resource via a server push, making it impossible to update any of these values in the field without an OTA.",
+      "range": {
+        "startLine": 1567,
+        "startChar": 20,
+        "endLine": 1567,
+        "endChar": 97
+      },
+      "revId": "ea4b4197fac9301c343b884a534e8cdd3d3421da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66ea1ac_df7c5d2e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2019-01-08T15:56:00Z",
+      "side": 1,
+      "message": "I am not sure I agree, more about that in the buganizer",
+      "parentUuid": "84f41505_257b34f6",
       "range": {
         "startLine": 1567,
         "startChar": 20,
