@@ -1730,6 +1730,30 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    @Override
+    public void firewallAddUidInterfaceFilteringRules(String iface, int[] uids) {
+        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
+        try {
+            mNetdService.firewallAddUidInterfaceRules(iface, uids);
+        } catch (ServiceSpecificException e) {
+            Log.w(TAG, "Unable to add uid interface filtering rules: "  + e.getMessage());
+        } catch (RemoteException e) {
+            Log.w(TAG, "Exception when adding uid interface filtering rules: ", e);
+        }
+    }
+
+    @Override
+    public void firewallRemoveUidInterfaceFilteringRules(String iface, int[] uids) {
+        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
+        try {
+            mNetdService.firewallRemoveUidInterfaceRules(iface, uids);
+        } catch (ServiceSpecificException e) {
+            Log.w(TAG, "Unable to remove Uid interface filtering rules: "  + e.getMessage());
+        } catch (RemoteException e) {
+            Log.w(TAG, "Exception when removing uid interface filtering rules: ", e);
+        }
+    }
+
     private void applyUidCleartextNetworkPolicy(int uid, int policy) {
         final int policyValue;
         switch (policy) {

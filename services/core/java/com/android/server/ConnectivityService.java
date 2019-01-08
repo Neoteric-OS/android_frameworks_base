@@ -2361,6 +2361,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             pw.decreaseIndent();
         }
+
+        pw.println("Permission Monitor:");
+        pw.increaseIndent();
+        mPermissionMonitor.dump(pw);
+        pw.decreaseIndent();
+        pw.println();
     }
 
     private void dumpNetworks(IndentingPrintWriter pw) {
@@ -5107,6 +5113,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
+        if (shouldApplyInterfaceFiltering(networkAgent)) {
+            final String oldIf = oldLp != null ? oldLp.getInterfaceName() : null;
+            final String newIf = oldLp != null ? newLp.getInterfaceName() : null;
+            if (!Objects.equals(oldIf, newIf)) {
+                final Set<UidRange> ranges = networkAgent.networkCapabilities.getUids();
+                final int vpnAppUid = networkAgent.networkCapabilities.getEstablishingVpnAppUid();
+                if (oldIf != null) {
+                    mPermissionMonitor.onVpnUidRangesRemoved(oldIf, ranges, vpnAppUid);
+                }
+                if (newIf != null) {
+                    mPermissionMonitor.onVpnUidRangesAdded(newIf, ranges, vpnAppUid);
+                }
+            }
+        }
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
@@ -5414,6 +5434,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private boolean shouldApplyInterfaceFiltering(NetworkAgentInfo nai) {
+        return nai.isVPN() && !nai.networkMisc.allowBypass
+                && (nai.linkProperties.hasIPv4DefaultRoute()
+                        || nai.linkProperties.hasIPv6DefaultRoute());
+    }
+
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
@@ -5426,15 +5452,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
         newRanges.removeAll(prevRangesCopy);
 
         try {
+            final boolean shouldFilter = shouldApplyInterfaceFiltering(nai);
+            final String ifname = nai.linkProperties.getInterfaceName();
+            final int vpnAppUid = newNc.getEstablishingVpnAppUid();
             if (!newRanges.isEmpty()) {
                 final UidRange[] addedRangesArray = new UidRange[newRanges.size()];
                 newRanges.toArray(addedRangesArray);
                 mNMS.addVpnUidRanges(nai.network.netId, addedRangesArray);
+                if (shouldFilter && ifname != null) {
+                    mPermissionMonitor.onVpnUidRangesAdded(ifname, newRanges, vpnAppUid);
+                }
             }
             if (!prevRanges.isEmpty()) {
                 final UidRange[] removedRangesArray = new UidRange[prevRanges.size()];
                 prevRanges.toArray(removedRangesArray);
                 mNMS.removeVpnUidRanges(nai.network.netId, removedRangesArray);
+                if (shouldFilter && ifname != null) {
+                    mPermissionMonitor.onVpnUidRangesRemoved(ifname, prevRanges, vpnAppUid);
+                }
             }
         } catch (Exception e) {
             // Never crash!

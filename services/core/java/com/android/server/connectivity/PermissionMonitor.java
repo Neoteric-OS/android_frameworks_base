@@ -20,9 +20,8 @@ import static android.Manifest.permission.CHANGE_NETWORK_STATE;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.NETWORK_STACK;
-import static android.content.pm.ApplicationInfo.FLAG_SYSTEM;
-import static android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
+import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.os.Process.INVALID_UID;
 import static android.os.Process.SYSTEM_UID;
 
@@ -33,23 +32,30 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
-import android.net.Uri;
+import android.net.INetd;
+import android.net.UidRange;
+import android.net.util.NetdService;
 import android.os.Build;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A utility class to inform Netd of UID permisisons.
@@ -75,10 +81,17 @@ public class PermissionMonitor {
     // Keys are App IDs. Values are true for SYSTEM permission and false for NETWORK permission.
     private final Map<Integer, Boolean> mApps = new HashMap<>();
 
+    // Keys are active non-bypassable and fully-routed VPN's interface name, Values are uid ranges
+    // for apps under the VPN
+    private final Map<String, Set<UidRange>> mVpnUidRanges = new HashMap<>();
+
+    // A set of appIds for apps across all users on the device.
+    private final Set<Integer> mAllApps = new HashSet<>();
+
     public PermissionMonitor(Context context, INetworkManagementService netd) {
         mContext = context;
         mPackageManager = context.getPackageManager();
-        mUserManager = UserManager.get(context);
+        mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         mNetd = netd;
     }
 
@@ -87,18 +100,29 @@ public class PermissionMonitor {
     public synchronized void startMonitoring() {
         log("Monitoring");
 
-        List<PackageInfo> apps = mPackageManager.getInstalledPackages(GET_PERMISSIONS);
+        List<PackageInfo> apps = mPackageManager.getInstalledPackages(
+                GET_PERMISSIONS | MATCH_ANY_USER);
         if (apps == null) {
             loge("No apps");
             return;
         }
 
         for (PackageInfo app : apps) {
+            log("app: " + app + " uid = " + app.applicationInfo.uid);
             int uid = app.applicationInfo != null ? app.applicationInfo.uid : INVALID_UID;
             if (uid < 0) {
                 continue;
             }
+            mAllApps.add(UserHandle.getAppId(uid));
 
+            // At the moment mApps only contains information of apps on user 0, which is slightly
+            // unusual because it will not includes apps only installed on secondary users. This
+            // behavior has existed since day one and it seems to be working fine. One possible
+            // explanation is that mApps only records apps with NETWORK/SYSTEM permission which
+            // means they are always sys-priv apps, and sys-priv apps always (?) exist on user 0.
+            if (UserHandle.getUserId(uid) != UserHandle.USER_SYSTEM) {
+                continue;
+            }
             boolean isNetwork = hasNetworkPermission(app);
             boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
 
@@ -122,6 +146,7 @@ public class PermissionMonitor {
         log("Users: " + mUsers.size() + ", Apps: " + mApps.size());
         update(mUsers, mApps, true);
     }
+
 
     @VisibleForTesting
     static boolean isVendorApp(@NonNull ApplicationInfo appInfo) {
@@ -194,10 +219,11 @@ public class PermissionMonitor {
         }
     }
 
-    private int[] toIntArray(List<Integer> list) {
+    private int[] toIntArray(Collection<Integer> list) {
         int[] array = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            array[i] = list.get(i);
+        int i = 0;
+        for (Integer item : list) {
+            array[i++] = item;
         }
         return array;
     }
@@ -290,6 +316,7 @@ public class PermissionMonitor {
      * @hide
      */
     public synchronized void onPackageAdded(String packageName, int uid) {
+        log("onPackageAdded: " + packageName + " uid: " + uid);
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
         final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName);
@@ -300,6 +327,16 @@ public class PermissionMonitor {
             apps.put(uid, permission);
             update(mUsers, apps, true);
         }
+
+        // If the newly-installed package falls within some VPN's uid range, update Netd with it.
+        // This needs to happen after the mApps update above, since intersectUids() depends on
+        // mApps to check if the package can bypass VPN.
+        final Set<Integer> appIds = Collections.singleton(UserHandle.getAppId(uid));
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            Set<Integer> changedUids = intersectUids(vpn.getValue(), appIds, -1);
+            updateVpnUids(vpn.getKey(), changedUids, true);
+        }
+        mAllApps.add(UserHandle.getAppId(uid));
     }
 
     /**
@@ -310,8 +347,18 @@ public class PermissionMonitor {
      * @hide
      */
     public synchronized void onPackageRemoved(int uid) {
-        Map<Integer, Boolean> apps = new HashMap<>();
+        log("onPackageRemoved: uid = " + uid);
+        // If the newly-removed package falls within some VPN's uid range, update Netd with it.
+        // This needs to happen before the mApps update below, since intersectUids() depends on
+        // mApps to check if the package can bypass VPN.
+        final Set<Integer> appIds = Collections.singleton(UserHandle.getAppId(uid));
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            Set<Integer> changedUids = intersectUids(vpn.getValue(), appIds, -1);
+            updateVpnUids(vpn.getKey(), changedUids, false);
+        }
+        mAllApps.remove(UserHandle.getAppId(uid));
 
+        Map<Integer, Boolean> apps = new HashMap<>();
         Boolean permission = null;
         String[] packages = mPackageManager.getPackagesForUid(uid);
         if (packages != null && packages.length > 0) {
@@ -336,6 +383,106 @@ public class PermissionMonitor {
             mApps.remove(uid);
             apps.put(uid, NETWORK);  // doesn't matter which permission we pick here
             update(mUsers, apps, false);
+        }
+    }
+
+    /**
+     * Called when a new interface or UID range is added to an active VPN network
+     *
+     */
+    public synchronized void onVpnUidRangesAdded(String ifName, Set<UidRange> ranges,
+            int vpnAppUid) {
+        log("onVpnUidRangesAdded: ifName = " + ifName);
+        StringBuilder sb = new StringBuilder();
+        sb.append("vpn range: ");
+        for (UidRange range : ranges) {
+            sb.append(range.toString() + " ");
+        }
+        log(sb.toString());
+
+        // Calculate the list of app uids under the new VPN range and update Netd about them.
+        updateVpnUids(ifName, intersectUids(ranges, mAllApps, vpnAppUid), true);
+        if (mVpnUidRanges.containsKey(ifName)) {
+            mVpnUidRanges.get(ifName).addAll(ranges);
+        } else {
+            mVpnUidRanges.put(ifName, new HashSet<UidRange>(ranges));
+        }
+    }
+
+    /**
+     * Called when a interface or UID range is removed from an active VPN network
+     */
+    public synchronized void onVpnUidRangesRemoved(String ifName, Set<UidRange> ranges,
+            int vpnAppUid) {
+        // Calculate the list of app uids under the new VPN range and update Netd about them.
+        updateVpnUids(ifName, intersectUids(ranges, mAllApps, vpnAppUid), false);
+        Set<UidRange> existingRanges = mVpnUidRanges.getOrDefault(ifName, null);
+        if (existingRanges == null) {
+            loge("Attempt to remove unknown vpn uid Range ifname = " + ifName);
+            return;
+        }
+        existingRanges.removeAll(ranges);
+        if (existingRanges.size() == 0) {
+            mVpnUidRanges.remove(ifName);
+        }
+    }
+
+    /**
+     * Compute the intersection of a set of UidRanges and appIds. Returns a set of uids
+     * that satisfies:
+     *   1. falls into one of the UidRange,
+     *   2. matches one of the appIds,
+     *   3. does not hold SYSTEM permission
+     *   4. is not the VPN app itself
+     * This will be the list of uids that are under active VPN and cannot bypass it.
+     */
+    private Set<Integer> intersectUids(Set<UidRange> ranges, Set<Integer> appIds, int vpnAppUid) {
+        Set<Integer> result = new HashSet<>();
+        for (UidRange range : ranges) {
+            final int userId = range.getStartUser();
+            for (int appId : appIds) {
+                final int uid = UserHandle.getUid(userId, appId);
+                if (uid == vpnAppUid) continue;
+                if (range.contains(uid) && mApps.getOrDefault(appId, NETWORK) != SYSTEM) {
+                    result.add(uid);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Update netd about the list of uids that are under an active VPN connection which they cannot
+     * bypass.
+     *
+     * This is to instruct netd to set up appropriate fitering rules for these uids, such that they
+     * cannot receive
+     * @param ifName the interface name of the active VPN connection
+     * @param add {@code true} if the uids are to be added to the interface, {@code false} if they
+     *        are to be removed from the interface.
+     */
+    private void updateVpnUids(String ifName, Set<Integer> uids, boolean add) {
+        if (uids.size() == 0) {
+            return;
+        }
+        try {
+            if (add) {
+                mNetd.firewallAddUidInterfaceFilteringRules(ifName, toIntArray(uids));
+            } else {
+                mNetd.firewallRemoveUidInterfaceFilteringRules(ifName, toIntArray(uids));
+            }
+        } catch (RemoteException e) {
+            loge("Exception when updating permissions: ", e);
+        }
+    }
+
+    public void dump(IndentingPrintWriter pw) {
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
+            pw.println("VPN: " + vpn.getKey());
+            Set<UidRange> ranges = vpn.getValue();
+            pw.println("uids: " + ranges.stream().map(n -> n.toString())
+                    .collect(Collectors.joining(",")));
+            pw.println();
         }
     }
 

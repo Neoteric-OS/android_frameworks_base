@@ -429,4 +429,7 @@ interface INetworkManagementService
     void setAllowOnlyVpnForUids(boolean enable, in UidRange[] uidRanges);
 
     boolean isNetworkRestricted(int uid);
+
+    void firewallAddUidInterfaceFilteringRules(String iface, in int[] uids);
+    void firewallRemoveUidInterfaceFilteringRules(String iface, in int[] uids);
 }

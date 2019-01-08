@@ -5239,4 +5239,11 @@ public class ConnectivityServiceTest {
         assertEquals(testProxyInfo, mService.getProxyForNetwork(mWiFiNetworkAgent.getNetwork()));
         assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
     }
+
+    public void testFullyRoutedVpnResultsInInterfaceFilteringRules() {
+        //1. Estabnlish a VPN connection
+        //2. Verify mNetworkManagementService.firewallAddUidInterfaceFilteringRules() is called
+        //3. Disconnect VPN
+        //4. Verify mNetworkManagementService.firewallRemoveUidInterfaceFilteringRules() is called
+    }
 }
