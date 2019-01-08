@@ -227,12 +227,13 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
 
     @Override
     public String toString() {
-        final String sb = "saddr: " + srcAddress
+        return "saddr: " + srcAddress
                 + " daddr: " + dstAddress
                 + " sport: " + srcPort
                 + " dport: " + dstPort
-                + " seq: " + mTcpSeq
-                + " ack: " + mTcpAck;
-        return sb;
+                + " seq: " + tcpSeq
+                + " ack: " + tcpAck
+                + " wnd: " + tcpWnd
+                + " wndScale: " + tcpWndScale;
     }
 }

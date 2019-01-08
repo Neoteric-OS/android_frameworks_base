@@ -109,10 +109,11 @@ public final class TcpKeepalivePacketDataTest {
         final int sequence = 0x11111111;
         final int ack = 0x22222222;
         final int wnd = 48_000;
+        final int wndScale = 2;
         TcpKeepalivePacketData testData = null;
         TcpKeepalivePacketDataParcelable resultData = null;
         TcpSocketInfo testInfo = new TcpSocketInfo(
-                srcAddr, srcPort, dstAddr, dstPort, sequence, ack, wnd);
+                srcAddr, srcPort, dstAddr, dstPort, sequence, ack, wnd, wndScale);
 
         testData = TcpKeepalivePacketData.tcpKeepalivePacket(testInfo);
         resultData = testData.toStableParcelable();
