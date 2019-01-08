@@ -31,12 +31,14 @@ import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkStack;
 import android.net.RouteInfo;
 import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
 import android.net.dhcp.IDhcpServer;
+import android.net.dnsproxy.DnsProxyServer;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
@@ -155,6 +157,31 @@ public class IpServer extends StateMachine {
                 DhcpServerCallbacks cb) {
             mContext.getSystemService(NetworkStack.class).makeDhcpServer(ifName, params, cb);
         }
+
+        /**
+         * Create a DnsProxyServer instance to be used by IpServer.
+         */
+        public DnsProxyServer makeDnsProxyServer(Looper looper, String ifName, SharedLog log) {
+            return new DnsProxyServer(looper, ifName, log);
+        }
+
+        /**
+         * Get Network by Interface set.
+         */
+        public Network getNetworkByIfaceSet(InterfaceSet ifaceSet) {
+            ConnectivityManager cm = (ConnectivityManager)
+                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            Network upstreamNetwork = null;
+            for (Network network : cm.getAllNetworks()) {
+                String lpIfname = cm.getLinkProperties(network).getInterfaceName();
+                for (String ifname : ifaceSet.ifnames) {
+                    if (ifname.equals(lpIfname)) {
+                        upstreamNetwork = network;
+                    }
+                }
+            }
+            return upstreamNetwork;
+        }
     }
 
     private static final int BASE_IFACE              = Protocol.BASE_TETHERING + 100;
@@ -195,6 +222,7 @@ public class IpServer extends StateMachine {
     private final int mInterfaceType;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
+    private final boolean mUsingLegacyDnsProxy;
 
     private final Dependencies mDeps;
 
@@ -216,10 +244,13 @@ public class IpServer extends StateMachine {
     private IDhcpServer mDhcpServer;
     private RaParams mLastRaParams;
 
+    private DnsProxyServer mDnsProxyServer;
+
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetworkManagementService nMService, INetworkStatsService statsService,
-            Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            Callback callback, boolean usingLegacyDhcp, boolean usingLegacyDnsProxy,
+            Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
@@ -231,6 +262,7 @@ public class IpServer extends StateMachine {
         mInterfaceType = interfaceType;
         mLinkProperties = new LinkProperties();
         mUsingLegacyDhcp = usingLegacyDhcp;
+        mUsingLegacyDnsProxy = usingLegacyDnsProxy;
         mDeps = deps;
         resetLinkProperties();
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
@@ -850,12 +882,15 @@ public class IpServer extends StateMachine {
         @Override
         public void exit() {
             cleanupUpstream();
+            stopDnsProxyServer();
+            mDnsProxyServer = null;
             super.exit();
         }
 
         private void cleanupUpstream() {
             if (mUpstreamIfaceSet == null) return;
 
+            stopDnsProxyServer();
             for (String ifname : mUpstreamIfaceSet.ifnames) cleanupUpstreamInterface(ifname);
             mUpstreamIfaceSet = null;
         }
@@ -909,10 +944,10 @@ public class IpServer extends StateMachine {
                     }
 
                     final Set<String> added = upstreamInterfacesAdd(newUpstreamIfaceSet);
+
                     // This makes the call to cleanupUpstream() in the error
                     // path for any interface neatly cleanup all the interfaces.
                     mUpstreamIfaceSet = newUpstreamIfaceSet;
-
                     for (String ifname : added) {
                         try {
                             mNMService.enableNat(mIfaceName, ifname);
@@ -925,11 +960,39 @@ public class IpServer extends StateMachine {
                             return true;
                         }
                     }
+
+                    startDnsProxyServer();
                     break;
                 default:
                     return false;
             }
             return true;
+        }
+
+        private void startDnsProxyServer() {
+            if (mUsingLegacyDnsProxy) {
+                return;
+            }
+
+            Network upstreamNetwork = mDeps.getNetworkByIfaceSet(mUpstreamIfaceSet);
+            if (upstreamNetwork == null) {
+                mLog.e("No available upstreamNetwork");
+                transitionTo(mInitialState);
+            }
+            if (mDnsProxyServer == null) {
+                mDnsProxyServer = mDeps.makeDnsProxyServer(getHandler().getLooper(),
+                    mIfaceName, mLog.forSubComponent("DnsProxyServer"));
+            }
+            mDnsProxyServer.startWithNetwork(upstreamNetwork);
+        }
+
+        private void stopDnsProxyServer() {
+            if (mUsingLegacyDnsProxy) {
+                return;
+            }
+            if (mDnsProxyServer != null) {
+                mDnsProxyServer.stop();
+            }
         }
 
         private boolean noChangeInUpstreamIfaceSet(InterfaceSet newIfaces) {
