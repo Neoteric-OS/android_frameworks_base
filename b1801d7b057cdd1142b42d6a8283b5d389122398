@@ -34,6 +34,24 @@
       "revId": "b1801d7b057cdd1142b42d6a8283b5d389122398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a031916_51d38e41",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-08T22:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0cfd665_2651acfc",
+      "revId": "b1801d7b057cdd1142b42d6a8283b5d389122398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
