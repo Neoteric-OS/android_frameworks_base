@@ -210,10 +210,10 @@ public final class ArrayMap<K, V> implements Map<K, V> {
             synchronized (ArrayMap.class) {
                 if (mTwiceBaseCache != null) {
                     final Object[] array = mTwiceBaseCache;
-                    mArray = array;
                     mTwiceBaseCache = (Object[])array[0];
                     mHashes = (int[])array[1];
                     array[0] = array[1] = null;
+                    mArray = array;
                     mTwiceBaseCacheSize--;
                     if (DEBUG) Log.d(TAG, "Retrieving 2x cache " + mHashes
                             + " now have " + mTwiceBaseCacheSize + " entries");
@@ -224,10 +224,10 @@ public final class ArrayMap<K, V> implements Map<K, V> {
             synchronized (ArrayMap.class) {
                 if (mBaseCache != null) {
                     final Object[] array = mBaseCache;
-                    mArray = array;
                     mBaseCache = (Object[])array[0];
                     mHashes = (int[])array[1];
                     array[0] = array[1] = null;
+                    mArray = array;
                     mBaseCacheSize--;
                     if (DEBUG) Log.d(TAG, "Retrieving 1x cache " + mHashes
                             + " now have " + mBaseCacheSize + " entries");
