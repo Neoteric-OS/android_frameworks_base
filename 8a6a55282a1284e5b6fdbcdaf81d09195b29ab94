@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70989f1_ac5f76c7",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "long, not Long",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17be3e71_7f31cdd6",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "I find 30 * 1000 a little more readable, especially for trivial conversions.. I would\u0027ve advised the opposite if the timeout was 1 day. Up to you though.",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be60a6db_0b7b9255",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "can we get rid of this ? calling onError with BUGREPORT_ERROR_OK seems surprising and awkward.",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 35
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e55d027_8c241bf5",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "nit: RUNTIME is better than RUN_TIME",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94729dcc_0b60d801",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "nit: we don\u0027t really need to report this, do we ? it\u0027s quite easier for implementers of BugreportListener to keep track of.",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500e0103_7acdab8a",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-08T13:31:35Z",
+      "side": 1,
+      "message": "won\u0027t this attempt to set this property from arbitrary privileged processes result in an SELinux denial ? (or do you plan on getting rid of it later)",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 55
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
