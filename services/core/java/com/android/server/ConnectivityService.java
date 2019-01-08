@@ -95,7 +95,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -3818,15 +3817,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (underlyingNetworks == null) {
             NetworkAgentInfo defaultNetwork = getDefaultNetwork();
             if (defaultNetwork != null && defaultNetwork.linkProperties != null) {
-                info.primaryUnderlyingIface = getDefaultNetwork().linkProperties.getInterfaceName();
+                info.underlyingIfaces =
+                        new String[] {getDefaultNetwork().linkProperties.getInterfaceName()};
             }
         } else if (underlyingNetworks.length > 0) {
-            LinkProperties linkProperties = getLinkProperties(underlyingNetworks[0]);
-            if (linkProperties != null) {
-                info.primaryUnderlyingIface = linkProperties.getInterfaceName();
+            List<String> interfaces = new ArrayList<>();
+            for (Network network : underlyingNetworks) {
+                LinkProperties lp = getLinkProperties(network);
+                if (lp != null) {
+                    interfaces.add(lp.getInterfaceName());
+                }
+            }
+            if (!interfaces.isEmpty()) {
+                info.underlyingIfaces = interfaces.toArray(new String[interfaces.size()]);
             }
         }
-        return info.primaryUnderlyingIface == null ? null : info;
+        return info.underlyingIfaces == null ? null : info;
     }
 
     /**
