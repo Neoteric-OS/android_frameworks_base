@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210c75df_12d1c479",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2019-01-08T21:21:27Z",
+      "side": 1,
+      "message": "Dont see IWLAN here. So what would this return when call is over IWLAN ?",
+      "revId": "b1801d7b057cdd1142b42d6a8283b5d389122398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
