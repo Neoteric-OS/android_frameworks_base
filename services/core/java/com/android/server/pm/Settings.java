@@ -51,6 +51,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.content.pm.UserInfo;
 import android.content.pm.VerifierDeviceIdentity;
+import android.net.INetd;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -405,6 +406,13 @@ public final class Settings {
     final SparseIntArray mNextAppLinkGeneration = new SparseIntArray();
 
     final StringBuilder mReadMessages = new StringBuilder();
+
+    /**
+     * Used to track packages app IDs that have permission INTERNET or permission
+     * UPDATES_DEVICE_STATS. The packageManager need to provide the list of uids
+     * that have these two permissions to netd when device boots or new app get installed.
+     */
+    private SparseIntArray mPendingNetdPermissionsAppIds;
 
     /**
      * Used to track packages that have a shared user ID that hasn't been read
@@ -2211,8 +2219,37 @@ public final class Settings {
         }
     }
 
-    void readInstallPermissionsLPr(XmlPullParser parser,
-            PermissionsState permissionsState) throws IOException, XmlPullParserException {
+    // Add special permissions that netd wants to lists;
+    void processNetdSpecialPermission(String name, int appId) {
+        if (appId < 0)  {
+            return;
+        }
+
+        int permissionAdded = 0;
+        if ("android.permission.INTERNET".equals(name)) {
+            permissionAdded = INetd.PERMISSION_INTERNET;
+        } else if ("android.permission.UPDATE_DEVICE_STATS".equals(name)) {
+            permissionAdded = INetd.PERMISSION_UPDATE_DEVICE_STATS;
+        }
+        if (permissionAdded == 0) {
+            return;
+        }
+        if (mPendingNetdPermissionsAppIds == null) {
+            mPendingNetdPermissionsAppIds = new SparseIntArray();
+        }
+        mPendingNetdPermissionsAppIds.put(appId,
+                mPendingNetdPermissionsAppIds.get(appId) | permissionAdded);
+        return;
+    }
+
+    SparseIntArray getPermissionAppIdsForNetd() {
+        SparseIntArray result = mPendingNetdPermissionsAppIds;
+        mPendingNetdPermissionsAppIds = null;
+        return result;
+    }
+
+    void readInstallPermissionsLPr(XmlPullParser parser, PermissionsState permissionsState,
+            int appId) throws IOException, XmlPullParserException {
         int outerDepth = parser.getDepth();
         int type;
         while ((type=parser.next()) != XmlPullParser.END_DOCUMENT
@@ -2249,6 +2286,7 @@ public final class Settings {
                     } else {
                         permissionsState.updatePermissionFlags(bp, UserHandle.USER_ALL,
                                 PackageManager.MASK_PERMISSION_FLAGS, flags);
+                        processNetdSpecialPermission(name, appId);
                     }
                 } else {
                     if (permissionsState.revokeInstallPermission(bp) ==
@@ -3639,7 +3677,7 @@ public final class Settings {
             }
 
             if (parser.getName().equals(TAG_PERMISSIONS)) {
-                readInstallPermissionsLPr(parser, ps.getPermissionsState());
+                readInstallPermissionsLPr(parser, ps.getPermissionsState(), ps.getAppId());
             } else if (parser.getName().equals(TAG_CHILD_PACKAGE)) {
                 String childPackageName = parser.getAttributeValue(null, ATTR_NAME);
                 if (ps.childPackageNames == null) {
@@ -3935,7 +3973,7 @@ public final class Settings {
                     packageSetting.signatures.readXml(parser, mPastSignatures);
                 } else if (tagName.equals(TAG_PERMISSIONS)) {
                     readInstallPermissionsLPr(parser,
-                            packageSetting.getPermissionsState());
+                            packageSetting.getPermissionsState(), packageSetting.getAppId());
                     packageSetting.installPermissionsFixed = true;
                 } else if (tagName.equals("proper-signing-keyset")) {
                     long id = Long.parseLong(parser.getAttributeValue(null, "identifier"));
@@ -4085,7 +4123,7 @@ public final class Settings {
                 if (tagName.equals("sigs")) {
                     su.signatures.readXml(parser, mPastSignatures);
                 } else if (tagName.equals("perms")) {
-                    readInstallPermissionsLPr(parser, su.getPermissionsState());
+                    readInstallPermissionsLPr(parser, su.getPermissionsState(), su.userId);
                 } else {
                     PackageManagerService.reportSettingsProblem(Log.WARN,
                             "Unknown element under <shared-user>: " + parser.getName());
