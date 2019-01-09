@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf536715_1176eacc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a good idea. It\u0027s always been a hack in network monitor, but here you\u0027re making new system API of it so it\u0027s becoming worse.\n\nIf you look at UpstreamNetworkMonitor#startTrackDefaultNetwork it has another hacky way of doing this which is less invasive, and I suggest you convert to that method. If you\u0027re moving Tethering into the network stack app you might even be able to unify these two things. That hack is bad too and has drawbacks over your current design, but overall I favor it for not needing this system API (especially if you manage to unify it with UNM, but I doubt you will).\n\nIf you can\u0027t use this scheme for some reason, I want to point out that NetworkMonitor is not even using this request you\u0027re sending here, but only the capabilities inside it, which I think never change (and if I\u0027m wrong and they do, you are not sending the changes over in this patchset anyway). Sending only the capabilities would be a well needed reduction of surface.\n\nEventually it\u0027s probably a good idea to have some true and nice system API that will let the NETWORK_STACK holding apps about the default system network without need for hacks. But this is not it, and I don\u0027t think it\u0027s a good idea to do it now.",
+      "range": {
+        "startLine": 2045,
+        "startChar": 26,
+        "endLine": 2045,
+        "endChar": 43
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd34c8dd_e1a272f4",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "Optional : do you want to make a Dependencies class right away to help with future testability ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 20
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507ba3d6_1f34e56a",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure we can afford to leave this as a TODO. This will not necessarily give you the right ones. You not only may get newer ones than the notification was for, but also older ones which would kill your purpose.\n\nI think you need to make them part of the message that is sent, otherwise it\u0027s actually broken. If you really need to do this into a separate patch, replace TODO with STOPSHIP, because this will break everything.\n\nOf course the same applies to NetworkCapabilities below.",
+      "range": {
+        "startLine": 431,
+        "startChar": 12,
+        "endLine": 431,
+        "endChar": 95
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d878620a_682ef0d4",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "Thanks for these well-needed modernizations",
+      "range": {
+        "startLine": 1484,
+        "startChar": 12,
+        "endLine": 1484,
+        "endChar": 61
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19a00ac8_5db8f0ab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "I think you need to explain this is doing a lot more than just display the notification (otherwise, why tell the system server ? The network stack app could just do it itself). Look at the handling of the message to see what else is done.\n\nIdeally this should even be renamed to reflect this, but maybe not for this patch.",
+      "range": {
+        "startLine": 468,
+        "startChar": 35,
+        "endLine": 468,
+        "endChar": 69
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a14d7e1_0beaedb3",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "Do you want to also move this while you\u0027re at it ?",
+      "range": {
+        "startLine": 121,
+        "startChar": 35,
+        "endLine": 121,
+        "endChar": 54
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383532c3_5cd9c004",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "This probably needs to be volatile, because you don\u0027t know that all methods reading it will always be called on the same thread as onNetworkMonitorCreated.",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 11
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c957cb4_71b363a9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "Especially for this method and the next one, I think it should be explicit in the method name that this notifies the monitor. Because I\u0027m not sure it makes a lot of sense to notify the NAI itself.",
+      "range": {
+        "startLine": 323,
+        "startChar": 16,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a011def1_0c3f89f7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T07:03:46Z",
+      "side": 1,
+      "message": "Conversely, why not just forceNetworkReevaluation ?",
+      "range": {
+        "startLine": 367,
+        "startChar": 16,
+        "endLine": 367,
+        "endChar": 47
+      },
+      "revId": "f5b761d33701d84a708915aed5e570d711a51402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
