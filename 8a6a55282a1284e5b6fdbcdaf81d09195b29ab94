@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "fc431501_da1acc7b",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-09T09:57:57Z",
+      "side": 1,
+      "message": "I\u0027m OK leaving this as is for now. We can tune it later.",
+      "parentUuid": "7b5e4ca9_294e0066",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "500e0103_7acdab8a",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 10
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "No, I intend to keep this. This is a oneshot service. Do you mean that though this code is in system server process, it will run in the context of the calling app? How can we get around that?",
       "parentUuid": "500e0103_7acdab8a",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 55
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf5e6b7_a5d501be",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-09T09:57:57Z",
+      "side": 1,
+      "message": "If I read this right, this code isn\u0027t running in the system server process, it\u0027s running in the app process. If you want to run this in the system server process, you\u0027ll have to define a new (private) binder interface and a corresponding system server to handle it.\n\nRunning this in the system server process is probably the right thing to do, since it will also allow you to limit the set of processes that can fetch the dumpstate service.",
+      "parentUuid": "5ccef598_c1c44b9e",
       "range": {
         "startLine": 129,
         "startChar": 7,
