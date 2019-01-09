@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "86532673_57520ccd",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-09T16:24:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc431501_da1acc7b",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "500e0103_7acdab8a",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 10
@@ -329,6 +353,30 @@
       "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f81d2e7_d291e3e9",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-09T16:24:50Z",
+      "side": 1,
+      "message": "Done. Reused the same interface. wdyt?",
+      "parentUuid": "3cf5e6b7_a5d501be",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 55
+      },
+      "revId": "8a6a55282a1284e5b6fdbcdaf81d09195b29ab94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
