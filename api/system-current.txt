@@ -5137,7 +5137,21 @@ package android.telephony {
     field public static final int VOICEMAIL_NUMBER_MISSING = 40; // 0x28
     field public static final int WIFI_LOST = 59; // 0x3b
   }
+  public final class LteVopsSupportInfo implements android.os.Parcelable {
+    ctor public LteVopsSupportInfo();
+    ctor public LteVopsSupportInfo(boolean, boolean);
+    method public int describeContents();
+    method public int getEmcBearerSupport();
+    method public int getVopsSupport();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.LteVopsSupportInfo> CREATOR;
+    field public static final int LTE_VOPS_STATUS_NOT_AVAILABLE = 0; // 0x0
+    field public static final int LTE_VOPS_STATUS_NOT_SUPPORTED = 2; // 0x2
+    field public static final int LTE_VOPS_STATUS_SUPPORTED = 1; // 0x1
+  }
 
+  public static abstract class LteVopsSupportInfo.LteVopsStatus implements java.lang.annotation.Annotation {
+  }
   public class MbmsDownloadSession implements java.lang.AutoCloseable {
     field public static final java.lang.String MBMS_DOWNLOAD_SERVICE_ACTION = "android.telephony.action.EmbmsDownload";
   }
