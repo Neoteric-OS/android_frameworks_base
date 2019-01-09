@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "483914db_ecd358f6",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-09T19:37:37Z",
+      "side": 1,
+      "message": "which were lost",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 64
+      },
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce215af5_4082e291",
         "filename": "telephony/java/android/telephony/CallQuality.java",
         "patchSetId": 9
@@ -13,6 +36,93 @@
       "writtenOn": "2019-01-09T19:25:11Z",
       "side": 1,
       "message": "Should this be rename to indicate lost in transmission  - like numRtpPacketsTransmittedLost ?",
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1ac488_b5f3c95c",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-09T19:37:37Z",
+      "side": 1,
+      "message": "Sure, good suggestion.",
+      "parentUuid": "ce215af5_4082e291",
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8b0309_408a1243",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-09T19:37:37Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 183,
+        "startChar": 60,
+        "endLine": 183,
+        "endChar": 64
+      },
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0dd41e_4e016622",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-09T19:37:37Z",
+      "side": 1,
+      "message": "milliseconds",
+      "range": {
+        "startLine": 192,
+        "startChar": 79,
+        "endLine": 192,
+        "endChar": 90
+      },
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f1c9e2_a21a8532",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-09T19:37:37Z",
+      "side": 1,
+      "message": "milliseconds",
+      "range": {
+        "startLine": 203,
+        "startChar": 88,
+        "endLine": 203,
+        "endChar": 99
+      },
       "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
