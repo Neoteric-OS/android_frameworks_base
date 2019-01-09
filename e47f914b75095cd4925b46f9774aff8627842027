@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6098f549_d27aa598",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2019-01-09T22:33:53Z",
+      "side": 1,
+      "message": "Just removal will cause this, I believe.  Max, can you verify? If so, I think Rob\u0027s point is that the wording should be tweaked.",
+      "parentUuid": "c25774d0_c378fed1",
+      "revId": "e47f914b75095cd4925b46f9774aff8627842027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81a7b488_db1df6bd",
         "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-08T01:43:27Z",
       "side": 1,
       "message": "Why catch this exception instead of letting the existing exception continue to be thrown?",
+      "range": {
+        "startLine": 105,
+        "startChar": 17,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "e47f914b75095cd4925b46f9774aff8627842027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde15214_88f67df4",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2019-01-09T22:33:53Z",
+      "side": 1,
+      "message": "+1.  No need to wrap a UKE in a UKE.",
+      "parentUuid": "81a7b488_db1df6bd",
       "range": {
         "startLine": 105,
         "startChar": 17,
