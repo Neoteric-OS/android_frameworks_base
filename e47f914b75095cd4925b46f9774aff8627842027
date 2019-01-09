@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c25774d0_c378fed1",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2019-01-09T13:45:10Z",
+      "side": 1,
+      "message": "This only occurs if a user removes their credential, and then replaces it with a new one? Or will it also occur if a user just removes their credential?",
+      "revId": "e47f914b75095cd4925b46f9774aff8627842027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81a7b488_db1df6bd",
         "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
         "patchSetId": 5
