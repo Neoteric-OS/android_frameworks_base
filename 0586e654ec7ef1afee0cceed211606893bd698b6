@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c362d938_161e7ace",
+        "filename": "core/java/android/os/BugreportService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-09T18:35:56Z",
+      "side": 1,
+      "message": "This should be called BugreportManagerService and should be move to the com.android.server.* package. Note that the latter is not just a stylistic change - it prevents this class from being present in the boot classpath (and therefore in every java process) when it\u0027s only required in the system server.",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0586e654ec7ef1afee0cceed211606893bd698b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
