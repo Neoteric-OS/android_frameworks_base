@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a2093e9_f8664cba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-09T23:04:04Z",
+      "side": 1,
+      "message": "For some weird reason just running \"runtest frameworks-net\" seems to be failing for these two newly added tests: vpnWithTwoUnderlyingIfaces and vpnWithIncorrectUnderlyingIfaces. \n\nHere\u0027s the test output for \"runtest frameworks-net\": http://gpaste/6260864638255104\nYou\u0027ll notice that the failure for both the test cases are for UID_RED over TEST_IFACE2 (represents mobile network). In both cases actual and expected values are off by 2000 bytes. Note that these tests succeed if I only run NetworkStatsServiceTest.\n\nAt this point, I\u0027m out of ideas. One interesting thing that I did notice after adding bunch of log statements and throwing custom exceptions to catch stack traces: For test \"vpnWithTwoUnderlyingIfaces\", I\u0027m first calling mService.forceUpdateIfaces and later calling forcePollAndWaitForIdle. Both of these calls leads to recordingSnapshot (in NSS). So one would ideally expect ONLY 2 calls (and thus 2 exceptions/stack traces). Based on logs and stack trace, it appears as if some how both forceUpdateIfaces and forcePollAndWaitForIdle calls are triggered twice (see the line# in the stack trace for NetworkStatsServiceTest). Here\u0027s the output: http://gpaste/5979389661544448\nNow I\u0027d have probably blamed this as a probable cause, but it turns out that same thing happens even when I only run NetworkStatsServiceTest (and no other tests).\n\nI\u0027d really appreciate any help at this point. Thanks.",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 88
+      },
+      "revId": "f91bf604aa6c3ad3d4f90989893915c67609fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
