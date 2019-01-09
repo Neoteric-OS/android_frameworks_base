@@ -1006,10 +1006,28 @@ message BluetoothConnectionStateChanged {
     // An identifier that can be used to match connect and disconnect events.
     // Currently is last two bytes of a hash of a device level ID and
     // the mac address of the bluetooth device that is connected.
-    optional int32 obfuscated_id = 2;
+    // Deprecated: use obfuscated_id instead, this one is always 0 for Q+
+    optional int32 OBSOLETE_obfuscated_id = 2 [deprecated = true];
     // The profile that is connected. Eg. GATT, A2DP, HEADSET.
     // From android.bluetooth.BluetoothAdapter.java
+    // Default: 0 when not used
     optional int32 bt_profile = 3;
+    // An identifier that can be used to match events for this device.
+    // Currently, this is a salted hash of the MAC address of this Bluetooth device.
+    // Salt: Randomly generated 256 bit value
+    // Hash algorithm: HMAC-SHA256
+    // Size: 32 byte
+    // Default: null or empty if the device identifier is not known
+    optional bytes obfuscated_id = 4[(android.os.statsd.log_mode) = MODE_BYTES];
+    // Which type of connection change this is
+    enum ConnectionType {
+        UNKNOWN = 0;
+        ACL = 1;
+        SCO = 2;
+        // Refer to bt_profile for the actual profile whose conneciton state has changed
+        PROFILE = 3;
+    }
+    optional ConnectionType connection_type = 5;
 }
 
 /**
