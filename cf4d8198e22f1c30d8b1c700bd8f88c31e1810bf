@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b9f60ca_5e31a3e8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd0e6bc_052d9b0a",
+      "range": {
+        "startLine": 2044,
+        "startChar": 14,
+        "endLine": 2044,
+        "endChar": 16
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb364bb_3e517746",
         "filename": "core/java/android/net/INetworkStackConnector.aidl",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ebdfe378_9f4d7ead",
+        "filename": "core/java/android/net/INetworkStackConnector.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "ACK - I\u0027m preparing another CL where I have a bunch of additional parcelables (including LinkProperties): I\u0027ll add one for Network there.",
+      "parentUuid": "eeb364bb_3e517746",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "950852dc_6c3f1156",
         "filename": "core/java/android/net/NetworkStack.java",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f696075_fc1c7679",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done (with NETWORKSTACK_PACKAGE_NAME to be clear in static imports)",
+      "parentUuid": "950852dc_6c3f1156",
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "db175476_7fd49ec0",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36dd2c63_eeb7a89a",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65791176_d78c2bad",
         "filename": "core/java/android/net/PrivateDnsConfigParcel.aidl",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e9effa_c5771d73",
+        "filename": "core/java/android/net/PrivateDnsConfigParcel.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done: b/122491892",
+      "parentUuid": "65791176_d78c2bad",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "28135b5e_2086e062",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0ae0a8_cf9c4764",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 46
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe6c77d8_8fe858fb",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -177,6 +315,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd29615_78cae0f2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6c77d8_8fe858fb",
+      "range": {
+        "startLine": 436,
+        "startChar": 28,
+        "endLine": 436,
+        "endChar": 29
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "38e14d75_53e2c211",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a7700b_b921d1e6",
+      "range": {
+        "startLine": 445,
+        "startChar": 33,
+        "endLine": 445,
+        "endChar": 34
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6647625b_8d14b2c0",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -223,6 +409,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae6619b_31587ba1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6647625b_8d14b2c0",
+      "range": {
+        "startLine": 458,
+        "startChar": 31,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "49fc03f0_66650f78",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe6c470_c241292a",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 511,
+        "endChar": 72
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db12d6f3_9908d5d1",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -269,6 +503,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7a6d73_7f3c804e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db12d6f3_9908d5d1",
+      "range": {
+        "startLine": 1105,
+        "startChar": 0,
+        "endLine": 1107,
+        "endChar": 5
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "6a3c926a_614eb01e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1483,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "According to the doc no, it just returns empty values.",
+      "parentUuid": "1f6a905f_964daf08",
+      "range": {
+        "startLine": 1483,
+        "startChar": 51,
+        "endLine": 1483,
+        "endChar": 71
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9ebd2da_76697699",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -315,6 +597,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f3fa6e_982ce301",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ebd2da_76697699",
+      "range": {
+        "startLine": 1537,
+        "startChar": 12,
+        "endLine": 1537,
+        "endChar": 94
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "98ab4d3f_d35802dc",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a5f7cc2_fdc5f663",
+      "range": {
+        "startLine": 106,
+        "startChar": 50,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebaa2d69_f66fea48",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 3
@@ -361,6 +691,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31c66ae_cff8376b",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebaa2d69_f66fea48",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 81
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "a5baaf49_073e6662",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4823,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4e944e_e3a4b9ea",
+      "range": {
+        "startLine": 4823,
+        "startChar": 0,
+        "endLine": 4823,
+        "endChar": 97
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12321c03_fa4672e6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -407,6 +785,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6f4506_b09f62af",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4849,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12321c03_fa4672e6",
+      "range": {
+        "startLine": 4848,
+        "startChar": 0,
+        "endLine": 4849,
+        "endChar": 34
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +835,30 @@
     },
     {
       "key": {
+        "uuid": "71ede1f0_912d9385",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5782,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f69fa617_de99f475",
+      "range": {
+        "startLine": 5782,
+        "startChar": 44,
+        "endLine": 5782,
+        "endChar": 66
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a668b6_76306b25",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 3
@@ -453,6 +879,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dc5db7_de106283",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Private sounds better",
+      "parentUuid": "32a668b6_76306b25",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 10
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -502,6 +952,30 @@
     },
     {
       "key": {
+        "uuid": "c5f86c7d_d6d26784",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Added comment",
+      "parentUuid": "fbb7eabc_9f5dba26",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 64
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d817a0_141b22f4",
         "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
         "patchSetId": 3
@@ -522,6 +996,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d939873_9929ec6f",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d817a0_141b22f4",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -548,6 +1046,30 @@
     },
     {
       "key": {
+        "uuid": "739a02a2_f82ca612",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c15217_3fc0c905",
+      "range": {
+        "startLine": 344,
+        "startChar": 34,
+        "endLine": 344,
+        "endChar": 50
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e35fbd_22ff1a14",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -571,6 +1093,30 @@
     },
     {
       "key": {
+        "uuid": "a462a547_c14f7673",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e35fbd_22ff1a14",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 25
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abc33995_2647b0cf",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -591,6 +1137,30 @@
       "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db62fe56_894a0f07",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-09T09:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc33995_2647b0cf",
+      "range": {
+        "startLine": 498,
+        "startChar": 25,
+        "endLine": 498,
+        "endChar": 26
+      },
+      "revId": "cf4d8198e22f1c30d8b1c700bd8f88c31e1810bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
