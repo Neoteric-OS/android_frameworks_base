@@ -22,6 +22,30 @@
       "revId": "b982be8d14f3e2cf1b42827edaa2386741ca9508",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafd8924_0c897ea6",
+        "filename": "core/java/android/net/ipmemorystore/Utils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:05:47Z",
+      "side": 1,
+      "message": "No, it\u0027s documented as exclusive.\n\nHowever l.27 and l.31 should say .length and not -1, so thanks :)",
+      "parentUuid": "1b921d45_9335e316",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "b982be8d14f3e2cf1b42827edaa2386741ca9508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
