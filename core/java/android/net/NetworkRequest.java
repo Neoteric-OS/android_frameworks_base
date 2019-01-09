@@ -19,7 +19,6 @@ package android.net;
 import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Process;
 import android.text.TextUtils;
 
 import java.util.Objects;
@@ -132,18 +131,12 @@ public class NetworkRequest implements Parcelable {
      * needed in terms of {@link NetworkCapabilities} features
      */
     public static class Builder {
-        private final NetworkCapabilities mNetworkCapabilities;
+        private final NetworkCapabilities mNetworkCapabilities = new NetworkCapabilities();
 
         /**
          * Default constructor for Builder.
          */
-        public Builder() {
-            // By default, restrict this request to networks available to this app.
-            // Apps can rescind this restriction, but ConnectivityService will enforce
-            // it for apps that do not have the NETWORK_SETTINGS permission.
-            mNetworkCapabilities = new NetworkCapabilities();
-            mNetworkCapabilities.setSingleUid(Process.myUid());
-        }
+        public Builder() {}
 
         /**
          * Build {@link NetworkRequest} give the current set of capabilities.
