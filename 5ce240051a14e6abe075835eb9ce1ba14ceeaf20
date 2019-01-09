@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad26c6e_e94439cc",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-09T01:11:00Z",
+      "side": 1,
+      "message": "Should be 2 if we know the size",
+      "range": {
+        "startLine": 946,
+        "startChar": 55,
+        "endLine": 946,
+        "endChar": 56
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73470ce5_e858a9ab",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-09T01:11:00Z",
+      "side": 1,
+      "message": "Does this need to be buildTemplateMobileWildcard?",
+      "range": {
+        "startLine": 1013,
+        "startChar": 16,
+        "endLine": 1013,
+        "endChar": 38
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82d2159_bf93932c",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-09T01:11:00Z",
+      "side": 1,
+      "message": "Could we check this before adding stats to see what the pre-modification values are? Perhaps the extra 2000 bytes are from some setup calls?",
+      "range": {
+        "startLine": 1216,
+        "startChar": 35,
+        "endLine": 1216,
+        "endChar": 63
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
