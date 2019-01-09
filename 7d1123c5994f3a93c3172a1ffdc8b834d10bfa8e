@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "4da02beb_08480dbe",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-09T18:46:43Z",
+      "side": 1,
+      "message": "I think it\u0027s more standard to have people pass in a Context. If the internals need a ConnectivityManager, they can get it from the context.",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b46b03e_91f72699",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -224,6 +247,30 @@
       "side": 1,
       "message": "Thanks for the suggestion.\nAnd it is true if we can ditch that it would simplify the architecture.\nBut since the mCallback cannot be passed into ConnectivityService,\n Currently I don\u0027t see a way to invoke callbacks inside service e.g. \nmExecutor.execute(() -\u003e {\n    mCallback.onStarted();\n});\nDo you have any specific idea about it?",
       "parentUuid": "40307fdc_d229593e",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f2425a_9a861742",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-09T18:46:43Z",
+      "side": 1,
+      "message": "Here\u0027s an example:\nhttps://android.googlesource.com/platform/frameworks/base/+/master/telephony/java/android/telephony/TelephonyManager.java#4899\n\nCheck out the CellInfoCallback and the ICellInfoCallback.aidl.\n\nThe short version is that you:\n1) Create a small AIDL interface so that the methods you want to run can be invoked on the binder thread and pass an instance of that IBinder object to the other side.\n2) Extend the aidl to invoke the user callbacks on the Executor.\n3) Invoke the aidl methods directly on the other side of the binder instead of posting messages.",
+      "parentUuid": "b5b93784_59422d0f",
       "range": {
         "startLine": 87,
         "startChar": 10,
