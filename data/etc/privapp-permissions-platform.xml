@@ -233,6 +233,7 @@ applications that come with the platform
         <permission name="android.permission.BIND_CONNECTION_SERVICE"/>
         <permission name="android.permission.BIND_INCALL_SERVICE"/>
         <permission name="android.permission.CALL_PRIVILEGED"/>
+        <permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
         <permission name="android.permission.INTERACT_ACROSS_USERS"/>
         <permission name="android.permission.MANAGE_USERS"/>
         <permission name="android.permission.MODIFY_AUDIO_ROUTING" />
