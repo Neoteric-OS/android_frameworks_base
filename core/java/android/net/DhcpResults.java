@@ -49,6 +49,9 @@ public class DhcpResults extends StaticIpConfiguration {
     public int mtu;
 
     @UnsupportedAppUsage
+    public String serverHostName;
+
+    @UnsupportedAppUsage
     public DhcpResults() {
         super();
     }
@@ -69,6 +72,7 @@ public class DhcpResults extends StaticIpConfiguration {
             vendorInfo = source.vendorInfo;
             leaseDuration = source.leaseDuration;
             mtu = source.mtu;
+            serverHostName = source.serverHostName;
         }
     }
 
@@ -89,6 +93,7 @@ public class DhcpResults extends StaticIpConfiguration {
         vendorInfo = null;
         leaseDuration = 0;
         mtu = 0;
+        serverHostName = null;
     }
 
     @Override
@@ -99,6 +104,7 @@ public class DhcpResults extends StaticIpConfiguration {
         str.append(" Vendor info ").append(vendorInfo);
         str.append(" lease ").append(leaseDuration).append(" seconds");
         if (mtu != 0) str.append(" MTU ").append(mtu);
+        str.append(" Server host name ").append(serverHostName);
 
         return str.toString();
     }
@@ -115,7 +121,8 @@ public class DhcpResults extends StaticIpConfiguration {
                 Objects.equals(serverAddress, target.serverAddress) &&
                 Objects.equals(vendorInfo, target.vendorInfo) &&
                 leaseDuration == target.leaseDuration &&
-                mtu == target.mtu;
+                mtu == target.mtu &&
+                Objects.equals(serverHostName, target.serverHostName);
     }
 
     /** Implement the Parcelable interface */
@@ -139,6 +146,7 @@ public class DhcpResults extends StaticIpConfiguration {
         dest.writeInt(mtu);
         NetworkUtils.parcelInetAddress(dest, serverAddress, flags);
         dest.writeString(vendorInfo);
+        dest.writeString(serverHostName);
     }
 
     private static void readFromParcel(DhcpResults dhcpResults, Parcel in) {
@@ -147,6 +155,7 @@ public class DhcpResults extends StaticIpConfiguration {
         dhcpResults.mtu = in.readInt();
         dhcpResults.serverAddress = (Inet4Address) NetworkUtils.unparcelInetAddress(in);
         dhcpResults.vendorInfo = in.readString();
+        dhcpResults.serverHostName = in.readString();
     }
 
     // Utils for jni population - false on success
