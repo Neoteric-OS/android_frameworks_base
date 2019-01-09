@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d11358ca_056e59d3",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-09T22:27:23Z",
+      "side": 1,
+      "message": "This doesn\u0027t really matter as NetworkStats would increase its size automatically.",
+      "parentUuid": "4ad26c6e_e94439cc",
+      "range": {
+        "startLine": 946,
+        "startChar": 55,
+        "endLine": 946,
+        "endChar": 56
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73470ce5_e858a9ab",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bfc163dd_9c3401c2",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-09T22:27:23Z",
+      "side": 1,
+      "message": "Thanks for pointing out. Done.",
+      "parentUuid": "73470ce5_e858a9ab",
+      "range": {
+        "startLine": 1013,
+        "startChar": 16,
+        "endLine": 1013,
+        "endChar": 38
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c82d2159_bf93932c",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73caea05_17ab42ee",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-09T22:27:23Z",
+      "side": 1,
+      "message": "Tried that. It is 0.",
+      "parentUuid": "c82d2159_bf93932c",
+      "range": {
+        "startLine": 1216,
+        "startChar": 35,
+        "endLine": 1216,
+        "endChar": 63
+      },
+      "revId": "5ce240051a14e6abe075835eb9ce1ba14ceeaf20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
