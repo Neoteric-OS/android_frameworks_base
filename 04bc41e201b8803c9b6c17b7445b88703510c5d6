@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb93981_7645a6d0",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-09T23:11:49Z",
+      "side": 1,
+      "message": "total or remaining?",
+      "range": {
+        "startLine": 1386,
+        "startChar": 15,
+        "endLine": 1386,
+        "endChar": 20
+      },
+      "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
