@@ -122,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "2f2ab80f_1bbada99",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1233895
+      },
+      "writtenOn": "2019-01-09T08:28:29Z",
+      "side": 1,
+      "message": "We think curretTimeMillis is not suitable for performance measurement since it uses RTC clocks.\nDo you mean you will change these into nanoTime by your side? Or is it better to create separated CL from this CL?",
+      "parentUuid": "8cfa20ef_6d731ad2",
+      "revId": "8cfdd5b82d03540288f8bd1b92e5dc29f1ca061a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfa8b453_454ac13d",
         "filename": "media/java/android/media/MediaScanner.java",
         "patchSetId": 6
