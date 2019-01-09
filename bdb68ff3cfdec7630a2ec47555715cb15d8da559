@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce215af5_4082e291",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1254469
+      },
+      "writtenOn": "2019-01-09T19:25:11Z",
+      "side": 1,
+      "message": "Should this be rename to indicate lost in transmission  - like numRtpPacketsTransmittedLost ?",
+      "revId": "bdb68ff3cfdec7630a2ec47555715cb15d8da559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
