@@ -47,6 +47,7 @@ java_defaults {
         "wifi/java/**/*.java",
         "keystore/java/**/*.java",
         "rs/java/**/*.java",
+        "identity/java/**/*.java",
 
         ":framework-javastream-protos",
 
