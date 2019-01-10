@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b5c8187_bd27a400",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-01-10T02:36:44Z",
+      "side": 0,
+      "message": "nit: can you fix mixed tabs/spaces by the chance of modifying this block?",
+      "range": {
+        "startLine": 381,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 9
+      },
+      "revId": "9fbe48172748ce030e58c53cbefa3f3ecfbdf525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
