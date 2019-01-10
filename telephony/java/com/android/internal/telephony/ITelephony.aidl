@@ -1838,6 +1838,13 @@ interface ITelephony {
     void switchMultiSimConfig(int numOfSims);
 
     /**
+     * Returns true if the specified type of application (e.g. {@link #APPTYPE_CSIM} is present
+     * on the UICC card.
+     * @hide
+     */
+    boolean isApplicationOnUicc(int subId, int appType);
+
+    /**
      * Get if reboot is required upon altering modems configurations
      * @hide
      */
