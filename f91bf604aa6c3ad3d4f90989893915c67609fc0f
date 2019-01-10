@@ -70,6 +70,30 @@
       "revId": "f91bf604aa6c3ad3d4f90989893915c67609fc0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bc23aa_80fb0b33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-10T00:28:09Z",
+      "side": 1,
+      "message": "Update#3:\nNathan pointed out that this is potentially caused by some other test as NSSTest seem to succeed when run as standalone. He suggested trying out different combinations of running NSSTest with other tests. I started with tests in same package as NSSTest (com.android.server.net). \n\nIt appears that running NSSTest along with NetworkStatsCollectionTest is causing new tests to fail (running NSSTest with other tests does not seem to cause any trouble).\n\nNext steps: Figure out what is up with NetworkStatsCollectionTest and why is it affecting NSSTest.",
+      "parentUuid": "32324ec1_7792e9f3",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 88
+      },
+      "revId": "f91bf604aa6c3ad3d4f90989893915c67609fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
