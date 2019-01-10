@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0a12568_36c73184",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-10T04:29:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42851abe_33b34421",
+      "range": {
+        "startLine": 368,
+        "startChar": 4,
+        "endLine": 368,
+        "endChar": 5
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dcb435f_e768ca4f",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4a776c_66c3c280",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-10T04:29:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcb435f_e768ca4f",
+      "range": {
+        "startLine": 937,
+        "startChar": 42,
+        "endLine": 937,
+        "endChar": 50
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +133,30 @@
       "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa129f2_230dd82f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-10T04:29:42Z",
+      "side": 1,
+      "message": "Removed the methods",
+      "parentUuid": "0ba90f99_e588058a",
+      "range": {
+        "startLine": 2799,
+        "startChar": 12,
+        "endLine": 2799,
+        "endChar": 37
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "d9984039_5891482f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5826,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-10T04:29:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7404179_4c8d87af",
+      "range": {
+        "startLine": 5826,
+        "startChar": 77,
+        "endLine": 5826,
+        "endChar": 78
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f71ca1f_6e2b968e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 11
@@ -154,6 +250,30 @@
       "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0fe6ab_701531db",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-10T04:29:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f71ca1f_6e2b968e",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 4
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
