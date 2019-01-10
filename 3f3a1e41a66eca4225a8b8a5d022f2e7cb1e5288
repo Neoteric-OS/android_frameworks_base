@@ -113,6 +113,29 @@
     },
     {
       "key": {
+        "uuid": "b08b0f4d_e76b275e",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T05:08:03Z",
+      "side": 1,
+      "message": "Nit: these three differ only in whether we mock the capabilities or not. Consider refactoring.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 5
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06927f54_76bec9f1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
