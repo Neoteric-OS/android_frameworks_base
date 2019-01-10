@@ -493,6 +493,7 @@ const std::map<string, uint32_t> UidMap::sAidToUidMapping = {{"AID_ROOT", 0},
                                                              {"AID_LMKD", 1069},
                                                              {"AID_LLKD", 1070},
                                                              {"AID_IORAPD", 1071},
+                                                             {"AID_CREDSTORE", 1074},
                                                              {"AID_SHELL", 2000},
                                                              {"AID_CACHE", 2001},
                                                              {"AID_DIAG", 2002}};

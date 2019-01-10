@@ -183,6 +183,12 @@ public class Process {
      */
     public static final int NETWORK_STACK_UID = 1073;
 
+    /**
+     * Defines the UIG/GID for the identity credential manager process.
+     * @hide
+     */
+    public static final int CREDENTIAL_MGR_UID = 1074;
+
     /** {@hide} */
     public static final int NOBODY_UID = 9999;
 

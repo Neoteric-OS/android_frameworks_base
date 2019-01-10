@@ -38897,6 +38897,127 @@ package android.security {
 
 }
 
+package android.security.identity {
+
+  public class AccessControlProfile {
+    ctor public AccessControlProfile();
+    method public java.lang.String getAccessControlProfileName();
+    method public java.security.cert.X509Certificate getReaderCertificate();
+    method public int getUserAuthenticationTimeout();
+    method public boolean isUserAuthenticationRequired();
+  }
+
+  public static class AccessControlProfile.Builder {
+    ctor public AccessControlProfile.Builder(java.lang.String);
+    method public android.security.identity.AccessControlProfile build();
+    method public android.security.identity.AccessControlProfile.Builder setReaderCertificate(java.security.cert.X509Certificate);
+    method public android.security.identity.AccessControlProfile.Builder setUserAuthenticationRequired(boolean);
+    method public android.security.identity.AccessControlProfile.Builder setUserAuthenticationTimeout(int);
+  }
+
+  public class AlreadyPersonalizedException extends android.security.identity.IdentityCredentialException {
+    ctor public AlreadyPersonalizedException();
+  }
+
+  public class DirectAccessStorageExceededException extends android.security.identity.IdentityCredentialException {
+    ctor public DirectAccessStorageExceededException();
+  }
+
+  public class EntryNamespace {
+    method public java.util.Collection<java.lang.String> getAccessControlProfiles(java.lang.String);
+    method public boolean getBooleanEntry(java.lang.String);
+    method public byte[] getByteStringEntry(java.lang.String);
+    method public java.util.Collection<java.lang.String> getDirectlyAccessibleNames();
+    method public java.util.Collection<java.lang.String> getEntryNames();
+    method public java.lang.Object getEntryValue(java.lang.String);
+    method public long getIntegerEntry(java.lang.String);
+    method public java.lang.String getNamespaceName();
+    method public byte[] getStaticAuthenticationData(java.lang.String);
+    method public java.lang.String getTextStringEntry(java.lang.String);
+    method public boolean isDirectlyAccessible(java.lang.String);
+  }
+
+  public static class EntryNamespace.Builder {
+    ctor public EntryNamespace.Builder(java.lang.String);
+    method public android.security.identity.EntryNamespace.Builder addBooleanEntry(java.lang.String, java.util.Collection<java.lang.String>, boolean);
+    method public android.security.identity.EntryNamespace.Builder addBooleanEntry(java.lang.String, java.util.Collection<java.lang.String>, boolean, boolean);
+    method public android.security.identity.EntryNamespace.Builder addBytestringEntry(java.lang.String, java.util.Collection<java.lang.String>, byte[], boolean);
+    method public android.security.identity.EntryNamespace.Builder addBytestringEntry(java.lang.String, java.util.Collection<java.lang.String>, byte[]);
+    method public android.security.identity.EntryNamespace.Builder addEntryName(java.lang.String);
+    method public android.security.identity.EntryNamespace.Builder addIntEntry(java.lang.String, java.util.Collection<java.lang.String>, int);
+    method public android.security.identity.EntryNamespace.Builder addIntEntry(java.lang.String, java.util.Collection<java.lang.String>, int, boolean);
+    method public android.security.identity.EntryNamespace.Builder addLongEntry(java.lang.String, java.util.Collection<java.lang.String>, long);
+    method public android.security.identity.EntryNamespace.Builder addLongEntry(java.lang.String, java.util.Collection<java.lang.String>, long, boolean);
+    method public android.security.identity.EntryNamespace.Builder addStringEntry(java.lang.String, java.util.Collection<java.lang.String>, java.lang.String, boolean);
+    method public android.security.identity.EntryNamespace.Builder addStringEntry(java.lang.String, java.util.Collection<java.lang.String>, java.lang.String);
+    method public android.security.identity.EntryNamespace build();
+  }
+
+  public class IdentityCredential {
+    method public java.security.KeyPair createEphemeralKeyPair();
+    method public byte[] decryptMessageFromReader(byte[]);
+    method public void delete();
+    method public byte[] encryptMessageToReader(byte[]);
+    method public java.util.Collection<java.security.cert.X509Certificate> getAuthKeysNeedingCertification();
+    method public java.util.Collection<java.lang.Integer> getAuthenticationDataUsageCount();
+    method public java.lang.Iterable<java.security.cert.X509Certificate> getCredentialKeyCertificateChain();
+    method public java.util.Collection<java.security.cert.X509Certificate> getDirectAccessAuthKeysNeedingCertification();
+    method public java.util.Collection<java.lang.Integer> getDirectAccessAuthenticationDataUsageCount();
+    method public android.security.identity.IdentityCredential.GetEntryResult getEntries(java.util.Collection<android.security.identity.EntryNamespace>, byte[], byte[], java.security.PublicKey);
+    method public void setAvailableAuthenticationKeys(int, int);
+    method public void setAvailableDirectAccessAuthenticationKeys(int, int);
+    method public void storeAuthenticationData(java.security.cert.X509Certificate, byte[], java.util.Map<android.util.Pair<java.lang.String, java.lang.String>, byte[]>) throws android.security.identity.DirectAccessStorageExceededException;
+  }
+
+  public class IdentityCredential.GetEntryResult {
+    ctor public IdentityCredential.GetEntryResult();
+    method public byte[] getAuthenticatedData();
+    method public java.util.Collection<android.security.identity.EntryNamespace> getEntryNamespaces();
+    method public byte[] getIssuerCertificate();
+    method public byte[] getMessageAuthenticationCode();
+  }
+
+  public class IdentityCredentialException extends java.lang.Exception {
+    ctor public IdentityCredentialException();
+  }
+
+  public class IdentityCredentialStore {
+    method public android.security.identity.WritableIdentityCredential createCredential(java.lang.String, java.util.List<java.lang.String>, int) throws android.security.identity.InvalidCredentialNameException, android.security.identity.UnsupportedCipherSuiteException;
+    method public android.security.identity.IdentityCredential getCredentialByName(java.lang.String);
+    method public java.lang.Iterable<android.security.identity.IdentityCredential> getCredentialsByDocType(java.lang.String);
+    method public java.lang.Iterable<java.lang.String> getDirectAccessDocTypes();
+    method public static android.security.identity.IdentityCredentialStore getInstance();
+    method public int getSecurityHardwareCertification();
+    method public int getSecurityHardwareType();
+    field public static final int CIPHERSUITE_ECDHE_HKDF_ECDSA_WITH_AES_128_GCM_SHA256 = 1; // 0x1
+    field public static final int SECURITY_CERTIFICATION_CC_EAL_4_PLUS = 1; // 0x1
+    field public static final int SECURITY_CERTIFICATION_CC_EAL_5_PLUS = 2; // 0x2
+    field public static final int SECURITY_CERTIFICATION_UNCERTIFIED = 0; // 0x0
+    field public static final int SECURITY_HARDWARE_DISCRETE_SECURE_CPU = 3; // 0x3
+    field public static final int SECURITY_HARDWARE_EMBEDDED_SECURE_CPU = 2; // 0x2
+    field public static final int SECURITY_HARDWARE_SOFTWARE_ONLY = 0; // 0x0
+    field public static final int SECURITY_HARDWARE_TRUSTED_EXECUTION_ENVIRONMENT = 1; // 0x1
+  }
+
+  public class InvalidCredentialNameException extends android.security.identity.IdentityCredentialException {
+    ctor public InvalidCredentialNameException();
+  }
+
+  public class InvalidRequestException extends android.security.identity.IdentityCredentialException {
+    ctor public InvalidRequestException();
+  }
+
+  public class UnsupportedCipherSuiteException extends android.security.identity.IdentityCredentialException {
+    ctor public UnsupportedCipherSuiteException();
+  }
+
+  public class WritableIdentityCredential {
+    method public java.util.Collection<java.security.cert.X509Certificate> getCredentialKeyCertificateChain(byte[]) throws android.security.identity.IdentityCredentialException;
+    method public byte[] personalize(java.util.Collection<android.security.identity.AccessControlProfile>, java.util.Collection<android.security.identity.EntryNamespace>) throws android.security.identity.IdentityCredentialException;
+  }
+
+}
+
 package android.security.keystore {
 
   public class KeyExpiredException extends java.security.InvalidKeyException {
