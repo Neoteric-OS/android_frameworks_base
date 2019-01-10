@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10e1756a_b2fadbf7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3821,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-10T21:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6026568d_86421168",
+      "range": {
+        "startLine": 3821,
+        "startChar": 38,
+        "endLine": 3821,
+        "endChar": 57
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6fc5a87_b035f907",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "189fb8c0_d7e2397b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-10T21:46:36Z",
+      "side": 1,
+      "message": "Yeah, I had to change this otherwise it wasn\u0027t letting me upload.",
+      "parentUuid": "e6fc5a87_b035f907",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263dc197_5bab8475",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0449d68_1771fbef",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-10T21:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "263dc197_5bab8475",
+      "range": {
+        "startLine": 137,
+        "startChar": 45,
+        "endLine": 137,
+        "endChar": 49
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
