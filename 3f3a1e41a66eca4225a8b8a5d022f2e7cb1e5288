@@ -96,6 +96,23 @@
     },
     {
       "key": {
+        "uuid": "a5e7a008_93642ee4",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T05:06:05Z",
+      "side": 1,
+      "message": "If this had actually returned the private DNS bypassing copy, would the test have caught the \"private DNS validation probe mistakenly bypasses private DNS\" bug that we found in this CL?",
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06927f54_76bec9f1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -317,6 +334,63 @@
         "endLine": 49,
         "endChar": 54
       },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08d23c2_84217c3b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T05:06:05Z",
+      "side": 1,
+      "message": "It looks like these are accessed both on the validation threads and on the test thread. Maybe make them volatile?",
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d527949e_395ce2e2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T05:06:05Z",
+      "side": 1,
+      "message": "This is actually not realistic. Here, revalidating a network twice will start two parallel threads which will race with each other. But actual NetworkMonitor behaviour (and the current behaviour of this unit test) is that all validation attempts occur in sequence on the same thread. What that means is that if the test ever re-evaluates a network without waiting for the result of the previous evaluation, then it could get confused.\n\nProbably fine for now, but maybe add a TODO to give the fake NetworkMonitor a handler thread?",
+      "range": {
+        "startLine": 467,
+        "startChar": 16,
+        "endLine": 467,
+        "endChar": 26
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7e3d83_e790d7cf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T05:06:05Z",
+      "side": 1,
+      "message": "Not for this CL, but: is this done inline in the MockNetworkAgent constructor? If so, I think it\u0027s not realistic since the actual creation of NetworkMonitors is asynchronous. We might want to create a new thread for this, or post it as a lambda to mHandlerThread, or move it to the fake NetworkMonitor handler thread when you add that.",
       "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
