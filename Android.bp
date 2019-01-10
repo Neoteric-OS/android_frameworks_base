@@ -47,6 +47,7 @@ java_defaults {
         "wifi/java/**/*.java",
         "keystore/java/**/*.java",
         "rs/java/**/*.java",
+        "identity/java/**/*.java",
 
         ":framework-javastream-protos",
 
@@ -247,6 +248,7 @@ java_defaults {
         "core/java/android/os/storage/IStorageShutdownObserver.aidl",
         "core/java/android/os/storage/IObbActionListener.aidl",
         ":keystore_aidl",
+        ":credstore_aidl",
         "core/java/android/security/keymaster/IKeyAttestationApplicationIdProvider.aidl",
         "core/java/android/service/autofill/IAutoFillService.aidl",
         "core/java/android/service/autofill/IAutofillFieldClassificationService.aidl",
@@ -646,6 +648,7 @@ java_defaults {
             "wifi/java",
             "keystore/java",
             "rs/java",
+            "identity/java",
         ],
 
         include_dirs: [
@@ -659,6 +662,7 @@ java_defaults {
             "system/vold/binder",
             "system/bt/binder",
             "system/security/keystore/binder",
+            "system/security/identity/binder",
         ],
 
         generate_get_transaction_name: true
@@ -1083,6 +1087,7 @@ frameworks_base_subdirs = [
     "lowpan/java",
     "keystore/java",
     "rs/java",
+    "identity/java",
 ]
 
 packages_to_document = [
