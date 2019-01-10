@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0606bc5b_7deb0fe1",
+        "filename": "core/tests/coretests/src/android/provider/SettingsBackupTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-10T02:50:10Z",
+      "side": 1,
+      "message": "Nit: This may need to change to alphabet \u0027D\u0027 section to align the alphabet order?",
+      "range": {
+        "startLine": 378,
+        "startChar": 36,
+        "endLine": 378,
+        "endChar": 71
+      },
+      "revId": "ce594fb60a9564a9f610b0384f56f164f2168e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
