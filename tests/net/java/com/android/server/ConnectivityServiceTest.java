@@ -40,6 +40,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_RCS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_SUPL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_TRUSTED;
@@ -573,6 +574,11 @@ public class ConnectivityServiceTest {
         public void connectWithCaptivePortal(String redirectUrl) {
             mWrappedNetworkMonitor.gen204ProbeResult = 200;
             mWrappedNetworkMonitor.gen204ProbeRedirectUrl = redirectUrl;
+            connect(false);
+        }
+
+        public void connectWithPartialConnectivity() {
+            mWrappedNetworkMonitor.gen204ProbeResult = CaptivePortalProbeResult.PARTIAL_CODE;
             connect(false);
         }
 
@@ -2402,6 +2408,58 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(networkCallback);
         waitFor(cv);
         verifyActiveNetwork(TRANSPORT_CELLULAR);
+    }
+
+    @Test
+    public void testPartialConnectivity() {
+        // Register network callback.
+        NetworkRequest request = new NetworkRequest.Builder()
+                .clearCapabilities().addCapability(NET_CAPABILITY_INTERNET)
+                .build();
+        TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(request, callback);
+
+        // Bring up validated mobile data.
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        // Bring up wifi with partial connectivity.
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connectWithPartialConnectivity();
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
+
+        // Mobile data should be the default network.
+        assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // If the user chooses yes to use this partial connectivity wifi, switching the default
+        // network to wifi and checking if wifi becomes valid or not.
+        mCm.setAcceptPartialConnectivity(mWiFiNetworkAgent.getNetwork(), true, false);
+        mWiFiNetworkAgent.mWrappedNetworkMonitor.gen204ProbeResult =
+                CaptivePortalProbeResult.SUCCESS_CODE;
+        callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
+        NetworkCapabilities nc = callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED,
+                mWiFiNetworkAgent);
+        nc.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY);
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Disconnect wifi and the default network should be switching to mobile data.
+        mWiFiNetworkAgent.disconnect();
+        callback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
+
+        // Bring up wifi with partial connectivity again.
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connectWithPartialConnectivity();
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
+
+        // Mobile data should be the default network.
+        assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // If the user chooses no, disconnect wifi immediately.
+        mCm.setAcceptPartialConnectivity(mWiFiNetworkAgent.getNetwork(), false, false);
+        callback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
     }
 
     @Test
