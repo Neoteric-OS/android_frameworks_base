@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba4154e8_440a5192",
+        "filename": "services/core/java/com/android/server/os/BugreportManagerServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-10T14:49:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t need to be a member if you fetch this every time.\n\nI think there\u0027s some work TODO here to handle serialization as well; eg if app A asks for a bugreport, and then app B asks for it while dumpstate is still running, it would get the dumpstate service that is currently running for A. If that terminates when it\u0027s done with A, B would be left without a BR.\n\nYou might be able to deal with that in dumpstate itself, though maybe it\u0027s easier to just keep a queue of pending bugreports here, and then have a serialized loop something like this:\n1) Remove bugreport request from queue\n2) Start dumpstate with ctl.start\n3) Retrieve IDumpstate and register a death recipient on it\n4) Wait for the death recipient to fire (eg dumpstate has completed BR and exited)\n5) Goto 1\n\nFine to do in a follow-up CL.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 36
+      },
+      "revId": "1c2e14f3edf00f07b8cda08cdf9859af6206cd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
