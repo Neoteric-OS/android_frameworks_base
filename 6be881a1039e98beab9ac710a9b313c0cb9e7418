@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5b15a03f_4af204be",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4203,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-10T14:20:45Z",
+      "side": 1,
+      "message": "Added a new binder service for app -\u003e system server communication, so now I do need this. I\u0027ll  send the sepolicy change out. For now I have not published the service.",
+      "parentUuid": "a4159a95_2d359d03",
+      "range": {
+        "startLine": 4203,
+        "startChar": 52,
+        "endLine": 4203,
+        "endChar": 61
+      },
+      "revId": "6be881a1039e98beab9ac710a9b313c0cb9e7418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4472fe_ac8d143b",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 7
