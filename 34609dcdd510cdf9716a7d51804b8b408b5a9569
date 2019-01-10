@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a945e0_58f4cbdf",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-10T07:34:52Z",
+      "side": 1,
+      "message": "Are we able to get the fail whenever assert fires?\nIf not, how can we know which line fails if just get timeoutMessage.\nDo we need to propagate the error, or print some debug info on console?",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 86
+      },
+      "revId": "34609dcdd510cdf9716a7d51804b8b408b5a9569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
