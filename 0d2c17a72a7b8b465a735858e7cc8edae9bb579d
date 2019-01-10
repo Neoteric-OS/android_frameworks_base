@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6026568d_86421168",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3821,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-10T21:39:09Z",
+      "side": 1,
+      "message": "We have this stored above already; perhaps just use the defaultNetwork variable?",
+      "range": {
+        "startLine": 3821,
+        "startChar": 38,
+        "endLine": 3821,
+        "endChar": 57
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fc5a87_b035f907",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-10T21:39:09Z",
+      "side": 1,
+      "message": "Is the preupload hook happy with this? There\u0027s some odd interactions with the formatter and preupload format checks, and I seem to recall this being one of them?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263dc197_5bab8475",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-10T21:39:09Z",
+      "side": 1,
+      "message": "Is tun0 ever used for other things? I think this should be safe in that we never actually create a real interface.\n\nPerhaps test_nss_tun?",
+      "range": {
+        "startLine": 137,
+        "startChar": 45,
+        "endLine": 137,
+        "endChar": 49
+      },
+      "revId": "0d2c17a72a7b8b465a735858e7cc8edae9bb579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
