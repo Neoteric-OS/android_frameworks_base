@@ -22,6 +22,30 @@
       "revId": "1c2e14f3edf00f07b8cda08cdf9859af6206cd03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c87558_f3957ff4",
+        "filename": "services/core/java/com/android/server/os/BugreportManagerServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-10T14:58:20Z",
+      "side": 1,
+      "message": "Agree re serialization. It\u0027s covered by the todos on line 33.\n\nI briefly considered hooking up setListener, that\u0027s when I made it a member. Forgot to change it back when I changed my mind. I\u0027ll leave it as is for now since all it will have to change either way.",
+      "parentUuid": "ba4154e8_440a5192",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 36
+      },
+      "revId": "1c2e14f3edf00f07b8cda08cdf9859af6206cd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
