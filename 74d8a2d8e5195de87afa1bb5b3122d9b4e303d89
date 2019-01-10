@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c192a999_a15e9ea0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5086,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-10T18:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917d3fd8_7535a21b",
+      "range": {
+        "startLine": 5086,
+        "startChar": 15,
+        "endLine": 5086,
+        "endChar": 92
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "375d65a9_47b92a74",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-10T14:39:33Z",
       "side": 1,
       "message": "Does this still hold true ?\nISTM that if a caller updates the UIDs, this gets called, and if in the ensuing rematchAllNetworksAndRequests the network goes to the foreground or to the background then this is reentered. I don\u0027t think you\u0027ll get an infinite loop because updateUids here will give the same results as previously and you\u0027ll enter the other branch of this if in the second pass, but it\u0027s pretty difficult to think about what happens if this is called in the middle of itself.\n\nI\u0027m too sleepy at this moment to be sure ; I\u0027ll try to take another look after I sleep, but to my tired brain this is what looks scary right now.",
+      "range": {
+        "startLine": 5092,
+        "startChar": 12,
+        "endLine": 5093,
+        "endChar": 84
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af91be11_866622fd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5093,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-10T18:54:48Z",
+      "side": 1,
+      "message": "\u003e Does this still hold true?\n\nI think it still holds, since uids also shouldn\u0027t be changed by rematchAllNetworksAndRequests. Or am I missing something?\n\nAlso AFAICT VPN is never a background network, so I don\u0027t think this will actually happen.",
+      "parentUuid": "375d65a9_47b92a74",
       "range": {
         "startLine": 5092,
         "startChar": 12,
@@ -82,6 +130,30 @@
       "writtenOn": "2019-01-10T14:39:33Z",
       "side": 1,
       "message": "Why does this happen ? expectAvailableCallbacksValidated already expects one capabilities update, why is a second one sent immediately ?",
+      "range": {
+        "startLine": 4328,
+        "startChar": 46,
+        "endLine": 4328,
+        "endChar": 80
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c23bc5_0e3799f4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4328,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-10T18:54:48Z",
+      "side": 1,
+      "message": "My understanding is this: with added \"equalsUids\" check in updateCapabilities, it now goes into \"else\" branch, which causes two callbacks for this request:\n1) rematchAllNetworksAndRequests(nai, oldScore) is causing CALLBACK_AVAILABLE, which I believe also causes onCapabilitiesChanged.\n2) notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED) causes onCapabilitiesChanged explicitly.\n\nMy first thought wast to swap those two, but then I get the opposite problem - onCapabilitiesChanged is invoked before onLost when the app is removed from uids.\n\nSo it looks like to fix it I should change the code to only send CALLBACK_CAP_CHANGED to requests that were already satisfied by the network, and so didn\u0027t get CALLBACK_AVAILABLE.\n\nDoes this make sense? If so do you have any hints on what is the most elegant way to do it?",
+      "parentUuid": "48ffae37_edb292f8",
       "range": {
         "startLine": 4328,
         "startChar": 46,
