@@ -10288,6 +10288,30 @@ public class TelephonyManager {
     }
 
     /**
+     * Returns true if the specified type of application (e.g. {@link #APPTYPE_CSIM} is present
+     * on the UICC card.
+     *
+     * Requires that the calling app has READ_PRIVILEGED_PHONE_STATE permission
+     *
+     * @param appType the uicc app type like {@link APPTYPE_CSIM}
+     * @return true if the specified type of application in UICC CARD or false if no uicc or error.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean isApplicationOnUicc(@UiccAppType int appType) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.isApplicationOnUicc(getSubId(), appType);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#isApplicationOnUicc", e);
+        }
+        return false;
+    }
+
+    /**
      * Get whether reboot is required or not after making changes to modem configurations.
      * The modem configuration change refers to switching from single SIM configuration to DSDS
      * or the other way around.
