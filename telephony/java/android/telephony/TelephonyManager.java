@@ -9744,4 +9744,26 @@ public class TelephonyManager {
         }
         return ret;
     }
+
+    /**
+     * Return true if the specified type of application in UICC CARD {@link APPTYPE_CSIM}.
+     *
+     * Requires that the calling app has READ_PRIVILEGED_PHONE_STATE permission
+     *
+     * @param subId the subscription ID that this request applies to.
+     * @param appType the uicc app type like {@link APPTYPE_CSIM}
+     * @return true if the specified type of application in UICC CARD or false if no uicc or error.
+     * @hide
+     */
+    public boolean isApplicationOnIcc(int subId, int appType) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.isApplicationOnIcc(subId, appType);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#isApplicationOnIcc", e);
+        }
+        return false;
+    }
 }

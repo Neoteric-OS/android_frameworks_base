@@ -1768,4 +1768,16 @@ interface ITelephony {
      * Set the String provisioning value for the provisioning key specified.
      */
     int setImsProvisioningString(int subId, int key, String value);
+
+    /**
+     * Return true if the specified type of application in UICC CARD {@link APPTYPE_CSIM}.
+     *
+     * Requires that the calling app has READ_PRIVILEGED_PHONE_STATE permission
+     *
+     * @param subId the subscription ID that this request applies to.
+     * @param appType the uicc app type like {@link APPTYPE_CSIM}
+     * @returntrue if the specified type of application in UICC CARD or false if no uicc or error.
+     * @hide
+     */
+    boolean isApplicationOnIcc(int subId, int appType);
 }
