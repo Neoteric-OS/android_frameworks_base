@@ -46,6 +46,30 @@
       "revId": "f91bf604aa6c3ad3d4f90989893915c67609fc0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32324ec1_7792e9f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-10T00:01:36Z",
+      "side": 1,
+      "message": "Update#2:\nAlso tried playing with different UIDs, interface names and netIds to rule out the possibility of collision with something existing on the device.",
+      "parentUuid": "ccd1d853_9e51bf35",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 88
+      },
+      "revId": "f91bf604aa6c3ad3d4f90989893915c67609fc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
