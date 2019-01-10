@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42851abe_33b34421",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "// mLinkProperties and mNetworkCapbilities must never be null or we will NPE.\n// Provide empty objects in case we are started and the network disconnects before\n// we can ever fetch them.\n// TODO: Delete ASAP.\nmLinkProperties \u003d new LinkProperties();\nmNetworkCapabilities \u003d new NetworkCapabilities();\nmNetworkCapabilities.clearAll();",
+      "range": {
+        "startLine": 368,
+        "startChar": 4,
+        "endLine": 368,
+        "endChar": 5
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcb435f_e768ca4f",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Per in-person: this should not bypass private DNS.",
+      "range": {
+        "startLine": 937,
+        "startChar": 42,
+        "endLine": 937,
+        "endChar": 50
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06927f54_76bec9f1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Nit: why is this not a boolean? If it\u0027s because you need to put it into a Message, then you can use encodeBool and toBool.",
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba90f99_e588058a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Generally, I\u0027m not a fan of these passthrough methods we\u0027re adding to NetworkAgentInfo. But regardless of that, I think the name of this method is misleading, since it *only* affects NetworkMonitor. notifyNetworkMonitorOfDisconnect?",
+      "range": {
+        "startLine": 2799,
+        "startChar": 12,
+        "endLine": 2799,
+        "endChar": 37
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02f4e39_5bf4ca6f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4886,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but can we just remove the concept of systemReady from NetworkMonitor? The only thing it uses for is so that it can avoid sending the network conditions broadcast, but it seems simpler just to catch the ISE in NetworkMonitor than go through this elaborate dance of notifying the NetworkMonitor that the system is ready.",
+      "range": {
+        "startLine": 4881,
+        "startChar": 0,
+        "endLine": 4886,
+        "endChar": 0
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7404179_4c8d87af",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5826,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "TODO: pass the LinkProperties to the NetworkMonitor in the notifyNetworkConnected call.",
+      "range": {
+        "startLine": 5826,
+        "startChar": 77,
+        "endLine": 5826,
+        "endChar": 78
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f71ca1f_6e2b968e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Per in-person discussion, let\u0027s remove these.",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 4
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3b4f93_5a697146",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "Per in-person conversation: maybe remove from here, if nothing in the system uses them?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72a16f1_62165845",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T02:57:27Z",
+      "side": 1,
+      "message": "TODO: consider having ConnectivityManager talk directly to the network stack app instead of duplicating this code.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "3f3a1e41a66eca4225a8b8a5d022f2e7cb1e5288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
