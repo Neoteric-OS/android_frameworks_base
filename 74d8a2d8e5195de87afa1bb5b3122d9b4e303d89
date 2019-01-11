@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a619b0d0_ff7d95e8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5085,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-11T13:54:15Z",
+      "side": 1,
+      "message": "You\u0027re going to hate me for this, but do we have any idea of the performance impact of this ? I think this was the reason I shied away from doing it when I first wrote that comment in the test. equalsUids() is a pretty expensive operation unfortunately.\n\nI *think* it\u0027s already done in many places and the marginal increase is actually small anyway. Also I *think* that it will overwhelmingly be the case that either the old or the new uids (or both) are null, in which case it\u0027s trivial, and because only VPNs have that it happens only for one network and then again barely at all.\n\nSo I think it\u0027s actually completely fine. But... do we have any measurement ?",
+      "range": {
+        "startLine": 5085,
+        "startChar": 25,
+        "endLine": 5085,
+        "endChar": 35
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "917d3fd8_7535a21b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -96,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d44b392_0f520f71",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5093,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-11T13:54:15Z",
+      "side": 1,
+      "message": "UIDs aren\u0027t changed by rematching, but that\u0027s not enough to say that updateNC can\u0027t have been called by rematchNetworkAndRequests. If an agent updates its UID, that will trigger a rematch, and if as a result a network changes foreground state, then you could come here having been called by rematchNetworkAndRequests. But I think now that in this case it\u0027s also not possible that the UIDs will have changed. So while what I was saying about this being reentered in the middle of itself is (I think) true, it was already the case. Your patch is simply doing the same thing as is already done for other things.\n\nAlso I think you\u0027re right, a VPN can\u0027t be a background network which prevents this from happening anyway.",
+      "parentUuid": "af91be11_866622fd",
+      "range": {
+        "startLine": 5092,
+        "startChar": 12,
+        "endLine": 5093,
+        "endChar": 84
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "615e6690_fbb9a642",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 5
@@ -154,6 +201,30 @@
       "side": 1,
       "message": "My understanding is this: with added \"equalsUids\" check in updateCapabilities, it now goes into \"else\" branch, which causes two callbacks for this request:\n1) rematchAllNetworksAndRequests(nai, oldScore) is causing CALLBACK_AVAILABLE, which I believe also causes onCapabilitiesChanged.\n2) notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED) causes onCapabilitiesChanged explicitly.\n\nMy first thought wast to swap those two, but then I get the opposite problem - onCapabilitiesChanged is invoked before onLost when the app is removed from uids.\n\nSo it looks like to fix it I should change the code to only send CALLBACK_CAP_CHANGED to requests that were already satisfied by the network, and so didn\u0027t get CALLBACK_AVAILABLE.\n\nDoes this make sense? If so do you have any hints on what is the most elegant way to do it?",
       "parentUuid": "48ffae37_edb292f8",
+      "range": {
+        "startLine": 4328,
+        "startChar": 46,
+        "endLine": 4328,
+        "endChar": 80
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35c60c1_20143740",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-11T13:54:15Z",
+      "side": 1,
+      "message": "I think what you suggest would work and I don\u0027t have any better suggestion, except from commenting it well.",
+      "parentUuid": "36c23bc5_0e3799f4",
       "range": {
         "startLine": 4328,
         "startChar": 46,

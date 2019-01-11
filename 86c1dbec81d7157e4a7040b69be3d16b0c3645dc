@@ -46,6 +46,30 @@
       "revId": "86c1dbec81d7157e4a7040b69be3d16b0c3645dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d60f9b2_da992930",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-11T13:54:15Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s much more robust with UIDs, though it may be a bit faster. The reason for this is that the UID ranges are a set of UidRange (which is a glorified pair of ints), and our implementation that tests for equality requires the ranges to be the same (i.e. if you compare a range 1~1000+1001~2000 with a range 1~500+501~2000 you\u0027ll get false).\n\nThe flimsy protection here comes mostly from the fact that the uid ranges are always generated the same way and are put into a SortedSet at the conversion from the list of apps to UIDs and never twiddled with afterwards, so in practice it works. If the VPN app decided to send the same list of apps in a different order, your old code would have missed it.\n\nAlso keep in mind that while not ideal, the worst that can happen here is that seamless handover fails, and then the VPN works anyway. It kills your feature but it doesn\u0027t destroy connectivity on the device nor does it violate expectations of the user that their traffic goes through the VPN.",
+      "parentUuid": "60cef2f0_40ec0e30",
+      "range": {
+        "startLine": 1123,
+        "startChar": 13,
+        "endLine": 1123,
+        "endChar": 27
+      },
+      "revId": "86c1dbec81d7157e4a7040b69be3d16b0c3645dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
