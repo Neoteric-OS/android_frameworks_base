@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97db417a_ab4264c8",
+        "filename": "telephony/java/android/telephony/CallAttributes.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2019-01-11T18:57:32Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "fd59a813293ecd604a925dddffb2b391385f4c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a2c6d5_74a9c7ad",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2019-01-11T18:57:32Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 24
+      },
+      "revId": "fd59a813293ecd604a925dddffb2b391385f4c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
