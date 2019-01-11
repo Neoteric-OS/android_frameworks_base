@@ -93,6 +93,46 @@
       "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17e0fb46_1b9aca8a",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-11T18:25:37Z",
+      "side": 1,
+      "message": "Remove the @link; CallQualityLevel is an @hide class so this wouldn\u0027t work for doc generation.  Can just say, \"call quality level\".",
+      "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f2cb38_106f5298",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-11T18:25:37Z",
+      "side": 1,
+      "message": "Remove the @link; CallQualityLevel is an @hide class so this wouldn\u0027t work for doc generation.  Can just say, \"call quality level\".",
+      "range": {
+        "startLine": 145,
+        "startChar": 26,
+        "endLine": 145,
+        "endChar": 51
+      },
+      "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
