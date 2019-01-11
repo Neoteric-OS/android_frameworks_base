@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- application name [CHAR LIMIT=32] -->
+    <string name="app_name">AndroidOnTap Installer</string>
+
+    <!-- notification channel name [CHAR LIMIT=32] -->
+    <string name="notification_channel_name">AndroidOnTap Installer</string>
+
+    <!-- Displayed on notification: AOT installation is completed [CHAR LIMIT=128] -->
+    <string name="notification_install_completed">Installation is completed, you can reboot into the new installed system now.</string>
+    <!-- Displayed on notification: AOT installation is in progress [CHAR LIMIT=128] -->
+    <string name="notification_install_inprogress">Installation is in progress.</string>
+    <!-- Displayed on notification: AOT installation is in progress [CHAR LIMIT=128] -->
+    <string name="notification_install_failed">Installation Failed.</string>
+    <!-- Displayed on notification: We are running in AOT [CHAR LIMIT=128] -->
+    <string name="notification_aot_in_use">We are running in AndroidOnTap.</string>
+
+    <!-- Action on notification: Cancel installation [CHAR LIMIT=16] -->
+    <string name="notification_action_cancel">Cancel</string>
+    <!-- Action on notification: Discard installation [CHAR LIMIT=16] -->
+    <string name="notification_action_discard">Discard</string>
+    <!-- Action on notification: Uninstall AOT [CHAR LIMIT=16] -->
+    <string name="notification_action_uninstall">Uninstall</string>
+    <!-- Action on notification: Reboot to AOT [CHAR LIMIT=16] -->
+    <string name="notification_action_reboot_to_aot">Reboot</string>
+
+
+</resources>

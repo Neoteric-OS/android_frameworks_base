@@ -438,4 +438,9 @@ applications that come with the platform
         <permission name="android.permission.CONTROL_VPN"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.android.androidontap">
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.MANAGE_ANDROID_ON_TAP"/>
+    </privapp-permissions>
+
 </permissions>
