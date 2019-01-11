@@ -46,6 +46,29 @@
       "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbdf2d62_fba9c2a5",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2019-01-11T02:05:09Z",
+      "side": 1,
+      "message": "nit: should we rename to mNumRtpPacketsNotTransmitted to match mNumRtpPacketsNotReceived?",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
