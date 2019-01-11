@@ -1,0 +1,42 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.android.liveimage">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MANAGE_LIVE_IMAGE" />
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="false"
+        android:label="@string/app_name">
+
+        <service
+            android:name=".LiveImageInstallationService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":liveimage" />
+
+        <activity android:name=".VerificationActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"
+            android:process=":liveimage">
+            <intent-filter>
+                <action android:name="android.intent.action.INSTALL_LIVEIMAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
