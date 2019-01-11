@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f716d5_48960235",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4817,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-11T21:54:52Z",
+      "side": 1,
+      "message": "Good to add prefix; helps doc generation.\n\nprefix \u003d {\"ERROR_\"},\nvalue \u003d {Blah }",
+      "revId": "5a56aabb0e242a9e81792192d767c563addae2ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
