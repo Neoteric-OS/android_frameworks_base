@@ -69,6 +69,30 @@
       "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ce0d85_65d91dd4",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-11T18:11:23Z",
+      "side": 1,
+      "message": "Amruth recommended the opposite, I think I like []Lost because it\u0027s a little more descriptive. []NotTransmitted seems a little confusing, like maybe we were unable to transmit them. Either way, its explained in the docs so I think its okay.",
+      "parentUuid": "cbdf2d62_fba9c2a5",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
