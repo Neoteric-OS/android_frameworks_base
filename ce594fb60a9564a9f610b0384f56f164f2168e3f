@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2570a34_8944d3cd",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10474,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2019-01-11T23:34:27Z",
+      "side": 1,
+      "message": "nit: append \".\"",
+      "range": {
+        "startLine": 10474,
+        "startChar": 78,
+        "endLine": 10474,
+        "endChar": 79
+      },
+      "revId": "ce594fb60a9564a9f610b0384f56f164f2168e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b2d363_55271495",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10486,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2019-01-11T23:34:27Z",
+      "side": 1,
+      "message": "Maybe append the time unit: IN_DURATION_BETWEEN_RECOVERY_STEPS_IN_MS\n\nplease also update the comment.",
+      "range": {
+        "startLine": 10486,
+        "startChar": 36,
+        "endLine": 10486,
+        "endChar": 70
+      },
+      "revId": "ce594fb60a9564a9f610b0384f56f164f2168e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0606bc5b_7deb0fe1",
         "filename": "core/tests/coretests/src/android/provider/SettingsBackupTest.java",
         "patchSetId": 3
