@@ -438,4 +438,8 @@ applications that come with the platform
         <permission name="android.permission.CONTROL_VPN"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.android.liveimage">
+        <permission name="android.permission.REBOOT"/>
+    </privapp-permissions>
+
 </permissions>
