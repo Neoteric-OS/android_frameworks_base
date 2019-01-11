@@ -22,6 +22,30 @@
       "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01057c6_8df07595",
+        "filename": "telephony/java/android/telephony/CallQuality.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-11T00:42:22Z",
+      "side": 1,
+      "message": "spoke offline, since multiple active calls isn\u0027t handled yet, and the telecom call Id I was using is not supposed to be exposed, we will leave the mCallId out.\n\nEventually when we support reporting the call quality when there are multiple active calls we can just report the quality for the foreground call.",
+      "parentUuid": "3d9f9353_7d7bc80e",
+      "range": {
+        "startLine": 81,
+        "startChar": 11,
+        "endLine": 81,
+        "endChar": 22
+      },
+      "revId": "eaba14d5df942761d9e75fd2b1aae90345ee6de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
