@@ -151,6 +151,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Whether a captive portal was found during the last network validation attempt.
     public boolean lastCaptivePortalDetected;
 
+    // Set to true when the network only pass the http validation but fail to https validation.
+    public boolean partialConnectivity;
+
+    // Set to true when user wants to use partial internet connectivity network.
+    public boolean acceptPartialConnectivity;
+
     // Networks are lingered when they become unneeded as a result of their NetworkRequests being
     // satisfied by a higher-scoring network. so as to allow communication to wrap up before the
     // network is taken down.  This usually only happens to the default network. Lingering ends with
@@ -611,19 +617,23 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         clatd = null;
     }
 
+    // TODO: Move shorter log to the top and only print the boolean variable which value is true
+    // to improve readability.
     public String toString() {
-        return "NetworkAgentInfo{ ni{" + networkInfo + "}  " +
-                "network{" + network + "}  nethandle{" + network.getNetworkHandle() + "}  " +
-                "lp{" + linkProperties + "}  " +
-                "nc{" + networkCapabilities + "}  Score{" + getCurrentScore() + "}  " +
-                "everValidated{" + everValidated + "}  lastValidated{" + lastValidated + "}  " +
-                "created{" + created + "} lingering{" + isLingering() + "} " +
-                "explicitlySelected{" + networkMisc.explicitlySelected + "} " +
-                "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} " +
-                "everCaptivePortalDetected{" + everCaptivePortalDetected + "} " +
-                "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} " +
-                "clat{" + clatd + "} " +
-                "}";
+        return "NetworkAgentInfo{ ni{" + networkInfo + "}  "
+                + "network{" + network + "}  nethandle{" + network.getNetworkHandle() + "}  "
+                + "lp{" + linkProperties + "}  "
+                + "nc{" + networkCapabilities + "}  Score{" + getCurrentScore() + "}  "
+                + "everValidated{" + everValidated + "}  lastValidated{" + lastValidated + "}  "
+                + "created{" + created + "} lingering{" + isLingering() + "} "
+                + "explicitlySelected{" + networkMisc.explicitlySelected + "} "
+                + "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} "
+                + "everCaptivePortalDetected{" + everCaptivePortalDetected + "} "
+                + "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} "
+                + "partialConnectivity{" + partialConnectivity + "} "
+                + "acceptPartialConnectivity{" + acceptPartialConnectivity + "} "
+                + "clat{" + clatd + "} "
+                + "}";
     }
 
     public String name() {
