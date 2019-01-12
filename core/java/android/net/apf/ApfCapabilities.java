@@ -38,13 +38,14 @@ public class ApfCapabilities {
      */
     public final int apfPacketFormat;
 
-    public ApfCapabilities(int apfVersionSupported, int maximumApfProgramSize, int apfPacketFormat)
-    {
+    public ApfCapabilities(
+            int apfVersionSupported, int maximumApfProgramSize, int apfPacketFormat) {
         this.apfVersionSupported = apfVersionSupported;
         this.maximumApfProgramSize = maximumApfProgramSize;
         this.apfPacketFormat = apfPacketFormat;
     }
 
+    @Override
     public String toString() {
         return String.format("%s{version: %d, maxSize: %d, format: %d}", getClass().getSimpleName(),
                 apfVersionSupported, maximumApfProgramSize, apfPacketFormat);
