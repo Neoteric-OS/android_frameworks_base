@@ -16,6 +16,24 @@
       "revId": "a32716511808455db8cad168af10274125bfaa0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386b6599_a1655dbc",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3159,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-12T01:06:21Z",
+      "side": 1,
+      "message": "We actually already have EuiccManager.createForCardId() and EuiccManager.getEid()... this API is a little easier to use.\n\nBut now you\u0027ve got me wondering if there should just be one correct way to do it?",
+      "parentUuid": "28b7792e_1b851bf1",
+      "revId": "a32716511808455db8cad168af10274125bfaa0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
