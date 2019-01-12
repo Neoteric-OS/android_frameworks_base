@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28b7792e_1b851bf1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3159,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-12T00:32:10Z",
+      "side": 1,
+      "message": "Does it make sense to put this on EuiccManager?",
+      "revId": "a32716511808455db8cad168af10274125bfaa0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
