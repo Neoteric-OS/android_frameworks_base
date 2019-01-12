@@ -734,13 +734,19 @@ package android.bluetooth {
 
   public final class BluetoothDevice implements android.os.Parcelable {
     method public boolean cancelBondProcess();
+    method public int getSilenceState();
     method public boolean isConnected();
     method public boolean isEncrypted();
     method public boolean removeBond();
     method public boolean setPhonebookAccessPermission(int);
+    method public boolean setSilenceState(int);
     field public static final int ACCESS_ALLOWED = 1; // 0x1
     field public static final int ACCESS_REJECTED = 2; // 0x2
     field public static final int ACCESS_UNKNOWN = 0; // 0x0
+    field public static final java.lang.String ACTION_SILENCE_STATE_CHANGED = "android.bluetooth.device.action.SILENCE_STATE_CHANGED";
+    field public static final java.lang.String EXTRA_SILENCE_STATE = "android.bluetooth.device.extra.SILENCE_STATE";
+    field public static final int SILENCE_DISABLED = 1; // 0x1
+    field public static final int SILENCE_ENABLED = 0; // 0x0
   }
 
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {

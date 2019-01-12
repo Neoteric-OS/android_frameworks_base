@@ -400,6 +400,29 @@ public final class BluetoothDevice implements Parcelable {
     public static final String ACTION_CONNECTION_ACCESS_CANCEL =
             "android.bluetooth.device.action.CONNECTION_ACCESS_CANCEL";
 
+    /** @hide */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @SystemApi
+    public static final String ACTION_SILENCE_STATE_CHANGED =
+            "android.bluetooth.device.action.SILENCE_STATE_CHANGED";
+
+    /**
+     * Used as an extra field in {@link #ACTION_SILENCE_STATE_CHANGED} intent.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_SILENCE_STATE =
+            "android.bluetooth.device.extra.SILENCE_STATE";
+
+    /** @hide */
+    @SystemApi
+    public static final int SILENCE_ENABLED = 0;
+
+    /** @hide */
+    @SystemApi
+    public static final int SILENCE_DISABLED = 1;
+
     /**
      * Used as an extra field in {@link #ACTION_CONNECTION_ACCESS_REQUEST} intent.
      *
@@ -1458,6 +1481,61 @@ public final class BluetoothDevice implements Parcelable {
             Log.e(TAG, "", e);
         }
         return ACCESS_UNKNOWN;
+    }
+
+    /**
+     * Set the Bluetooth device silence mode.
+     *
+     * <p> This API gracefully remove the device from active, and lower Bluetooth
+     * traffic by disable some of the indicators in AV Remote Control Profile
+     * and HandsFree Profile when state is set as {@link #SILENCE_ENABLED}.
+     * Device resume to normal when state is set as {@link #SILENCE_DISABLED}.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_PRIVILEGED}.
+     *
+     * @param state {@link #SILENCE_ENABLED} or {@link #SILENCE_DISABLED}
+     * @return true on success, false on error.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean setSilenceState(int state) {
+        final IBluetooth service = sService;
+        if (service == null) {
+            return false;
+        }
+        try {
+            if (state == getSilenceState()) {
+                return true;
+            }
+            return service.setDeviceSilence(this,
+                    state == SILENCE_ENABLED ? true : false);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        }
+        return false;
+    }
+
+    /**
+     * Check the device silence state.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_PRIVILEGED}.
+     *
+     * @return the device silence state, whether {@link #SILENCE_ENABLED} or
+     * {@link #SILENCE_DISABLED}.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public int getSilenceState() {
+        final IBluetooth service = sService;
+        if (service == null) {
+            return SILENCE_DISABLED;
+        }
+        try {
+            return service.isDeviceSilenced(this) ? SILENCE_ENABLED : SILENCE_DISABLED;
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        }
+        return SILENCE_DISABLED;
     }
 
     /**
