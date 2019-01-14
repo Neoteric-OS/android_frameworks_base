@@ -68,13 +68,13 @@ import com.android.internal.policy.IKeyguardDrawnCallback;
 import com.android.internal.policy.IKeyguardExitCallback;
 import com.android.internal.policy.IKeyguardStateCallback;
 import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.util.LatencyTracker;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardConstants;
 import com.android.keyguard.KeyguardDisplayManager;
 import com.android.keyguard.KeyguardSecurityView;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
-import com.android.internal.util.LatencyTracker;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.Dependency;
 import com.android.systemui.SystemUI;
@@ -781,14 +781,17 @@ public class KeyguardViewMediator extends SystemUI {
      * Let us know that the system is ready after startup.
      */
     public void onSystemReady() {
+        synchronized (this) {
+            if (DEBUG) Log.d(TAG, "run doKeyguardLocked in Binder thread");
+            mSystemReady = true;
+            doKeyguardLocked(null);
+        }
         mHandler.obtainMessage(SYSTEM_READY).sendToTarget();
     }
 
     private void handleSystemReady() {
         synchronized (this) {
             if (DEBUG) Log.d(TAG, "onSystemReady");
-            mSystemReady = true;
-            doKeyguardLocked(null);
             mUpdateMonitor.registerCallback(mUpdateCallback);
         }
         // Most services aren't available until the system reaches the ready state, so we
