@@ -358,6 +358,7 @@ static bool generatePrivacyFlags(const Descriptor* descriptor, const Destination
                     break;
                 }
                 // else treat string field as primitive field and goes to default
+                GOOGLE_FALLTHROUGH_INTENDED;
             default:
                 if (!hasDefaultFlags[i]) printPrivacy(fieldName, field, "NULL", fieldDest, "NULL");
         }
