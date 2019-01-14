@@ -28,6 +28,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemProperties;
 import android.os.Trace;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -390,7 +391,7 @@ public abstract class LayoutInflater {
     private void initPrecompiledViews() {
         try {
             mUseCompiledView =
-                android.os.SystemProperties.getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false);
+                SystemProperties.getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false);
             if (mUseCompiledView) {
                 mPrecompiledClassLoader = mContext.getClassLoader();
                 String dexFile = mContext.getCodeCacheDir() + COMPILED_VIEW_DEX_FILE_NAME;
@@ -462,15 +463,14 @@ public abstract class LayoutInflater {
         final Resources res = getContext().getResources();
         if (DEBUG) {
             Log.d(TAG, "INFLATING from resource: \"" + res.getResourceName(resource) + "\" ("
-                    + Integer.toHexString(resource) + ")");
+                  + Integer.toHexString(resource) + ")");
         }
 
-        View view = tryInflatePrecompiled(resource, res);
+        View view = tryInflatePrecompiled(resource, res, root, attachToRoot);
         if (view != null) {
             return view;
         }
-
-        final XmlResourceParser parser = res.getLayout(resource);
+        XmlResourceParser parser = res.getLayout(resource);
         try {
             return inflate(parser, root, attachToRoot);
         } finally {
@@ -478,7 +478,9 @@ public abstract class LayoutInflater {
         }
     }
 
-    private @Nullable View tryInflatePrecompiled(@LayoutRes int resource, Resources res) {
+    private @Nullable
+    View tryInflatePrecompiled(@LayoutRes int resource, Resources res, @Nullable ViewGroup root,
+        boolean attachToRoot) {
         if (!mUseCompiledView) {
             return null;
         }
@@ -491,9 +493,29 @@ public abstract class LayoutInflater {
 
         try {
             Class clazz = mPrecompiledClassLoader.loadClass("" + pkg + ".CompiledView");
-            // TODO: cache this method
             Method inflater = clazz.getMethod(layout, Context.class, int.class);
-            return (View) inflater.invoke(null, mContext, resource);
+            View view = (View) inflater.invoke(null, mContext, resource);
+
+            if (view != null && root != null) {
+                // We were able to use the precompiled inflater, but now we need to do some work to
+                // attach the view to the root correctly.
+                XmlResourceParser parser = res.getLayout(resource);
+                try {
+                    AttributeSet attrs = Xml.asAttributeSet(parser);
+                    advanceToRootNode(parser);
+                    ViewGroup.LayoutParams params = root.generateLayoutParams(attrs);
+
+                    if (attachToRoot) {
+                        root.addView(view, params);
+                    } else {
+                        view.setLayoutParams(params);
+                    }
+                } finally {
+                    parser.close();
+                }
+            }
+
+            return view;
         } catch (Throwable e) {
             if (DEBUG) {
                 Log.e(TAG, "Failed to use precompiled view", e);
@@ -504,6 +526,24 @@ public abstract class LayoutInflater {
         return null;
     }
 
+    /**
+     * Advances the given parser to the first START_TAG. Throws InflateException if no start tag is
+     * found.
+     */
+    private void advanceToRootNode(XmlPullParser parser)
+        throws InflateException, IOException, XmlPullParserException {
+        // Look for the root node.
+        int type;
+        while ((type = parser.next()) != XmlPullParser.START_TAG &&
+            type != XmlPullParser.END_DOCUMENT) {
+            // Empty
+        }
+
+        if (type != XmlPullParser.START_TAG) {
+            throw new InflateException(parser.getPositionDescription()
+                + ": No start tag found!");
+        }
+    }
 
     /**
      * Inflate a new view hierarchy from the specified XML node. Throws
@@ -538,18 +578,7 @@ public abstract class LayoutInflater {
             View result = root;
 
             try {
-                // Look for the root node.
-                int type;
-                while ((type = parser.next()) != XmlPullParser.START_TAG &&
-                        type != XmlPullParser.END_DOCUMENT) {
-                    // Empty
-                }
-
-                if (type != XmlPullParser.START_TAG) {
-                    throw new InflateException(parser.getPositionDescription()
-                            + ": No start tag found!");
-                }
-
+                advanceToRootNode(parser);
                 final String name = parser.getName();
 
                 if (DEBUG) {
@@ -1052,16 +1081,9 @@ public abstract class LayoutInflater {
                 + "reference. The layout ID " + value + " is not valid.");
         }
 
-        final View precompiled = tryInflatePrecompiled(layout, context.getResources());
-        if (precompiled != null) {
-            final ViewGroup precompiledGroup = (ViewGroup) parent;
-            final XmlResourceParser childParser = context.getResources().getLayout(layout);
-            childParser.next(); // start document
-            childParser.next(); // start view
-            ViewGroup.LayoutParams precompiledParams = precompiledGroup
-                .generateLayoutParams(childParser);
-            precompiledGroup.addView(precompiled, precompiledParams);
-        } else {
+        final View precompiled = tryInflatePrecompiled(layout, context.getResources(),
+            (ViewGroup) parent, /*attachToRoot=*/true);
+        if (precompiled == null) {
             final XmlResourceParser childParser = context.getResources().getLayout(layout);
 
             try {
