@@ -87,6 +87,29 @@
       "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78ea5599_ed57a5f9",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-14T19:15:44Z",
+      "side": 1,
+      "message": "From an API standpoint, is there a way to know how much is already stored on the card?  I\u0027m curious what the use-case is for knowing the capacity?",
+      "range": {
+        "startLine": 1393,
+        "startChar": 15,
+        "endLine": 1393,
+        "endChar": 34
+      },
+      "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
