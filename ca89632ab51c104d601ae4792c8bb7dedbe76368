@@ -22,6 +22,30 @@
       "revId": "ca89632ab51c104d601ae4792c8bb7dedbe76368",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135c2588_bdcc8c36",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2995,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-15T22:45:42Z",
+      "side": 1,
+      "message": "Correct; when I say we won\u0027t be sent as an ordered broadcast it means that we won\u0027t wait for the response.",
+      "parentUuid": "b7a86ebd_2551290e",
+      "range": {
+        "startLine": 2995,
+        "startChar": 45,
+        "endLine": 2995,
+        "endChar": 97
+      },
+      "revId": "ca89632ab51c104d601ae4792c8bb7dedbe76368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
