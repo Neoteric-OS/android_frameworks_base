@@ -15,6 +15,8 @@
  */
 package android.net;
 
+import static android.net.IpSecManager.INVALID_RESOURCE_ID;
+
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -61,6 +63,7 @@ import com.android.internal.util.Protocol;
 
 import libcore.net.event.NetworkEventDispatcher;
 
+import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
@@ -1849,8 +1852,36 @@ public class ConnectivityManager {
             @NonNull InetAddress destination,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull Callback callback) {
-        return new NattSocketKeepalive(mService, network, socket, source, destination, executor,
-                callback);
+        return new NattSocketKeepalive(mService, network, socket.getFileDescriptor(),
+            socket.getResourceId(), source, destination, executor, callback);
+    }
+
+    /**
+     * Request that keepalives be started on a IPsec NAT-T socket file descriptor. Directly called
+     * by system apps which don't use IpSecService to create {@link UdpEncapsulationSocket}.
+     *
+     * @param network The {@link Network} the socket is on.
+     * @param fd The file descriptor that needs to be kept alive.
+     * @param source The source address of the {@link UdpEncapsulationSocket}.
+     * @param destination The destination address of the {@link UdpEncapsulationSocket}.
+     * @param executor The executor on which callback will be invoked. The provided {@link Executor}
+     *                 must run callback sequentially, otherwise the order of callbacks cannot be
+     *                 guaranteed.
+     * @param callback A {@link SocketKeepalive.Callback}. Used for notifications about keepalive
+     *        changes. Must be extended by applications that use this API.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD)
+    public SocketKeepalive createNattKeepalive(@NonNull Network network,
+            @NonNull FileDescriptor fd,
+            @NonNull InetAddress source,
+            @NonNull InetAddress destination,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull Callback callback) {
+        return new NattSocketKeepalive(mService, network, fd, INVALID_RESOURCE_ID /* Unused */,
+                source, destination, executor, callback);
     }
 
     /**
