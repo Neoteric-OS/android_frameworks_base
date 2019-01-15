@@ -22,6 +22,30 @@
       "revId": "34609dcdd510cdf9716a7d51804b8b408b5a9569",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9ce7cc_18d664d6",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-15T07:35:35Z",
+      "side": 1,
+      "message": "No no this really fails the test. It\u0027s true that the run will just end up with \"process crashed\" but the logcat shows the correct stacktrace, so I think this is fine.",
+      "parentUuid": "35a945e0_58f4cbdf",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 86
+      },
+      "revId": "34609dcdd510cdf9716a7d51804b8b408b5a9569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
