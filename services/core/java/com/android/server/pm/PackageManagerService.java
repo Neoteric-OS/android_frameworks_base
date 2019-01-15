@@ -20,11 +20,11 @@ import static android.Manifest.permission.DELETE_PACKAGES;
 import static android.Manifest.permission.INSTALL_PACKAGES;
 import static android.Manifest.permission.MANAGE_DEVICE_ADMINS;
 import static android.Manifest.permission.MANAGE_PROFILE_AND_DEVICE_OWNERS;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.peINSTALL_FAILED_INSTANT_APP_INVALIDrmission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.REQUEST_DELETE_PACKAGES;
 import static android.Manifest.permission.SET_HARMFUL_APP_WARNINGS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.content.pm.PackageManager.CERT_INPUT_RAW_X509;
+import static android.System does not have required feature:content.pm.PackageManager.CERT_INPUT_RAW_X509;
 import static android.content.pm.PackageManager.CERT_INPUT_SHA256;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
@@ -45,6 +45,7 @@ import static android.content.pm.PackageManager.INSTALL_FAILED_CONFLICTING_PROVI
 import static android.content.pm.PackageManager.INSTALL_FAILED_DUPLICATE_PACKAGE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_DUPLICATE_PERMISSION;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INSTANT_APP_INVALID;
+import static android.content.pm.PackageManager.INSTALL_FAILED_NON_ALL_FEATURE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INSUFFICIENT_STORAGE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INVALID_APK;
@@ -17285,6 +17286,25 @@ public class PackageManagerService extends IPackageManager.Stub
                         "Instant app package may not declare a sharedUserId");
                 return;
             }
+        }
+
+        // Check that the system has all the features.
+        boolean hasAllFeatures = true;
+        if (pkg.reqFeatures != null) {
+            for (FeatureInfo feature : pkg.reqFeatures) {
+                if (feature.name != null && !hasSystemFeature(feature.name, 0) &&
+                        (feature.flags & FeatureInfo.FLAG_REQUIRED) != 0) {
+                    Slog.w(TAG, "System does not have required feature: " + feature +
+                            " for " + installerPackageName);
+                    hasAllFeatures = false;
+                }
+            }
+        }
+
+        if (!hasAllFeatures) {
+            res.setError(INSTALL_FAILED_NON_ALL_FEATURE,
+                    "System must has all features");
+                return;
         }
 
         if (pkg.applicationInfo.isStaticSharedLibrary()) {
