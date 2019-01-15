@@ -1353,6 +1353,13 @@ public abstract class PackageManager {
      */
     public static final int INSTALL_FAILED_BAD_DEX_METADATA = -117;
 
+    /**
+     * Installation failed return code: the installation can be decided at run-time
+     * according to the capabilities/features the device supports.
+     * @hide
+     */
+    public static final int INSTALL_FAILED_NON_ALL_FEATURE = -118;
+
     /** @hide */
     @IntDef(flag = true, prefix = { "DELETE_" }, value = {
             DELETE_KEEP_DATA,
