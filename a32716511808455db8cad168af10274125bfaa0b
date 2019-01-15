@@ -34,6 +34,24 @@
       "revId": "a32716511808455db8cad168af10274125bfaa0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be080760_166df09b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3159,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-15T00:54:30Z",
+      "side": 1,
+      "message": "After mulling it over for the weekend I still think it makes the most sense here in TelephonyManager.",
+      "parentUuid": "386b6599_a1655dbc",
+      "revId": "a32716511808455db8cad168af10274125bfaa0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
