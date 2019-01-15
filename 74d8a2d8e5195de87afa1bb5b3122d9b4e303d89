@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36f66811_ab888438",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5085,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-15T13:44:17Z",
+      "side": 1,
+      "message": "I have no measurement but I changed updateUids to return whether there was any change, so now there is no addition recalculation. Although the comparison is still happening in establish(). But that is limited to VPNs for sure, so the impact in general should be negligible.\n\nBTW, two observations on NC#equalsUids:\n1) is there any reason not to use ArraySet.equals()?\n2) it seems to distinguish between null and an empty set.\n\nBecause of 2) I had fun time debugging ConnectivityServiceTest#testVpnNetworkActive:\n1) it calls mMockVpn.setUids([(myUid, myUid)]), but those uids aren’t saved to MockVpn.mMockNetworkAgent because it’s not connected (checked in MockVpn.updateCapabilities).\n2) then it calls connect, which overwrites MockVpn.mNetworkCapabilitie with empty MockVpn.mMockNetworkAgent.mNetworkCapabilities, so uids are null.\n3) Then it calls mMockVpn.setUids(empty set), and since it is different from null, rematch happens, and the test suddenly gets onLost callback as if everything works :)\nI fixed MockVpn.updateCapabilities to save capabilities to the mock agent even when not connected.",
+      "parentUuid": "a619b0d0_ff7d95e8",
+      "range": {
+        "startLine": 5085,
+        "startChar": 25,
+        "endLine": 5085,
+        "endChar": 35
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917d3fd8_7535a21b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d0db5d50_be477924",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5093,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-15T13:44:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d44b392_0f520f71",
+      "range": {
+        "startLine": 5092,
+        "startChar": 12,
+        "endLine": 5093,
+        "endChar": 84
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "615e6690_fbb9a642",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 5
@@ -154,6 +202,30 @@
       "writtenOn": "2019-01-10T14:39:33Z",
       "side": 1,
       "message": "No objections to the logic but I think it would be a bit easier to understand if this paralleled the way it\u0027s done for LinkProperties. As you obviously noticed you can\u0027t just make this updateNetworkCapabilitiesInPlaceIfPossible and add it with \u0026\u0026 to the test because if this new function ever says no then we\u0027d end up having sent a wrong LP.\n\nBut what you could do is to move the contents of the current updateLP to a new function that returns an LP, create a symmetric updateNC function, and have both be called by a new updateLPAndNCInPlaceIfPossible. That function would call both, and only if both are okay then send both the LP and the NC, and return true or false the way updateLPInPlaceIfPossible does today.",
+      "range": {
+        "startLine": 1054,
+        "startChar": 17,
+        "endLine": 1054,
+        "endChar": 39
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9ec397_d7828690",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-15T13:44:17Z",
+      "side": 1,
+      "message": "I tried applying you suggestion, but IMHO it doesn\u0027t add clarity, in particular, we don\u0027t always need to send updated NC, only if the uids actually change (which is unlikely in general I believe), so sending both would be a bit of waste. And without sending both it won\u0027t be particularly parallel in logic. WDYT?",
+      "parentUuid": "615e6690_fbb9a642",
       "range": {
         "startLine": 1054,
         "startChar": 17,
@@ -234,6 +306,30 @@
       "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37eb08f_cce8ad99",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4328,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-15T13:44:17Z",
+      "side": 1,
+      "message": "Filed b/122845176 to address it in a follow-up.",
+      "parentUuid": "a35c60c1_20143740",
+      "range": {
+        "startLine": 4328,
+        "startChar": 46,
+        "endLine": 4328,
+        "endChar": 80
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

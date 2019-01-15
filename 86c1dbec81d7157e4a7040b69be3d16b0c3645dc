@@ -70,6 +70,30 @@
       "revId": "86c1dbec81d7157e4a7040b69be3d16b0c3645dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f91e5f48_4b3af21d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-01-15T13:44:17Z",
+      "side": 1,
+      "message": "Thanks for clarification!",
+      "parentUuid": "0d60f9b2_da992930",
+      "range": {
+        "startLine": 1123,
+        "startChar": 13,
+        "endLine": 1123,
+        "endChar": 27
+      },
+      "revId": "86c1dbec81d7157e4a7040b69be3d16b0c3645dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
