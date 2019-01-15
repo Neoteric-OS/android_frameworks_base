@@ -258,7 +258,7 @@ class LocalSocketImpl
                 throw new IllegalStateException("unknown sockType");
         }
         try {
-            fd = Os.socket(OsConstants.AF_UNIX, osType, 0);
+            fd = Os.socket(OsConstants.AF_UNIX, osType | OsConstant.SOCK_CLOEXEC, 0);
             mFdCreatedInternally = true;
         } catch (ErrnoException e) {
             e.rethrowAsIOException();
