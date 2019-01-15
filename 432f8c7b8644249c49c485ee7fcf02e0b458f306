@@ -22,6 +22,30 @@
       "revId": "432f8c7b8644249c49c485ee7fcf02e0b458f306",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b281db_6df17ba2",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-15T08:37:08Z",
+      "side": 1,
+      "message": "yeah it will go away. I will still have to send the BUGREPORT_STARTED broadcast, for combo-keys initiated bugreport (perhaps target it to Shell app). This broadcast is so that Shell app can lazily bind the listener and supply fds, if at all it\u0027s up. Then when it\u0027s finished it will get an onFinished callback.",
+      "parentUuid": "4c10f9a3_14a2d310",
+      "range": {
+        "startLine": 803,
+        "startChar": 8,
+        "endLine": 806,
+        "endChar": 81
+      },
+      "revId": "432f8c7b8644249c49c485ee7fcf02e0b458f306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
