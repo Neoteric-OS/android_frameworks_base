@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "766f2a33_f83d7a11",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T17:23:41Z",
+      "side": 1,
+      "message": "In regular boot cases, handleSystemReady is called after zram swap is setup. In cases where persist.sys.zram_enabled is disabled at boot, swapon_all is not triggered until persist.sys.zram_enabled is set to 1 by refreshZramSettings(). Once the property is set, init code calls swapon_all which sets up the zram swap.\nRegarding moving the initial trigger to vendor code, I prefer all writeback logic to be in one place so that it does not depend on vendor implementation details.",
+      "parentUuid": "506e3d00_ab852053",
+      "range": {
+        "startLine": 756,
+        "startChar": 8,
+        "endLine": 758,
+        "endChar": 9
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "493492c3_5106a54d",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
