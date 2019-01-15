@@ -60,6 +60,7 @@ import com.android.internal.util.Protocol;
 
 import libcore.net.event.NetworkEventDispatcher;
 
+import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
@@ -1844,8 +1845,27 @@ public class ConnectivityManager {
             @NonNull InetAddress destination,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull Callback callback) {
-        return new NattSocketKeepalive(mService, network, socket, source, destination, executor,
-                callback);
+        return createNattKeepalive(network, socket.getFileDescriptor(), socket.getResourceId(),
+                source, destination, executor, callback);
+    }
+
+    /**
+     * Request that keepalives be started on a IPsec NAT-T socket file descriptor. See
+     * {@link #createSocketKeepalive(Network, UdpEncapsulationSocket, InetAddress, InetAddress,
+     * Executor, Callback)}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public SocketKeepalive createNattKeepalive(@NonNull Network network,
+            @NonNull FileDescriptor fd,
+            int resourceId,
+            @NonNull InetAddress source,
+            @NonNull InetAddress destination,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull Callback callback) {
+        return new NattSocketKeepalive(mService, network, fd, resourceId, source,
+                destination, executor, callback);
     }
 
     /**

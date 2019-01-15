@@ -16,6 +16,7 @@
 
 package com.android.server.connectivity;
 
+// TODO: Clean up imports and remove references of PacketKeepalive constants.
 import com.android.internal.util.HexDump;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.NetworkAgentInfo;
@@ -33,15 +34,20 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.Process;
 import android.os.RemoteException;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.system.OsConstants;
 import android.util.Log;
 import android.util.Pair;
 
+import java.io.FileDescriptor;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,6 +55,7 @@ import static android.net.ConnectivityManager.PacketKeepalive.*;
 import static android.net.NetworkAgent.CMD_START_PACKET_KEEPALIVE;
 import static android.net.NetworkAgent.CMD_STOP_PACKET_KEEPALIVE;
 import static android.net.NetworkAgent.EVENT_PACKET_KEEPALIVE;
+import static android.net.SocketKeepalive.ERROR_INVALID_SOCKET;
 
 /**
  * Manages packet keepalive requests.
@@ -358,6 +365,44 @@ public class KeepaliveTracker {
         Log.d(TAG, "Created keepalive: " + ki.toString());
         mConnectivityServiceHandler.obtainMessage(
                 NetworkAgent.CMD_START_PACKET_KEEPALIVE, ki).sendToTarget();
+    }
+
+    /**
+     * Called when requesting that keepalives be started on a IPsec NAT-T socket. See
+     * {@link android.net.SocketKeepalive}.
+     **/
+    public void startNattKeepalive(NetworkAgentInfo nai, FileDescriptor fd, int resourceId,
+            int intervalSeconds, Messenger messenger, IBinder binder, String srcAddrString,
+            String dstAddrString, int dstPort) {
+        // Valid date if the socket is created by IpSecService.
+        if (!isNattKeepaliveSocketValid(fd, resourceId)) {
+            notifyMessenger(messenger, NO_KEEPALIVE, ERROR_INVALID_SOCKET);
+        }
+
+        // Get src port to adopt old API.
+        int srcPort = 0;
+        try {
+            final SocketAddress srcSockAddr = Os.getsockname(fd);
+            srcPort = ((InetSocketAddress) srcSockAddr).getPort();
+        } catch (ErrnoException e) {
+            notifyMessenger(messenger, NO_KEEPALIVE, ERROR_INVALID_SOCKET);
+        }
+
+        // Forward request to old API.
+        startNattKeepalive(nai, intervalSeconds, messenger, binder, srcAddrString, srcPort,
+                dstAddrString, dstPort);
+    }
+
+    /**
+     * Verify if the IPsec NAT-T file descriptor and resource Id hold for IPsec keepalive is valid.
+     **/
+    public static boolean isNattKeepaliveSocketValid(FileDescriptor fd, int resourceId) {
+        // TODO: 1. confirm whether the fd is called from system api or created by IpSecService.
+        //       2. If the fd is created from the system api, check that it's bound to the port. And
+        //          call dup to keep the fd opened.
+        //       3. If the fd is created from IpSecService, check if the resource ID is valid. And
+        //          hold the resource needed in IpSecService.
+        return true;
     }
 
     public void dump(IndentingPrintWriter pw) {
