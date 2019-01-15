@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fc25ea0b_f01ade85",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "Ah yes, never mind... makes plenty of sense. For some reason when I looked at this I was thinking this method would be part of the public API.",
+      "parentUuid": "4f8bf2a8_8d2176c7",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b46b03e_91f72699",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "b2d1dc38_e49b2038",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "I\u0027m not the approver, so it\u0027s up to Lorenzo.",
+      "parentUuid": "d656c06e_ef4b3269",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9fe9a73_c84dce14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -296,6 +344,30 @@
       "side": 1,
       "message": "We cannot rearrange the numbers due to the backward compability with PacketKeepalive needs to be maintained.\nAnd we share the same service code for SocketKeepalive \u0026 PacketKeepalive\nOnce all references for PacketKeepalive has been eliminated, then I\u0027ll submit a follow-up commit to properly arrange this.\nThus, I\u0027ll add a TODO and resolve comments for now.",
       "parentUuid": "45b4727f_04333906",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1e114d1_28656a66",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "You can\u0027t ever change these once they become part of the public API. These numbers are:\n1) non-contiguous\n2) negative (I counted 46 negative and 186 positive error codes in the public API)",
+      "parentUuid": "2ede852a_082e9e13",
       "range": {
         "startLine": 60,
         "startChar": 52,
@@ -391,6 +463,30 @@
       "side": 1,
       "message": "Thanks for the suggestion.\nSince current architecture uses messenger to pass error codes.\nI would like to finish functionality first, then submit a follow-up patch commit to address all threading related problems.\nIs that ok?",
       "parentUuid": "92f2425a_9a861742",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6a3566_1e1103ab",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "Defer to Lorenzo",
+      "parentUuid": "5815d77f_e108b485",
       "range": {
         "startLine": 87,
         "startChar": 10,

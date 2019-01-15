@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c724631c_21a88321",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "nit, suggest createSocketKeepalive, though in reality there are 2 things to consider here:\n1) Since this is specifically for NATT, should it be makeNattKeepalive()\n2) Since there is no reason to call this unless you want to start a natt keepalive, why not do that which would make the method - startNattKeepalive()... same as another comment asking why there\u0027s a start() method.",
+      "range": {
+        "startLine": 1841,
+        "startChar": 27,
+        "endLine": 1841,
+        "endChar": 46
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fed5e4f_f44c4a14",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "@IntDef this enum?",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e30585e_5491b90d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "suggest to @hide these and document the range in the public API documentation rather than defining them as constants.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16425a4_1938e351",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T07:22:48Z",
+      "side": 1,
+      "message": "These should be protected or private.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
