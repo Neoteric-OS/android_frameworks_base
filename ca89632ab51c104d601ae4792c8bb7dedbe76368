@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a86ebd_2551290e",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2995,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-01-15T21:51:58Z",
+      "side": 1,
+      "message": "The current logic is we still send the intent, but not receive it if there is an available call redirection service",
+      "range": {
+        "startLine": 2995,
+        "startChar": 45,
+        "endLine": 2995,
+        "endChar": 97
+      },
+      "revId": "ca89632ab51c104d601ae4792c8bb7dedbe76368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
