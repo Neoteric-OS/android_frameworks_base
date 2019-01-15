@@ -56,6 +56,7 @@ import android.system.Os;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -150,7 +151,9 @@ public class ApfFilter {
         DROPPED_IPV6_NON_ICMP_MULTICAST,
         DROPPED_802_3_FRAME,
         DROPPED_ETHERTYPE_BLACKLISTED,
-        DROPPED_ARP_REPLY_SPA_NO_HOST;
+        DROPPED_ARP_REPLY_SPA_NO_HOST,
+        DROPPED_IPV4_KEEPALIVE_ACK,
+        DROPPED_IPV6_KEEPALIVE_ACK;
 
         // Returns the negative byte offset from the end of the APF data segment for
         // a given counter.
@@ -848,11 +851,163 @@ public class ApfFilter {
         }
     }
 
+    // A class to hold keepalive ack information.
+    private abstract static class KeepaliveAck {
+        // Note that the offset starts from IP header.
+        // These must be added ether header length when generating program.
+        static final int IP_HEADER_OFFSET = 0;
+
+        protected final byte[] mPacket;
+        protected final byte[] mSrcDstAddr;
+        protected final byte[] mSrcDstPort;
+        protected final byte[] mSeqAckNum;
+
+        KeepaliveAck(final byte[] packet, final byte[] srcDstAddr, final byte[] srcDstPort,
+                final byte[] seqAckNum) {
+            mPacket = packet;
+            mSrcDstAddr = srcDstAddr;
+            mSrcDstPort = srcDstPort;
+            mSeqAckNum = seqAckNum;
+        }
+
+        KeepaliveAck(final byte[] packet,
+                final int srcDstAddrOffset, final int srcDstAddrSize,
+                final int srcDstPortOffset, final int srcDstPortSize,
+                final int seqAckNumOffset, final int seqAckNumSize) {
+            this(packet, Arrays.copyOfRange(packet, srcDstAddrOffset, srcDstAddrSize),
+                    Arrays.copyOfRange(packet, srcDstPortOffset, srcDstPortSize),
+                    Arrays.copyOfRange(packet, seqAckNumOffset, seqAckNumSize));
+        }
+
+        // For debugging only. Returns the string representation of IPv4 or IPv6 address starting
+        // at start in the packet.
+        protected String addressToString(final byte[] packet, final int start, final int len) {
+            try {
+                final byte[] addr = Arrays.copyOfRange(packet, start, start + len);
+                final InetAddress inetAddr = InetAddress.getByAddress(addr);
+                if (null == inetAddr) return "???";
+                return inetAddr.getHostAddress();
+            } catch (UnknownHostException e) {
+                return "???";
+            }
+        }
+
+        // Append a filter for this keepalive ack to {@code gen}.
+        // Jump to drop if it matches the keepalive ack.
+        // Jump to the next filter if packet doesn't match the keepalive ack.
+        abstract void generateFilterLocked(ApfGenerator gen) throws IllegalInstructionException;
+    }
+
+    private class KeepaliveAckV4 extends KeepaliveAck {
+        private static final int IPV4_HEADER_LEN = 20;
+        private static final int IPV4_SRC_ADDR_OFFSET = IP_HEADER_OFFSET + 12;
+        private static final int IPV4_DST_ADDR_OFFSET = IP_HEADER_OFFSET + 16;
+        private static final int IPV4_TCP_SRC_PORT_OFFSET = IPV4_HEADER_LEN;
+        private static final int IPV4_TCP_DST_PORT_OFFSET = IPV4_HEADER_LEN + 2;
+        private static final int IPV4_TCP_SEQ_NUM_OFFSET = IPV4_HEADER_LEN + 4;
+        private static final int IPV4_TCP_ACK_NUM_OFFSET = IPV4_HEADER_LEN + 8;
+
+        // Parse the keepalive packet. Note that the packet does NOT include the ethernet header.
+        KeepaliveAckV4(final TcpKeepalivePacketDataParcelable packet) {
+            super(packet.packetData, IPV4_SRC_ADDR_OFFSET, IPV4_SRC_ADDR_OFFSET + 8,
+                    IPV4_TCP_SRC_PORT_OFFSET, IPV4_TCP_SRC_PORT_OFFSET + 4,
+                    IPV4_TCP_SEQ_NUM_OFFSET, IPV4_TCP_SEQ_NUM_OFFSET + 8);
+            if (packet.ipVersion != 4) {
+                throw new IllegalArgumentException(
+                        "Wrong Ip version : expected 4, got " + packet.ipVersion);
+            }
+        }
+
+        public String toString() {
+            try {
+                final ByteBuffer buffer = ByteBuffer.wrap(mPacket);
+                return String.format("%s(%d) -> %s(%d), seq=%d, ack=%d",
+                        addressToString(mPacket, IPV4_SRC_ADDR_OFFSET, 4),
+                        getUint16(buffer, IPV4_TCP_SRC_PORT_OFFSET),
+                        addressToString(mPacket, IPV4_DST_ADDR_OFFSET, 4),
+                        getUint16(buffer, IPV4_TCP_DST_PORT_OFFSET),
+                        getUint32(buffer, IPV4_TCP_SEQ_NUM_OFFSET),
+                        getUint32(buffer, IPV4_TCP_ACK_NUM_OFFSET));
+            } catch (BufferUnderflowException | IndexOutOfBoundsException e) {
+                return "<Malformed Keepalive ack>";
+            }
+        }
+
+        @Override
+        void generateFilterLocked(ApfGenerator gen) throws IllegalInstructionException {
+            final String nextFilterLabel = "keepalive_ack" + getUniqueNumberLocked();
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN + IPV4_SRC_ADDR_OFFSET);
+            gen.addJumpIfBytesNotEqual(Register.R0, mSrcDstAddr, nextFilterLabel);
+            // Add IPv4 header length
+            gen.addLoadFromMemory(Register.R1, gen.IPV4_HEADER_SIZE_MEMORY_SLOT);
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN);
+            gen.addAddR1();
+            gen.addJumpIfBytesNotEqual(Register.R0, mSrcDstPort, nextFilterLabel);
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN + 4);
+            gen.addAddR1();
+            gen.addJumpIfBytesNotEqual(Register.R0, mSeqAckNum, nextFilterLabel);
+            maybeSetupCounter(gen, Counter.DROPPED_IPV4_KEEPALIVE_ACK);
+            gen.addJump(mCountAndDropLabel);
+            gen.defineLabel(nextFilterLabel);
+        }
+    }
+
+    private class KeepaliveAckV6 extends KeepaliveAck {
+        private static final int IPV6_SRC_ADDR_OFFSET = IP_HEADER_OFFSET + 8;
+        private static final int IPV6_DST_ADDR_OFFSET = IP_HEADER_OFFSET + 24;
+        private static final int IPV6_TCP_SRC_PORT_OFFSET = IPV6_HEADER_LEN;
+        private static final int IPV6_TCP_DST_PORT_OFFSET = IPV6_HEADER_LEN + 2;
+        private static final int IPV6_TCP_SEQ_NUM_OFFSET = IPV6_HEADER_LEN + 4;
+        private static final int IPV6_TCP_ACK_NUM_OFFSET = IPV6_HEADER_LEN + 8;
+
+        // Parse the keepalive packet. Note that the packet does NOT include the ethernet header.
+        KeepaliveAckV6(final TcpKeepalivePacketDataParcelable packet) {
+            super(packet.packetData, IPV6_SRC_ADDR_OFFSET, IPV6_SRC_ADDR_OFFSET + 8,
+                    IPV6_TCP_SRC_PORT_OFFSET, IPV6_TCP_SRC_PORT_OFFSET + 4,
+                    IPV6_TCP_SEQ_NUM_OFFSET, IPV6_TCP_SEQ_NUM_OFFSET + 8);
+            if (packet.ipVersion != 6) {
+                throw new IllegalArgumentException(
+                        "Wrong Ip version : expected 6, got " + packet.ipVersion);
+            }
+        }
+
+        public String toString() {
+            try {
+                final ByteBuffer buffer = ByteBuffer.wrap(mPacket);
+                return String.format("%s(%d) -> %s(%d), seq=%d, ack=%d",
+                        addressToString(mPacket, IPV6_SRC_ADDR_OFFSET, 16),
+                        getUint16(buffer, IPV6_TCP_SRC_PORT_OFFSET),
+                        addressToString(mPacket, IPV6_DST_ADDR_OFFSET, 16),
+                        getUint16(buffer, IPV6_TCP_DST_PORT_OFFSET),
+                        getUint32(buffer, IPV6_TCP_SEQ_NUM_OFFSET),
+                        getUint32(buffer, IPV6_TCP_ACK_NUM_OFFSET));
+            } catch (BufferUnderflowException | IndexOutOfBoundsException e) {
+                return "<Malformed Keepalive ack>";
+            }
+        }
+
+        @Override
+        void generateFilterLocked(ApfGenerator gen) throws IllegalInstructionException {
+            final String nextFilterLabel = "keepalive_ack" + getUniqueNumberLocked();
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN + IPV6_SRC_ADDR_OFFSET);
+            gen.addJumpIfBytesNotEqual(Register.R0, mSrcDstAddr, nextFilterLabel);
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN + IPV6_TCP_SRC_PORT_OFFSET);
+            gen.addJumpIfBytesNotEqual(Register.R0, mSrcDstPort, nextFilterLabel);
+            gen.addLoadImmediate(Register.R0, ETH_HEADER_LEN + IPV6_TCP_SEQ_NUM_OFFSET);
+            gen.addJumpIfBytesNotEqual(Register.R0, mSeqAckNum, nextFilterLabel);
+            maybeSetupCounter(gen, Counter.DROPPED_IPV6_KEEPALIVE_ACK);
+            gen.addJump(mCountAndDropLabel);
+            gen.defineLabel(nextFilterLabel);
+        }
+    }
+
     // Maximum number of RAs to filter for.
     private static final int MAX_RAS = 10;
 
     @GuardedBy("this")
-    private ArrayList<Ra> mRas = new ArrayList<Ra>();
+    private ArrayList<Ra> mRas = new ArrayList<>();
+    @GuardedBy("this")
+    private SparseArray<KeepaliveAck> mKeepaliveAcks = new SparseArray<>();
 
     // There is always some marginal benefit to updating the installed APF program when an RA is
     // seen because we can extend the program's lifetime slightly, but there is some cost to
@@ -972,6 +1127,8 @@ public class ApfFilter {
     private void generateIPv4FilterLocked(ApfGenerator gen) throws IllegalInstructionException {
         // Here's a basic summary of what the IPv4 filter program does:
         //
+        // if keepalive ack
+        //   drop
         // if filtering multicast (i.e. multicast lock not held):
         //   if it's DHCP destined to our MAC:
         //     pass
@@ -982,6 +1139,12 @@ public class ApfFilter {
         //   if it's IPv4 broadcast:
         //     drop
         // pass
+
+        // Drop IPv4 Keepalive acks
+        for (int i = 0; i < mKeepaliveAcks.size(); ++i) {
+            final KeepaliveAck ack = mKeepaliveAcks.valueAt(i);
+            if (ack instanceof KeepaliveAckV4) ack.generateFilterLocked(gen);
+        }
 
         if (mMulticastFilter) {
             final String skipDhcpv4Filter = "skip_dhcp_v4_filter";
@@ -1049,6 +1212,8 @@ public class ApfFilter {
     private void generateIPv6FilterLocked(ApfGenerator gen) throws IllegalInstructionException {
         // Here's a basic summary of what the IPv6 filter program does:
         //
+        // if keepalive ack
+        //   drop
         // if we're dropping multicast
         //   if it's not IPCMv6 or it's ICMPv6 but we're in doze mode:
         //     if it's multicast:
@@ -1058,6 +1223,12 @@ public class ApfFilter {
         //   drop
         // if it's ICMPv6 NA to ff02::1:
         //   drop
+
+        // Drop IPv6 Keepalive acks
+        for (int i = 0; i < mKeepaliveAcks.size(); ++i) {
+            final KeepaliveAck ack = mKeepaliveAcks.valueAt(i);
+            if (ack instanceof KeepaliveAckV6) ack.generateFilterLocked(gen);
+        }
 
         gen.addLoad8(Register.R0, IPV6_NEXT_HEADER_OFFSET);
 
@@ -1494,13 +1665,17 @@ public class ApfFilter {
      * Add keepalive packet filter.
      *
      * @param slot The index used to access the filter.
-     * @param pkt Parameters needed to compose the filter.
+     * @param pkt The ack packet to filter.
      */
-    public synchronized void addKeepalivePacketFilter(int slot,
-            TcpKeepalivePacketDataParcelable pkt) {
-        // TODO: implement this.
-        Log.e(TAG, "APF function is not implemented: addKeepalivePacketFilter(" + slot + ", "
-                + pkt + ")");
+    public synchronized void addKeepalivePacketFilter(final int slot,
+            final TcpKeepalivePacketDataParcelable pkt) {
+        log("Adding keepalive ack(" + slot + ")");
+        if (null != mKeepaliveAcks.get(slot)) {
+            throw new IllegalArgumentException("Keepalive slot " + slot + " is occupied");
+        }
+        mKeepaliveAcks.put(slot,
+                    (pkt.ipVersion == 4) ? new KeepaliveAckV4(pkt) : new KeepaliveAckV6(pkt));
+        installNewProgramLocked();
     }
 
     /**
@@ -1509,8 +1684,8 @@ public class ApfFilter {
      * @param slot The index used to access the filter.
      */
     public synchronized void removeKeepalivePacketFilter(int slot) {
-        // TODO: implement this.
-        Log.e(TAG, "APF function is not implemented: removeKeepalivePacketFilter(" + slot + ")");
+        mKeepaliveAcks.remove(slot);
+        installNewProgramLocked();
     }
 
     static public long counterValue(byte[] data, Counter counter)
@@ -1562,6 +1737,17 @@ public class ApfFilter {
                 pw.decreaseIndent();
             }
             pw.decreaseIndent();
+        }
+        pw.decreaseIndent();
+
+        pw.println("Keepalive filter:");
+        pw.increaseIndent();
+        for (int i = 0; i < mKeepaliveAcks.size(); ++i) {
+            final KeepaliveAck keepaliveAck = mKeepaliveAcks.valueAt(i);
+            pw.print("Slot ");
+            pw.print(mKeepaliveAcks.keyAt(i));
+            pw.print(" : ");
+            pw.println(keepaliveAck);
         }
         pw.decreaseIndent();
 
