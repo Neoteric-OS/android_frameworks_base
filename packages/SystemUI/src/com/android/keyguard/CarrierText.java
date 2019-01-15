@@ -166,6 +166,8 @@ public class CarrierText extends TextView {
     protected void updateCarrierText() {
         boolean allSimsMissing = true;
         boolean anySimReadyAndInService = false;
+        boolean showCustomizeName = getContext().getResources().getBoolean(
+                com.android.systemui.R.bool.config_show_customize_carrier_name);
         CharSequence displayText = null;
 
         List<SubscriptionInfo> subs = mKeyguardUpdateMonitor.getSubscriptionInfo(false);
@@ -175,6 +177,9 @@ public class CarrierText extends TextView {
             int subId = subs.get(i).getSubscriptionId();
             State simState = mKeyguardUpdateMonitor.getSimState(subId);
             CharSequence carrierName = subs.get(i).getCarrierName();
+            if ( showCustomizeName ) {
+                carrierName = getCustomizeCarrierName(carrierName, subId);
+            }
             CharSequence carrierTextForSimState = getCarrierTextForSimState(simState, carrierName);
             if (DEBUG) {
                 Log.d(TAG, "Handling (subId=" + subId + "): " + simState + " " + carrierName);
@@ -246,6 +251,74 @@ public class CarrierText extends TextView {
             displayText = getAirplaneModeMessage();
         }
         setText(displayText);
+    }
+
+    private String getCustomizeCarrierName(CharSequence originCarrierName, int subId) {
+        String networkClass = "";
+        StringBuilder newCarrierName = new StringBuilder();
+        ServiceState ss = mKeyguardUpdateMonitor.mServiceStates.get(subId);
+        if (ss != null && (ss.getDataRegState() == ServiceState.STATE_IN_SERVICE
+                || ss.getVoiceRegState() == ServiceState.STATE_IN_SERVICE)) {
+            int networkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+            if (ss.getRilDataRadioTechnology() !=
+                    ServiceState.RIL_RADIO_TECHNOLOGY_UNKNOWN) {
+                networkType = ss.getDataNetworkType();
+            } else if (ss.getRilVoiceRadioTechnology() !=
+                    ServiceState.RIL_RADIO_TECHNOLOGY_UNKNOWN) {
+                networkType = ss.getVoiceNetworkType();
+            }
+            networkClass = networkClassToString(TelephonyManager
+                    .getNetworkClass(networkType));
+        }
+
+        if (!TextUtils.isEmpty(originCarrierName)) {
+            String[] names = originCarrierName.toString().split(mSeparator.toString(), 2);
+
+            for (int j = 0; j < names.length; j++) {
+                names[j] = getLocalString(
+                        names[j], com.android.systemui.R.array.origin_carrier_names,
+                        com.android.systemui.R.array.locale_carrier_names);
+                if (!TextUtils.isEmpty(names[j])) {
+                    if (!TextUtils.isEmpty(networkClass)) {
+                        names[j] = new StringBuilder().append(names[j]).append(" ")
+                                .append(networkClass).toString();
+                    }
+                    if (j > 0 && names[j].equals(names[j - 1])) {
+                        continue;
+                    }
+                    if (j > 0) {
+                        newCarrierName.append(mSeparator);
+                    }
+                    newCarrierName.append(names[j]);
+                }
+            }
+        }
+        return newCarrierName.toString();
+    }
+
+    private String networkClassToString (int networkClass) {
+        final int[] classIds = {
+                com.android.systemui.R.string.config_rat_unknown,
+                com.android.systemui.R.string.config_rat_2g,
+                com.android.systemui.R.string.config_rat_3g,
+                com.android.systemui.R.string.config_rat_4g };
+        String classString = null;
+        if (networkClass < classIds.length) {
+            classString = getContext().getResources().getString(classIds[networkClass]);
+        }
+        return (classString == null) ? "" : classString;
+    }
+
+    private String getLocalString(String originalString,
+                                  int originNamesId, int localNamesId) {
+        String[] origNames = getContext().getResources().getStringArray(originNamesId);
+        String[] localNames = getContext().getResources().getStringArray(localNamesId);
+        for (int i = 0; i < origNames.length; i++) {
+            if (origNames[i].equalsIgnoreCase(originalString)) {
+                return localNames[i];
+            }
+        }
+        return originalString;
     }
 
     private String getMissingSimMessage() {

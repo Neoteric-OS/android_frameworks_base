@@ -493,4 +493,7 @@
 
     <!-- On debuggable builds, alert the user if SystemUI PSS goes over this number (in kb) -->
     <integer name="watch_heap_limit">256000</integer>
+
+    <!-- Whether to show customize carrier name in the status bar -->
+    <bool name="config_show_customize_carrier_name">false</bool>
 </resources>
