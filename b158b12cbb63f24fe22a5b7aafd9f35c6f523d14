@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8e9a25_9a08999b",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2014,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-15T21:52:15Z",
+      "side": 0,
+      "message": "Any reason this was taken out?  It seems it was a useful comment.",
+      "range": {
+        "startLine": 2011,
+        "startChar": 10,
+        "endLine": 2014,
+        "endChar": 30
+      },
+      "revId": "b158b12cbb63f24fe22a5b7aafd9f35c6f523d14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
