@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cfb744e5_687fcfd6",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837cca77_037af44d",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da02beb_08480dbe",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "writtenOn": "2019-01-09T18:46:43Z",
       "side": 1,
       "message": "I think it\u0027s more standard to have people pass in a Context. If the internals need a ConnectivityManager, they can get it from the context.",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8bf2a8_8d2176c7",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Because 1. it will be only called from ConnectivityManager instead of called directly by user.\nAnd 2. ConnectivityManager already have mService reference.\nI think it would be more reasonable to pass service object here.\nDoes it make sense?",
+      "parentUuid": "4da02beb_08480dbe",
       "range": {
         "startLine": 36,
         "startChar": 24,
@@ -165,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d656c06e_ef4b3269",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "As you mentioned, I\u0027ll submit a follow-up commit later and try to remove it entirely.\nfor now, is it ok if we just leave it as is?",
+      "parentUuid": "2e310086_a0519edf",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9fe9a73_c84dce14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -209,6 +281,30 @@
       "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ede852a_082e9e13",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "We cannot rearrange the numbers due to the backward compability with PacketKeepalive needs to be maintained.\nAnd we share the same service code for SocketKeepalive \u0026 PacketKeepalive\nOnce all references for PacketKeepalive has been eliminated, then I\u0027ll submit a follow-up commit to properly arrange this.\nThus, I\u0027ll add a TODO and resolve comments for now.",
+      "parentUuid": "45b4727f_04333906",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "5815d77f_e108b485",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Thanks for the suggestion.\nSince current architecture uses messenger to pass error codes.\nI would like to finish functionality first, then submit a follow-up patch commit to address all threading related problems.\nIs that ok?",
+      "parentUuid": "92f2425a_9a861742",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eb6f77c_efe53359",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -318,6 +438,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "9eb6f77c_efe53359",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 56
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a299659_796fbb25",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4544279b_98d02e94",
       "range": {
         "startLine": 146,
         "startChar": 26,
@@ -377,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "b5de48bf_94f818d9",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51bded17_09a8a154",
+      "range": {
+        "startLine": 157,
+        "startChar": 35,
+        "endLine": 157,
+        "endChar": 46
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c64dea_865ffb99",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -397,6 +565,30 @@
       "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58a1b06_094ef4c8",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c64dea_865ffb99",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 8
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

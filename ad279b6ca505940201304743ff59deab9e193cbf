@@ -187,6 +187,30 @@
       "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f5bbb6_b22857a6",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "description modified",
+      "parentUuid": "fb9c921d_5bf2f3ce",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 17
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

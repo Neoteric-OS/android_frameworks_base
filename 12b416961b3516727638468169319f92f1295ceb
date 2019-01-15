@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "95f84029_f287596a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-15T06:33:52Z",
+      "side": 1,
+      "message": "I would like to have a follow-up change to apply threading model change there, which Nathan gives suggestions to remove messenger and handler, invoke callback through binder and using binder thread to run the callbacks.\nSince current design is copied from PacketKeepalive, I guess it should be temporary fine to leave it as is?",
+      "parentUuid": "2dc730f3_c3fec8a5",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 54
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66421c8a_334c8331",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 3
