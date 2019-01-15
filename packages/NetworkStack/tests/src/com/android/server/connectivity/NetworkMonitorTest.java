@@ -19,6 +19,7 @@ package com.android.server.connectivity;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
@@ -511,6 +512,34 @@ public class NetworkMonitorTest {
                 .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
     }
 
+    @Test
+    public void testIgnoreHttpsProbe() throws Exception {
+        setSslException(mHttpsConnection);
+        setStatus(mHttpConnection, 204);
+
+        final NetworkMonitor nm = makeMonitor();
+        nm.notifyNetworkConnected();
+        verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
+                .notifyNetworkTested(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY, null);
+
+        nm.notifyIgnoringHttpsProbe();
+        verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
+                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
+    }
+
+    @Test
+    public void testIsPartialConnectivity() throws IOException {
+        setStatus(mHttpsConnection, 500);
+        setStatus(mHttpConnection, 204);
+        setStatus(mFallbackConnection, 500);
+        assertPartialConnectivity(makeMonitor().isCaptivePortal());
+
+        setStatus(mHttpsConnection, 500);
+        setStatus(mHttpConnection, 500);
+        setStatus(mFallbackConnection, 204);
+        assertPartialConnectivity(makeMonitor().isCaptivePortal());
+    }
+
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
         for (int i = 0; i < count; i++) {
             wrappedMonitor.getDnsStallDetector().accumulateConsecutiveDnsTimeoutCount(
@@ -582,6 +611,10 @@ public class NetworkMonitorTest {
         assertFalse(result.isPortal());
         assertTrue(result.isFailed());
         assertFalse(result.isSuccessful());
+    }
+
+    private void assertPartialConnectivity(CaptivePortalProbeResult result) {
+        assertTrue(result.isPartialConnectivity());
     }
 
     private void setSslException(HttpURLConnection connection) throws IOException {
