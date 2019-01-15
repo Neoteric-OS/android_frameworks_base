@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "506e3d00_ab852053",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T07:31:04Z",
+      "side": 1,
+      "message": "What\u0027s the call order between setup zram swap setup by fs_mgr and this handleSystemReady?\nCan we make sure initial triggering of zram writeback in vendor?\nWhat I meant is once vendor set up zram swap, they could trigger this working logic for initial idle page marking and schedule next writeback.",
+      "parentUuid": "30fa1817_aed75eb8",
+      "range": {
+        "startLine": 756,
+        "startChar": 8,
+        "endLine": 758,
+        "endChar": 9
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "493492c3_5106a54d",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "94599fcc_d217ed12",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T07:31:04Z",
+      "side": 1,
+      "message": "Thanks for the clarification.",
+      "parentUuid": "f37e11bd_dcd04a31",
+      "range": {
+        "startLine": 137,
+        "startChar": 25,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1fbd95_0ad1eff4",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
@@ -260,6 +308,30 @@
       "side": 1,
       "message": "Yes. I will remove this if you are ok with using for pixel.",
       "parentUuid": "ae222f1f_21025c48",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfc847a_144077eb",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T07:31:04Z",
+      "side": 1,
+      "message": "I\u0027m okay with this interface for the pixel. Jaegeuk?",
+      "parentUuid": "44457365_0f4ed9dd",
       "range": {
         "startLine": 170,
         "startChar": 29,
