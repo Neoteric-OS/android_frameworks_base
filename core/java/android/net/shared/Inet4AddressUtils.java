@@ -84,6 +84,78 @@ public class Inet4AddressUtils {
     }
 
     /**
+     * Encode an int into a byte array in big endian.
+     * @param val the int to encode
+     * @return the encoded 4 byte array
+     */
+    public static byte[] intToByteArrayBE(final int val) {
+        byte[] encoded = new byte[4];
+        encoded[0] = (byte) (val >> 24);
+        encoded[1] = (byte) ((val >> 16) & 0xff);
+        encoded[2] = (byte) ((val >> 8) & 0xff);
+        encoded[3] = (byte) (val & 0xff);
+        return encoded;
+    }
+
+    /**
+     * Encode an int into a byte array in little endian.
+     * @param val the int to encode
+     * @return the encoded 4 byte array
+     */
+    public static byte[] intToByteArrayLE(final int val) {
+        byte[] encoded = new byte[4];
+        encoded[0] = (byte) (val >> 24);
+        encoded[1] = (byte) ((val >> 16) & 0xff);
+        encoded[2] = (byte) ((val >> 8) & 0xff);
+        encoded[3] = (byte) (val & 0xff);
+        return encoded;
+    }
+
+    /**
+     * Encode an int into a byte array in network order.
+     * This is an alias for intToByteArrayBE.
+     * @param val the int to encode
+     * @return the encoded 4 byte array
+     */
+    public static byte[] intToByteArrayNO(final int val) {
+        return intToByteArrayBE(val);
+    }
+
+    /**
+     * Encode a short into a byte array in big endian.
+     * @param val the short to encode
+     * @return the encoded 2 byte array
+     */
+    public static byte[] shortToByteArrayBE(final short val) {
+        byte[] encoded = new byte[2];
+        encoded[0] = (byte) ((val >> 8) & 0xff);
+        encoded[1] = (byte) (val & 0xff);
+        return encoded;
+    }
+
+    /**
+     * Encode a short into a byte array in little endian.
+     * @param val the short to encode
+     * @return the encoded 2 byte array
+     */
+    public static byte[] shortToByteArrayLE(final short val) {
+        byte[] encoded = new byte[2];
+        encoded[0] = (byte) ((val >> 8) & 0xff);
+        encoded[1] = (byte) (val & 0xff);
+        return encoded;
+    }
+
+    /**
+     * Encode a short into a byte array in network order.
+     * This is an alias for shortToByteArrayBE.
+     * @param val the shoct to encode
+     * @return the encoded array
+     */
+    public static byte[] shortToByteArrayNO(final short val) {
+        return shortToByteArrayBE(val);
+    }
+
+    /**
      * Convert a network prefix length to an IPv4 netmask integer (prefixLength 17 -> 0xffff8000)
      * @return the IPv4 netmask as an integer
      */
