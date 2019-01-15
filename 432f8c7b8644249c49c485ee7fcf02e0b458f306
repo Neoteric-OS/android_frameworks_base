@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c10f9a3_14a2d310",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-15T08:20:46Z",
+      "side": 1,
+      "message": "So IIUC this Intent-based communication will also go away? Eg by using the new DumpStateListener onFinished() method?",
+      "range": {
+        "startLine": 803,
+        "startChar": 8,
+        "endLine": 806,
+        "endChar": 81
+      },
+      "revId": "432f8c7b8644249c49c485ee7fcf02e0b458f306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
