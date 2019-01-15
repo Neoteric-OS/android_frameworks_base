@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30fa1817_aed75eb8",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "When refreshZramSettings() enables ZRAM, we might run into a timing issue. ZramWriteback checks the backingdev node to figure out if writeback is enabled. However backingdev is not written until fs_mgr parses fstab and sets up the zram device.\nOne possible way is that I could make the assumption that writeback is enabled if config_zramWriteback is true. backingdev need not be read and since the job scheduled into the future, zram device would be ready. What do you think?",
+      "parentUuid": "681b96ab_6fbb85fb",
+      "range": {
+        "startLine": 756,
+        "startChar": 8,
+        "endLine": 758,
+        "endChar": 9
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "493492c3_5106a54d",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ed4aeb_6ce0fcb0",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493492c3_5106a54d",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b53cb171_23350b11",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56d409d_15f77757",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a69e888_cd222d62",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-15T04:24:09Z",
       "side": 1,
       "message": "a question: unless device is idle at that time, the writeback will do when the device finally goes IDLE? Or, it\u0027s just cancelled?",
+      "range": {
+        "startLine": 137,
+        "startChar": 25,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37e11bd_dcd04a31",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "The job will be scheduled atleast x hours later and when the device is idle. So it would still get scheduled.",
+      "parentUuid": "0a69e888_cd222d62",
       "range": {
         "startLine": 137,
         "startChar": 25,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "5d6f36ee_b57a8e5d",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1fbd95_0ad1eff4",
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae222f1f_21025c48",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2019-01-15T04:24:09Z",
       "side": 1,
       "message": "Need to fix for Pixel?",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44457365_0f4ed9dd",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "Yes. I will remove this if you are ok with using for pixel.",
+      "parentUuid": "ae222f1f_21025c48",
       "range": {
         "startLine": 170,
         "startChar": 29,
@@ -154,6 +292,30 @@
       "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5111295_96aad038",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-15T06:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "652b9d32_bd8b3896",
+      "range": {
+        "startLine": 190,
+        "startChar": 74,
+        "endLine": 190,
+        "endChar": 91
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
