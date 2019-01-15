@@ -1,4 +1,4 @@
-/*
+parseUsesFeature/*
  * Copyright (C) 2007 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -2169,7 +2169,7 @@ public class PackageParser {
                 XmlUtils.skipCurrentTag(parser);
 
             } else if (tagName.equals(TAG_USES_FEATURE)) {
-                FeatureInfo fi = parseUsesFeature(res, parser);
+                FeatureInfo fi = parseUsesFeature(res, parser, outError);
                 pkg.reqFeatures = ArrayUtils.add(pkg.reqFeatures, fi);
 
                 if (fi.name == null) {
@@ -2192,7 +2192,7 @@ public class PackageParser {
 
                     final String innerTagName = parser.getName();
                     if (innerTagName.equals("uses-feature")) {
-                        FeatureInfo featureInfo = parseUsesFeature(res, parser);
+                        FeatureInfo featureInfo = parseUsesFeature(res, parser, outError);
                         // FeatureGroups are stricter and mandate that
                         // any <uses-feature> declared are mandatory.
                         featureInfo.flags |= FeatureInfo.FLAG_REQUIRED;
@@ -2684,7 +2684,7 @@ public class PackageParser {
         return -1;
     }
 
-    private FeatureInfo parseUsesFeature(Resources res, AttributeSet attrs) {
+    private FeatureInfo parseUsesFeature(Resources res, AttributeSet attrs, String[] outError) {
         FeatureInfo fi = new FeatureInfo();
         TypedArray sa = res.obtainAttributes(attrs,
                 com.android.internal.R.styleable.AndroidManifestUsesFeature);
@@ -2704,6 +2704,12 @@ public class PackageParser {
             fi.flags |= FeatureInfo.FLAG_REQUIRED;
         }
         sa.recycle();
+        // the platform doesn't have the feature.
+        if (fi.name != null && mCallback != null && !mCallback.hasFeature(fi.name)) {
+            outError[0] = "Depending on the platform has feature " + fi.name;
+            mParseError = PackageManager.INSTALL_FAILED_NON_ALL_FEATURES;
+            return null;
+        }
         return fi;
     }
 
