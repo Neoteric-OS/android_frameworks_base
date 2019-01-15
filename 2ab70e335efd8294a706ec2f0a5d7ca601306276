@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "681b96ab_6fbb85fb",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "I don\u0027t know what refreshZramSettings does but looks like zram_writback should be in there if the naming of refreshZramSettings is reasonable?",
+      "range": {
+        "startLine": 756,
+        "startChar": 8,
+        "endLine": 758,
+        "endChar": 9
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493492c3_5106a54d",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "nit: getWrittenPageCount?",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56d409d_15f77757",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "nit: How about moving this function out of markAndFlushPages?\nSo that, markAndFlushPages just do what the function name does.",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a69e888_cd222d62",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "a question: unless device is idle at that time, the writeback will do when the device finally goes IDLE? Or, it\u0027s just cancelled?",
+      "range": {
+        "startLine": 137,
+        "startChar": 25,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1fbd95_0ad1eff4",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "Here, schedNextWriteback(ZramWriteback.this)?\nAnyway, it\u0027s trivial. Feel free to do what you prefer.",
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae222f1f_21025c48",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "Need to fix for Pixel?",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652b9d32_bd8b3896",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-15T04:24:09Z",
+      "side": 1,
+      "message": "Need to be fixed because it was property vendor could override?",
+      "range": {
+        "startLine": 190,
+        "startChar": 74,
+        "endLine": 190,
+        "endChar": 91
+      },
+      "revId": "2ab70e335efd8294a706ec2f0a5d7ca601306276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
