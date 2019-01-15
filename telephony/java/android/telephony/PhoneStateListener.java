@@ -184,14 +184,17 @@ public class PhoneStateListener {
     public static final int LISTEN_PRECISE_CALL_STATE                       = 0x00000800;
 
     /**
-     * Listen for precise changes and fails on the data connection (cellular).
+     * Listen for {@link PreciseDataConnectionState} on the data connection (cellular).
+     *
      * {@more}
      * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
      * READ_PRECISE_PHONE_STATE}
      *
      * @see #onPreciseDataConnectionStateChanged
+     *
      * @hide
      */
+    @SystemApi
     public static final int LISTEN_PRECISE_DATA_CONNECTION_STATE            = 0x00001000;
 
     /**
@@ -331,6 +334,18 @@ public class PhoneStateListener {
      */
     @SystemApi
     public static final int LISTEN_CALL_DISCONNECT_CAUSES                  = 0x02000000;
+
+    /**
+     * Listen for changes to the call attributes of a currently active call.
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
+     * READ_PRECISE_PHONE_STATE}
+     *
+     * @see #onCallAttributesChanged
+     * @hide
+     */
+    @SystemApi
+    public static final int LISTEN_CALL_ATTRIBUTES_CHANGED                 = 0x04000000;
 
     /*
      * Subscription used to listen to the phone state changes
@@ -564,10 +579,11 @@ public class PhoneStateListener {
 
     /**
      * Callback invoked when data connection state changes with precise information.
+     * @param dataConnectionState {@link PreciseDataConnectionState}
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public void onPreciseDataConnectionStateChanged(
             PreciseDataConnectionState dataConnectionState) {
         // default implementation empty
@@ -675,6 +691,17 @@ public class PhoneStateListener {
      * @hide
      */
     public void onPreferredDataSubIdChanged(int subId) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when the call attributes changes. Requires
+     * the READ_PRIVILEGED_PHONE_STATE permission.
+     * @param callAttributes the call attributes
+     * @hide
+     */
+    @SystemApi
+    public void onCallAttributesChanged(CallAttributes callAttributes) {
         // default implementation empty
     }
 
@@ -935,6 +962,14 @@ public class PhoneStateListener {
 
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> psl.onRadioPowerStateChanged(state)));
+        }
+
+        public void onCallAttributesChanged(CallAttributes callAttributes) {
+            PhoneStateListener psl = mPhoneStateListenerWeakRef.get();
+            if (psl == null) return;
+
+            Binder.withCleanCallingIdentity(
+                    () -> mExecutor.execute(() -> psl.onCallAttributesChanged(callAttributes)));
         }
 
         public void onPreferredDataSubIdChanged(int subId) {

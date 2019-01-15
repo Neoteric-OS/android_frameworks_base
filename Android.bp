@@ -553,7 +553,7 @@ java_defaults {
         "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
         "telephony/java/com/android/internal/telephony/ISms.aidl",
         "telephony/java/com/android/internal/telephony/ISub.aidl",
-        "telephony/java/com/android/internal/telephony/IAns.aidl",
+        "telephony/java/com/android/internal/telephony/IOns.aidl",
         "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
         "telephony/java/com/android/internal/telephony/IWapPushManager.aidl",
@@ -697,6 +697,7 @@ java_defaults {
         "android.hardware.radio-V1.3-java",
         "android.hardware.radio-V1.4-java",
         "android.hardware.usb.gadget-V1.0-java",
+        "networkstack-aidl-interfaces-java",
         "netd_aidl_interface-java",
     ],
 
@@ -824,11 +825,16 @@ aidl_interface {
     name: "networkstack-aidl-interfaces",
     local_include_dir: "core/java",
     srcs: [
+        "core/java/android/net/INetworkMonitor.aidl",
+        "core/java/android/net/INetworkMonitorCallbacks.aidl",
+        "core/java/android/net/IIpMemoryStore.aidl",
         "core/java/android/net/INetworkStackConnector.aidl",
         "core/java/android/net/INetworkStackStatusCallback.aidl",
+        "core/java/android/net/PrivateDnsConfigParcel.aidl",
         "core/java/android/net/dhcp/DhcpServingParamsParcel.aidl",
         "core/java/android/net/dhcp/IDhcpServer.aidl",
         "core/java/android/net/dhcp/IDhcpServerCallbacks.aidl",
+        "core/java/android/net/ipmemorystore/**/*.aidl",
     ],
     api_dir: "aidl/networkstack",
 }

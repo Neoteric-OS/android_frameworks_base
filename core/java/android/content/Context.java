@@ -3015,6 +3015,7 @@ public abstract class Context {
             VIBRATOR_SERVICE,
             //@hide: STATUS_BAR_SERVICE,
             CONNECTIVITY_SERVICE,
+            //@hide: IP_MEMORY_STORE_SERVICE,
             IPSEC_SERVICE,
             //@hide: UPDATE_LOCK_SERVICE,
             //@hide: NETWORKMANAGEMENT_SERVICE,
@@ -3511,6 +3512,14 @@ public abstract class Context {
      * @see NetworkStack
      */
     public static final String NETWORK_STACK_SERVICE = "network_stack";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.IpMemoryStore} to store and read information about
+     * known networks.
+     * @hide
+     */
+    public static final String IP_MEMORY_STORE_SERVICE = "ipmemorystore";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
@@ -4202,6 +4211,16 @@ public abstract class Context {
      */
     @SystemApi
     public static final String STATS_MANAGER = "stats";
+
+    /**
+     * Service to capture a bugreport.
+     * @see #getSystemService(String)
+     * @see android.os.BugreportManager
+     * @hide
+     */
+    // TODO: Expose API when the implementation is more complete.
+    // @SystemApi
+    public static final String BUGREPORT_SERVICE = "bugreport";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link

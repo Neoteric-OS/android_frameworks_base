@@ -22,6 +22,7 @@ import static android.net.NetworkPolicyManager.OVERRIDE_UNMETERED;
 import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.DurationMillisLong;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -62,6 +63,8 @@ import com.android.internal.telephony.ISub;
 import com.android.internal.telephony.ITelephonyRegistry;
 import com.android.internal.telephony.PhoneConstants;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -601,6 +604,72 @@ public class SubscriptionManager {
      * @hide
      */
     public static final String IS_METERED = "is_metered";
+
+    /**
+     * TelephonyProvider column name for the profile class of a subscription
+     * Only present if {@link #IS_EMBEDDED} is 1.
+     * <P>Type: INTEGER (int)</P>
+     * @hide
+     */
+    public static final String PROFILE_CLASS = "profile_class";
+
+    /**
+     * Profile class of the subscription
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = { "PROFILE_CLASS_" }, value = {
+            PROFILE_CLASS_TESTING,
+            PROFILE_CLASS_PROVISIONING,
+            PROFILE_CLASS_OPERATIONAL,
+            PROFILE_CLASS_UNSET,
+            PROFILE_CLASS_DEFAULT
+    })
+    public @interface ProfileClass {}
+
+    /**
+     * A testing profile can be pre-loaded or downloaded onto
+     * the eUICC and provides connectivity to test equipment
+     * for the purpose of testing the device and the eUICC. It
+     * is not intended to store any operator credentials.
+     * @hide
+     */
+    @SystemApi
+    public static final int PROFILE_CLASS_TESTING = 0;
+
+    /**
+     * A provisioning profile is pre-loaded onto the eUICC and
+     * provides connectivity to a mobile network solely for the
+     * purpose of provisioning profiles.
+     * @hide
+     */
+    @SystemApi
+    public static final int PROFILE_CLASS_PROVISIONING = 1;
+
+    /**
+     * An operational profile can be pre-loaded or downloaded
+     * onto the eUICC and provides services provided by the
+     * operator.
+     * @hide
+     */
+    @SystemApi
+    public static final int PROFILE_CLASS_OPERATIONAL = 2;
+
+    /**
+     * The profile class is unset. This occurs when profile class
+     * info is not available. The subscription either has no profile
+     * metadata or the profile metadata did not encode profile class.
+     * @hide
+     */
+    @SystemApi
+    public static final int PROFILE_CLASS_UNSET = -1;
+
+    /**
+     * Default profile class
+     * @hide
+     */
+    @SystemApi
+    public static final int PROFILE_CLASS_DEFAULT = PROFILE_CLASS_UNSET;
 
     /**
      * Broadcast Action: The user has changed one of the default subs related to
@@ -1201,7 +1270,8 @@ public class SubscriptionManager {
     }
 
     /**
-     * Request a refresh of the platform cache of profile information.
+     * Request a refresh of the platform cache of profile information for the eUICC which
+     * corresponds to the card ID returned by {@link TelephonyManager#getCardIdForDefaultEuicc()}.
      *
      * <p>Should be called by the EuiccService implementation whenever this information changes due
      * to an operation done outside the scope of a request initiated by the platform to the
@@ -1209,17 +1279,50 @@ public class SubscriptionManager {
      * were made through the EuiccService.
      *
      * <p>Requires the {@link android.Manifest.permission#WRITE_EMBEDDED_SUBSCRIPTIONS} permission.
+     *
+     * @see {@link TelephonyManager#getCardIdForDefaultEuicc()} for more information on the card ID.
+     *
      * @hide
      */
     @SystemApi
     public void requestEmbeddedSubscriptionInfoListRefresh() {
+        int cardId = TelephonyManager.from(mContext).getCardIdForDefaultEuicc();
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                iSub.requestEmbeddedSubscriptionInfoListRefresh();
+                iSub.requestEmbeddedSubscriptionInfoListRefresh(cardId);
             }
         } catch (RemoteException ex) {
-            // ignore it
+            logd("requestEmbeddedSubscriptionInfoListFresh for card = " + cardId + " failed.");
+        }
+    }
+
+    /**
+     * Request a refresh of the platform cache of profile information for the eUICC with the given
+     * {@code cardId}.
+     *
+     * <p>Should be called by the EuiccService implementation whenever this information changes due
+     * to an operation done outside the scope of a request initiated by the platform to the
+     * EuiccService. There is no need to refresh for downloads, deletes, or other operations that
+     * were made through the EuiccService.
+     *
+     * <p>Requires the {@link android.Manifest.permission#WRITE_EMBEDDED_SUBSCRIPTIONS} permission.
+     *
+     * @param cardId the card ID of the eUICC.
+     *
+     * @see {@link TelephonyManager#getCardIdForDefaultEuicc()} for more information on the card ID.
+     *
+     * @hide
+     */
+    @SystemApi
+    public void requestEmbeddedSubscriptionInfoListRefresh(int cardId) {
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub != null) {
+                iSub.requestEmbeddedSubscriptionInfoListRefresh(cardId);
+            }
+        } catch (RemoteException ex) {
+            logd("requestEmbeddedSubscriptionInfoListFresh for card = " + cardId + " failed.");
         }
     }
 

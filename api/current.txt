@@ -41453,11 +41453,14 @@ package android.telecom {
     field public static final int CAPABILITY_SWAP_CONFERENCE = 8; // 0x8
     field public static final java.lang.String EVENT_CALL_MERGE_FAILED = "android.telecom.event.CALL_MERGE_FAILED";
     field public static final java.lang.String EVENT_CALL_PULL_FAILED = "android.telecom.event.CALL_PULL_FAILED";
+    field public static final java.lang.String EVENT_RTT_AUDIO_INDICATION_CHANGED = "android.telecom.event.RTT_AUDIO_INDICATION_CHANGED";
     field public static final java.lang.String EXTRA_ANSWERING_DROPS_FG_CALL = "android.telecom.extra.ANSWERING_DROPS_FG_CALL";
     field public static final java.lang.String EXTRA_ANSWERING_DROPS_FG_CALL_APP_NAME = "android.telecom.extra.ANSWERING_DROPS_FG_CALL_APP_NAME";
     field public static final java.lang.String EXTRA_CALL_SUBJECT = "android.telecom.extra.CALL_SUBJECT";
     field public static final java.lang.String EXTRA_CHILD_ADDRESS = "android.telecom.extra.CHILD_ADDRESS";
+    field public static final java.lang.String EXTRA_IS_RTT_AUDIO_PRESENT = "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
     field public static final java.lang.String EXTRA_LAST_FORWARDED_NUMBER = "android.telecom.extra.LAST_FORWARDED_NUMBER";
+    field public static final java.lang.String EXTRA_SIP_INVITE = "android.telecom.extra.SIP_INVITE";
     field public static final int PROPERTY_HAS_CDMA_VOICE_PRIVACY = 32; // 0x20
     field public static final int PROPERTY_IS_EXTERNAL_CALL = 16; // 0x10
     field public static final int PROPERTY_IS_RTT = 256; // 0x100
@@ -42215,6 +42218,10 @@ package android.telephony {
     field public static final java.lang.String KEY_MONTHLY_DATA_CYCLE_DAY_INT = "monthly_data_cycle_day_int";
     field public static final java.lang.String KEY_ONLY_SINGLE_DC_ALLOWED_INT_ARRAY = "only_single_dc_allowed_int_array";
     field public static final java.lang.String KEY_OPERATOR_SELECTION_EXPAND_BOOL = "operator_selection_expand_bool";
+    field public static final java.lang.String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT = "opportunistic_network_entry_threshold_rsrp_int";
+    field public static final java.lang.String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSSNR_INT = "opportunistic_network_entry_threshold_rssnr_int";
+    field public static final java.lang.String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSRP_INT = "opportunistic_network_exit_threshold_rsrp_int";
+    field public static final java.lang.String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT = "opportunistic_network_exit_threshold_rssnr_int";
     field public static final java.lang.String KEY_PREFER_2G_BOOL = "prefer_2g_bool";
     field public static final java.lang.String KEY_RADIO_RESTART_FAILURE_CAUSES_INT_ARRAY = "radio_restart_failure_causes_int_array";
     field public static final java.lang.String KEY_RCS_CONFIG_SERVER_URL_STRING = "rcs_config_server_url_string";
@@ -42727,6 +42734,7 @@ package android.telephony {
     method public int describeContents();
     method public int getCdmaDbm();
     method public int getCdmaEcio();
+    method public java.util.List<android.telephony.CellSignalStrength> getCellSignalStrengths();
     method public int getEvdoDbm();
     method public int getEvdoEcio();
     method public int getEvdoSnr();
@@ -43103,6 +43111,7 @@ package android.telephony {
     field public static final int DATA_CONNECTING = 1; // 0x1
     field public static final int DATA_DISCONNECTED = 0; // 0x0
     field public static final int DATA_SUSPENDED = 3; // 0x3
+    field public static final int DATA_UNKNOWN = -1; // 0xffffffff
     field public static final java.lang.String EXTRA_CALL_VOICEMAIL_INTENT = "android.telephony.extra.CALL_VOICEMAIL_INTENT";
     field public static final java.lang.String EXTRA_CARRIER_ID = "android.telephony.extra.CARRIER_ID";
     field public static final java.lang.String EXTRA_CARRIER_NAME = "android.telephony.extra.CARRIER_NAME";
@@ -43165,6 +43174,9 @@ package android.telephony {
   public static abstract class TelephonyManager.CellInfoCallback {
     ctor public TelephonyManager.CellInfoCallback();
     method public abstract void onCellInfo(java.util.List<android.telephony.CellInfo>);
+    method public void onError(int, java.lang.Throwable);
+    field public static final int ERROR_MODEM_ERROR = 2; // 0x2
+    field public static final int ERROR_TIMEOUT = 1; // 0x1
   }
 
   public static abstract class TelephonyManager.UssdResponseCallback {
