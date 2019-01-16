@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc412b9_855a84d3",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-16T00:20:04Z",
+      "side": 1,
+      "message": "And here",
+      "revId": "8580ee549ce134c148bb6294c4b346f646c5388b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefad19f_3ddadab5",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-16T00:20:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t sizeof return size in bytes? I think you want .size().",
+      "revId": "8580ee549ce134c148bb6294c4b346f646c5388b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
