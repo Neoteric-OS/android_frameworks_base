@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bcd0bee_8706e84b",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-16T11:18:30Z",
+      "side": 1,
+      "message": "I\u0027m testing on it.\nInitial idle marks works well. However, first writeback is never happened. Hmm.",
+      "range": {
+        "startLine": 140,
+        "startChar": 19,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "aa45ca0bd588579a2f1633257764d7e83f78b957",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e903173d_4294f504",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-16T11:18:30Z",
+      "side": 1,
+      "message": "For the pixel, we should remove this line?",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 51
+      },
+      "revId": "aa45ca0bd588579a2f1633257764d7e83f78b957",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13ed9e4_7d8ca4eb",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2019-01-16T11:18:30Z",
+      "side": 1,
+      "message": "Thing is fs_mgr doesn\u0027t setup backing_dev yet so it returns false when this function is called. How about skipping the check in here because user already enabled \"config_zramWriteback\".\nInstead, let\u0027s validate it in onStartJob before the doing action.",
+      "range": {
+        "startLine": 173,
+        "startChar": 13,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "aa45ca0bd588579a2f1633257764d7e83f78b957",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
