@@ -17,7 +17,6 @@
 package android.net;
 
 import android.net.IpSecManager.UdpEncapsulationSocket;
-import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -46,11 +45,10 @@ public final class NattSocketKeepalive extends SocketKeepalive {
     public void start(int intervalSec) {
         try {
             // TODO: Create new interface in ConnectivityService and pass fd to it.
-            mService.startNattKeepalive(mNetwork, intervalSec, mMessenger, new Binder(),
+            mService.startNattKeepalive(mNetwork, intervalSec, mCallback,
                     mSource.getHostAddress(), mSocket.getPort(), mDestination.getHostAddress());
         } catch (RemoteException e) {
             Log.e(TAG, "Error starting packet keepalive: ", e);
-            stopLooper();
         }
     }
 }
