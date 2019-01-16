@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c668184e_6ee884b6",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-16T11:20:31Z",
+      "side": 1,
+      "message": "do we need to add test for number of fields of networkAttribute here?\ne.g. someone add new fields in networkAttribute but forget to add tests against it.",
+      "range": {
+        "startLine": 220,
+        "startChar": 3,
+        "endLine": 220,
+        "endChar": 5
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
