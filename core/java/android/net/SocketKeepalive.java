@@ -20,13 +20,8 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.Process;
-import android.util.Log;
+import android.os.Binder;
+import android.os.RemoteException;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -59,8 +54,8 @@ public abstract class SocketKeepalive implements AutoCloseable {
     /** @hide */
     public static final int DATA_RECEIVED = -2;
 
-    /** @hide */
-    public static final int BINDER_DIED = -10;
+    /** The remote binder has died. */
+    public static final int ERROR_BINDER_DIED = -10;
 
     /** The specified {@code Network} is not connected. */
     public static final int ERROR_INVALID_NETWORK = -20;
@@ -152,10 +147,9 @@ public abstract class SocketKeepalive implements AutoCloseable {
 
     @NonNull final IConnectivityManager mService;
     @NonNull final Network mNetwork;
-    @NonNull private final Executor mExecutor;
-    @NonNull private final SocketKeepalive.Callback mCallback;
-    @NonNull private final Looper mLooper;
-    @NonNull final Messenger mMessenger;
+    @NonNull final Executor mExecutor;
+    @NonNull final ISocketKeepaliveCallback mCallback;
+    // TODO: remove slot since mCallback could be used to identify which keepalive to stop.
     @Nullable Integer mSlot;
 
     SocketKeepalive(@NonNull IConnectivityManager service, @NonNull Network network,
@@ -163,48 +157,43 @@ public abstract class SocketKeepalive implements AutoCloseable {
         mService = service;
         mNetwork = network;
         mExecutor = executor;
-        mCallback = callback;
-        // TODO: 1. Use other thread modeling instead of create one thread for every instance to
-        //          reduce the memory cost.
-        //       2. support restart.
-        //       3. Fix race condition which caused by rapidly start and stop.
-        HandlerThread thread = new HandlerThread(TAG, Process.THREAD_PRIORITY_BACKGROUND
-                + Process.THREAD_PRIORITY_LESS_FAVORABLE);
-        thread.start();
-        mLooper = thread.getLooper();
-        mMessenger = new Messenger(new Handler(mLooper) {
+        mCallback = new ISocketKeepaliveCallback.Stub() {
             @Override
-            public void handleMessage(Message message) {
-                switch (message.what) {
-                    case NetworkAgent.EVENT_SOCKET_KEEPALIVE:
-                        final int status = message.arg2;
-                        try {
-                            if (status == SUCCESS) {
-                                if (mSlot == null) {
-                                    mSlot = message.arg1;
-                                    mExecutor.execute(() -> mCallback.onStarted());
-                                } else {
-                                    mSlot = null;
-                                    stopLooper();
-                                    mExecutor.execute(() -> mCallback.onStopped());
-                                }
-                            } else if (status == DATA_RECEIVED) {
-                                stopLooper();
-                                mExecutor.execute(() -> mCallback.onDataReceived());
-                            } else {
-                                stopLooper();
-                                mExecutor.execute(() -> mCallback.onError(status));
-                            }
-                        } catch (Exception e) {
-                            Log.e(TAG, "Exception in keepalive callback(" + status + ")", e);
-                        }
-                        break;
-                    default:
-                        Log.e(TAG, "Unhandled message " + Integer.toHexString(message.what));
-                        break;
-                }
+            public void onStarted(int slot) {
+                Binder.withCleanCallingIdentity(() ->
+                        mExecutor.execute(() -> {
+                            mSlot = slot;
+                            callback.onStarted();
+                        }));
             }
-        });
+
+            @Override
+            public void onStopped() {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> {
+                            mSlot = null;
+                            callback.onStopped();
+                        }));
+            }
+
+            @Override
+            public void onError(int error) {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> {
+                            mSlot = null;
+                            callback.onError(error);
+                        }));
+            }
+
+            @Override
+            public void onDataReceived() {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> {
+                            mSlot = null;
+                            callback.onDataReceived();
+                        }));
+            }
+        };
     }
 
     /**
@@ -221,12 +210,6 @@ public abstract class SocketKeepalive implements AutoCloseable {
     }
 
     abstract void startImpl(int intervalSec);
-
-    /** @hide */
-    protected void stopLooper() {
-        // TODO: remove this after changing thread modeling.
-        mLooper.quit();
-    }
 
     /**
      * Requests that keepalive be stopped. The application must wait for {@link Callback#onStopped}
@@ -245,7 +228,14 @@ public abstract class SocketKeepalive implements AutoCloseable {
     @Override
     public final void close() {
         stop();
-        stopLooper();
+    }
+
+    void notifyErrorCallback(int reason) {
+        try {
+            mCallback.onError(reason);
+        } catch (RemoteException e) {
+            // Not much to do here.
+        }
     }
 
     /**

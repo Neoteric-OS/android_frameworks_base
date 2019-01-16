@@ -17,7 +17,6 @@
 package android.net;
 
 import android.annotation.NonNull;
-import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -55,24 +54,28 @@ final class TcpSocketKeepalive extends SocketKeepalive {
      */
     @Override
     void startImpl(int intervalSec) {
-        try {
-            final FileDescriptor fd = mSocket.getFileDescriptor$();
-            mService.startTcpKeepalive(mNetwork, fd, intervalSec, mMessenger, new Binder());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error starting packet keepalive: ", e);
-            stopLooper();
-        }
+        mExecutor.execute(() -> {
+            try {
+                final FileDescriptor fd = mSocket.getFileDescriptor$();
+                mService.startTcpKeepalive(mNetwork, fd, intervalSec, mCallback);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error starting packet keepalive: ", e);
+                notifyErrorCallback(ERROR_BINDER_DIED);
+            }
+        });
     }
 
     @Override
     void stopImpl() {
-        try {
-            if (mSlot != null) {
-                mService.stopKeepalive(mNetwork, mSlot);
+        mExecutor.execute(() -> {
+            try {
+                if (mSlot != null) {
+                    mService.stopKeepalive(mNetwork, mSlot);
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error stopping packet keepalive: ", e);
+                notifyErrorCallback(ERROR_BINDER_DIED);
             }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error stopping packet keepalive: ", e);
-            stopLooper();
-        }
+        });
     }
 }

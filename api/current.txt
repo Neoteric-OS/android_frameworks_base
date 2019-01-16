@@ -27626,6 +27626,7 @@ package android.net {
     method public final void close();
     method public final void start(@IntRange(from=0xa, to=0xe10) int);
     method public final void stop();
+    field public static final int ERROR_BINDER_DIED = -10; // 0xfffffff6
     field public static final int ERROR_HARDWARE_ERROR = -31; // 0xffffffe1
     field public static final int ERROR_HARDWARE_UNSUPPORTED = -30; // 0xffffffe2
     field public static final int ERROR_INVALID_INTERVAL = -24; // 0xffffffe8
