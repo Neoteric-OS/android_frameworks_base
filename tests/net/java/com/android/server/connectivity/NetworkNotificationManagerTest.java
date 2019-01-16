@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.*;
+
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.eq;
@@ -34,25 +35,23 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
 
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.junit.runner.RunWith;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -193,5 +192,33 @@ public class NetworkNotificationManagerTest {
         // Network disconnects
         mManager.clearNotification(id);
         verify(mNotificationManager, times(1)).cancelAsUser(eq(tag), eq(SIGN_IN.eventId), any());
+    }
+
+    @Test
+    public void testSameLevelNotifications() {
+        final int id = 101;
+        final String tag = NetworkNotificationManager.tagFor(id);
+
+        // SIGN_IN and CONNECTED are the same level notifications. It means no matter SIGN_IN popup
+        // first or CONNECTED popup first, the other one can also popup normally.
+
+        // The first time login to the captive portal network.
+        mManager.showNotification(id, SIGN_IN, mWifiNai, mCellNai, null, false);
+        verify(mNotificationManager, times(1))
+                .notifyAsUser(eq(tag), eq(SIGN_IN.eventId), any(), any());
+        mManager.showNotification(id, CONNECTED, mWifiNai, mCellNai, null, false);
+        verify(mNotificationManager, times(1))
+                .notifyAsUser(eq(tag), eq(CONNECTED.eventId), any(), any());
+
+        // In order to simulate the situation that captive portal is expired and check SIGN_IN
+        // notification won't be blocked by previous CONNECTED notification, so here trigger
+        // SIGN_IN and CONNECTED notifications twice to ensure the SIGN_IN notification will popup
+        // again if captive portal is expired.
+        mManager.showNotification(id, SIGN_IN, mWifiNai, mCellNai, null, false);
+        verify(mNotificationManager, times(2))
+                .notifyAsUser(eq(tag), eq(SIGN_IN.eventId), any(), any());
+        mManager.showNotification(id, CONNECTED, mWifiNai, mCellNai, null, false);
+        verify(mNotificationManager, times(2))
+                .notifyAsUser(eq(tag), eq(CONNECTED.eventId), any(), any());
     }
 }

@@ -16,13 +16,16 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.NetworkCapabilities;
 import android.net.wifi.WifiInfo;
 import android.os.UserHandle;
 import android.telephony.TelephonyManager;
@@ -31,14 +34,11 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.widget.Toast;
+
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
-
-import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
-import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
-import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 public class NetworkNotificationManager {
 
@@ -47,7 +47,8 @@ public class NetworkNotificationManager {
         LOST_INTERNET(SystemMessage.NOTE_NETWORK_LOST_INTERNET),
         NETWORK_SWITCH(SystemMessage.NOTE_NETWORK_SWITCH),
         NO_INTERNET(SystemMessage.NOTE_NETWORK_NO_INTERNET),
-        SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN);
+        SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN),
+        CONNECTED(SystemMessage.NOTE_NETWORK_CONNECTED);
 
         public final int eventId;
 
@@ -192,6 +193,9 @@ public class NetworkNotificationManager {
                     details = r.getString(R.string.network_available_sign_in_detailed, name);
                     break;
             }
+        } else if (notifyType == NotificationType.CONNECTED) {
+            title = WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID());
+            details = r.getString(R.string.captive_portal_connected_detailed);
         } else if (notifyType == NotificationType.NETWORK_SWITCH) {
             String fromTransport = getTransportName(transportType);
             String toTransport = getTransportName(getFirstTransportType(switchToNai));
@@ -296,6 +300,13 @@ public class NetworkNotificationManager {
         }
         switch (t) {
             case SIGN_IN:
+            // The reason to set CONNECTED as the same level notfication as SIGN_IN because captive
+            // portal network may have expired timer, when the captive portal is expired, the
+            // SIGN_IN notification should popup again, or user need to login the captive portal
+            // network by opening browser manually. And CONNECTED notification is shown when user
+            // login the captive portal network, so CONNECTED should have the same level as
+            // SIGN_IN, or CONNECTED notification cannot popup.
+            case CONNECTED:
                 return 4;
             case NO_INTERNET:
                 return 3;
