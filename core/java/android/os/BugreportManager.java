@@ -66,10 +66,14 @@ public class BugreportManager {
         @interface BugreportErrorCode {}
 
         /** The input options were invalid */
-        int BUGREPORT_ERROR_INVALID_INPUT = 1;
+        int BUGREPORT_ERROR_INVALID_INPUT = IDumpstateListener.BUGREPORT_ERROR_INVALID_INPUT;
 
         /** A runtime error occured */
-        int BUGREPORT_ERROR_RUNTIME = 2;
+        int BUGREPORT_ERROR_RUNTIME = IDumpstateListener.BUGREPORT_ERROR_RUNTIME_ERROR;
+
+        /** A runtime error occured */
+        int BUGREPORT_ERROR_USER_DENIED_CONSENT =
+                IDumpstateListener.BUGREPORT_ERROR_USER_DENIED_CONSENT;
 
         /**
          * Called when taking bugreport resulted in an error.
@@ -108,7 +112,9 @@ public class BugreportManager {
         DumpstateListener dsListener = new DumpstateListener(listener);
 
         try {
-            mBinder.startBugreport(bugreportFd, screenshotFd, params.getMode(), dsListener);
+            mBinder.startBugreport(-1 /* mBinder can get it from the binder transaction */,
+                    mContext.getOpPackageName(), bugreportFd, screenshotFd,
+                    params.getMode(), dsListener);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

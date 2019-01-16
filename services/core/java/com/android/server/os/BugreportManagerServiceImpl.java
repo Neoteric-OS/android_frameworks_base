@@ -18,6 +18,7 @@ package com.android.server.os;
 
 import android.annotation.RequiresPermission;
 import android.content.Context;
+import android.os.Binder;
 import android.os.BugreportParams;
 import android.os.IDumpstate;
 import android.os.IDumpstateListener;
@@ -63,7 +64,8 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
 
     @Override
     @RequiresPermission(android.Manifest.permission.DUMP)
-    public void startBugreport(FileDescriptor bugreportFd, FileDescriptor screenshotFd,
+    public void startBugreport(int callingUid, String callingPackage,
+            FileDescriptor bugreportFd, FileDescriptor screenshotFd,
             int bugreportMode, IDumpstateListener listener) throws RemoteException {
 
         validate(bugreportMode);
@@ -74,7 +76,8 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
             // TODO(b/111441001): pass error on listener
             return;
         }
-        mDs.startBugreport(bugreportFd, screenshotFd, bugreportMode, listener);
+        mDs.startBugreport(Binder.getCallingUid(), callingPackage,
+                bugreportFd, screenshotFd, bugreportMode, listener);
     }
 
     private boolean validate(@BugreportParams.BugreportMode int mode) {
