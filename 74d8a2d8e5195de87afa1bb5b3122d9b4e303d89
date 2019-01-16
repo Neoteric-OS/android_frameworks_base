@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "89ca1c25_6e400580",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5085,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T11:50:41Z",
+      "side": 1,
+      "message": "Yeah I think that\u0027s fair. Thanks for the improvement.\n\nI can\u0027t see any reason not to use ArraySet.equals(). I probably messed up when I wrote this, maybe I got under the impression that it would use pointer equality or something.\n\nAbout testVpnNetworkActive do feel free filing bugs on me on all things that tripped you up. This thing is very hard to use and also was done in a hurry, so knowing about the issues will help me clean it up.",
+      "parentUuid": "36f66811_ab888438",
+      "range": {
+        "startLine": 5085,
+        "startChar": 25,
+        "endLine": 5085,
+        "endChar": 35
+      },
+      "revId": "74d8a2d8e5195de87afa1bb5b3122d9b4e303d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917d3fd8_7535a21b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
