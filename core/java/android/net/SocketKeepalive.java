@@ -16,11 +16,7 @@
 
 package android.net;
 
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.os.Messenger;
+import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -87,10 +83,7 @@ public abstract class SocketKeepalive implements AutoCloseable {
 
     final IConnectivityManager mService;
     final Network mNetwork;
-    final Executor mExecutor;
-    final SocketKeepalive.Callback mCallback;
-    final Looper mLooper;
-    final Messenger mMessenger;
+    final ISocketKeepaliveCallback mCallback;
 
     volatile Integer mSlot;
 
@@ -99,52 +92,32 @@ public abstract class SocketKeepalive implements AutoCloseable {
             Callback callback) {
         mService = service;
         mNetwork = network;
-        mExecutor = executor;
-        mCallback = callback;
-        HandlerThread thread = new HandlerThread(TAG);
-        thread.start();
-        mLooper = thread.getLooper();
-        mMessenger = new Messenger(new Handler(mLooper) {
+        mCallback = new ISocketKeepaliveCallback.Stub() {
             @Override
-            public void handleMessage(Message message) {
-                switch (message.what) {
-                    case NetworkAgent.EVENT_SOCKET_KEEPALIVE:
-                        int error = message.arg2;
-                        try {
-                            if (error == SUCCESS) {
-                                if (mSlot == null) {
-                                    mSlot = message.arg1;
-                                    mExecutor.execute(() -> {
-                                        mCallback.onStarted();
-                                    });
-                                } else {
-                                    mSlot = null;
-                                    stopLooper();
-                                    mExecutor.execute(() -> {
-                                        mCallback.onStopped();
-                                    });
-                                }
-                            } else if (error == DATA_RECEIVED) {
-                                stopLooper();
-                                mExecutor.execute(() -> {
-                                    mCallback.onDataReceived();
-                                });
-                            } else {
-                                stopLooper();
-                                mExecutor.execute(() -> {
-                                    mCallback.onError(error);
-                                });
-                            }
-                        } catch (Exception e) {
-                            Log.e(TAG, "Exception in keepalive callback(" + error + ")", e);
-                        }
-                        break;
-                    default:
-                        Log.e(TAG, "Unhandled message " + Integer.toHexString(message.what));
-                        break;
-                }
+            public void onStarted(int slot) {
+                mSlot = slot;
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> callback.onStarted()));
             }
-        });
+
+            @Override
+            public void onStopped() {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> callback.onStopped()));
+            }
+
+            @Override
+            public void onError(int error) {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> callback.onError(error)));
+            }
+
+            @Override
+            public void onDataReceived() {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() -> callback.onDataReceived()));
+            }
+        };
     }
 
     /**
@@ -157,11 +130,6 @@ public abstract class SocketKeepalive implements AutoCloseable {
      */
     public abstract void start(int intervalSec);
 
-    /** @hide */
-    protected void stopLooper() {
-        mLooper.quit();
-    }
-
     /**
      * Requests that keepalive be stopped. Application must wait for {@link Callback#onStopped}
      * before using object.
@@ -173,7 +141,6 @@ public abstract class SocketKeepalive implements AutoCloseable {
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error stopping packet keepalive: ", e);
-            stopLooper();
         }
     }
 
@@ -184,7 +151,6 @@ public abstract class SocketKeepalive implements AutoCloseable {
     @Override
     public void close() {
         stop();
-        stopLooper();
     }
 
     /**
