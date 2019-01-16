@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7cf61ba_3527a93e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2019-01-16T17:01:12Z",
+      "side": 1,
+      "message": "is this also something that is interesting to move to resources? I am not sure i see the value in being able to overlay it but perhaps there is a use case.",
+      "revId": "aabab54196bace40223cfa928b4b69f22f80f35f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
