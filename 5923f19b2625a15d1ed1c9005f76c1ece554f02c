@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "87ef7cff_b1ba3933",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-16T15:40:04Z",
+      "side": 1,
+      "message": "Do we need to try catch here? It will throw IllegalArgumentException if the column does not exist",
+      "range": {
+        "startLine": 315,
+        "startChar": 23,
+        "endLine": 315,
+        "endChar": 44
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe3065e_c3d4f043",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-16T15:40:04Z",
+      "side": 1,
+      "message": "If it\u0027s unset(0), do we expect not to set it? That might be possible, right?",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 17
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c668184e_6ee884b6",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 8
