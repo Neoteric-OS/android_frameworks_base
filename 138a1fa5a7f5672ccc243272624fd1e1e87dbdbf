@@ -157,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "a104dbe1_d54076b5",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T19:33:07Z",
+      "side": 1,
+      "message": "For NATT, the RFC recommends that 20 seconds as the standard value. Since sys admins don\u0027t necessarily care about users\u0027 batteries, some networks (such as Google\u0027s) are configured very aggressively. I believe Google\u0027s was actually at 10s and the Bridge folks yelled at them to change it. Since we need the API to work universally (and it\u0027s actually at its most helpful on aggressively firewalled networks), keeping this value low makes sense. That said, I am not in favor of publishing the value in the public API but instead documenting a minimum that must be supported by implementers, so I think this should be @hide.",
+      "parentUuid": "bbb86f3b_c145afca",
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c89e1aae_0378c771",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 9
@@ -168,6 +186,30 @@
       "writtenOn": "2019-01-17T09:30:10Z",
       "side": 1,
       "message": "Given that we need to create a HandlerThread anyway, why not require that the app pass in a Handler thread? In case the app already has a Handler, that allows us to have one fewer threads, saving memory.\n\nNot for this patch series, but maybe add a TODO?\n\nIf you end up implementing Nathan\u0027s suggestion and use ConnectivityThread directly, then you can just do that.",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 54
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab19ef2e_27c2b097",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T19:33:07Z",
+      "side": 1,
+      "message": "Nathan\u0027s suggestion doesn\u0027t require the connectivity thread. :-)",
+      "parentUuid": "c89e1aae_0378c771",
       "range": {
         "startLine": 104,
         "startChar": 31,

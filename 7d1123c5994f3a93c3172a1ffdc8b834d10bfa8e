@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "2768cc7a_078166ea",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T19:33:07Z",
+      "side": 1,
+      "message": "*sigh* burdening NATT with a thus-far-unimplementable TCP keepalive\u0027s requirements. I\u0027ll say it again... this would all be a much smaller cleaner surface if we did it in IpSecManager, even if IpSecManager used 20 lines of callback skeleton for the user to override (though I think the callback itself can/should be simplified... you can take a look at the onError callback scheme that to see what I just did for CellInfo based on 2 of the other API councilors\u0027 suggestions).\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/telephony/java/android/telephony/TelephonyManager.java#4872\n\nI\u0027ve made throwables Parcelable so that we don\u0027t have to commit to all the error codes up front, since it doesn\u0027t matter to the caller for anything other than debug, unless the error code is actionable.",
+      "parentUuid": "e0f4c358_fd747366",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e310086_a0519edf",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "I don\u0027t think we can set up a handler on the binder thread - does it have a looper?\n\nAgree that it might be better to use ConnectivityThread (and maybe even better to have the app pass in a Handler). But we don\u0027t have to do that in this CL.",
       "parentUuid": "b2d1dc38_e49b2038",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe92e1d_b6a42b15",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T19:33:07Z",
+      "side": 1,
+      "message": "Executor is responsible for providing the looper/handler, thread or other mechanism. PTAL at the CellInfo stuff I just did to see a really minimal/clean example.",
+      "parentUuid": "f4064b0d_506bf1b0",
       "range": {
         "startLine": 53,
         "startChar": 12,
