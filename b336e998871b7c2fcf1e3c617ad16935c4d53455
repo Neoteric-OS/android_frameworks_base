@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "758a2fb1_2aedcb00",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-17T23:01:34Z",
+      "side": 1,
+      "message": "Yeah, mConfig \u003d\u003d null means VPN is not running in which case there\u0027s no point in creating underlyingNetworks[] from defaultNetwork.",
+      "parentUuid": "254aaae8_2698b4b8",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe592af_fe8c3dc2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "67e4fe19_778dac3c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4536,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-17T23:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe592af_fe8c3dc2",
+      "range": {
+        "startLine": 4536,
+        "startChar": 0,
+        "endLine": 4536,
+        "endChar": 51
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ed60ca_63747df9",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7007c782_59f243eb",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-01-17T23:01:34Z",
+      "side": 1,
+      "message": "Yeah I have added that in ConnectivityServiceTest. This class however, only tests the static method.",
+      "parentUuid": "b9ed60ca_63747df9",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 5
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
