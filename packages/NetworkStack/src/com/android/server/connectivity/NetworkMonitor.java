@@ -24,6 +24,7 @@ import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_URL;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.metrics.ValidationProbeEvent.DNS_FAILURE;
@@ -225,6 +226,11 @@ public class NetworkMonitor extends StateMachine {
      */
     public static final int EVENT_DNS_NOTIFICATION = BASE + 17;
 
+    /**
+     * ConnectivityService notifies NetworkMonitor that it should ignore the https probe.
+     */
+    public static final int EVENT_IGNORE_HTTPS_PROBE = BASE + 18;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
     private static final int MAX_REEVALUATE_DELAY_MS = 10 * 60 * 1000;
@@ -375,6 +381,13 @@ public class NetworkMonitor extends StateMachine {
         mLinkProperties = new LinkProperties();
         mNetworkCapabilities = new NetworkCapabilities();
         mNetworkCapabilities.clearAll();
+    }
+
+    /**
+     * ConnectivityService notifies NetworkMonitor that it should ignore the https probe.
+     */
+    public void notifyIgnoringHttpsProbe() {
+        sendMessage(EVENT_IGNORE_HTTPS_PROBE);
     }
 
     /**
@@ -628,6 +641,10 @@ public class NetworkMonitor extends StateMachine {
                 }
                 case EVENT_DNS_NOTIFICATION:
                     mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
+                    break;
+                case EVENT_IGNORE_HTTPS_PROBE:
+                    mUseHttps = false;
+                    transitionTo(mEvaluatingState);
                     break;
                 default:
                     break;
@@ -999,6 +1016,11 @@ public class NetworkMonitor extends StateMachine {
                         notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
+                    } else if (probeResult.isPartialConnectivity()) {
+                        logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
+                        notifyNetworkTested(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY,
+                                probeResult.redirectUrl);
+                        transitionTo(mWaitingForNextProbeState);
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
                         notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
@@ -1006,7 +1028,8 @@ public class NetworkMonitor extends StateMachine {
                     }
                     return HANDLED;
                 case EVENT_DNS_NOTIFICATION:
-                    // Leave the event to DefaultState to record correct dns timestamp.
+                case EVENT_IGNORE_HTTPS_PROBE:
+                    // Leave the event to DefaultState.
                     return NOT_HANDLED;
                 default:
                     // Wait for probe result and defer events to next state by default.
@@ -1444,10 +1467,11 @@ public class NetworkMonitor extends StateMachine {
         // If we have new-style probe specs, use those. Otherwise, use the fallback URLs.
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
         final URL fallbackUrl = (probeSpec != null) ? probeSpec.getUrl() : nextFallbackUrl();
+        CaptivePortalProbeResult fallbackProbeResult = null;
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (result.isPortal()) {
-                return result;
+            fallbackProbeResult = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
+            if (fallbackProbeResult.isPortal()) {
+                return fallbackProbeResult;
             }
         }
         // Otherwise wait until http and https probes completes and use their results.
@@ -1457,6 +1481,12 @@ public class NetworkMonitor extends StateMachine {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            final boolean isHttpSuccessful =
+                    (httpProbe.result().isSuccessful()
+                    || (fallbackProbeResult != null && fallbackProbeResult.isSuccessful()));
+            if (httpsProbe.result().isFailed() && isHttpSuccessful) {
+                return CaptivePortalProbeResult.PARTIAL;
+            }
             return httpsProbe.result();
         } catch (InterruptedException e) {
             validationLog("Error: http or https probe wait interrupted!");

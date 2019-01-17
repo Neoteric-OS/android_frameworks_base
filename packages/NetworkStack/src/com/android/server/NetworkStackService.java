@@ -178,6 +178,12 @@ public class NetworkStackService extends Service {
         }
 
         @Override
+        public void notifyIgnoringHttpsProbe() {
+            checkNetworkStackCallingPermission();
+            mNm.notifyIgnoringHttpsProbe();
+        }
+
+        @Override
         public void forceReevaluation(int uid) {
             checkNetworkStackCallingPermission();
             mNm.forceReevaluation(uid);

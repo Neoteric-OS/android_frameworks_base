@@ -3096,6 +3096,7 @@ package android.net {
     method public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(android.net.NetworkCapabilities);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
+    field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 23; // 0x17
   }
 
   public class NetworkKey implements android.os.Parcelable {
