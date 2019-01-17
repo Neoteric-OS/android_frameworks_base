@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "81628c54_73a793a7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-17T23:15:43Z",
+      "side": 1,
+      "message": "Yeah; that sounds right regarding mConfig being null implying that there\u0027s no VPN running.\n\nFor consistency sake, we should either do all the steps, or none. (set-default-as-underlying, updateCapbilities, sendNetworkCapabilities)",
+      "parentUuid": "758a2fb1_2aedcb00",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbe592af_fe8c3dc2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
