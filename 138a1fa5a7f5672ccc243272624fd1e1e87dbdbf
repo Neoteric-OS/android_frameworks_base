@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a18a002_55ea061b",
+        "filename": "api/current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27723,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "Do we want applications to be able to override close() and stop? If not, we might want to make them final? (Assuming we don\u0027t override them ourselves for testing.)",
+      "range": {
+        "startLine": 27721,
+        "startChar": 0,
+        "endLine": 27723,
+        "endChar": 30
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23ea7e8_2db41f73",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "socket is on\n\nAlso, this comment should say if this can be null, and if it is null, what happens. Can that be implemented correctly?",
+      "range": {
+        "startLine": 1831,
+        "startChar": 46,
+        "endLine": 1831,
+        "endChar": 79
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391094dd_2b1028fc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "that needs to be kept alive",
+      "range": {
+        "startLine": 1832,
+        "startChar": 32,
+        "endLine": 1832,
+        "endChar": 50
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19407baa_34fed5e2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "Must",
+      "range": {
+        "startLine": 1837,
+        "startChar": 23,
+        "endLine": 1837,
+        "endChar": 29
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdc00a0_2cada175",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "that use this API",
+      "range": {
+        "startLine": 1837,
+        "startChar": 58,
+        "endLine": 1837,
+        "endChar": 79
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce71f412_bb6c2361",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "\u0027s onStarted method is called",
+      "range": {
+        "startLine": 35,
+        "startChar": 74,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb86f3b_c145afca",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "10 seconds is really short. Is that what we support today?",
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89e1aae_0378c771",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "Given that we need to create a HandlerThread anyway, why not require that the app pass in a Handler thread? In case the app already has a Handler, that allows us to have one fewer threads, saving memory.\n\nNot for this patch series, but maybe add a TODO?\n\nIf you end up implementing Nathan\u0027s suggestion and use ConnectivityThread directly, then you can just do that.",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 54
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80debd3d_692329c0",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "Merge these three lines into one? Also elsewhere.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63230a9f_eebc0445",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "The application",
+      "range": {
+        "startLine": 166,
+        "startChar": 43,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce877dc_09465a8b",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "keepalives",
+      "range": {
+        "startLine": 166,
+        "startChar": 21,
+        "endLine": 166,
+        "endChar": 30
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b160a409_2a1bec5d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "the object",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 26
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45587e9_b7c71fbd",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "So if the app ignores the documentation and incorrectly does start() immediately after stop(), what happens? Will the code get confused or behave incorrectly?",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245b7dfe_fb809a0e",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "Once stop() hits the service, the service will send back an EVENT_PACKET_KEEPALIVE with a SUCCESS error code. What happens if that message is received when the looper is already stopped? Is an exception thrown?",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 21
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

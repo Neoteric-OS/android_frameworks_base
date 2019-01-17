@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "e0f4c358_fd747366",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "An explicit start() method also allows calling start() after stop(). This might not be super useful for NAT-T, but it would make sense for TCP. If we support start() after stop() for TCP, then we probably want to have an explicit start() method here for consistency.",
+      "parentUuid": "7b6b3c10_861d38d7",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e310086_a0519edf",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "I\u0027m not the approver, so it\u0027s up to Lorenzo.",
       "parentUuid": "d656c06e_ef4b3269",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4064b0d_506bf1b0",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T09:30:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we can set up a handler on the binder thread - does it have a looper?\n\nAgree that it might be better to use ConnectivityThread (and maybe even better to have the app pass in a Handler). But we don\u0027t have to do that in this CL.",
+      "parentUuid": "b2d1dc38_e49b2038",
       "range": {
         "startLine": 53,
         "startChar": 12,
