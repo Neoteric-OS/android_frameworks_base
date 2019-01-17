@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a3c6394_ba33bff1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4866,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:18:14Z",
+      "side": 1,
+      "message": "getDefaultUnderlyingNetwork?",
+      "range": {
+        "startLine": 4866,
+        "startChar": 20,
+        "endLine": 4866,
+        "endChar": 43
+      },
+      "revId": "0afc6e4234a5320fb18dcf17972148808edf44a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45284470_cbfdc434",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:18:14Z",
+      "side": 1,
+      "message": "2 comments here:\n1) suggest to refactor the logic to return if config is null (with a comment explaining that mConfig should only be null if VPN is not running)\n2) since the updateCapabilities should probably not be called on a VPN that isn\u0027t running, suggest to log a warning before returning from the function.",
+      "revId": "0afc6e4234a5320fb18dcf17972148808edf44a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6337c00b_4788ab43",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:18:14Z",
+      "side": 1,
+      "message": "can a change occur such that even when the underlying networks are null (track default), there is no default (default \u003d\u003d null)? If so, I think there\u0027s a 3rd case and while underlyingNetworks defaults to null, it\u0027s probably worth spelling that out here",
+      "range": {
+        "startLine": 271,
+        "startChar": 12,
+        "endLine": 271,
+        "endChar": 13
+      },
+      "revId": "0afc6e4234a5320fb18dcf17972148808edf44a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
