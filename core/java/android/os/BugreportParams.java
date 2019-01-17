@@ -26,8 +26,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @hide
  */
-// TODO: Expose API when the implementation is more complete.
-// @SystemApi
+@SystemApi
 public final class BugreportParams {
     private final int mMode;
 

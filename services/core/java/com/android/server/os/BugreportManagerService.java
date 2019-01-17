@@ -38,6 +38,6 @@ public class BugreportManagerService extends SystemService {
     public void onStart() {
         mService = new BugreportManagerServiceImpl(getContext());
         // TODO(b/111441001): Needs sepolicy to be submitted first.
-        // publishBinderService(Context.BUGREPORT_SERVICE, mService);
+        publishBinderService(Context.BUGREPORT_SERVICE, mService);
     }
 }
