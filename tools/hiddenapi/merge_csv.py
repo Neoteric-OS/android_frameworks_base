@@ -17,12 +17,21 @@
 Merge mutliple CSV files, possibly with different columns, writing to stdout.
 """
 
+import argparse
 import csv
+import operator
 import sys
+
+parser = argparse.ArgumentParser(description='Merge mutliple CSV files, possibly with different columns, writing to stdout.')
+parser.add_argument('files', metavar='csv file', nargs='+',
+                    help='a CSV file to merge')
+parser.add_argument('--sort', dest='sort', action='store',
+                    help='name of the column to sort by (default: unsorted)')
+args = parser.parse_args()
 
 csv_readers = [
     csv.DictReader(open(csv_file, 'rb'), delimiter=',', quotechar='|')
-    for csv_file in sys.argv[1:]
+    for csv_file in args.files
 ]
 
 # Build union of all columns from source files:
@@ -30,11 +39,18 @@ headers = set()
 for reader in csv_readers:
   headers = headers.union(reader.fieldnames)
 
+rows = list()
+for reader in csv_readers:
+  rows.extend(reader)
+
+if args.sort != None:
+  rows = sorted(rows, key=operator.itemgetter(args.sort))
+
 # Concatenate all files to output:
 out = csv.DictWriter(sys.stdout, delimiter=',', quotechar='|', fieldnames = sorted(headers))
 out.writeheader()
 for reader in csv_readers:
-  for row in reader:
+  for row in rows:
     out.writerow(row)
 
 

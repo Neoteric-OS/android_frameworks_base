@@ -104,7 +104,7 @@ $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS): \
 $(INTERNAL_PLATFORM_HIDDENAPI_GREYLIST_METADATA): \
     frameworks/base/tools/hiddenapi/merge_csv.py \
     $(PRIVATE_METADATA_INPUTS)
-	frameworks/base/tools/hiddenapi/merge_csv.py $(PRIVATE_METADATA_INPUTS) > $@
+	frameworks/base/tools/hiddenapi/merge_csv.py --sort=signature $(PRIVATE_METADATA_INPUTS) > $@
 
 $(call dist-for-goals,droidcore,$(INTERNAL_PLATFORM_HIDDENAPI_FLAGS))
 $(call dist-for-goals,droidcore,$(INTERNAL_PLATFORM_HIDDENAPI_GREYLIST_METADATA))
