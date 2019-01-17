@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "782f6c52_e521a718",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2019-01-17T01:51:14Z",
+      "side": 1,
+      "message": "Please avoid extraneous whitespace changes, or at least move whitespace cleanups to a separate CL",
+      "range": {
+        "startLine": 134,
+        "startChar": 11,
+        "endLine": 134,
+        "endChar": 13
+      },
+      "revId": "51852eb3fe441d509bcd7a485c71c5da44fb92a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd028244_ff784bf5",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2019-01-17T01:51:14Z",
+      "side": 1,
+      "message": "constexpr std::string_view please. I want to avoid static constructors when we can.",
+      "range": {
+        "startLine": 117,
+        "startChar": 13,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "51852eb3fe441d509bcd7a485c71c5da44fb92a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd13ea98_db0474fa",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2019-01-17T01:51:14Z",
+      "side": 1,
+      "message": "Nit: why not group all the private members?",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 162,
+        "endChar": 8
+      },
+      "revId": "51852eb3fe441d509bcd7a485c71c5da44fb92a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
