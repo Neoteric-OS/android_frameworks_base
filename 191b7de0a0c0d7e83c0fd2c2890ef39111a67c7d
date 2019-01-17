@@ -22,6 +22,30 @@
       "revId": "191b7de0a0c0d7e83c0fd2c2890ef39111a67c7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ebf972_62698397",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-17T21:23:09Z",
+      "side": 1,
+      "message": "Intellij likes doing this.  Dunno why.",
+      "parentUuid": "a8335da6_70d8d5f1",
+      "range": {
+        "startLine": 967,
+        "startChar": 7,
+        "endLine": 967,
+        "endChar": 38
+      },
+      "revId": "191b7de0a0c0d7e83c0fd2c2890ef39111a67c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
