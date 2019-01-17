@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b616de00_fdf0aa7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2019-01-17T22:24:55Z",
+      "side": 1,
+      "message": "consider adding:\n\n  Bug: 120145930\n\nto this commit message.",
+      "revId": "40c1196841546465c19ccef1d85ed51a333290e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
