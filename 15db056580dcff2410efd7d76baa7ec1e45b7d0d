@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f849ef1_c859d7e6",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2019-01-17T00:29:31Z",
+      "side": 1,
+      "message": "Any debug logging could have impact performance. I would suggest to conditionally enable it if it really needed to keep them. \n\nSimilar comment for remaining debug logging in this file. \n\nSee some examples of conditional debug logging @ http://cs/search/?q\u003dSlog.d+package:%5Eandroid$\u0026m\u003d100\u0026type\u003dcs",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 61
+      },
+      "revId": "15db056580dcff2410efd7d76baa7ec1e45b7d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2eb7e5_1d3d5dd2",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 4
