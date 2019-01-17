@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "254aaae8_2698b4b8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-17T22:02:58Z",
+      "side": 1,
+      "message": "Does this need to be within the mConfig !\u003d null case? could we do:\n\n\u003e if (mConfig !\u003d null \u0026\u0026 mConfig.underlyingNetworks !\u003d null){\n\u003e   ...\n\u003e } else if (defaultNetwork !\u003d null) {\n\u003e   ...\n\u003e }\n\nOr perhaps:\n\n\u003e Network[] underlyingNetworks \u003d (mConfig !\u003d null) ? mConfig.underlyingNetworks : null;\n\u003e if (underlyingNetworks \u003d\u003d null) underlyingNetworks \u003d new Network[] { defaultNetwork };\n\nRight now it looks like if the config is null, we omit the defaultNetwork override?",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe592af_fe8c3dc2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4536,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-17T22:02:58Z",
+      "side": 1,
+      "message": "Perhaps break this out into testNullUnderlyingNetworks",
+      "range": {
+        "startLine": 4536,
+        "startChar": 0,
+        "endLine": 4536,
+        "endChar": 51
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ed60ca_63747df9",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-01-17T22:02:58Z",
+      "side": 1,
+      "message": "Is it possible to have a test to ensure that the \"default\" network is used if there is no underlying network set?",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 5
+      },
+      "revId": "b336e998871b7c2fcf1e3c617ad16935c4d53455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
