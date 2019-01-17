@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8335da6_70d8d5f1",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-17T19:03:23Z",
+      "side": 1,
+      "message": "Perhaps use a little bit less indents.",
+      "range": {
+        "startLine": 967,
+        "startChar": 7,
+        "endLine": 967,
+        "endChar": 38
+      },
+      "revId": "191b7de0a0c0d7e83c0fd2c2890ef39111a67c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
