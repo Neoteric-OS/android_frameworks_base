@@ -22,6 +22,7 @@ import android.net.PrivateDnsConfigParcel;
 /** @hide */
 oneway interface INetworkMonitorCallbacks {
     void onNetworkMonitorCreated(in INetworkMonitor networkMonitor);
+    void notifyCaptivePortalConnected();
     void notifyNetworkTested(int testResult, @nullable String redirectUrl);
     void notifyPrivateDnsConfigResolved(in PrivateDnsConfigParcel config);
     void showProvisioningNotification(String action);

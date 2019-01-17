@@ -535,6 +535,10 @@ public class ConnectivityServiceTest {
                 if (mNmProvNotificationRequested
                         && mNmValidationResult == NETWORK_TEST_RESULT_VALID) {
                     mNmCallbacks.hideProvisioningNotification();
+                    // If captive portal app ever popped up and the validation result becomes
+                    // valid, it means the captive portal network is connected. So, here should
+                    // trigger the notification to notify user that the network is connected.
+                    mNmCallbacks.notifyCaptivePortalConnected();
                     mNmProvNotificationRequested = false;
                 }
 

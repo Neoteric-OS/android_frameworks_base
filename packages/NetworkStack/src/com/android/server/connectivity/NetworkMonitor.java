@@ -24,6 +24,7 @@ import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_URL;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.metrics.ValidationProbeEvent.DNS_FAILURE;
@@ -493,6 +494,13 @@ public class NetworkMonitor extends StateMachine {
                 mDefaultRequest.networkCapabilities, mNetworkCapabilities);
     }
 
+    private void notifyCaptivePortalConnected() {
+        try {
+            mCallback.notifyCaptivePortalConnected();
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error sending network test result", e);
+        }
+    }
 
     private void notifyNetworkTested(int result, @Nullable String redirectUrl) {
         try {
@@ -643,6 +651,9 @@ public class NetworkMonitor extends StateMachine {
         public void enter() {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
+            if (mNetworkCapabilities.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL)) {
+                notifyCaptivePortalConnected();
+            }
             notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
             mValidations++;
         }
