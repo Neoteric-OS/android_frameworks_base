@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f0145a3_415767af",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-17T02:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f849ef1_c859d7e6",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 61
+      },
+      "revId": "15db056580dcff2410efd7d76baa7ec1e45b7d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2eb7e5_1d3d5dd2",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d4ca6de0_96d232a7",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-17T02:01:12Z",
+      "side": 1,
+      "message": "Add an additional log with in isWritebackEnabled()",
+      "parentUuid": "dd2eb7e5_1d3d5dd2",
+      "revId": "15db056580dcff2410efd7d76baa7ec1e45b7d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e02d2f1_46d8ff55",
         "filename": "services/core/java/com/android/server/ZramWriteback.java",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2019-01-16T23:57:29Z",
       "side": 1,
       "message": "Let\u0027s add some log in here to confirm it works with IdleDelay, firstWbDelay, periodic_wb_delay_hours.",
+      "revId": "15db056580dcff2410efd7d76baa7ec1e45b7d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0444279_2a7d00dd",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-17T02:01:12Z",
+      "side": 1,
+      "message": "Is this necessary? We can use dumpsys jobscheduler to check if the properties are set properly?",
+      "parentUuid": "5e02d2f1_46d8ff55",
       "revId": "15db056580dcff2410efd7d76baa7ec1e45b7d0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
