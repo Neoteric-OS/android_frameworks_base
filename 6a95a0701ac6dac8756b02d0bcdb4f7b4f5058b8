@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "bf2083f1_2666d539",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-18T11:52:26Z",
+      "side": 1,
+      "message": "As the talk in person, you can move the clear mDnsProxyServer logic from this function to TetheredState#exist()",
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1eda3e_a471e678",
         "filename": "services/net/java/android/net/ip/IpServer.java",
         "patchSetId": 4
