@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2685b334_feb98712",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-18T10:00:25Z",
+      "side": 1,
+      "message": "If the column does not exist, it would mean the table does not have the expected structure so everything is broken and nothing can ever work.\n\nThat being said as we discussed on MS07, I\u0027d rather not crash the system. Ideally we\u0027d neuter the entire memory store and maybe wipe the DB, but then it\u0027s easiest to do this in the maintenance phase, so for now I\u0027ll just make it so that it won\u0027t crash. Thanks for raising this.",
+      "parentUuid": "87ef7cff_b1ba3933",
+      "range": {
+        "startLine": 315,
+        "startChar": 23,
+        "endLine": 315,
+        "endChar": 44
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe3065e_c3d4f043",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ab6df48a_7776948c",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-18T10:00:25Z",
+      "side": 1,
+      "message": "I thought this would not be possible because the default value for an int in SQLite would be 0. But your comment made me realize it\u0027s actually possible to ask SQLite to have a default of -1, so updated the code.\n\nIt does not matter too much because an MTU of 0 does not really make sense anyway but it\u0027s at least more consistent with the parceling code.",
+      "parentUuid": "9fe3065e_c3d4f043",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 17
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c668184e_6ee884b6",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1178e3e1_16965a1f",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-18T10:00:25Z",
+      "side": 1,
+      "message": "Good idea. This is more important for the parceling code actually so I added one in ParcelableTests too, but it is also relevant here.",
+      "parentUuid": "c668184e_6ee884b6",
+      "range": {
+        "startLine": 220,
+        "startChar": 3,
+        "endLine": 220,
+        "endChar": 5
+      },
+      "revId": "5923f19b2625a15d1ed1c9005f76c1ece554f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
