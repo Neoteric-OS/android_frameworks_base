@@ -35,6 +35,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Encapsulating class for using the SQLite database backing the memory store.
@@ -46,6 +47,10 @@ import java.util.List;
  */
 public class IpMemoryStoreDatabase {
     private static final String TAG = IpMemoryStoreDatabase.class.getSimpleName();
+    // A pair of NetworkAttribute objects is group-close if the confidence that they are
+    // the same is above this cutoff. See NetworkAttributes and SameL3NetworkResponse.
+    private static final float GROUPCLOSE_CONFIDENCE = 0.5f;
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
      * Contract class for the Network Attributes table.
@@ -187,30 +192,35 @@ public class IpMemoryStoreDatabase {
         return addresses;
     }
 
+    @NonNull
+    private static ContentValues toContentValues(@Nullable final NetworkAttributes attributes) {
+        final ContentValues values = new ContentValues();
+        if (null == attributes) return values;
+        if (null != attributes.assignedV4Address) {
+            values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS,
+                    NetworkUtils.inet4AddressToIntHTH(attributes.assignedV4Address));
+        }
+        if (null != attributes.groupHint) {
+            values.put(NetworkAttributesContract.COLNAME_GROUPHINT, attributes.groupHint);
+        }
+        if (null != attributes.dnsAddresses) {
+            values.put(NetworkAttributesContract.COLNAME_DNSADDRESSES,
+                    encodeAddressList(attributes.dnsAddresses));
+        }
+        if (null != attributes.mtu) {
+            values.put(NetworkAttributesContract.COLNAME_MTU, attributes.mtu);
+        }
+        return values;
+    }
+
     // Convert a NetworkAttributes object to content values to store them in a table compliant
     // with the contract defined in NetworkAttributesContract.
     @NonNull
     private static ContentValues toContentValues(@NonNull final String key,
             @Nullable final NetworkAttributes attributes, final long expiry) {
-        final ContentValues values = new ContentValues();
+        final ContentValues values = toContentValues(attributes);
         values.put(NetworkAttributesContract.COLNAME_L2KEY, key);
         values.put(NetworkAttributesContract.COLNAME_EXPIRYDATE, expiry);
-        if (null != attributes) {
-            if (null != attributes.assignedV4Address) {
-                values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS,
-                        NetworkUtils.inet4AddressToIntHTH(attributes.assignedV4Address));
-            }
-            if (null != attributes.groupHint) {
-                values.put(NetworkAttributesContract.COLNAME_GROUPHINT, attributes.groupHint);
-            }
-            if (null != attributes.dnsAddresses) {
-                values.put(NetworkAttributesContract.COLNAME_DNSADDRESSES,
-                        encodeAddressList(attributes.dnsAddresses));
-            }
-            if (null != attributes.mtu) {
-                values.put(NetworkAttributesContract.COLNAME_MTU, attributes.mtu);
-            }
-        }
         return values;
     }
 
@@ -226,6 +236,33 @@ public class IpMemoryStoreDatabase {
         values.put(PrivateDataContract.COLNAME_DATANAME, name);
         values.put(PrivateDataContract.COLNAME_DATA, data);
         return values;
+    }
+
+    @Nullable
+    private static NetworkAttributes readNetworkAttributesLine(@NonNull final Cursor cursor) {
+        // Make sure the data hasn't expired
+        final long expiry = cursor.getLong(
+                cursor.getColumnIndexOrThrow(NetworkAttributesContract.COLNAME_EXPIRYDATE));
+        if (expiry < System.currentTimeMillis()) return null;
+
+        final NetworkAttributes.Builder builder = new NetworkAttributes.Builder();
+        final int assignedV4AddressInt = getInt(cursor,
+                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS, 0);
+        final String groupHint = getString(cursor, NetworkAttributesContract.COLNAME_GROUPHINT);
+        final byte[] dnsAddressesBlob =
+                getBlob(cursor, NetworkAttributesContract.COLNAME_DNSADDRESSES);
+        final int mtu = getInt(cursor, NetworkAttributesContract.COLNAME_MTU, -1);
+        if (0 != assignedV4AddressInt) {
+            builder.setAssignedV4Address(NetworkUtils.intToInet4AddressHTH(assignedV4AddressInt));
+        }
+        builder.setGroupHint(groupHint);
+        if (null != dnsAddressesBlob) {
+            builder.setDnsAddresses(decodeAddressList(dnsAddressesBlob));
+        }
+        if (mtu >= 0) {
+            builder.setMtu(mtu);
+        }
+        return builder.build();
     }
 
     private static final String[] EXPIRY_COLUMN = new String[] {
@@ -305,7 +342,7 @@ public class IpMemoryStoreDatabase {
         final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
                 null, // columns, null means everything
                 NetworkAttributesContract.COLNAME_L2KEY + " = ?", // selection
-                new String[] { key }, // selectionArgs
+                new String[]{key}, // selectionArgs
                 null, // groupBy
                 null, // having
                 null); // orderBy
@@ -313,32 +350,9 @@ public class IpMemoryStoreDatabase {
         // result here. 0 results means the key was not found.
         if (cursor.getCount() != 1) return null;
         cursor.moveToFirst();
-
-        // Make sure the data hasn't expired
-        final long expiry = cursor.getLong(
-                cursor.getColumnIndexOrThrow(NetworkAttributesContract.COLNAME_EXPIRYDATE));
-        if (expiry < System.currentTimeMillis()) return null;
-
-        final NetworkAttributes.Builder builder = new NetworkAttributes.Builder();
-        final int assignedV4AddressInt = getInt(cursor,
-                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS, 0);
-        final String groupHint = getString(cursor, NetworkAttributesContract.COLNAME_GROUPHINT);
-        final byte[] dnsAddressesBlob =
-                getBlob(cursor, NetworkAttributesContract.COLNAME_DNSADDRESSES);
-        final int mtu = getInt(cursor, NetworkAttributesContract.COLNAME_MTU, -1);
+        final NetworkAttributes attributes = readNetworkAttributesLine(cursor);
         cursor.close();
-
-        if (0 != assignedV4AddressInt) {
-            builder.setAssignedV4Address(NetworkUtils.intToInet4AddressHTH(assignedV4AddressInt));
-        }
-        builder.setGroupHint(groupHint);
-        if (null != dnsAddressesBlob) {
-            builder.setDnsAddresses(decodeAddressList(dnsAddressesBlob));
-        }
-        if (mtu >= 0) {
-            builder.setMtu(mtu);
-        }
-        return builder.build();
+        return attributes;
     }
 
     private static final String[] DATA_COLUMN = new String[] {
@@ -363,6 +377,53 @@ public class IpMemoryStoreDatabase {
         final byte[] result = cursor.getBlob(0); // index in the DATA_COLUMN array
         cursor.close();
         return result;
+    }
+
+    // Returns the attributes and l2key of the closest match, if and only if it matches
+    // closely enough (as determined by group-closeness).
+    @Nullable
+    static String findClosestAttributes(@NonNull final SQLiteDatabase db,
+            @NonNull final NetworkAttributes attr) {
+        if (attr.isEmpty()) return null;
+        final ContentValues values = toContentValues(attr);
+
+        // Build the selection and args. To cut down on the number of lines to search, limit
+        // the search to those with at least one argument equals to the requested attributes.
+        // This works only because null attributes match only will not result in group-closeness.
+        final StringJoiner sj = new StringJoiner(" OR ");
+        final ArrayList<String> args = new ArrayList();
+        for (final String field : values.keySet()) {
+            sj.add(field + " = ?");
+            args.add(values.getAsString(field));
+        }
+
+        final String selection = NetworkAttributesContract.COLNAME_EXPIRYDATE + " > ? AND ("
+                + sj.toString() + ")";
+        args.add(Long.toString(System.currentTimeMillis()));
+        final String[] selectionArgs = args.toArray(EMPTY_STRING_ARRAY);
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns, null means everything
+                selection, // selection
+                selectionArgs, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+
+        if (cursor.getCount() <= 0) return null;
+        cursor.moveToFirst();
+        String bestKey = null;
+        float bestMatchConfidence = GROUPCLOSE_CONFIDENCE; // Never return a match worse than this.
+        while (!cursor.isAfterLast()) {
+            final NetworkAttributes read = readNetworkAttributesLine(cursor);
+            final float confidence = read.getNetworkGroupSamenessConfidence(attr);
+            if (confidence > bestMatchConfidence) {
+                bestKey = getString(cursor, NetworkAttributesContract.COLNAME_L2KEY);
+                bestMatchConfidence = confidence;
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return bestKey;
     }
 
     // Helper methods
