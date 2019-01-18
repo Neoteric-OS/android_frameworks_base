@@ -1413,9 +1413,9 @@ public class MediaScanner implements AutoCloseable {
     public void scanDirectories(String[] directories) {
         if (DEBUG) Log.d(TAG, "scanDirectories: " + Arrays.toString(directories));
         try {
-            long start = System.currentTimeMillis();
+            long start = System.nanoTime() / 1000000;
             prescan(null, true);
-            long prescan = System.currentTimeMillis();
+            long prescan = System.nanoTime() / 1000000;
 
             if (ENABLE_BULK_INSERTS) {
                 // create MediaInserter for bulk inserts
@@ -1432,9 +1432,9 @@ public class MediaScanner implements AutoCloseable {
                 mMediaInserter = null;
             }
 
-            long scan = System.currentTimeMillis();
+            long scan = System.nanoTime() / 1000000;
             postscan(directories);
-            long end = System.currentTimeMillis();
+            long end = System.nanoTime() / 1000000;
 
             if (DEBUG) {
                 Log.i(TAG, "< SCAN > : " + Arrays.toString(directories));
