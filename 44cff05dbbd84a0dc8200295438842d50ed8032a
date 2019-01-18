@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f1a7bf_c4ad0393",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2019-01-18T23:20:27Z",
+      "side": 1,
+      "message": "We also want boolean isRemovable? Or this is coming in a follow-up CL?",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "44cff05dbbd84a0dc8200295438842d50ed8032a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a7fcbd_fa6077e3",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2019-01-18T23:20:27Z",
+      "side": 1,
+      "message": "extra space :)",
+      "range": {
+        "startLine": 1486,
+        "startChar": 67,
+        "endLine": 1486,
+        "endChar": 68
+      },
+      "revId": "44cff05dbbd84a0dc8200295438842d50ed8032a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
