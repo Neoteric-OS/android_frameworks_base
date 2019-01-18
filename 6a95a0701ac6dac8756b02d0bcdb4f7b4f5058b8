@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "772a4622_96928be0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-18T05:21:14Z",
+      "side": 1,
+      "message": "How about extract calling legacy daemon logic to new function as below, or put calling legacy daemon logic into if function. Then, you won\u0027t need to add the same log \"mLog.log(\"SET master tether settings: ON\");\" again.\n\n        if (!cfg.enableLegacyDhcpServer \u0026\u0026 !cfg.enableLegacyDnsProxyServer) {\n            if (!usingLegacyTetherDaemon(cfg.enableLegacyDhcpServer, cfg.enableLegacyDnsProxyServer)) return;\n        }\n        mLog.log(\"SET master tether settings: ON\");\n        return true;\n\n\n    private boolean usingLegacyTetherDaemon(useDhcpserver, useDnsProxyServer) {\n        // TODO: Randomize DHCPv4 ranges, especially in hotspot mode.\n        // Legacy DHCP server is disabled if passed an empty ranges array\n        final String[] dhcpRanges \u003d cfg.enableLegacyDhcpServer\n                ? cfg.legacyDhcpRanges\n                : new String[0];\n        try {\n            // TODO: Find a more accurate method name (startDHCPv4()?).\n            mNMService.startTetheringLegacy(cfg.enableLegacyDnsProxyServer, dhcpRanges);\n        } catch (Exception e) {\n            try {\n                mNMService.stopTethering();\n                mNMService.startTetheringLegacy(cfg.enableLegacyDnsProxyServer, dhcpRanges);\n            } catch (Exception ee) {\n                mLog.e(ee);\n                transitionTo(mStartTetheringErrorState);\n                return false;\n            }\n        }\n        return true;\n    }",
+      "range": {
+        "startLine": 1159,
+        "startChar": 12,
+        "endLine": 1159,
+        "endChar": 81
+      },
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1eda3e_a471e678",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-18T05:21:14Z",
+      "side": 1,
+      "message": "nit: why not put if check into stopDnsProxy() as createDnsProxy()",
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192b538c_4317c302",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-18T05:21:14Z",
+      "side": 1,
+      "message": "Is createDnsProxy() needed in here?? TetheredState#enter() already call it.",
+      "range": {
+        "startLine": 986,
+        "startChar": 24,
+        "endLine": 986,
+        "endChar": 38
+      },
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
