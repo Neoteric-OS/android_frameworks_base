@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "1ad4b33c_b6573e07",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "for the onError part, took a look at the CellInfo, the detail is well hidden in the second parameter of the onError.\nHowever for this API, I\u0027m not sure how much we gained from this.\nIt looks like most of our errors are generated from the defined error code.\nThus, the user will still need the public definitions to map what happens, right?\n\nalso +jchalard@ for input.",
+      "parentUuid": "2768cc7a_078166ea",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e310086_a0519edf",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 4
@@ -500,6 +524,30 @@
     },
     {
       "key": {
+        "uuid": "00aefb55_d57b4cbf",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Reopen this since it is still not properly addressed.\nI\u0027ll check with lorenzo for this.\nPerhaps add proper comments to group the error codes.",
+      "parentUuid": "f1e114d1_28656a66",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40307fdc_d229593e",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -616,6 +664,30 @@
       "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2cafe0_7467b476",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "address threading problem in aosp/875738\nresolving this for now.",
+      "parentUuid": "ad6a3566_1e1103ab",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -828,6 +900,30 @@
       "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196f0dca_69817a6a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e6e53de_044413b7",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 198,
+        "endChar": 31
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

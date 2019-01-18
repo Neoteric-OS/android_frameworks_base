@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b3238d79_bcc85433",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Use Nathan\u0027s comment for tracking.\nResolving this one.",
+      "parentUuid": "ab0dff1f_e07ea59e",
+      "range": {
+        "startLine": 54,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "ad279b6ca505940201304743ff59deab9e193cbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52d7a5c3_24d7e8fa",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 2

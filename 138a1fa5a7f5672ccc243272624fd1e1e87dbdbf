@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37d78773_2a90a4e1",
+        "filename": "api/current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27723,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "I\u0027ll add final for close and stop.\nbut for start() we will override in Tcp/NattSocketKeepalive so I\u0027ll leave it as is.",
+      "parentUuid": "9a18a002_55ea061b",
+      "range": {
+        "startLine": 27721,
+        "startChar": 0,
+        "endLine": 27723,
+        "endChar": 30
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23ea7e8_2db41f73",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-17T09:30:10Z",
       "side": 1,
       "message": "socket is on\n\nAlso, this comment should say if this can be null, and if it is null, what happens. Can that be implemented correctly?",
+      "range": {
+        "startLine": 1831,
+        "startChar": 46,
+        "endLine": 1831,
+        "endChar": 79
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7032618c_6b9ef248",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Ack.\nThis cannot be null as below @NotNull annotation suggested.\nSo I guess we don\u0027t need to say what will happen if it is null or invalid?\n\nAnd yes, we\u0027ve got this implemented correctly by you.\nIf it is null or invalid, ERROR_INVALID_NETWORK will be returned in onError.",
+      "parentUuid": "d23ea7e8_2db41f73",
       "range": {
         "startLine": 1831,
         "startChar": 46,
@@ -68,6 +116,30 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d4ca57_39a90e7e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "391094dd_2b1028fc",
+      "range": {
+        "startLine": 1832,
+        "startChar": 32,
+        "endLine": 1832,
+        "endChar": 50
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "dc25a93a_658a2441",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19407baa_34fed5e2",
+      "range": {
+        "startLine": 1837,
+        "startChar": 23,
+        "endLine": 1837,
+        "endChar": 29
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e4a4278_fa121107",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfdc00a0_2cada175",
+      "range": {
+        "startLine": 1837,
+        "startChar": 58,
+        "endLine": 1837,
+        "endChar": 79
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce71f412_bb6c2361",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639ab17b_f8e5bce7",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce71f412_bb6c2361",
+      "range": {
+        "startLine": 35,
+        "startChar": 74,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +313,24 @@
       "side": 1,
       "message": "For NATT, the RFC recommends that 20 seconds as the standard value. Since sys admins don\u0027t necessarily care about users\u0027 batteries, some networks (such as Google\u0027s) are configured very aggressively. I believe Google\u0027s was actually at 10s and the Bridge folks yelled at them to change it. Since we need the API to work universally (and it\u0027s actually at its most helpful on aggressively firewalled networks), keeping this value low makes sense. That said, I am not in favor of publishing the value in the public API but instead documenting a minimum that must be supported by implementers, so I think this should be @hide.",
       "parentUuid": "bbb86f3b_c145afca",
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e9a58f_ecc8c2b0",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Ack, will hide this and mention that in doc.\nBut I don\u0027t have preference on the MIN interval here.\nThus I\u0027ll keep this item unresolved here.",
+      "parentUuid": "a104dbe1_d54076b5",
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -222,6 +384,30 @@
     },
     {
       "key": {
+        "uuid": "12024ac1_f1ab3536",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "address threading problem in aosp/875738\nAck, I\u0027ll add a todo here.",
+      "parentUuid": "ab19ef2e_27c2b097",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 54
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80debd3d_692329c0",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 9
@@ -242,6 +428,30 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bd1d0b_368c24e7",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80debd3d_692329c0",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +501,54 @@
     },
     {
       "key": {
+        "uuid": "283ecc2a_6f066436",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63230a9f_eebc0445",
+      "range": {
+        "startLine": 166,
+        "startChar": 43,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37df77f0_cf73627f",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "We are controlling over one keepalive with the stop(), right?\nwhy should we use keepalive(s)?\nDid I miss something?",
+      "parentUuid": "6ce877dc_09465a8b",
+      "range": {
+        "startLine": 166,
+        "startChar": 21,
+        "endLine": 166,
+        "endChar": 30
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b160a409_2a1bec5d",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 9
@@ -311,6 +569,30 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1ad4c1_4c143409",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b160a409_2a1bec5d",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 26
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +619,30 @@
     },
     {
       "key": {
+        "uuid": "cb7e8658_1fd90b9a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Well, nothing but only bug will happen.\nCurrently, if start() is called, then only the previous onStopped will\nbe invoked, because the looper quit after that. Only the service side will work as expected.\nBecause how we fix this will depend on thread modeling.\nI\u0027ll add a todo to support restart, and address this with additional\ntest case in the follow-up commit after thread modeling patch.\nIs that ok?",
+      "parentUuid": "b45587e9_b7c71fbd",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "245b7dfe_fb809a0e",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 9
@@ -348,6 +654,30 @@
       "writtenOn": "2019-01-17T09:30:10Z",
       "side": 1,
       "message": "Once stop() hits the service, the service will send back an EVENT_PACKET_KEEPALIVE with a SUCCESS error code. What happens if that message is received when the looper is already stopped? Is an exception thrown?",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 21
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8646dee_b860062a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "I think the event looper will stop working after quiting, right?\nSo we could not receive any message from messenger after this call.\nDid I miss something?",
+      "parentUuid": "245b7dfe_fb809a0e",
       "range": {
         "startLine": 187,
         "startChar": 8,

@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "80c9bb42_4e26f71c",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Upload aosp/875738 aka KA02.5 to evaluate this,\nwhich will invoke callback from binder thread and remove the looper/handler/messenger/thread as Nathan suggested.\nThe callback might possibly blocking in that binder thread.\nBut I guess it should be fine.",
+      "parentUuid": "95f84029_f287596a",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 54
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66421c8a_334c8331",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 3

@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d8f14ae0_db0529a7",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fed5e4f_f44c4a14",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e30585e_5491b90d",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 7
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1dd819be_8c2928d4",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e30585e_5491b90d",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16425a4_1938e351",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 7
@@ -106,6 +154,30 @@
       "writtenOn": "2019-01-15T07:22:48Z",
       "side": 1,
       "message": "These should be protected or private.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6096c770_1653de76",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T15:18:02Z",
+      "side": 1,
+      "message": "Ack,\n But for some field that used in NattSocketKeepalive, I also don\u0027t want user to touch these.\n Is it better if we keep them package-private?",
+      "parentUuid": "f16425a4_1938e351",
       "range": {
         "startLine": 87,
         "startChar": 0,
