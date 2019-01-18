@@ -617,7 +617,7 @@ public class MediaScanner implements AutoCloseable {
         public Uri doScanFile(String path, String mimeType, long lastModified,
                 long fileSize, boolean isDirectory, boolean scanAlways, boolean noMedia) {
             Uri result = null;
-//            long t1 = System.currentTimeMillis();
+//            long t1 = System.nanoTime() / 1000000;
             try {
                 FileEntry entry = beginFile(path, mimeType, lastModified,
                         fileSize, isDirectory, noMedia);
@@ -691,7 +691,7 @@ public class MediaScanner implements AutoCloseable {
             } catch (RemoteException e) {
                 Log.e(TAG, "RemoteException in MediaScanner.scanFile()", e);
             }
-//            long t2 = System.currentTimeMillis();
+//            long t2 = System.nanoTime() / 1000000;
 //            Log.v(TAG, "scanFile: " + path + " took " + (t2-t1));
             return result;
         }
@@ -1413,9 +1413,9 @@ public class MediaScanner implements AutoCloseable {
     public void scanDirectories(String[] directories) {
         if (DEBUG) Log.d(TAG, "scanDirectories: " + Arrays.toString(directories));
         try {
-            long start = System.currentTimeMillis();
+            long start = System.nanoTime() / 1000000;
             prescan(null, true);
-            long prescan = System.currentTimeMillis();
+            long prescan = System.nanoTime() / 1000000;
 
             if (ENABLE_BULK_INSERTS) {
                 // create MediaInserter for bulk inserts
@@ -1432,9 +1432,9 @@ public class MediaScanner implements AutoCloseable {
                 mMediaInserter = null;
             }
 
-            long scan = System.currentTimeMillis();
+            long scan = System.nanoTime() / 1000000;
             postscan(directories);
-            long end = System.currentTimeMillis();
+            long end = System.nanoTime() / 1000000;
 
             if (DEBUG) {
                 Log.i(TAG, "< SCAN > : " + Arrays.toString(directories));
