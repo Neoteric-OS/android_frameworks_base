@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6e4e7cd_00a4c4c9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T04:58:12Z",
+      "side": 1,
+      "message": "Don\u0027t have strong opinon for the naming and api usage.\n+lorenzo to input.",
+      "parentUuid": "c724631c_21a88321",
+      "range": {
+        "startLine": 1841,
+        "startChar": 27,
+        "endLine": 1841,
+        "endChar": 46
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fed5e4f_f44c4a14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 7

@@ -381,6 +381,30 @@
     },
     {
       "key": {
+        "uuid": "fff11763_cd7b5cf9",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T04:58:12Z",
+      "side": 1,
+      "message": "Upload aosp/875738 aka KA02.5 to evaluate this,\nwhich will invoke callback from binder thread and remove the looper/handler/messenger/thread as Nathan suggested.\nBut as mentioned by lorenzo in the offline discuss yesterday, I\u0027m not very sure if the order of callback can be guaranteed even if user provide a single thread executor.",
+      "parentUuid": "7fe92e1d_b6a42b15",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9fe9a73_c84dce14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
