@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "20a00b70_f6caf13c",
+        "filename": "packages/StubNetworkLocation/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-18T07:55:12Z",
+      "side": 1,
+      "message": "Please add\n\nLOCAL_PRODUCT_MODULE :\u003d true \n\nafter line 27",
+      "revId": "90547f65ad29323db713057610fac929f2be9309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d531543_2ff8bb5e",
         "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/FusionEngine.java",
         "patchSetId": 1
