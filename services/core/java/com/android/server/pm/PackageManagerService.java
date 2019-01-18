@@ -7965,7 +7965,20 @@ public class PackageManagerService extends IPackageManager.Stub
                     try {
                         final ApexInfo[] activePkgs = apex.getActivePackages();
                         for (ApexInfo apexInfo : activePkgs) {
-                            list.add(new PackageInfo(apexInfo));
+                            PackageInfo pi = new PackageInfo();
+                            try {
+                                PackageParser.PackageLite pkg = PackageParser.parsePackageLite(
+                                        new File(apexInfo.packagePath), 0);
+                                pi.packageName = pkg.packageName;
+                                pi.setLongVersionCode(pkg.versionCode);
+                            } catch (PackageParserException e) {
+                                Slog.w(TAG, "Failed to parse apex file at " + apexInfo.packagePath
+                                        + ": " + e);
+                                pi.packageName = apexInfo.packageName;
+                                pi.setLongVersionCode(apexInfo.versionCode);
+                            }
+                            pi.isApex = true;
+                            list.add(pi);
                         }
                     } catch (RemoteException e) {
                         Log.e(TAG, "Unable to retrieve packages from apexservice: " + e.toString());
