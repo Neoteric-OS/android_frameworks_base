@@ -16,8 +16,7 @@
 
 package android.net;
 
-import android.annotation.UnsupportedAppUsage;
-import android.net.NetworkUtils;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,38 +27,32 @@ import java.util.Objects;
 /**
  * A simple object for retrieving the results of a DHCP request.
  * Optimized (attempted) for that jni interface
- * TODO - remove when DhcpInfo is deprecated.  Move the remaining api to LinkProperties.
+ * TODO - remove ASAP. Move the remaining api to LinkProperties.
  * @hide
  */
+@SystemApi
 public class DhcpResults extends StaticIpConfiguration {
     private static final String TAG = "DhcpResults";
 
-    @UnsupportedAppUsage
     public Inet4Address serverAddress;
 
     /** Vendor specific information (from RFC 2132). */
-    @UnsupportedAppUsage
     public String vendorInfo;
 
-    @UnsupportedAppUsage
     public int leaseDuration;
 
     /** Link MTU option. 0 means unset. */
-    @UnsupportedAppUsage
     public int mtu;
 
-    @UnsupportedAppUsage
     public DhcpResults() {
         super();
     }
 
-    @UnsupportedAppUsage
     public DhcpResults(StaticIpConfiguration source) {
         super(source);
     }
 
     /** copy constructor */
-    @UnsupportedAppUsage
     public DhcpResults(DhcpResults source) {
         super(source);
 
@@ -118,7 +111,10 @@ public class DhcpResults extends StaticIpConfiguration {
                 mtu == target.mtu;
     }
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     * @hide
+     */
     public static final Creator<DhcpResults> CREATOR =
         new Creator<DhcpResults>() {
             public DhcpResults createFromParcel(Parcel in) {
@@ -132,7 +128,11 @@ public class DhcpResults extends StaticIpConfiguration {
             }
         };
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     * @hide
+     */
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeInt(leaseDuration);
@@ -151,6 +151,7 @@ public class DhcpResults extends StaticIpConfiguration {
 
     // Utils for jni population - false on success
     // Not part of the superclass because they're only used by the JNI iterface to the DHCP daemon.
+    /** @hide */
     public boolean setIpAddress(String addrString, int prefixLength) {
         try {
             Inet4Address addr = (Inet4Address) NetworkUtils.numericToInetAddress(addrString);
