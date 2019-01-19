@@ -16,10 +16,9 @@
 
 package android.net;
 
-import android.annotation.UnsupportedAppUsage;
-import android.net.LinkAddress;
-import android.os.Parcelable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -46,17 +45,13 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public class StaticIpConfiguration implements Parcelable {
-    @UnsupportedAppUsage
     public LinkAddress ipAddress;
-    @UnsupportedAppUsage
     public InetAddress gateway;
-    @UnsupportedAppUsage
     public final ArrayList<InetAddress> dnsServers;
-    @UnsupportedAppUsage
     public String domains;
 
-    @UnsupportedAppUsage
     public StaticIpConfiguration() {
         dnsServers = new ArrayList<InetAddress>();
     }
@@ -86,7 +81,6 @@ public class StaticIpConfiguration implements Parcelable {
      * route to the gateway as well. This configuration is arguably invalid, but it used to work
      * in K and earlier, and other OSes appear to accept it.
      */
-    @UnsupportedAppUsage
     public List<RouteInfo> getRoutes(String iface) {
         List<RouteInfo> routes = new ArrayList<RouteInfo>(3);
         if (ipAddress != null) {
@@ -107,6 +101,7 @@ public class StaticIpConfiguration implements Parcelable {
      * contained in the LinkProperties will not be a complete picture of the link's configuration,
      * because any configuration information that is obtained dynamically by the network (e.g.,
      * IPv6 configuration) will not be included.
+     * @hide
      */
     public LinkProperties toLinkProperties(String iface) {
         LinkProperties lp = new LinkProperties();
@@ -124,6 +119,7 @@ public class StaticIpConfiguration implements Parcelable {
         return lp;
     }
 
+    @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
 
@@ -143,6 +139,7 @@ public class StaticIpConfiguration implements Parcelable {
         return str.toString();
     }
 
+    @Override
     public int hashCode() {
         int result = 13;
         result = 47 * result + (ipAddress == null ? 0 : ipAddress.hashCode());
@@ -167,7 +164,10 @@ public class StaticIpConfiguration implements Parcelable {
                 Objects.equals(domains, other.domains);
     }
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     * @hide
+     */
     public static Creator<StaticIpConfiguration> CREATOR =
         new Creator<StaticIpConfiguration>() {
             public StaticIpConfiguration createFromParcel(Parcel in) {
@@ -181,12 +181,20 @@ public class StaticIpConfiguration implements Parcelable {
             }
         };
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     * @hide
+     */
+    @Override
     public int describeContents() {
         return 0;
     }
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     * @hide
+     */
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(ipAddress, flags);
         NetworkUtils.parcelInetAddress(dest, gateway, flags);
@@ -197,6 +205,7 @@ public class StaticIpConfiguration implements Parcelable {
         dest.writeString(domains);
     }
 
+    /** @hide */
     protected static void readFromParcel(StaticIpConfiguration s, Parcel in) {
         s.ipAddress = in.readParcelable(null);
         s.gateway = NetworkUtils.unparcelInetAddress(in);
