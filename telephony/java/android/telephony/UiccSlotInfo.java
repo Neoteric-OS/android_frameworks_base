@@ -15,14 +15,14 @@
  */
 package android.telephony;
 
+import android.annotation.IntDef;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
-
-import android.annotation.IntDef;
 
 /**
  * Class for the information of a UICC slot.
@@ -57,6 +57,7 @@ public class UiccSlotInfo implements Parcelable {
 
     private final boolean mIsActive;
     private final boolean mIsEuicc;
+    private final boolean mIsRemovable;
     private final String mCardId;
     private final @CardStateInfo int mCardStateInfo;
     private final int mLogicalSlotIdx;
@@ -77,6 +78,7 @@ public class UiccSlotInfo implements Parcelable {
     private UiccSlotInfo(Parcel in) {
         mIsActive = in.readByte() != 0;
         mIsEuicc = in.readByte() != 0;
+        mIsRemovable = in.readByte() != 0;
         mCardId = in.readString();
         mCardStateInfo = in.readInt();
         mLogicalSlotIdx = in.readInt();
@@ -87,6 +89,7 @@ public class UiccSlotInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte((byte) (mIsActive ? 1 : 0));
         dest.writeByte((byte) (mIsEuicc ? 1 : 0));
+        dest.writeByte((byte) (mIsRemovable ? 1 : 0));
         dest.writeString(mCardId);
         dest.writeInt(mCardStateInfo);
         dest.writeInt(mLogicalSlotIdx);
@@ -98,10 +101,11 @@ public class UiccSlotInfo implements Parcelable {
         return 0;
     }
 
-    public UiccSlotInfo(boolean isActive, boolean isEuicc, String cardId,
+    public UiccSlotInfo(boolean isActive, boolean isEuicc, boolean isRemovable, String cardId,
             @CardStateInfo int cardStateInfo, int logicalSlotIdx, boolean isExtendedApduSupported) {
         this.mIsActive = isActive;
         this.mIsEuicc = isEuicc;
+        this.mIsRemovable = isRemovable;
         this.mCardId = cardId;
         this.mCardStateInfo = cardStateInfo;
         this.mLogicalSlotIdx = logicalSlotIdx;
@@ -114,6 +118,10 @@ public class UiccSlotInfo implements Parcelable {
 
     public boolean getIsEuicc() {
         return mIsEuicc;
+    }
+
+    public boolean getIsRemovable() {
+        return mIsRemovable;
     }
 
     public String getCardId() {
@@ -148,6 +156,7 @@ public class UiccSlotInfo implements Parcelable {
         UiccSlotInfo that = (UiccSlotInfo) obj;
         return (mIsActive == that.mIsActive)
                 && (mIsEuicc == that.mIsEuicc)
+                && (mIsRemovable == that.mIsRemovable)
                 && (Objects.equals(mCardId, that.mCardId))
                 && (mCardStateInfo == that.mCardStateInfo)
                 && (mLogicalSlotIdx == that.mLogicalSlotIdx)
@@ -159,6 +168,7 @@ public class UiccSlotInfo implements Parcelable {
         int result = 1;
         result = 31 * result + (mIsActive ? 1 : 0);
         result = 31 * result + (mIsEuicc ? 1 : 0);
+        result = 31 * result + (mIsRemovable ? 1 : 0);
         result = 31 * result + Objects.hashCode(mCardId);
         result = 31 * result + mCardStateInfo;
         result = 31 * result + mLogicalSlotIdx;
@@ -172,6 +182,8 @@ public class UiccSlotInfo implements Parcelable {
                 + mIsActive
                 + ", mIsEuicc="
                 + mIsEuicc
+                + ", mIsRemovable="
+                + mIsRemovable
                 + ", mCardId="
                 + mCardId
                 + ", cardState="
