@@ -3042,6 +3042,23 @@ package android.net {
     method public void onTetheringStarted();
   }
 
+  public class DhcpResults extends android.net.StaticIpConfiguration {
+    ctor public DhcpResults();
+    ctor public DhcpResults(android.net.StaticIpConfiguration);
+    ctor public DhcpResults(android.net.DhcpResults);
+    method public boolean addDns(java.lang.String);
+    method public boolean hasMeteredHint();
+    method public void setDomains(java.lang.String);
+    method public boolean setGateway(java.lang.String);
+    method public void setLeaseDuration(int);
+    method public boolean setServerAddress(java.lang.String);
+    method public void setVendorInfo(java.lang.String);
+    field public int leaseDuration;
+    field public int mtu;
+    field public java.net.Inet4Address serverAddress;
+    field public java.lang.String vendorInfo;
+  }
+
   public class LinkAddress implements android.os.Parcelable {
     ctor public LinkAddress(java.net.InetAddress, int);
     ctor public LinkAddress(String);
@@ -3164,6 +3181,17 @@ package android.net {
     field public final android.net.RssiCurve rssiCurve;
   }
 
+  public class StaticIpConfiguration implements android.os.Parcelable {
+    ctor public StaticIpConfiguration();
+    ctor public StaticIpConfiguration(android.net.StaticIpConfiguration);
+    method public void clear();
+    method public java.util.List<android.net.RouteInfo> getRoutes(java.lang.String);
+    field public final java.util.ArrayList<java.net.InetAddress> dnsServers;
+    field public java.lang.String domains;
+    field public java.net.InetAddress gateway;
+    field public android.net.LinkAddress ipAddress;
+  }
+
   public class TrafficStats {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
@@ -3185,6 +3213,47 @@ package android.net {
     field public static final android.os.Parcelable.Creator<android.net.WifiKey> CREATOR;
     field public final String bssid;
     field public final String ssid;
+  }
+
+}
+
+package android.net.apf {
+
+  public class ApfCapabilities {
+    ctor public ApfCapabilities(int, int, int);
+    method public boolean hasDataAccess();
+    field public final int apfPacketFormat;
+    field public final int apfVersionSupported;
+    field public final int maximumApfProgramSize;
+  }
+
+}
+
+package android.net.captiveportal {
+
+  public final class CaptivePortalProbeResult {
+    ctor public CaptivePortalProbeResult(int);
+    ctor public CaptivePortalProbeResult(int, java.lang.String, java.lang.String);
+    ctor public CaptivePortalProbeResult(int, java.lang.String, java.lang.String, android.net.captiveportal.CaptivePortalProbeSpec);
+    method public boolean isFailed();
+    method public boolean isPortal();
+    method public boolean isSuccessful();
+    field public static final android.net.captiveportal.CaptivePortalProbeResult FAILED;
+    field public static final int FAILED_CODE = 599; // 0x257
+    field public static final int PORTAL_CODE = 302; // 0x12e
+    field public static final android.net.captiveportal.CaptivePortalProbeResult SUCCESS;
+    field public static final int SUCCESS_CODE = 204; // 0xcc
+    field public final java.lang.String detectUrl;
+    field public final android.net.captiveportal.CaptivePortalProbeSpec probeSpec;
+    field public final java.lang.String redirectUrl;
+  }
+
+  public abstract class CaptivePortalProbeSpec {
+    method public java.lang.String getEncodedSpec();
+    method public abstract android.net.captiveportal.CaptivePortalProbeResult getResult(int, java.lang.String);
+    method public java.net.URL getUrl();
+    method public static android.net.captiveportal.CaptivePortalProbeSpec[] parseCaptivePortalProbeSpecs(java.lang.String);
+    method public static android.net.captiveportal.CaptivePortalProbeSpec parseSpecOrNull(java.lang.String);
   }
 
 }
