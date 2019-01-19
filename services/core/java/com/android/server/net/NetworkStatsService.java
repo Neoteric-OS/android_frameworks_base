@@ -39,6 +39,7 @@ import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStatsHistory.FIELD_ALL;
+import static android.net.NetworkTemplate.buildTemplateMatchAllInterfaces;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.KB_IN_BYTES;
@@ -289,6 +290,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     /** Data layer operation counters for splicing into other structures. */
     private NetworkStats mUidOperations = new NetworkStats(0L, 10);
+
+    /**
+     * Snapshot containing most recent network stats for all UIDs across all interfaces and tags
+     * since boot.
+     *
+     * <p>Maintains migrated VPN stats and is used to compute {@link #getRealtimeNetworkUidStats}.
+     */
+    @GuardedBy("mStatsLock")
+    private NetworkStats mTunAdjustedStats;
 
     /** Must be set in factory by calling #setHandler. */
     private Handler mHandler;
@@ -807,9 +817,19 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @Override
     public NetworkStats getDetailedUidStats(String[] requiredIfaces) {
         try {
+            // Get the latest snapshot from NetworkStatsFactory.
+            NetworkStats uidDetailStats = getNetworkStatsUidDetail(INTERFACES_ALL);
+            VpnInfo[] vpnArray = mConnManager.getAllVpnInfo();
+
+            // Migrate traffic from VPN UID over delta and update mTunAdjustedStats.
+            migrateTunTraffic(uidDetailStats, vpnArray);
+
             final String[] ifacesToQuery =
                     NetworkStatsFactory.augmentWithStackedInterfaces(requiredIfaces);
-            return getNetworkStatsUidDetail(ifacesToQuery);
+            // Apply filter based on ifacesToQuery.
+            NetworkStats result = getTunAdjustedStats();
+            result.filter(UID_ALL, ifacesToQuery, TAG_ALL);
+            return result;
         } catch (RemoteException e) {
             Log.wtf(TAG, "Error compiling UID stats", e);
             return new NetworkStats(0L, 0);
@@ -1292,6 +1312,73 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // a race condition between the service handler thread and the observer's
         mStatsObservers.updateStats(xtSnapshot, uidSnapshot, new ArrayMap<>(mActiveIfaces),
                 new ArrayMap<>(mActiveUidIfaces), vpnArray, currentTime);
+
+        migrateTunTraffic(uidSnapshot, vpnArray);
+    }
+
+    /**
+     * Updates {@link #mTunAdjustedStats} with the delta containing traffic migrated off of TUN.
+     */
+    @GuardedBy("mStatsLock")
+    private void migrateTunTraffic(NetworkStats uidDetailStats, VpnInfo[] vpnInfoArray) {
+        if (mTunAdjustedStats == null) {
+            // Either system server crashed or device booted.
+            // In either case initialize last snapshot from disk which could potentially be off by
+            // [0, mPersistThreshold).
+            mTunAdjustedStats = queryTunAdjustedStatsSinceBoot();
+        }
+
+        // Migrate delta traffic from VPN to other apps.
+        NetworkStats delta = uidDetailStats.subtract(mTunAdjustedStats);
+        for (VpnInfo info : vpnInfoArray) {
+            for (String underlyingIface : info.underlyingIfaces) {
+                delta.migrateTun(info.ownerUid, info.vpnIface, underlyingIface);
+            }
+        }
+
+        // Add delta to last snapshot.
+        mTunAdjustedStats.combineAllValues(delta);
+    }
+
+    /** Returns stats for all UIDs across all interfaces and tags since boot from disk. */
+    @GuardedBy("mStatsLock")
+    private NetworkStats queryTunAdjustedStatsSinceBoot() {
+        long end = System.currentTimeMillis();
+        long start = end - SystemClock.elapsedRealtime();
+        NetworkTemplate template = buildTemplateMatchAllInterfaces();
+
+        NetworkStats uidDetailStats =
+                mUidRecorder
+                        .getOrLoadCompleteLocked()
+                        .getSummary(
+                                template,
+                                start,
+                                end,
+                                NetworkStatsAccess.Level.DEVICE,
+                                android.os.Process.SYSTEM_UID);
+        NetworkStats tagStats =
+                mUidTagRecorder
+                        .getOrLoadCompleteLocked()
+                        .getSummary(
+                                template,
+                                start,
+                                end,
+                                NetworkStatsAccess.Level.DEVICE,
+                                android.os.Process.SYSTEM_UID);
+        uidDetailStats.combineAllValues(tagStats);
+
+        return uidDetailStats;
+    }
+
+    @VisibleForTesting
+    NetworkStats getTunAdjustedStats() {
+        synchronized (mStatsLock) {
+            if (mTunAdjustedStats == null) {
+                // Shouldn't be null after #systemReady.
+                return null;
+            }
+            return mTunAdjustedStats.clone();
+        }
     }
 
     /**
