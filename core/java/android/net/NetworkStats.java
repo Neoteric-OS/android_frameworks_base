@@ -1013,6 +1013,26 @@ public class NetworkStats implements Parcelable {
         size = nextOutputEntry;
     }
 
+    /**
+     * Only keep entries with {@link #set} value less than {@link #SET_DEBUG_START}.
+     *
+     * <p>This mutates the original structure in place.
+     */
+    public void filterDebugEntries() {
+        Entry entry = new Entry();
+        int nextOutputEntry = 0;
+        for (int i = 0; i < size; i++) {
+            entry = getValues(i, entry);
+            if (entry.set < SET_DEBUG_START) {
+                if (nextOutputEntry != i ) {
+                    setValues(nextOutputEntry, entry);
+                }
+                nextOutputEntry++;
+            }
+        }
+        size = nextOutputEntry;
+    }
+
     public void dump(String prefix, PrintWriter pw) {
         pw.print(prefix);
         pw.print("NetworkStats: elapsedRealtime="); pw.println(elapsedRealtime);
