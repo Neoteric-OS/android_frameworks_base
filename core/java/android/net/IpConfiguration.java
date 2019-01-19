@@ -16,6 +16,9 @@
 
 package android.net;
 
+import static android.net.shared.IpConfigurationParcelableUtil.fromStableParcelable;
+import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
+
 import android.annotation.UnsupportedAppUsage;
 import android.net.StaticIpConfiguration;
 import android.os.Parcel;
@@ -184,7 +187,7 @@ public class IpConfiguration implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(ipAssignment.name());
         dest.writeString(proxySettings.name());
-        dest.writeParcelable(staticIpConfiguration, flags);
+        dest.writeParcelable(toStableParcelable(staticIpConfiguration), flags);
         dest.writeParcelable(httpProxy, flags);
     }
 
@@ -195,7 +198,8 @@ public class IpConfiguration implements Parcelable {
                 IpConfiguration config = new IpConfiguration();
                 config.ipAssignment = IpAssignment.valueOf(in.readString());
                 config.proxySettings = ProxySettings.valueOf(in.readString());
-                config.staticIpConfiguration = in.readParcelable(null);
+                config.staticIpConfiguration = fromStableParcelable(
+                        (StaticIpConfigurationParcelable) in.readParcelable(null));
                 config.httpProxy = in.readParcelable(null);
                 return config;
             }
