@@ -21,8 +21,11 @@ import static android.net.captiveportal.CaptivePortalProbeResult.SUCCESS_CODE;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,9 +36,8 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /** @hide */
+@SystemApi
 public abstract class CaptivePortalProbeSpec {
-    public static final String HTTP_LOCATION_HEADER_NAME = "Location";
-
     private static final String TAG = CaptivePortalProbeSpec.class.getSimpleName();
     private static final String REGEX_SEPARATOR = "@@/@@";
     private static final String SPEC_SEPARATOR = "@@,@@";
@@ -55,7 +57,9 @@ public abstract class CaptivePortalProbeSpec {
      * @throws MalformedURLException The URL has invalid format for {@link URL#URL(String)}.
      * @throws ParseException The string is empty, does not match the above format, or a regular
      * expression is invalid for {@link Pattern#compile(String)}.
+     * @hide
      */
+    @VisibleForTesting
     @NonNull
     public static CaptivePortalProbeSpec parseSpec(String spec) throws ParseException,
             MalformedURLException {

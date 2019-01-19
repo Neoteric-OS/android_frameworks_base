@@ -16,11 +16,14 @@
 
 package android.net.apf;
 
+import android.annotation.SystemApi;
+
 /**
  * APF program support capabilities.
  *
  * @hide
  */
+@SystemApi
 public class ApfCapabilities {
     /**
      * Version of APF instruction set supported for packet filtering. 0 indicates no support for
