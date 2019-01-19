@@ -16,9 +16,10 @@
 
 package android.net;
 
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
-import android.net.NetworkUtils;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -28,38 +29,44 @@ import java.util.Objects;
 /**
  * A simple object for retrieving the results of a DHCP request.
  * Optimized (attempted) for that jni interface
- * TODO - remove when DhcpInfo is deprecated.  Move the remaining api to LinkProperties.
+ * TODO - remove ASAP. Move the remaining api to LinkProperties.
  * @hide
  */
-public class DhcpResults extends StaticIpConfiguration {
+@SystemApi
+public final class DhcpResults extends StaticIpConfiguration implements Parcelable {
     private static final String TAG = "DhcpResults";
 
+    /** @hide */
     @UnsupportedAppUsage
     public Inet4Address serverAddress;
 
-    /** Vendor specific information (from RFC 2132). */
+    /**
+     * Vendor specific information (from RFC 2132).
+     * @hide
+     */
     @UnsupportedAppUsage
     public String vendorInfo;
 
+    /** @hide */
     @UnsupportedAppUsage
     public int leaseDuration;
 
-    /** Link MTU option. 0 means unset. */
+    /**
+     * Link MTU option. 0 means unset.
+     * @hide
+     */
     @UnsupportedAppUsage
     public int mtu;
 
-    @UnsupportedAppUsage
     public DhcpResults() {
         super();
     }
 
-    @UnsupportedAppUsage
     public DhcpResults(StaticIpConfiguration source) {
         super(source);
     }
 
     /** copy constructor */
-    @UnsupportedAppUsage
     public DhcpResults(DhcpResults source) {
         super(source);
 
@@ -118,7 +125,9 @@ public class DhcpResults extends StaticIpConfiguration {
                 mtu == target.mtu;
     }
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     */
     public static final Creator<DhcpResults> CREATOR =
         new Creator<DhcpResults>() {
             public DhcpResults createFromParcel(Parcel in) {
@@ -132,13 +141,24 @@ public class DhcpResults extends StaticIpConfiguration {
             }
         };
 
-    /** Implement the Parcelable interface */
+    /**
+     * Implement the Parcelable interface
+     */
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeInt(leaseDuration);
         dest.writeInt(mtu);
         NetworkUtils.parcelInetAddress(dest, serverAddress, flags);
         dest.writeString(vendorInfo);
+    }
+
+    /**
+     * Implement the Parcelable interface
+     */
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     private static void readFromParcel(DhcpResults dhcpResults, Parcel in) {
@@ -151,6 +171,7 @@ public class DhcpResults extends StaticIpConfiguration {
 
     // Utils for jni population - false on success
     // Not part of the superclass because they're only used by the JNI iterface to the DHCP daemon.
+    /** @hide */
     public boolean setIpAddress(String addrString, int prefixLength) {
         try {
             Inet4Address addr = (Inet4Address) NetworkUtils.numericToInetAddress(addrString);
@@ -184,14 +205,8 @@ public class DhcpResults extends StaticIpConfiguration {
         return false;
     }
 
-    public boolean setServerAddress(String addrString) {
-        try {
-            serverAddress = (Inet4Address) NetworkUtils.numericToInetAddress(addrString);
-        } catch (IllegalArgumentException|ClassCastException e) {
-            Log.e(TAG, "setServerAddress failed with addrString " + addrString);
-            return true;
-        }
-        return false;
+    public void setServerAddress(Inet4Address addr) {
+        serverAddress = addr;
     }
 
     public void setLeaseDuration(int duration) {
@@ -202,7 +217,23 @@ public class DhcpResults extends StaticIpConfiguration {
         vendorInfo = info;
     }
 
-    public void setDomains(String newDomains) {
-        domains = newDomains;
+    public void setMtu(int mtu) {
+        this.mtu = mtu;
+    }
+
+    public Inet4Address getServerAddress() {
+        return serverAddress;
+    }
+
+    public int getLeaseDuration() {
+        return leaseDuration;
+    }
+
+    public String getVendorInfo() {
+        return vendorInfo;
+    }
+
+    public int getMtu() {
+        return mtu;
     }
 }
