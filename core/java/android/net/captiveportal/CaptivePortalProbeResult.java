@@ -17,11 +17,13 @@
 package android.net.captiveportal;
 
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 
 /**
  * Result of calling isCaptivePortal().
  * @hide
  */
+@SystemApi
 public final class CaptivePortalProbeResult {
     public static final int SUCCESS_CODE = 204;
     public static final int FAILED_CODE = 599;
