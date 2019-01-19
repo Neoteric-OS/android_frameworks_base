@@ -70,6 +70,7 @@ public class NetworkTemplate implements Parcelable {
     public static final int MATCH_WIFI_WILDCARD = 7;
     public static final int MATCH_BLUETOOTH = 8;
     public static final int MATCH_PROXY = 9;
+    public static final int MATCH_ALL = 10;
 
     private static boolean isKnownMatchRule(final int rule) {
         switch (rule) {
@@ -80,6 +81,7 @@ public class NetworkTemplate implements Parcelable {
             case MATCH_WIFI_WILDCARD:
             case MATCH_BLUETOOTH:
             case MATCH_PROXY:
+            case MATCH_ALL:
                 return true;
 
             default:
@@ -161,6 +163,10 @@ public class NetworkTemplate implements Parcelable {
      */
     public static NetworkTemplate buildTemplateProxy() {
         return new NetworkTemplate(MATCH_PROXY, null, null);
+    }
+
+    public static NetworkTemplate buildTemplateMatchAllInterfaces() {
+        return new NetworkTemplate(MATCH_ALL, null, null);
     }
 
     private final int mMatchRule;
@@ -341,6 +347,8 @@ public class NetworkTemplate implements Parcelable {
                 return matchesBluetooth(ident);
             case MATCH_PROXY:
                 return matchesProxy(ident);
+            case MATCH_ALL:
+                return true;
             default:
                 // We have no idea what kind of network template we are, so we
                 // just claim not to match anything.
@@ -458,6 +466,8 @@ public class NetworkTemplate implements Parcelable {
                 return "BLUETOOTH";
             case MATCH_PROXY:
                 return "PROXY";
+            case MATCH_ALL:
+                return "ALL";
             default:
                 return "UNKNOWN(" + matchRule + ")";
         }
