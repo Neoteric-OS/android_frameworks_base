@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9fdd3b01_1bcde312",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-19T11:06:06Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "bf2083f1_2666d539",
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd1eda3e_a471e678",
         "filename": "services/net/java/android/net/ip/IpServer.java",
         "patchSetId": 4
@@ -56,6 +74,24 @@
       "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe0f6ff_3b1cda69",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-19T11:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd1eda3e_a471e678",
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +115,30 @@
       "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34eff03_86995670",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-19T11:06:06Z",
+      "side": 1,
+      "message": "refine it.",
+      "parentUuid": "192b538c_4317c302",
+      "range": {
+        "startLine": 986,
+        "startChar": 24,
+        "endLine": 986,
+        "endChar": 38
+      },
+      "revId": "6a95a0701ac6dac8756b02d0bcdb4f7b4f5058b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
