@@ -18,6 +18,7 @@ package com.android.server.net;
 
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
+import android.os.RemoteException;
 
 public abstract class NetworkStatsManagerInternal {
     /** Return network layer usage total for traffic that matches template. */
@@ -34,4 +35,13 @@ public abstract class NetworkStatsManagerInternal {
 
     /** Force update of statistics. */
     public abstract void forceUpdate();
+
+    /**
+     * Returns instantaneous network layer usage based on given arguments.
+     *
+     * <p>This method is similar to NetworkStatsFactory#readNetworkStatsDetail, except that the
+     * returned NetworkStats also migrates VPN UID traffic to other apps.
+     */
+    public abstract NetworkStats getRealtimeNetworkUidStats(
+            int limitUid, String[] limitIfaces, int limitTag) throws RemoteException;
 }

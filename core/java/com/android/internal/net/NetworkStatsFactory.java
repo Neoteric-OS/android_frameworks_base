@@ -256,10 +256,12 @@ public class NetworkStatsFactory {
         return stats;
     }
 
+    /** @deprecated consider using NetworkStatsManagerInternal#getRealtimeNetworkUidStats */
     public NetworkStats readNetworkStatsDetail() throws IOException {
         return readNetworkStatsDetail(UID_ALL, null, TAG_ALL, null);
     }
 
+    /** @deprecated consider using NetworkStatsManagerInternal#getRealtimeNetworkUidStats */
     public NetworkStats readNetworkStatsDetail(int limitUid, String[] limitIfaces, int limitTag,
             NetworkStats lastStats) throws IOException {
         final NetworkStats stats =
