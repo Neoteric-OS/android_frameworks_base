@@ -16,8 +16,6 @@
 
 package android.net.shared;
 
-import android.annotation.UnsupportedAppUsage;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -131,7 +129,6 @@ public class Inet4AddressUtils {
     /**
      * Returns the implicit netmask of an IPv4 address, as was the custom before 1993.
      */
-    @UnsupportedAppUsage
     public static int getImplicitNetmask(Inet4Address address) {
         int firstByte = address.getAddress()[0] & 0xff;  // Convert to an unsigned value.
         if (firstByte < 128) {
