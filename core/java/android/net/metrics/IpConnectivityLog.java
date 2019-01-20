@@ -19,10 +19,12 @@ package android.net.metrics;
 import android.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityMetricsEvent;
 import android.net.IIpConnectivityMetrics;
+import android.net.Network;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.BitUtils;
 
@@ -111,6 +113,18 @@ public class IpConnectivityLog {
         ConnectivityMetricsEvent ev = makeEv(data);
         ev.ifname = ifname;
         return log(ev);
+    }
+
+    /**
+     * Log an IpConnectivity event.
+     * @param network the network associated with the event.
+     * @param transports the current transports of the network associated with the event, as defined
+     * in NetworkCapabilities.
+     * @param data is a Parcelable instance representing the event.
+     * @return true if the event was successfully logged.
+     */
+    public boolean log(Network network, int[] transports, Parcelable data) {
+        return log(network.netId, transports, data);
     }
 
     /**
