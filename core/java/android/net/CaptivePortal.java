@@ -15,6 +15,8 @@
  */
 package android.net;
 
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,6 +39,8 @@ public class CaptivePortal implements Parcelable {
     private final IBinder mBinder;
 
     /** @hide */
+    @SystemApi
+    @TestApi
     public CaptivePortal(IBinder binder) {
         mBinder = binder;
     }
@@ -99,6 +103,8 @@ public class CaptivePortal implements Parcelable {
      * connectivity for apps because the captive portal is still in place.
      * @hide
      */
+    @SystemApi
+    @TestApi
     public void useNetwork() {
         try {
             ICaptivePortal.Stub.asInterface(mBinder).appResponse(APP_RETURN_WANTED_AS_IS);

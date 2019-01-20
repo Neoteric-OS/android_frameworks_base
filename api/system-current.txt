@@ -3023,6 +3023,11 @@ package android.metrics {
 
 package android.net {
 
+  public class CaptivePortal implements android.os.Parcelable {
+    ctor public CaptivePortal(android.os.IBinder);
+    method public void useNetwork();
+  }
+
   public class ConnectivityManager {
     method @RequiresPermission(android.Manifest.permission.LOCAL_MAC_ADDRESS) public String getCaptivePortalServerUrl();
     method @RequiresPermission(anyOf={android.Manifest.permission.TETHER_PRIVILEGED, android.Manifest.permission.WRITE_SETTINGS}) public boolean isTetheringSupported();
