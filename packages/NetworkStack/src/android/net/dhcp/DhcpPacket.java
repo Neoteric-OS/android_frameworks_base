@@ -5,6 +5,7 @@ import android.net.DhcpResults;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.metrics.DhcpErrorEvent;
+import android.net.util.NetworkStackUtils;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.system.OsConstants;
@@ -1228,7 +1229,7 @@ public abstract class DhcpPacket {
                 return null;
             }
         } else {
-            prefixLength = NetworkUtils.getImplicitNetmask(ipAddress);
+            prefixLength = NetworkStackUtils.getImplicitNetmask(ipAddress);
         }
 
         DhcpResults results = new DhcpResults();
