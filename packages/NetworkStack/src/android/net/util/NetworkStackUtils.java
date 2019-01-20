@@ -56,4 +56,11 @@ public class NetworkStackUtils {
                 | ~Inet4AddressUtils.prefixLengthToV4NetmaskIntHTH(prefixLength);
         return Inet4AddressUtils.intToInet4AddressHTH(intBroadcastAddr);
     }
+
+    /**
+     * @return True if the array is null or 0-length.
+     */
+    public static <T> boolean isEmpty(T[] array) {
+        return array == null || array.length == 0;
+    }
 }
