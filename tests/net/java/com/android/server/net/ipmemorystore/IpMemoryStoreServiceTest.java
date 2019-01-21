@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
@@ -41,6 +42,8 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.android.server.LocalServices;
 
 import org.junit.After;
 import org.junit.Before;
@@ -71,6 +74,8 @@ public class IpMemoryStoreServiceTest {
 
     @Mock
     private Context mMockContext;
+    @Mock
+    private JobScheduler mMockJobScheduler;
     private File mDbFile;
 
     private IpMemoryStoreService mService;
@@ -82,6 +87,8 @@ public class IpMemoryStoreServiceTest {
         final File dir = context.getFilesDir();
         mDbFile = new File(dir, "test.db");
         doReturn(mDbFile).when(mMockContext).getDatabasePath(anyString());
+        doReturn(mMockJobScheduler).when(mMockContext)
+                .getSystemService(Context.JOB_SCHEDULER_SERVICE);
         mService = new IpMemoryStoreService(mMockContext);
     }
 
@@ -89,6 +96,7 @@ public class IpMemoryStoreServiceTest {
     public void tearDown() {
         mService.shutdown();
         mDbFile.delete();
+        LocalServices.removeServiceForTest(IpMemoryStoreServiceInternal.class);
     }
 
     /** Helper method to make a vanilla IOnStatusListener */

@@ -365,6 +365,93 @@ public class IpMemoryStoreDatabase {
         return result;
     }
 
+    // Drop all records which are expired. Relevance has decayed to zero for these records.
+    static void dropAllExpiredRecords(@NonNull final SQLiteDatabase db) {
+        // Query all NetworkAttributes
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        if (cursor == null || cursor.getCount() == 0) return;
+        cursor.moveToFirst();
+
+        do {
+            final long expiry = getLong(cursor, NetworkAttributesContract.COLNAME_EXPIRYDATE, 0);
+            final int relevance = expiry < 0
+                    ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+            if (relevance <= 0) {
+                final String l2key = getString(cursor, NetworkAttributesContract.COLNAME_L2KEY);
+                delteData(db, l2key);
+            }
+        } while (cursor.moveToNext());
+        cursor.close();
+    }
+
+    // Drop a record which relevance is the lowest in DB.
+    static void dropLowestRelevanceRecord(@NonNull final SQLiteDatabase db) {
+        // Query all NetworkAttributes
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        if (cursor == null || cursor.getCount() == 0) return;
+        cursor.moveToFirst();
+
+        String lowestL2Key = null;
+        int lowestRelevance = 1;
+        do {
+            final long expiry = getLong(cursor, NetworkAttributesContract.COLNAME_EXPIRYDATE, 0);
+            final int relevance = expiry < 0
+                    ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+            if (relevance < lowestRelevance) {
+                lowestRelevance = relevance;
+                lowestL2Key = getString(cursor, NetworkAttributesContract.COLNAME_L2KEY);
+            }
+        } while (cursor.moveToNext());
+        cursor.close();
+        delteData(db, lowestL2Key);
+    }
+
+    // Delete a data which is storing in DB by specifing L2Key. Don't leave any data in DB for this
+    // L2key, so remove NetworkAttributes and Blob togather.
+    static void delteData(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        deleteNetworkAttributes(db, key);
+        deleteBlob(db, key);
+    }
+
+    private static void deleteNetworkAttributes(@NonNull final SQLiteDatabase db,
+            @NonNull final String key) {
+        db.beginTransaction();
+        try {
+            db.delete(NetworkAttributesContract.TABLENAME, SELECT_L2KEY, new String[]{key});
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delte NetworkAttributes from memory store", e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    static final String SELECT_PRIVATE_DATA_L2KEY = PrivateDataContract.COLNAME_L2KEY + " = ?";
+
+    private static void deleteBlob(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        db.beginTransaction();
+        try {
+            db.delete(PrivateDataContract.TABLENAME, SELECT_PRIVATE_DATA_L2KEY, new String[]{key});
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delte Blob from memory store", e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     // Helper methods
     static String getString(final Cursor cursor, final String columnName) {
         final int columnIndex = cursor.getColumnIndex(columnName);
@@ -377,5 +464,9 @@ public class IpMemoryStoreDatabase {
     static int getInt(final Cursor cursor, final String columnName, final int defaultValue) {
         final int columnIndex = cursor.getColumnIndex(columnName);
         return (columnIndex >= 0) ? cursor.getInt(columnIndex) : defaultValue;
+    }
+    static long getLong(final Cursor cursor, final String columnName, final long defaultValue) {
+        final int columnIndex = cursor.getColumnIndex(columnName);
+        return (columnIndex >= 0) ? cursor.getLong(columnIndex) : defaultValue;
     }
 }
