@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec1213eb_6c266fd0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:06:09Z",
+      "side": 1,
+      "message": "Agree with point 1 that since this is specifically NATT, it can be called makeNattKeepAlive or createNattKeepAlive. ConnectivityManager has neither make* nor create* methods yet, but ConnectivityService has plenty.\nIt looks to me like we are unfortunately not too consistent within ConnectivityService – the general pattern is make* is for internal use and create* is for external use but I don\u0027t think this is intentional. We do have some strong position that some of the make* are internal, and create* is I think slightly more common.\n\nAll in all, I favor \"createNattKeepalive\".\n\nAs for the start() call, while this makes some sense for NAT-T on UDP sockets, I think this is only the first incarnation of something that will get more common and a start() and stop() method will make sense generally. I don\u0027t think the burden on apps to make themselves a method\n\n  private SocketKeepAlive makeNattKeepalive(n, s, s, d, e, c) {\n    final SocketKeepAlive nka \u003d mConnectivityManager.createNattKeepalive(n, s, s, d, e, c);\n    nka.start();\n    return nka;\n  }\n\n...carries enough to outweigh the consistency argument.",
+      "parentUuid": "d6e4e7cd_00a4c4c9",
+      "range": {
+        "startLine": 1841,
+        "startChar": 27,
+        "endLine": 1841,
+        "endChar": 46
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fed5e4f_f44c4a14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 7
