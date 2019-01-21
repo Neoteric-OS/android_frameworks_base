@@ -596,6 +596,30 @@
     },
     {
       "key": {
+        "uuid": "a7ded554_79ef140f",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:49:59Z",
+      "side": 1,
+      "message": "\u003e ・When the app classes are loaded by the class loader, these references are linked. Any app that used the symbolic constants rather than hardcode the numbers should be fine.\n\nWhat is the blazes am I saying ? Scratch that, I was confused.",
+      "parentUuid": "ea913f86_83f1a619",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40307fdc_d229593e",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
