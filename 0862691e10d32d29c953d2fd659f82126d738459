@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ce3d16_f563d890",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:24:41Z",
+      "side": 1,
+      "message": "consistency",
+      "range": {
+        "startLine": 13,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252cabda_ca56adc0",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:24:41Z",
+      "side": 1,
+      "message": "You didn\u0027t introduce this, but s/ to//",
+      "range": {
+        "startLine": 172,
+        "startChar": 82,
+        "endLine": 172,
+        "endChar": 84
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
