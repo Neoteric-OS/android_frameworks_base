@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c77bca_3a756151",
+        "filename": "core/java/android/net/InitialConfigurationParcelable.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "Not used by the converter utils. Should we remove it?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ecc616_e2b7c908",
+        "filename": "core/java/android/net/apf/ApfCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "Override hashCode?",
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e018ad8a_8426710f",
+        "filename": "services/net/java/android/net/shared/InitialConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "The version of this class nested inside IpClient had a:\n\n        public Inet4Address gateway; // WiFi legacy behavior with static ipv4 config\n\nbut I don\u0027t see it here. Was it unneeded?",
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8823e61d_a6d9f24d",
+        "filename": "services/net/java/android/net/shared/InitialConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "Override hashCode as well?",
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3157aa8_ec692233",
+        "filename": "services/net/java/android/net/shared/IpConfigurationParcelableUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "Would it be better to have these in ParcelableUtil.java? They\u0027re not specific to IpConfiguration, right?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2f1846_318a61a9",
+        "filename": "services/net/java/android/net/shared/ProvisioningConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "If you override equals, you should also override hashCode as well such that two objects for which equals returns true also have the same hashCode. Just use Objects.hash?",
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cf53ef_70823a3c",
+        "filename": "tests/net/java/android/net/shared/InitialConfigurationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T05:30:48Z",
+      "side": 1,
+      "message": "IpPrefix truncates to prefix length, so this will result in 192.168.0.0/17 and 2001:db8::/34. Maybe use longer prefix lengths like /31 or /127 for extra realism.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 72
+      },
+      "revId": "6b0b2b735eb42f87319a91cc7822e78ce2296186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
