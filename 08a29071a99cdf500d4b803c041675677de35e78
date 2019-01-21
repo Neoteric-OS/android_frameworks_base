@@ -34,6 +34,24 @@
       "revId": "08a29071a99cdf500d4b803c041675677de35e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5233a3f_c3b8c1e1",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6928,
+      "author": {
+        "id": 1411826
+      },
+      "writtenOn": "2019-01-21T08:22:01Z",
+      "side": 1,
+      "message": "I also re-check this issue (https://issuetracker.google.com/issues/123128658) again, and still can observe screen on hang.\n\nThe reproduce steps:\n   1. disable keyguard service by set overlay config to false:\nin frameworks/base/packages/SystemUI/res/values/config.xml\n\u003cbool name\u003d\"config_enableKeyguardService\"\u003efalse\u003c/bool\u003e\n   2. shorten the screen timeout to 15s.\n   3. Running any full screen application and wait for screen off.\n   4. blank and then unblank the display util we observe screen cannot be turned on\n   5. it\u0027s easy to rerpduce this problem on step 4.\n\nI think the key issue is to disable keyguard service is (keyguardDelegate !\u003d null \u0026\u0026 !hasKeyguard) but not (keyguardDelegate !\u003d null \u0026\u0026 hasKeyguard). Therefore, it still needs to update the correct screen state for keyguardDelegate which is my proposed change trying to fix it.",
+      "parentUuid": "19c716d6_1735fb7d",
+      "revId": "08a29071a99cdf500d4b803c041675677de35e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
