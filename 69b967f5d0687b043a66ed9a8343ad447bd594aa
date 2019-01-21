@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3865fef5_c4f1ec44",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T11:44:17Z",
+      "side": 1,
+      "message": "Nit: 20ms seems like a pretty tight loop, especially for boot when things are happening all over. Don\u0027t bother respinning a new patchset just for this though, you can fix it in a follow-up change.",
+      "range": {
+        "startLine": 192,
+        "startChar": 29,
+        "endLine": 192,
+        "endChar": 31
+      },
+      "revId": "69b967f5d0687b043a66ed9a8343ad447bd594aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18020123_15b113c7",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T11:44:17Z",
+      "side": 1,
+      "message": "Is it safe to access mConnector without synchronizing on mPendingNetStackRequests? It\u0027s annotated as @GuardedBy(\"mPendingNetStackRequests\").\n\nIn practice I think it\u0027s safe because the connector will only ever be null or the same object. But if we\u0027re running a static analysis build that checks this (does our errorprone build check this?) then it might break the build.",
+      "revId": "69b967f5d0687b043a66ed9a8343ad447bd594aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
