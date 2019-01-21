@@ -23,7 +23,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
@@ -43,6 +45,8 @@ import android.os.RemoteException;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.server.net.ipmemorystore.RegularMaintenanceJobService.InterruptMaintenance;
 
 import org.junit.After;
 import org.junit.Before;
@@ -69,6 +73,7 @@ public class IpMemoryStoreServiceTest {
     private static final String TEST_CLIENT_ID = "testClientId";
     private static final String TEST_DATA_NAME = "testData";
 
+    private static final int TEST_DATABASE_SIZE_THRESHOLD = 100 * 1024; //100KB
     private static final int FAKE_KEY_COUNT = 20;
     private static final String[] FAKE_KEYS;
     static {
@@ -80,6 +85,8 @@ public class IpMemoryStoreServiceTest {
 
     @Mock
     private Context mMockContext;
+    @Mock
+    private JobScheduler mMockJobScheduler;
     private File mDbFile;
 
     private IpMemoryStoreService mService;
@@ -91,7 +98,9 @@ public class IpMemoryStoreServiceTest {
         final File dir = context.getFilesDir();
         mDbFile = new File(dir, "test.db");
         doReturn(mDbFile).when(mMockContext).getDatabasePath(anyString());
-        mService = new IpMemoryStoreService(mMockContext);
+        doReturn(mMockJobScheduler).when(mMockContext)
+                .getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        mService = spy(new IpMemoryStoreService(mMockContext));
     }
 
     @After
@@ -341,7 +350,7 @@ public class IpMemoryStoreServiceTest {
                                     status.isSuccess());
                             assertEquals(l2Key, key);
                             assertEquals(name, TEST_DATA_NAME);
-                            Arrays.equals(b.data, data);
+                            assertTrue(Arrays.equals(b.data, data));
                             latch.countDown();
                         })));
 
@@ -502,5 +511,44 @@ public class IpMemoryStoreServiceTest {
                     assertNull(answer);
                     latch.countDown();
                 })));
+    }
+
+    @Test
+    public void testFullMaintenance() throws UnknownHostException {
+        final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+        na.setAssignedV4Address((Inet4Address) Inet4Address.getByName("1.2.3.4"));
+        na.setGroupHint("hint1");
+        na.setMtu(219);
+        na.setDnsAddresses(Arrays.asList(Inet6Address.getByName("0A1C:2E40:480A::1CA6")));
+        final byte[] data = new byte[] { -3, 6, 8, -9, 12, -128, 0, 89, 112, 91, -34 };
+        final long time = System.currentTimeMillis() - 1;
+        for (int i = 0; i < 5000; i++) {
+            int errorCode = IpMemoryStoreDatabase.storeNetworkAttributes(
+                    mService.mDb,
+                    "fakeKey" + i,
+                    // Let first 500 records get expiry.
+                    i < 500 ? time : time + TimeUnit.HOURS.toMillis(i),
+                    na.build());
+            assertEquals(errorCode, Status.SUCCESS);
+
+            errorCode = IpMemoryStoreDatabase.storeBlob(
+                    mService.mDb, "fakeKey" + i, TEST_CLIENT_ID, TEST_DATA_NAME, data);
+            assertEquals(errorCode, Status.SUCCESS);
+        }
+
+        // After added 5000 records, db size is larger than fake threshold(100KB).
+        doReturn(TEST_DATABASE_SIZE_THRESHOLD).when(mService).getDbSizeThreshold();
+        assertTrue(mService.isDbSizeOverThreshold());
+
+        // Do full maintenance and then db size should go down and meet the threshold.
+        final InterruptMaintenance im = new InterruptMaintenance(false);
+        doLatched("Did not complete full maintenance", latch ->
+                mService.fullMaintenance(onStatus((status) -> {
+                    assertTrue("Execute full maintenance failed: "
+                            + status.resultCode, status.isSuccess());
+                    latch.countDown();
+                }), im));
+
+        assertFalse(mService.isDbSizeOverThreshold());
     }
 }

@@ -773,6 +773,7 @@ public final class SystemServer {
         ConsumerIrService consumerIr = null;
         MmsServiceBroker mmsService = null;
         HardwarePropertiesManagerService hardwarePropertiesService = null;
+        IpMemoryStoreService ipMemoryStoreService = null;
 
         boolean disableSystemTextClassifier = SystemProperties.getBoolean(
                 "config.disable_systemtextclassifier", false);
@@ -1129,8 +1130,8 @@ public final class SystemServer {
 
             traceBeginAndSlog("StartIpMemoryStoreService");
             try {
-                ServiceManager.addService(Context.IP_MEMORY_STORE_SERVICE,
-                        new IpMemoryStoreService(context));
+                ipMemoryStoreService = new IpMemoryStoreService(context);
+                ServiceManager.addService(Context.IP_MEMORY_STORE_SERVICE, ipMemoryStoreService);
             } catch (Throwable e) {
                 reportWtf("starting IP Memory Store Service", e);
             }
@@ -1798,6 +1799,7 @@ public final class SystemServer {
         final MmsServiceBroker mmsServiceF = mmsService;
         final IpSecService ipSecServiceF = ipSecService;
         final WindowManagerService windowManagerF = wm;
+        final IpMemoryStoreService ipMemoryStoreF = ipMemoryStoreService;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
@@ -1872,6 +1874,13 @@ public final class SystemServer {
             if (networkPolicyF != null) {
                 networkPolicyInitReadySignal = networkPolicyF
                         .networkScoreAndNetworkManagementServiceReady();
+            }
+            traceEnd();
+            traceBeginAndSlog("MakeIpMemoryStoreServiceReady");
+            try {
+                if (ipMemoryStoreF != null) ipMemoryStoreF.systemReady();
+            } catch (Throwable e) {
+                reportWtf("making IpMemoryStore Service ready", e);
             }
             traceEnd();
             traceBeginAndSlog("MakeIpSecServiceReady");
