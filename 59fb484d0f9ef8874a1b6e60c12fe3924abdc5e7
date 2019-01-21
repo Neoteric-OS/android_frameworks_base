@@ -16,6 +16,24 @@
       "revId": "59fb484d0f9ef8874a1b6e60c12fe3924abdc5e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29c3903_1d657b6d",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-21T14:22:36Z",
+      "side": 1,
+      "message": "Err no: removed",
+      "parentUuid": "858552a7_464d2322",
+      "revId": "59fb484d0f9ef8874a1b6e60c12fe3924abdc5e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
