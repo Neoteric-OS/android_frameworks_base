@@ -365,6 +365,86 @@ public class IpMemoryStoreDatabase {
         return result;
     }
 
+    static void dropAllZeroRelevance(@NonNull final SQLiteDatabase db) {
+        // Query all NetworkAttributes
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        if (cursor == null || cursor.getCount() == 0) return;
+        cursor.moveToFirst();
+
+        do {
+            final long expiry = getLong(cursor, NetworkAttributesContract.COLNAME_EXPIRYDATE, 0);
+            final int relevance = expiry < 0
+                    ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+            if (relevance <= 0) {
+                final String l2key = getString(cursor, NetworkAttributesContract.COLNAME_L2KEY);
+                dropNetworkAttributes(db, l2key);
+                dropBlob(db, l2key);
+            }
+        } while (cursor.moveToNext());
+        cursor.close();
+    }
+
+    static void dropLowestRelevance(@NonNull final SQLiteDatabase db) {
+        // Query all NetworkAttributes
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                null, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        if (cursor == null || cursor.getCount() == 0) return;
+        cursor.moveToFirst();
+
+        String lowestL2Key = null;
+        int lowestRelevance = 1;
+        do {
+            final long expiry = getLong(cursor, NetworkAttributesContract.COLNAME_EXPIRYDATE, 0);
+            final int relevance = expiry < 0
+                    ? (int) expiry : RelevanceUtils.computeRelevanceForNow(expiry);
+            if (relevance < lowestRelevance) {
+                lowestRelevance = relevance;
+                lowestL2Key = getString(cursor, NetworkAttributesContract.COLNAME_L2KEY);
+            }
+        } while (cursor.moveToNext());
+        cursor.close();
+
+        dropNetworkAttributes(db, lowestL2Key);
+        dropBlob(db, lowestL2Key);
+    }
+
+    static void dropNetworkAttributes(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        db.beginTransaction();
+        try {
+            db.delete(NetworkAttributesContract.TABLENAME, SELECT_L2KEY, new String[]{key});
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delte from memory store", e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    static final String SELECT_PRIVATE_DATA_L2KEY = PrivateDataContract.COLNAME_L2KEY + " = ?";
+
+    static void dropBlob(@NonNull final SQLiteDatabase db, @NonNull final String key) {
+        db.beginTransaction();
+        try {
+            db.delete(PrivateDataContract.TABLENAME, SELECT_PRIVATE_DATA_L2KEY, new String[]{key});
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delte from memory store", e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     // Helper methods
     static String getString(final Cursor cursor, final String columnName) {
         final int columnIndex = cursor.getColumnIndex(columnName);
@@ -377,5 +457,9 @@ public class IpMemoryStoreDatabase {
     static int getInt(final Cursor cursor, final String columnName, final int defaultValue) {
         final int columnIndex = cursor.getColumnIndex(columnName);
         return (columnIndex >= 0) ? cursor.getInt(columnIndex) : defaultValue;
+    }
+    static long getLong(final Cursor cursor, final String columnName, final long defaultValue) {
+        final int columnIndex = cursor.getColumnIndex(columnName);
+        return (columnIndex >= 0) ? cursor.getLong(columnIndex) : defaultValue;
     }
 }

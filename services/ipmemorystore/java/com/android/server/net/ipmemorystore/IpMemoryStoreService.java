@@ -44,6 +44,9 @@ import android.net.ipmemorystore.Utils;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.android.server.LocalServices;
+
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -112,6 +115,9 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         // with judicious subclassing of ThreadPoolExecutor, but that's a lot of dangerous
         // complexity for little benefit in this case.
         mExecutor = Executors.newWorkStealingPool(MAX_CONCURRENT_THREADS);
+        // Expose private service for system components to use.
+        LocalServices.addService(IpMemoryStoreServiceInternal.class,
+                new IpMemoryStoreServiceInternalImpl());
     }
 
     /**
@@ -126,6 +132,14 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         // guarantee the threads can be terminated in any given amount of time.
         mExecutor.shutdownNow();
         if (mDb != null) mDb.close();
+        RegularMaintenanceJobService.unschedule(mContext);
+    }
+
+    /**
+     * System is ready, scheduling regular maintenance through JobScheduler.
+     */
+    public void systemReady() {
+        RegularMaintenanceJobService.schedule(mContext);
     }
 
     /** Helper function to make a status object */
@@ -377,5 +391,56 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
                 // Client at the other end died
             }
         });
+    }
+
+    /** Check if db size is met the threshold. */
+    private boolean isDbSizeMetThreshold() {
+        final long threshold = 10 * 1024 * 1024; //10MB
+        final File dbFile = new File(mDb.getPath());
+        long dbSize;
+        try {
+            dbSize = dbFile.length();
+        } catch (SecurityException e) {
+            if (DBG) Log.e(TAG, "Read db size access deny.", e);
+            // Set db size to limit if can't get exact disk usage.
+            dbSize = threshold;
+        }
+        return dbSize <= threshold ? true : false;
+    }
+
+    /** Implement ImMemoryStoreServiceInternal class. */
+    private class IpMemoryStoreServiceInternalImpl extends IpMemoryStoreServiceInternal {
+        @Override
+        public void fullMaintenance() {
+            mExecutor.execute(() -> {
+                if (null == mDb) return;
+
+                try {
+                    // Drop all records whose relevance has dropped to zero.
+                    IpMemoryStoreDatabase.dropAllZeroRelevance(mDb);
+                } catch (Exception e) {
+                    if (DBG)Log.e(TAG, "Drop all zero relevance failed.", e);
+                }
+
+                // Aggregate historical data in passes
+                // TODO : Waiting for historical data implement.
+
+                // Check if db size is met the storage goal(10MB).
+                // If not, keep dropping the lowest relevance records and aggregate historical data
+                // until the storage goal is met.
+                while (!isDbSizeMetThreshold()) {
+                    try {
+                        // Drop the lowest relevance
+                        IpMemoryStoreDatabase.dropLowestRelevance(mDb);
+                    } catch (Exception e) {
+                        if (DBG)Log.e(TAG, "Drop lowest relevance failed.", e);
+                        break;
+                    }
+
+                    // Aggregate historical data
+                    // TODO : Waiting for historical data implement.
+                }
+            });
+        }
     }
 }
