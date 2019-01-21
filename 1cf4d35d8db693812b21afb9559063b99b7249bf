@@ -278,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "2d51071e_65234a1a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T09:12:56Z",
+      "side": 1,
+      "message": "After checking through chat : I did miss something. The original comment was about a need to document what range of values is acceptable. The comment in this patchset has this. Marking resolved accordingly.",
+      "parentUuid": "e6df8784_562d9ca2",
+      "range": {
+        "startLine": 175,
+        "startChar": 35,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aab3061_b3c3f0d1",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
