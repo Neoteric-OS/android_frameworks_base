@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd050e65_506bc980",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "Bug: 109584964",
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db442f6_648d79ec",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9503,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "Please be specific.\nIn Python 0 is false and every other integer is true.\nIn Ruby all integers are true, including 0.\nIn Java and Kotlin integers are not truth values.\nIn C it\u0027s all over the place. errno has 0 for success, as has strcmp, but if (0) is false and if (1) is true.\n\nSo which is it here ?\n\nWhatever you are used to, you can bet other programmers have a different experience. This is especially true here in Java where integers are not truth values.\n\nIf you don\u0027t mind, also please update the doc for the two methods above.",
+      "range": {
+        "startLine": 9503,
+        "startChar": 11,
+        "endLine": 9503,
+        "endChar": 52
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52e17d6_a0a1f017",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "Why do we have two separate settings if we will always consider them together ?\n\nCan you please make it so that the two settings are actually independent ?",
+      "range": {
+        "startLine": 1188,
+        "startChar": 16,
+        "endLine": 1188,
+        "endChar": 84
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79b023f_a2f35aa1",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "uses a single thread",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5f5307_beb135cb",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "This seems to me in direct contraction with the fact you are using work-stealing pools of 5 threads.",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8ad44d_00e0ffef",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "ISTM this will fit on one line",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 18
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65dfeb1c_5ea345cf",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "You could just have said\nansPacket.write((buf.length \u003e\u003e 8) \u0026 0xff);\nansPacket.write(buf.length \u0026 0xff);\nansPacket.write(buf);\n\n\nBut you can also do this in a vastly more efficient way :\n\nfinal byte[] ansPacket \u003d new byte[buf.length + 2];\nansPacket[0] \u003d (buf.length \u003e\u003e 8) \u0026 0xff;\nansPacket[1] \u003d buf.length \u0026 0xff;\nSystem.arrayCopy(buf, 0, ansPacket, 2, buf.length);\nreturn ansPacket;",
+      "range": {
+        "startLine": 299,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ad8a99_729abc47",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "IIUC the RFC correctly you probably want to say querybuf[3] \u003d rcode. To give an example I don\u0027t think \"not implemented\" | \"format error\" should yield \"refused\" error code. Am I missing something ?",
+      "range": {
+        "startLine": 311,
+        "startChar": 44,
+        "endLine": 311,
+        "endChar": 49
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1feaf1e_98f8f4f5",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "You probably want to say\nmLog.e(\"Ignored malformed packet\", e);\n\nLikewise below.",
+      "range": {
+        "startLine": 327,
+        "startChar": 44,
+        "endLine": 327,
+        "endChar": 50
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9becfe51_024b20f5",
+        "filename": "services/net/java/android/net/dnsproxy/DnsProxyServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "Can you comment on the rationale of closing this fd ? ISTM the implementation here doesn\u0027t necessarily own the fd and it\u0027s not necessarily expected the TCP connection is closed for the client – especially since here there is no programmatic way for the client to tell.\n\nSo two issues :\n・Does this implementation own the FD ? If not let\u0027s not close the FD for them. Possibly let the exception bubble up or something.\n・Is it impossible one received packet is malformed but we still want to continue listening ? Suppose there is a bug in the implementation of the DNS server, might we not want to still continue proxying its queries/replies ?",
+      "range": {
+        "startLine": 329,
+        "startChar": 16,
+        "endLine": 329,
+        "endChar": 41
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57481c1c_ee2f7d6e",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "B",
+      "range": {
+        "startLine": 171,
+        "startChar": 33,
+        "endLine": 171,
+        "endChar": 34
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47014ded_d33be490",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "We usually call those make* and have them return the object rather than assign to the member.",
+      "range": {
+        "startLine": 418,
+        "startChar": 17,
+        "endLine": 418,
+        "endChar": 37
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe918a0_b7da1fcb",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "This seems confusing rather than helpful. Just let the caller null out the reference if it wants to.",
+      "range": {
+        "startLine": 428,
+        "startChar": 37,
+        "endLine": 428,
+        "endChar": 48
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8739055_c4393a68",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T08:10:23Z",
+      "side": 1,
+      "message": "Four blank lines should not be needed",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "8de990c5dca373c2c0577465ed752646a5548c64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
