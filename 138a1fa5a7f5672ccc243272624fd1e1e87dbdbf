@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1b07897b_f13b62b2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "I think the generally accepted answer is that if you pass null to a @NonNull argument you should expect an NPE thrown to your face and possibly inconsistent state. ISTM this is such a common thing that you don\u0027t even need to document it (and Kotlin makes it statically checked, too ; Java IDEs will also complain loudly if you do this).\n\nIn this case, the implementation sending ERROR_INVALID_NETWORK is also a perfectly good answer, it\u0027s actually even better for the client than NPE.",
+      "parentUuid": "7032618c_6b9ef248",
+      "range": {
+        "startLine": 1831,
+        "startChar": 46,
+        "endLine": 1831,
+        "endChar": 79
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "391094dd_2b1028fc",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 9
@@ -334,6 +358,24 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c1cd54_f4546025",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "I think Nathan\u0027s argument makes sense here, and I\u0027m happy with this being @hide. Optimistically resolving this comment, please reopen if I missed something.",
+      "parentUuid": "06e9a58f_ecc8c2b0",
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -687,6 +729,30 @@
       "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af1b604_3452b503",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "After quit() no messages are processed. Trying to enqueue one fails silently IIUC the Looper and MessageQueue code.",
+      "parentUuid": "a8646dee_b860062a",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 21
+      },
+      "revId": "138a1fa5a7f5672ccc243272624fd1e1e87dbdbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

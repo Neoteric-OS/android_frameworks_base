@@ -429,6 +429,30 @@
     },
     {
       "key": {
+        "uuid": "d6a1b85c_d3f90616",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "In my mind this is mostly a matter of documentation. If this API requires the executor to have some specific properties (e.g. non-inline) then either :\n・Failure to comply with these requirements only affects the client-visible. Then the requirements should simply be documented ; if the client passes a bad executor it\u0027s on them.\n・Failure to comply has more severe ramifications (e.g. crashing the system). Then the implementation needs to either provide these guarantees (e.g. by wrapping the executor) or to check the executor actually provides them (keep in mind most executors can be reconfigured at runtime).",
+      "parentUuid": "fff11763_cd7b5cf9",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9fe9a73_c84dce14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4
@@ -536,6 +560,30 @@
       "side": 1,
       "message": "Reopen this since it is still not properly addressed.\nI\u0027ll check with lorenzo for this.\nPerhaps add proper comments to group the error codes.",
       "parentUuid": "f1e114d1_28656a66",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea913f86_83f1a619",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "I do not agree these values may never be changed :\n・When the app classes are loaded by the class loader, these references are linked. Any app that used the symbolic constants rather than hardcode the numbers should be fine.\n・Any app that hardcoded the same numbers is explicitly not supported.\nTherefore I don\u0027t see why we could not change this going forward.\nWhat\u0027s more, these constants are backward-compatible with existing constants that apps may already be using, so changing them now to look better doesn\u0027t actually improve the backward compatibility situation much compared to changing them later.\n\nAlso, personally I do not see any reason these has to be contiguous or not \"odd\". While this doesn\u0027t hold as often in practice as I\u0027d wish it did, symbolic constants are here specifically because the concrete values do not matter. Therefore I don\u0027t see at all what the problem is with completely arbitrary constants as long as it\u0027s not confusing. Backward compatibility sounds to me like a good reason to set specific constants, and adding a comment here to explain that the concrete value has been chosen for backward compatibility (so as to avoid future implementors trying to double-guess another reason) is enough of a handling of this comment in my opinion.",
+      "parentUuid": "00aefb55_d57b4cbf",
       "range": {
         "startLine": 60,
         "startChar": 52,

@@ -187,6 +187,30 @@
       "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1887c798_7344401e",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Made private in the latest patchset, resolving this.",
+      "parentUuid": "6096c770_1653de76",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

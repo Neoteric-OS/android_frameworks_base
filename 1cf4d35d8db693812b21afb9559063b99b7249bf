@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "250c15da_6c68c01b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "It\u0027s unclear when this can happen. @deprecated is already a statement of intent that if it was possible at all we would stop supporting this API, so let\u0027s not mention this specifically.",
+      "range": {
+        "startLine": 1701,
+        "startChar": 56,
+        "endLine": 1702,
+        "endChar": 58
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53c8411_d437830a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1829,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "It is unconventional to add deprecated APIs. Maybe you want to at least mention that this is purely for convenience of backward compatibility ? Or if we can live without this method, I think it\u0027s better, as it avoids encouraging to continue using this class.",
+      "range": {
+        "startLine": 1829,
+        "startChar": 7,
+        "endLine": 1829,
+        "endChar": 65
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b112b0_e04fbad4",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Can you please annonate the members @Nullable or @NonNull ? Ideally also the arguments.",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d217f7f4_feb85059",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Just curious : will we deprecate the ConnectivityManager methods ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc939cc0_0eefab50",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Is this a requirement ? If this feature does not work without hardware support then this comment is fine. If the feature falls back to software handling in the absence of support then you need to add something like \"if available\" or \"opportunistically\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b840a7d6_e9315474",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Is there any reasoning behind choosing this specific value ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 78
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9d2023_e947a869",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Given this is seconds maybe MIN_INTERVAL_SEC",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 40
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6abe6a8_046e18c7",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Annotate members with @NonNull",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad608bc5_fc5bf698",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": ", Process.THEAD_PRIORITY_BACKGROUND) ? Possibly even Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_LESS_FAVORABLE ?\n(or some other appropriate priority).",
+      "range": {
+        "startLine": 129,
+        "startChar": 49,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bdee64_f3eb7757",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 27
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc31063_60d8b378",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Nit : because this particular expression seems so odd, you typically call the variable \"status\" or something :)\nNot a big deal at all though.",
+      "range": {
+        "startLine": 139,
+        "startChar": 32,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6df8784_562d9ca2",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Did you want to address Nathan\u0027s comment in patchset 4 about this being a range ? Or did I miss something ?\n(If you do please note this is a best-effort and there is no guarantee for this to be exact)",
+      "range": {
+        "startLine": 175,
+        "startChar": 35,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aab3061_b3c3f0d1",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "This at least needs comments : I don\u0027t see any case where it\u0027s legitimate to call this (though the implementation is doing it in many places). This simply stops message processing but does not stop the actual keepalive right ?\n\nThat being said, KA02.5 completely removes this method, so if you plan to check it in, you can ignore this comment (or possibly just leave a TODO to remove the method).",
+      "range": {
+        "startLine": 178,
+        "startChar": 19,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fd87ff_760f2b37",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Wait final ? So implementors *must* override start() but *must not* override this ?\nThis sounds like asking for trouble.\n\nI understand you\u0027re concerned about apps overriding this as exemplified by the comments on patchset 9. I think you should have a way to do this internally only, for example :\n\npublic final void start(int intervalSec) {\n  startImpl(intervalSec);\n}\n\nabstract void startImpl(int intervalSec);\n\n\n...and the same for stop(). This way only internal implementations can override but they can override both.",
+      "range": {
+        "startLine": 186,
+        "startChar": 11,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e800f6ce_775446e3",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "(Not sure how my comment relates to Lorenzo\u0027s on patchset 9. Maybe Lorenzo was hinting at the same thing ? Junyu, does your reply there address my concern here ? I have trouble seeing how your suggestion about restarting will fix that, but if it will please feel free to tell me to go pound sand).\n\nThis is public API so this can be called on any thread.\n\nSo the client calls startKeepalive. The system starts it and sends a message to the handler in l.129. The control reaches l.140 but the thread is pre-empted after the test and before the assignment.\nMeanwhile the client calls stop(). mSlot is null and this method misfires. The handler thread is resumed and keepalive goes on.\nNote that it does not look to me like KA02.5 will fix this.\n\nGenerally speaking I don\u0027t actually understand why you made mSlot volatile : it doesn\u0027t buy you anything considering the code. I suspect pushing a message to the thread to stop keepalive may be the easiest way to keep this race-free and lock-free.",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df12223d_5c04e480",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "General concern (food for thought, not necessarily needs some change) : from a software engineering point of view is it fine to have abstract start() but concrete stop() that calls mService.stopKeepalive ? It sounds to me like strong coupling and requiring the subclasses to call some form of starting the keepalive ; at the same time it means the children classes are entitled to have a start() method but no corresponding stop() method which makes them harder to understand. It may make sense as a default implementation, but then it raises the question of whether start() should have a default implementation too.\n\nJust food for thought.",
+      "range": {
+        "startLine": 189,
+        "startChar": 25,
+        "endLine": 189,
+        "endChar": 38
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f538aa0_fb7ae14c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Can we move all this to a separate file specialized in testing keepalive ? ConnectivityServiceTest is already very unwieldly and this does not make much use of what\u0027s inside.\n\nOnly a TODO to move it out is fine for now.",
+      "range": {
+        "startLine": 3550,
+        "startChar": 25,
+        "endLine": 3550,
+        "endChar": 52
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6801cc3a_ca4ed152",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3785,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "This API is destined to be public. I suggest you should make sure what happens with at least an inline executor. You could convert this function into a helper function that takes an Executor, and call it both with Executors.newSingleThreadExecutor() and with some implementation of an inline executor, e.g. :\n\nnew Executor() {\n  public void execute(Runnable r) {\n    r.run();\n  }\n}",
+      "range": {
+        "startLine": 3785,
+        "startChar": 44,
+        "endLine": 3785,
+        "endChar": 67
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f3895d_189a85ea",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T03:54:43Z",
+      "side": 1,
+      "message": "Other checks are commented but I can\u0027t figure out why this should say UNSUPPORTED",
+      "range": {
+        "startLine": 3828,
+        "startChar": 44,
+        "endLine": 3828,
+        "endChar": 72
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
