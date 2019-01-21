@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19917a4c_bbbd06d2",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T04:33:33Z",
+      "side": 1,
+      "message": "Care to create a bug for this so we can fix it after IC?",
+      "range": {
+        "startLine": 182,
+        "startChar": 22,
+        "endLine": 182,
+        "endChar": 51
+      },
+      "revId": "ef3666c9508f3cffeb2144e9e5d4a22a43fdd099",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967a68d3_cde6b8f6",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T04:33:33Z",
+      "side": 1,
+      "message": "Rename to getRemoteConnector?",
+      "range": {
+        "startLine": 184,
+        "startChar": 17,
+        "endLine": 184,
+        "endChar": 33
+      },
+      "revId": "ef3666c9508f3cffeb2144e9e5d4a22a43fdd099",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cf6832_4261e7b1",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T04:33:33Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually tell you if the caller is the system server. It only tells you if the caller is UID 1000, which includes a lot of code.",
+      "revId": "ef3666c9508f3cffeb2144e9e5d4a22a43fdd099",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba103abd_d126b2ac",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T04:33:33Z",
+      "side": 1,
+      "message": "Move to a different function?\n\n    if (!isSystemServer) {\n        getRemoteConnector();\n        return;\n    }\n\n    // else update pending requests, etc.",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "ef3666c9508f3cffeb2144e9e5d4a22a43fdd099",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
