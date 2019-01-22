@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a0d852_00905279",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T02:34:14Z",
+      "side": 1,
+      "message": "Is there a reason you do this here instead of in connectNativeNetdService?",
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e69d91_a25353ab",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T02:34:14Z",
+      "side": 1,
+      "message": "Nit: Slog.e",
+      "range": {
+        "startLine": 383,
+        "startChar": 12,
+        "endLine": 383,
+        "endChar": 18
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7544de8d_c27a4120",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T02:34:14Z",
+      "side": 1,
+      "message": "to ensure events are broadcast one at a time in the order they are received\n\nBut actually, is this the right solution? I\u0027m not sure how the threading works, but I can imagine that we have two cases:\n\n1. The events always arrive from netd in order on the same binder thread.\n2. The events are always sent from netd in order, but may arrive on different binder threads and race.\n\nIf the way things work is #1, then posting these broadcasts to mDaemonHandler doesn\u0027t help with ordering or with collisions. The broadcasts will only ever go out in order, one after the other, on the same thread. Posting to mDaemonHandler *does* help ensure that the broadcasts are all sent from the mDaemonHandler looper thread, which is a good idea because it matches what we do today.\n\nIf the way things work is #2, then posting these broadcasts to mDaemonHandler doesn\u0027t ensure that the events are ordered and I don\u0027t see a way to order them, which means we can\u0027t actually merge this change.",
+      "range": {
+        "startLine": 425,
+        "startChar": 52,
+        "endLine": 425,
+        "endChar": 70
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94ddbc5_79f0e633",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T02:34:14Z",
+      "side": 1,
+      "message": "Just replace with:\n\n    () -\u003e {",
+      "range": {
+        "startLine": 426,
+        "startChar": 28,
+        "endLine": 427,
+        "endChar": 41
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd183c8_2c60400c",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T02:34:14Z",
+      "side": 1,
+      "message": "Nit: move to previous line?",
+      "range": {
+        "startLine": 743,
+        "startChar": 0,
+        "endLine": 743,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
