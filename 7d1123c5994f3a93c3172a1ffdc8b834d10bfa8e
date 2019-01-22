@@ -453,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "7c11431c_2f950251",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Resolving this,\n1. add some descriptions in executor parameter in ConnectivityManager\n2. Upload aosp/875738 to address this and also remove all looper/messenger/handler/thread code.",
+      "parentUuid": "d6a1b85c_d3f90616",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "7d1123c5994f3a93c3172a1ffdc8b834d10bfa8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fe9a73_c84dce14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 4

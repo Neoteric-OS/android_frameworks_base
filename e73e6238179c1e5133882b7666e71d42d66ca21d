@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "736eb0d3_cf2cbddc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "After offline discuss with lorenzo \u0026 jean,\nI\u0027ll use createSocketKeepalive for public APIs of the two type of keepalives.\nAnd use createNattKeepalive for systemApi version.\nAlso the start() function will be preserved.\nThen defer the naming problem to API council.",
+      "parentUuid": "ec1213eb_6c266fd0",
+      "range": {
+        "startLine": 1841,
+        "startChar": 27,
+        "endLine": 1841,
+        "endChar": 46
+      },
+      "revId": "e73e6238179c1e5133882b7666e71d42d66ca21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fed5e4f_f44c4a14",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 7

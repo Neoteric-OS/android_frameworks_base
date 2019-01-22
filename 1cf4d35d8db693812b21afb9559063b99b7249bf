@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d63600a_0c5aaa6d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250c15da_6c68c01b",
+      "range": {
+        "startLine": 1701,
+        "startChar": 56,
+        "endLine": 1702,
+        "endChar": 58
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a53c8411_d437830a",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 12
@@ -45,6 +69,53 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c81b07_874977e9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1829,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "no, this is intended to be provided as part of the new API.\nOn the other words, we just want to remove PacketKeepalive, but not its functionality.",
+      "parentUuid": "a53c8411_d437830a",
+      "range": {
+        "startLine": 1829,
+        "startChar": 7,
+        "endLine": 1829,
+        "endChar": 65
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac135c7f_4c2dc715",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Need to comment that this executor must execute things sequentially, otherwise callback might not be in order.",
+      "range": {
+        "startLine": 1835,
+        "startChar": 14,
+        "endLine": 1835,
+        "endChar": 22
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3143bc0d_e05b5f18",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b112b0_e04fbad4",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d217f7f4_feb85059",
         "filename": "core/java/android/net/NattSocketKeepalive.java",
         "patchSetId": 12
@@ -82,6 +177,30 @@
       "writtenOn": "2019-01-21T03:54:43Z",
       "side": 1,
       "message": "Just curious : will we deprecate the ConnectivityManager methods ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05a7eca_7e3e8787",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "After old reference to PacketKeepalive are all removed,\n this API is planned to be removed and replaced by new one: \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/871494/1/core/java/android/net/IConnectivityManager.aidl",
+      "parentUuid": "d217f7f4_feb85059",
       "range": {
         "startLine": 49,
         "startChar": 21,
@@ -114,6 +233,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb612368_1e56a5f4",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "yes, this feature does not work without hardware support.\nSo I guess I\u0027ll leave it as is.",
+      "parentUuid": "cc939cc0_0eefab50",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "14cdfbd2_05b30b78",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done, and it will be referenced in KA02, not in this commit.",
+      "parentUuid": "5f9d2023_e947a869",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 40
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6abe6a8_046e18c7",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -183,6 +350,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202de8fc_94d419ae",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done, also in the parameters",
+      "parentUuid": "d6abe6a8_046e18c7",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "dad19135_a61983fb",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad608bc5_fc5bf698",
+      "range": {
+        "startLine": 129,
+        "startChar": 49,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7bdee64_f3eb7757",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -232,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "ee7e2bb3_6ceea0c5",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7bdee64_f3eb7757",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 27
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc31063_60d8b378",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -243,6 +482,30 @@
       "writtenOn": "2019-01-21T03:54:43Z",
       "side": 1,
       "message": "Nit : because this particular expression seems so odd, you typically call the variable \"status\" or something :)\nNot a big deal at all though.",
+      "range": {
+        "startLine": 139,
+        "startChar": 32,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d9b0488_3d5880e7",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc31063_60d8b378",
       "range": {
         "startLine": 139,
         "startChar": 32,
@@ -302,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "083f1028_ce400247",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "I\u0027ve also add @IntRange annotation.\nI guess it is no harm to add that, right?",
+      "parentUuid": "2d51071e_65234a1a",
+      "range": {
+        "startLine": 175,
+        "startChar": 35,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aab3061_b3c3f0d1",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -322,6 +609,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f948a021_62aef07a",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done, todo is added.",
+      "parentUuid": "8aab3061_b3c3f0d1",
+      "range": {
+        "startLine": 178,
+        "startChar": 19,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "2007839c_df40f45c",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Done, thanks for the hint, that is exactly what I concerned.",
+      "parentUuid": "e1fd87ff_760f2b37",
+      "range": {
+        "startLine": 186,
+        "startChar": 11,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e800f6ce_775446e3",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -359,6 +694,30 @@
       "writtenOn": "2019-01-21T03:54:43Z",
       "side": 1,
       "message": "(Not sure how my comment relates to Lorenzo\u0027s on patchset 9. Maybe Lorenzo was hinting at the same thing ? Junyu, does your reply there address my concern here ? I have trouble seeing how your suggestion about restarting will fix that, but if it will please feel free to tell me to go pound sand).\n\nThis is public API so this can be called on any thread.\n\nSo the client calls startKeepalive. The system starts it and sends a message to the handler in l.129. The control reaches l.140 but the thread is pre-empted after the test and before the assignment.\nMeanwhile the client calls stop(). mSlot is null and this method misfires. The handler thread is resumed and keepalive goes on.\nNote that it does not look to me like KA02.5 will fix this.\n\nGenerally speaking I don\u0027t actually understand why you made mSlot volatile : it doesn\u0027t buy you anything considering the code. I suspect pushing a message to the thread to stop keepalive may be the easiest way to keep this race-free and lock-free.",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f620f65_e9e9ad5b",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Thanks to make it clear.\nIf we adopt the handler model then,\nit can be fixed by sending messages to handler as you suggested.\nbut it looks like if we adopt KA02.5 to remove all handler and thread,\nthen it could not be done by this way.\nHow about we use the ISocketCallback object as the identifier to look up keepalive info?\n\nAnyway I\u0027ll add todo here to make sure we properly address it after IC5.",
+      "parentUuid": "e800f6ce_775446e3",
       "range": {
         "startLine": 188,
         "startChar": 16,
@@ -417,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "19589ea7_231efba2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Ack, add todo for this.",
+      "parentUuid": "2f538aa0_fb7ae14c",
+      "range": {
+        "startLine": 3550,
+        "startChar": 25,
+        "endLine": 3550,
+        "endChar": 52
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6801cc3a_ca4ed152",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
@@ -440,6 +823,30 @@
     },
     {
       "key": {
+        "uuid": "c6158538_294d97b9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3785,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "Ack, add todo for this.",
+      "parentUuid": "6801cc3a_ca4ed152",
+      "range": {
+        "startLine": 3785,
+        "startChar": 44,
+        "endLine": 3785,
+        "endChar": 67
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f3895d_189a85ea",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
@@ -460,6 +867,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7cbefb_2c26ecf5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "In l.410 of MockNetworkAgent, the default value of returned error is this.\nI think it just a sanity check before tests starting below.",
+      "parentUuid": "04f3895d_189a85ea",
+      "range": {
+        "startLine": 3828,
+        "startChar": 44,
+        "endLine": 3828,
+        "endChar": 72
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

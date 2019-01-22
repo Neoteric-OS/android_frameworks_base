@@ -117,6 +117,30 @@
       "revId": "12b416961b3516727638468169319f92f1295ceb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8aea9f_08f45512",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T11:07:12Z",
+      "side": 1,
+      "message": "addressed in KA02.5 by using oneway interface, resolving this.",
+      "parentUuid": "66421c8a_334c8331",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "12b416961b3516727638468169319f92f1295ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
