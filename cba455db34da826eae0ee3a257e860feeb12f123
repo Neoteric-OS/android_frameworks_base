@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e139da43_378c3dd1",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T15:37:21Z",
+      "side": 1,
+      "message": "Thanks for fixing this inconsistency.",
+      "range": {
+        "startLine": 563,
+        "startChar": 12,
+        "endLine": 563,
+        "endChar": 38
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20c31a3_02fc4800",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T15:37:21Z",
+      "side": 1,
+      "message": "Nit: the rest of the code calls this parameter \"up\" instead of \"status\".",
+      "range": {
+        "startLine": 787,
+        "startChar": 67,
+        "endLine": 787,
+        "endChar": 73
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d028a898_2b845f11",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T15:37:21Z",
+      "side": 1,
+      "message": "Prefer InetAddresses.parseNumericAddress over InetAddress.parseNumericAddress. The latter has some unexpected corner cases - for example, it converts null to ::1. Also everywhere else in this CL.",
+      "range": {
+        "startLine": 802,
+        "startChar": 20,
+        "endLine": 802,
+        "endChar": 31
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6709ccf2_584964a8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T15:37:21Z",
+      "side": 1,
+      "message": "Is it safe to call this on the binder thread? Should this be posted to mDaemonHandler as well?",
+      "range": {
+        "startLine": 808,
+        "startChar": 41,
+        "endLine": 808,
+        "endChar": 63
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
