@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b00f62b_6661ab19",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-01-22T18:51:36Z",
+      "side": 1,
+      "message": "do we allow this to be 0/1 or maybe also true/false?\nif so, SystemProperties.getBoolean(ZRAM_ENABLED_PROPERTY, false);?",
+      "range": {
+        "startLine": 757,
+        "startChar": 8,
+        "endLine": 757,
+        "endChar": 75
+      },
+      "revId": "5f79b4a422d3fb570026731956ede5768f6ca784",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
