@@ -810,8 +810,17 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_ALL_APPS = 284;
     /** Key code constant: Refresh key. */
     public static final int KEYCODE_REFRESH = 285;
+    /** Key code constant: Critical communication control key.
+     * This key can be used for initiating a half-duplex communication between different
+     * push-to-talk devices, and for floor control arbitration. User has to hold the key
+     * down and speak during push-to-talk calls. */
+    public static final int KEYCODE_CCOMM_CONTROL = 286;
+    /** Key code constant: Critical communication SOS key.
+     * Activates push-to-talk emergency mode. This key can simply be pressed and the
+     * action would be to send a push-to-talk emergency signal to other participants. */
+    public static final int KEYCODE_CCOMM_SOS = 287;
 
-    private static final int LAST_KEYCODE = KEYCODE_REFRESH;
+    private static final int LAST_KEYCODE = KEYCODE_CCOMM_SOS;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -1883,6 +1892,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN:
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT:
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT:
+            case KeyEvent.KEYCODE_CCOMM_CONTROL:
+            case KeyEvent.KEYCODE_CCOMM_SOS:
+
                 return true;
         }
 
@@ -1900,6 +1912,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
             case KeyEvent.KEYCODE_STEM_2:
             case KeyEvent.KEYCODE_STEM_3:
             case KeyEvent.KEYCODE_WAKEUP:
+            case KeyEvent.KEYCODE_CCOMM_CONTROL:
+            case KeyEvent.KEYCODE_CCOMM_SOS:
                 return true;
         }
         return false;
