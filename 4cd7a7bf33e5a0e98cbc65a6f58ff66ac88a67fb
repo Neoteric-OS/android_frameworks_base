@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cd4f27c_e844326a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "no",
+      "parentUuid": "e6a0d852_00905279",
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e69d91_a25353ab",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -39,6 +57,30 @@
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70626d1_e7e4c3cf",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e69d91_a25353ab",
+      "range": {
+        "startLine": 383,
+        "startChar": 12,
+        "endLine": 383,
+        "endChar": 18
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "be6ce020_93263421",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7544de8d_c27a4120",
+      "range": {
+        "startLine": 425,
+        "startChar": 52,
+        "endLine": 425,
+        "endChar": 70
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94ddbc5_79f0e633",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -85,6 +151,30 @@
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f4a7f0_f0d8694f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94ddbc5_79f0e633",
+      "range": {
+        "startLine": 426,
+        "startChar": 28,
+        "endLine": 427,
+        "endChar": 41
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "0a7c7ea0_05becec1",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f10d05c3_231d8e8a",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 9
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432b2511_ec104651",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -131,6 +245,30 @@
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0833007e_e93dcef3",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432b2511_ec104651",
+      "range": {
+        "startLine": 741,
+        "startChar": 15,
+        "endLine": 741,
+        "endChar": 27
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "77105ae2_4ae58738",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bd183c8_2c60400c",
+      "range": {
+        "startLine": 743,
+        "startChar": 0,
+        "endLine": 743,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a88261_261b4ddb",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "63b320e0_3a18abd2",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a88261_261b4ddb",
+      "range": {
+        "startLine": 765,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9665067_366400f0",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -191,6 +377,24 @@
       "writtenOn": "2019-01-22T03:50:55Z",
       "side": 1,
       "message": "Prefer InetAddresses.parseNumericAddress. (I think that didn\u0027t exist when this code was first written.)",
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af82925_9ff2749e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "what do u mean?",
+      "parentUuid": "c9665067_366400f0",
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "34976c5c_056e586f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "yeah, it\u0027s fine. Binder.java would catch RuntimeException/RemoteException.",
+      "parentUuid": "b397703a_072a540f",
+      "range": {
+        "startLine": 828,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 51
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a09902cb_01995dd3",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -240,6 +468,30 @@
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1b4291_3c488b4b",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T07:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09902cb_01995dd3",
+      "range": {
+        "startLine": 1494,
+        "startChar": 12,
+        "endLine": 1494,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
