@@ -3451,7 +3451,8 @@ class AlarmManagerService extends SystemService {
 
     private boolean isExemptFromAppStandby(Alarm a) {
         return a.alarmClock != null || UserHandle.isCore(a.creatorUid)
-                || (a.flags & FLAG_ALLOW_WHILE_IDLE_UNRESTRICTED) != 0;
+                || (a.flags & (FLAG_ALLOW_WHILE_IDLE_UNRESTRICTED
+                        | FLAG_ALLOW_WHILE_IDLE)) != 0;
     }
 
     private class AlarmThread extends Thread
