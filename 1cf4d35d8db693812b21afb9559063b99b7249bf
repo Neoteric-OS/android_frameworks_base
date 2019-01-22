@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4ebcc5e0_c47da3f1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1829,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "Ack. For some reason I thought this was part of a deprecated class. Thanks for the clarification.",
+      "parentUuid": "68c81b07_874977e9",
+      "range": {
+        "startLine": 1829,
+        "startChar": 7,
+        "endLine": 1829,
+        "endChar": 65
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac135c7f_4c2dc715",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 12
@@ -107,6 +131,30 @@
       "writtenOn": "2019-01-22T11:07:12Z",
       "side": 1,
       "message": "Need to comment that this executor must execute things sequentially, otherwise callback might not be in order.",
+      "range": {
+        "startLine": 1835,
+        "startChar": 14,
+        "endLine": 1835,
+        "endChar": 22
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07a1c5c_04070383",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac135c7f_4c2dc715",
       "range": {
         "startLine": 1835,
         "startChar": 14,
@@ -210,6 +258,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c213e9e0_6c49f33a",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b05a7eca_7e3e8787",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -589,6 +661,30 @@
     },
     {
       "key": {
+        "uuid": "65282461_f653d31e",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a clear improvement. Thanks.",
+      "parentUuid": "083f1028_ce400247",
+      "range": {
+        "startLine": 175,
+        "startChar": 35,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aab3061_b3c3f0d1",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -727,6 +823,30 @@
       "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41e961a_2da9cb4d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "I think with the executor we can use the exact same strategy by pushing a Runnable onto the executor instead of sending a message to the handler. (that means the executor has to be stored in a member, but so be it).",
+      "parentUuid": "7f620f65_e9e9ad5b",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -882,6 +1002,30 @@
       "side": 1,
       "message": "In l.410 of MockNetworkAgent, the default value of returned error is this.\nI think it just a sanity check before tests starting below.",
       "parentUuid": "04f3895d_189a85ea",
+      "range": {
+        "startLine": 3828,
+        "startChar": 44,
+        "endLine": 3828,
+        "endChar": 72
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae30b699_7acbb71b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:57:01Z",
+      "side": 1,
+      "message": "I see. Ideally add a comment like with the other tests",
+      "parentUuid": "ee7cbefb_2c26ecf5",
       "range": {
         "startLine": 3828,
         "startChar": 44,
