@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4d9a92_74dbc86f",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T15:49:49Z",
+      "side": 1,
+      "message": "because we don\u0027t have different stopImpl to do for Natt/Tcp SocketKeepalive.\nSo I put the implementation here instead of NattSocketKeepalive.\nPlease let me know if it should be moved.",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 17
+      },
+      "revId": "88376925ba352fd426705898eb31bdb0c54fe1fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -850,6 +850,30 @@
     },
     {
       "key": {
+        "uuid": "cab9cee5_3f36872d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T15:49:49Z",
+      "side": 1,
+      "message": "you mean something like:\n stop() {\n   mExecutor.execute(() -\u003e stopImpl());\n }\nhmmm, yes it will be a good idea to solve this race condition. \nBut I think that will also put part of our function correctness on the assumption that user will use sequential executor.",
+      "parentUuid": "c41e961a_2da9cb4d",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df12223d_5c04e480",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
@@ -1026,6 +1050,30 @@
       "side": 1,
       "message": "I see. Ideally add a comment like with the other tests",
       "parentUuid": "ee7cbefb_2c26ecf5",
+      "range": {
+        "startLine": 3828,
+        "startChar": 44,
+        "endLine": 3828,
+        "endChar": 72
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d618d26a_7a7aae6e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-22T15:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae30b699_7acbb71b",
       "range": {
         "startLine": 3828,
         "startChar": 44,
