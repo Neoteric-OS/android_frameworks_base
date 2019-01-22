@@ -806,6 +806,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
 
+    // Critical communication buttons manager
+    private CriticalCommunicationKeyManager mCriticalCommunicationKeyManager;
+
     // Fallback actions by key code.
     private final SparseArray<KeyCharacterMap.FallbackAction> mFallbackActions =
             new SparseArray<KeyCharacterMap.FallbackAction>();
@@ -2261,6 +2264,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.bool.config_enableScreenshotChord);
 
         mGlobalKeyManager = new GlobalKeyManager(mContext);
+
+        mCriticalCommunicationKeyManager = new CriticalCommunicationKeyManager(mContext);
 
         // Controls rotation and the like.
         initializeHdmiState();
@@ -4026,6 +4031,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (isValidGlobalKey(keyCode)
                 && mGlobalKeyManager.handleGlobalKey(mContext, keyCode, event)) {
+            return -1;
+        }
+
+        if ((keyCode == KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_CONTROL
+                || keyCode == KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_SOS)
+                && mCriticalCommunicationKeyManager.handleCriticalCommunicationKey(keyCode,
+                event)) {
             return -1;
         }
 

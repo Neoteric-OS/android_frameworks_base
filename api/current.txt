@@ -47185,6 +47185,8 @@ package android.view {
     field public static final int KEYCODE_COMMA = 55; // 0x37
     field public static final int KEYCODE_CONTACTS = 207; // 0xcf
     field public static final int KEYCODE_COPY = 278; // 0x116
+    field public static final int KEYCODE_CRITICAL_COMMUNICATION_CONTROL = 286; // 0x11e
+    field public static final int KEYCODE_CRITICAL_COMMUNICATION_SOS = 287; // 0x11f
     field public static final int KEYCODE_CTRL_LEFT = 113; // 0x71
     field public static final int KEYCODE_CTRL_RIGHT = 114; // 0x72
     field public static final int KEYCODE_CUT = 277; // 0x115
