@@ -88,6 +88,52 @@
     },
     {
       "key": {
+        "uuid": "f10d05c3_231d8e8a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:45:04Z",
+      "side": 1,
+      "message": "After discussion with Jean, we found that one non-obvious thing that will change if we call notifyInterfaceClassActivity simultaneously on two threads is that we can call reportNetworkActive on two threads. This is unsafe because reportNetworkActive does:\n\n        final int length \u003d mNetworkActivityListeners.beginBroadcast();\n\nand calling beginBroadcast twice before finishBroadcast will throw IllegalStateException. Even if this doesn\u0027t crash the system, it will result in the ConnectivityManager#addDefaultNetworkActiveListener public API misbehaving.",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 9
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432b2511_ec104651",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:45:04Z",
+      "side": 1,
+      "message": "Do these need to be synchronized? I think that due to oneway binder semantics, because these oneway IPCs are being executed on the same binder reference inside netd, they\u0027re guaranteed to be processed one at a time in the order they were received.",
+      "range": {
+        "startLine": 741,
+        "startChar": 15,
+        "endLine": 741,
+        "endChar": 27
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bd183c8_2c60400c",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
@@ -103,6 +149,29 @@
         "startLine": 743,
         "startChar": 0,
         "endLine": 743,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09902cb_01995dd3",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:45:04Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s safe to run notifyInterfaceClassActivity here without posting to mDaemonHandler, for two reasons:\n\n1. If we don\u0027t post to mDaemonHandler, we might run notifyInterfaceClassActivity concurrently on two threads. Not sure if this is safe. It\u0027s true that with the observer change above, the broadcasts come from mDaemonHandler, so the broadcasts won\u0027t occur concurrently. But there might still be problems. For example, \n\n2. notifyInterfaceClassActivity talks to other system services, grabs locks, etc. If we run it inline here it, might lead to deadlock due to binder thread pool exhaustion. Given that all of notifyInterfaceClassActivity is already running asynchronously on mDaemonHandler, it seems safest to keep it there, because code will almost never block on a Handler.\n\nI\u0027d consider putting this back as:\n\n    mDaemonHandler.post(() -\u003e notifyInterfaceClassActivity(...));\n\nand correspondingly, making all the unsolicited event methods post to lambdas.",
+      "range": {
+        "startLine": 1494,
+        "startChar": 12,
+        "endLine": 1494,
         "endChar": 40
       },
       "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
