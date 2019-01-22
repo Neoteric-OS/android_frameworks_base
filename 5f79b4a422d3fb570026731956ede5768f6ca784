@@ -22,6 +22,30 @@
       "revId": "5f79b4a422d3fb570026731956ede5768f6ca784",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b12960_6a155358",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1374565
+      },
+      "writtenOn": "2019-01-22T19:21:47Z",
+      "side": 1,
+      "message": "From what I can tell, this property is mostly used as 0/1.",
+      "parentUuid": "4b00f62b_6661ab19",
+      "range": {
+        "startLine": 757,
+        "startChar": 8,
+        "endLine": 757,
+        "endChar": 75
+      },
+      "revId": "5f79b4a422d3fb570026731956ede5768f6ca784",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
