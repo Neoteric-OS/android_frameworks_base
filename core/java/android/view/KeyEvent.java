@@ -810,8 +810,12 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_ALL_APPS = 284;
     /** Key code constant: Refresh key. */
     public static final int KEYCODE_REFRESH = 285;
+    /** Key code constant: PTT button. */
+    public static final int KEYCODE_CRITICAL_COMMUNICATION_CONTROL_BUTTON = 286;
+    /** Key code constant: SOS button. */
+    public static final int KEYCODE_CRITICAL_COMMUNICATION_SOS_BUTTON = 287;
 
-    private static final int LAST_KEYCODE = KEYCODE_REFRESH;
+    private static final int LAST_KEYCODE = KEYCODE_CRITICAL_COMMUNICATION_SOS_BUTTON;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -1883,6 +1887,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN:
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT:
             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT:
+            case KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_CONTROL_BUTTON:
+            case KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_SOS_BUTTON:
+
                 return true;
         }
 
@@ -1899,6 +1906,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
             case KeyEvent.KEYCODE_STEM_1:
             case KeyEvent.KEYCODE_STEM_2:
             case KeyEvent.KEYCODE_STEM_3:
+            case KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_CONTROL_BUTTON:
+            case KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_SOS_BUTTON:
                 return true;
         }
         return false;
