@@ -157,6 +157,69 @@
     },
     {
       "key": {
+        "uuid": "68a88261_261b4ddb",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:50:55Z",
+      "side": 1,
+      "message": "Nit: move to previous line. Also in the other methods.",
+      "range": {
+        "startLine": 765,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 40
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9665067_366400f0",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:50:55Z",
+      "side": 1,
+      "message": "Prefer InetAddresses.parseNumericAddress. (I think that didn\u0027t exist when this code was first written.)",
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b397703a_072a540f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T03:50:55Z",
+      "side": 1,
+      "message": "What\u0027s the advantage of catching IAE and rethrowing ISE? Can\u0027t you just let the IAE propagate?",
+      "range": {
+        "startLine": 828,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 51
+      },
+      "revId": "4cd7a7bf33e5a0e98cbc65a6f58ff66ac88a67fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a09902cb_01995dd3",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 13
