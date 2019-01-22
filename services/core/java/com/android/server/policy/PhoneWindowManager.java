@@ -270,12 +270,11 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.policy.IShortcutService;
-import com.android.internal.policy.KeyguardDismissCallback;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
+import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.widget.PointerLocationView;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
@@ -807,6 +806,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
+
+    // Critical communication buttons manager
+    private CriticalCommunicationButtonManager mCriticalCommunicationButtonManager;
 
     // Fallback actions by key code.
     private final SparseArray<KeyCharacterMap.FallbackAction> mFallbackActions =
@@ -2263,6 +2265,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.bool.config_enableScreenshotChord);
 
         mGlobalKeyManager = new GlobalKeyManager(mContext);
+
+        mCriticalCommunicationButtonManager = new CriticalCommunicationButtonManager(mContext);
 
         // Controls rotation and the like.
         initializeHdmiState();
@@ -4028,6 +4032,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (isValidGlobalKey(keyCode)
                 && mGlobalKeyManager.handleGlobalKey(mContext, keyCode, event)) {
+            return -1;
+        }
+
+        if ((keyCode == KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_CONTROL_BUTTON
+                || keyCode == KeyEvent.KEYCODE_CRITICAL_COMMUNICATION_SOS_BUTTON)
+                && mCriticalCommunicationButtonManager.handleCriticalCommunicationButton(keyCode,
+                event)) {
             return -1;
         }
 
