@@ -699,6 +699,7 @@ java_defaults {
         "android.hardware.usb.gadget-V1.0-java",
         "networkstack-aidl-interfaces-java",
         "netd_aidl_interface-java",
+        "datastallprotosnano",
     ],
 
     required: [
