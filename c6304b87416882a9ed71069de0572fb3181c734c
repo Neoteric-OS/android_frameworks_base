@@ -22,6 +22,30 @@
       "revId": "c6304b87416882a9ed71069de0572fb3181c734c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdc2ba1_05cb528f",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T14:31:55Z",
+      "side": 1,
+      "message": "Per discussion, it might be better to call super.onIpClientCreated before mIpClientCv.open().\n\nThat said: a caller that is doing this (i.e., mixing the native asynchronous API with the synchronous wrapper) is holding it wrong. There are no such callers, and this wrapper is expected to be deleted in a few days once callers have been migrated. So it\u0027s fine to submit this as is.\n\nMaybe upload a follow-up CL to fix this so we don\u0027t lose track, just in case this wrapper ends up lasting longer than we think it will?",
+      "parentUuid": "27b8026a_5130336c",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "c6304b87416882a9ed71069de0572fb3181c734c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
