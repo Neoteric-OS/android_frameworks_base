@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b8026a_5130336c",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T14:15:50Z",
+      "side": 1,
+      "message": "Is it safe to open this CV before calling super.onIpClientCreated? A client could do:\n\n    i \u003d new IpClient();\n    i.startProvisioning(provConfig);\n\nThis starts the asynchronous operation of creating the client and then, inside startProvisioning, blocks on mIpClientCv. As soon as onIpClientCreated is fired, mIpClient is set and then startProvisioning proceeds at the same as onIpClientCreated. Is it safe to have those proceed in parallel?",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "c6304b87416882a9ed71069de0572fb3181c734c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
