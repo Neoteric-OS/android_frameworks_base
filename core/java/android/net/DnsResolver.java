@@ -84,6 +84,10 @@ public final class DnsResolver {
 
     private static final DnsResolver sInstance = new DnsResolver();
 
+
+    // Note that: if query question more than 1 in blob and DnsServer doesn't
+    // support to answer multiple questions. Query might timed out.
+
     /**
      * listener for receiving raw answers
      */
@@ -238,7 +242,7 @@ public final class DnsResolver {
 
         public @NonNull List<InetAddress> getAddresses() {
             final List<InetAddress> results = new ArrayList<InetAddress>();
-            for (final DnsSection ansSec : mSections[ANSECTION]) {
+            for (final DnsRecord ansSec : mSections[ANSECTION]) {
                 // Only support A and AAAA, also ignore answers if query type != answer type.
                 int nsType = ansSec.nsType;
                 if (nsType != mQueryType || (nsType != TYPE_A && nsType != TYPE_AAAA)) {
