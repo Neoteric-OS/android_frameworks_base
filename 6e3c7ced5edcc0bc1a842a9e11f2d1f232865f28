@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec63a545_43c31191",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-23T22:01:54Z",
+      "side": 1,
+      "message": "Already merged internally.  Will fix in followup CL.",
+      "parentUuid": "957cca48_9919ef28",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3422180_072dbeb8",
         "filename": "core/java/android/os/ZygoteProcess.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ac0f06f5_acab2000",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-23T22:01:54Z",
+      "side": 1,
+      "message": "Already merged internally.  Will fix in followup CL.",
+      "parentUuid": "f3422180_072dbeb8",
+      "range": {
+        "startLine": 267,
+        "startChar": 41,
+        "endLine": 267,
+        "endChar": 46
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde16d29_a49e0b0b",
         "filename": "core/java/android/os/ZygoteProcess.java",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950ef465_ab471654",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-23T22:01:54Z",
+      "side": 1,
+      "message": "Already merged internally.  Will fix in followup CL.",
+      "parentUuid": "cde16d29_a49e0b0b",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
