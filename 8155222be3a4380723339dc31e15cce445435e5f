@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "026258f3_e456b04e",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T02:09:08Z",
+      "side": 1,
+      "message": "suggest to @hide this since it\u0027s not used.",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "8155222be3a4380723339dc31e15cce445435e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1458e1c9_9daf7c87",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T02:09:08Z",
+      "side": 1,
+      "message": "suggest to @hide this... nothing supports it.",
+      "range": {
+        "startLine": 234,
+        "startChar": 20,
+        "endLine": 234,
+        "endChar": 34
+      },
+      "revId": "8155222be3a4380723339dc31e15cce445435e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
