@@ -1,0 +1,373 @@
+// Baseline format: 1.0
+AcronymName: android.net.ssl.SSLEngines:
+    Acronyms should not be capitalized in class names: was `SSLEngines`, should this be `SslEngines`?
+AcronymName: android.net.ssl.SSLSockets:
+    Acronyms should not be capitalized in class names: was `SSLSockets`, should this be `SslSockets`?
+
+
+ActionValue: android.content.Intent#EXTRA_SHORTCUT_ID:
+    Inconsistent extra value; expected `android.intent.extra.SHORTCUT_ID`, was `android.intent.extra.shortcut.ID`
+ActionValue: android.provider.CalendarContract#ACTION_VIEW_WORK_CALENDAR_EVENT:
+    Inconsistent action value; expected `android.provider.action.VIEW_WORK_CALENDAR_EVENT`, was `android.provider.calendar.action.VIEW_WORK_CALENDAR_EVENT`
+ActionValue: android.provider.CalendarContract#EXTRA_EVENT_ID:
+    Inconsistent extra value; expected `android.provider.extra.EVENT_ID`, was `id`
+ActionValue: android.provider.Settings#ACTION_APP_USAGE_SETTINGS:
+    Inconsistent action value; expected `android.settings.APP_USAGE_SETTINGS`, was `android.settings.action.APP_USAGE_SETTINGS`
+ActionValue: android.provider.Settings.Panel#ACTION_INTERNET_CONNECTIVITY:
+    Inconsistent action value; expected `android.provider.action.INTERNET_CONNECTIVITY`, was `android.settings.panel.action.INTERNET_CONNECTIVITY`
+ActionValue: android.provider.Settings.Panel#ACTION_VOLUME:
+    Inconsistent action value; expected `android.provider.action.VOLUME`, was `android.settings.panel.action.VOLUME`
+
+
+AllUpper: android.media.MediaCodecInfo.CodecCapabilities#FEATURE_DynamicTimestamp:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecCapabilities#FEATURE_DynamicTimestamp`, should be `FEATURE__DYNAMIC_TIMESTAMP`?
+AllUpper: android.media.MediaCodecInfo.CodecCapabilities#FEATURE_FrameParsing:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecCapabilities#FEATURE_FrameParsing`, should be `FEATURE__FRAME_PARSING`?
+AllUpper: android.media.MediaCodecInfo.CodecCapabilities#FEATURE_MultipleFrames:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecCapabilities#FEATURE_MultipleFrames`, should be `FEATURE__MULTIPLE_FRAMES`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level2:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level2`, should be `AV1_LEVEL2`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level21:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level21`, should be `AV1_LEVEL21`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level22:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level22`, should be `AV1_LEVEL22`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level23:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level23`, should be `AV1_LEVEL23`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level3:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level3`, should be `AV1_LEVEL3`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level31:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level31`, should be `AV1_LEVEL31`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level32:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level32`, should be `AV1_LEVEL32`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level33:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level33`, should be `AV1_LEVEL33`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level4:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level4`, should be `AV1_LEVEL4`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level41:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level41`, should be `AV1_LEVEL41`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level42:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level42`, should be `AV1_LEVEL42`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level43:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level43`, should be `AV1_LEVEL43`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level5:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level5`, should be `AV1_LEVEL5`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level51:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level51`, should be `AV1_LEVEL51`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level52:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level52`, should be `AV1_LEVEL52`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level53:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level53`, should be `AV1_LEVEL53`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level6:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level6`, should be `AV1_LEVEL6`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level61:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level61`, should be `AV1_LEVEL61`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level62:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level62`, should be `AV1_LEVEL62`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level63:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level63`, should be `AV1_LEVEL63`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level7:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level7`, should be `AV1_LEVEL7`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level71:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level71`, should be `AV1_LEVEL71`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level72:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level72`, should be `AV1_LEVEL72`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Level73:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Level73`, should be `AV1_LEVEL73`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile0:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile0`, should be `AV1_PROFILE0`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile1:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile1`, should be `AV1_PROFILE1`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile2:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AV1Profile2`, should be `AV1_PROFILE2`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel6:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel6`, should be `AVCLEVEL6`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel61:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel61`, should be `AVCLEVEL61`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel62:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#AVCLevel62`, should be `AVCLEVEL62`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#HEVCProfileMain10HDR10Plus:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#HEVCProfileMain10HDR10Plus`, should be `HEVCPROFILE_MAIN10_HDR10_PLUS`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#VP9Profile2HDR10Plus:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#VP9Profile2HDR10Plus`, should be `VP9_PROFILE2_HDR10_PLUS`?
+AllUpper: android.media.MediaCodecInfo.CodecProfileLevel#VP9Profile3HDR10Plus:
+    Constant field names must be named with only upper case characters: `android.media.MediaCodecInfo.CodecProfileLevel#VP9Profile3HDR10Plus`, should be `VP9_PROFILE3_HDR10_PLUS`?
+
+
+ArrayReturn: android.content.ContentInterface#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>):
+    Method should return Collection<ContentProviderResult> (or subclass) instead of raw array; was `android.content.ContentProviderResult[]`
+ArrayReturn: android.content.ContentInterface#bulkInsert(android.net.Uri, android.content.ContentValues[]) parameter #1:
+    Method parameter should be Collection<ContentValues> (or subclass) instead of raw array; was `android.content.ContentValues[]`
+ArrayReturn: android.content.ContentProvider#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>):
+    Method should return Collection<ContentProviderResult> (or subclass) instead of raw array; was `android.content.ContentProviderResult[]`
+ArrayReturn: android.content.ContentProviderClient#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>):
+    Method should return Collection<ContentProviderResult> (or subclass) instead of raw array; was `android.content.ContentProviderResult[]`
+ArrayReturn: android.content.pm.PackageInfo#usesPermissions:
+    Field should be Collection<UsesPermissionInfo> (or subclass) instead of raw array; was `android.content.pm.UsesPermissionInfo[]`
+ArrayReturn: android.content.pm.ShortcutInfo.Builder#setPersons(android.app.Person[]) parameter #0:
+    Method parameter should be Collection<Person> (or subclass) instead of raw array; was `android.app.Person[]`
+ArrayReturn: android.graphics.fonts.Font#getAxes():
+    Method should return Collection<FontVariationAxis> (or subclass) instead of raw array; was `android.graphics.fonts.FontVariationAxis[]`
+ArrayReturn: android.graphics.fonts.Font.Builder#setFontVariationSettings(android.graphics.fonts.FontVariationAxis[]) parameter #0:
+    Method parameter should be Collection<FontVariationAxis> (or subclass) instead of raw array; was `android.graphics.fonts.FontVariationAxis[]`
+ArrayReturn: dalvik.system.InMemoryDexClassLoader#InMemoryDexClassLoader(java.nio.ByteBuffer[], String, ClassLoader) parameter #0:
+    Method parameter should be Collection<ByteBuffer> (or subclass) instead of raw array; was `java.nio.ByteBuffer[]`
+
+
+AutoBoxing: android.icu.util.CurrencyAmount#CurrencyAmount(Number, java.util.Currency) parameter #0:
+    Must avoid boxed primitives (`java.lang.Number`)
+AutoBoxing: android.media.MediaFormat#getNumber(String):
+    Must avoid boxed primitives (`java.lang.Number`)
+AutoBoxing: android.media.MediaFormat#getNumber(String, Number):
+    Must avoid boxed primitives (`java.lang.Number`)
+AutoBoxing: android.media.MediaFormat#getNumber(String, Number) parameter #1:
+    Must avoid boxed primitives (`java.lang.Number`)
+
+
+CallbackInterface: android.telephony.mbms.GroupCallCallback:
+    Callbacks must be abstract class instead of interface to enable extension in future API levels: GroupCallCallback
+CallbackInterface: android.telephony.mbms.MbmsGroupCallSessionCallback:
+    Callbacks must be abstract class instead of interface to enable extension in future API levels: MbmsGroupCallSessionCallback
+
+
+CallbackMethodName: android.media.DataSourceCallback:
+    Callback method names must follow the on<Something> style: readAt
+CallbackMethodName: android.net.wifi.p2p.WifiP2pManager.P2pStateListener:
+    Listener method names must follow the on<Something> style: onP2pStateAvailable
+
+
+ConcreteCollection: android.content.ContentInterface#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>) parameter #1:
+    Parameter type is concrete collection (`java.util.ArrayList`); must be higher-level interface
+ConcreteCollection: android.content.ContentProvider#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>) parameter #1:
+    Parameter type is concrete collection (`java.util.ArrayList`); must be higher-level interface
+ConcreteCollection: android.content.ContentProviderClient#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>) parameter #1:
+    Parameter type is concrete collection (`java.util.ArrayList`); must be higher-level interface
+ConcreteCollection: android.os.Parcel#createTypedArrayMap(android.os.Parcelable.Creator<T>):
+    Return type is concrete collection (`android.util.ArrayMap`); must be higher-level interface
+ConcreteCollection: android.os.Parcel#writeTypedArrayMap(android.util.ArrayMap<java.lang.String,T>, int) parameter #0:
+    Parameter type is concrete collection (`android.util.ArrayMap`); must be higher-level interface
+ConcreteCollection: android.telephony.AvailableNetworkInfo#AvailableNetworkInfo(int, int, java.util.ArrayList<java.lang.String>) parameter #2:
+    Parameter type is concrete collection (`java.util.ArrayList`); must be higher-level interface
+ConcreteCollection: android.util.ArraySet#ArraySet(java.util.Collection<? extends E>):
+    Return type is concrete collection (`android.util.ArraySet`); must be higher-level interface
+
+
+Enum: android.graphics.BlendMode:
+    Enums are discouraged in Android APIs
+
+
+EqualsAndHashCode: android.media.MediaCodecInfo.VideoCapabilities.PerformancePoint#equals(Object):
+    Must override both equals and hashCode; missing one in android.media.MediaCodecInfo.VideoCapabilities.PerformancePoint
+EqualsAndHashCode: android.media.VideoSize#equals(Object):
+    Must override both equals and hashCode; missing one in android.media.VideoSize
+EqualsAndHashCode: android.opengl.EGLImage#equals(Object):
+    Must override both equals and hashCode; missing one in android.opengl.EGLImage
+EqualsAndHashCode: android.opengl.EGLSync#equals(Object):
+    Must override both equals and hashCode; missing one in android.opengl.EGLSync
+
+
+ExecutorRegistration: android.media.CallbackDataSourceDesc.Builder#setDataSource(android.media.DataSourceCallback):
+    Registration methods should have overload that accepts delivery Executor: `setDataSource`
+ExecutorRegistration: android.media.MediaPlayer2#addOnRoutingChangedListener(android.media.AudioRouting.OnRoutingChangedListener, android.os.Handler):
+    Registration methods should have overload that accepts delivery Executor: `addOnRoutingChangedListener`
+
+
+GenericException: android.media.DataSourceDesc#finalize():
+    Methods must not throw generic exceptions (`java.lang.Throwable`)
+GenericException: android.media.MediaPlayer2#finalize():
+    Methods must not throw generic exceptions (`java.lang.Throwable`)
+GenericException: android.view.contentcapture.ContentCaptureSession#finalize():
+    Methods must not throw generic exceptions (`java.lang.Throwable`)
+
+
+GetterSetterNames: android.graphics.RenderNode#isForceDarkAllowed():
+    Symmetric method for `setForceDarkAllowed` must be named `getForceDarkAllowed`; was `isForceDarkAllowed`
+GetterSetterNames: android.media.MediaSession2#isPlaybackActive():
+    Symmetric method for `setPlaybackActive` must be named `getPlaybackActive`; was `isPlaybackActive`
+GetterSetterNames: android.view.contentcapture.ContentCaptureManager#isContentCaptureEnabled():
+    Symmetric method for `setContentCaptureEnabled` must be named `getContentCaptureEnabled`; was `isContentCaptureEnabled`
+
+
+HeavyBitSet: android.net.wifi.WifiConfiguration#allowedGroupManagementCiphers:
+    Type must not be heavy BitSet (field android.net.wifi.WifiConfiguration.allowedGroupManagementCiphers)
+HeavyBitSet: android.net.wifi.WifiConfiguration#allowedSuiteBCiphers:
+    Type must not be heavy BitSet (field android.net.wifi.WifiConfiguration.allowedSuiteBCiphers)
+
+
+InterfaceConstant: android.telecom.CallRedirectionService#SERVICE_INTERFACE:
+    Inconsistent interface constant; expected 'CallRedirectionService'`
+
+
+KotlinOperator: android.view.inspector.IntFlagMapping#get(int):
+    Method can be invoked with an indexing operator from Kotlin: `get` (this is usually desirable; just make sure it makes sense for this type of object)
+
+
+ListenerInterface: android.telephony.SubscriptionManager.OnOpportunisticSubscriptionsChangedListener:
+    Listeners should be an interface, or otherwise renamed Callback: OnOpportunisticSubscriptionsChangedListener
+
+
+MethodNameUnits: android.view.inspector.PropertyMapper#mapByte(String, int):
+    Expected method name units to be `Bytes`, was `Byte` in `mapByte`
+
+
+MissingBuild: android.net.wifi.WifiNetworkConfigBuilder:
+    Missing `build()` method in android.net.wifi.WifiNetworkConfigBuilder
+
+
+NoByteOrShort: android.view.inspector.PropertyReader#readByte(int, byte) parameter #1:
+    Should avoid odd sized primitives; use `int` instead of `byte` in parameter value in android.view.inspector.PropertyReader.readByte(int id, byte value)
+NoByteOrShort: android.view.inspector.PropertyReader#readShort(int, short) parameter #1:
+    Should avoid odd sized primitives; use `int` instead of `short` in parameter value in android.view.inspector.PropertyReader.readShort(int id, short value)
+
+
+NoClone: android.graphics.fonts.Font.Builder#Builder(java.io.FileDescriptor) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.graphics.fonts.Font.Builder(java.io.FileDescriptor fd)
+NoClone: android.graphics.fonts.Font.Builder#Builder(java.io.FileDescriptor, long, long) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.graphics.fonts.Font.Builder(java.io.FileDescriptor fd, long offset, long size)
+NoClone: android.os.FileUtils#closeQuietly(java.io.FileDescriptor) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.os.FileUtils.closeQuietly(java.io.FileDescriptor fd)
+NoClone: android.os.FileUtils#copy(java.io.FileDescriptor, java.io.FileDescriptor) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter in in android.os.FileUtils.copy(java.io.FileDescriptor in, java.io.FileDescriptor out)
+NoClone: android.os.FileUtils#copy(java.io.FileDescriptor, java.io.FileDescriptor) parameter #1:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter out in android.os.FileUtils.copy(java.io.FileDescriptor in, java.io.FileDescriptor out)
+NoClone: android.os.FileUtils#copy(java.io.FileDescriptor, java.io.FileDescriptor, android.os.CancellationSignal, java.util.concurrent.Executor, android.os.FileUtils.ProgressListener) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter in in android.os.FileUtils.copy(java.io.FileDescriptor in, java.io.FileDescriptor out, android.os.CancellationSignal signal, java.util.concurrent.Executor executor, android.os.FileUtils.ProgressListener listener)
+NoClone: android.os.FileUtils#copy(java.io.FileDescriptor, java.io.FileDescriptor, android.os.CancellationSignal, java.util.concurrent.Executor, android.os.FileUtils.ProgressListener) parameter #1:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter out in android.os.FileUtils.copy(java.io.FileDescriptor in, java.io.FileDescriptor out, android.os.CancellationSignal signal, java.util.concurrent.Executor executor, android.os.FileUtils.ProgressListener listener)
+
+
+NotCloseable: android.media.DataSourceDesc:
+    Classes that release resources should implement AutoClosable and CloseGuard: class android.media.DataSourceDesc
+
+
+PackageLayering: android.widget.RemoteViews.RemoteResponse:
+    Method parameter type `android.app.PendingIntent` violates package layering: nothing in `package android.widget` should depend on `package android.app`
+
+
+ParcelConstructor: android.text.style.LineBackgroundSpan.Standard#Standard(android.os.Parcel):
+    Parcelable inflation is exposed through CREATOR, not raw constructors, in android.text.style.LineBackgroundSpan.Standard
+ParcelConstructor: android.text.style.LineHeightSpan.Standard#Standard(android.os.Parcel):
+    Parcelable inflation is exposed through CREATOR, not raw constructors, in android.text.style.LineHeightSpan.Standard
+
+
+ParcelCreator: android.telephony.CellIdentityNr:
+    Parcelable requires `public int describeContents()`; missing in android.telephony.CellIdentityNr
+ParcelCreator: android.telephony.CellInfoNr:
+    Parcelable requires `public int describeContents()`; missing in android.telephony.CellInfoNr
+ParcelCreator: android.text.style.LineBackgroundSpan.Standard:
+    Parcelable requires a `CREATOR` field; missing in android.text.style.LineBackgroundSpan.Standard
+ParcelCreator: android.text.style.LineHeightSpan.Standard:
+    Parcelable requires a `CREATOR` field; missing in android.text.style.LineHeightSpan.Standard
+
+
+ParcelNotFinal: android.text.style.LineBackgroundSpan.Standard:
+    Parcelable classes must be final: android.text.style.LineBackgroundSpan.Standard is not final
+ParcelNotFinal: android.text.style.LineHeightSpan.Standard:
+    Parcelable classes must be final: android.text.style.LineHeightSpan.Standard is not final
+
+
+ProtectedMember: android.graphics.drawable.ColorStateListDrawable#onStateChange(int[]):
+    Protected methods not allowed; must be public: method android.graphics.drawable.ColorStateListDrawable.onStateChange(int[])}
+
+
+RethrowRemoteException: android.content.ContentInterface#applyBatch(String, java.util.ArrayList<android.content.ContentProviderOperation>):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#bulkInsert(android.net.Uri, android.content.ContentValues[]):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#call(String, String, String, android.os.Bundle):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#canonicalize(android.net.Uri):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#delete(android.net.Uri, String, String[]):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#getStreamTypes(android.net.Uri, String):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#getType(android.net.Uri):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#insert(android.net.Uri, android.content.ContentValues):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#openAssetFile(android.net.Uri, String, android.os.CancellationSignal):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#openFile(android.net.Uri, String, android.os.CancellationSignal):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#openTypedAssetFile(android.net.Uri, String, android.os.Bundle, android.os.CancellationSignal):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#query(android.net.Uri, String[], android.os.Bundle, android.os.CancellationSignal):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#refresh(android.net.Uri, android.os.Bundle, android.os.CancellationSignal):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#uncanonicalize(android.net.Uri):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.content.ContentInterface#update(android.net.Uri, android.content.ContentValues, String, String[]):
+    Methods calling into system server should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+
+
+SamShouldBeLast: android.app.admin.DevicePolicyManager#installSystemUpdate(android.content.ComponentName, android.net.Uri, java.util.concurrent.Executor, android.app.admin.DevicePolicyManager.InstallUpdateCallback):
+    SAM-compatible parameters (such as parameter 3, "executor", in android.app.admin.DevicePolicyManager.installSystemUpdate) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.graphics.drawable.ColorStateListDrawable#scheduleDrawable(android.graphics.drawable.Drawable, Runnable, long):
+    SAM-compatible parameters (such as parameter 2, "what", in android.graphics.drawable.ColorStateListDrawable.scheduleDrawable) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.AudioRecord#registerAudioRecordingCallback(java.util.concurrent.Executor, android.media.AudioManager.AudioRecordingCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.AudioRecord.registerAudioRecordingCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.AudioRecordingMonitor#registerAudioRecordingCallback(java.util.concurrent.Executor, android.media.AudioManager.AudioRecordingCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.AudioRecordingMonitor.registerAudioRecordingCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.AudioTrack#registerStreamEventCallback(java.util.concurrent.Executor, android.media.AudioTrack.StreamEventCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.AudioTrack.registerStreamEventCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaDrm#setOnSessionLostStateListener(android.media.MediaDrm.OnSessionLostStateListener, android.os.Handler):
+    SAM-compatible parameters (such as parameter 1, "listener", in android.media.MediaDrm.setOnSessionLostStateListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaPlayer2#addOnRoutingChangedListener(android.media.AudioRouting.OnRoutingChangedListener, android.os.Handler):
+    SAM-compatible parameters (such as parameter 1, "listener", in android.media.MediaPlayer2.addOnRoutingChangedListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaPlayer2#registerEventCallback(java.util.concurrent.Executor, android.media.MediaPlayer2.EventCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.MediaPlayer2.registerEventCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaPlayer2#setDrmEventCallback(java.util.concurrent.Executor, android.media.MediaPlayer2.DrmEventCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.MediaPlayer2.setDrmEventCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaRecorder#registerAudioRecordingCallback(java.util.concurrent.Executor, android.media.AudioManager.AudioRecordingCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.MediaRecorder.registerAudioRecordingCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.media.MediaSession2.Builder#setSessionCallback(java.util.concurrent.Executor, android.media.MediaSession2.SessionCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.media.MediaSession2.Builder.setSessionCallback) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.telephony.MbmsGroupCallSession#create(android.content.Context, int, java.util.concurrent.Executor, android.telephony.mbms.MbmsGroupCallSessionCallback):
+    SAM-compatible parameters (such as parameter 3, "executor", in android.telephony.MbmsGroupCallSession.create) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.telephony.MbmsGroupCallSession#create(android.content.Context, java.util.concurrent.Executor, android.telephony.mbms.MbmsGroupCallSessionCallback):
+    SAM-compatible parameters (such as parameter 2, "executor", in android.telephony.MbmsGroupCallSession.create) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.telephony.MbmsGroupCallSession#startGroupCall(long, java.util.List<java.lang.Integer>, java.util.List<java.lang.Integer>, java.util.concurrent.Executor, android.telephony.mbms.GroupCallCallback):
+    SAM-compatible parameters (such as parameter 4, "executor", in android.telephony.MbmsGroupCallSession.startGroupCall) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.telephony.SubscriptionManager#addOnOpportunisticSubscriptionsChangedListener(java.util.concurrent.Executor, android.telephony.SubscriptionManager.OnOpportunisticSubscriptionsChangedListener):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.telephony.SubscriptionManager.addOnOpportunisticSubscriptionsChangedListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.telephony.TelephonyManager#requestCellInfoUpdate(java.util.concurrent.Executor, android.telephony.TelephonyManager.CellInfoCallback):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.telephony.TelephonyManager.requestCellInfoUpdate) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.text.util.Linkify#addLinks(android.text.Spannable, java.util.regex.Pattern, String, String[], android.text.util.Linkify.MatchFilter, android.text.util.Linkify.TransformFilter, java.util.function.Function<java.lang.String,android.text.style.URLSpan>):
+    SAM-compatible parameters (such as parameter 6, "transformFilter", in android.text.util.Linkify.addLinks) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+SamShouldBeLast: android.webkit.WebView#setWebViewRendererClient(java.util.concurrent.Executor, android.webkit.WebViewRendererClient):
+    SAM-compatible parameters (such as parameter 1, "executor", in android.webkit.WebView.setWebViewRendererClient) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+
+
+ServiceName: android.Manifest.permission#BIND_CALL_REDIRECTION_SERVICE:
+    Inconsistent service value; expected `BIND_CALL_REDIRECTION`, was `android.permission.BIND_CALL_REDIRECTION_SERVICE`
+ServiceName: android.Manifest.permission#BIND_SMS_APP_SERVICE:
+    Inconsistent service value; expected `BIND_SMS_APP`, was `android.permission.BIND_SMS_APP_SERVICE`
+ServiceName: android.telephony.TelephonyManager#ACTION_SMS_APP_SERVICE:
+    Inconsistent service value; expected `ACTION_SMS_APP`, was `android.telephony.action.SMS_APP_SERVICE`
+
+
+TopLevelBuilder: android.net.wifi.WifiNetworkConfigBuilder:
+    Builder should be defined as inner class: android.net.wifi.WifiNetworkConfigBuilder
+
+
+UseIcu: android.icu.text.DecimalFormatSymbols#forNumberingSystem(java.util.Locale, android.icu.text.NumberingSystem) parameter #0:
+    Type `java.util.Locale` should be replaced with richer ICU type `android.icu.util.ULocale`
+
+
+VisiblySynchronized: android.media.MediaPlayer2#getPreferredDevice():
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.media.MediaPlayer2.getPreferredDevice()
+VisiblySynchronized: android.media.MediaPlayer2#setPreferredDevice(android.media.AudioDeviceInfo):
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.media.MediaPlayer2.setPreferredDevice(android.media.AudioDeviceInfo)
+VisiblySynchronized: android.media.MediaSession2#close():
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.media.MediaSession2.close()
+VisiblySynchronized: android.os.PowerManager#getCurrentThermalStatus():
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.os.PowerManager.getCurrentThermalStatus()
+VisiblySynchronized: android.os.PowerManager#registerThermalStatusCallback(android.os.PowerManager.ThermalStatusCallback, java.util.concurrent.Executor):
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.os.PowerManager.registerThermalStatusCallback(android.os.PowerManager.ThermalStatusCallback,java.util.concurrent.Executor)
+VisiblySynchronized: android.os.PowerManager#unregisterThermalStatusCallback(android.os.PowerManager.ThermalStatusCallback):
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.os.PowerManager.unregisterThermalStatusCallback(android.os.PowerManager.ThermalStatusCallback)
+VisiblySynchronized: android.view.Display#getCutout():
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.view.Display.getCutout()
+
+
