@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6027619f_3cc9ff8e",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T06:44:30Z",
+      "side": 1,
+      "message": "I know it sounds wierd but we should use \u0027NetworkAttributes\u0027 class name here, right?",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548c5c09_85fcf531",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 5
