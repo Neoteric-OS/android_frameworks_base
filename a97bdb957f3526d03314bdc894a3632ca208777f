@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94bedd6f_c5d6c7b4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-01-23T00:18:27Z",
+      "side": 0,
+      "message": "No sure if we should get rid of this adding. When a device reports Physical address, even with the same logical address, it could still be different devices with different OSD names.",
+      "range": {
+        "startLine": 586,
+        "startChar": 7,
+        "endLine": 586,
+        "endChar": 33
+      },
+      "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
