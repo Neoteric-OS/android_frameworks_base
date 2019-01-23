@@ -88,6 +88,46 @@
     },
     {
       "key": {
+        "uuid": "e9abc419_47e27352",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T06:33:06Z",
+      "side": 1,
+      "message": "Nits: no strong opinion, but is it better if we use\n new Inet4Address(null, new byte[] { 0, 0, 0, 0 }\nor  (Inet4Address) InetAddress.getByName(String) ?",
+      "range": {
+        "startLine": 227,
+        "startChar": 47,
+        "endLine": 227,
+        "endChar": 96
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b233961f_fa81f515",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T06:33:06Z",
+      "side": 1,
+      "message": "It seems used in multiple places.\nDo we need to define it in a variable locally?",
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4de0f66_eda17d69",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 5
