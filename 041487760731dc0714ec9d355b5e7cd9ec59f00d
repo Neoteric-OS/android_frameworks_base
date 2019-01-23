@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b12bca_8d09f48a",
+        "filename": "core/res/res/values/arrays.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2019-01-23T00:50:02Z",
+      "side": 1,
+      "message": "soldered_euicc_slots?",
+      "range": {
+        "startLine": 202,
+        "startChar": 25,
+        "endLine": 202,
+        "endChar": 50
+      },
+      "revId": "041487760731dc0714ec9d355b5e7cd9ec59f00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
