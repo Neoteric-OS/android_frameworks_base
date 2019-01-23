@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957cca48_9919ef28",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2019-01-23T21:55:50Z",
+      "side": 1,
+      "message": "nit: seems inconsistent with with getAbiList()",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3422180_072dbeb8",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2019-01-23T21:55:50Z",
+      "side": 1,
+      "message": "nit: add space before false?",
+      "range": {
+        "startLine": 267,
+        "startChar": 41,
+        "endLine": 267,
+        "endChar": 46
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde16d29_a49e0b0b",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2019-01-23T21:55:50Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "6e3c7ced5edcc0bc1a842a9e11f2d1f232865f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
