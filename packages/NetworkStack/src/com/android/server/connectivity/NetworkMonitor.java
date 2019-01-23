@@ -31,6 +31,7 @@ import static android.net.metrics.ValidationProbeEvent.DNS_SUCCESS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_FALLBACK;
 import static android.net.metrics.ValidationProbeEvent.PROBE_PRIVDNS;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -39,6 +40,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.CaptivePortal;
 import android.net.ConnectivityManager;
+import android.net.DataStallEventLogger;
 import android.net.ICaptivePortal;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
@@ -131,6 +133,8 @@ public class NetworkMonitor extends StateMachine {
     private static final int DATA_STALL_EVALUATION_TYPE_DNS = 1;
     private static final int DEFAULT_DATA_STALL_EVALUATION_TYPES =
             (1 << DATA_STALL_EVALUATION_TYPE_DNS);
+    // Reevaluate it whenever intending to increase the number.
+    private static final int NUM_OF_LOGGED_DNS_EVENTS = 10;
 
     enum EvaluationResult {
         VALIDATED(true),
@@ -310,6 +314,7 @@ public class NetworkMonitor extends StateMachine {
     private final int mDataStallEvaluationType;
     private final DnsStallDetector mDnsStallDetector;
     private long mLastProbeTime;
+    private DataStallEventLogger mStallLogger = null;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             NetworkRequest defaultRequest, SharedLog validationLog) {
@@ -661,6 +666,7 @@ public class NetworkMonitor extends StateMachine {
                 case EVENT_DNS_NOTIFICATION:
                     mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
                     if (isDataStall()) {
+                        collectDataStallMetrics();
                         validationLog("Suspecting data stall, reevaluate");
                         transitionTo(mEvaluatingState);
                     }
@@ -669,6 +675,54 @@ public class NetworkMonitor extends StateMachine {
                     return NOT_HANDLED;
             }
             return HANDLED;
+        }
+    }
+
+    private void writeResultToMetrics(@NonNull CaptivePortalProbeResult result) {
+        mStallLogger.setProbeResult(result);
+        mStallLogger.write();
+        mStallLogger = null;
+    }
+
+    private void collectDataStallMetrics() {
+        if (mStallLogger == null) {
+            mStallLogger = new DataStallEventLogger();
+        }
+
+        final int[] transports = mNetworkCapabilities.getTransportTypes();
+
+        if (transports.length > 0) {
+            if (VDBG_STALL) log("collectDataStallMetrics");
+            mStallLogger.setEvaluationType(DATA_STALL_EVALUATION_TYPE_DNS)
+                        .setNetworkType(transports[0]);
+            switch (transports[0]) {
+                case NetworkCapabilities.TRANSPORT_WIFI:
+                    final WifiInfo currentWifiInfo = mWifiManager.getConnectionInfo();
+                    mStallLogger.setWiFiData(currentWifiInfo.getRssi(), currentWifiInfo.is5GHz());
+                    break;
+                case NetworkCapabilities.TRANSPORT_CELLULAR:
+                    final boolean isRoaming = mNetworkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
+                    mStallLogger.setCellData(mTelephonyManager.getDataNetworkType(),
+                                    isRoaming, mTelephonyManager.getNetworkOperator(),
+                                    mTelephonyManager.getSimOperator(),
+                                    mTelephonyManager.getSignalStrength().getLevel());
+                    break;
+                default:
+                    log("collectDataStallMetrics: unknown type=" + transports[0]);
+                    break;
+            }
+
+            logDnsEvents();
+        }
+    }
+
+    private void logDnsEvents() {
+        final int size = mDnsStallDetector.mResultIndices.size();
+        for (int i = 1; i <= NUM_OF_LOGGED_DNS_EVENTS && i <  size; i++) {
+            int index = mDnsStallDetector.mResultIndices.indexOf(size - i);
+            mStallLogger.setDnsEvent(mDnsStallDetector.mDnsEvents[index].mReturnCode,
+                    mDnsStallDetector.mDnsEvents[index].mTimeStamp);
         }
     }
 
@@ -991,6 +1045,11 @@ public class NetworkMonitor extends StateMachine {
                     final CaptivePortalProbeResult probeResult =
                             (CaptivePortalProbeResult) message.obj;
                     mLastProbeTime = SystemClock.elapsedRealtime();
+
+                    if (mStallLogger != null) {
+                        writeResultToMetrics(probeResult);
+                    }
+
                     if (probeResult.isSuccessful()) {
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
