@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "102ef7ba_690c406c",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d870c7_ebb1401a",
+      "range": {
+        "startLine": 257,
+        "startChar": 15,
+        "endLine": 257,
+        "endChar": 40
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6027619f_3cc9ff8e",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3caf674a_2ed34eda",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:43:31Z",
+      "side": 1,
+      "message": "Generally speaking if the column is not found the memory store is completely busted.\nBut you have a point, we should handle it here in the same ways as other places, and in other places the policy is : let\u0027s not crash even if the memory store is busted.\nDone.",
+      "parentUuid": "548c5c09_85fcf531",
+      "range": {
+        "startLine": 248,
+        "startChar": 23,
+        "endLine": 248,
+        "endChar": 44
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ccf8643_2f7a6444",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 5
@@ -85,6 +133,24 @@
       "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e2d4f5_88b80bee",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:43:31Z",
+      "side": 1,
+      "message": "No. The closeness is determined by how many fields are equal, so if no field is equal there is exactly zero chance of that line being group-close. Therefore this only ever drops lines that are guaranteed not to match.",
+      "parentUuid": "7ccf8643_2f7a6444",
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +174,30 @@
       "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c997e840_75133d52",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:43:31Z",
+      "side": 1,
+      "message": "We can do this, but :\n・It\u0027s not like missing to close a cursor will leak resources. The cursor will be garbage collected and resources freed up eventually.\n・I tried doing that in other places and thought the code was less readable, which is why I left it as is. In this new code it would be easier to justify, but then we\u0027d lose consistency.\n\nBut I don\u0027t have a strong opinion either way. If you feel this is really an improvement I\u0027ll do it.",
+      "parentUuid": "d16717e9_d0d4dc16",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 23
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
