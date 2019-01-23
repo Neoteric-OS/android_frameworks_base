@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9fb394e_c242384c",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T09:57:27Z",
+      "side": 1,
+      "message": "Happy with this but surprised you didn\u0027t need the specializations for native types",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "1576d4e97526e2a1b7a6abc64456f9fa2ffa3984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
