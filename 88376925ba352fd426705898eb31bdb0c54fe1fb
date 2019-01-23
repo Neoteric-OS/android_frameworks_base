@@ -22,6 +22,30 @@
       "revId": "88376925ba352fd426705898eb31bdb0c54fe1fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866d55e1_68aa6128",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T02:41:34Z",
+      "side": 1,
+      "message": "I see.\n\nIn the future yes, I think the code for stopImpl should be in the same place as the code for startImpl() for ownership reasons. It\u0027s already obvious in this patch : startImpl() being abstract means starting is implementation-specific so we should expect stopImpl() to be. Conversely using this default stopImpl() means constraints on specifically what startImpl() has to do, but it\u0027s only obvious in the concrete stopImpl() code here. Someone touching the concrete implementation of startImpl() does not see that.\n\nIf you think this scheme of starting/stopping should be very common, I think it\u0027s fine to have a separate SocketKeepaliveBase class that implements the defaults startImpl() and stopImpl(), that implementations that want to use them could inherit from. I don\u0027t think we have a strong case to do that though, seeing as this is only going to be UDP and TCP right.\n\nAnyway, none of this has to be done immediately. If you like you can file a cleanup bug for this.",
+      "parentUuid": "fe4d9a92_74dbc86f",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 17
+      },
+      "revId": "88376925ba352fd426705898eb31bdb0c54fe1fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

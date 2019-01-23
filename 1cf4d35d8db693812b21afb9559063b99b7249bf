@@ -874,6 +874,30 @@
     },
     {
       "key": {
+        "uuid": "77949268_a4c9c8a6",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T02:41:34Z",
+      "side": 1,
+      "message": "Yes I agree. I think everything is already predicated on this anyway and it\u0027s documented, so it\u0027s probably fine. But we can think about correctness on the patch that will implement this.",
+      "parentUuid": "cab9cee5_3f36872d",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1cf4d35d8db693812b21afb9559063b99b7249bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df12223d_5c04e480",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 12
