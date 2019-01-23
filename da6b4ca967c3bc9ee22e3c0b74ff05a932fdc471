@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57dce107_aa588635",
+        "filename": "services/core/java/com/android/server/job/JobSchedulerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2019-01-23T00:15:47Z",
+      "side": 1,
+      "message": "Don\u0027t do this by special-casing as a post-processing step just for this particular message\u0027s handling path.  The way to make a change so that this happens only as part of the MSG_CHECK_JOB sequence is to move this removeMessage(MSG_CHECK_JOB) call into the MSG_CHECK_JOB case within the switch statement.  It should also be FIRST in that block, not last, so that any concurrent operations that wind up scheduling a re-check do not get dropped.\n\nSo:  instead of this edit, simply move the call to removeMessages(MSG_CHECK_JOB) upwards to be the first thing in the MSG_CHECK_JOB case, following line 1598 above, like this:\n\n  case MSG_CHECK_JOB:\n      removeMessages(MSG_CHECK_JOB);\n      if (mReportedActive) {\n          // if jobs are currently being run, queue all ready jobs for execution.\n          queueReadyJobsForExecutionLocked();\n      } else {\n          // Check the list of jobs and run some of them if we feel inclined.\n          maybeQueueReadyJobsForExecutionLocked();\n      }\n      break;\n\nand then the end of the block will execute maybeRunPendingJobsLocked(), and nothing more.",
+      "range": {
+        "startLine": 1655,
+        "startChar": 0,
+        "endLine": 1655,
+        "endChar": 80
+      },
+      "revId": "da6b4ca967c3bc9ee22e3c0b74ff05a932fdc471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
