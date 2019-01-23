@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc0e9200_157665b6",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T11:54:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6b84b7f_7e73ef9f",
+      "range": {
+        "startLine": 47,
+        "startChar": 64,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "b5e8cab4e0b34bff386ae04965783ae76ef01381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "723c1315_2e8122ed",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-23T11:45:59Z",
       "side": 1,
       "message": "Are these values correct for all keepalive types? A minimum of 10 seconds may be reasonable for UDP, but for TCP such intervals are probably too low. Not for this CL; we can always revisit this annotation when we add TCP support.",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "b5e8cab4e0b34bff386ae04965783ae76ef01381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0937e8b5_e207ba2d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T11:54:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "723c1315_2e8122ed",
       "range": {
         "startLine": 177,
         "startChar": 38,
