@@ -46,6 +46,30 @@
       "revId": "88376925ba352fd426705898eb31bdb0c54fe1fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3710876e_796bdab3",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T07:01:44Z",
+      "side": 1,
+      "message": "done, anyway I need to reupload it due to merge conflict in KA05.",
+      "parentUuid": "866d55e1_68aa6128",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 17
+      },
+      "revId": "88376925ba352fd426705898eb31bdb0c54fe1fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
