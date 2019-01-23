@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548c5c09_85fcf531",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T04:18:46Z",
+      "side": 1,
+      "message": "If column is not found, do we want to throw IIlegalArgumentException or just return it silently?\nIt looks like we have different way to handle it between this line and getXyz functions below.",
+      "range": {
+        "startLine": 248,
+        "startChar": 23,
+        "endLine": 248,
+        "endChar": 44
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccf8643_2f7a6444",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-23T04:18:46Z",
+      "side": 1,
+      "message": "Understand that we need to cut down the number of lines to search.\nBut just curious that: do we have any case that we don\u0027t have any field equals but closeness is high?",
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
