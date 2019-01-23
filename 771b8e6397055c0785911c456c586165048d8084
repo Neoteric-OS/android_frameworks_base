@@ -22,6 +22,30 @@
       "revId": "771b8e6397055c0785911c456c586165048d8084",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed0adc6_f86fecbd",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-23T23:11:58Z",
+      "side": 1,
+      "message": "This patch has already been merged into master, but I\u0027ve taken a note of this and will address it in a followup patch.",
+      "parentUuid": "44093c62_5313e49c",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 13
+      },
+      "revId": "771b8e6397055c0785911c456c586165048d8084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
