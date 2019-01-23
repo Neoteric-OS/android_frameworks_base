@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "68d870c7_ebb1401a",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-23T06:03:50Z",
+      "side": 1,
+      "message": "Suggest parenthesis around this for readability.",
+      "range": {
+        "startLine": 257,
+        "startChar": 15,
+        "endLine": 257,
+        "endChar": 40
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548c5c09_85fcf531",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 5
@@ -36,6 +59,52 @@
       "writtenOn": "2019-01-23T04:18:46Z",
       "side": 1,
       "message": "Understand that we need to cut down the number of lines to search.\nBut just curious that: do we have any case that we don\u0027t have any field equals but closeness is high?",
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16717e9_d0d4dc16",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-23T06:03:50Z",
+      "side": 1,
+      "message": "Not necessary in this commit if we would like to update it.\n\nWe may use try {} final {} to make sure it works as expectation. Like: \nhttps://cs.corp.google.com/aosp-lollipop/packages/providers/TelephonyProvider/src/com/android/providers/telephony/MmsSmsProvider.java?q\u003dMmsSmsProvider\u0026dr\u003dCSs\u0026l\u003d533\n\nHow about your thought?",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 23
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4de0f66_eda17d69",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-23T06:03:50Z",
+      "side": 1,
+      "message": "5?",
+      "range": {
+        "startLine": 388,
+        "startChar": 56,
+        "endLine": 388,
+        "endChar": 58
+      },
       "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
