@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3c192cd5_06337c62",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:58:43Z",
+      "side": 1,
+      "message": "Oh yes you\u0027re right. Done.",
+      "parentUuid": "6027619f_3cc9ff8e",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "548c5c09_85fcf531",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 5
@@ -224,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "4a34dd88_67e8f784",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:58:43Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have at least something that\u0027s valid, so 0.0.0.0 is probably not great (though for the purposes of the memory store it indeed does not matter).\n\nMade it string for the time being. It does improve readability and ease of writing, thanks.",
+      "parentUuid": "e9abc419_47e27352",
+      "range": {
+        "startLine": 227,
+        "startChar": 47,
+        "endLine": 227,
+        "endChar": 96
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b233961f_fa81f515",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 5
@@ -238,6 +286,24 @@
       "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6a23c0_b3dd82bc",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:58:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure it would help much, and someone updating this may miss it more easily.\n\nThat being said I don\u0027t feel strongly, if you do I\u0027ll introduce a local.",
+      "parentUuid": "b233961f_fa81f515",
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +327,30 @@
       "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defd885f_54f4487e",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4de0f66_eda17d69",
+      "range": {
+        "startLine": 388,
+        "startChar": 56,
+        "endLine": 388,
+        "endChar": 58
+      },
+      "revId": "10c1a6789d65a399f19023906e737826cdaa9156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
