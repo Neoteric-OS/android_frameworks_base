@@ -237,6 +237,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // connect anyway?" dialog after the user selects a network that doesn't validate.
     private static final int PROMPT_UNVALIDATED_DELAY_MS = 8 * 1000;
 
+    // How long to dismiss network notification.
+    private static final int TIMEOUT_NOTIFICATION_DELAY_MS = 20 * 1000;
+
     // Default to 30s linger time-out. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
@@ -471,6 +474,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * obj     = Intent to be launched when notification selected by user, null if !arg1.
      */
     public static final int EVENT_PROVISIONING_NOTIFICATION = 43;
+
+    /**
+     * This event can handle dismissing notification by given network id.
+     */
+    public static final int EVENT_TIMEOUT_NOTIFICATION = 44;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2476,6 +2484,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final boolean valid = (msg.arg1 == NETWORK_TEST_RESULT_VALID);
                     final boolean wasValidated = nai.lastValidated;
                     final boolean wasDefault = isDefaultNetwork(nai);
+                    if (nai.networkCapabilities.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL)
+                            && valid) {
+                        showNetworkNotification(nai, NotificationType.LOGGED_IN);
+                    }
 
                     final String redirectUrl = (msg.obj instanceof String) ? (String) msg.obj : "";
 
@@ -3229,9 +3241,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.decreaseIndent();
     }
 
-    private void showValidationNotification(NetworkAgentInfo nai, NotificationType type) {
+    private void showNetworkNotification(NetworkAgentInfo nai, NotificationType type) {
         final String action;
         switch (type) {
+            case LOGGED_IN:
+                action = Settings.ACTION_WIFI_SETTINGS;
+                mHandler.removeMessages(EVENT_TIMEOUT_NOTIFICATION);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(EVENT_TIMEOUT_NOTIFICATION,
+                        nai.network.netId, 0), TIMEOUT_NOTIFICATION_DELAY_MS);
+                break;
             case NO_INTERNET:
                 action = ConnectivityManager.ACTION_PROMPT_UNVALIDATED;
                 break;
@@ -3244,10 +3262,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         Intent intent = new Intent(action);
-        intent.setData(Uri.fromParts("netId", Integer.toString(nai.network.netId), null));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName("com.android.settings",
-                "com.android.settings.wifi.WifiNoInternetDialog");
+        if (type != NotificationType.LOGGED_IN) {
+            intent.setData(Uri.fromParts("netId", Integer.toString(nai.network.netId), null));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setClassName("com.android.settings",
+                    "com.android.settings.wifi.WifiNoInternetDialog");
+        }
 
         PendingIntent pendingIntent = PendingIntent.getActivityAsUser(
                 mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT, null, UserHandle.CURRENT);
@@ -3265,7 +3285,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 !nai.networkMisc.explicitlySelected || nai.networkMisc.acceptUnvalidated) {
             return;
         }
-        showValidationNotification(nai, NotificationType.NO_INTERNET);
+        showNetworkNotification(nai, NotificationType.NO_INTERNET);
     }
 
     private void handleNetworkUnvalidated(NetworkAgentInfo nai) {
@@ -3274,7 +3294,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) &&
             mMultinetworkPolicyTracker.shouldNotifyWifiUnvalidated()) {
-            showValidationNotification(nai, NotificationType.LOST_INTERNET);
+            showNetworkNotification(nai, NotificationType.LOST_INTERNET);
         }
     }
 
@@ -3419,6 +3439,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_DATA_SAVER_CHANGED:
                     handleRestrictBackgroundChanged(toBool(msg.arg1));
+                    break;
+                case EVENT_TIMEOUT_NOTIFICATION:
+                    mNotifier.clearNotification(msg.arg1, NotificationType.LOGGED_IN);
                     break;
             }
         }
