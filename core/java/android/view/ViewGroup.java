@@ -8754,6 +8754,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
 
         private void clear() {
             mView = null;
+            mRoot = null;
             mLocation.set(0, 0, 0, 0);
         }
     }
