@@ -20,20 +20,27 @@ import static android.system.OsConstants.SOL_SOCKET;
 import static android.system.OsConstants.SO_BINDTODEVICE;
 
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.net.NetworkUtils;
 import android.system.ErrnoException;
 import android.system.NetlinkSocketAddress;
 import android.system.Os;
 import android.system.PacketSocketAddress;
 
+import libcore.io.IoBridge;
+import libcore.io.IoUtils;
+
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.net.SocketAddress;
+import java.net.SocketException;
 
 /**
  * Collection of utilities to interact with raw sockets.
  * @hide
  */
 @SystemApi
+@TestApi
 public class SocketUtils {
     /**
      * Create a raw datagram socket that is bound to an interface.
@@ -57,17 +64,47 @@ public class SocketUtils {
     }
 
     /**
-     * Make a socket address to bind to packet sockets.
+     * Make socket address that packet sockets can bind to.
      */
     public static SocketAddress makePacketSocketAddress(short protocol, int ifIndex) {
         return new PacketSocketAddress(protocol, ifIndex);
     }
 
     /**
-     * Make a socket address to send raw packets.
+     * Make a socket address that packet socket can send packets to.
      */
     public static SocketAddress makePacketSocketAddress(int ifIndex, byte[] hwAddr) {
         return new PacketSocketAddress(ifIndex, hwAddr);
+    }
+
+    /**
+     * Bind the socket to the specified address.
+     */
+    public static void bind(FileDescriptor fd, SocketAddress address)
+            throws ErrnoException, SocketException {
+        Os.bind(fd, address);
+    }
+
+    /**
+     * Send bytes with the specified SocketAddress.
+     */
+    public static int sendTo(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount,
+            int flags, SocketAddress address) throws ErrnoException, SocketException {
+        return Os.sendto(fd, bytes, byteOffset, byteCount, flags, address);
+    }
+
+    /**
+     * @see IoBridge#closeAndSignalBlockedThreads(FileDescriptor)
+     */
+    public static void closeAndSignalBlockedThreads(FileDescriptor fd) throws IOException {
+        IoBridge.closeAndSignalBlockedThreads(fd);
+    }
+
+    /**
+     * @see IoUtils#setBlocking(FileDescriptor, boolean)
+     */
+    public static void setBlocking(FileDescriptor fd, boolean blocking) throws IOException {
+        IoUtils.setBlocking(fd, blocking);
     }
 
     private SocketUtils() {}

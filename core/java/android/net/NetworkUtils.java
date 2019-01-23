@@ -16,6 +16,8 @@
 
 package android.net;
 
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -46,16 +48,19 @@ public class NetworkUtils {
     /**
      * Attaches a socket filter that accepts DHCP packets to the given socket.
      */
-    @UnsupportedAppUsage
-    public native static void attachDhcpFilter(FileDescriptor fd) throws SocketException;
+    @SystemApi
+    @TestApi
+    public static native void attachDhcpFilter(FileDescriptor fd) throws SocketException;
 
     /**
      * Attaches a socket filter that accepts ICMPv6 router advertisements to the given socket.
      * @param fd the socket's {@link FileDescriptor}.
      * @param packetType the hardware address type, one of ARPHRD_*.
      */
-    @UnsupportedAppUsage
-    public native static void attachRaFilter(FileDescriptor fd, int packetType) throws SocketException;
+    @SystemApi
+    @TestApi
+    public static native void attachRaFilter(FileDescriptor fd, int packetType)
+            throws SocketException;
 
     /**
      * Attaches a socket filter that accepts L2-L4 signaling traffic required for IP connectivity.
@@ -65,8 +70,9 @@ public class NetworkUtils {
      * @param fd the socket's {@link FileDescriptor}.
      * @param packetType the hardware address type, one of ARPHRD_*.
      */
-    @UnsupportedAppUsage
-    public native static void attachControlPacketFilter(FileDescriptor fd, int packetType)
+    @SystemApi
+    @TestApi
+    public static native void attachControlPacketFilter(FileDescriptor fd, int packetType)
             throws SocketException;
 
     /**

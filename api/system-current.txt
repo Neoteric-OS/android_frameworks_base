@@ -3206,6 +3206,9 @@ package android.net {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
     method public static void setThreadStatsTagRestore();
+    field public static final int TAG_SYSTEM_DHCP = -192; // 0xffffff40
+    field public static final int TAG_SYSTEM_DHCP_SERVER = -186; // 0xffffff46
+    field public static final int TAG_SYSTEM_PROBE = -190; // 0xffffff42
   }
 
   public class VpnService extends android.app.Service {
@@ -3371,10 +3374,14 @@ package android.net.metrics {
 package android.net.util {
 
   public class SocketUtils {
+    method public static void bind(java.io.FileDescriptor, java.net.SocketAddress) throws android.system.ErrnoException, java.net.SocketException;
     method public static void bindSocketToInterface(java.io.FileDescriptor, String) throws android.system.ErrnoException;
+    method public static void closeAndSignalBlockedThreads(java.io.FileDescriptor) throws java.io.IOException;
     method public static java.net.SocketAddress makeNetlinkSocketAddress(int, int);
     method public static java.net.SocketAddress makePacketSocketAddress(short, int);
     method public static java.net.SocketAddress makePacketSocketAddress(int, byte[]);
+    method public static int sendTo(java.io.FileDescriptor, byte[], int, int, int, java.net.SocketAddress) throws android.system.ErrnoException, java.net.SocketException;
+    method public static void setBlocking(java.io.FileDescriptor, boolean) throws java.io.IOException;
   }
 
 }
