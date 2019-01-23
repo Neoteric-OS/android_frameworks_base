@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94ecd4d9_74526f7c",
+        "filename": "core/java/com/android/server/net/NetlinkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T15:07:22Z",
+      "side": 1,
+      "message": "InetAddresses.parseNumericAddress will throw exception if input is empty.\nHowever, although gateway is empty it still could be a valid route.",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 86
+      },
+      "revId": "9e251d46d11678e4537a4a00b3e1c398e5a2d798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
