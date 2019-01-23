@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2f19c982_fea1fed4",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T02:39:10Z",
+      "side": 1,
+      "message": "It\u0027s it\u0027s going to be used in the public Q API, then might as well do it here? That\u0027s ultimately a Lorenzo question, but we can always hide it later if there\u0027s a problem. I haven\u0027t seen any patches wit TCP in them, though.",
+      "parentUuid": "cf0e420a_1463f259",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "8155222be3a4380723339dc31e15cce445435e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1458e1c9_9daf7c87",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 15
