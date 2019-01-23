@@ -117,7 +117,18 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         int phoneId = SubscriptionManager.INVALID_PHONE_INDEX;
 
+        AppOpsManager mAppOps;
+
         boolean matchPhoneStateListenerEvent(int events) {
+            if ((events & OP_PHONE_STATE_REQUIRED_EVENT_MASK) != 0) {
+                if (mAppOps == null) {
+                    return true;
+                }
+                if (mAppOps.noteOp(AppOpsManager.OP_READ_PHONE_STATE, Binder.getCallingUid(),
+                        callingPackage) != AppOpsManager.MODE_ALLOWED) {
+                    return false;
+                }
+            }
             return (callback != null) && ((events & this.events) != 0);
         }
 
@@ -241,11 +252,22 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     static final int ENFORCE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR
                         | PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR
+                        | PhoneStateListener.LISTEN_CALL_DISCONNECT_CAUSES
                         | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST;
 
     static final int PRECISE_PHONE_STATE_PERMISSION_MASK =
-                PhoneStateListener.LISTEN_PRECISE_CALL_STATE |
-                PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE;
+            PhoneStateListener.LISTEN_PRECISE_CALL_STATE
+                    | PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE;
+
+    static final int PRIVILEGED_PHONE_STATE_PERMISSION_MASK =
+            PhoneStateListener.LISTEN_OEM_HOOK_RAW_EVENT
+                    | PhoneStateListener.LISTEN_SRVCC_STATE_CHANGED;
+
+    // For checking appops when sending out the listener events
+    static final int OP_PHONE_STATE_REQUIRED_EVENT_MASK =
+            ENFORCE_PHONE_STATE_PERMISSION_MASK
+            | PRECISE_PHONE_STATE_PERMISSION_MASK
+            | PRIVILEGED_PHONE_STATE_PERMISSION_MASK;
 
     private static final int MSG_USER_SWITCHED = 1;
     private static final int MSG_UPDATE_DEFAULT_SUB = 2;
@@ -429,6 +451,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
 
             r.context = mContext;
+            r.mAppOps = mAppOps;
             r.onSubscriptionsChangedListenerCallback = callback;
             r.callingPackage = callingPackage;
             r.callerUid = Binder.getCallingUid();
@@ -482,6 +505,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
 
             r.context = mContext;
+            r.mAppOps = mAppOps;
             r.onOpportunisticSubscriptionsChangedListenerCallback = callback;
             r.callingPackage = callingPackage;
             r.callerUid = Binder.getCallingUid();
@@ -601,6 +625,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 }
 
                 r.context = mContext;
+                r.mAppOps = mAppOps;
                 r.callback = callback;
                 r.callingPackage = callingPackage;
                 r.callerUid = Binder.getCallingUid();
@@ -1998,12 +2023,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     android.Manifest.permission.READ_PRECISE_PHONE_STATE, null);
         }
 
-        if ((events & PhoneStateListener.LISTEN_OEM_HOOK_RAW_EVENT) != 0) {
-            mContext.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, null);
-        }
-
-        if ((events & PhoneStateListener.LISTEN_SRVCC_STATE_CHANGED) != 0) {
+        if ((events & PRIVILEGED_PHONE_STATE_PERMISSION_MASK) != 0) {
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, null);
         }
@@ -2014,11 +2034,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     SubscriptionManager.INVALID_SUBSCRIPTION_ID, Binder.getCallingPid(),
                     Binder.getCallingUid(), callingPackage, "listen to "
                             + "LISTEN_PREFERRED_DATA_SUBID_CHANGE");
-        }
-
-        if ((events & PhoneStateListener.LISTEN_CALL_DISCONNECT_CAUSES) != 0) {
-            mContext.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.READ_PRECISE_PHONE_STATE, null);
         }
 
         return true;
