@@ -22,6 +22,23 @@
       "revId": "041487760731dc0714ec9d355b5e7cd9ec59f00d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2b9440_e556b1f5",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-23T19:03:20Z",
+      "side": 1,
+      "message": "Same here as on the other CL. Seems like this should belong to UiccSlotInfo.",
+      "revId": "041487760731dc0714ec9d355b5e7cd9ec59f00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
