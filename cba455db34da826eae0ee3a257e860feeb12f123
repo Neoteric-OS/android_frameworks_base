@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3872073d_a58c53c4",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T03:03:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e139da43_378c3dd1",
+      "range": {
+        "startLine": 563,
+        "startChar": 12,
+        "endLine": 563,
+        "endChar": 38
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f20c31a3_02fc4800",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80db5c41_9080e5c6",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T03:03:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20c31a3_02fc4800",
+      "range": {
+        "startLine": 787,
+        "startChar": 67,
+        "endLine": 787,
+        "endChar": 73
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a90d461c_0b6d29e8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T03:03:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "d028a898_2b845f11",
+      "range": {
+        "startLine": 802,
+        "startChar": 20,
+        "endLine": 802,
+        "endChar": 31
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6709ccf2_584964a8",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 14
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-22T15:37:21Z",
       "side": 1,
       "message": "Is it safe to call this on the binder thread? Should this be posted to mDaemonHandler as well?",
+      "range": {
+        "startLine": 808,
+        "startChar": 41,
+        "endLine": 808,
+        "endChar": 63
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c3c899_b899009f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T03:03:42Z",
+      "side": 1,
+      "message": "I think it is fine. This call only sends msg to handler of ActivityManagerService.\nAm I missing anything?\nhttps://cs.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java?type\u003dcs\u0026q\u003dnotifyCleartextNetwork\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d13259",
+      "parentUuid": "6709ccf2_584964a8",
       "range": {
         "startLine": 808,
         "startChar": 41,
