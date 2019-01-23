@@ -187,6 +187,30 @@
       "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e19494_2add902c",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T06:25:30Z",
+      "side": 1,
+      "message": "SGTM. Maybe add a comment that we don\u0027t need to post to mDaemonHandler because the only thing that notifyCleartextNetwork does is post to a handler. Doesn\u0027t need to be in this CL.",
+      "parentUuid": "f1c3c899_b899009f",
+      "range": {
+        "startLine": 808,
+        "startChar": 41,
+        "endLine": 808,
+        "endChar": 63
+      },
+      "revId": "cba455db34da826eae0ee3a257e860feeb12f123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
