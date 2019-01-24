@@ -35,7 +35,8 @@ public class AndroidHidlUpdater extends PackageSharedLibraryUpdater {
     @Override
     public void updatePackage(Package pkg) {
         // This was the default <= P and is maintained for backwards compatibility.
-        if (pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P) {
+        if (pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P
+                && pkg.applicationInfo.isSignedWithPlatformKey()) {
             prefixRequiredLibrary(pkg, ANDROID_HIDL_BASE);
             prefixRequiredLibrary(pkg, ANDROID_HIDL_MANAGER);
         } else {

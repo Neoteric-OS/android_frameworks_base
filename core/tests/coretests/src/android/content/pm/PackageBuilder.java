@@ -28,6 +28,8 @@ import java.util.List;
  */
 class PackageBuilder {
 
+    private int mPrivateFlags;
+
     private int mTargetSdkVersion = Build.VERSION_CODES.CUR_DEVELOPMENT;
 
     private ArrayList<String> mRequiredLibraries;
@@ -40,6 +42,7 @@ class PackageBuilder {
 
     public PackageParser.Package build() {
         PackageParser.Package pkg = new PackageParser.Package("org.package.name");
+        pkg.applicationInfo.privateFlags |= mPrivateFlags;
         pkg.applicationInfo.targetSdkVersion = mTargetSdkVersion;
         pkg.usesLibraries = mRequiredLibraries;
         pkg.usesOptionalLibraries = mOptionalLibraries;
@@ -63,6 +66,11 @@ class PackageBuilder {
 
     PackageBuilder optionalLibraries(String... names) {
         this.mOptionalLibraries = arrayListOrNull(names);
+        return this;
+    }
+
+    PackageBuilder withPlatformSignature() {
+        this.mPrivateFlags |= ApplicationInfo.PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY;
         return this;
     }
 
