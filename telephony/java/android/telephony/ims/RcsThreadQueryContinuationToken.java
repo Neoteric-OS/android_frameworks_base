@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,67 @@
 package android.telephony.ims;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * A continuation token to provide for {@link RcsMessageStore#getRcsThreads}. Use this token to
- * break large queries into manageable chunks
- * @hide - TODO make this public
+ * break large queries into manageable chunks.
+ * @hide - TODO make this public. This class should not have any public methods however.
  */
-public class RcsThreadQueryContinuationToken implements Parcelable {
+public class RcsThreadQueryContinuationToken implements RcsQueryContinuationToken {
+    /**
+     * @hide
+     */
+    public static final String THREAD_QUERY_CONTINUATION_TOKEN = "thread_query_continuation_token";
+
+    // The raw query that was executed on the provider
+    private final String mRawQuery;
+    // The number of RcsThreads that should be included in the result query
+    private final int mLimit;
+    // The offset to continue the next batch of RcsThreads from
+    private int mOffset;
+
+    /**
+     * Constructor for RcsProvider to create new instances of this token.
+     * @hide
+     */
+    public RcsThreadQueryContinuationToken(String rawQuery, int limit, int offset) {
+        mRawQuery = rawQuery;
+        mLimit = limit;
+        mOffset = offset;
+    }
+
+    /**
+     * @hide
+     */
+    public String getRawQuery() {
+        return mRawQuery;
+    }
+
+    /**
+     * @hide
+     */
+    public int getOffset() {
+        return mOffset;
+    }
+
+    /**
+     * @hide
+     */
+    public void incrementOffset() {
+        mOffset += mLimit;
+    }
+
+    /**
+     * @hide
+     */
+    public String getKey() {
+        return THREAD_QUERY_CONTINUATION_TOKEN;
+    }
+
     protected RcsThreadQueryContinuationToken(Parcel in) {
+        mRawQuery = in.readString();
+        mLimit = in.readInt();
+        mOffset = in.readInt();
     }
 
     public static final Creator<RcsThreadQueryContinuationToken> CREATOR =
@@ -48,5 +100,8 @@ public class RcsThreadQueryContinuationToken implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mRawQuery);
+        dest.writeInt(mLimit);
+        dest.writeInt(mOffset);
     }
 }
