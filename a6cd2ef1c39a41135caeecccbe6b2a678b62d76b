@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3467a139_b5186f8f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3157,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2019-01-24T21:53:30Z",
+      "side": 1,
+      "message": "how about return an empty list so the caller can avoid the null pointer check?",
+      "range": {
+        "startLine": 3155,
+        "startChar": 0,
+        "endLine": 3157,
+        "endChar": 13
+      },
+      "revId": "a6cd2ef1c39a41135caeecccbe6b2a678b62d76b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
