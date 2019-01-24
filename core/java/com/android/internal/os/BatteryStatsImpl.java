@@ -87,12 +87,13 @@ import android.view.Display;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.location.gnssmetrics.GnssMetrics;
-import com.android.internal.net.NetworkStatsFactory;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.JournaledFile;
 import com.android.internal.util.XmlUtils;
+import com.android.server.LocalServices;
+import com.android.server.net.NetworkStatsManagerInternal;
 
 import libcore.util.EmptyArray;
 
@@ -11083,7 +11084,6 @@ public class BatteryStatsImpl extends BatteryStats {
         }
     }
 
-    private final NetworkStatsFactory mNetworkStatsFactory = new NetworkStatsFactory();
     private final Pools.Pool<NetworkStats> mNetworkStatsPool = new Pools.SynchronizedPool<>(6);
 
     private final Object mWifiNetworkLock = new Object();
@@ -11105,8 +11105,10 @@ public class BatteryStatsImpl extends BatteryStats {
     private NetworkStats readNetworkStatsLocked(String[] ifaces) {
         try {
             if (!ArrayUtils.isEmpty(ifaces)) {
-                return mNetworkStatsFactory.readNetworkStatsDetail(NetworkStats.UID_ALL, ifaces,
-                        NetworkStats.TAG_NONE, mNetworkStatsPool.acquire());
+                NetworkStatsManagerInternal networkStatsService
+                    = LocalServices.getService(NetworkStatsManagerInternal.class);
+                return networkStatsService.getRealtimeNetworkUidStats(NetworkStats.UID_ALL,
+                        ifaces, NetworkStats.TAG_NONE);
             }
         } catch (IOException e) {
             Slog.e(TAG, "failed to read network stats for ifaces: " + Arrays.toString(ifaces));
