@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ab1f28_d698e6a0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1358617
+      },
+      "writtenOn": "2019-01-24T20:01:39Z",
+      "side": 1,
+      "message": "Why do we need this else block? Addresses still get assigned below even if address is incorrect.",
+      "range": {
+        "startLine": 610,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 77
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431460c6_6c99962f",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1358617
+      },
+      "writtenOn": "2019-01-24T20:01:39Z",
+      "side": 1,
+      "message": "Why was the check for parameterId \u003d\u003d ORINGINATING_ADDRESS before assigning mOriginatingAddress removed? It looks like mOriginatingAddress will always be set even if we are parsing a destination address.",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 51
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
