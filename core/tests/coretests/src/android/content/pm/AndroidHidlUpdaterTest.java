@@ -36,9 +36,10 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
     private static final String OTHER_LIBRARY = "other.library";
 
     @Test
-    public void targeted_at_P() {
+    public void platform_targeted_at_P() {
         PackageBuilder before = builder()
-                .targetSdkVersion(Build.VERSION_CODES.P);
+                .targetSdkVersion(Build.VERSION_CODES.P)
+                .withPlatformSignature();
 
         // Should add both HIDL libraries
         PackageBuilder after = builder()
@@ -49,10 +50,20 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
     }
 
     @Test
-    public void targeted_at_P_not_empty_usesLibraries() {
+    public void targeted_at_P() {
+        PackageBuilder before = builder()
+                .targetSdkVersion(Build.VERSION_CODES.P);
+
+        // Dependency not added (because not vendor)
+        checkBackwardsCompatibility(before, before);
+    }
+
+    @Test
+    public void platform_targeted_at_P_not_empty_usesLibraries() {
         PackageBuilder before = builder()
                 .targetSdkVersion(Build.VERSION_CODES.P)
-                .requiredLibraries(OTHER_LIBRARY);
+                .requiredLibraries(OTHER_LIBRARY)
+                .withPlatformSignature();
 
         // The hidl jars should be added at the start of the list because it
         // is not on the bootclasspath and the package targets pre-P.
@@ -64,10 +75,21 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
     }
 
     @Test
-    public void targeted_at_P_in_usesLibraries() {
+    public void targeted_at_P_not_empty_usesLibraries() {
         PackageBuilder before = builder()
                 .targetSdkVersion(Build.VERSION_CODES.P)
-                .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE);
+                .requiredLibraries(OTHER_LIBRARY);
+
+        // Dependency not added (because not vendor)
+        checkBackwardsCompatibility(before, before);
+    }
+
+    @Test
+    public void platform_targeted_at_P_in_usesLibraries() {
+        PackageBuilder before = builder()
+                .targetSdkVersion(Build.VERSION_CODES.P)
+                .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE)
+                .withPlatformSignature();
 
         // No change is required because although the HIDL libraries has been removed from
         // the bootclasspath the package explicitly requests it.
@@ -75,14 +97,25 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
     }
 
     @Test
+    public void targeted_at_P_in_usesLibraries() {
+        PackageBuilder before = builder()
+                .targetSdkVersion(Build.VERSION_CODES.P)
+                .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE);
+
+        // Dependency is removed, hidl Java libs are not available (because not vendor).
+        PackageBuilder after = builder()
+                .targetSdkVersion(Build.VERSION_CODES.P);
+
+        checkBackwardsCompatibility(before, after);
+    }
+
+    @Test
     public void in_usesLibraries() {
         PackageBuilder before = builder().requiredLibraries(ANDROID_HIDL_BASE);
 
-        // Dependency is removed, it is not available.
+        // Dependency is removed, hidl Java libs are not available.
         PackageBuilder after = builder();
 
-        // No change is required because the package explicitly requests the HIDL libraries
-        // and is targeted at the current version so does not need backwards compatibility.
         checkBackwardsCompatibility(before, after);
     }
 
@@ -90,11 +123,9 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
     public void in_usesOptionalLibraries() {
         PackageBuilder before = builder().optionalLibraries(ANDROID_HIDL_BASE);
 
-        // Dependency is removed, it is not available.
+        // Dependency is removed, hidl Java libs are not available.
         PackageBuilder after = builder();
 
-        // No change is required because the package explicitly requests the HIDL libraries
-        // and is targeted at the current version so does not need backwards compatibility.
         checkBackwardsCompatibility(before, after);
     }
 
