@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "8b08e75c_1ca060d4",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/FusionEngine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-24T06:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d531543_2ff8bb5e",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "90547f65ad29323db713057610fac929f2be9309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c55a79d_499ae938",
         "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationProvider.java",
         "patchSetId": 1
@@ -92,6 +116,24 @@
       "revId": "90547f65ad29323db713057610fac929f2be9309",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3831c7bc_ffcaeaac",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-24T06:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c55a79d_499ae938",
+      "revId": "90547f65ad29323db713057610fac929f2be9309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "1b7ef637_a62abde0",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-24T06:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e855ddd_9a74d627",
+      "range": {
+        "startLine": 96,
+        "startChar": 20,
+        "endLine": 96,
+        "endChar": 21
+      },
+      "revId": "90547f65ad29323db713057610fac929f2be9309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80c6a18c_95d68ff7",
         "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationService.java",
         "patchSetId": 1
@@ -138,6 +204,30 @@
       "revId": "90547f65ad29323db713057610fac929f2be9309",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3de5e86_a7551a1b",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-24T06:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c6a18c_95d68ff7",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "90547f65ad29323db713057610fac929f2be9309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
