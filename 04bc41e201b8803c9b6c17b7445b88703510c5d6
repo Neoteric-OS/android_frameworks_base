@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3a7a1ca_e4b01b86",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 5372,
+      "author": {
+        "id": 1358617
+      },
+      "writtenOn": "2019-01-24T20:10:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91fc8a13_e469e668",
+      "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb93981_7645a6d0",
         "filename": "telephony/java/android/telephony/SmsManager.java",
         "patchSetId": 2
@@ -101,6 +119,30 @@
       "writtenOn": "2019-01-14T19:15:44Z",
       "side": 1,
       "message": "From an API standpoint, is there a way to know how much is already stored on the card?  I\u0027m curious what the use-case is for knowing the capacity?",
+      "range": {
+        "startLine": 1393,
+        "startChar": 15,
+        "endLine": 1393,
+        "endChar": 34
+      },
+      "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2826fa5_d39117cb",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1358617
+      },
+      "writtenOn": "2019-01-24T20:10:53Z",
+      "side": 1,
+      "message": "Currently there is no API that tells what the current storage amount is. The use-case for knowing the capacity is for displaying an error on the UE once the storage memory capacity is full as per one of the operators.",
+      "parentUuid": "78ea5599_ed57a5f9",
       "range": {
         "startLine": 1393,
         "startChar": 15,
