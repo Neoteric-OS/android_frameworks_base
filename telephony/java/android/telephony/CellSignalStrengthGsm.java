@@ -62,7 +62,11 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     /** @hide */
     public CellSignalStrengthGsm(android.hardware.radio.V1_0.GsmSignalStrength gsm) {
         // Convert from HAL values as part of construction.
-        this(getRssiDbmFromAsu(gsm.signalStrength), gsm.bitErrorRate, gsm.timingAdvance);
+        this(getRssiDbmFromAsu(gsm.signalStrength), gsm.bitErrorRate, 0, 7, gsm.timingAdvance);
+
+        if (mRssi == CellInfo.UNAVAILABLE) {
+            setDefaultValues();
+        }
     }
 
     /** @hide */
