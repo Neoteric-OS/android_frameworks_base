@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a4ada2e_c1249452",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2019-01-25T01:47:41Z",
+      "side": 1,
+      "message": "just one debugging log from AOSP used to arrow down incorrect address type",
+      "parentUuid": "c5ab1f28_d698e6a0",
+      "range": {
+        "startLine": 610,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 77
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431460c6_6c99962f",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14323643_2a6fa881",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2019-01-25T01:47:41Z",
+      "side": 1,
+      "message": "for 3gpp2, mOriginatingAddress reflects the sender\u0027s address, so no matter what parameterId is.\nto have compatibility with 3GPP, here support for API getRecipientAddress(), because recipient address reflects the sender\u0027s address for MT 3GPP SMS.",
+      "parentUuid": "431460c6_6c99962f",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 51
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
