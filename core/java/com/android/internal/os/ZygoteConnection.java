@@ -26,6 +26,7 @@ import static android.system.OsConstants.STDOUT_FILENO;
 import static com.android.internal.os.ZygoteConnectionConstants.CONNECTION_TIMEOUT_MILLIS;
 import static com.android.internal.os.ZygoteConnectionConstants.WRAPPED_PID_TIMEOUT_MILLIS;
 
+import android.metrics.LogMaker;
 import android.net.Credentials;
 import android.net.LocalSocket;
 import android.os.Process;
@@ -34,6 +35,9 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructPollfd;
 import android.util.Log;
+
+import com.android.internal.logging.MetricsLogger;
+import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 import dalvik.system.VMRuntime;
 
@@ -314,6 +318,32 @@ class ZygoteConnection {
     private void handleHiddenApiAccessLogSampleRate(int percent) {
         try {
             ZygoteInit.setHiddenApiAccessLogSampleRate(percent);
+            ZygoteInit.setHiddenApiUsageLogger(new VMRuntime.HiddenApiUsageLogger() {
+                private final MetricsLogger mMetricsLogger = new MetricsLogger();
+
+                private void hiddenApiUsed(String packageName, String signature,
+                        int accessMethod, boolean accessDenied) {
+                    LogMaker logMaker = new LogMaker(MetricsEvent.ACTION_HIDDEN_API_ACCESSED)
+                            .setPackageName(packageName)
+                            .addTaggedData(MetricsEvent.FIELD_HIDDEN_API_SIGNATURE, signature)
+                            .addTaggedData(MetricsEvent.FIELD_HIDDEN_API_ACCESS_METHOD,
+                                accessMethod);
+                    if (accessDenied) {
+                        logMaker.addTaggedData(MetricsEvent.FIELD_HIDDEN_API_ACCESS_DENIED, 1);
+                    }
+                    mMetricsLogger.write(logMaker);
+                }
+                public void hiddenApiUsedWithJNI(String packageName, String signature,
+                        boolean accessDenied) {
+                    hiddenApiUsed(packageName, signature, MetricsEvent.ACCESS_METHOD_JNI,
+                            accessDenied);
+                }
+                public void hiddenApiUsedWithReflection(String packageName,
+                        String signature, boolean accessDenied) {
+                    hiddenApiUsed(packageName, signature, MetricsEvent.ACCESS_METHOD_REFLECTION,
+                                accessDenied);
+                }
+            });
             mSocketOutStream.writeInt(0);
         } catch (IOException ioe) {
             throw new IllegalStateException("Error writing to command socket", ioe);

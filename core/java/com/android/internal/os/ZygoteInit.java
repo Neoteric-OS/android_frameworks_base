@@ -532,6 +532,10 @@ public class ZygoteInit {
         VMRuntime.getRuntime().setHiddenApiAccessLogSamplingRate(percent);
     }
 
+    public static void setHiddenApiUsageLogger(VMRuntime.HiddenApiUsageLogger logger) {
+        VMRuntime.getRuntime().setHiddenApiUsageLogger(logger);
+    }
+
     /**
      * Creates a PathClassLoader for the given class path that is associated with a shared
      * namespace, i.e., this classloader can access platform-private native libraries. The
