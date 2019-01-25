@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c889403_36c8c9ba",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3133,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-25T20:13:10Z",
+      "side": 1,
+      "message": "currently active/enabled? \u0027inserted\u0027 anyway does not sound right for embedded eSIMs.",
+      "range": {
+        "startLine": 3133,
+        "startChar": 30,
+        "endLine": 3133,
+        "endChar": 48
+      },
+      "revId": "1331226805169520c024ecf5178844bd874e4441",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc76d78_43c45371",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3144,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-25T20:13:10Z",
+      "side": 1,
+      "message": "What about an eSIM with no profiles on it?",
+      "range": {
+        "startLine": 3142,
+        "startChar": 7,
+        "endLine": 3144,
+        "endChar": 26
+      },
+      "revId": "1331226805169520c024ecf5178844bd874e4441",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
