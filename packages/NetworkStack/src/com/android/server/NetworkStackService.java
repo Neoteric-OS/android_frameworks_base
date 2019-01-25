@@ -40,7 +40,7 @@ import android.net.dhcp.DhcpServingParams;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
-import android.net.ip.IpClient;
+import android.net.networkstack.IpClient;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.SharedLog;
 import android.os.IBinder;

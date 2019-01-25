@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net.ip;
+package android.net.networkstack;
 
 import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
 import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
@@ -37,7 +37,10 @@ import android.net.RouteInfo;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
+import android.net.ip.ConnectivityPacketTracker;
 import android.net.ip.IIpClientCallbacks;
+import android.net.ip.InterfaceController;
+import android.net.ip.IpReachabilityMonitor;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.shared.InitialConfiguration;
