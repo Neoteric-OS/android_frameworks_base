@@ -10998,7 +10998,8 @@ public class PackageManagerService extends IPackageManager.Stub
         if (PLATFORM_PACKAGE_NAME.equals(pkg.packageName) ||
                 (platformPkg != null && compareSignatures(
                         platformPkg.mSigningDetails.signatures,
-                        pkg.mSigningDetails.signatures) == PackageManager.SIGNATURE_MATCH)) {
+                        pkg.mSigningDetails.signatures) == PackageManager.SIGNATURE_MATCH) ||
+                (platformPkg != null && pkg.mSigningDetails.hasAncestor(platformPkg.mSigningDetails))) {
             pkg.applicationInfo.privateFlags |=
                 ApplicationInfo.PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY;
         }
