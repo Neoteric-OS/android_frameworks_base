@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd9456f_12d9529e",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-25T00:15:45Z",
+      "side": 1,
+      "message": "Having onNetworkAttributesRetrieved(functor, latch) to open the latch in that method might be less error-prone, but this could also be changed later.",
+      "range": {
+        "startLine": 319,
+        "startChar": 28,
+        "endLine": 319,
+        "endChar": 43
+      },
+      "revId": "f735efc83331c8f7ab76a0114c94ffb6d25377c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
