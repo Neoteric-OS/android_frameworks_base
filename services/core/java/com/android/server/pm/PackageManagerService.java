@@ -24505,7 +24505,7 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
             PackageParser.Package pkg;
             synchronized (mPackages) {
                 pkg = mPackages.get(packageName);
-                if (pkg == null) {
+                if (pkg == null || isPrivilegedApp(pkg)) {
                     return false;
                 }
             }
