@@ -93,6 +93,30 @@
       "revId": "b5e8cab4e0b34bff386ae04965783ae76ef01381",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da2d15a_986ec355",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-25T07:55:12Z",
+      "side": 1,
+      "message": "2-3 hours seems like reasonable upper limit.  But I guess 1 hour works too.\n(2-ish because I think I\u0027ve seen firewalls with 2 hour timeouts - perhaps linux default?)\n\nMinimum should perhaps be all the way down to 5s? Certainly not any lower.  I guess 10s works too... Probably does need to be \u003c15s due to existence of such timeouts in firewalls I\u0027m aware of (for UDP).\n\nTimeouts could also be per-protocol?  But not sure if that\u0027s worth the bother.\n\nIf I had to choose something, I\u0027d perhaps go with 8s..3h or 12s..2h.  Depending on how aggressive we want to be.",
+      "parentUuid": "0937e8b5_e207ba2d",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "b5e8cab4e0b34bff386ae04965783ae76ef01381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
