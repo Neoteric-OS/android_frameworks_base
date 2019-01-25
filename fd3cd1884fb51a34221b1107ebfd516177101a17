@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "543002f9_3dc4c03b",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-25T01:59:43Z",
+      "side": 1,
+      "message": "Style : style guide says to avoid multiple blank lines in succession.",
+      "revId": "fd3cd1884fb51a34221b1107ebfd516177101a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70797c06_c18bf6b7",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-25T01:59:43Z",
+      "side": 1,
+      "message": "I am not sure I understand this wording. Let me try and rephrase :\n\n// Note that if a client sends a query with more than 1 record in the question section but\n// the remote dns server does not support this, it may not answer at all yielding a timeout.\n\n\nIs this a fair understanding of what you mean here ? If not I think you need to reword.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "fd3cd1884fb51a34221b1107ebfd516177101a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
