@@ -289,7 +289,7 @@ public final class TvTrackInfo implements Parcelable {
         if (!TextUtils.equals(mId, obj.mId) || mType != obj.mType
                 || !TextUtils.equals(mLanguage, obj.mLanguage)
                 || !TextUtils.equals(mDescription, obj.mDescription)
-                || !Objects.equals(mExtra, obj.mExtra)) {
+                || mEncrypted != obj.mEncrypted) {
             return false;
         }
 
@@ -311,7 +311,16 @@ public final class TvTrackInfo implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mId);
+        int result = Objects.hash(mId, mType, mLanguage, mDescription);
+
+        if (mType == TYPE_AUDIO) {
+            result = Objects.hash(result, mAudioChannelCount, mAudioSampleRate);
+        } else if (mType == TYPE_VIDEO) {
+            result = Objects.hash(result, mVideoWidth, mVideoHeight, mVideoFrameRate,
+                    mVideoPixelAspectRatio);
+        }
+
+        return result;
     }
 
     public static final Parcelable.Creator<TvTrackInfo> CREATOR =
