@@ -480,6 +480,10 @@ public class ArtManagerService extends android.content.pm.dex.IArtManager.Stub {
             final String apkPath = pkg.baseCodePath;
             final ApplicationInfo appInfo = pkg.applicationInfo;
             final String outDexFile = appInfo.dataDir + "/code_cache/compiled_view.dex";
+            if (appInfo.isPrivilegedApp()) {
+                // Do not compile layouts for privileged apps since they only load trusted code.
+                return false;
+            }
             Log.i("PackageManager", "Compiling layouts in " + packageName + " (" + apkPath +
                     ") to " + outDexFile);
             long callingId = Binder.clearCallingIdentity();
