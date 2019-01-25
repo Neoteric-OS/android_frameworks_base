@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net.ip;
+package android.net.networkstack;
 
 import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
 
