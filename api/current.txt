@@ -26765,6 +26765,7 @@ package android.media.tv {
     method public int getAudioChannelCount();
     method public int getAudioSampleRate();
     method public CharSequence getDescription();
+    method public String getEncoding();
     method public android.os.Bundle getExtra();
     method public String getId();
     method public String getLanguage();
@@ -26787,6 +26788,7 @@ package android.media.tv {
     method public android.media.tv.TvTrackInfo.Builder setAudioChannelCount(int);
     method public android.media.tv.TvTrackInfo.Builder setAudioSampleRate(int);
     method public android.media.tv.TvTrackInfo.Builder setDescription(CharSequence);
+    method public android.media.tv.TvTrackInfo.Builder setEncoding(String);
     method public android.media.tv.TvTrackInfo.Builder setExtra(android.os.Bundle);
     method public android.media.tv.TvTrackInfo.Builder setLanguage(String);
     method public android.media.tv.TvTrackInfo.Builder setVideoActiveFormatDescription(byte);

@@ -58,6 +58,7 @@ public final class TvTrackInfo implements Parcelable {
     private final String mId;
     private final String mLanguage;
     private final CharSequence mDescription;
+    private final String mEncoding;
     private final int mAudioChannelCount;
     private final int mAudioSampleRate;
     private final int mVideoWidth;
@@ -69,13 +70,14 @@ public final class TvTrackInfo implements Parcelable {
     private final Bundle mExtra;
 
     private TvTrackInfo(int type, String id, String language, CharSequence description,
-            int audioChannelCount, int audioSampleRate, int videoWidth, int videoHeight,
-            float videoFrameRate, float videoPixelAspectRatio, byte videoActiveFormatDescription,
-            Bundle extra) {
+            String encoding, int audioChannelCount, int audioSampleRate, int videoWidth,
+            int videoHeight, float videoFrameRate, float videoPixelAspectRatio,
+            byte videoActiveFormatDescription, Bundle extra) {
         mType = type;
         mId = id;
         mLanguage = language;
         mDescription = description;
+        mEncoding = encoding;
         mAudioChannelCount = audioChannelCount;
         mAudioSampleRate = audioSampleRate;
         mVideoWidth = videoWidth;
@@ -91,6 +93,7 @@ public final class TvTrackInfo implements Parcelable {
         mId = in.readString();
         mLanguage = in.readString();
         mDescription = in.readString();
+        mEncoding = in.readString();
         mAudioChannelCount = in.readInt();
         mAudioSampleRate = in.readInt();
         mVideoWidth = in.readInt();
@@ -130,6 +133,19 @@ public final class TvTrackInfo implements Parcelable {
      */
     public final CharSequence getDescription() {
         return mDescription;
+    }
+
+    /**
+     * Returns the codec in the form of mime type. If the encoding is unknown or could not be
+     * determined, the corresponding value will be {@code null}.
+     *
+     * <p>For example of broadcast, codec information may be referred to broadcast standard (e.g.
+     * Component Descriptor of ETSI EN 300 468). In the case that track type is subtitle, mime type
+     * could be defined in broadcast standard (e.g. "text/dvb.subtitle" or "text/dvb.teletext" in
+     * ETSI TS 102 812 V1.3.1 section 7.6).
+     */
+    public String getEncoding() {
+        return mEncoding;
     }
 
     /**
@@ -248,6 +264,7 @@ public final class TvTrackInfo implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mLanguage);
         dest.writeString(mDescription != null ? mDescription.toString() : null);
+        dest.writeString(mEncoding);
         dest.writeInt(mAudioChannelCount);
         dest.writeInt(mAudioSampleRate);
         dest.writeInt(mVideoWidth);
@@ -273,6 +290,7 @@ public final class TvTrackInfo implements Parcelable {
                 && mType == obj.mType
                 && TextUtils.equals(mLanguage, obj.mLanguage)
                 && TextUtils.equals(mDescription, obj.mDescription)
+                && TextUtils.equals(mEncoding, obj.mEncoding)
                 && Objects.equals(mExtra, obj.mExtra)
                 && (mType == TYPE_AUDIO
                         ? mAudioChannelCount == obj.mAudioChannelCount
@@ -310,6 +328,7 @@ public final class TvTrackInfo implements Parcelable {
         private final int mType;
         private String mLanguage;
         private CharSequence mDescription;
+        private String mEncoding;
         private int mAudioChannelCount;
         private int mAudioSampleRate;
         private int mVideoWidth;
@@ -357,6 +376,21 @@ public final class TvTrackInfo implements Parcelable {
          */
         public final Builder setDescription(CharSequence description) {
             mDescription = description;
+            return this;
+        }
+
+        /**
+         * Sets the encoding of the track.
+         *
+         * <p>For example of broadcast, codec information may be referred to broadcast standard
+         * (e.g. Component Descriptor of ETSI EN 300 468). In the case that track type is subtitle,
+         * mime type could be defined in broadcast standard (e.g. "text/dvb.subtitle" or
+         * "text/dvb.teletext" in ETSI TS 102 812 V1.3.1 section 7.6).
+         *
+         * @param encoding The encoding of the track in the form of mime type.
+         */
+        public Builder setEncoding(String encoding) {
+            mEncoding = encoding;
             return this;
         }
 
@@ -490,9 +524,9 @@ public final class TvTrackInfo implements Parcelable {
          * @return The new {@link TvTrackInfo} instance
          */
         public TvTrackInfo build() {
-            return new TvTrackInfo(mType, mId, mLanguage, mDescription, mAudioChannelCount,
-                    mAudioSampleRate, mVideoWidth, mVideoHeight, mVideoFrameRate,
-                    mVideoPixelAspectRatio, mVideoActiveFormatDescription, mExtra);
+            return new TvTrackInfo(mType, mId, mLanguage, mDescription,  mEncoding,
+                    mAudioChannelCount, mAudioSampleRate, mVideoWidth, mVideoHeight,
+                    mVideoFrameRate, mVideoPixelAspectRatio, mVideoActiveFormatDescription, mExtra);
         }
     }
 }
