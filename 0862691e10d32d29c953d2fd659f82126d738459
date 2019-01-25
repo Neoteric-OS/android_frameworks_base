@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dce3dc6_ffa7ac02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-25T10:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ce3d16_f563d890",
+      "range": {
+        "startLine": 13,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252cabda_ca56adc0",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 10
@@ -41,6 +65,53 @@
         "startChar": 82,
         "endLine": 172,
         "endChar": 84
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e9a6fc_13ad79dd",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-25T10:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252cabda_ca56adc0",
+      "range": {
+        "startLine": 172,
+        "startChar": 82,
+        "endLine": 172,
+        "endChar": 84
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0a192c2_ab54f654",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-25T10:15:48Z",
+      "side": 1,
+      "message": "Do we want to rename this to SOCKET_KEEPALIVE_OFFLOAD?\nIt looks like we\u0027ll need to modify across several gits.\nhttps://cs.corp.google.com/search/?q\u003dPACKET_KEEPALIVE_OFFLOAD\u0026sq\u003dpackage:aosp-master\u0026type\u003dcs",
+      "range": {
+        "startLine": 66,
+        "startChar": 72,
+        "endLine": 66,
+        "endChar": 96
       },
       "revId": "0862691e10d32d29c953d2fd659f82126d738459",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
