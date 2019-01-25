@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "254bfc7b_8624d3d8",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-25T06:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "543002f9_3dc4c03b",
+      "revId": "fd3cd1884fb51a34221b1107ebfd516177101a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70797c06_c18bf6b7",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-25T01:59:43Z",
       "side": 1,
       "message": "I am not sure I understand this wording. Let me try and rephrase :\n\n// Note that if a client sends a query with more than 1 record in the question section but\n// the remote dns server does not support this, it may not answer at all yielding a timeout.\n\n\nIs this a fair understanding of what you mean here ? If not I think you need to reword.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "fd3cd1884fb51a34221b1107ebfd516177101a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1718624b_718b530f",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-25T06:14:12Z",
+      "side": 1,
+      "message": "Server will answer it only for first question. And our native resolver will continue retry and fail at the last.\nThen our native resolver will return timeout.",
+      "parentUuid": "70797c06_c18bf6b7",
       "range": {
         "startLine": 88,
         "startChar": 7,
