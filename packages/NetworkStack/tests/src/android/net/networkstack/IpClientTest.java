@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net.ip;
+package android.net.networkstack;
 
 import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
 
@@ -43,6 +43,7 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.RouteInfo;
+import android.net.ip.IIpClientCallbacks;
 import android.net.shared.InitialConfiguration;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.util.InterfaceParams;
