@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f43b2669_693c750b",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3021,
+      "author": {
+        "id": 1129710
+      },
+      "writtenOn": "2019-01-26T16:19:21Z",
+      "side": 1,
+      "message": "same line 3176 ，should be (0, null)",
+      "parentUuid": "9eb133c3_4d88df8b",
+      "range": {
+        "startLine": 3021,
+        "startChar": 74,
+        "endLine": 3021,
+        "endChar": 78
+      },
+      "revId": "56c7d69dd7bba589c43d258e96ef1dafd1645bce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93f7372_1b021014",
         "filename": "services/core/java/com/android/server/AlarmManagerService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "56c7d69dd7bba589c43d258e96ef1dafd1645bce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35e00cb_25e02606",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3176,
+      "author": {
+        "id": 1129710
+      },
+      "writtenOn": "2019-01-26T16:19:21Z",
+      "side": 1,
+      "message": "I think it should be (1, null), the line 2743 is use （msg.arg1 \u003d\u003d 1）\nthe obtainMessage func is defined：\npublic final Message obtainMessage(int what, int arg1, int arg2)",
+      "parentUuid": "b93f7372_1b021014",
+      "range": {
+        "startLine": 3176,
+        "startChar": 77,
+        "endLine": 3176,
+        "endChar": 78
+      },
+      "revId": "56c7d69dd7bba589c43d258e96ef1dafd1645bce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
