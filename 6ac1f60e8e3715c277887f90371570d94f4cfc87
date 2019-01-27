@@ -46,6 +46,30 @@
       "revId": "6ac1f60e8e3715c277887f90371570d94f4cfc87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70ab7c43_0b1d9a2b",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1437350
+      },
+      "writtenOn": "2019-01-27T05:46:38Z",
+      "side": 1,
+      "message": "We\u0027ve met the same issue, hope can get official patch soon.",
+      "parentUuid": "2c950b68_5cca792a",
+      "range": {
+        "startLine": 1283,
+        "startChar": 0,
+        "endLine": 1283,
+        "endChar": 48
+      },
+      "revId": "6ac1f60e8e3715c277887f90371570d94f4cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
