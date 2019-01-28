@@ -486,6 +486,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public static final int EVENT_TIMEOUT_NOTIFICATION = 44;
 
     /**
+     * This event can handle DNS resolver log switch
+     */
+    public static final int EVENT_CONFIGURE_DNS_RESOLVER_LOG = 45;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -1085,6 +1090,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mSettingsObserver.observe(
                 Settings.Global.getUriFor(Settings.Global.WIFI_ALWAYS_REQUESTED),
                 EVENT_CONFIGURE_ALWAYS_ON_NETWORKS);
+
+        // Watch for whether or not to enable DNS resolver.
+        mSettingsObserver.observe(
+                Settings.Global.getUriFor(Settings.Global.DNS_RESOLVER_LOG),
+                EVENT_CONFIGURE_DNS_RESOLVER_LOG);
     }
 
     private void registerPrivateDnsSettingsCallbacks() {
@@ -3563,6 +3573,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_TIMEOUT_NOTIFICATION:
                     mNotifier.clearNotification(msg.arg1, NotificationType.LOGGED_IN);
+                    break;
+                case EVENT_CONFIGURE_DNS_RESOLVER_LOG:
+                    handleDnsResolverLogSettingChanged();
                     break;
             }
         }
@@ -6694,4 +6707,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return vpn != null && vpn.getLockdown();
         }
     }
+
+    private void handleDnsResolverLogSettingChanged() {
+        String logLevel = Settings.Global.getString(mContext.getContentResolver(),
+                Settings.Global.DNS_RESOLVER_LOG);
+        try {
+            mNetd.setDnsResolverLog(logLevel);
+        } catch (Exception e) {
+            loge("Exception in setDnsResolverLog: " + e);
+        }
+    }
+
 }

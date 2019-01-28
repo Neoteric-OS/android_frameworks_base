@@ -100,6 +100,35 @@
         <item>Always use HDCP checking</item>
     </string-array>
 
+    <!-- Titles for DNS resolver log. [CHAR LIMIT=35] -->
+    <string-array name="nw_dns_resolver_log_titles">
+        <item>Verbose</item>
+        <item>Debug</item>
+        <item>Info</item>
+        <item>Warning</item>
+        <item>Error</item>
+        <item>Off</item>
+    </string-array>
+
+    <!-- Values for DNS resolver log. -->
+    <string-array name="nw_dns_resolver_log_values" translatable="false" >
+        <item>verbose</item>
+        <item>debug</item>
+        <item>info</item>
+        <item>warning</item>
+        <item>error</item>
+        <item>off</item>
+    </string-array>
+
+    <!-- Summaries for DNS resolver log. [CHAR LIMIT=100]-->
+    <string-array name="nw_dns_resolver_log_summaries" >
+        <item>Dump DNS Resolver log in verbose level</item>
+        <item>Dump DNS Resolver log in Debug level</item>
+        <item>Dump DNS Resolver log in Info level</item>
+        <item>Dump DNS Resolver log in Warning level</item>
+        <item>Dump DNS Resolver log in Error level</item>
+        <item>Do not dump DNS log</item>
+    </string-array>
 
     <!-- Bluetooth settings -->
     <!-- Titles for Bluetooth AVRCP Versions -->

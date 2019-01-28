@@ -13204,6 +13204,16 @@ public final class Settings {
          */
         public static final String GNSS_HAL_LOCATION_REQUEST_DURATION_MILLIS =
                 "gnss_hal_location_request_duration_millis";
+
+        /**
+         * Whether we have enabled DNS resolver log on this device.
+         *
+         * The value can be "verbose", "debug", "info", "warning", "error" or
+         * "off".
+         *
+         * @hide
+         */
+        public static final String DNS_RESOLVER_LOG = "dns_resolver_log";
     }
 
     /**

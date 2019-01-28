@@ -529,6 +529,12 @@
     <string name="wifi_verbose_logging">Enable Wi\u2011Fi Verbose Logging</string>
     <!-- Setting Checkbox title whether to enable connected MAC randomization -->
     <string name="wifi_connected_mac_randomization">Connected MAC Randomization</string>
+
+    <!-- DNS resolver log title, to enable or disable DNS log. [CHAR LIMIT=25] -->
+    <string name="nw_dns_resolver_log_title">DNS Resolver log</string>
+    <!-- DNS resolver log dialog title, to enable or disable DNS log. [CHAR LIMIT=25] -->
+    <string name="nw_dns_resolver_log_dialog_title">Enable or disable DNS log</string>
+
     <!-- Setting Checkbox title whether to always keep mobile data active. [CHAR LIMIT=80] -->
     <string name="mobile_data_always_on">Mobile data always active</string>
     <!-- Setting Checkbox title whether to enable hardware acceleration for tethering. [CHAR LIMIT=80] -->
