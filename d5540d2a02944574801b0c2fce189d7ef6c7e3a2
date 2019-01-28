@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "26c9e775_ad45a41a",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5123,
+      "author": {
+        "id": 1217401
+      },
+      "writtenOn": "2019-01-28T21:18:02Z",
+      "side": 1,
+      "message": "Where will it show that it happens?\nIn general, because it\u0027s rare and something we don\u0027t expect, that\u0027s why we want to log it.\nFor example, if we rely on the logs to check account events, but something didn\u0027t add up, we can check if there\u0027s unexpected issue.",
+      "parentUuid": "6526ded8_351a7a50",
+      "range": {
+        "startLine": 5123,
+        "startChar": 24,
+        "endLine": 5123,
+        "endChar": 45
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccda70af_ae3b496f",
         "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66153f26_06bb582e",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5149,
+      "author": {
+        "id": 1217401
+      },
+      "writtenOn": "2019-01-28T21:18:02Z",
+      "side": 1,
+      "message": "My question is not logging it if insertionPoint \u003d -1. It\u0027s about why logging the insertionPoint is not part of the same atomic transaction/lock of the logStatement. Maybe i am missing something?",
+      "parentUuid": "2c23f525_bdfd4b84",
+      "range": {
+        "startLine": 5144,
+        "startChar": 8,
+        "endLine": 5149,
+        "endChar": 9
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
