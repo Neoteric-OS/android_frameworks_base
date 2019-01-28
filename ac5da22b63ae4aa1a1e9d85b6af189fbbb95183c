@@ -16,6 +16,24 @@
       "revId": "ac5da22b63ae4aa1a1e9d85b6af189fbbb95183c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d56a640_923796ac",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-28T23:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e06ccb0_b9044956",
+      "revId": "ac5da22b63ae4aa1a1e9d85b6af189fbbb95183c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
