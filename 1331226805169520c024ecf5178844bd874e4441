@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "86d26ad4_4966893f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3119,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2019-01-28T22:59:21Z",
+      "side": 1,
+      "message": "Checked with jpd@, Tycho will not hold the READ_PHONE_STATE permission in the future soon. Can we remove this permission check for these APIs? I think it\u0027s ok to remove the permission check since in EuiccManager, we don\u0027t require any permission to get either the default EuiccManager or an EuiccManager with cardId.",
+      "revId": "1331226805169520c024ecf5178844bd874e4441",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c889403_36c8c9ba",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 7
