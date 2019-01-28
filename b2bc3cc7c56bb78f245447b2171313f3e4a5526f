@@ -16,6 +16,24 @@
       "revId": "b2bc3cc7c56bb78f245447b2171313f3e4a5526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4e5f7a_8d21dbb7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24508,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-28T16:22:19Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t think that flag has made it to aosp yet, so this is fine for now.",
+      "parentUuid": "723b9e2c_9e503f71",
+      "revId": "b2bc3cc7c56bb78f245447b2171313f3e4a5526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
