@@ -39,6 +39,24 @@
       "revId": "041487760731dc0714ec9d355b5e7cd9ec59f00d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc6d3f4_2ea2f3b0",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-28T20:17:28Z",
+      "side": 1,
+      "message": "As discussed offline, its simple for a caller to just use getUiccCardsInfo and have that return all the info they want, instead of calling getUiccCardsInfo and getUiccSlotsInfo and cross-referencing them using slotId.\n\nI\u0027ve moved the internal state to UiccSlot, but lets leave the API this way.",
+      "parentUuid": "7d2b9440_e556b1f5",
+      "revId": "041487760731dc0714ec9d355b5e7cd9ec59f00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
