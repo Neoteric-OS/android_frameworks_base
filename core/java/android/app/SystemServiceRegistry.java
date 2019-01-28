@@ -84,6 +84,7 @@ import android.net.IConnectivityManager;
 import android.net.IEthernetManager;
 import android.net.IIpMemoryStore;
 import android.net.IIpSecService;
+import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.IpMemoryStore;
 import android.net.IpSecManager;
@@ -95,6 +96,7 @@ import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
 import android.net.nsd.INsdManager;
 import android.net.nsd.NsdManager;
+import android.net.shared.NetdService;
 import android.net.wifi.IWifiManager;
 import android.net.wifi.IWifiScanner;
 import android.net.wifi.RttManager;
@@ -287,6 +289,13 @@ final class SystemServiceRegistry {
                 IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
                 return new ConnectivityManager(context, service);
             }});
+
+        registerService(Context.NETD_SERVICE, INetd.class, new CachedServiceFetcher<INetd>() {
+            @Override
+            public INetd createService(ContextImpl ctx) {
+                return NetdService.getInstance();
+            }
+        });
 
         registerService(Context.NETWORK_STACK_SERVICE, NetworkStack.class,
                 new StaticServiceFetcher<NetworkStack>() {
