@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e06ccb0_b9044956",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-01-28T22:20:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is true. They can still load things from their private data folder.",
+      "revId": "ac5da22b63ae4aa1a1e9d85b6af189fbbb95183c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
