@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d66d1e_41234d6a",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5123,
+      "author": {
+        "id": 1217401
+      },
+      "writtenOn": "2019-01-28T20:48:41Z",
+      "side": 1,
+      "message": "Can you add logs for this condition?",
+      "range": {
+        "startLine": 5123,
+        "startChar": 24,
+        "endLine": 5123,
+        "endChar": 45
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccda70af_ae3b496f",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5149,
+      "author": {
+        "id": 1217401
+      },
+      "writtenOn": "2019-01-28T20:48:41Z",
+      "side": 1,
+      "message": "Can you please help me understand the purpose of insertion point and why it\u0027s logged separately?",
+      "range": {
+        "startLine": 5144,
+        "startChar": 8,
+        "endLine": 5149,
+        "endChar": 9
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
