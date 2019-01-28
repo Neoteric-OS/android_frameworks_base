@@ -34,6 +34,24 @@
       "revId": "b2bc3cc7c56bb78f245447b2171313f3e4a5526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8acf97_20c10340",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24508,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-28T16:31:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b4e5f7a_8d21dbb7",
+      "revId": "b2bc3cc7c56bb78f245447b2171313f3e4a5526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
