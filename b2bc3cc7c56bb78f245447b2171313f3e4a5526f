@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "723b9e2c_9e503f71",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24508,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-28T16:21:16Z",
+      "side": 1,
+      "message": "While you\u0027re at it, it\u0027d probably be good to check if the PREFER_CODE_INTEGRITY flag is set. See https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/6085824/7/core/java/android/view/LayoutInflater.java#411 for what we do on the LayoutInflater side. I think it makes sense to match that here.",
+      "revId": "b2bc3cc7c56bb78f245447b2171313f3e4a5526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
