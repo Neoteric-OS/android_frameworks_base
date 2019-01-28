@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04153e8_5100c565",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-28T19:55:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to modify this file if this class is under test.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 69
+      },
+      "revId": "d38bef5b769f9a82f593f614527ad5c1900d5d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b065c378_024ee02f",
+        "filename": "services/tests/servicestests/src/com/android/server/BluetoothManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-28T19:55:49Z",
+      "side": 1,
+      "message": "Instead of spying on the class under test, we should instead test how doing something with it causes some other function calls to its dependencies. \n\nFor example, in this test, when we want to verify if mProfileServiceConnections.bindService() will trigger BluetoothManagerService to call doBind(), we should verify if it calls mContext to do Bind() since mContext is the actual worker class that does the binding.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "d38bef5b769f9a82f593f614527ad5c1900d5d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
