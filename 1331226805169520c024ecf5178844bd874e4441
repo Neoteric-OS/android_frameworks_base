@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "cf3d44fd_6701b050",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3133,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-28T23:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c889403_36c8c9ba",
+      "range": {
+        "startLine": 3133,
+        "startChar": 30,
+        "endLine": 3133,
+        "endChar": 48
+      },
+      "revId": "1331226805169520c024ecf5178844bd874e4441",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc76d78_43c45371",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 7
@@ -62,6 +86,30 @@
       "revId": "1331226805169520c024ecf5178844bd874e4441",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9221c244_86ebe395",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3144,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-01-28T23:11:55Z",
+      "side": 1,
+      "message": "Spoke offline, it should be okay to hide private info in this case. We will still expose the cardId, whether it is an EUICC, and whether it is removable.",
+      "parentUuid": "dcc76d78_43c45371",
+      "range": {
+        "startLine": 3142,
+        "startChar": 7,
+        "endLine": 3144,
+        "endChar": 26
+      },
+      "revId": "1331226805169520c024ecf5178844bd874e4441",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
