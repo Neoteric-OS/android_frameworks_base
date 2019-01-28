@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df5a29f4_7092ecd1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5983,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-28T08:10:08Z",
+      "side": 1,
+      "message": "can we add test coverage for this?",
+      "range": {
+        "startLine": 5983,
+        "startChar": 22,
+        "endLine": 5983,
+        "endChar": 39
+      },
+      "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
