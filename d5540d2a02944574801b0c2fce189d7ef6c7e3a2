@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6526ded8_351a7a50",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5123,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-01-28T21:06:47Z",
+      "side": 1,
+      "message": "It happens when the database cannot be open which is very rare.\nOther logcat entries will show that it happened and I want to keep code in sync with internal version.",
+      "parentUuid": "21d66d1e_41234d6a",
+      "range": {
+        "startLine": 5123,
+        "startChar": 24,
+        "endLine": 5123,
+        "endChar": 45
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccda70af_ae3b496f",
         "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c23f525_bdfd4b84",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5149,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-01-28T21:06:47Z",
+      "side": 1,
+      "message": "It is simply an index to order entries in the database.\nIn most cases timestamp is enough - it is logged above\n (logStatement.bindString(3, mDateFormat.format(new Date()));)\n\nThe tricky part is that database may not be available yet (insertionPoint\u003d-1).\nIn this case it is better to skip logging than crashing system service.",
+      "parentUuid": "ccda70af_ae3b496f",
+      "range": {
+        "startLine": 5144,
+        "startChar": 8,
+        "endLine": 5149,
+        "endChar": 9
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
