@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd235d22_a9760cc0",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "to be updated",
+      "range": {
+        "startLine": 753,
+        "startChar": 48,
+        "endLine": 753,
+        "endChar": 53
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9201ec_5dc2d9df",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "updateForAllUsers",
+      "range": {
+        "startLine": 809,
+        "startChar": 16,
+        "endLine": 809,
+        "endChar": 30
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e12b5b_b02a126c",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "check your comments when you copy/paste :)",
+      "range": {
+        "startLine": 817,
+        "startChar": 87,
+        "endLine": 817,
+        "endChar": 95
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93e6e7b_556bafa4",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "Does this apply here, since you\u0027re only updating an entry?",
+      "range": {
+        "startLine": 847,
+        "startChar": 40,
+        "endLine": 847,
+        "endChar": 71
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91268273_12c4ed84",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "Why not use the same values.getAsString method as below?",
+      "range": {
+        "startLine": 1274,
+        "startChar": 68,
+        "endLine": 1274,
+        "endChar": 81
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fe72ab_fcc888f4",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "Is it possible that the user unlocks between when the conference was merged and when the call is disconnected from the conference? does this still work in that case?",
+      "range": {
+        "startLine": 1303,
+        "startChar": 28,
+        "endLine": 1305,
+        "endChar": 42
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4ff475_8fae0365",
+        "filename": "telecomm/java/android/telecom/DisconnectCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-28T23:09:15Z",
+      "side": 1,
+      "message": "Is this supposed to be part of this change?",
+      "range": {
+        "startLine": 98,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
