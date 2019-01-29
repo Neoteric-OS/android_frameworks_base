@@ -171,6 +171,201 @@
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31432afe_2eccde6a",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Why is this needed after threadId is provided?",
+      "range": {
+        "startLine": 62,
+        "startChar": 36,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f65f01d_7ebd4c0c",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Without owner?\n\nAnd I think I asked this earlier as well, can a thread have multiple owners?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d80156_34b528fe",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t a messageId uniquely identify a message? Why are all these fields needed as parameters?",
+      "range": {
+        "startLine": 75,
+        "startChar": 41,
+        "endLine": 75,
+        "endChar": 93
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2226a831_f4bae272",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Should there be a single getSnipped() API? This can cause timing issues on active threads, where after you query the text and before you query status, the status could have changed. Or some such timing issues.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb72f3a6_4f2ceb92",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "So I guess the specs allow only one group thread owner?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1131c3e3_1bec45d1",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be added when creating the thread? Because if it isn\u0027t added then, how else would you look up a threadId to add the conferenceUri later?",
+      "range": {
+        "startLine": 103,
+        "startChar": 54,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4b0ff5_bc3257e2",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "Why are all the set APIs separate? Shouldn\u0027t there be a single createMessage API that takes in all these parameters?\n\nAlso, like in a few cases above, why do you need additional parameters to identify a message after messageId?",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5c38cb_c95bcc7a",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "What does this returned array represent? As in what are the values in the array.\nIt will be good to add some documentation for the APIs here.",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63d502d_e5e84720",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T20:22:04Z",
+      "side": 1,
+      "message": "What does this array represent?",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 9
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
