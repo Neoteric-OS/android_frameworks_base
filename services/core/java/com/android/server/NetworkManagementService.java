@@ -61,7 +61,7 @@ import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
 import android.net.shared.NetdService;
-import android.net.shared.NetworkObserverRegistry;
+import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
 import android.os.Handler;
