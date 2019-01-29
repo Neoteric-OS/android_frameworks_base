@@ -16,6 +16,8 @@
 
 package android.net;
 
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.net.shared.Inet4AddressUtils;
 import android.os.Build;
@@ -41,6 +43,8 @@ import java.util.TreeSet;
  *
  * {@hide}
  */
+@TestApi
+@SystemApi
 public class NetworkUtils {
 
     private static final String TAG = "NetworkUtils";
@@ -48,7 +52,6 @@ public class NetworkUtils {
     /**
      * Attaches a socket filter that accepts DHCP packets to the given socket.
      */
-    @UnsupportedAppUsage
     public native static void attachDhcpFilter(FileDescriptor fd) throws SocketException;
 
     /**
@@ -56,7 +59,6 @@ public class NetworkUtils {
      * @param fd the socket's {@link FileDescriptor}.
      * @param packetType the hardware address type, one of ARPHRD_*.
      */
-    @UnsupportedAppUsage
     public native static void attachRaFilter(FileDescriptor fd, int packetType) throws SocketException;
 
     /**
@@ -67,7 +69,6 @@ public class NetworkUtils {
      * @param fd the socket's {@link FileDescriptor}.
      * @param packetType the hardware address type, one of ARPHRD_*.
      */
-    @UnsupportedAppUsage
     public native static void attachControlPacketFilter(FileDescriptor fd, int packetType)
             throws SocketException;
 
@@ -75,6 +76,7 @@ public class NetworkUtils {
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.
+     * @hide
      */
     public native static void setupRaSocket(FileDescriptor fd, int ifIndex) throws SocketException;
 
@@ -85,12 +87,14 @@ public class NetworkUtils {
      * {@code Network} ever disconnects all sockets created in this way will cease to work.  This
      * is by design so an application doesn't accidentally use sockets it thinks are still bound to
      * a particular {@code Network}.  Passing NETID_UNSET clears the binding.
+     * @hide
      */
     public native static boolean bindProcessToNetwork(int netId);
 
     /**
      * Return the netId last passed to {@link #bindProcessToNetwork}, or NETID_UNSET if
      * {@link #unbindProcessToNetwork} has been called since {@link #bindProcessToNetwork}.
+     * @hide
      */
     public native static int getBoundNetworkForProcess();
 
@@ -100,6 +104,7 @@ public class NetworkUtils {
      * the binding.
      *
      * @deprecated This is strictly for legacy usage to support startUsingNetworkFeature().
+     * @hide
      */
     @Deprecated
     public native static boolean bindProcessToNetworkForHostResolution(int netId);
@@ -108,6 +113,7 @@ public class NetworkUtils {
      * Explicitly binds {@code socketfd} to the network designated by {@code netId}.  This
      * overrides any binding via {@link #bindProcessToNetwork}.
      * @return 0 on success or negative errno on failure.
+     * @hide
      */
     public native static int bindSocketToNetwork(int socketfd, int netId);
 
@@ -115,6 +121,7 @@ public class NetworkUtils {
      * Protect {@code fd} from VPN connections.  After protecting, data sent through
      * this socket will go directly to the underlying network, so its traffic will not be
      * forwarded through the VPN.
+     * @hide
      */
     @UnsupportedAppUsage
     public static boolean protectFromVpn(FileDescriptor fd) {
@@ -125,12 +132,14 @@ public class NetworkUtils {
      * Protect {@code socketfd} from VPN connections.  After protecting, data sent through
      * this socket will go directly to the underlying network, so its traffic will not be
      * forwarded through the VPN.
+     * @hide
      */
     public native static boolean protectFromVpn(int socketfd);
 
     /**
      * Determine if {@code uid} can access network designated by {@code netId}.
      * @return {@code true} if {@code uid} can access network, {@code false} otherwise.
+     * @hide
      */
     public native static boolean queryUserAccess(int uid, int netId);
 
@@ -139,6 +148,7 @@ public class NetworkUtils {
      * Issue the query {@code msg} on the network designated by {@code netId}.
      * {@code flags} is an additional config to control actual querying behavior.
      * @return a file descriptor to watch for read events
+     * @hide
      */
     public static native FileDescriptor resNetworkSend(
             int netId, byte[] msg, int msglen, int flags) throws ErrnoException;
@@ -149,6 +159,7 @@ public class NetworkUtils {
      * with Domain Name {@code dname} on the network designated by {@code netId}.
      * {@code flags} is an additional config to control actual querying behavior.
      * @return a file descriptor to watch for read events
+     * @hide
      */
     public static native FileDescriptor resNetworkQuery(
             int netId, String dname, int nsClass, int nsType, int flags) throws ErrnoException;
@@ -157,6 +168,7 @@ public class NetworkUtils {
      * DNS resolver series jni method.
      * Read a result for the query associated with the {@code fd}.
      * @return a byte array containing blob answer
+     * @hide
      */
     public static native byte[] resNetworkResult(FileDescriptor fd) throws ErrnoException;
 
@@ -175,6 +187,7 @@ public class NetworkUtils {
      * @see Inet4AddressUtils#intToInet4AddressHTL(int)
      * @deprecated Use either {@link Inet4AddressUtils#intToInet4AddressHTH(int)}
      *             or {@link Inet4AddressUtils#intToInet4AddressHTL(int)}
+     * @hide
      */
     @Deprecated
     @UnsupportedAppUsage
@@ -186,6 +199,7 @@ public class NetworkUtils {
      * @see Inet4AddressUtils#inet4AddressToIntHTL(Inet4Address)
      * @deprecated Use either {@link Inet4AddressUtils#inet4AddressToIntHTH(Inet4Address)}
      *             or {@link Inet4AddressUtils#inet4AddressToIntHTL(Inet4Address)}
+     * @hide
      */
     @Deprecated
     public static int inetAddressToInt(Inet4Address inetAddr)
@@ -197,6 +211,7 @@ public class NetworkUtils {
      * @see Inet4AddressUtils#prefixLengthToV4NetmaskIntHTL(int)
      * @deprecated Use either {@link Inet4AddressUtils#prefixLengthToV4NetmaskIntHTH(int)}
      *             or {@link Inet4AddressUtils#prefixLengthToV4NetmaskIntHTL(int)}
+     * @hide
      */
     @Deprecated
     @UnsupportedAppUsage
@@ -209,6 +224,7 @@ public class NetworkUtils {
      * Convert a IPv4 netmask integer to a prefix length
      * @param netmask as an integer (0xff000000 for a /8 subnet)
      * @return the network prefix length
+     * @hide
      */
     public static int netmaskIntToPrefixLength(int netmask) {
         return Integer.bitCount(netmask);
@@ -249,6 +265,7 @@ public class NetworkUtils {
     /**
      * Writes an InetAddress to a parcel. The address may be null. This is likely faster than
      * calling writeSerializable.
+     * @hide
      */
     protected static void parcelInetAddress(Parcel parcel, InetAddress address, int flags) {
         byte[] addressArray = (address != null) ? address.getAddress() : null;
@@ -258,6 +275,7 @@ public class NetworkUtils {
     /**
      * Reads an InetAddress from a parcel. Returns null if the address that was written was null
      * or if the data is invalid.
+     * @hide
      */
     protected static InetAddress unparcelInetAddress(Parcel in) {
         byte[] addressArray = in.createByteArray();
@@ -273,7 +291,8 @@ public class NetworkUtils {
 
 
     /**
-     *  Masks a raw IP address byte array with the specified prefix length.
+     * Masks a raw IP address byte array with the specified prefix length.
+     * @hide
      */
     public static void maskRawAddress(byte[] array, int prefixLength) {
         if (prefixLength < 0 || prefixLength > array.length * 8) {
@@ -298,6 +317,7 @@ public class NetworkUtils {
      * Get InetAddress masked with prefixLength.  Will never return null.
      * @param address the IP address to mask with
      * @param prefixLength the prefixLength used to mask the IP
+     * @hide
      */
     public static InetAddress getNetworkPart(InetAddress address, int prefixLength) {
         byte[] array = address.getAddress();
@@ -314,6 +334,7 @@ public class NetworkUtils {
 
     /**
      * Returns the implicit netmask of an IPv4 address, as was the custom before 1993.
+     * @hide
      */
     @UnsupportedAppUsage
     public static int getImplicitNetmask(Inet4Address address) {
@@ -348,6 +369,7 @@ public class NetworkUtils {
     /**
      * Check if IP address type is consistent between two InetAddress.
      * @return true if both are the same type.  False otherwise.
+     * @hide
      */
     public static boolean addressTypeMatches(InetAddress left, InetAddress right) {
         return (((left instanceof Inet4Address) && (right instanceof Inet4Address)) ||
@@ -360,6 +382,7 @@ public class NetworkUtils {
      * made into an Inet6Address
      * @param addrHexString a 32 character hex string representing an IPv6 addr
      * @return addr an InetAddress representation for the string
+     * @hide
      */
     public static InetAddress hexToInet6Address(String addrHexString)
             throws IllegalArgumentException {
@@ -379,6 +402,7 @@ public class NetworkUtils {
      * Create a string array of host addresses from a collection of InetAddresses
      * @param addrs a Collection of InetAddresses
      * @return an array of Strings containing their host addresses
+     * @hide
      */
     public static String[] makeStrings(Collection<InetAddress> addrs) {
         String[] result = new String[addrs.size()];
@@ -397,6 +421,7 @@ public class NetworkUtils {
      * TODO - fix base libraries and remove this function
      * @param addr a string representing an ip addr
      * @return a string propertly trimmed
+     * @hide
      */
     @UnsupportedAppUsage
     public static String trimV4AddrZeros(String addr) {
@@ -454,6 +479,7 @@ public class NetworkUtils {
      * set is not ordered smallest prefix to longer prefix.
      *
      * @param prefixes the set of prefixes, ordered by length
+     * @hide
      */
     public static long routedIPv4AddressCount(final TreeSet<IpPrefix> prefixes) {
         long routedIPCount = 0;
@@ -473,6 +499,7 @@ public class NetworkUtils {
      * This returns a BigInteger between 0 and 2**128.
      * The behavior is undefined if any of the prefixes is not an IPv6 prefix or if the
      * set is not ordered smallest prefix to longer prefix.
+     * @hide
      */
     public static BigInteger routedIPv6AddressCount(final TreeSet<IpPrefix> prefixes) {
         BigInteger routedIPCount = BigInteger.ZERO;
