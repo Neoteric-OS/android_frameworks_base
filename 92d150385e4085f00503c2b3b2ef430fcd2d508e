@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec33a55c_c75e5023",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-29T22:01:41Z",
+      "side": 1,
+      "message": "My understanding is that this is supposed to be a stub provider that does nothing, and simply exists to allow location to be considered enabled until my changes in master make it to AOSP. If that\u0027s the case, what is all this extraneous code (FusionEngine and all the logic here)? A no-op location provider can be done in just a couple lines of code, this all seems unnecessary if my understanding is correct?",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "92d150385e4085f00503c2b3b2ef430fcd2d508e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
