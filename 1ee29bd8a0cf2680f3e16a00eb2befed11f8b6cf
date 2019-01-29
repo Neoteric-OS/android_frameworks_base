@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae69bd9a_a755a49a",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3189,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-29T07:42:20Z",
+      "side": 1,
+      "message": "Remove. :-)",
+      "range": {
+        "startLine": 3189,
+        "startChar": 4,
+        "endLine": 3189,
+        "endChar": 31
+      },
+      "revId": "1ee29bd8a0cf2680f3e16a00eb2befed11f8b6cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db7402a_ef943cb8",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3193,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-29T07:42:20Z",
+      "side": 1,
+      "message": "Per in-person: maybe move these to SocketUtils until we can replace these with in-app JNI code?",
+      "range": {
+        "startLine": 3190,
+        "startChar": 0,
+        "endLine": 3193,
+        "endChar": 106
+      },
+      "revId": "1ee29bd8a0cf2680f3e16a00eb2befed11f8b6cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
