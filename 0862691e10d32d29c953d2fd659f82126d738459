@@ -116,6 +116,30 @@
       "revId": "0862691e10d32d29c953d2fd659f82126d738459",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7a512e_0ea3ff45",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:47:08Z",
+      "side": 1,
+      "message": "This is a public internal API so we don\u0027t need to change it yet. We can do this rename as part of a cleanup later (we can file a cleanup bug to do that).",
+      "parentUuid": "b0a192c2_ab54f654",
+      "range": {
+        "startLine": 66,
+        "startChar": 72,
+        "endLine": 66,
+        "endChar": 96
+      },
+      "revId": "0862691e10d32d29c953d2fd659f82126d738459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
