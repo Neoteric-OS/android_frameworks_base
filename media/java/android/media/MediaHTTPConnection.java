@@ -16,6 +16,8 @@
 
 package android.media;
 
+import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+
 import android.annotation.UnsupportedAppUsage;
 import android.net.NetworkUtils;
 import android.os.IBinder;
@@ -23,21 +25,22 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.Proxy;
-import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.NoRouteToHostException;
 import java.net.ProtocolException;
+import java.net.Proxy;
+import java.net.URL;
 import java.net.UnknownServiceException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /** @hide */
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
@@ -68,8 +71,28 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private final static int HTTP_TEMP_REDIRECT = 307;
     private final static int MAX_REDIRECTS = 20;
 
+    private ExecutorService mExecutor;
+
+    private final Object mLock = new Object();
+
+    private class NativeReadTask implements Callable<Integer> {
+        NativeReadTask(long offset, int size) {
+            mOffset = offset;
+            mSize = size;
+        }
+
+        @Override
+        public Integer call() throws Exception {
+            return native_readAt(mOffset, mSize);
+        }
+
+        private long mOffset;
+        private int mSize;
+    }
+
     @UnsupportedAppUsage
     public MediaHTTPConnection() {
+        mExecutor = Executors.newFixedThreadPool(1);
         CookieHandler cookieHandler = CookieHandler.getDefault();
         if (cookieHandler == null) {
             Log.w(TAG, "MediaHTTPConnection: Unexpected. No CookieHandler found.");
@@ -140,9 +163,12 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public void disconnect() {
-        teardownConnection();
-        mHeaders = null;
-        mURL = null;
+        synchronized (mLock) {
+            teardownConnection();
+            mHeaders = null;
+            mURL = null;
+            mExecutor.shutdown();
+        }
     }
 
     private void teardownConnection() {
@@ -325,7 +351,17 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public int readAt(long offset, int size) {
-        return native_readAt(offset, size);
+        synchronized (mLock) {
+            Future<Integer> future = mExecutor.submit(new NativeReadTask(offset, size));
+            try {
+                return future.get();
+            } catch (Exception e) {
+                if (VERBOSE) {
+                    Log.d(TAG, "readAt " + offset + " / " + size + " => -1");
+                }
+                return -1;
+            }
+        }
     }
 
     private int readAt(long offset, byte[] data, int size) {
