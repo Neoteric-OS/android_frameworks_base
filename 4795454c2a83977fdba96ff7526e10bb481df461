@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33468f1c_a9f064be",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 2061,
+        "startChar": 32,
+        "endLine": 2061,
+        "endChar": 51
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a881af33_aad1f236",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "Why not withAppendedPath() like the other Uris above?",
+      "range": {
+        "startLine": 2300,
+        "startChar": 61,
+        "endLine": 2301,
+        "endChar": 55
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3138c6_bdbd9209",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "No seen timestamp for incoming messages? Will arrival and notified timestamps ever be different?",
+      "range": {
+        "startLine": 2316,
+        "startChar": 19,
+        "endLine": 2316,
+        "endChar": 27
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b5937f_223e9678",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2335,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabb7bf3_6b036341",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2370,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "Define a constant for this, like it is done for other tables.\n\nBtw, no Uri for RcsMessage?",
+      "range": {
+        "startLine": 2370,
+        "startChar": 83,
+        "endLine": 2370,
+        "endChar": 90
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f2a27a_41ec1726",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "Seems the values are inverted. For isIncoming, true should be indicated by 1, but you have it the other way round. Do you want to change the column to MESSAGE_TYPE instead? (Similar to THREAD_TYPE)",
+      "range": {
+        "startLine": 2382,
+        "startChar": 12,
+        "endLine": 2397,
+        "endChar": 42
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09cddef_3bc4881d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "start with 1?",
+      "range": {
+        "startLine": 2568,
+        "startChar": 48,
+        "endLine": 2568,
+        "endChar": 49
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f996fe7_e7ab7e0b",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2619,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-29T19:53:15Z",
+      "side": 1,
+      "message": "Do we need a type field here?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
