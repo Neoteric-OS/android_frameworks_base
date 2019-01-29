@@ -43,4 +43,13 @@ public class LayoutCompilerTest {
         Context context = InstrumentationRegistry.getTargetContext();
         layout1.invoke(null, context, R.layout.layout1);
     }
+
+    @Test
+    public void loadAndInflaterLayout2() throws Exception {
+        ClassLoader dex_file = loadDexFile("layout2.dex");
+        Class compiled_view = dex_file.loadClass("android.startop.test.CompiledView");
+        Method layout1 = compiled_view.getMethod("layout2", Context.class, int.class);
+        Context context = InstrumentationRegistry.getTargetContext();
+        layout1.invoke(null, context, R.layout.layout1);
+    }
 }
