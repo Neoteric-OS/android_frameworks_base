@@ -22,6 +22,30 @@
       "revId": "da6b4ca967c3bc9ee22e3c0b74ff05a932fdc471",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db59e447_27d16e02",
+        "filename": "services/core/java/com/android/server/job/JobSchedulerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2019-01-29T03:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57dce107_aa588635",
+      "range": {
+        "startLine": 1655,
+        "startChar": 0,
+        "endLine": 1655,
+        "endChar": 80
+      },
+      "revId": "da6b4ca967c3bc9ee22e3c0b74ff05a932fdc471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
