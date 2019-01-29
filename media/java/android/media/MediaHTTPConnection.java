@@ -16,6 +16,8 @@
 
 package android.media;
 
+import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+
 import android.annotation.UnsupportedAppUsage;
 import android.net.NetworkUtils;
 import android.os.IBinder;
@@ -23,21 +25,20 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.Proxy;
-import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.NoRouteToHostException;
 import java.net.ProtocolException;
+import java.net.Proxy;
+import java.net.URL;
 import java.net.UnknownServiceException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /** @hide */
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
@@ -68,6 +69,43 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private final static int HTTP_TEMP_REDIRECT = 307;
     private final static int MAX_REDIRECTS = 20;
 
+    // -2: uninialized; -1: met exception; other values: see android.media.MediaPlayer
+    private int mReadAtResult = -2;
+
+    private final Object mLock = new Object();
+    private boolean mDisconnectPending = false;
+
+    private ExecutorService mExecutor;
+
+    private class ReadTask implements Runnable {
+        ReadTask(long offset, int size) {
+            mOffset = offset;
+            mSize = size;
+        }
+
+        @Override
+        public void run() {
+            synchronized (mLock) {
+                mReadAtResult = native_readAt(mOffset, mSize);
+                mLock.notify();
+            }
+        }
+
+        private long mOffset;
+        private int mSize;
+    }
+
+    private class DisconnectTask implements Runnable {
+        @Override
+        public void run() {
+            synchronized (mLock) {
+                teardownConnection();
+                mLock.notify();
+            }
+        }
+    }
+
+
     @UnsupportedAppUsage
     public MediaHTTPConnection() {
         CookieHandler cookieHandler = CookieHandler.getDefault();
@@ -87,6 +125,7 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
 
         try {
             disconnect();
+            mExecutor = Executors.newFixedThreadPool(1);
             mAllowCrossDomainRedirect = true;
             mURL = new URL(uri);
             mHeaders = convertHeaderStringToMap(headers);
@@ -140,9 +179,18 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public void disconnect() {
-        teardownConnection();
-        mHeaders = null;
-        mURL = null;
+        try {
+            synchronized (mLock) {
+                mDisconnectPending = true;
+                mExecutor.execute(new DisconnectTask());
+                mLock.wait();
+                mHeaders = null;
+                mURL = null;
+            }
+        } catch (Exception e) {
+        } finally {
+            mExecutor.shutdown();
+        }
     }
 
     private void teardownConnection() {
@@ -325,7 +373,21 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public int readAt(long offset, int size) {
-        return native_readAt(offset, size);
+        try {
+            synchronized (mLock) {
+                mExecutor.execute(new ReadTask(offset, size));
+                mLock.wait();
+                if (mDisconnectPending) {
+                    return -1;
+                }
+                return mReadAtResult == -2 ? -1 : mReadAtResult;
+            }
+        } catch (Exception e) {
+            if (VERBOSE) {
+                Log.d(TAG, "readAt " + offset + " / " + size + " => -1");
+            }
+            return -1;
+        }
     }
 
     private int readAt(long offset, byte[] data, int size) {
