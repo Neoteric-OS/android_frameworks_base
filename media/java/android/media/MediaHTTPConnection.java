@@ -16,6 +16,8 @@
 
 package android.media;
 
+import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+
 import android.annotation.UnsupportedAppUsage;
 import android.net.NetworkUtils;
 import android.os.IBinder;
@@ -23,21 +25,20 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.Proxy;
-import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.NoRouteToHostException;
 import java.net.ProtocolException;
+import java.net.Proxy;
+import java.net.URL;
 import java.net.UnknownServiceException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 /** @hide */
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
@@ -322,10 +323,36 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
         }
     }
 
+    class NativeReadTask implements Callable<Integer> {
+        NativeReadTask(long offset, int size) {
+            mOffset = offset;
+            mSize = size;
+        }
+
+        @Override
+        public Integer call() throws Exception {
+            return native_readAt(mOffset, mSize);
+        }
+
+        private long mOffset;
+        private int mSize;
+    }
+
     @Override
     @UnsupportedAppUsage
     public int readAt(long offset, int size) {
-        return native_readAt(offset, size);
+        NativeReadTask nativeReadTask = new NativeReadTask(offset, size);
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(nativeReadTask);
+        Thread thread = new Thread(futureTask);
+        thread.start();
+        try {
+            return futureTask.get();
+        } catch (Exception e) {
+            if (VERBOSE) {
+                Log.d(TAG, "readAt " + offset + " / " + size + " => -1");
+            }
+            return -1;
+        }
     }
 
     private int readAt(long offset, byte[] data, int size) {
