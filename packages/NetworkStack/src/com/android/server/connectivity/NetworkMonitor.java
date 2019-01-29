@@ -48,7 +48,9 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.ProxyInfo;
+import android.net.StringNetworkSpecifier;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.net.captiveportal.CaptivePortalProbeResult;
@@ -67,15 +69,9 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
-import android.telephony.CellIdentityCdma;
-import android.telephony.CellIdentityGsm;
-import android.telephony.CellIdentityLte;
-import android.telephony.CellIdentityWcdma;
-import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
-import android.telephony.CellInfoWcdma;
+import android.telephony.AccessNetworkConstants;
+import android.telephony.NetworkRegistrationState;
+import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -245,7 +241,6 @@ public class NetworkMonitor extends StateMachine {
     private final INetworkMonitorCallbacks mCallback;
     private final Network mNetwork;
     private final Network mNonPrivateDnsBypassNetwork;
-    private final TelephonyManager mTelephonyManager;
     private final WifiManager mWifiManager;
     private final ConnectivityManager mCm;
     private final IpConnectivityLog mMetricsLog;
@@ -315,6 +310,22 @@ public class NetworkMonitor extends StateMachine {
                 Dependencies.DEFAULT);
     }
 
+    private TelephonyManager getTelephonyManagerForNetwork() {
+        if (mNetworkCapabilities == null) return null;
+        NetworkSpecifier ns = mNetworkCapabilities.getNetworkSpecifier();
+        if (!(ns instanceof StringNetworkSpecifier)) return null;
+        StringNetworkSpecifier sns = (StringNetworkSpecifier) ns;
+        try {
+            int subId = Integer.parseInt(sns.specifier);
+            TelephonyManager tm =
+                    (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+            return tm.createForSubscriptionId(subId);
+        } catch (NumberFormatException unexpected) {
+            // The Cellular StringNetworkSpecifier is malformed
+            return null;
+        }
+    }
+
     @VisibleForTesting
     protected NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             NetworkRequest defaultRequest, IpConnectivityLog logger, SharedLog validationLogs,
@@ -333,7 +344,6 @@ public class NetworkMonitor extends StateMachine {
         mDependencies = deps;
         mNonPrivateDnsBypassNetwork = network;
         mNetwork = deps.getPrivateDnsBypassNetwork(network);
-        mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         mCm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -1507,39 +1517,22 @@ public class NetworkMonitor extends StateMachine {
             }
             latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CONNECTIVITY_TYPE, TYPE_WIFI);
         } else if (mNetworkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
+            TelephonyManager tm = getTelephonyManagerForNetwork();
+            if (tm == null) return;
             latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_NETWORK_TYPE,
-                    mTelephonyManager.getNetworkType());
-            List<CellInfo> info = mTelephonyManager.getAllCellInfo();
-            if (info == null) return;
-            int numRegisteredCellInfo = 0;
-            for (CellInfo cellInfo : info) {
-                if (cellInfo.isRegistered()) {
-                    numRegisteredCellInfo++;
-                    if (numRegisteredCellInfo > 1) {
-                        if (VDBG) {
-                            logw("more than one registered CellInfo."
-                                    + " Can't tell which is active.  Bailing.");
-                        }
-                        return;
-                    }
-                    if (cellInfo instanceof CellInfoCdma) {
-                        CellIdentityCdma cellId = ((CellInfoCdma) cellInfo).getCellIdentity();
-                        latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CELL_ID, cellId);
-                    } else if (cellInfo instanceof CellInfoGsm) {
-                        CellIdentityGsm cellId = ((CellInfoGsm) cellInfo).getCellIdentity();
-                        latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CELL_ID, cellId);
-                    } else if (cellInfo instanceof CellInfoLte) {
-                        CellIdentityLte cellId = ((CellInfoLte) cellInfo).getCellIdentity();
-                        latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CELL_ID, cellId);
-                    } else if (cellInfo instanceof CellInfoWcdma) {
-                        CellIdentityWcdma cellId = ((CellInfoWcdma) cellInfo).getCellIdentity();
-                        latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CELL_ID, cellId);
-                    } else {
-                        if (VDBG) logw("Registered cellinfo is unrecognized");
-                        return;
-                    }
-                }
+                    tm.getNetworkType());
+            ServiceState dataSs = tm.getServiceState();
+            if (dataSs == null) {
+                logw("failed to retrieve ServiceState");
+                return;
             }
+            // See if the data sub is registered for PS services on cell.
+            NetworkRegistrationState nrs = dataSs.getNetworkRegistrationState(
+                    AccessNetworkConstants.TransportType.WWAN,
+                    NetworkRegistrationState.DOMAIN_PS);
+            latencyBroadcast.putExtra(
+                    NetworkMonitorUtils.EXTRA_CELL_ID,
+                    nrs == null ? null : nrs.getCellIdentity());
             latencyBroadcast.putExtra(NetworkMonitorUtils.EXTRA_CONNECTIVITY_TYPE, TYPE_MOBILE);
         } else {
             return;
