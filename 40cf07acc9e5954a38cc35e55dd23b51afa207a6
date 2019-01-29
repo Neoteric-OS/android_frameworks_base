@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6794cd0_e6baaf8d",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "missing space after comma?\nthe same for other places",
+      "range": {
+        "startLine": 495,
+        "startChar": 29,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950b200d_df935c0d",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "1. if relevance \u003c 0 means error case.\nShould we log.wtf instead of add this key?\n2. should we use expiry directly instead of compute relevance?",
+      "range": {
+        "startLine": 511,
+        "startChar": 12,
+        "endLine": 516,
+        "endChar": 32
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de61d994_ab0233ca",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "1. typo\n2. should we add log.e or some kind of local event buffer to debug error cases?\n3. Is it better to return error if all fails instead of one?\n4. the same for below",
+      "range": {
+        "startLine": 522,
+        "startChar": 16,
+        "endLine": 522,
+        "endChar": 25
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c3e3a3_78e6b597",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "this sentence looks redundant to me.\n\nHow about this?\nDeletes rows of NetworkAttributes and Blob which match the given L2Key.\nReturns an int ...",
+      "range": {
+        "startLine": 559,
+        "startChar": 66,
+        "endLine": 560,
+        "endChar": 17
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b8d65f_cf9734b3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "1. typo\n2. could we simpilify this?\ne.g. \nret \u003d SUCCESS\ndb.begin()\ntry {\n  db.delete(NA);\n  db.delete(Blob);\n} catch(...) {\n   ret \u003d ERROR_XX;\n} finally {\n  db.end()\n}\n  return ret;",
+      "range": {
+        "startLine": 562,
+        "startChar": 15,
+        "endLine": 562,
+        "endChar": 24
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8aea2f_3bf6cf9d",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T11:35:58Z",
+      "side": 1,
+      "message": "drop only 1 at time seems too inefficient.\nCould we \n1. estimate how many record we want to delete. \n  e.g. we want 50MB-\u003e30MB then drop 2/5 * all_rows_in_db.\n2. sort by expiry\n3. delete first n rows of data.",
+      "range": {
+        "startLine": 465,
+        "startChar": 55,
+        "endLine": 465,
+        "endChar": 80
+      },
+      "revId": "40cf07acc9e5954a38cc35e55dd23b51afa207a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
