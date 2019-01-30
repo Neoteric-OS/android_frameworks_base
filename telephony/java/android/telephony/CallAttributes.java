@@ -50,10 +50,9 @@ public class CallAttributes implements Parcelable {
     }
 
     private CallAttributes(Parcel in) {
-        mPreciseCallState = (PreciseCallState)
-                in.readValue(PreciseCallState.class.getClassLoader());
+        mPreciseCallState = in.readParcelable(null);
         mNetworkType = in.readInt();
-        mCallQuality = (CallQuality) in.readValue(CallQuality.class.getClassLoader());
+        mCallQuality = in.readParcelable(null);
     }
 
     // getters
@@ -134,9 +133,9 @@ public class CallAttributes implements Parcelable {
      * {@link Parcelable#writeToParcel}
      */
     public void writeToParcel(Parcel dest, @Parcelable.WriteFlags int flags) {
-        mPreciseCallState.writeToParcel(dest, flags);
+        dest.writeParcelable(mPreciseCallState, 0);
         dest.writeInt(mNetworkType);
-        mCallQuality.writeToParcel(dest, flags);
+        dest.writeParcelable(mCallQuality, 0);
     }
 
     public static final Parcelable.Creator<CallAttributes> CREATOR = new Parcelable.Creator() {
