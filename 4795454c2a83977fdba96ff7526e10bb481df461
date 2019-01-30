@@ -191,6 +191,23 @@
     },
     {
       "key": {
+        "uuid": "03daa921_44b24b01",
+        "filename": "telephony/java/android/telephony/ims/RcsControllerCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:18:38Z",
+      "side": 1,
+      "message": "Revisit the naming in this file. Particularly of the call() methods (and for RcsControllerCall and RcsServiceCall as well).",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78817cc3_8567f259",
         "filename": "telephony/java/android/telephony/ims/RcsEventQueryContinuationToken.java",
         "patchSetId": 2
