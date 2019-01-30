@@ -15,9 +15,9 @@
  */
 package android.net;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.net.util.IpUtils;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.system.OsConstants;
 
 import java.net.Inet4Address;
@@ -30,7 +30,7 @@ import java.nio.ByteOrder;
  * @hide
  */
 
-public class TcpKeepalivePacketData extends KeepalivePacketData implements Parcelable {
+public class TcpKeepalivePacketData extends KeepalivePacketData {
     private static final String TAG = "TcpKeepalivePacketData";
 
      /** TCP sequence number. */
@@ -105,6 +105,7 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
     // TODO: add buildV6Packet.
 
     /** Represents tcp/ip infromation. */
+    // TODO: Replace TcpSocketInfo with TcpKeepalivePacketDataParcelable.
     public static class TcpSocketInfo {
         public final InetAddress srcAddress;
         public final InetAddress dstAddress;
@@ -126,34 +127,64 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
         }
     }
 
-    /* Parcelable Implementation. */
-    /** No special parcel contents. */
-    public int describeContents() {
-        return 0;
+    /**
+     * Convert this TcpKeepalivePacketData to a TcpKeepalivePacketDataParcelable.
+     */
+    @NonNull
+    public TcpKeepalivePacketDataParcelable toParcelable() {
+        final TcpKeepalivePacketDataParcelable parcel = new TcpKeepalivePacketDataParcelable();
+        parcel.srcAddress = srcAddress.getHostAddress();
+        parcel.dstAddress = dstAddress.getHostAddress();
+        parcel.srcPort = srcPort;
+        parcel.dstPort = dstPort;
+        parcel.seqNum = tcpSeq;
+        parcel.ackNum = tcpAck;
+        return parcel;
     }
 
-    /** Write to parcel. */
-    public void writeToParcel(Parcel out, int flags) {
-        super.writeToParcel(out, flags);
-        out.writeInt(tcpSeq);
-        out.writeInt(tcpAck);
+   /**
+     * Convert a TcpKeepalivePacketDataParcelable to a TcpKeepalivePacketData.
+     */
+    public static TcpKeepalivePacketData fromStableParcelable(
+            @Nullable TcpKeepalivePacketDataParcelable parcel) {
+        if (null == parcel) return null;
+        TcpKeepalivePacketData pkt = null;
+        try {
+            final TcpSocketInfo tcpInfo =
+                    new TcpSocketInfo(InetAddresses.parseNumericAddress(parcel.srcAddress),
+                            parcel.srcPort,
+                            InetAddresses.parseNumericAddress(parcel.dstAddress),
+                            parcel.dstPort, parcel.seqNum, parcel.ackNum);
+            pkt = tcpKeepalivePacket(tcpInfo);
+        } catch (InvalidPacketException e) {
+            Log.e(TAG, "fromStableParcelable: " + e);
+        }
+        return pkt;
     }
 
-    private TcpKeepalivePacketData(Parcel in) {
-        super(in);
-        tcpSeq = in.readInt();
-        tcpAck = in.readInt();
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("saddr: " + srcAddress)
+                .append(" daddr: " + dstAddress)
+                .append(" sport: " + srcPort)
+                .append(" dport: " + dstPort)
+                .append(" seq: " + tcpAck)
+                .append(" ack: " + tcpAck);
+        return sb.toString();
     }
 
-    /** Parcelable Creator. */
-    public static final Parcelable.Creator<TcpKeepalivePacketData> CREATOR =
-            new Parcelable.Creator<TcpKeepalivePacketData>() {
-                public TcpKeepalivePacketData createFromParcel(Parcel in) {
-                    return new TcpKeepalivePacketData(in);
-                }
-
-                public TcpKeepalivePacketData[] newArray(int size) {
-                    return new TcpKeepalivePacketData[size];
-                }
-            };
+    @Override
+    public boolean equals(@Nullable final Object o) {
+        if (!(o instanceof TcpKeepalivePacketData)) {
+            return false;
+        }
+        final TcpKeepalivePacketData other = (TcpKeepalivePacketData) o;
+        return this.srcAddress.equals(other.srcAddress)
+                && this.dstAddress.equals(other.dstAddress)
+                && this.srcPort == other.srcPort
+                && this.dstPort == other.dstPort
+                && this.tcpAck == other.tcpAck
+                && this.tcpSeq == other.tcpSeq;
+    }
 }
