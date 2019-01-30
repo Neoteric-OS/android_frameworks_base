@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "465252c6_bdfd98ae",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd235d22_a9760cc0",
+      "range": {
+        "startLine": 753,
+        "startChar": 48,
+        "endLine": 753,
+        "endChar": 53
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c9201ec_5dc2d9df",
         "filename": "core/java/android/provider/CallLog.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-28T23:09:15Z",
       "side": 1,
       "message": "updateForAllUsers",
+      "range": {
+        "startLine": 809,
+        "startChar": 16,
+        "endLine": 809,
+        "endChar": 30
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b0bda0_874a57fa",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4c9201ec_5dc2d9df",
       "range": {
         "startLine": 809,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0fe25956_fc83807e",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "51e12b5b_b02a126c",
+      "range": {
+        "startLine": 817,
+        "startChar": 87,
+        "endLine": 817,
+        "endChar": 95
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a93e6e7b_556bafa4",
         "filename": "core/java/android/provider/CallLog.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-28T23:09:15Z",
       "side": 1,
       "message": "Does this apply here, since you\u0027re only updating an entry?",
+      "range": {
+        "startLine": 847,
+        "startChar": 40,
+        "endLine": 847,
+        "endChar": 71
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08fa7c0_a731c787",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "This is supposed to be the new method. Done.",
+      "parentUuid": "a93e6e7b_556bafa4",
       "range": {
         "startLine": 847,
         "startChar": 40,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a31a6827_687922fd",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "We could, by putting it into values object. Since we don\u0027t need other fields other than _id and duration, just pass them directly.",
+      "parentUuid": "91268273_12c4ed84",
+      "range": {
+        "startLine": 1274,
+        "startChar": 68,
+        "endLine": 1274,
+        "endChar": 81
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52fe72ab_fcc888f4",
         "filename": "core/java/android/provider/CallLog.java",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8292597a_0260918b",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "I doubt that. Making more changes to it.",
+      "parentUuid": "52fe72ab_fcc888f4",
+      "range": {
+        "startLine": 1303,
+        "startChar": 28,
+        "endLine": 1305,
+        "endChar": 42
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c4ff475_8fae0365",
         "filename": "telecomm/java/android/telecom/DisconnectCause.java",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2019-01-28T23:09:15Z",
       "side": 1,
       "message": "Is this supposed to be part of this change?",
+      "range": {
+        "startLine": 98,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "965bd430b9e3a371948e9295e242b02f3f57616e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe280fe_a213255e",
+        "filename": "telecomm/java/android/telecom/DisconnectCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-30T21:33:32Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a case we need to skip the updating call log time. When the conference is emulating the single party conference, the dropped call time will get updated correctly, but the remaining call shouldn\u0027t be updated yet.",
+      "parentUuid": "7c4ff475_8fae0365",
       "range": {
         "startLine": 98,
         "startChar": 31,
