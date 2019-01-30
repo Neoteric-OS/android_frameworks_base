@@ -26787,6 +26787,7 @@ package android.media.tv {
     method public float getVideoPixelAspectRatio();
     method public int getVideoWidth();
     method public boolean isEncrypted();
+    method public boolean isHardOfHearing();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.media.tv.TvTrackInfo> CREATOR;
     field public static final int TYPE_AUDIO = 0; // 0x0
@@ -26802,6 +26803,7 @@ package android.media.tv {
     method public android.media.tv.TvTrackInfo.Builder setDescription(CharSequence);
     method public android.media.tv.TvTrackInfo.Builder setEncrypted(boolean);
     method public android.media.tv.TvTrackInfo.Builder setExtra(android.os.Bundle);
+    method public android.media.tv.TvTrackInfo.Builder setHardOfHearing(boolean);
     method public android.media.tv.TvTrackInfo.Builder setLanguage(String);
     method public android.media.tv.TvTrackInfo.Builder setVideoActiveFormatDescription(byte);
     method public android.media.tv.TvTrackInfo.Builder setVideoFrameRate(float);
