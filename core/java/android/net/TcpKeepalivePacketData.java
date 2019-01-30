@@ -17,6 +17,7 @@ package android.net;
 
 import static android.net.SocketKeepalive.ERROR_INVALID_IP_ADDRESS;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.util.IpUtils;
@@ -25,6 +26,7 @@ import android.os.Parcelable;
 import android.system.OsConstants;
 
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -122,6 +124,7 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
     // TODO: add buildV6Packet.
 
     /** Represents tcp/ip information. */
+    // TODO: Replace TcpSocketInfo with TcpKeepalivePacketDataParcelable.
     public static class TcpSocketInfo {
         public final InetAddress srcAddress;
         public final InetAddress dstAddress;
@@ -166,7 +169,10 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
     }
 
     /* Parcelable Implementation. */
-    /** No special parcel contents. */
+    /* Note that this object implements parcelable (and needs to keep doing this as it inherits
+     * from a class that does), but should usually be parceled as a stable parcelable using
+     * the toStableParcelable() and fromStableParcelable() methods.
+     */
     public int describeContents() {
         return 0;
     }
@@ -199,4 +205,34 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
                     return new TcpKeepalivePacketData[size];
                 }
             };
+
+    /**
+     * Convert this TcpKeepalivePacketData to a TcpKeepalivePacketDataParcelable.
+     */
+    @NonNull
+    public TcpKeepalivePacketDataParcelable toStableParcelable() {
+        final TcpKeepalivePacketDataParcelable parcel = new TcpKeepalivePacketDataParcelable();
+        if (srcAddress instanceof Inet4Address && dstAddress instanceof Inet4Address) {
+            parcel.ipVersion = 4;
+        } else if (srcAddress instanceof Inet6Address && dstAddress instanceof Inet6Address) {
+            parcel.ipVersion = 6;
+        } else {
+            // This is not possible because the constructor is checking for this. Hence throw
+            // an unchecked exception rather than a checked one.
+            throw new RuntimeException(new InvalidPacketException(ERROR_INVALID_IP_ADDRESS));
+        }
+        parcel.packetData = getPacket();
+        return parcel;
+    }
+
+    @Override
+    public String toString() {
+        final String sb = "saddr: " + srcAddress
+                + " daddr: " + dstAddress
+                + " sport: " + srcPort
+                + " dport: " + dstPort
+                + " seq: " + tcpAck
+                + " ack: " + tcpAck;
+        return sb;
+    }
 }
