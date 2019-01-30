@@ -62,6 +62,7 @@ import android.net.util.SharedLog;
 import android.net.util.Stopwatch;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Binder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -688,6 +689,19 @@ public class NetworkMonitor extends StateMachine {
                                                 "CaptivePortal");
                                     }
                                     sendMessage(CMD_CAPTIVE_PORTAL_APP_FINISHED, response);
+                                }
+
+                                @Override
+                                public void logEvent(int eventId) throws RemoteException {
+                                    mContext.enforceCallingPermission(
+                                            android.Manifest.permission.CONNECTIVITY_INTERNAL,
+                                            "CaptivePortal");
+                                    final String[] packageNames = mContext.getPackageManager()
+                                            .getPackagesForUid(Binder.getCallingUid());
+                                    if (packageNames == null || packageNames.length != 1) {
+                                        return;
+                                    }
+                                    mCallback.logCaptivePortalLoginEvent(eventId, packageNames[0]);
                                 }
                             }));
                     final CaptivePortalProbeResult probeRes = mLastPortalProbeResult;
