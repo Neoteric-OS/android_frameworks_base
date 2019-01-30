@@ -32,9 +32,14 @@ public final class PermissionUtil {
     public static void checkNetworkStackCallingPermission() {
         // TODO: check that the calling PID is the system server.
         final int caller = getCallingUid();
-        if (caller != Process.SYSTEM_UID && caller != Process.BLUETOOTH_UID) {
+        if (caller != Process.SYSTEM_UID && getAppId(caller) != Process.BLUETOOTH_UID) {
             throw new SecurityException("Invalid caller: " + caller);
         }
+    }
+
+    private static int getAppId(int caller) {
+        // TODO: consider exposing UserHandle.isSameApp() as SystemApi
+        return caller % 100000;
     }
 
     /**
