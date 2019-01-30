@@ -54,6 +54,11 @@ public class IccCardConstants {
     public static final String INTENT_VALUE_LOCKED_NETWORK = "NETWORK";
     /* PERM_DISABLED means ICC is permanently disabled due to puk fails */
     public static final String INTENT_VALUE_ABSENT_ON_PERM_DISABLED = "PERM_DISABLED";
+    /**
+     * @hide
+     * ICCID_LOADED means ICCID has been loaded.
+     */
+    public static final String INTENT_VALUE_ICCID_LOADED ="ICCID_LOADED";
 
     /**
      * This is combination of IccCardStatus.CardState and IccCardApplicationStatus.AppState
