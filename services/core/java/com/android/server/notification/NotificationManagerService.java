@@ -200,6 +200,7 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.util.XmlUtils;
 import com.android.server.DeviceIdleController;
 import com.android.server.EventLogTags;
+import com.android.server.IoThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.lights.Light;
@@ -255,7 +256,6 @@ public class NotificationManagerService extends SystemService {
 
     // message codes
     static final int MESSAGE_DURATION_REACHED = 2;
-    static final int MESSAGE_SAVE_POLICY_FILE = 3;
     static final int MESSAGE_SEND_RANKING_UPDATE = 4;
     static final int MESSAGE_LISTENER_HINTS_CHANGED = 5;
     static final int MESSAGE_LISTENER_NOTIFICATION_FILTER_CHANGED = 6;
@@ -578,12 +578,15 @@ public class NotificationManagerService extends SystemService {
     }
 
     public void savePolicyFile() {
-        mHandler.removeMessages(MESSAGE_SAVE_POLICY_FILE);
-        mHandler.sendEmptyMessage(MESSAGE_SAVE_POLICY_FILE);
+        Handler ioHandler = IoThread.getHandler();
+        if (ioHandler.hasCallbacks(mSavePolicyFileRunnable)) {
+            ioHandler.removeCallbacks(mSavePolicyFileRunnable);
+        }
+        ioHandler.post(mSavePolicyFileRunnable);
     }
 
-    private void handleSavePolicyFile() {
-        if (DBG) Slog.d(TAG, "handleSavePolicyFile");
+    private Runnable mSavePolicyFileRunnable = () -> {
+        if (DBG) Slog.d(TAG, "SavePolicyFileRunnable");
         synchronized (mPolicyFile) {
             final FileOutputStream stream;
             try {
@@ -5352,9 +5355,6 @@ public class NotificationManagerService extends SystemService {
                     break;
                 case MESSAGE_FINISH_TOKEN_TIMEOUT:
                     handleKillTokenTimeout((IBinder)msg.obj);
-                    break;
-                case MESSAGE_SAVE_POLICY_FILE:
-                    handleSavePolicyFile();
                     break;
                 case MESSAGE_SEND_RANKING_UPDATE:
                     handleSendRankingUpdate();
