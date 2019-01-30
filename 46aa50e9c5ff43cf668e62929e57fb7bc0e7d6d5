@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbf7ca61_ec98cd73",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4857,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-01-30T21:56:45Z",
+      "side": 1,
+      "message": "Existing code already unbinds from Authenticator.\ngetResponseAndClose() -\u003e close() -\u003e unbind()\n\nThere are some exceptions when it may be skipped and extra attempt to do unbind may help.\n\nI would move new unbind() right after this line.",
+      "range": {
+        "startLine": 4857,
+        "startChar": 47,
+        "endLine": 4857,
+        "endChar": 66
+      },
+      "revId": "46aa50e9c5ff43cf668e62929e57fb7bc0e7d6d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
