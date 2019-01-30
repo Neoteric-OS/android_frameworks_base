@@ -174,6 +174,23 @@
     },
     {
       "key": {
+        "uuid": "62d7f9b5_d2dcc26e",
+        "filename": "telephony/java/android/telephony/PhoneCapability.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "revert the change here?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78817cc3_8567f259",
         "filename": "telephony/java/android/telephony/ims/RcsEventQueryContinuationToken.java",
         "patchSetId": 2
@@ -350,6 +367,178 @@
         "startChar": 4,
         "endLine": 144,
         "endChar": 90
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9fb307_815bce5a",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "Is this needed? base class already implements Parcelable.\n\nAnd is this class really needed? It doesn\u0027t have anything on top of the base class. Or looks like some fields are missing here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 87,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cfe4e6_a3f67199",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageDelivery.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be part of constructor to make sure it is always set? I don\u0027t think there should be a constructor that does not take this as argument.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391c5676_34966bfa",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageDelivery.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "What value is returned if the message is not delivered?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efbfa3f_23abb1c9",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantAliasChangedEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "Same as another event related comment: old alias should not be needed here, no?",
+      "range": {
+        "startLine": 135,
+        "startChar": 49,
+        "endLine": 135,
+        "endChar": 65
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dddc92a_28532724",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "nit: delete",
+      "range": {
+        "startLine": 55,
+        "startChar": 36,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021d408b_24f7ec25",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "Do we really need subclasses? Are the fields different in the subclasses you currently have? Aren\u0027t they all query, limit and offset?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 81
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc5f903_f49c9846",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "add comments for these? Specifically for TIMESTAMP. What timestamp does this refer to? Thread creation? Last message received? snippet?",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 59
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7588da5a_d47d744d",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-30T19:13:20Z",
+      "side": 1,
+      "message": "What if no participant is specified? I believe it will consider all threads that match the other parameters? If yes, add that as a comment.",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 9
       },
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
