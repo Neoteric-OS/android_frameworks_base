@@ -657,6 +657,7 @@ public class NetworkMonitor extends StateMachine {
                     mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
                     if (isDataStall()) {
                         validationLog("Suspecting data stall, reevaluate");
+                        notifyDataStallSuspected();
                         transitionTo(mEvaluatingState);
                     }
                     break;
@@ -1760,5 +1761,24 @@ public class NetworkMonitor extends StateMachine {
         }
 
         return result;
+    }
+
+    private void notifyDataStallSuspected() {
+        final Intent intent = new Intent(
+                NetworkMonitorUtils.ACTION_DATA_STALL_SUSPECTED);
+
+        intent.putExtra(ConnectivityManager.EXTRA_NETWORK, new Network(mNetwork));
+        intent.putExtra(NetworkMonitorUtils.EXTRA_CONSECUTIVE_DNS_COUNT,
+                mDnsStallDetector.getConsecutiveTimeoutCount());
+
+        final int target =
+                mDnsStallDetector.mResultIndices.size() - mConsecutiveDnsTimeoutThreshold;
+        final int firstConsecutiveTimeoutIndex =
+                mDnsStallDetector.mResultIndices.indexOf(target);
+
+        intent.putExtra(NetworkMonitorUtils.EXTRA_FIRST_TIMEOUT_TIMESTAMP_MS,
+                mDnsStallDetector.mDnsEvents[firstConsecutiveTimeoutIndex].mTimeStamp);
+        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT,
+                NetworkMonitorUtils.PERMISSION_ACCESS_NETWORK_CONDITIONS);
     }
 }

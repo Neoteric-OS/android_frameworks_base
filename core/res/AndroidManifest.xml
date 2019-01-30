@@ -291,6 +291,7 @@
     <protected-broadcast android:name="android.net.conn.RESTRICT_BACKGROUND_CHANGED" />
     <protected-broadcast android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED" />
     <protected-broadcast android:name="android.net.conn.CAPTIVE_PORTAL_TEST_COMPLETED" />
+    <protected-broadcast android:name="android.net.conn.DATA_STALL_SUSPECTED" />
 
     <protected-broadcast android:name="android.net.nsd.STATE_CHANGED" />
 

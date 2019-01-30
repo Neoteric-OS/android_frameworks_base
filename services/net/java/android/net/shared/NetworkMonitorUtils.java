@@ -48,6 +48,11 @@ public class NetworkMonitorUtils {
     private static final String DEFAULT_HTTP_URL =
             "http://connectivitycheck.gstatic.com/generate_204";
 
+    public static final String ACTION_DATA_STALL_SUSPECTED =
+            "android.net.conn.DATA_STALL_SUSPECTED";
+    public static final String EXTRA_CONSECUTIVE_DNS_COUNT = "extra_consecutive_dns_count";
+    public static final String EXTRA_FIRST_TIMEOUT_TIMESTAMP_MS =
+            "extra_first_timeout_timestamp_ms";
     /**
      * Get the captive portal server HTTP URL that is configured on the device.
      */
