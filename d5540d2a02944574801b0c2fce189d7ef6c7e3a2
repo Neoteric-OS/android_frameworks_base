@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e4247c58_aa6d9e09",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5123,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-01-30T21:51:02Z",
+      "side": 1,
+      "message": "At this moment database CE database is not usable and most of the AccountManager methods crash system service. It is easy to notice.",
+      "parentUuid": "26c9e775_ad45a41a",
+      "range": {
+        "startLine": 5123,
+        "startChar": 24,
+        "endLine": 5123,
+        "endChar": 45
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccda70af_ae3b496f",
         "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
         "patchSetId": 2
@@ -141,6 +165,30 @@
       "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d0e239_2a448efb",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5149,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-01-30T21:51:02Z",
+      "side": 1,
+      "message": "It can be done as one big transaction.\nExisting code caches insertionPoint in memory which is better for performance.",
+      "parentUuid": "66153f26_06bb582e",
+      "range": {
+        "startLine": 5144,
+        "startChar": 8,
+        "endLine": 5149,
+        "endChar": 9
+      },
+      "revId": "d5540d2a02944574801b0c2fce189d7ef6c7e3a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
