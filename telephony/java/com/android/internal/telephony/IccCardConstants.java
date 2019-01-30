@@ -54,6 +54,11 @@ public class IccCardConstants {
     public static final String INTENT_VALUE_LOCKED_NETWORK = "NETWORK";
     /* PERM_DISABLED means ICC is permanently disabled due to puk fails */
     public static final String INTENT_VALUE_ABSENT_ON_PERM_DISABLED = "PERM_DISABLED";
+    /**
+     * @hide
+     * ICCID_LOADED means ICCID has been loaded.
+     */
+    public static final String INTENT_VALUE_ICCID_LOADED ="ICCID_LOADED";
 
     /**
      * This is combination of IccCardStatus.CardState and IccCardApplicationStatus.AppState
@@ -76,7 +81,8 @@ public class IccCardConstants {
         PERM_DISABLED,  /** ordinal(7) == {@See TelephonyManager#SIM_STATE_PERM_DISABLED} */
         CARD_IO_ERROR,  /** ordinal(8) == {@See TelephonyManager#SIM_STATE_CARD_IO_ERROR} */
         CARD_RESTRICTED,/** ordinal(9) == {@See TelephonyManager#SIM_STATE_CARD_RESTRICTED} */
-        LOADED;         /** ordinal(9) == {@See TelephonyManager#SIM_STATE_LOADED} */
+        LOADED,         /** ordinal(9) == {@See TelephonyManager#SIM_STATE_LOADED} */
+        ICCID_LOADED;
 
         public boolean isPinLocked() {
             return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED));
@@ -85,7 +91,7 @@ public class IccCardConstants {
         public boolean iccCardExist() {
             return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED)
                     || (this == NETWORK_LOCKED) || (this == READY) || (this == NOT_READY)
-                    || (this == PERM_DISABLED) || (this == CARD_IO_ERROR)
+                    || (this == PERM_DISABLED) || (this == CARD_IO_ERROR) || (this == ICCID_LOADED)
                     || (this == CARD_RESTRICTED) || (this == LOADED));
         }
 
@@ -102,6 +108,7 @@ public class IccCardConstants {
                 case 8: return CARD_IO_ERROR;
                 case 9: return CARD_RESTRICTED;
                 case 10: return LOADED;
+                case 11: return ICCID_LOADED;
                 default:
                     throw new IllegalArgumentException();
             }
