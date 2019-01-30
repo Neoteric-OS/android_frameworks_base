@@ -1476,6 +1476,11 @@ class UserController implements Handler.Callback {
                     callingUid, -1, true) == PackageManager.PERMISSION_GRANTED) {
                 // If the caller has this permission, they always pass go.  And collect $200.
                 allow = true;
+            } else if (callingUid == Process.NETWORK_STACK_UID) {
+                // NetworkStack is a cross-user system component that effectively needs
+                // INTERACT_ACROSS_USERS_FULL (to start captive portal login for example) but cannot
+                // get this signature permission as it is signed with its own certificate.
+                allow = true;
             } else if (allowMode == ALLOW_FULL_ONLY) {
                 // We require full access, sucks to be you.
                 allow = false;
