@@ -97,4 +97,26 @@ public final class TcpKeepalivePacketDataTest {
     }
 
     //TODO: add ipv6 test when ipv6 supported
+
+    @Test
+    public void testParcelUnparcel() {
+        final InetAddress srcAddr = InetAddressUtils.parseNumericAddress("192.168.0.1");
+        final InetAddress dstAddr = InetAddressUtils.parseNumericAddress("192.168.0.10");
+        final int srcPort = 1234;
+        final int dstPort = 4321;
+        final int sequence = 0x11111111;
+        final int ack = 0x22222222;
+        final int wnd = 48_000;
+        TcpKeepalivePacketData testData = null;
+        TcpKeepalivePacketData resultData = null;
+        TcpSocketInfo testInfo = new TcpSocketInfo(
+                srcAddr, srcPort, dstAddr, dstPort, sequence, ack, wnd);
+        try {
+            testData = TcpKeepalivePacketData.tcpKeepalivePacket(testInfo);
+            resultData = TcpKeepalivePacketData.fromStableParcelable(testData.toStableParcelable());
+        } catch (InvalidPacketException e) {
+            fail("InvalidPacketException" + e);
+        }
+        assertEquals(testData, resultData);
+    }
 }

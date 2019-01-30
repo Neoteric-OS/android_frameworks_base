@@ -17,15 +17,18 @@ package android.net;
 
 import static android.net.SocketKeepalive.ERROR_INVALID_IP_ADDRESS;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.util.IpUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.system.OsConstants;
+import android.util.Log;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Objects;
@@ -35,7 +38,7 @@ import java.util.Objects;
  * @hide
  */
 
-public class TcpKeepalivePacketData extends KeepalivePacketData implements Parcelable {
+public class TcpKeepalivePacketData extends KeepalivePacketData {
     private static final String TAG = "TcpKeepalivePacketData";
 
      /** TCP sequence number. */
@@ -115,6 +118,7 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
     // TODO: add buildV6Packet.
 
     /** Represents tcp/ip information. */
+    // TODO: Replace TcpSocketInfo with TcpKeepalivePacketDataParcelable.
     public static class TcpSocketInfo {
         public final InetAddress srcAddress;
         public final InetAddress dstAddress;
@@ -155,7 +159,10 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
     }
 
     /* Parcelable Implementation. */
-    /** No special parcel contents. */
+    /* Note that this object implements parcelable (and needs to keep doing this as it inherits
+     * from a class that does), but should usually be parceled as a stable parcelable using
+     * the toStableParcelable() and fromStableParcelable() methods.
+     */
     public int describeContents() {
         return 0;
     }
@@ -186,4 +193,60 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
                     return new TcpKeepalivePacketData[size];
                 }
             };
+
+    /**
+     * Convert this TcpKeepalivePacketData to a TcpKeepalivePacketDataParcelable.
+     */
+    @NonNull
+    public TcpKeepalivePacketDataParcelable toStableParcelable() {
+        final TcpKeepalivePacketDataParcelable parcel = new TcpKeepalivePacketDataParcelable();
+        parcel.srcAddress = srcAddress.getAddress();
+        parcel.dstAddress = dstAddress.getAddress();
+        parcel.srcPort = srcPort;
+        parcel.dstPort = dstPort;
+        parcel.seqNum = tcpSeq;
+        parcel.ackNum = tcpAck;
+        parcel.rcvWnd = tcpWnd;
+        return parcel;
+    }
+
+    /**
+     * Convert a TcpKeepalivePacketDataParcelable to a TcpKeepalivePacketData.
+     */
+    @Nullable
+    public static TcpKeepalivePacketData fromStableParcelable(
+            @Nullable TcpKeepalivePacketDataParcelable parcel) {
+        if (null == parcel) return null;
+        try {
+            final TcpSocketInfo tcpInfo = new TcpSocketInfo(
+                    getByAddressOrNull(parcel.srcAddress), parcel.srcPort,
+                    getByAddressOrNull(parcel.dstAddress), parcel.dstPort,
+                    parcel.seqNum, parcel.ackNum, parcel.rcvWnd);
+            return tcpKeepalivePacket(tcpInfo);
+        } catch (InvalidPacketException e) {
+            Log.e(TAG, "Can't unparcel TcpKeepaliveData", e);
+        }
+        return null;
+    }
+
+    @Nullable
+    private static InetAddress getByAddressOrNull(@Nullable final byte[] address) {
+        try {
+            return InetAddress.getByAddress(address);
+        } catch (UnknownHostException e) {
+            return null;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        final String sb = "saddr: " + srcAddress
+                + " daddr: " + dstAddress
+                + " sport: " + srcPort
+                + " dport: " + dstPort
+                + " seq: " + tcpAck
+                + " ack: " + tcpAck;
+        return sb;
+    }
 }
