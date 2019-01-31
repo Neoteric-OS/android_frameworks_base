@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8df79cba_6e5a5bf1",
+        "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T08:34:21Z",
+      "side": 1,
+      "message": "Previously the TextView was added to the placeholder in the SSL certificate view, but the placeholder has an id that is @hide.\nHowever it can be added at the top of the LinearLayout to obtain the same result, since the placeholder was at the top of the SSL certificate view. This is why I am moving the TextView at the top here instead of inserting it dynamically in the view.",
+      "parentUuid": "3192ce1d_8881fbf5",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703d23ee_ce0df198",
         "filename": "proto/Android.bp",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b8ea2a_c1427fdb",
+        "filename": "proto/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T08:34:21Z",
+      "side": 1,
+      "message": "As per in-person discussion: the app needs to know the metrics IDs which are defined in metrics_constants.proto, but does not need to be compiled with all framework protos (the rule at the top), which are also not marked as \"sdk_version: system_current\".",
+      "parentUuid": "703d23ee_ce0df198",
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
