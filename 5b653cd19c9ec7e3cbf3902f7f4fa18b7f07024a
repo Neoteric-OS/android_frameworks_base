@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b3beaa1_288df06b",
+        "filename": "packages/NetworkStack/AndroidManifest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T12:17:55Z",
+      "side": 1,
+      "message": "Nit: NetworkStackPermissionStub. Don\u0027t bother respinning just for this though.",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 57
+      },
+      "revId": "5b653cd19c9ec7e3cbf3902f7f4fa18b7f07024a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
