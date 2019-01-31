@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ca89edd4_84dece0f",
+        "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-31T08:52:10Z",
+      "side": 1,
+      "message": "Discussed offline : it seems to be irrelevant is this case. Please do search for the ID regardless just in case :)",
+      "parentUuid": "f2aa5f2d_f3b0855c",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703d23ee_ce0df198",
         "filename": "proto/Android.bp",
         "patchSetId": 5
