@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "729a3f8e_5c3266e3",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Done: as discussed, marking this permission as @SystemApi, since this class is on the system_server side.",
+      "parentUuid": "f38bb6da_bb31a82e",
+      "range": {
+        "startLine": 56,
+        "startChar": 54,
+        "endLine": 56,
+        "endChar": 95
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30183455_df7c9d0d",
         "filename": "packages/NetworkStack/AndroidManifest.xml",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ddce633a_4943418a",
+        "filename": "packages/NetworkStack/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Yes, I remember I did a dumpsys package com.android.mainline.networkstack. I don\u0027t think the UID needs to be shared either.",
+      "parentUuid": "30183455_df7c9d0d",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 80
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a4cc9f6_545243f5",
         "filename": "packages/NetworkStackStub/AndroidManifest.xml",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cef09d2_cb64a857",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4cc9f6_545243f5",
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "efb31767_a4ab6e28",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad17873_cada49dd",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46afca1a_beecd28f",
         "filename": "packages/NetworkStackStub/AndroidManifest.xml",
         "patchSetId": 2
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "a69b0f8d_8961d9ae",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46afca1a_beecd28f",
+      "range": {
+        "startLine": 26,
+        "startChar": 50,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433ddbe7_0df4963d",
         "filename": "packages/NetworkStackStub/src/com/android/server/NetworkStackStub.java",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4882c1_f9837160",
+        "filename": "packages/NetworkStackStub/src/com/android/server/NetworkStackStub.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T11:58:52Z",
+      "side": 1,
+      "message": "Tried it but it\u0027s still not happy. I think this may be soong-related: all examples of hasCode\u003d\"false\" in the framework are currently using Android.mk.\nKeeping the class for now, I think it\u0027s better than having to do a make -\u003e soong conversion later. Will file a bug for soong.",
+      "parentUuid": "433ddbe7_0df4963d",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
