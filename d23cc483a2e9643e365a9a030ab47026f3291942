@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad17873_cada49dd",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-31T09:26:32Z",
+      "side": 1,
+      "message": "Can you please be a it more expansive on how this works and why this is the way it\u0027s done ? The explanation we reached offline is fine.",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433ddbe7_0df4963d",
+        "filename": "packages/NetworkStackStub/src/com/android/server/NetworkStackStub.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-31T09:26:32Z",
+      "side": 1,
+      "message": "You don\u0027t need this IIUC. Use android:hasCode\u003d\"no\" in the \u003capplication\u003e tag in the manifest.",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
