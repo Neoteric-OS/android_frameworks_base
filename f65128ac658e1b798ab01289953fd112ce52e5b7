@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "245ace26_e6ef80f6",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-31T07:09:07Z",
+      "side": 1,
+      "message": "setLocationEnabledForUser is a systemApi and cannot be called in the test code. other suggestion?",
+      "parentUuid": "693f411d_46210000",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2f5f65_1a1ba27f",
         "filename": "packages/StubNetworkLocation/MODULE_LICENSE_APACHE2",
         "patchSetId": 3
