@@ -220,6 +220,29 @@
     },
     {
       "key": {
+        "uuid": "be77f094_255da216",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T22:49:17Z",
+      "side": 1,
+      "message": "This should probably be called getMessageRecipients() (and also document that this can be different compared to the current list of participants in the thread).",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69dfb75a_90eb1a49",
         "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
         "patchSetId": 3
