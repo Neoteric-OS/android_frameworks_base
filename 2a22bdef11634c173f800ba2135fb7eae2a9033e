@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "091bc3dd_930863e9",
+        "filename": "packages/CaptivePortalLogin/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T09:45:58Z",
+      "side": 1,
+      "message": "Removed privileged flag: we can reconsider adding it if being in priv-app turns out to be necessary, but this is not needed for now indeed.",
+      "parentUuid": "eeb84b81_dddf6a5f",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3192ce1d_8881fbf5",
         "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
         "patchSetId": 5
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "1152ba07_eb46d7aa",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T09:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ed3674_a92f3ed5",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 643,
+        "endChar": 5
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "791f7a08_f3d7cb86",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 5
@@ -187,6 +235,30 @@
       "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72aaef08_4c0fa06e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T09:45:58Z",
+      "side": 1,
+      "message": "Yes, the app will likely stop using NETWORK_SETTINGS soon.",
+      "parentUuid": "791f7a08_f3d7cb86",
+      "range": {
+        "startLine": 113,
+        "startChar": 32,
+        "endLine": 113,
+        "endChar": 59
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
