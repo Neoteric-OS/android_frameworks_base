@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "f38bb6da_bb31a82e",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:46:54Z",
+      "side": 1,
+      "message": "Are we also going to define this in the tree somewhere as @SystemApi? I haven\u0027t found an example of this in the tree yet. This does seem quite common though, for example:\n\n    \u003cpermission android:name\u003d\"com.android.permissioncontroller.permission.MANAGE_ROLES_FROM_CONTROLLER\"\n            android:protectionLevel\u003d\"signature\" /\u003e\n\nwhich is in packages/apps/PermissionController/AndroidManifest.xml and as a constant (but not @SystemApi) in frameworks/base/core/java/android/app/role/RoleManager.java.\n\nOr:\n\n    \u003c!-- SysUI must be the one to define this permission; its name is\n         referenced by the core OS. --\u003e\n    \u003cpermission android:name\u003d\"android.permission.systemui.IDENTITY\"\n        android:protectionLevel\u003d\"signature\" /\u003e",
+      "range": {
+        "startLine": 56,
+        "startChar": 54,
+        "endLine": 56,
+        "endChar": 95
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30183455_df7c9d0d",
+        "filename": "packages/NetworkStack/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:46:54Z",
+      "side": 1,
+      "message": "Have you checked that the permission is actually granted?\n\nDo the two apps need to share a UID for this to work? (I don\u0027t think so.)",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 80
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4cc9f6_545243f5",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:46:54Z",
+      "side": 1,
+      "message": "2019",
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ad17873_cada49dd",
         "filename": "packages/NetworkStackStub/AndroidManifest.xml",
         "patchSetId": 2
@@ -18,6 +81,29 @@
         "startChar": 9,
         "endLine": 22,
         "endChar": 52
+      },
+      "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46afca1a_beecd28f",
+        "filename": "packages/NetworkStackStub/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:46:54Z",
+      "side": 1,
+      "message": "NetworkStackPermissionStub?",
+      "range": {
+        "startLine": 26,
+        "startChar": 50,
+        "endLine": 26,
+        "endChar": 66
       },
       "revId": "d23cc483a2e9643e365a9a030ab47026f3291942",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
