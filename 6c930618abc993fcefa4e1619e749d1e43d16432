@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5004ec1_570d7781",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T13:00:39Z",
+      "side": 1,
+      "message": "Incomplete sentence. I think we say this elsewhere, e.g., in the app manifest. So you may want to remove it. Or you could say that the permission is defined by the stub and used only by the network stack, which must be signed with the same key as the stub.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "6c930618abc993fcefa4e1619e749d1e43d16432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94ca181_acb3ff10",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T13:00:39Z",
+      "side": 1,
+      "message": "We should add allow callers with the NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK here too.",
+      "revId": "6c930618abc993fcefa4e1619e749d1e43d16432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
