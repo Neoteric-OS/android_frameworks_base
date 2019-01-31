@@ -22,6 +22,30 @@
       "revId": "92d150385e4085f00503c2b3b2ef430fcd2d508e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360343aa_f3bdfb47",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-31T01:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec33a55c_c75e5023",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "92d150385e4085f00503c2b3b2ef430fcd2d508e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
