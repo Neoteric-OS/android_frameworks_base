@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e038f8fe_cac3177b",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 5372,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-31T00:23:18Z",
+      "side": 1,
+      "message": "This is still here in the latest patchset. Please run make update-api and if it is still there remove \"sendTextMessageWithoutPersisting\" API manually",
+      "parentUuid": "e3a7a1ca_e4b01b86",
+      "revId": "04bc41e201b8803c9b6c17b7445b88703510c5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fb93981_7645a6d0",
         "filename": "telephony/java/android/telephony/SmsManager.java",
         "patchSetId": 2
