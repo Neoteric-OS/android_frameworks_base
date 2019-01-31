@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01ad7d5a_6d28b0e5",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T12:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28968af_43d20e4e",
+      "range": {
+        "startLine": 3190,
+        "startChar": 37,
+        "endLine": 3190,
+        "endChar": 56
+      },
+      "revId": "795162f6e53f4d65df1d141e033bd32ca7e0afc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dfd95c7_51c02c90",
         "filename": "packages/NetworkStackPermissionStub/AndroidManifest.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "795162f6e53f4d65df1d141e033bd32ca7e0afc4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388ecd47_f691d8a1",
+        "filename": "packages/NetworkStackPermissionStub/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-31T12:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dfd95c7_51c02c90",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "795162f6e53f4d65df1d141e033bd32ca7e0afc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
