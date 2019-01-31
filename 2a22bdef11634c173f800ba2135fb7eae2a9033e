@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eeb84b81_dddf6a5f",
+        "filename": "packages/CaptivePortalLogin/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:05:15Z",
+      "side": 1,
+      "message": "To be clear: I don\u0027t see a problem with being in priv-app per se, but, but I\u0027m wondering if it\u0027s OK for the same app to go from normal to priv-app on an OS upgrade. For example, does the app\u0027s data remain the same? (Assuming it even stores any data, that is...)",
+      "parentUuid": "f6c44c3f_3d21a24c",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3192ce1d_8881fbf5",
         "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
         "patchSetId": 5
@@ -117,6 +141,52 @@
       "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52ed3674_a92f3ed5",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:05:15Z",
+      "side": 1,
+      "message": "Can you add a TODO to delete this once we are able to access the SSID in NetworkCapabilities? This is racy and may be incorrect if there is more than one wifi network.",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 643,
+        "endChar": 5
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791f7a08_f3d7cb86",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T09:05:15Z",
+      "side": 1,
+      "message": "We\u0027re not making this permission string be @SystemApi because we\u0027ll need the stub APK anyway, right?",
+      "range": {
+        "startLine": 113,
+        "startChar": 32,
+        "endLine": 113,
+        "endChar": 59
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
