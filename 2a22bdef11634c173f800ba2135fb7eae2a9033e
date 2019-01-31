@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f2aa5f2d_f3b0855c",
+        "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-31T08:42:05Z",
+      "side": 1,
+      "message": "Have you searched carefully for the ID of the placeholder throughout the code base ? Usually the reason we have such a scheme is that the placeholder is manipulated by other parts of the code.",
+      "parentUuid": "8df79cba_6e5a5bf1",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703d23ee_ce0df198",
         "filename": "proto/Android.bp",
         "patchSetId": 5
