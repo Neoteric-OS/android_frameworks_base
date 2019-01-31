@@ -390,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "8eabb26b_99788965",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThreadIconChangedEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "My thought is even that should not require the old icon. As long as we have the thread id, only new icon should be good enough.",
+      "parentUuid": "2566c3be_9056298c",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b36d8267_dfae32b3",
         "filename": "telephony/java/android/telephony/ims/RcsGroupThreadIconChangedEvent.java",
         "patchSetId": 2
@@ -442,6 +460,24 @@
       "side": 1,
       "message": "This is a static inner class so it is not possible to use buildAndSave on an already created event. However it is possible to have a builder instantiated and call this function multiple times. I don\u0027t think that would be an issue as the code below seems useful\n\nBuilder builder \u003d RcsGroupThreadParticipantLeftEvent.builder(someThread, someOwner);\nbuilder.setLeavingParticipant(someParticipant).buildAndSave();\nbuilder.setLeavingParticipant(someOtherParticipant).buildAndSave();\n\nThat being said, we should check in provider side to not create identical events.",
       "parentUuid": "67017974_af0ef3e7",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510f7223_eac61d77",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThreadParticipantLeftEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "Sure, or avoid back to back calls to buildAndSave.",
+      "parentUuid": "e22dba02_76e84874",
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -547,6 +583,30 @@
       "side": 1,
       "message": "There is a utility function for messages in RcsThread, but you are right that I should add for events. \n\nAs for moving these over to threads completely, that would take away the ability to search for messages app-wide so I\u0027d rather keep them here too.",
       "parentUuid": "d4954bec_b5bab4f7",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 90
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c67be4_b4383bc0",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "Sure, makes sense for messages. But do you think the event APIs are needed here?",
+      "parentUuid": "c812b32c_d0342b88",
       "range": {
         "startLine": 98,
         "startChar": 4,
@@ -721,6 +781,30 @@
       "side": 1,
       "message": "The classes will provide type safety for API users but we can make the interface an abstract class and move the logic there.",
       "parentUuid": "021d408b_24f7ec25",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 81
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c217d591_2e04ae39",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "Won\u0027t type safety be provided via raw query anyway? Or we can include a field for URI used for the query in the base class in addition to the raw query.",
+      "parentUuid": "f19fdbba_c316f37b",
       "range": {
         "startLine": 26,
         "startChar": 13,
@@ -1013,6 +1097,30 @@
     },
     {
       "key": {
+        "uuid": "9ca8e6b8_2c8c3823",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "Interesting. How is a thread identified until then (between app and server)? I believe until URI is generated, app would not allow creation of a new thread? Because what if the user tries to create a new thread with same participants before URI is generated.",
+      "parentUuid": "fab79a42_33e4c179",
+      "range": {
+        "startLine": 103,
+        "startChar": 54,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa4b0ff5_bc3257e2",
         "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "patchSetId": 2
@@ -1048,6 +1156,30 @@
       "side": 1,
       "message": "This is to allow draft messages - i.e. the user opened a conversation, typed a few things, then closed the app, then opened it again to continue typing, changed the SIM card to send on etc. all before sending a message. Status especially changes multiple times before the message is successfully sent.\n\nThat being said, received messages could have their own big creator function.",
       "parentUuid": "fa4b0ff5_bc3257e2",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c78582_104923eb",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "Until the user hits send, the message should not be persisted in the db, should it?",
+      "parentUuid": "77b487da_f67f5ca3",
       "range": {
         "startLine": 121,
         "startChar": 7,
@@ -1142,6 +1274,30 @@
       "side": 1,
       "message": "Returns the participant ID\u0027s that the deliveries are for. Will add comments.",
       "parentUuid": "d63d502d_e5e84720",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 9
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63338a2d_e36e67fb",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:14:57Z",
+      "side": 1,
+      "message": "But deliveries are more than just the participant id\u0027s, no? Otherwise this essentially sounds like the participants in the thread.",
+      "parentUuid": "a2b85cee_6b688821",
       "range": {
         "startLine": 165,
         "startChar": 4,
