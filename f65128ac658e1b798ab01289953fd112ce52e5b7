@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "693f411d_46210000",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-01-31T03:59:00Z",
+      "side": 1,
+      "message": "I will try, sorry to delay you so late.",
+      "parentUuid": "b31e80fd_62b7ae05",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2f5f65_1a1ba27f",
         "filename": "packages/StubNetworkLocation/MODULE_LICENSE_APACHE2",
         "patchSetId": 3
