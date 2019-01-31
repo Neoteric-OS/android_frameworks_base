@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6c44c3f_3d21a24c",
+        "filename": "packages/CaptivePortalLogin/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T08:56:41Z",
+      "side": 1,
+      "message": "Is this necessary? Was it true before? At the moment the app is installed in /system/app/CaptivePortalLogin",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "2a22bdef11634c173f800ba2135fb7eae2a9033e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3192ce1d_8881fbf5",
         "filename": "packages/CaptivePortalLogin/res/layout/ssl_warning.xml",
         "patchSetId": 5
