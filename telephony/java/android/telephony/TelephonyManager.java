@@ -9863,7 +9863,8 @@ public class TelephonyManager {
      * Get preferred opportunistic data subscription Id
      *
      * <p>Requires that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}),
-     * or has permission {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}.
+     * or has permission
+     * {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE READ_PRIVILEGED_PHONE_STATE}.
      * @return subId preferred opportunistic subscription id or
      * {@link SubscriptionManager#DEFAULT_SUBSCRIPTION_ID} if there are no preferred
      * subscription id
