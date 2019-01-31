@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b31e80fd_62b7ae05",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-31T03:33:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we can check this into AOSP, this will have side effects. For CTS test purposes, I would suggest turning on location in the test setUp via LocationManager.setLocationEnabledForUser().\n\nOutside of CTS tests, this problem should be solved by Jack\u0027s cl.",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2f5f65_1a1ba27f",
+        "filename": "packages/StubNetworkLocation/MODULE_LICENSE_APACHE2",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-31T03:33:19Z",
+      "side": 1,
+      "message": "Is this file necessary?",
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a28475_d7299dfc",
+        "filename": "packages/StubNetworkLocation/NOTICE",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-31T03:33:19Z",
+      "side": 1,
+      "message": "Is this file necessary? I thought we had discontinued them, but I could be wrong.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f572fe6_c751fa77",
+        "filename": "packages/StubNetworkLocation/src/com/android/location/stubnetwork/StubNetworkLocationService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-31T03:33:19Z",
+      "side": 1,
+      "message": "may be removed",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
