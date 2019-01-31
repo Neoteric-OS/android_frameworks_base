@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "450047ed_e969c9d9",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2019-01-31T17:22:31Z",
+      "side": 1,
+      "message": "Hmm, I know I\u0027ve seen CTS tests with WRITE_SECURE_SETTINGS permission, so I assumed they would have access to system code as well. Could you try Settings.Secure.putInt(cr, LOCATION_MODE, LOCATION_MODE_HIGH_ACCURACY) instead?",
+      "parentUuid": "245ace26_e6ef80f6",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2f5f65_1a1ba27f",
         "filename": "packages/StubNetworkLocation/MODULE_LICENSE_APACHE2",
         "patchSetId": 3
