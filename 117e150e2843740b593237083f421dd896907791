@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65e7ba3a_547e7a7f",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-01-31T04:32:07Z",
+      "side": 1,
+      "message": "This call will wait for task to finish while holding mLock. That result in sequential execution of readAt and disconnect.",
+      "range": {
+        "startLine": 357,
+        "startChar": 23,
+        "endLine": 357,
+        "endChar": 35
+      },
+      "revId": "117e150e2843740b593237083f421dd896907791",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
