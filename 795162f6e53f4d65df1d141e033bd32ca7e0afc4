@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28968af_43d20e4e",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T12:11:56Z",
+      "side": 1,
+      "message": "Nit: because this will often be imported statically, it might be better as PERMISSION_MAINLINE_NETWORK_STACK?",
+      "range": {
+        "startLine": 3190,
+        "startChar": 37,
+        "endLine": 3190,
+        "endChar": 56
+      },
+      "revId": "795162f6e53f4d65df1d141e033bd32ca7e0afc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfd95c7_51c02c90",
+        "filename": "packages/NetworkStackPermissionStub/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T12:11:56Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mention CTS here, since that\u0027s implementation detail. Maybe just say:\n\nThis APK *must* be installed, even if the NetworkStack app is not installed, because otherwise, any application will be able to define this permission and the system will give that application full access to the network stack.",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "795162f6e53f4d65df1d141e033bd32ca7e0afc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
