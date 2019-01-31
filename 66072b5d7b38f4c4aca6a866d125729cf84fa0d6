@@ -42,6 +42,161 @@
     },
     {
       "key": {
+        "uuid": "b941164a_9efbfd9a",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Getters should not be @hide, and should not reference internal classes in the javadoc.",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d7c13d_266d8a23",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "@NonNull or @Nullable?",
+      "range": {
+        "startLine": 85,
+        "startChar": 9,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1585f8ff_a9854d34",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Should indicate how to tell if the location is not set.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 5
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378aac39_f5af6ca2",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f481b91_4556590d",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Should default to SubscriptionManager#INVALID_SUBSCRIPTION_ID.",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 7
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a20378_e57eff92",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Should indicate where these IDs come from.",
+      "range": {
+        "startLine": 140,
+        "startChar": 19,
+        "endLine": 140,
+        "endChar": 44
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f68b50_aa6cb2b6",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "This feels like its not an optional parameter; if this is the case have it set in the constructor for the builder.  Otherwise you\u0027ll need some way to know if this is not set.",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48af038a_ad158a4b",
         "filename": "telephony/java/android/telephony/ims/RcsMessageQueryContinuationToken.java",
         "patchSetId": 3
@@ -59,6 +214,149 @@
         "endLine": 75,
         "endChar": 41
       },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dfb75a_90eb1a49",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "This class doesn\u0027t add any new parameters; we should just use the base class and remove this.",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2b8e17_fef16190",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Why is the message empty?  The parameters passed in look complete enough that I\u0027m surprised the resulting message would be empty.",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 96
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfbc1b8_b1721a8c",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add @NonNull annotation for the parameter .",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7534ad3_101cd359",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d9fe05_494fc748",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add @NonNull annotation.",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7d0de9_b756fca1",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add @NonNull annotation.",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1464b1_e00f14b4",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "This isn\u0027t adding any new methods of functionality that is visible to the API consumer.  Instead of inflating the API surface with new extensions which don\u0027t add anything other than implementation values, lets just use RcsQueryContinuationToken; if it needs some internal implementation specifics to track what kind of continuation token it is, that\u0027s fine.",
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true

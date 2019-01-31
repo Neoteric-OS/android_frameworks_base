@@ -25,6 +25,293 @@
     },
     {
       "key": {
+        "uuid": "e0c45dc6_9fab922f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "I believe its usually implements BaseColumns, and it really just adds the _ID column.",
+      "parentUuid": "33468f1c_a9f064be",
+      "range": {
+        "startLine": 2061,
+        "startChar": 32,
+        "endLine": 2061,
+        "endChar": 51
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138963aa_b3587e34",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "It is more typical to do this as:\npublic static final class RcsColumns implements BaseColumns\n\nThe same comment applies to the sub-classes; its more typical to see these provider column definitions as classes rather than interfaces (2x as many providers define them as concrete classes than interfaces).",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38273f65_64480eb2",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "public static final",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd2a6b6_0d3f21c0",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "public static final",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf2d8e0_2351f2dc",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "The schema in the design doc seems to indicate rcs thread is keyed on _id, in which case you could extend BaseColumns.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7a98cd_594c9ac1",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need to define RCS_THREAD_ID?",
+      "range": {
+        "startLine": 2104,
+        "startChar": 9,
+        "endLine": 2105,
+        "endChar": 15
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a692cd20_80fe9a5f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need to define RCS_THREAD_ID? (e.g. for primary/foreign key)?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afafc9e9_bbb02e65",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "I realize the decision was made to store the data in 3rd normal form.  Is it going to be the case that developers always consume the view versus the individual tables?  Just trying to get a feel for why this is necessary.",
+      "range": {
+        "startLine": 2167,
+        "startChar": 8,
+        "endLine": 2169,
+        "endChar": 15
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d956ec83_9cd3d7a9",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "So this table has a composite primary key made up of rcs_thread_id and rcs_participant_id?\nThe schema shows rcs_thread_id and canonical_address_id.",
+      "range": {
+        "startLine": 2207,
+        "startChar": 12,
+        "endLine": 2207,
+        "endChar": 68
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e634ab_ef2f2a2c",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Should extend BaseColumns since it has the _id which in the schema you indicated is the primary key?",
+      "range": {
+        "startLine": 2242,
+        "startChar": 8,
+        "endLine": 2242,
+        "endChar": 37
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241458b2_d89b383a",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Thought this was just _id?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e400e15a_7cb3b78f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Is this the rcs_message_id column?  Should indicate that its text and where it comes from; refer to spec if possible to define what the global ID is made of.  Is it a UUID?",
+      "range": {
+        "startLine": 2248,
+        "startChar": 12,
+        "endLine": 2251,
+        "endChar": 62
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4fe2b7_96c382a6",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What are the allowed values for status?",
+      "range": {
+        "startLine": 2259,
+        "startChar": 12,
+        "endLine": 2261,
+        "endChar": 44
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77298485_edeefd32",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "MESSAGE_TEXT_COLUMN",
+      "range": {
+        "startLine": 2271,
+        "startChar": 19,
+        "endLine": 2271,
+        "endChar": 30
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a881af33_aad1f236",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 2
@@ -42,6 +329,23 @@
         "endLine": 2301,
         "endChar": 55
       },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea899495_c93c0302",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "SENDER_PARTICIPANT_ID_COLUMN?  \nTrying to name more in line with the key in the other table.",
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -135,6 +439,29 @@
     },
     {
       "key": {
+        "uuid": "2e9b48d6_713d61d4",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "I\u0027m finding the mixture of views and tables to be hard to follow.  I\u0027ve got the schema up in the design doc, but a developer without access to that is going to have a tough time figuring this out.",
+      "range": {
+        "startLine": 2372,
+        "startChar": 12,
+        "endLine": 2380,
+        "endChar": 83
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0f2a27a_41ec1726",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 2
@@ -151,6 +478,235 @@
         "startChar": 12,
         "endLine": 2397,
         "endChar": 42
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b1cc21_743e4b8b",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Again, typical convention is to use _id as the primary key for tables in Android.",
+      "range": {
+        "startLine": 2421,
+        "startChar": 11,
+        "endLine": 2422,
+        "endChar": 0
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b10233a_0f6a0852",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What is the type for a session ID?  Where does it come from?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53eb42da_5022be50",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What are the units?",
+      "range": {
+        "startLine": 2439,
+        "startChar": 14,
+        "endLine": 2439,
+        "endChar": 44
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9758136_852813c2",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2446,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "SUCCESSFULLY_TRANSFERRED_BYTES?",
+      "range": {
+        "startLine": 2446,
+        "startChar": 19,
+        "endLine": 2446,
+        "endChar": 41
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a020e31_6bf71fe3",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2449,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What are valid values here?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae65025f_7c8015bb",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "DURATION_MILLIS_COLUMN?",
+      "range": {
+        "startLine": 2466,
+        "startChar": 19,
+        "endLine": 2466,
+        "endChar": 32
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c93f55_14a37960",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2474,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Valid types?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87553f6a_c9682063",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2515,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "_ID?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efffdaed_5d2c1d94",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2520,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What are the expected values?  \ne.g.\n\u003cUL\u003e\n  \u003cLI\u003e{@link #PARTICIPANT_LEFT_EVENT_TYPE}\u003c/LI\u003e\n...\n\u003c/UL\u003e",
+      "range": {
+        "startLine": 2518,
+        "startChar": 12,
+        "endLine": 2520,
+        "endChar": 52
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c41f61_5721fb3c",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2530,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "SOURCE_PARTICIPANT_ID_COLUMN?",
+      "range": {
+        "startLine": 2530,
+        "startChar": 12,
+        "endLine": 2530,
+        "endChar": 51
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca03bd6_3bb4b843",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2537,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "DESTINATION_PARTICIPANT_ID_COLUMN?",
+      "range": {
+        "startLine": 2537,
+        "startChar": 19,
+        "endLine": 2537,
+        "endChar": 49
       },
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -216,6 +772,24 @@
     },
     {
       "key": {
+        "uuid": "23d2344d_b1f4345d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2619,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Agree",
+      "parentUuid": "8f996fe7_e7ab7e0b",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62d7f9b5_d2dcc26e",
         "filename": "telephony/java/android/telephony/PhoneCapability.aidl",
         "patchSetId": 2
@@ -244,6 +818,29 @@
       "writtenOn": "2019-01-30T19:18:38Z",
       "side": 1,
       "message": "Revisit the naming in this file. Particularly of the call() methods (and for RcsControllerCall and RcsServiceCall as well).",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825ad513_d5decf29",
+        "filename": "telephony/java/android/telephony/ims/RcsControllerCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "I want to make sure I\u0027m understanding this correctly.  This code will effectively be called from within Messanger\u0027s app space.  You should be using mContext.getSystemService to get the system service.  Also, \"ircs\" shouldn\u0027t be hardcoded, it should be specified in the Context like other system service.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 5
+      },
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -548,6 +1145,367 @@
     },
     {
       "key": {
+        "uuid": "feb69efa_c9f094b6",
+        "filename": "telephony/java/android/telephony/ims/RcsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "What is the permission model here?",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6d6f6e_558ca6e1",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Don\u0027t need to annotate the static consts.",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15eb6b15_deb56767",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Does a bitmask make more sense?",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5dfa20_adcc9e89",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Don\u0027t need to annotate the consts with the intdef; just annotate places where the consts are expected with the intdef.",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d938a203_fb142f9b",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Not needed; can expose builder as public.",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 5
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1192828_4098a4fc",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "All the getters below should be public; they can\u0027t @link to com.android.internal.telephony classes though.  The comments should say something to the effect of, \n\"Used to determine the message type which is queried.\"",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171abb59_cc837b32",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "@FileTransferPresence",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b533de2d_7ad2df2e",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add @SortingProperty  annotation",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085ea4e0_015ec3e7",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Not @hide and should be public.",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 9
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0114f8a_a8edd707",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setResultLimit",
+      "range": {
+        "startLine": 243,
+        "startChar": 23,
+        "endLine": 243,
+        "endChar": 37
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d020074a_3022e480",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "For limit parameter add:\n@IntRange(from \u003d 0)",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ea9e06_52825e0e",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Any reason why we\u0027re not using a standard query matching language here?",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 45
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85f0351_76e0610c",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setSortBy",
+      "range": {
+        "startLine": 302,
+        "startChar": 23,
+        "endLine": 302,
+        "endChar": 29
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122a65f4_a68b8575",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setSortAscending",
+      "range": {
+        "startLine": 314,
+        "startChar": 23,
+        "endLine": 314,
+        "endChar": 36
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0690958b_1ab919ac",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setThreadId",
+      "range": {
+        "startLine": 327,
+        "startChar": 23,
+        "endLine": 327,
+        "endChar": 36
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa259eeb_29b3410d",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add @Nullable annotation to RcsThread.",
+      "range": {
+        "startLine": 327,
+        "startChar": 37,
+        "endLine": 327,
+        "endChar": 53
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807214b3_c40d6e82",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "These all need permission checks to protect them.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4954bec_b5bab4f7",
         "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
         "patchSetId": 2
@@ -747,6 +1705,52 @@
     },
     {
       "key": {
+        "uuid": "a9166a84_47e896be",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Don\u0027t think you want to refer to this here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04a56bf_01aa3eb4",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "@hide; otherwise it\u0027ll be in the API.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 5
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dddc92a_28532724",
         "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
         "patchSetId": 2
@@ -763,6 +1767,178 @@
         "startChar": 36,
         "endLine": 55,
         "endChar": 38
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d39edf_389c46aa",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this method; the caller can just use new RcsParticipantQueryParameters.Builder()",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e549cdb7_cb717268",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "getters don\u0027t need to be @hide.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a224724_8eb4509c",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setThread",
+      "range": {
+        "startLine": 171,
+        "startChar": 23,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c197155d_e9f5434b",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "The same comment as I have below applies here; why would you want to query in this manner?",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39134b55_81081a30",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "This is REALLY awkward.  You\u0027re revealing details about the underlying RCS message store as part of the querying, and you\u0027re also designing what appears to be a new version of regex.\n\nWhy would we ever want to perform queries like this?  Is it not enough to just query for specific addresses?",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 67
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd634d8_3b1045e6",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setResultLimit",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 37
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2382cb2d_caef6dae",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setSortProperty",
+      "range": {
+        "startLine": 240,
+        "startChar": 23,
+        "endLine": 240,
+        "endChar": 29
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10491555_821c09ac",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setSetDirection",
+      "range": {
+        "startLine": 252,
+        "startChar": 23,
+        "endLine": 252,
+        "endChar": 36
       },
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -841,6 +2017,63 @@
     },
     {
       "key": {
+        "uuid": "a8bf6864_07052c67",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "prefix these with THREAD_TYPE\nE.g.\nTHREAD_TYPE_ALL\nTHREAD_TYPE_GROUP\nTHREAD_TYPE_1_TO_1",
+      "range": {
+        "startLine": 45,
+        "startChar": 40,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c35cdca_e612534b",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "add prefix\u003d\"THREAD_TYPE\"",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c429c709_71823433",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "These should be prefixed; e.g. something like SORT_BY_THREAD_ID, SORT_BY_TIMESTAMP",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cc5f903_f49c9846",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 2
@@ -864,6 +2097,109 @@
     },
     {
       "key": {
+        "uuid": "139cca9f_7d4cd8ec",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Not needed; make the builder constructor public.",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 5
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f02c7dd_ebf9276c",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "All the getter methods should be available; not @hide.\nRemove @links to internal code and make the docs make sense on their own.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7df4422_f0540d1a",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "Add annotation for sorting property intdef.",
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25ea9ab_dd8c3987",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setParticipant",
+      "range": {
+        "startLine": 204,
+        "startChar": 23,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5593a25c_88fcc44c",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setParticipants(List\u003cRcsParticipant\u003e",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 217,
+        "endChar": 39
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7588da5a_d47d744d",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 2
@@ -880,6 +2216,98 @@
         "startChar": 8,
         "endLine": 222,
         "endChar": 9
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a65e41_a1eafc85",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setLimit",
+      "range": {
+        "startLine": 233,
+        "startChar": 23,
+        "endLine": 233,
+        "endChar": 37
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4e6389_1d4b7d44",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setSortBy",
+      "range": {
+        "startLine": 250,
+        "startChar": 23,
+        "endLine": 250,
+        "endChar": 29
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba42d60d_70829a63",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "setIsAscendingSort",
+      "range": {
+        "startLine": 262,
+        "startChar": 23,
+        "endLine": 262,
+        "endChar": 36
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75eaaab6_edff821c",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryResult.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-31T03:39:09Z",
+      "side": 1,
+      "message": "getQueryContinuationToken",
+      "range": {
+        "startLine": 63,
+        "startChar": 43,
+        "endLine": 63,
+        "endChar": 57
       },
       "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
