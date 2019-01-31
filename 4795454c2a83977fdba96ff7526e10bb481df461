@@ -666,6 +666,30 @@
     },
     {
       "key": {
+        "uuid": "d0063508_4abfc9a4",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:36:23Z",
+      "side": 1,
+      "message": "So is this going to be removed?",
+      "parentUuid": "ac80e5d8_ea76f83b",
+      "range": {
+        "startLine": 25,
+        "startChar": 87,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "4795454c2a83977fdba96ff7526e10bb481df461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41cfe4e6_a3f67199",
         "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageDelivery.java",
         "patchSetId": 2

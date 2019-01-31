@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447250e9_9d98334b",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:36:23Z",
+      "side": 1,
+      "message": "Outgoing messages have seen timestamp per participant. I think this should be in incoming message and outgoing message delivery, not here.",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bed25da_2d5a1d83",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2599,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:36:23Z",
+      "side": 1,
+      "message": "RcsEvent",
+      "range": {
+        "startLine": 2599,
+        "startChar": 18,
+        "endLine": 2599,
+        "endChar": 37
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48af038a_ad158a4b",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryContinuationToken.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-31T00:36:23Z",
+      "side": 1,
+      "message": "Even if you decide to keep subclasses, these are not needed I guess?",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
