@@ -42083,7 +42083,7 @@ package android.telephony {
   }
 
   public final class AvailableNetworkInfo implements android.os.Parcelable {
-    ctor public AvailableNetworkInfo(int, int, java.util.ArrayList<java.lang.String>);
+    ctor public AvailableNetworkInfo(int, int, java.util.List<java.lang.String>);
     method public int describeContents();
     method public java.util.List<java.lang.String> getMccMncs();
     method public int getPriority();
