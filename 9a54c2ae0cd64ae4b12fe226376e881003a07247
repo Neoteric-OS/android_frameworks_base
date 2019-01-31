@@ -93,6 +93,29 @@
       "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38c5999c_f8a49684",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1358617
+      },
+      "writtenOn": "2019-01-31T19:24:54Z",
+      "side": 1,
+      "message": "Do we need to add destSubaddress in env for DESTINATION_SUB_ADDRESS?",
+      "range": {
+        "startLine": 669,
+        "startChar": 8,
+        "endLine": 669,
+        "endChar": 37
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
