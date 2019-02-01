@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95650936_30537f18",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9901,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-02-01T18:55:00Z",
+      "side": 1,
+      "message": "3rd party app can\u0027t get READ_PRIVILEGED_PHONE_STATE permission. and since it\u0027s a public api, it doesn\u0027t make sense to only allow READ_PRIVILEGED_PHONE_STATE.\n\nSo it should be either READ_PHONE_STATE or READ_PRIVILEGED_PHONE_STATE",
+      "range": {
+        "startLine": 9901,
+        "startChar": 0,
+        "endLine": 9901,
+        "endChar": 7
+      },
+      "revId": "76979ac5f6c5de5bafeff54e03ff5c588e5b8792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
