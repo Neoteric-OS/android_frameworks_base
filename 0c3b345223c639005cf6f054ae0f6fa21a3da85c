@@ -48,6 +48,40 @@
     },
     {
       "key": {
+        "uuid": "9964c0e2_245d40a7",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T19:52:16Z",
+      "side": 1,
+      "message": "We should probably require subId to always be provided by the caller.",
+      "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa4d9b9_6412ff0f",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T19:52:16Z",
+      "side": 1,
+      "message": "Is this based on Tyler\u0027s comments? It seems a little weird that these are bitmasks. I think the earlier way was better. Were there any issues with that?",
+      "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0599230d_85116b54",
         "filename": "telephony/java/android/telephony/ims/RcsMessageQueryParameters.java",
         "patchSetId": 5
@@ -168,6 +202,29 @@
     },
     {
       "key": {
+        "uuid": "41218b01_e997e03a",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T19:52:16Z",
+      "side": 1,
+      "message": "rename this?",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 60
+      },
+      "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cf541e7_d81e92ce",
         "filename": "telephony/java/android/telephony/ims/RcsParticipantQueryParameters.java",
         "patchSetId": 5
@@ -276,6 +333,52 @@
         "startChar": 37,
         "endLine": 63,
         "endChar": 51
+      },
+      "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12aa61e_9e7cd11c",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T19:52:16Z",
+      "side": 1,
+      "message": "boolean; similar to deleteThread",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 8
+      },
+      "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42083c75_d4a90505",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T19:52:16Z",
+      "side": 1,
+      "message": "Maybe all APIs here should return a boolean since almost all interact with db and can potentially fail? It can be done as a bug later IMO, but does that affect the public API as well?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 8
       },
       "revId": "0c3b345223c639005cf6f054ae0f6fa21a3da85c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
