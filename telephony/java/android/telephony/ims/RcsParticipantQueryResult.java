@@ -18,10 +18,7 @@ package android.telephony.ims;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,21 +28,15 @@ import java.util.List;
  *
  * @hide
  */
-public final class RcsParticipantQueryResult implements Parcelable {
+public final class RcsParticipantQueryResult {
     // A token for the caller to continue their query for the next batch of results
     private RcsQueryContinuationToken mContinuationToken;
     // The list of participant IDs returned with this query
-    private List<Integer> mParticipants;
+    private List<RcsParticipant> mParticipants;
 
-    /**
-     * Internal constructor for {@link com.android.internal.telephony.ims.RcsMessageStoreController}
-     * to create query results
-     *
-     * @hide
-     */
-    public RcsParticipantQueryResult(
+    RcsParticipantQueryResult(
             RcsQueryContinuationToken continuationToken,
-            List<Integer> participants) {
+            List<RcsParticipant> participants) {
         mContinuationToken = continuationToken;
         mParticipants = participants;
     }
@@ -67,39 +58,6 @@ public final class RcsParticipantQueryResult implements Parcelable {
      */
     @NonNull
     public List<RcsParticipant> getParticipants() {
-        List<RcsParticipant> participantList = new ArrayList<>();
-        for (Integer participantId : mParticipants) {
-            participantList.add(new RcsParticipant(participantId));
-        }
-
-        return participantList;
-    }
-
-    private RcsParticipantQueryResult(Parcel in) {
-        mContinuationToken = in.readParcelable(
-                RcsQueryContinuationToken.class.getClassLoader());
-    }
-
-    public static final @android.annotation.NonNull Creator<RcsParticipantQueryResult> CREATOR =
-            new Creator<RcsParticipantQueryResult>() {
-                @Override
-                public RcsParticipantQueryResult createFromParcel(Parcel in) {
-                    return new RcsParticipantQueryResult(in);
-                }
-
-                @Override
-                public RcsParticipantQueryResult[] newArray(int size) {
-                    return new RcsParticipantQueryResult[size];
-                }
-            };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mContinuationToken, flags);
+        return mParticipants;
     }
 }
