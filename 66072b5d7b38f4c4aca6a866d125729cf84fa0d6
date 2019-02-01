@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4732e2d_0b58469d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "I made them extend this interface to not have it duplicated. Let me know if you think I should have it both places.",
+      "parentUuid": "447250e9_9d98334b",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bed25da_2d5a1d83",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30874e26_8f77604d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2599,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "7bed25da_2d5a1d83",
+      "range": {
+        "startLine": 2599,
+        "startChar": 18,
+        "endLine": 2599,
+        "endChar": 37
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "eccf5028_27f93813",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "be77f094_255da216",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69dfb75a_90eb1a49",
         "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
         "patchSetId": 3
@@ -257,6 +323,24 @@
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246eb4c4_f11bac4e",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessageCreationParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Removed, thanks!",
+      "parentUuid": "69dfb75a_90eb1a49",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "0902b8d9_7ebf65ea",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Sorry, this was a leftover from an older implementation. Removed.",
+      "parentUuid": "ed2b8e17_fef16190",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 96
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfbc1b8_b1721a8c",
         "filename": "telephony/java/android/telephony/ims/RcsThread.java",
         "patchSetId": 3
@@ -297,6 +405,24 @@
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f98493_1d974ac3",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "2dfbc1b8_b1721a8c",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "03bb927e_6fba986a",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Same as above, removed. Thanks!",
+      "parentUuid": "b7534ad3_101cd359",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0d9fe05_494fc748",
         "filename": "telephony/java/android/telephony/ims/RcsThread.java",
         "patchSetId": 3
@@ -343,6 +493,30 @@
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a283830f_f26efbb8",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "a0d9fe05_494fc748",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -369,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "a226b63a_dc057ee1",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "ec7d0de9_b756fca1",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1464b1_e00f14b4",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
         "patchSetId": 3
@@ -383,6 +581,24 @@
       "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbeb1f89_476fd843",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-01T02:16:35Z",
+      "side": 1,
+      "message": "Removed all 4 continuation tokens and moved functionality into RcsQueryContinuationToken class as per your suggestions. Thanks!",
+      "parentUuid": "cb1464b1_e00f14b4",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
