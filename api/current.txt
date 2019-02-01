@@ -43719,7 +43719,6 @@ package android.telephony.ims {
   public final class RcsGroupThreadParticipantLeftEvent extends android.telephony.ims.RcsGroupThreadEvent {
     ctor public RcsGroupThreadParticipantLeftEvent(long, @NonNull android.telephony.ims.RcsGroupThread, @NonNull android.telephony.ims.RcsParticipant, @NonNull android.telephony.ims.RcsParticipant);
     method @NonNull public android.telephony.ims.RcsParticipant getLeavingParticipant();
-    method public void persist() throws android.telephony.ims.RcsMessageStoreException;
   }
 
   public class RcsIncomingMessage extends android.telephony.ims.RcsMessage {
@@ -43838,12 +43837,9 @@ package android.telephony.ims {
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @IntDef({android.telephony.ims.RcsMessageQueryParams.SORT_BY_CREATION_ORDER, android.telephony.ims.RcsMessageQueryParams.SORT_BY_TIMESTAMP}) public static @interface RcsMessageQueryParams.SortingProperty {
   }
 
-  public final class RcsMessageQueryResult implements android.os.Parcelable {
-    method public int describeContents();
+  public final class RcsMessageQueryResult {
     method @Nullable public android.telephony.ims.RcsQueryContinuationToken getContinuationToken();
     method @NonNull public java.util.List<android.telephony.ims.RcsMessage> getMessages();
-    method public void writeToParcel(android.os.Parcel, int);
-    field public static final android.os.Parcelable.Creator<android.telephony.ims.RcsMessageQueryResult> CREATOR;
   }
 
   public final class RcsMessageSnippet implements android.os.Parcelable {
@@ -43856,7 +43852,6 @@ package android.telephony.ims {
   }
 
   public class RcsMessageStore {
-    ctor public RcsMessageStore();
     method @WorkerThread @NonNull public android.telephony.ims.RcsGroupThread createGroupThread(@Nullable java.util.List<android.telephony.ims.RcsParticipant>, @Nullable String, @Nullable android.net.Uri) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread @NonNull public android.telephony.ims.Rcs1To1Thread createRcs1To1Thread(@NonNull android.telephony.ims.RcsParticipant) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread @NonNull public android.telephony.ims.RcsParticipant createRcsParticipant(String, @Nullable String) throws android.telephony.ims.RcsMessageStoreException;
@@ -43945,12 +43940,9 @@ package android.telephony.ims {
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @IntDef({android.telephony.ims.RcsParticipantQueryParams.SORT_BY_CREATION_ORDER, android.telephony.ims.RcsParticipantQueryParams.SORT_BY_ALIAS, android.telephony.ims.RcsParticipantQueryParams.SORT_BY_CANONICAL_ADDRESS}) public static @interface RcsParticipantQueryParams.SortingProperty {
   }
 
-  public final class RcsParticipantQueryResult implements android.os.Parcelable {
-    method public int describeContents();
+  public final class RcsParticipantQueryResult {
     method @Nullable public android.telephony.ims.RcsQueryContinuationToken getContinuationToken();
     method @NonNull public java.util.List<android.telephony.ims.RcsParticipant> getParticipants();
-    method public void writeToParcel(android.os.Parcel, int);
-    field public static final android.os.Parcelable.Creator<android.telephony.ims.RcsParticipantQueryResult> CREATOR;
   }
 
   public final class RcsQueryContinuationToken implements android.os.Parcelable {
@@ -44004,12 +43996,9 @@ package android.telephony.ims {
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @IntDef({android.telephony.ims.RcsThreadQueryParams.SORT_BY_CREATION_ORDER, android.telephony.ims.RcsThreadQueryParams.SORT_BY_TIMESTAMP}) public static @interface RcsThreadQueryParams.SortingProperty {
   }
 
-  public final class RcsThreadQueryResult implements android.os.Parcelable {
-    method public int describeContents();
+  public final class RcsThreadQueryResult {
     method @Nullable public android.telephony.ims.RcsQueryContinuationToken getContinuationToken();
     method @NonNull public java.util.List<android.telephony.ims.RcsThread> getThreads();
-    method public void writeToParcel(android.os.Parcel, int);
-    field public static final android.os.Parcelable.Creator<android.telephony.ims.RcsThreadQueryResult> CREATOR;
   }
 
 }

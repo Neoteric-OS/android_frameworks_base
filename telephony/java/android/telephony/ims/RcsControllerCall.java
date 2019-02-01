@@ -21,13 +21,26 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.ims.aidl.IRcs;
 
+import com.android.internal.telephony.SmsApplication;
+
 /**
  * A wrapper class around RPC calls that {@link RcsMessageStore} APIs to minimize boilerplate code.
  *
  * @hide - not meant for public use
  */
 class RcsControllerCall {
-    static <R> R call(RcsServiceCall<R> serviceCall) throws RcsMessageStoreException {
+    Context mContext;
+
+    RcsControllerCall(Context context) {
+        mContext = context;
+    }
+
+    <R> R call(RcsServiceCall<R> serviceCall) throws RcsMessageStoreException {
+        if (!isDefaultSmsApplication()) {
+            throw new SecurityException("RCS message storage access is only available for the "
+                    + "default SMS application");
+        }
+
         IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_RCS_SERVICE));
         if (iRcs == null) {
             throw new RcsMessageStoreException("Could not connect to RCS storage service");
@@ -40,18 +53,12 @@ class RcsControllerCall {
         }
     }
 
-    static void callWithNoReturn(RcsServiceCallWithNoReturn serviceCall)
+    void callWithNoReturn(RcsServiceCallWithNoReturn serviceCall)
             throws RcsMessageStoreException {
-        IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_RCS_SERVICE));
-        if (iRcs == null) {
-            throw new RcsMessageStoreException("Could not connect to RCS storage service");
-        }
-
-        try {
+        call(iRcs -> {
             serviceCall.methodOnIRcs(iRcs);
-        } catch (RemoteException exception) {
-            throw new RcsMessageStoreException(exception.getMessage());
-        }
+            return null;
+        });
     }
 
     interface RcsServiceCall<R> {
@@ -60,5 +67,9 @@ class RcsControllerCall {
 
     interface RcsServiceCallWithNoReturn {
         void methodOnIRcs(IRcs iRcs) throws RemoteException;
+    }
+
+    private boolean isDefaultSmsApplication() {
+        return SmsApplication.isDefaultSmsApplication(mContext, mContext.getOpPackageName());
     }
 }

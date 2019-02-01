@@ -40,9 +40,9 @@ public class RcsParticipantAliasChangedEventDescriptor extends RcsEventDescripto
 
     @Override
     @VisibleForTesting(visibility = PROTECTED)
-    public RcsParticipantAliasChangedEvent createRcsEvent() {
+    public RcsParticipantAliasChangedEvent createRcsEvent(RcsControllerCall rcsControllerCall) {
         return new RcsParticipantAliasChangedEvent(
-                mTimestamp, new RcsParticipant(mParticipantId), mNewAlias);
+                mTimestamp, new RcsParticipant(rcsControllerCall, mParticipantId), mNewAlias);
     }
 
     public static final Creator<RcsParticipantAliasChangedEventDescriptor> CREATOR =

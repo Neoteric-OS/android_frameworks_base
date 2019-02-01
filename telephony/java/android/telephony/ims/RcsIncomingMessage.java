@@ -24,8 +24,8 @@ public class RcsIncomingMessage extends RcsMessage {
     /**
      * @hide
      */
-    RcsIncomingMessage(int id) {
-        super(id);
+    RcsIncomingMessage(RcsControllerCall rcsControllerCall, int id) {
+        super(rcsControllerCall, id);
     }
 
     /**
@@ -37,7 +37,7 @@ public class RcsIncomingMessage extends RcsMessage {
      */
     @WorkerThread
     public void setArrivalTimestamp(long arrivalTimestamp) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.setMessageArrivalTimestamp(mId, true, arrivalTimestamp));
     }
 
@@ -48,7 +48,7 @@ public class RcsIncomingMessage extends RcsMessage {
      */
     @WorkerThread
     public long getArrivalTimestamp() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getMessageArrivalTimestamp(mId, true));
+        return mRcsControllerCall.call(iRcs -> iRcs.getMessageArrivalTimestamp(mId, true));
     }
 
     /**
@@ -60,7 +60,7 @@ public class RcsIncomingMessage extends RcsMessage {
      */
     @WorkerThread
     public void setSeenTimestamp(long notifiedTimestamp) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.setMessageSeenTimestamp(mId, true, notifiedTimestamp));
     }
 
@@ -71,7 +71,7 @@ public class RcsIncomingMessage extends RcsMessage {
      */
     @WorkerThread
     public long getSeenTimestamp() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getMessageSeenTimestamp(mId, true));
+        return mRcsControllerCall.call(iRcs -> iRcs.getMessageSeenTimestamp(mId, true));
     }
 
     /**
@@ -81,7 +81,8 @@ public class RcsIncomingMessage extends RcsMessage {
     @WorkerThread
     public RcsParticipant getSenderParticipant() throws RcsMessageStoreException {
         return new RcsParticipant(
-                RcsControllerCall.call(iRcs -> iRcs.getSenderParticipant(mId)));
+                mRcsControllerCall,
+                mRcsControllerCall.call(iRcs -> iRcs.getSenderParticipant(mId)));
     }
 
     /**
