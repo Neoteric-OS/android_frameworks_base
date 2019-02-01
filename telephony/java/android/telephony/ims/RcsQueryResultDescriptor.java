@@ -21,48 +21,48 @@ import android.os.Parcelable;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Contains the raw data backing a {@link RcsEventQueryResult}.
+ * Contains the raw data backing an RCS message store query.
  *
+ * @param <T> the type of the row
  * @hide - used only for internal communication with the ircs service
  */
-public class RcsEventQueryResultDescriptor implements Parcelable {
+public class RcsQueryResultDescriptor<T> implements Parcelable {
     private final RcsQueryContinuationToken mContinuationToken;
-    private final List<RcsEventDescriptor> mEvents;
+    private final List<T> mRows;
 
-    public RcsEventQueryResultDescriptor(
+    public RcsQueryResultDescriptor(
             RcsQueryContinuationToken continuationToken,
-            List<RcsEventDescriptor> events) {
+            List<T> rows) {
         mContinuationToken = continuationToken;
-        mEvents = events;
+        mRows = rows;
     }
 
-    protected RcsEventQueryResult getRcsEventQueryResult(RcsControllerCall rcsControllerCall) {
-        List<RcsEvent> rcsEvents = mEvents.stream()
-                .map(rcsEvent -> rcsEvent.createRcsEvent(rcsControllerCall))
-                .collect(Collectors.toList());
-
-        return new RcsEventQueryResult(mContinuationToken, rcsEvents);
+    public RcsQueryContinuationToken getContinuationToken() {
+        return mContinuationToken;
     }
 
-    protected RcsEventQueryResultDescriptor(Parcel in) {
+    public List<T> getRows() {
+        return mRows;
+    }
+
+    protected RcsQueryResultDescriptor(Parcel in) {
         mContinuationToken = in.readParcelable(RcsQueryContinuationToken.class.getClassLoader());
-        mEvents = new LinkedList<>();
-        in.readList(mEvents, null);
+        mRows = new LinkedList<>();
+        in.readList(mRows, null);
     }
 
-    public static final Creator<RcsEventQueryResultDescriptor> CREATOR =
-            new Creator<RcsEventQueryResultDescriptor>() {
+    public static final Creator<RcsQueryResultDescriptor> CREATOR =
+            new Creator<RcsQueryResultDescriptor>() {
         @Override
-        public RcsEventQueryResultDescriptor createFromParcel(Parcel in) {
-            return new RcsEventQueryResultDescriptor(in);
+        public RcsQueryResultDescriptor createFromParcel(Parcel in) {
+            return new RcsQueryResultDescriptor(in);
         }
 
         @Override
-        public RcsEventQueryResultDescriptor[] newArray(int size) {
-            return new RcsEventQueryResultDescriptor[size];
+        public RcsQueryResultDescriptor[] newArray(int size) {
+            return new RcsQueryResultDescriptor[size];
         }
     };
 
@@ -74,6 +74,6 @@ public class RcsEventQueryResultDescriptor implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(mContinuationToken, flags);
-        dest.writeList(mEvents);
+        dest.writeList(mRows);
     }
 }

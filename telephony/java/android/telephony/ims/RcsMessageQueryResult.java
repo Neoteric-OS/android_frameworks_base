@@ -20,8 +20,6 @@ import static android.provider.Telephony.RcsColumns.RcsUnifiedMessageColumns.MES
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.android.ims.RcsTypeIdPair;
 
@@ -33,11 +31,9 @@ import java.util.List;
  * call. This class allows getting the token for querying the next batch of messages in order to
  * prevent handling large amounts of data at once.
  */
-public final class RcsMessageQueryResult implements Parcelable {
-    // The token to continue the query to get the next batch of results
-    private RcsQueryContinuationToken mContinuationToken;
-    // The message type and message ID pairs for all the messages in this query result
-    private List<RcsTypeIdPair> mMessageTypeIdPairs;
+public final class RcsMessageQueryResult {
+    private final RcsControllerCall mRcsControllerCall;
+    private final RcsMessageQueryResultDescriptor mRcsMessageQueryResultDescriptor;
 
     /**
      * Internal constructor for {@link com.android.internal.telephony.ims.RcsMessageStoreController}
@@ -46,10 +42,10 @@ public final class RcsMessageQueryResult implements Parcelable {
      * @hide
      */
     public RcsMessageQueryResult(
-            RcsQueryContinuationToken continuationToken,
-            List<RcsTypeIdPair> messageTypeIdPairs) {
-        mContinuationToken = continuationToken;
-        mMessageTypeIdPairs = messageTypeIdPairs;
+            RcsControllerCall rcsControllerCall,
+            RcsMessageQueryResultDescriptor rcsMessageQueryResultDescriptor) {
+        mRcsControllerCall = rcsControllerCall;
+        mRcsMessageQueryResultDescriptor = rcsMessageQueryResultDescriptor;
     }
 
     /**
@@ -59,7 +55,7 @@ public final class RcsMessageQueryResult implements Parcelable {
      */
     @Nullable
     public RcsQueryContinuationToken getContinuationToken() {
-        return mContinuationToken;
+        return mRcsMessageQueryResultDescriptor.mContinuationToken;
     }
 
     /**
@@ -70,44 +66,14 @@ public final class RcsMessageQueryResult implements Parcelable {
     @NonNull
     public List<RcsMessage> getMessages() {
         List<RcsMessage> messages = new ArrayList<>();
-        for (RcsTypeIdPair typeIdPair : mMessageTypeIdPairs) {
+        for (RcsTypeIdPair typeIdPair : mRcsMessageQueryResultDescriptor.mMessageTypeIdPairs) {
             if (typeIdPair.getType() == MESSAGE_TYPE_INCOMING) {
-                messages.add(new RcsIncomingMessage(typeIdPair.getId()));
+                messages.add(new RcsIncomingMessage(mRcsControllerCall, typeIdPair.getId()));
             } else {
-                messages.add(new RcsOutgoingMessage(typeIdPair.getId()));
+                messages.add(new RcsOutgoingMessage(mRcsControllerCall, typeIdPair.getId()));
             }
         }
 
         return messages;
-    }
-
-    private RcsMessageQueryResult(Parcel in) {
-        mContinuationToken = in.readParcelable(
-                RcsQueryContinuationToken.class.getClassLoader());
-        in.readTypedList(mMessageTypeIdPairs, RcsTypeIdPair.CREATOR);
-    }
-
-    public static final Creator<RcsMessageQueryResult> CREATOR =
-            new Creator<RcsMessageQueryResult>() {
-                @Override
-                public RcsMessageQueryResult createFromParcel(Parcel in) {
-                    return new RcsMessageQueryResult(in);
-                }
-
-                @Override
-                public RcsMessageQueryResult[] newArray(int size) {
-                    return new RcsMessageQueryResult[size];
-                }
-            };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mContinuationToken, flags);
-        dest.writeTypedList(mMessageTypeIdPairs);
     }
 }

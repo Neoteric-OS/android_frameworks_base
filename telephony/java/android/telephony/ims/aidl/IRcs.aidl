@@ -23,13 +23,14 @@ import android.telephony.ims.RcsFileTransferCreationParams;
 import android.telephony.ims.RcsIncomingMessageCreationParams;
 import android.telephony.ims.RcsMessageSnippet;
 import android.telephony.ims.RcsMessageQueryParams;
-import android.telephony.ims.RcsMessageQueryResult;
+import android.telephony.ims.RcsMessageQueryResultDescriptor;
 import android.telephony.ims.RcsOutgoingMessageCreationParams;
 import android.telephony.ims.RcsParticipantQueryParams;
 import android.telephony.ims.RcsParticipantQueryResult;
 import android.telephony.ims.RcsQueryContinuationToken;
 import android.telephony.ims.RcsThreadQueryParams;
 import android.telephony.ims.RcsThreadQueryResult;
+import android.telephony.ims.RcsQueryResultDescriptor;
 
 /**
  * RPC definition between RCS storage APIs and phone process.
@@ -44,14 +45,14 @@ interface IRcs {
     RcsThreadQueryResult getRcsThreadsWithToken(
         in RcsQueryContinuationToken continuationToken);
 
-    RcsParticipantQueryResult getParticipants(in RcsParticipantQueryParams queryParams);
+    RcsQueryResultDescriptor<Integer> getParticipants(in RcsParticipantQueryParams queryParams);
 
-    RcsParticipantQueryResult getParticipantsWithToken(
+    RcsQueryResultDescriptor<Integer> getParticipantsWithToken(
         in RcsQueryContinuationToken continuationToken);
 
-    RcsMessageQueryResult getMessages(in RcsMessageQueryParams queryParams);
+    RcsMessageQueryResultDescriptor getMessages(in RcsMessageQueryParams queryParams);
 
-    RcsMessageQueryResult getMessagesWithToken(
+    RcsMessageQueryResultDescriptor getMessagesWithToken(
         in RcsQueryContinuationToken continuationToken);
 
     RcsEventQueryResultDescriptor getEvents(in RcsEventQueryParams queryParams);

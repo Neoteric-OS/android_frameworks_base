@@ -22,8 +22,9 @@ import android.annotation.WorkerThread;
  * RcsParticipant is an RCS capable contact that can participate in {@link RcsThread}s.
  */
 public class RcsParticipant {
+    private final RcsControllerCall mRcsControllerCall;
     // The row ID of this participant in the database
-    private int mId;
+    private final int mId;
 
     /**
      * Constructor for {@link com.android.internal.telephony.ims.RcsMessageStoreController}
@@ -31,7 +32,8 @@ public class RcsParticipant {
      *
      * @hide
      */
-    public RcsParticipant(int id) {
+    public RcsParticipant(RcsControllerCall rcsControllerCall, int id) {
+        mRcsControllerCall = rcsControllerCall;
         mId = id;
     }
 
@@ -43,7 +45,7 @@ public class RcsParticipant {
     @Nullable
     @WorkerThread
     public String getCanonicalAddress() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getRcsParticipantCanonicalAddress(mId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getRcsParticipantCanonicalAddress(mId));
     }
 
     /**
@@ -55,7 +57,7 @@ public class RcsParticipant {
     @Nullable
     @WorkerThread
     public String getAlias() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getRcsParticipantAlias(mId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getRcsParticipantAlias(mId));
     }
 
     /**
@@ -68,7 +70,7 @@ public class RcsParticipant {
      */
     @WorkerThread
     public void setAlias(String alias) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setRcsParticipantAlias(mId, alias));
+        mRcsControllerCall.callWithNoReturn(iRcs -> iRcs.setRcsParticipantAlias(mId, alias));
     }
 
     /**
@@ -80,7 +82,7 @@ public class RcsParticipant {
     @Nullable
     @WorkerThread
     public String getContactId() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getRcsParticipantContactId(mId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getRcsParticipantContactId(mId));
     }
 
     /**
@@ -93,7 +95,8 @@ public class RcsParticipant {
      */
     @WorkerThread
     public void setContactId(String contactId) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setRcsParticipantContactId(mId, contactId));
+        mRcsControllerCall.callWithNoReturn(
+                iRcs -> iRcs.setRcsParticipantContactId(mId, contactId));
     }
 
     @Override

@@ -21,14 +21,14 @@ import android.annotation.NonNull;
  * An event that happened on an {@link RcsGroupThread}.
  */
 public abstract class RcsGroupThreadEvent extends RcsEvent {
-    private final int mRcsGroupThreadId;
-    private final int mOriginatingParticipantId;
+    private final RcsGroupThread mRcsGroupThread;
+    private final RcsParticipant mOriginatingParticipant;
 
-    RcsGroupThreadEvent(long timestamp, int rcsGroupThreadId,
-            int originatingParticipantId) {
+    RcsGroupThreadEvent(long timestamp, RcsGroupThread rcsGroupThread,
+            RcsParticipant originatingParticipant) {
         super(timestamp);
-        mRcsGroupThreadId = rcsGroupThreadId;
-        mOriginatingParticipantId = originatingParticipantId;
+        mRcsGroupThread = rcsGroupThread;
+        mOriginatingParticipant = originatingParticipant;
     }
 
     /**
@@ -36,7 +36,7 @@ public abstract class RcsGroupThreadEvent extends RcsEvent {
      */
     @NonNull
     public RcsGroupThread getRcsGroupThread() {
-        return new RcsGroupThread(mRcsGroupThreadId);
+        return mRcsGroupThread;
     }
 
     /**
@@ -44,6 +44,6 @@ public abstract class RcsGroupThreadEvent extends RcsEvent {
      */
     @NonNull
     public RcsParticipant getOriginatingParticipant() {
-        return new RcsParticipant(mOriginatingParticipantId);
+        return getOriginatingParticipant();
     }
 }

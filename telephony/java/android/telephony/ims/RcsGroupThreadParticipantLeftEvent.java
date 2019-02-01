@@ -42,7 +42,7 @@ public final class RcsGroupThreadParticipantLeftEvent extends RcsGroupThreadEven
     public RcsGroupThreadParticipantLeftEvent(long timestamp,
             @NonNull RcsGroupThread rcsGroupThread, @NonNull RcsParticipant originatingParticipant,
             @NonNull RcsParticipant leavingParticipant) {
-        super(timestamp, rcsGroupThread.getThreadId(), originatingParticipant.getId());
+        super(timestamp, rcsGroupThread, originatingParticipant);
         mLeavingParticipant = leavingParticipant;
     }
 
@@ -55,9 +55,14 @@ public final class RcsGroupThreadParticipantLeftEvent extends RcsGroupThreadEven
         return mLeavingParticipant;
     }
 
+    /**
+     * Persists the event to the data store.
+     *
+     * @hide - not meant for public use.
+     */
     @Override
-    public void persist() throws RcsMessageStoreException {
-        RcsControllerCall.call(
+    void persist(RcsControllerCall rcsControllerCall) throws RcsMessageStoreException {
+        rcsControllerCall.call(
                 iRcs -> iRcs.createGroupThreadParticipantLeftEvent(getTimestamp(),
                         getRcsGroupThread().getThreadId(), getOriginatingParticipant().getId(),
                         getLeavingParticipant().getId()));

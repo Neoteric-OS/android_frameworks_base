@@ -36,8 +36,8 @@ public class RcsGroupThread extends RcsThread {
      *
      * @hide
      */
-    public RcsGroupThread(int threadId) {
-        super(threadId);
+    public RcsGroupThread(RcsControllerCall rcsControllerCall, int threadId) {
+        super(rcsControllerCall, threadId);
     }
 
     /**
@@ -56,7 +56,7 @@ public class RcsGroupThread extends RcsThread {
     @Nullable
     @WorkerThread
     public String getGroupName() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getGroupThreadName(mThreadId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getGroupThreadName(mThreadId));
     }
 
     /**
@@ -67,7 +67,7 @@ public class RcsGroupThread extends RcsThread {
      */
     @WorkerThread
     public void setGroupName(String groupName) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setGroupThreadName(mThreadId, groupName));
+        mRcsControllerCall.callWithNoReturn(iRcs -> iRcs.setGroupThreadName(mThreadId, groupName));
     }
 
     /**
@@ -77,7 +77,7 @@ public class RcsGroupThread extends RcsThread {
      */
     @Nullable
     public Uri getGroupIcon() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getGroupThreadIcon(mThreadId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getGroupThreadIcon(mThreadId));
     }
 
     /**
@@ -88,7 +88,7 @@ public class RcsGroupThread extends RcsThread {
      */
     @WorkerThread
     public void setGroupIcon(@Nullable Uri groupIcon) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setGroupThreadIcon(mThreadId, groupIcon));
+        mRcsControllerCall.callWithNoReturn(iRcs -> iRcs.setGroupThreadIcon(mThreadId, groupIcon));
     }
 
     /**
@@ -98,8 +98,9 @@ public class RcsGroupThread extends RcsThread {
     @Nullable
     @WorkerThread
     public RcsParticipant getOwner() throws RcsMessageStoreException {
-        return new RcsParticipant(RcsControllerCall.call(
-                iRcs -> iRcs.getGroupThreadOwner(mThreadId)));
+        return new RcsParticipant(
+                mRcsControllerCall,
+                mRcsControllerCall.call(iRcs -> iRcs.getGroupThreadOwner(mThreadId)));
     }
 
     /**
@@ -112,7 +113,7 @@ public class RcsGroupThread extends RcsThread {
      */
     @WorkerThread
     public void setOwner(@Nullable RcsParticipant participant) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.setGroupThreadOwner(mThreadId, participant.getId()));
     }
 
@@ -131,7 +132,7 @@ public class RcsGroupThread extends RcsThread {
             return;
         }
 
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.addParticipantToGroupThread(mThreadId, participant.getId()));
     }
 
@@ -148,7 +149,7 @@ public class RcsGroupThread extends RcsThread {
             return;
         }
 
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.removeParticipantFromGroupThread(mThreadId, participant.getId()));
     }
 
@@ -167,7 +168,7 @@ public class RcsGroupThread extends RcsThread {
         RcsParticipantQueryParams queryParameters =
                 new RcsParticipantQueryParams.Builder().setThread(this).build();
 
-        RcsParticipantQueryResult queryResult = RcsControllerCall.call(
+        RcsParticipantQueryResult queryResult = mRcsControllerCall.call(
                 iRcs -> iRcs.getParticipants(queryParameters));
 
         List<RcsParticipant> participantList = queryResult.getParticipants();
@@ -184,7 +185,7 @@ public class RcsGroupThread extends RcsThread {
     @Nullable
     @WorkerThread
     public Uri getConferenceUri() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getGroupThreadConferenceUri(mThreadId));
+        return mRcsControllerCall.call(iRcs -> iRcs.getGroupThreadConferenceUri(mThreadId));
     }
 
     /**
@@ -197,7 +198,7 @@ public class RcsGroupThread extends RcsThread {
     @Nullable
     @WorkerThread
     public void setConferenceUri(Uri conferenceUri) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(
+        mRcsControllerCall.callWithNoReturn(
                 iRcs -> iRcs.setGroupThreadConferenceUri(mThreadId, conferenceUri));
     }
 }
