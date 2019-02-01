@@ -59,8 +59,8 @@ public class RcsGroupThreadParticipantJoinedEvent extends RcsGroupThreadEvent {
      * @hide - not meant for public use.
      */
     @Override
-    public void persist() throws RcsMessageStoreException {
-        RcsControllerCall.call(
+    public void persist(RcsControllerCall rcsControllerCall) throws RcsMessageStoreException {
+        rcsControllerCall.call(
                 iRcs -> iRcs.createGroupThreadParticipantJoinedEvent(getTimestamp(),
                         getRcsGroupThread().getThreadId(), getOriginatingParticipant().getId(),
                         getJoinedParticipant().getId()));

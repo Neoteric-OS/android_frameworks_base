@@ -61,9 +61,9 @@ public class RcsGroupThreadIconChangedEvent extends RcsGroupThreadEvent {
      * @hide - not meant for public use.
      */
     @Override
-    public void persist() throws RcsMessageStoreException {
+    public void persist(RcsControllerCall rcsControllerCall) throws RcsMessageStoreException {
         // TODO ensure failure throws
-        RcsControllerCall.call(iRcs -> iRcs.createGroupThreadIconChangedEvent(
+        rcsControllerCall.call(iRcs -> iRcs.createGroupThreadIconChangedEvent(
                 getTimestamp(), getRcsGroupThread().getThreadId(),
                 getOriginatingParticipant().getId(), mNewIcon));
     }

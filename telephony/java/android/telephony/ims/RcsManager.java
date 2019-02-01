@@ -16,6 +16,7 @@
 package android.telephony.ims;
 
 import android.annotation.SystemService;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 
 /**
@@ -25,12 +26,19 @@ import android.content.Context;
 @SystemService(Context.TELEPHONY_RCS_SERVICE)
 public class RcsManager {
 
-    private static final RcsMessageStore sRcsMessageStoreInstance = new RcsMessageStore();
+    private final RcsMessageStore mRcsMessageStore;
+
+
+    /** @hide */
+    @UnsupportedAppUsage
+    public RcsManager(Context context) {
+        mRcsMessageStore = new RcsMessageStore(context);
+    }
 
     /**
      * Returns an instance of {@link RcsMessageStore}
      */
     public RcsMessageStore getRcsMessageStore() {
-        return sRcsMessageStoreInstance;
+        return mRcsMessageStore;
     }
 }
