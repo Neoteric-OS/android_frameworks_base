@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd04b638_60309b80",
+        "filename": "services/core/java/com/android/server/tv/TvInputManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-02-01T19:49:19Z",
+      "side": 1,
+      "message": "Seems like we need to ungregister this also.",
+      "revId": "25a986f597f2bac4a10a7c7b7e2e68fc58d787bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
