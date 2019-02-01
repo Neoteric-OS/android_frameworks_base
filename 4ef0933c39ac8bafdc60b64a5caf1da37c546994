@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9264dce0_dd190106",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "This is not needed since -2 will be converted to -1 anyway.",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7230fe2d_1ac43cd2",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "It seems this variable covers both disconnecting and disconnected states. How about rename it mConnected? Then use !mConnected.\n\nUsing AtomicBoolean for mConnected could remove the necessity of mDisconnectPendingLock.",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5435df12_ee8bc2f1",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "Is it really necessary to have ReadTask and DisconnectTask? You can use Runnable override directly when it\u0027s submitted.",
+      "range": {
+        "startLine": 85,
+        "startChar": 18,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e40c4d_1ebc0abb",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "This needs access lock since it could be accessed on different thread.\n\nMeanwhile, it\u0027s better to check if mExecutor has been shutdown before creating a new one.",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8190eb6d_2fa9b6bc",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "This requires synchronized(mLock), per https://developer.android.com/reference/java/lang/Object.html#notify()",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9c7993_06decc5d",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "mDisconnectPending should be also checked before this line to ensure no more data reading once mDisconnectPending is set.",
+      "range": {
+        "startLine": 381,
+        "startChar": 12,
+        "endLine": 381,
+        "endChar": 58
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc56c4da_8119b484",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-01T23:14:30Z",
+      "side": 1,
+      "message": "this requires synchronized(mLock), per https://developer.android.com/reference/java/lang/Object.html#wait(long)",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 24
+      },
+      "revId": "4ef0933c39ac8bafdc60b64a5caf1da37c546994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
