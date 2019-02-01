@@ -16,16 +16,9 @@
 
 package android.telephony.ims;
 
-import static android.provider.Telephony.RcsColumns.RcsUnifiedThreadColumns.THREAD_TYPE_1_TO_1;
-
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import com.android.ims.RcsTypeIdPair;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,23 +28,17 @@ import java.util.List;
  *
  * @hide
  */
-public final class RcsThreadQueryResult implements Parcelable {
+public final class RcsThreadQueryResult {
     // A token for the caller to continue their query for the next batch of results
     private RcsQueryContinuationToken mContinuationToken;
     // The list of thread IDs returned with this query
-    private List<RcsTypeIdPair> mRcsThreadIds;
+    private List<RcsThread> mRcsThreads;
 
-    /**
-     * Internal constructor for {@link com.android.internal.telephony.ims.RcsMessageStoreController}
-     * to create query results
-     *
-     * @hide
-     */
-    public RcsThreadQueryResult(
+    RcsThreadQueryResult(
             RcsQueryContinuationToken continuationToken,
-            List<RcsTypeIdPair> rcsThreadIds) {
+            List<RcsThread> rcsThreads) {
         mContinuationToken = continuationToken;
-        mRcsThreadIds = rcsThreadIds;
+        mRcsThreads = rcsThreads;
     }
 
     /**
@@ -71,47 +58,6 @@ public final class RcsThreadQueryResult implements Parcelable {
      */
     @NonNull
     public List<RcsThread> getThreads() {
-        List<RcsThread> rcsThreads = new ArrayList<>();
-
-        for (RcsTypeIdPair typeIdPair : mRcsThreadIds) {
-            if (typeIdPair.getType() == THREAD_TYPE_1_TO_1) {
-                rcsThreads.add(new Rcs1To1Thread(typeIdPair.getId()));
-            } else {
-                rcsThreads.add(new RcsGroupThread(typeIdPair.getId()));
-            }
-        }
-
-        return rcsThreads;
-    }
-
-    private RcsThreadQueryResult(Parcel in) {
-        mContinuationToken = in.readParcelable(
-            RcsQueryContinuationToken.class.getClassLoader());
-        mRcsThreadIds = new ArrayList<>();
-        in.readList(mRcsThreadIds, Integer.class.getClassLoader());
-    }
-
-    public static final Creator<RcsThreadQueryResult> CREATOR =
-            new Creator<RcsThreadQueryResult>() {
-                @Override
-                public RcsThreadQueryResult createFromParcel(Parcel in) {
-                    return new RcsThreadQueryResult(in);
-                }
-
-                @Override
-                public RcsThreadQueryResult[] newArray(int size) {
-                    return new RcsThreadQueryResult[size];
-                }
-            };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mContinuationToken, flags);
-        dest.writeList(mRcsThreadIds);
+        return mRcsThreads;
     }
 }
