@@ -188,18 +188,23 @@ public interface TelephonyProperties
      */
     static final String PROPERTY_IGNORE_NITZ = "telephony.test.ignore.nitz";
 
-     /**
+    /**
      * Property to set multi sim feature.
      * Type:  String(dsds, dsda)
      */
     static final String PROPERTY_MULTI_SIM_CONFIG = "persist.radio.multisim.config";
 
-     /**
+    /**
+     * Set to true if a device with 2 or more SIM cards supports the switch to multi-SIM
+     * configuration.
+     */
+    String PROPERTY_MULTI_SIM_SWITCH_SUPPORT = "persist.radio.multisim_switch_support";
+
+    /**
      * Property to indicate if reboot is required when changing modems configurations
      * Type:  String(true, false) default is false; most devices don't need reboot
      */
-    String PROPERTY_REBOOT_REQUIRED_ON_MODEM_CHANGE =
-             "persist.radio.reboot_on_modem_change";
+    String PROPERTY_REBOOT_REQUIRED_ON_MODEM_CHANGE = "persist.radio.reboot_on_modem_change";
 
     /**
      * Property to store default subscription.

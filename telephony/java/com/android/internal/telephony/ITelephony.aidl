@@ -1825,21 +1825,23 @@ interface ITelephony {
     void setMultisimCarrierRestriction(boolean isMultisimCarrierRestricted);
 
     /**
-     * Returns if the usage of multiple SIM cards at the same time is restricted.
+     * Returns if the usage of multiple SIM cards at the same time is supported.
      * @hide
      */
-    boolean isMultisimCarrierRestricted();
-    
+    boolean isMultisimSupported();
+
     /**
      * Switch configs to enable multi-sim or switch back to single-sim
      * @hide
      */
     void switchMultiSimConfig(int numOfSims);
+
     /**
      * Get how many modems have been activated on the phone
      * @hide
      */
     int getNumOfActiveSims();
+
     /**
      * Get if reboot is required upon altering modems configurations
      */
