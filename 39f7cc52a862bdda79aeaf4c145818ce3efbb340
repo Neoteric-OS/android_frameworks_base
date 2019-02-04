@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9bba5aa_e8662b76",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-04T21:00:34Z",
+      "side": 1,
+      "message": "Too much info for one line! :) It looks pretty, but unreadable.\n\nSplit up increment and \u003e 1 check to make it more obvious what this is doing.",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 93
+      },
+      "revId": "39f7cc52a862bdda79aeaf4c145818ce3efbb340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
