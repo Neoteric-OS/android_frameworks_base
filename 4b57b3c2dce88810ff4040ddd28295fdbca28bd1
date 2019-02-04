@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76b99190_3934dd93",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 9902,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-02-04T19:47:41Z",
+      "side": 1,
+      "message": "let\u0027s also update the description here to include READ_PHONE_STATE and\n@RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)",
+      "range": {
+        "startLine": 9896,
+        "startChar": 0,
+        "endLine": 9902,
+        "endChar": 80
+      },
+      "revId": "4b57b3c2dce88810ff4040ddd28295fdbca28bd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
