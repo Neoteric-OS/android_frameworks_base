@@ -1825,10 +1825,10 @@ interface ITelephony {
     void setMultisimCarrierRestriction(boolean isMultisimCarrierRestricted);
 
     /**
-     * Returns if the usage of multiple SIM cards at the same time is restricted.
+     * Returns if the usage of multiple SIM cards at the same time is supported.
      * @hide
      */
-    boolean isMultisimCarrierRestricted();
+    boolean isMultisimSupported();
     
     /**
      * Switch configs to enable multi-sim or switch back to single-sim
