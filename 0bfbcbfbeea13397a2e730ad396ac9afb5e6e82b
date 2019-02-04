@@ -153,6 +153,24 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bef1f58_2f4e628f",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-02-04T19:26:41Z",
+      "side": 1,
+      "message": "I meant to hide the persist method on the events. The thought would be that an API user should not be able to call persist directly. That the interface was package scoped and the persist methods were hidden. From an API perspective, the events should be immutable value objects that can be persisted here or returned from the API.\n\nWe may rearrange some of this, but wanted to get the API down where persistence only happens on the message store. So the persist method should be hidden for now if that works.",
+      "parentUuid": "b5af7046_527f5be3",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
