@@ -22,6 +22,30 @@
       "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8eb10c_c015beb4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-02-04T10:45:40Z",
+      "side": 0,
+      "message": "Sorry to late response.\nI think it could be renewed correctly since addDeviceInfo(in NewDeviceAction.Java)\u0027s logic was also changed to renew OSD always. please check the change of addDeviceInfo().\n\nI checked the history of commit and found one commit related with this.\n\nCEC: Add CEC device upon receiving \u003cReport Physical Address\u003e\n\nHelp devices be processed sooner when new device detection operation\ntakes longer than usual.\n\nBug: 19181472\nChange-Id: I96c29081a9c7c9f73ebcd027ed9d18056dc89bf9\n\nmaybe this patch is for detecting new device more early timing. but we found this OSD issue and once default information is registered, there is few chance to renew OSD correctly.",
+      "parentUuid": "94bedd6f_c5d6c7b4",
+      "range": {
+        "startLine": 586,
+        "startChar": 7,
+        "endLine": 586,
+        "endChar": 33
+      },
+      "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
