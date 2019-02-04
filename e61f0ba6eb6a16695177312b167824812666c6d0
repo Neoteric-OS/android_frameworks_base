@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59cd03c0_6a106391",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-02-04T23:15:12Z",
+      "side": 1,
+      "message": "Should we be putting the property names in static final variables to avoid magic constants?",
+      "revId": "e61f0ba6eb6a16695177312b167824812666c6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
