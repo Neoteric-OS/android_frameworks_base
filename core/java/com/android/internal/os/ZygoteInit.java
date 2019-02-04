@@ -41,6 +41,7 @@ import android.system.OsConstants;
 import android.system.StructCapUserData;
 import android.system.StructCapUserHeader;
 import android.text.Hyphenator;
+import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
@@ -703,6 +704,13 @@ public class ZygoteInit {
                     "dalvik.vm.profilesystemserver", false);
             if (profileSystemServer) {
                 parsedArgs.mRuntimeFlags |= Zygote.PROFILE_SYSTEM_SERVER;
+            }
+
+            String use_app_image_cache = SystemProperties.get(
+                    "persist.device_config.runtime_native.use_app_image_startup_cache", "");
+            // Property defaults to true.
+            if (!TextUtils.isEmpty(use_app_image_cache) && !use_app_image_cache.equals("false")) {
+                parsedArgs.mRuntimeFlags |= Zygote.USE_APP_IMAGE_STARTUP_CACHE;
             }
 
             /* Request to fork the system server process */
