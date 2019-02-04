@@ -10060,24 +10060,24 @@ public class TelephonyManager {
 
     /**
      * Returns if the usage of multiple SIM cards at the same time to register on the network
-     * (e.g. Dual Standby or Dual Active) is restricted.
+     * (e.g. Dual Standby or Dual Active) is supported by the device and by the carrier.
      *
-     * @return true if usage of multiple SIMs is restricted, false otherwise.
+     * @return true if usage of multiple SIMs is supported, false otherwise.
      *
      * @hide
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public boolean isMultisimCarrierRestricted() {
+    public boolean isMultisimSupported() {
         try {
             ITelephony service = getITelephony();
             if (service != null) {
-                return service.isMultisimCarrierRestricted();
+                return service.isMultisimSupported();
             }
         } catch (RemoteException e) {
-            Log.e(TAG, "isMultisimCarrierRestricted RemoteException", e);
+            Log.e(TAG, "isMultisimSupported RemoteException", e);
         }
-        return true;
+        return false;
     }
 
     /**
@@ -10113,8 +10113,8 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public void switchMultiSimConfig(int numOfSims) {
         //only proceed if multi-sim is not restricted
-        if (isMultisimCarrierRestricted()) {
-            Rlog.e(TAG, "switchMultiSimConfig not possible. It is restricted.");
+        if (!isMultisimSupported()) {
+            Rlog.e(TAG, "switchMultiSimConfig not possible. It is restricted or not supported.");
             return;
         }
 
