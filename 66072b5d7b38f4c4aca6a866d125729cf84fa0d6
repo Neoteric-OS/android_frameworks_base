@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "33c59379_e5cf271d",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-05T06:51:54Z",
+      "side": 1,
+      "message": "What does the SEEN_TIMESTAMP mean for an outgoing group message? It will be per recipient, which is why I think incoming and outgoing delivery should have it, but not outgoing message.",
+      "parentUuid": "d4732e2d_0b58469d",
+      "revId": "66072b5d7b38f4c4aca6a866d125729cf84fa0d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bed25da_2d5a1d83",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 3
