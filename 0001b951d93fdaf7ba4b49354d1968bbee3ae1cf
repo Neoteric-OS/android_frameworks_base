@@ -16,6 +16,24 @@
       "revId": "0001b951d93fdaf7ba4b49354d1968bbee3ae1cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f2ef77_c3020d24",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-05T20:01:14Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be since ConnectivityService does not include VpnInfo in vpnArray if underlying networks are null.",
+      "parentUuid": "b76372d2_8a2b69dd",
+      "revId": "0001b951d93fdaf7ba4b49354d1968bbee3ae1cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
