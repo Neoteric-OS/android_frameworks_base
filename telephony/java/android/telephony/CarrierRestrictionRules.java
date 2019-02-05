@@ -26,7 +26,9 @@ import android.service.carrier.CarrierIdentifier;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Contains the list of carrier restrictions.
@@ -92,6 +94,9 @@ public final class CarrierRestrictionRules implements Parcelable {
     @IntDef(prefix = "CARRIER_RESTRICTION_DEFAULT_",
             value = {CARRIER_RESTRICTION_DEFAULT_NOT_ALLOWED, CARRIER_RESTRICTION_DEFAULT_ALLOWED})
     public @interface CarrierRestrictionDefault {}
+
+    /* Wild character for comparison */
+    private static final char WILD_CHARACTER = '?';
 
     private List<CarrierIdentifier> mAllowedCarriers;
     private List<CarrierIdentifier> mExcludedCarriers;
@@ -163,6 +168,124 @@ public final class CarrierRestrictionRules implements Parcelable {
      */
     public @MultiSimPolicy int getMultiSimPolicy() {
         return mMultiSimPolicy;
+    }
+
+    /**
+     * Tests an array of carriers with the carrier restriction configuration. The list of carrier
+     * ids passed as argument does not need to be the same as currently present in the device.
+     *
+     * @param carrierIds list of carrier ids, one for each SIM slot on the device
+     * @return an array of boolean with the same size as carrierIds, indicating if each SIM card
+     * is allowed or not.
+     */
+    public boolean[] isCarrierIdentifiersAllowed(CarrierIdentifier[] carrierIds) {
+        boolean[] result = new boolean[carrierIds.length];
+
+        // First calculate the result for each slot independently
+        for (int i = 0; i < carrierIds.length; i++) {
+            boolean inAllowedList = isCarrierIdInList(carrierIds[i], mAllowedCarriers);
+            boolean inExcludedList = isCarrierIdInList(carrierIds[i], mExcludedCarriers);
+            if (mCarrierRestrictionDefault == CARRIER_RESTRICTION_DEFAULT_NOT_ALLOWED) {
+                result[i] = (inAllowedList && !inExcludedList) ? true : false;
+            } else {
+                result[i] = (inExcludedList && !inAllowedList) ? false : true;
+            }
+        }
+        // Apply the multi-slot policy, if needed.
+        if (mMultiSimPolicy == MULTISIM_POLICY_ONE_VALID_SIM_MUST_BE_PRESENT) {
+            for (boolean b : result) {
+                if (b) {
+                    Arrays.fill(result, true);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Indicates if a certain carrier {@code id} is present inside a {@code list}
+     *
+     * @return true if the carrier {@code id} is present, false otherwise
+     */
+    private static boolean isCarrierIdInList(CarrierIdentifier id, List<CarrierIdentifier> list) {
+        for (CarrierIdentifier listItem : list) {
+            // Compare MCC and MNC
+            if (!patternMatch(id.getMcc(), listItem.getMcc())
+                    || !patternMatch(id.getMnc(), listItem.getMnc())) {
+                continue;
+            }
+
+            // Compare SPN. Comparison is on the complete strings, case insensitive and with wild
+            // characters.
+            String listItemValue = convertNullToEmpty(listItem.getSpn());
+            String idValue = convertNullToEmpty(id.getSpn());
+            if (!listItemValue.isEmpty()) {
+                if (!patternMatch(idValue, listItemValue)) {
+                    continue;
+                }
+            }
+
+            // The IMSI of the configuration can be shorter than actual IMSI in the SIM card.
+            listItemValue = convertNullToEmpty(listItem.getImsi());
+            idValue = convertNullToEmpty(id.getImsi());
+            if (!patternMatch(
+                    idValue.substring(0, Math.min(idValue.length(), listItemValue.length())),
+                    listItemValue)) {
+                continue;
+            }
+
+            // The GID1 of the configuration can be shorter than actual GID1 in the SIM card.
+            listItemValue = convertNullToEmpty(listItem.getGid1());
+            idValue = convertNullToEmpty(id.getGid1());
+            if (!patternMatch(
+                    idValue.substring(0, Math.min(idValue.length(), listItemValue.length())),
+                    listItemValue)) {
+                continue;
+            }
+
+            // The GID2 of the configuration can be shorter than actual GID2 in the SIM card.
+            listItemValue = convertNullToEmpty(listItem.getGid2());
+            idValue = convertNullToEmpty(id.getGid2());
+            if (!patternMatch(
+                    idValue.substring(0, Math.min(idValue.length(), listItemValue.length())),
+                    listItemValue)) {
+                continue;
+            }
+
+            // Valid match was found in the list
+            return true;
+        }
+        return false;
+    }
+
+    private static String convertNullToEmpty(String value) {
+        return Objects.toString(value, "");
+    }
+
+    /**
+     * Performs a case insensitive string comparison against a given pattern. The character '?'
+     * is used in the pattern as wild character in the comparison. The string must have the same
+     * length as the pattern.
+     *
+     * @param str string to match
+     * @param pattern string containing the pattern
+     * @return true in case of match, false otherwise
+     */
+    private static boolean patternMatch(String str, String pattern) {
+        if (str.length() != pattern.length()) {
+            return false;
+        }
+        String lowerCaseStr = str.toLowerCase();
+        String lowerCasePattern = pattern.toLowerCase();
+
+        for (int i = 0; i < lowerCasePattern.length(); i++) {
+            if (lowerCasePattern.charAt(i) != lowerCaseStr.charAt(i)
+                    && lowerCasePattern.charAt(i) != WILD_CHARACTER) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
