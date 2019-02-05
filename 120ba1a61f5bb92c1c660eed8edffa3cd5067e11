@@ -45,6 +45,30 @@
       "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84bd15f_416cc768",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-02-05T21:03:30Z",
+      "side": 1,
+      "message": "PatternMatch also ignores case. Is that desired here?",
+      "parentUuid": "3fec4ecc_c7d8818e",
+      "range": {
+        "startLine": 223,
+        "startChar": 21,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
