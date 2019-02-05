@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "756f08db_75e976a8",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-02-05T20:59:17Z",
+      "side": 1,
+      "message": "Why not just TextUtils.isEmpty() in the conditions?",
+      "range": {
+        "startLine": 221,
+        "startChar": 29,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fec4ecc_c7d8818e",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-02-05T20:59:17Z",
+      "side": 1,
+      "message": "I thought wildcard was only for MCC/MNC?\n\nThe comment says \"this must match exactly\", but patternMatch accounts for the wildcard character. SPN wildcard matching seems unexpected and unreasonable - \"I want to blacklist all carriers with a 7 letter SPN.\" Possible, but nonsensical.\n\nI think this should be strict equality. Same goes for all the fields below. TextUtils.equals() may be reasonable here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 21,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
