@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34043f27_2d51ce46",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-05T21:24:19Z",
+      "side": 1,
+      "message": "This allows to have a simpler code below.\n\nThe if condition is not an issue and I initially did as you suggested, but I had to take into account null value also in the string truncation and comparison. And that was making code more convoluted.\nSo, I decided to keep code simpler and get rid of null from the very beginning.",
+      "parentUuid": "756f08db_75e976a8",
+      "range": {
+        "startLine": 221,
+        "startChar": 29,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fec4ecc_c7d8818e",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b40a87_08020860",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-05T21:24:19Z",
+      "side": 1,
+      "message": "Wildcards: the documentation above does not say that it\u0027s only for MCC/MNC.\nThe wildcard definitely makes sense for GID1 and GID2 values... as a matter of fact, the concept of wildcard is present in the definition of those two files in 3GPP TS 22.022. In Annex A, it says \"The value \"FF\" is the default value to be used in byte 1 when no meaningful SP/corporate code is represented in the GID1/GID2 files respectively. This value shall not be allocated as an SP/corporate code.\"\n\nThis is to say that wildcard makes sense for GID1 and GID2.\n\nAt that point, the only exception would be SPN and this is where things are not completely clear. I agree with you that a valid use case for SPN might be difficult to find, even if there might be one. For example \"vodafone ??\" might cover the operator in multiple countries (\"uk\", \"it\", \"de\" and so on). So, rather than creating an exception to rules specified above, I intentionally applied the same logic to SPN comparison as well.\n\nI will update the comment \"this must match exactly\".\n\nRegarding case sensitivity. The main goal was to avoid case sensitivity in the comparison for GID values (\"02AB\" should be same as \"02ab\"). Again, the only case that was not completely clear is the comparison of SPN and I decided to go with case insensitive comparison to make it more robust against minor typos/errors. It\u0027s unlikely that an operator says \"Value carriername is ok, but value Carriername is not\". So, again, instead of creating exception, I applied the same logic there.",
+      "parentUuid": "e84bd15f_416cc768",
+      "range": {
+        "startLine": 223,
+        "startChar": 21,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
