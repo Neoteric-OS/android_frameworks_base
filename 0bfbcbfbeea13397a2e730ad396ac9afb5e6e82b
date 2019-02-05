@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11711eff_e5ffa10c",
+        "filename": "telephony/java/android/telephony/ims/RcsEvent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "0fe4ee72_0557236c",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73dc4df_b7d3fe5f",
         "filename": "telephony/java/android/telephony/ims/RcsEventQueryParameters.java",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474446c2_7133dbcb",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "Added the API and filed b/123933592 to implement. Thank you!",
+      "parentUuid": "c73dc4df_b7d3fe5f",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "42ec2957_1fd23088",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "This class is also capable of returning RcsParticipantAliasChangedEvents so I\u0027d rather keep the name generic. Thanks!",
+      "parentUuid": "ad791cca_079ea749",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d913cce8_d9851401",
         "filename": "telephony/java/android/telephony/ims/RcsEventQueryParameters.java",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46eda410_bdd23a23",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "d913cce8_d9851401",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e4db573a_d1b68b28",
+        "filename": "telephony/java/android/telephony/ims/RcsIncomingMessageCreationParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "54089e06_87b20022",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c79f8bfa_f428ae6c",
         "filename": "telephony/java/android/telephony/ims/RcsIncomingMessageCreationParameters.java",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42572257_b8edc8d9",
+        "filename": "telephony/java/android/telephony/ims/RcsIncomingMessageCreationParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "Moved to constructor, thanks!",
+      "parentUuid": "c79f8bfa_f428ae6c",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5706eb8a_7470a409",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageCreationParameters.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "This is referred to message ID pretty much everywhere (specs etc) - internally I named this the global id so that it doesn\u0027t get confused with the row ID in the table, but as we are not exposing those to the API users I think calling this RcsMessageId should be fine. Let me know if you disagree, thanks!",
+      "parentUuid": "e08519df_00c3c89d",
+      "range": {
+        "startLine": 163,
+        "startChar": 29,
+        "endLine": 163,
+        "endChar": 38
+      },
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +315,24 @@
       "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c19de71_ed465a94",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-05T19:00:01Z",
+      "side": 1,
+      "message": "One other reason is that once we add the permissions the user would need to pass Context objects  to event.persist() - I like the idea of giving the context only once for RcsManager and its APIs handles the context passing around internally.",
+      "parentUuid": "8bef1f58_2f4e628f",
+      "revId": "0bfbcbfbeea13397a2e730ad396ac9afb5e6e82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
