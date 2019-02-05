@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65e3076_246fb120",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3125,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-05T06:10:53Z",
+      "side": 1,
+      "message": "unsupported means that the device does not support it, and subsequent calls should return the same value. In error scenarios I think we should either return uninitialized, or we return unsupported we should come up with a different name. I prefer the former unless you see any issues with it.",
+      "range": {
+        "startLine": 3125,
+        "startChar": 23,
+        "endLine": 3125,
+        "endChar": 42
+      },
+      "revId": "7ff080131928b7a03517da1167a8fed64f079cc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
