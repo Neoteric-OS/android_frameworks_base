@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4649fa5a_ba69352f",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-05T09:22:12Z",
+      "side": 1,
+      "message": "2019?",
+      "revId": "02bafa6eaa1cb84c72e05c9f3b43c9df925ab590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abacbf6_833391b5",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-05T09:22:12Z",
+      "side": 1,
+      "message": "stop sending keep alive packet?",
+      "revId": "02bafa6eaa1cb84c72e05c9f3b43c9df925ab590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
