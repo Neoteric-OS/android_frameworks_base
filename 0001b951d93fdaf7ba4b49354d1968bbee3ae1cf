@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b76372d2_8a2b69dd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2019-02-05T19:18:35Z",
+      "side": 1,
+      "message": "Careful, this could be null?",
+      "revId": "0001b951d93fdaf7ba4b49354d1968bbee3ae1cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
