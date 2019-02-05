@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74b6357c_1e533d78",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-05T02:15:22Z",
+      "side": 1,
+      "message": "Should this be 255 or 140?",
+      "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
