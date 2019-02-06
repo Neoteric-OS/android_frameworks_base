@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fc3812b_864071cc",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-06T18:51:51Z",
+      "side": 1,
+      "message": "Renamed as suggested.\n\nRegarding #3, the API would be called by the LPA module. This is the expected sequence:\n - LPA retrieves the carrier restriction rules using TelephonyManager::getCarrierRestrictionRules().\n - LPA tests the profile that needs to be downloaded against the carrier restriction rules using this new API\n - LPA decides if it\u0027s ok to proceed, warn the user or reject the download (outside Telephony scope)\n\ngetCarrierRestrictionRules() is already a system API, exactly as getAllowedCarriers() was before.",
+      "parentUuid": "dd0a0723_a3c10e51",
+      "range": {
+        "startLine": 181,
+        "startChar": 21,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756f08db_75e976a8",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 1
