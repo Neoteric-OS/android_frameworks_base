@@ -25,6 +25,70 @@
     },
     {
       "key": {
+        "uuid": "82f2842a_b21caff2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-06T06:33:34Z",
+      "side": 1,
+      "message": "Specifically, it looks like we\u0027d need to register the two BroadcastReceivers that listen for ACTION_USER_* so that they run on the ConnectivityService handler thread.",
+      "parentUuid": "02ab6ede_40e36952",
+      "range": {
+        "startLine": 4419,
+        "startChar": 39,
+        "endLine": 4419,
+        "endChar": 62
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec39c40b_403c8d13",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5010,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-06T06:33:34Z",
+      "side": 1,
+      "message": "This is not VPN-specific, so let\u0027s remove NonVpn from the name.",
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e155e50_e0773177",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6308,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-06T06:33:34Z",
+      "side": 1,
+      "message": "This call is running on the wrong thread as well. Let\u0027s try not to introduce a race here.\n\nThe following alternatives come to mind:\n\n1. Remove the call to updateCapabilities inside Vpn#setUnderlyingNetworks, and instead add a call to updateAllVpnsCapabilities inside the lambda that we post to the handler below.\n\n2. Move the call to setUnderlyingNetworks into the handler post as well, and only leave out of the handler the permissions checks, i.e., throwIfLockdownEnabled and Vpn#isCallerEstablishedOwnerLocked (which you\u0027ll need to wrap in a synchronized public method).\n\n3. Move all the operations into the lambda and hold a latch until the handler thread runs the lambda.\n\nThe downsides of #1 and #2 is that the operation will succeed before it\u0027s actually produced all of its effects. That doesn\u0027t see like a particularly bad problem though. #1 should have no ordering issues since updateAllVpnsCapabilities is idempotent. #2 can have ordering issues if the app issues two simultaneous calls to this method on two different threads in parallel, but it seems to me that that sort of operation would already have had non-deterministic ordering.\n\n#3 could deadlock if the handler thread needs to block on a resource that\u0027s held in the VPN process. But that seems unlikely/impossible since the system server should never block on an app process. If we\u0027re worried about this we can also add a timeout to the wait for the latch. I doubt that anyone is checking the return value of setUnderlyingNetworks anyway, it pretty much never returns false unless the VPN isn\u0027t established.",
+      "range": {
+        "startLine": 6308,
+        "startChar": 70,
+        "endLine": 6308,
+        "endChar": 93
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbc432c2_1291b6e7",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 11
