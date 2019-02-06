@@ -16,6 +16,24 @@
       "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0d68ee_ee3eaac6",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-06T06:10:23Z",
+      "side": 1,
+      "message": "Why 140? I think 255 just comes from the fact that it is represented by a byte. Otherwise I think the spec limit may be lower.",
+      "parentUuid": "74b6357c_1e533d78",
+      "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
