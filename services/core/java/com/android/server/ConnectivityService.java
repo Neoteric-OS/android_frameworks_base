@@ -917,7 +917,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mPermissionMonitor = new PermissionMonitor(mContext, mNMS);
 
-        //set up the listener for user state for creating user VPNs
+        // Set up the listener for user state for creating user VPNs.
+        // Should run on mHandler to avoid any races.
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_USER_STARTED);
         intentFilter.addAction(Intent.ACTION_USER_STOPPED);
@@ -925,7 +926,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_USER_REMOVED);
         intentFilter.addAction(Intent.ACTION_USER_UNLOCKED);
         mContext.registerReceiverAsUser(
-                mIntentReceiver, UserHandle.ALL, intentFilter, null, null);
+                mIntentReceiver,
+                UserHandle.ALL,
+                intentFilter,
+                null /* broadcastPermission */,
+                mHandler);
         mContext.registerReceiverAsUser(mUserPresentReceiver, UserHandle.SYSTEM,
                 new IntentFilter(Intent.ACTION_USER_PRESENT), null, null);
 
@@ -936,7 +941,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
         mContext.registerReceiverAsUser(
-                mIntentReceiver, UserHandle.ALL, intentFilter, null, null);
+                mIntentReceiver,
+                UserHandle.ALL,
+                intentFilter,
+                null /* broadcastPermission */,
+                mHandler);
 
         try {
             mNMS.registerObserver(mTethering);
@@ -3975,7 +3984,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            return mVpns.get(user).establish(config);
+            ParcelFileDescriptor tunFd = mVpns.get(user).establish(config);
+            // Set up VPN's capabilities such as meteredness.
+            mHandler.post(() -> updateAllVpnsCapabilities());
+            return tunFd;
         }
     }
 
@@ -4092,10 +4104,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * TODO : Fix this and call updateCapabilities inline to remove out-of-order events.
      */
     private void updateAllVpnsCapabilities() {
+        Network defaultNetwork = getDefaultNetwork();
         synchronized (mVpns) {
             for (int i = 0; i < mVpns.size(); i++) {
                 final Vpn vpn = mVpns.valueAt(i);
-                vpn.updateCapabilities();
+                vpn.updateCapabilities(defaultNetwork);
             }
         }
     }
@@ -4440,22 +4453,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void onUserAdded(int userId) {
         mPermissionMonitor.onUserAdded(userId);
+        Network defaultNetwork = getDefaultNetwork();
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
-                vpn.onUserAdded(userId);
+                vpn.onUserAdded(userId, defaultNetwork);
             }
         }
     }
 
     private void onUserRemoved(int userId) {
         mPermissionMonitor.onUserRemoved(userId);
+        Network defaultNetwork = getDefaultNetwork();
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
-                vpn.onUserRemoved(userId);
+                vpn.onUserRemoved(userId, defaultNetwork);
             }
         }
     }
@@ -4524,6 +4539,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            // Should be running on primary handler thread as it may lead to updating VPN caps which
+            // requires passing default network around.
+            ensureRunningOnConnectivityServiceThread();
             final String action = intent.getAction();
             final int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_NULL);
             final int uid = intent.getIntExtra(Intent.EXTRA_UID, -1);
@@ -5026,6 +5044,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private NetworkAgentInfo getDefaultNetworkAgentInfo() {
         return getNetworkForRequest(mDefaultRequest.requestId);
+    }
+
+    /**
+     * Returns current default network; must be called on {@link #mHandler}.
+     *
+     * <p>Cannot be a virtual network.
+     */
+    @Nullable
+    private Network getDefaultNetwork() {
+        ensureRunningOnConnectivityServiceThread();
+        NetworkAgentInfo nai = getDefaultNetworkAgentInfo();
+        return nai != null ? nai.network : null;
+    }
+
+    private void ensureRunningOnConnectivityServiceThread() {
+        if (mHandler.getLooper().getThread() != Thread.currentThread()) {
+            throw new IllegalStateException("Not running on ConnectivityService thread");
+        }
     }
 
     private boolean isDefaultNetwork(NetworkAgentInfo nai) {
@@ -5621,6 +5657,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
+        // For VPNs that follow platform default, notify them here rather than depending on changes
+        // in the capabilities of non-VPN networks.
+        updateAllVpnsCapabilities();
     }
 
     private void processListenRequests(NetworkAgentInfo nai, boolean capabilitiesChanged) {
@@ -6321,7 +6360,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             success = mVpns.get(user).setUnderlyingNetworks(networks);
         }
         if (success) {
-            mHandler.post(() -> notifyIfacesChangedForNetworkStats());
+            mHandler.post(() -> {
+                // Update VPN's capabilities based on updated underlying network set.
+                updateAllVpnsCapabilities();
+                notifyIfacesChangedForNetworkStats();
+            });
         }
         return success;
     }
