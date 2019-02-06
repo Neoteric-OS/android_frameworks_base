@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc008be7_6cbed5db",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-06T20:18:01Z",
+      "side": 1,
+      "message": "You can use try with resources, basically \"try (Cursor cursor \u003d contentResolver.query(...))\" and omit the finally block",
+      "range": {
+        "startLine": 2686,
+        "startChar": 31,
+        "endLine": 2686,
+        "endChar": 36
+      },
+      "revId": "ac7663aefd6d0c06e6ba2831cc2b3bd51f2a0208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
