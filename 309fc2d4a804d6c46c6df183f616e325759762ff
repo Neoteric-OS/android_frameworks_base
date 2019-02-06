@@ -34,6 +34,24 @@
       "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10096866_069115a9",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-06T17:06:14Z",
+      "side": 1,
+      "message": "SMS messages usually have a data limit of 140 bytes, I was wondering of this type of encoding is different.",
+      "parentUuid": "8d0d68ee_ee3eaac6",
+      "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
