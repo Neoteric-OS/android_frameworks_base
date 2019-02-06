@@ -404,7 +404,7 @@ public class VpnTest {
 
         // Add the restricted user.
         setMockedUsers(primaryUser, tempProfile);
-        vpn.onUserAdded(tempProfile.id);
+        vpn.onUserAdded(tempProfile.id, null /* defaultNetwork */);
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
             new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
@@ -412,7 +412,7 @@ public class VpnTest {
 
         // Remove the restricted user.
         tempProfile.partial = true;
-        vpn.onUserRemoved(tempProfile.id);
+        vpn.onUserRemoved(tempProfile.id, null /* defaultNetwork */);
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
             new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
             new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
