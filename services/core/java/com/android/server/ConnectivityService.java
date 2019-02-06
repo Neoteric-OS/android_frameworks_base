@@ -1155,7 +1155,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
-        NetworkAgentInfo nai = getDefaultNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkAgentInfo();
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
         if (networks != null) {
@@ -1294,7 +1294,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
-        nai = getDefaultNetwork();
+        nai = getDefaultNetworkAgentInfo();
         if (nai != null
                 && isNetworkWithLinkPropertiesBlocked(nai.linkProperties, uid, ignoreBlocked)) {
             nai = null;
@@ -1406,7 +1406,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
-        NetworkAgentInfo nai = getDefaultNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkAgentInfo();
         NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
         if (nc != null) {
             result.put(nai.network, nc);
@@ -2266,7 +2266,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println();
         pw.println();
 
-        final NetworkAgentInfo defaultNai = getDefaultNetwork();
+        final NetworkAgentInfo defaultNai = getDefaultNetworkAgentInfo();
         pw.print("Active default network: ");
         if (defaultNai == null) {
             pw.println("none");
@@ -3754,7 +3754,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Network network, int uid, boolean hasConnectivity) {
         final NetworkAgentInfo nai;
         if (network == null) {
-            nai = getDefaultNetwork();
+            nai = getDefaultNetworkAgentInfo();
         } else {
             nai = getNetworkAgentInfoForNetwork(network);
         }
@@ -4047,9 +4047,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // see VpnService.setUnderlyingNetworks()'s javadoc about how to interpret
         // the underlyingNetworks list.
         if (underlyingNetworks == null) {
-            NetworkAgentInfo defaultNetwork = getDefaultNetwork();
+            NetworkAgentInfo defaultNetwork = getDefaultNetworkAgentInfo();
             if (defaultNetwork != null && defaultNetwork.linkProperties != null) {
-                info.primaryUnderlyingIface = getDefaultNetwork().linkProperties.getInterfaceName();
+                info.primaryUnderlyingIface =
+                        getDefaultNetworkAgentInfo().linkProperties.getInterfaceName();
             }
         } else if (underlyingNetworks.length > 0) {
             LinkProperties linkProperties = getLinkProperties(underlyingNetworks[0]);
@@ -5023,12 +5024,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private NetworkAgentInfo getDefaultNetwork() {
+    private NetworkAgentInfo getDefaultNetworkAgentInfo() {
         return getNetworkForRequest(mDefaultRequest.requestId);
     }
 
     private boolean isDefaultNetwork(NetworkAgentInfo nai) {
-        return nai == getDefaultNetwork();
+        return nai == getDefaultNetworkAgentInfo();
     }
 
     private boolean isDefaultRequest(NetworkRequestInfo nri) {
@@ -5259,7 +5260,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;  // no updating necessary
         }
 
-        final NetworkAgentInfo defaultNai = getDefaultNetwork();
+        final NetworkAgentInfo defaultNai = getDefaultNetworkAgentInfo();
         final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
 
         if (DBG) {
@@ -6224,7 +6225,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             NetworkAgentInfo newDefaultAgent = null;
             if (nai.isSatisfyingRequest(mDefaultRequest.requestId)) {
-                newDefaultAgent = getDefaultNetwork();
+                newDefaultAgent = getDefaultNetworkAgentInfo();
                 if (newDefaultAgent != null) {
                     intent.putExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO,
                             newDefaultAgent.networkInfo);
@@ -6273,7 +6274,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private Network[] getDefaultNetworks() {
         ArrayList<Network> defaultNetworks = new ArrayList<>();
-        NetworkAgentInfo defaultNetwork = getDefaultNetwork();
+        NetworkAgentInfo defaultNetwork = getDefaultNetworkAgentInfo();
         for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
             if (nai.everConnected && (nai == defaultNetwork || nai.isVPN())) {
                 defaultNetworks.add(nai.network);
