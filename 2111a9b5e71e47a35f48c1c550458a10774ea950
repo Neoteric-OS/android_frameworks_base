@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf22d4e4_85ab916f",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-02-06T22:57:27Z",
+      "side": 1,
+      "message": "given this is a system API add reference to the input parameters\n{@link CarrierIdentifier} for example.\n\nbtw, this api doesn\u0027t require passing CarrierIdentifiers to be the one from devices right? it can be any identifier",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 25
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945b56bf_f7b41938",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-02-06T22:57:27Z",
+      "side": 1,
+      "message": "add an NonNull annotation? or do the null pointer check in side the API",
+      "range": {
+        "startLine": 181,
+        "startChar": 48,
+        "endLine": 181,
+        "endChar": 50
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a49c317_14296a3c",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-02-06T22:57:27Z",
+      "side": 1,
+      "message": "sorry if this is a dumb question, is that possible it could be not in allowed \u0026\u0026 not in excluded?\nor both in allowed and in excluded, how do we handle those?",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 13
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a5ea5f_e565ce5e",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-02-06T22:57:27Z",
+      "side": 1,
+      "message": "not quite understand what this part doing.\nIf one of the id is considered as allowed, all ids are allowed?",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 9
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
