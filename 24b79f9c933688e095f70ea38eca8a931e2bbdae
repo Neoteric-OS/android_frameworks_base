@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ab6ede_40e36952",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-06T02:07:49Z",
+      "side": 1,
+      "message": "Looks like this is also running on the wrong thread. For Q we can probably just run the broadcast receiver on the handler thread. For P we need to consider the implications carefully.",
+      "range": {
+        "startLine": 4419,
+        "startChar": 39,
+        "endLine": 4419,
+        "endChar": 62
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc432c2_1291b6e7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-06T02:07:49Z",
+      "side": 1,
+      "message": "What thread does this run on? If we cannot  guarantee that this only runs on the CS handler then there may be a race here.",
+      "range": {
+        "startLine": 270,
+        "startChar": 16,
+        "endLine": 270,
+        "endChar": 34
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
