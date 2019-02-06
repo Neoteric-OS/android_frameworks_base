@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb96084e_a227ce1e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarIconControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-02-06T10:39:38Z",
+      "side": 0,
+      "message": "This is a bug that order of icons is changed on guest user because #getHolderListInViewOrder returns list in view order. It should not be list in view order.",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 62
+      },
+      "revId": "533b2960fc260de7b9bad62b393690517f4eef1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
