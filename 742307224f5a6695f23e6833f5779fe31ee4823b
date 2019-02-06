@@ -22,6 +22,30 @@
       "revId": "742307224f5a6695f23e6833f5779fe31ee4823b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b58b3e_784a9c3a",
+        "filename": "media/java/android/media/tv/TvTrackInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-02-06T08:57:23Z",
+      "side": 1,
+      "message": "Let me check your intention.\nDo you mean that current param(string) should be more specific?\nThere are lots of mime types and It is quite difficult to maintain all mime types.\nhttps://www.digipres.org/formats/mime-types/\nIt will be appreciated if let me know more details of your expectation.",
+      "parentUuid": "331553c6_6d8f2251",
+      "range": {
+        "startLine": 392,
+        "startChar": 23,
+        "endLine": 392,
+        "endChar": 34
+      },
+      "revId": "742307224f5a6695f23e6833f5779fe31ee4823b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
