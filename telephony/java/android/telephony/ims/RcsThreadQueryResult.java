@@ -29,13 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The result of a {@link RcsMessageStore#getRcsThreads(RcsThreadQueryParameters)}
+ * The result of a {@link RcsMessageStore#getRcsThreads(RcsThreadQueryParams)}
  * call. This class allows getting the token for querying the next batch of threads in order to
  * prevent handling large amounts of data at once.
- *
- * @hide
  */
-public class RcsThreadQueryResult implements Parcelable {
+public final class RcsThreadQueryResult implements Parcelable {
     // A token for the caller to continue their query for the next batch of results
     private RcsQueryContinuationToken mContinuationToken;
     // The list of thread IDs returned with this query
@@ -84,7 +82,7 @@ public class RcsThreadQueryResult implements Parcelable {
         return rcsThreads;
     }
 
-    protected RcsThreadQueryResult(Parcel in) {
+    private RcsThreadQueryResult(Parcel in) {
         mContinuationToken = in.readParcelable(
             RcsQueryContinuationToken.class.getClassLoader());
         mRcsThreadIds = new ArrayList<>();
