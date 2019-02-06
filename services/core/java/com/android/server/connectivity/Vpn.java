@@ -240,7 +240,7 @@ public class Vpn {
         mNetworkCapabilities = new NetworkCapabilities();
         mNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
         mNetworkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
-        updateCapabilities();
+        updateCapabilities(null /* defaultNetwork */);
 
         loadAlwaysOnPackage();
     }
@@ -267,11 +267,25 @@ public class Vpn {
         updateAlwaysOnNotification(detailedState);
     }
 
-    public void updateCapabilities() {
-        final Network[] underlyingNetworks = (mConfig != null) ? mConfig.underlyingNetworks : null;
+    /**
+     * Updates VPN capabilities based on its current underlying networks.
+     *
+     * <p>Should be called on ConnectivityService thread.
+     */
+    public synchronized void updateCapabilities(@Nullable Network defaultNetwork) {
+        if (mConfig == null) {
+            // VPN is not running.
+            return;
+        }
+
+        Network[] underlyingNetworks = mConfig.underlyingNetworks;
+        if (underlyingNetworks == null && defaultNetwork != null) {
+            // null underlying networks means to track the default.
+            underlyingNetworks = new Network[] { defaultNetwork };
+        }
         // Only apps targeting Q and above can explicitly declare themselves as metered.
-        final boolean isAlwaysMetered =
-                mIsPackageTargetingAtLeastQ && (mConfig == null || mConfig.isMetered);
+        final boolean isAlwaysMetered = mIsPackageTargetingAtLeastQ && mConfig.isMetered;
+
         updateCapabilities(mContext.getSystemService(ConnectivityManager.class), underlyingNetworks,
                 mNetworkCapabilities, isAlwaysMetered);
 
@@ -1005,9 +1019,8 @@ public class Vpn {
     }
 
     /**
-     * Establish a VPN network and return the file descriptor of the VPN
-     * interface. This methods returns {@code null} if the application is
-     * revoked or not prepared.
+     * Establish a VPN network and return the file descriptor of the VPN interface. This methods
+     * returns {@code null} if the application is revoked or not prepared.
      *
      * @param config The parameters to configure the network.
      * @return The file descriptor of the VPN interface.
@@ -1099,8 +1112,6 @@ public class Vpn {
                 // as rules are deleted. This prevents data leakage as the rules are moved over.
                 agentDisconnect(oldNetworkAgent);
             }
-            // Set up VPN's capabilities such as meteredness.
-            updateCapabilities();
 
             if (oldConnection != null) {
                 mContext.unbindService(oldConnection);
@@ -1256,7 +1267,12 @@ public class Vpn {
         return ranges;
     }
 
-    public void onUserAdded(int userHandle) {
+    /**
+     * Updates UID ranges for this VPN and also updates its capabilities.
+     *
+     * <p>Should be called on primary ConnectivityService thread.
+     */
+    public void onUserAdded(int userHandle, @Nullable Network defaultNetwork) {
         // If the user is restricted tie them to the parent user's VPN
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1267,7 +1283,7 @@ public class Vpn {
                         addUserToRanges(existingRanges, userHandle, mConfig.allowedApplications,
                                 mConfig.disallowedApplications);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities();
+                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to add restricted user to owner", e);
                     }
@@ -1277,7 +1293,12 @@ public class Vpn {
         }
     }
 
-    public void onUserRemoved(int userHandle) {
+    /**
+     * Updates UID ranges for this VPN and also updates its capabilities.
+     *
+     * <p>Should be called on primary ConnectivityService thread.
+     */
+    public void onUserRemoved(int userHandle, @Nullable Network defaultNetwork) {
         // clean up if restricted
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1289,7 +1310,7 @@ public class Vpn {
                             uidRangesForUser(userHandle, existingRanges);
                         existingRanges.removeAll(removedRanges);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities();
+                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to remove restricted user to owner", e);
                     }
@@ -1502,6 +1523,12 @@ public class Vpn {
         return success;
     }
 
+    /**
+     * Updates underlying network set.
+     *
+     * <p>Note: Does not updates capabilities. Caller needs to call {@link #updateCapabilities} from
+     * ConnectivityService thread for update to actually propagate to apps.
+     */
     public synchronized boolean setUnderlyingNetworks(Network[] networks) {
         if (!isCallerEstablishedOwnerLocked()) {
             return false;
@@ -1518,7 +1545,6 @@ public class Vpn {
                 }
             }
         }
-        updateCapabilities();
         return true;
     }
 
