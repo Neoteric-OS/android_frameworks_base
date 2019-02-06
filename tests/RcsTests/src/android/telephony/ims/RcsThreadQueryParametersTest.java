@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.tests.ims;
+package android.telephony.ims;
 
 import static android.telephony.ims.RcsThreadQueryParameters.SORT_BY_TIMESTAMP;
 import static android.telephony.ims.RcsThreadQueryParameters.THREAD_TYPE_GROUP;
@@ -22,8 +22,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
-import android.telephony.ims.RcsParticipant;
-import android.telephony.ims.RcsThreadQueryParameters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

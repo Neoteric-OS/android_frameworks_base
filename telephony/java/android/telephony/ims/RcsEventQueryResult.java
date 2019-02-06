@@ -16,9 +16,6 @@
 
 package android.telephony.ims;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -28,7 +25,7 @@ import java.util.List;
  *
  * @hide
  */
-public class RcsEventQueryResult implements Parcelable {
+public class RcsEventQueryResult {
     private RcsQueryContinuationToken mContinuationToken;
     private List<RcsEvent> mEvents;
 
@@ -61,30 +58,5 @@ public class RcsEventQueryResult implements Parcelable {
      */
     public List<RcsEvent> getEvents() {
         return mEvents;
-    }
-
-    protected RcsEventQueryResult(Parcel in) {
-    }
-
-    public static final Creator<RcsEventQueryResult> CREATOR = new Creator<RcsEventQueryResult>() {
-        @Override
-        public RcsEventQueryResult createFromParcel(Parcel in) {
-            return new RcsEventQueryResult(in);
-        }
-
-        @Override
-        public RcsEventQueryResult[] newArray(int size) {
-            return new RcsEventQueryResult[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mContinuationToken, flags);
     }
 }

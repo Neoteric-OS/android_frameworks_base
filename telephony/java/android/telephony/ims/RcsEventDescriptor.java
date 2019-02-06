@@ -15,29 +15,33 @@
  */
 package android.telephony.ims;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The base class for events that can happen on {@link RcsParticipant}s and {@link RcsThread}s.
  * @hide - TODO(109759350) make this public
  */
-public abstract class RcsEvent {
+public abstract class RcsEventDescriptor implements Parcelable {
     protected long mTimestamp;
 
-    protected RcsEvent(long timestamp) {
+    RcsEventDescriptor(long timestamp) {
         mTimestamp = timestamp;
     }
 
-    /**
-     * @return Returns the time of when this event happened. The timestamp is defined as
-     * milliseconds passed after midnight, January 1, 1970 UTC
-     */
-    public long getTimestamp() {
-        return mTimestamp;
+    protected abstract RcsEvent createRcsEvent();
+
+    RcsEventDescriptor(Parcel in) {
+        mTimestamp = in.readLong();
     }
 
-    /**
-     * Persists the event to the data store
-     *
-     * @hide
-     */
-    abstract void persist() throws RcsMessageStoreException;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mTimestamp);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

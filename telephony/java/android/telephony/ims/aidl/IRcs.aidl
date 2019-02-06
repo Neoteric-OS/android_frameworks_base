@@ -18,7 +18,7 @@ package android.telephony.ims.aidl;
 
 import android.net.Uri;
 import android.telephony.ims.RcsEventQueryParameters;
-import android.telephony.ims.RcsEventQueryResult;
+import android.telephony.ims.RcsEventQueryResultDescriptor;
 import android.telephony.ims.RcsFileTransferCreationParameters;
 import android.telephony.ims.RcsIncomingMessageCreationParameters;
 import android.telephony.ims.RcsMessageCreationParameters;
@@ -54,9 +54,9 @@ interface IRcs {
     RcsMessageQueryResult getMessagesWithToken(
         in RcsQueryContinuationToken continuationToken);
 
-    RcsEventQueryResult getEvents(in RcsEventQueryParameters queryParameters);
+    RcsEventQueryResultDescriptor getEvents(in RcsEventQueryParameters queryParameters);
 
-    RcsEventQueryResult getEventsWithToken(
+    RcsEventQueryResultDescriptor getEventsWithToken(
         in RcsQueryContinuationToken continuationToken);
 
     // returns true if the thread was successfully deleted

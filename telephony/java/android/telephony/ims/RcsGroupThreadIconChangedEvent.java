@@ -18,7 +18,6 @@ package android.telephony.ims;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.Uri;
-import android.os.Parcel;
 
 /**
  * An event that indicates an {@link RcsGroupThread}'s icon was changed. Please see R6-2-5 - GSMA
@@ -48,15 +47,6 @@ public class RcsGroupThreadIconChangedEvent extends RcsGroupThreadEvent {
     }
 
     /**
-     * @hide - internal constructor for queries
-     */
-    public RcsGroupThreadIconChangedEvent(long timestamp, int rcsGroupThreadId,
-            int originatingParticipantId, @Nullable Uri newIcon) {
-        super(timestamp, rcsGroupThreadId, originatingParticipantId);
-        mNewIcon = newIcon;
-    }
-
-    /**
      * @return Returns the {@link Uri} to the icon of the {@link RcsGroupThread} after this
      * {@link RcsGroupThreadIconChangedEvent} occured.
      */
@@ -76,34 +66,5 @@ public class RcsGroupThreadIconChangedEvent extends RcsGroupThreadEvent {
         RcsControllerCall.call(iRcs -> iRcs.createGroupThreadIconChangedEvent(
                 getTimestamp(), getRcsGroupThread().getThreadId(),
                 getOriginatingParticipant().getId(), mNewIcon));
-    }
-
-    public static final Creator<RcsGroupThreadIconChangedEvent> CREATOR =
-            new Creator<RcsGroupThreadIconChangedEvent>() {
-                @Override
-                public RcsGroupThreadIconChangedEvent createFromParcel(Parcel in) {
-                    return new RcsGroupThreadIconChangedEvent(in);
-                }
-
-                @Override
-                public RcsGroupThreadIconChangedEvent[] newArray(int size) {
-                    return new RcsGroupThreadIconChangedEvent[size];
-                }
-            };
-
-    protected RcsGroupThreadIconChangedEvent(Parcel in) {
-        super(in);
-        mNewIcon = in.readParcelable(Uri.class.getClassLoader());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(mNewIcon, flags);
     }
 }

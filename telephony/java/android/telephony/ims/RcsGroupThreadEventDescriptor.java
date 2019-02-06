@@ -15,37 +15,34 @@
  */
 package android.telephony.ims;
 
-import android.annotation.NonNull;
+import android.os.Parcel;
 
 /**
  * An event that happened on an {@link RcsGroupThread}.
  *
  * @hide - TODO(109759350) make this public
  */
-public abstract class RcsGroupThreadEvent extends RcsEvent {
-    private final int mRcsGroupThreadId;
-    private final int mOriginatingParticipantId;
+public abstract class RcsGroupThreadEventDescriptor extends RcsEventDescriptor {
+    protected final int mRcsGroupThreadId;
+    protected final int mOriginatingParticipantId;
 
-    RcsGroupThreadEvent(long timestamp, int rcsGroupThreadId,
+    RcsGroupThreadEventDescriptor(long timestamp, int rcsGroupThreadId,
             int originatingParticipantId) {
         super(timestamp);
         mRcsGroupThreadId = rcsGroupThreadId;
         mOriginatingParticipantId = originatingParticipantId;
     }
 
-    /**
-     * @return Returns the {@link RcsGroupThread} that this event happened on.
-     */
-    @NonNull
-    public RcsGroupThread getRcsGroupThread() {
-        return new RcsGroupThread(mRcsGroupThreadId);
+    RcsGroupThreadEventDescriptor(Parcel in) {
+        super(in);
+        mRcsGroupThreadId = in.readInt();
+        mOriginatingParticipantId = in.readInt();
     }
 
-    /**
-     * @return Returns the {@link RcsParticipant} that performed the event.
-     */
-    @NonNull
-    public RcsParticipant getOriginatingParticipant() {
-        return new RcsParticipant(mOriginatingParticipantId);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(mRcsGroupThreadId);
+        dest.writeInt(mOriginatingParticipantId);
     }
 }
