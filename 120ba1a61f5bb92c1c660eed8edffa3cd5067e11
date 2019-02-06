@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dd0a0723_a3c10e51",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-02-06T17:52:11Z",
+      "side": 1,
+      "message": "can we rename this API? \n1. carrierId here may cause confusion as we already have a bunch of carrier id public APIs. can we explicitly call it CarrierIdentifier?\n\n2. maybe rename to isCarrierIdentifiersAllowed(CarrierIdentifier[]) if you just call it testCarrierId, its unclear what to be tested.\n\n3. who is the callers for this API? why it has to be a systemAPI?",
+      "range": {
+        "startLine": 181,
+        "startChar": 21,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "120ba1a61f5bb92c1c660eed8edffa3cd5067e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756f08db_75e976a8",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 1
