@@ -15,33 +15,40 @@
  */
 package android.telephony.ims;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility.PROTECTED;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
- * The base class for events that can happen on {@link RcsParticipant}s and {@link RcsThread}s.
- *
- * @hide - TODO: make public
+ * @hide - used only for internal communication with the ircs service
  */
-public abstract class RcsEvent {
-    /**
-     * @hide
-     */
+public abstract class RcsEventDescriptor implements Parcelable {
     protected long mTimestamp;
 
-    protected RcsEvent(long timestamp) {
+    RcsEventDescriptor(long timestamp) {
         mTimestamp = timestamp;
     }
 
     /**
-     * @return Returns the time of when this event happened. The timestamp is defined as
-     * milliseconds passed after midnight, January 1, 1970 UTC
-     */
-    public long getTimestamp() {
-        return mTimestamp;
-    }
-
-    /**
-     * Persists the event to the data store
-     *
      * @hide
      */
-    abstract void persist() throws RcsMessageStoreException;
+    @VisibleForTesting(visibility = PROTECTED)
+    public abstract RcsEvent createRcsEvent();
+
+    RcsEventDescriptor(Parcel in) {
+        mTimestamp = in.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mTimestamp);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }
