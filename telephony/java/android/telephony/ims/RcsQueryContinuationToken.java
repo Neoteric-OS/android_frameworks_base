@@ -26,9 +26,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * This interface allows using the same implementation for continuation token usage in
  * {@link com.android.providers.telephony.RcsProvider}
- * @hide - TODO make getQueryType() and types public - the rest should stay internal
  */
-public class RcsQueryContinuationToken implements Parcelable {
+public final class RcsQueryContinuationToken implements Parcelable {
     /**
      * Denotes that this {@link RcsQueryContinuationToken} token is meant to allow continuing
      * {@link RcsEvent} queries
@@ -116,7 +115,7 @@ public class RcsQueryContinuationToken implements Parcelable {
         return mQueryType;
     }
 
-    protected RcsQueryContinuationToken(Parcel in) {
+    private RcsQueryContinuationToken(Parcel in) {
         mQueryType = in.readInt();
         mRawQuery = in.readString();
         mLimit = in.readInt();

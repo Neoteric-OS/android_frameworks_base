@@ -27,8 +27,6 @@ import java.util.Set;
 
 /**
  * This is a single instance of a message sent or received over RCS.
- *
- * @hide - TODO(109759350) make this public
  */
 public abstract class RcsMessage {
     /**
@@ -83,7 +81,10 @@ public abstract class RcsMessage {
      */
     public static final int SEEN = 9;
 
-    protected int mId;
+    /**
+     * @hide
+     */
+    protected final int mId;
 
     @IntDef({
             DRAFT, QUEUED, SENDING, SENT, RETRYING, FAILED, RECEIVED, SEEN
@@ -277,7 +278,7 @@ public abstract class RcsMessage {
     @NonNull
     @WorkerThread
     public RcsFileTransferPart insertFileTransfer(
-            RcsFileTransferCreationParameters fileTransferCreationParameters)
+            RcsFileTransferCreationParams fileTransferCreationParameters)
             throws RcsMessageStoreException {
         return new RcsFileTransferPart(RcsControllerCall.call(
                 iRcs -> iRcs.storeFileTransfer(mId, isIncoming(), fileTransferCreationParameters)));
