@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e522c258_58e2351d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "There is an @SystemApi version of requestCellInfoUpdate() that also needs to be updated. :-)",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3f73b4_3d495672",
+        "filename": "api/removed.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "getNeighboringCellInfo() also needs ACCESS_FINE_LOCATION. Looks like it was in the commit message but just got missed?",
+      "range": {
+        "startLine": 542,
+        "startChar": 71,
+        "endLine": 542,
+        "endChar": 93
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f070de66_06bfbb39",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "logged b/123994640... let\u0027s discuss on the bug.",
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4f41c9_b63df453",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "can you protect this by Build.IS_DEBUGGABLE?",
+      "range": {
+        "startLine": 2125,
+        "startChar": 17,
+        "endLine": 2125,
+        "endChar": 52
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492f48ad_72d164ef",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "Is it possible to create all the plumbing for all the enforcement in one place so that you don\u0027t have to delete it, and then isolate the piece that needs to change later to 1 or 2 specific functions that can simply \"switch\" between enforcing and non-enforcing mode? That would have 2 benefits:\n1) reduce the code churn late-cycle.\n2) make it easy to switch between enforcing and non-enforcing mode.",
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f5414c_c1f80920",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2319,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-06T19:20:04Z",
+      "side": 1,
+      "message": "You can now use the fancy Binder.withCleanCallingIdentity(Callable\u003cT\u003e) to reduce the amount of boilerplate here.",
+      "range": {
+        "startLine": 2319,
+        "startChar": 21,
+        "endLine": 2319,
+        "endChar": 27
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
