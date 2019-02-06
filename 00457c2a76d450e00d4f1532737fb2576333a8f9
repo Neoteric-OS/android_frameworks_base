@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79b58509_7ee94095",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-02-06T20:44:44Z",
+      "side": 1,
+      "message": "very minor nit: extra line above",
+      "range": {
+        "startLine": 2677,
+        "startChar": 16,
+        "endLine": 2677,
+        "endChar": 17
+      },
+      "revId": "00457c2a76d450e00d4f1532737fb2576333a8f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
