@@ -46,6 +46,30 @@
       "revId": "742307224f5a6695f23e6833f5779fe31ee4823b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b314bfb_620598fc",
+        "filename": "media/java/android/media/tv/TvTrackInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-02-06T09:23:07Z",
+      "side": 1,
+      "message": "According to specification, I think about 10 mime types will be used here.\nBut we hope to be flexible when specification was changed.",
+      "parentUuid": "92b58b3e_784a9c3a",
+      "range": {
+        "startLine": 392,
+        "startChar": 23,
+        "endLine": 392,
+        "endChar": 34
+      },
+      "revId": "742307224f5a6695f23e6833f5779fe31ee4823b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
