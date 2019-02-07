@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "56301ce8_48f95d9a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4419,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-07T00:40:22Z",
+      "side": 1,
+      "message": "\u003e Looks like this is also running on the wrong thread.\n\nThanks for pointing this out done. Yeah, this is running on BR itself (which I guess runs on SystemServer thread or main UI thread?). \n\n\u003e For Q we can probably just run the broadcast receiver on the handler thread. \n\nMakes sense. Done. Note that I think all of ACTION_USER_* should be fine to run on CS handler, therefore I\u0027m going to pass in mHandler when registering mIntentReceiver (For ex - onUserStart also leads to calling updateCapabilities, although VPN shouldn\u0027t be running when a user is added, but I think it is probably better to be consistent). LMK if you think we should only migrate onUserAdded and onUserRemoved calls to CS handler (and not others).\n\n\u003e For P we need to consider the implications carefully.\n\nAck. For P, we will anyways need to cherry-pick changes carefully.\n\n\u003e Specifically, it looks like we\u0027d need to register the two BroadcastReceivers that listen for ACTION_USER_* so that they run on the ConnectivityService handler thread.\n\nAll the ACTION_USER_* are part of mIntentReceiver (on Q). I don\u0027t understand why we would need to register two BRs?",
+      "parentUuid": "82f2842a_b21caff2",
+      "range": {
+        "startLine": 4419,
+        "startChar": 39,
+        "endLine": 4419,
+        "endChar": 62
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec39c40b_403c8d13",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -63,6 +87,24 @@
       "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8f3f87_9feb9b7f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5010,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-07T00:40:22Z",
+      "side": 1,
+      "message": "I added nonVpn for 2 reasons:\n- There is already a getDefaultNetwork above which returns NetworkAgentInfo.\n- I wanted to make it clear that this Network cannot be a VPN network (which I guess I could do it via javadoc comment).\n\nI will rename getDefaultNetwork -\u003e getDefaultNetworkAgentInfo (in the CL below), so I can have getDefaultNetwork that actually returns Network.",
+      "parentUuid": "ec39c40b_403c8d13",
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "581ddad3_9721320f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6308,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-07T00:40:22Z",
+      "side": 1,
+      "message": "#1 SGTM. Thanks for the suggestion and alternatives.",
+      "parentUuid": "8e155e50_e0773177",
+      "range": {
+        "startLine": 6308,
+        "startChar": 70,
+        "endLine": 6308,
+        "endChar": 93
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc432c2_1291b6e7",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 11
@@ -109,6 +175,53 @@
       "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0791a1de_49880fc7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-07T00:40:22Z",
+      "side": 1,
+      "message": "This runs on bunch of different threads as pointed out in other comments. I will be hardening calls to updateCapabilities by ensuring they are only called on ConnectivityService handler thread.",
+      "parentUuid": "cbc432c2_1291b6e7",
+      "range": {
+        "startLine": 270,
+        "startChar": 16,
+        "endLine": 270,
+        "endChar": 34
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca6a0e36_74b9798c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-07T00:40:22Z",
+      "side": 1,
+      "message": "synchronizing this method as it tries to access mConfig which gets mutated by setUnderlyingNetworks.",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 15
+      },
+      "revId": "24b79f9c933688e095f70ea38eca8a931e2bbdae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
