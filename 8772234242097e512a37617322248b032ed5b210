@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c7e7a7e_e908aaf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e522c258_58e2351d",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a3f73b4_3d495672",
         "filename": "api/removed.txt",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-06T19:20:04Z",
       "side": 1,
       "message": "getNeighboringCellInfo() also needs ACCESS_FINE_LOCATION. Looks like it was in the commit message but just got missed?",
+      "range": {
+        "startLine": 542,
+        "startChar": 71,
+        "endLine": 542,
+        "endChar": 93
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d89cf89_6afe71c9",
+        "filename": "api/removed.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "the coarse-\u003efine switch is only happening for apps targeting Q-and-over. This api has been disabled already for those apps, so there\u0027s no need to change it.",
+      "parentUuid": "6a3f73b4_3d495672",
       "range": {
         "startLine": 542,
         "startChar": 71,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1079714a_ca9211be",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "Saving this for another CL",
+      "parentUuid": "f070de66_06bfbb39",
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f41c9_b63df453",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9c9130a0_cbe1cfa1",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4f41c9_b63df453",
+      "range": {
+        "startLine": 2125,
+        "startChar": 17,
+        "endLine": 2125,
+        "endChar": 52
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492f48ad_72d164ef",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "8772234242097e512a37617322248b032ed5b210",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbea763_5b1b221b",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492f48ad_72d164ef",
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "8772234242097e512a37617322248b032ed5b210",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0ddf12_ab5ceccc",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2319,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-07T03:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f5414c_c1f80920",
+      "range": {
+        "startLine": 2319,
+        "startChar": 21,
+        "endLine": 2319,
+        "endChar": 27
+      },
+      "revId": "8772234242097e512a37617322248b032ed5b210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
