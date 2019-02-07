@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b6370a_5d03d64f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-07T03:29:16Z",
+      "side": 1,
+      "message": "Nit: for extra clarity would rename this to \"hasAnyPermissionOf\".",
+      "range": {
+        "startLine": 1835,
+        "startChar": 20,
+        "endLine": 1835,
+        "endChar": 40
+      },
+      "revId": "dd29f2078d5679608a956e5f291cc1e8b981dcfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
