@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d1e379_e2aaca37",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2126,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-07T23:01:19Z",
+      "side": 1,
+      "message": "Honestly, it\u0027s unclear to me why we have this function. It has 2 problems:\n1) It doesn\u0027t work with runtime permissions, because if permissions are revoked post-registration, then things fail silently.\n2) Different bits have different permissions requirements.\n\nInconsistent enforcement is just lame. I\u0027m almost inclined to say we should just let the listen() function pass and then do all the enforcement bit-by-bit. As a side-effect, that would simplify this enforcement tremendously.",
+      "range": {
+        "startLine": 2126,
+        "startChar": 20,
+        "endLine": 2126,
+        "endChar": 43
+      },
+      "revId": "e27c9ad295c7218607c625a6da37851ee284b6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aab518a_b3bd26de",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-07T23:01:19Z",
+      "side": 1,
+      "message": "nit: STOPSHIP",
+      "range": {
+        "startLine": 2129,
+        "startChar": 15,
+        "endLine": 2129,
+        "endChar": 19
+      },
+      "revId": "e27c9ad295c7218607c625a6da37851ee284b6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb8c960_0ff9d1f9",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-07T23:01:19Z",
+      "side": 1,
+      "message": "this function (and name) will lose all context soon. Can we architect this so that we check upgraded permissions, then if that fails, check to see if we have some flag set (boolean allowDegradedPermission \u003d true; //STOPSHIP if true).\nThen if the degraded permission passes, toast and allow... otherwise, continue to explode?",
+      "range": {
+        "startLine": 90,
+        "startChar": 26,
+        "endLine": 90,
+        "endChar": 64
+      },
+      "revId": "e27c9ad295c7218607c625a6da37851ee284b6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22e989d_522f088b",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-07T23:01:19Z",
+      "side": 1,
+      "message": "nit: requireFine",
+      "range": {
+        "startLine": 91,
+        "startChar": 75,
+        "endLine": 91,
+        "endChar": 81
+      },
+      "revId": "e27c9ad295c7218607c625a6da37851ee284b6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
