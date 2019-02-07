@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcffeca7_d88f46fc",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-07T03:05:23Z",
+      "side": 1,
+      "message": "Correct. It can be anything and this is the way the LPA team plans to use it.",
+      "parentUuid": "cf22d4e4_85ab916f",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 25
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "945b56bf_f7b41938",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd6af28_cf0645ac",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-07T03:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "945b56bf_f7b41938",
+      "range": {
+        "startLine": 181,
+        "startChar": 48,
+        "endLine": 181,
+        "endChar": 50
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ec0f7d03_3c37961f",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-07T03:05:23Z",
+      "side": 1,
+      "message": "Absolutely possible, and this is correctly handled in the else block of each line.\nFor example, in the case CARRIER_RESTRICTION_DEFAULT_NOT_ALLOWED, result[i] would be false if the carrier is in both lists or in none of the lists. This is the correct output.\nSimilarly, in the case CARRIER_RESTRICTION_DEFAULT_ALLOWED, result[i] would be true in those two cases, and again this is the expected output.",
+      "parentUuid": "9a49c317_14296a3c",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 13
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a5ea5f_e565ce5e",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41bfb8d_f243190b",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-07T03:05:23Z",
+      "side": 1,
+      "message": "Yes, that is correct. This is for the policy \"ONE_VALID_SIM_MUST_BE_PRESENT\". So, if one SIM is valid, then all SIMs become valid.",
+      "parentUuid": "d4a5ea5f_e565ce5e",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 9
+      },
+      "revId": "2111a9b5e71e47a35f48c1c550458a10774ea950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
