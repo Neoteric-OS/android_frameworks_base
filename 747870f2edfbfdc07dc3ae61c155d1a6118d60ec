@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9dbe3e8_6560d760",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-07T00:57:49Z",
+      "side": 1,
+      "message": "Are there constants for these?",
+      "range": {
+        "startLine": 2672,
+        "startChar": 38,
+        "endLine": 2672,
+        "endChar": 57
+      },
+      "revId": "747870f2edfbfdc07dc3ae61c155d1a6118d60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3adf3dd_33032f60",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2678,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-07T00:57:49Z",
+      "side": 1,
+      "message": "I thought you didn\u0027t use _ID column in any table. Did you in this one?",
+      "range": {
+        "startLine": 2678,
+        "startChar": 68,
+        "endLine": 2678,
+        "endChar": 83
+      },
+      "revId": "747870f2edfbfdc07dc3ae61c155d1a6118d60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
