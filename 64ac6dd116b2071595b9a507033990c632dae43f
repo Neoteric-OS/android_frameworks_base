@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7e0d869_06da2ccc",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-07T23:52:57Z",
+      "side": 1,
+      "message": "Will do. Thanks.",
+      "parentUuid": "490024c1_9ce121e6",
+      "revId": "64ac6dd116b2071595b9a507033990c632dae43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db10af8f_464788bc",
         "filename": "core/java/android/os/AsyncTask.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2019-02-07T23:17:13Z",
       "side": 1,
       "message": "what causes this to happen? SynchronousQueue doesn\u0027t have a max size, does it?",
+      "range": {
+        "startLine": 235,
+        "startChar": 27,
+        "endLine": 235,
+        "endChar": 54
+      },
+      "revId": "64ac6dd116b2071595b9a507033990c632dae43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd850899_fdb92a92",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-07T23:52:57Z",
+      "side": 1,
+      "message": "SynchronousQueue has zero size; it\u0027s only a communication mechanism. Thus this setup will add threads as necessary to give all tasks a chance to run, up to MAXIMUM_POOL_SIZE. So this happens if we have more than MAXIMUM_POOL_SIZE simultaneously active tasks.\n\nEmpirically, I didn\u0027t see this happening while just playing around with a device. But we should still handle it correctly. I don\u0027t believe ThreadPoolExecutor directly supports queueing when we overflow MAXIMUM_POOL_SIZE.\n\nGiven that the scheme here doesn\u0027t really work (we can end up with the only running SerialExecutor task enqueued on its own queue, though I didn\u0027t actually observe this), I\u0027m currently inclined to lazily create a second ThreadPoolExecutor with an unbounded queue to handle the overflow. Since that doesn\u0027t actually seem to happen, it shouldn\u0027t affect performance.\n\nMy assumption is that we want to limit the number of threads, but would rather let a queue grow than dropping anything or crashing. Queue entries are much cheaper than threads.",
+      "parentUuid": "db10af8f_464788bc",
       "range": {
         "startLine": 235,
         "startChar": 27,
