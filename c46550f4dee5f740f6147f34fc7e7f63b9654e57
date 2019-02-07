@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f47018_9c98b0fe",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2019-02-07T17:48:26Z",
+      "side": 1,
+      "message": "The search paths originate from the java.library.path system property, and I assume /system/lib comes from there (where ever that gets set). Shouldn\u0027t this be in the same place?\n\nThe long comment above is all about the vendor special cases below, but it wouldn\u0027t apply to this one.",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
