@@ -24,6 +24,7 @@ import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.os.IBinder;
 import android.os.Messenger;
+import com.android.internal.net.VpnInfo;
 
 /** {@hide} */
 interface INetworkStatsService {
@@ -58,7 +59,7 @@ interface INetworkStatsService {
     void incrementOperationCount(int uid, int tag, int operationCount);
 
     /** Force update of ifaces. */
-    void forceUpdateIfaces(in Network[] defaultNetworks);
+    void forceUpdateIfaces(in Network[] defaultNetworks, in VpnInfo[] vpnArray);
     /** Force update of statistics. */
     void forceUpdate();
 

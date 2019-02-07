@@ -268,6 +268,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @GuardedBy("mStatsLock")
     private Network[] mDefaultNetworks = new Network[0];
 
+    /** Set containing info about active VPNs and their underlying networks. */
+    @GuardedBy("mStatsLock")
+    private VpnInfo[] mVpnInfos = new VpnInfo[0];
+
     private final DropBoxNonMonotonicObserver mNonMonotonicObserver =
             new DropBoxNonMonotonicObserver();
 
@@ -824,12 +828,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         try {
             // Get the latest snapshot from NetworkStatsFactory.
             NetworkStats uidDetailStats = getNetworkStatsUidDetail(INTERFACES_ALL);
-            VpnInfo[] vpnArray = mConnManager.getAllVpnInfo();
 
             // Migrate traffic from VPN UID over delta and update mTunAdjustedStats.
             NetworkStats result;
             synchronized (mStatsLock) {
-                migrateTunTraffic(uidDetailStats, vpnArray);
+                migrateTunTraffic(uidDetailStats, mVpnInfos);
                 result = mTunAdjustedStats.clone();
             }
 
@@ -897,13 +900,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     @Override
-    public void forceUpdateIfaces(Network[] defaultNetworks) {
+    public void forceUpdateIfaces(Network[] defaultNetworks, VpnInfo[] vpnArray) {
         mContext.enforceCallingOrSelfPermission(READ_NETWORK_USAGE_HISTORY, TAG);
         assertBandwidthControlEnabled();
 
         final long token = Binder.clearCallingIdentity();
         try {
-            updateIfaces(defaultNetworks);
+            updateIfaces(defaultNetworks, vpnArray);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -1167,10 +1170,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     };
 
-    private void updateIfaces(Network[] defaultNetworks) {
+    private void updateIfaces(Network[] defaultNetworks, VpnInfo[] vpnArray) {
         synchronized (mStatsLock) {
             mWakeLock.acquire();
             try {
+                mVpnInfos = vpnArray;
                 updateIfacesLocked(defaultNetworks);
             } finally {
                 mWakeLock.release();
@@ -1320,7 +1324,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
         // For per-UID stats, pass the VPN info so VPN traffic is reattributed to responsible apps.
-        VpnInfo[] vpnArray = mConnManager.getAllVpnInfo();
+        VpnInfo[] vpnArray = mVpnInfos;
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUid");
         mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, vpnArray, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
