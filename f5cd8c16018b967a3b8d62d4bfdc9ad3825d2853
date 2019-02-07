@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15413329_89d05b01",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-02-07T20:34:08Z",
+      "side": 1,
+      "message": "Is there actually a reason to make this a tristate?",
+      "range": {
+        "startLine": 714,
+        "startChar": 17,
+        "endLine": 714,
+        "endChar": 55
+      },
+      "revId": "f5cd8c16018b967a3b8d62d4bfdc9ad3825d2853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
