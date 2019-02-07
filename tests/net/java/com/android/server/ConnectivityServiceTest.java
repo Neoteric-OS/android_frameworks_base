@@ -17,10 +17,10 @@
 package com.android.server;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
-import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -184,6 +184,8 @@ import org.mockito.stubbing.Answer;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -3951,6 +3953,75 @@ public class ConnectivityServiceTest {
 
         mWiFiNetworkAgent.disconnect();
         waitFor(mWiFiNetworkAgent.getDisconnectedCV());
+    }
+
+    @Test
+    public void testTcpSocketKeepalives() throws Exception {
+        final ExecutorService executor = Executors.newSingleThreadExecutor();
+        final int srcPortV4 = 12345;
+        final int srcPortV6 = 23456;
+        final InetAddress myIPv4 = InetAddress.getByName("127.0.0.1");
+        final InetAddress myIPv6 = InetAddress.getByName("::1");
+
+        final int validKaInterval = 15;
+        final int invalidKaInterval = 9;
+
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("wlan12");
+        lp.addLinkAddress(new LinkAddress(myIPv6, 64));
+        lp.addLinkAddress(new LinkAddress(myIPv4, 25));
+        lp.addRoute(new RouteInfo(InetAddress.getByName("fe80::1234")));
+        lp.addRoute(new RouteInfo(InetAddress.getByName("127.0.0.254")));
+
+        final Network notMyNet = new Network(61234);
+        final Network myNet = connectKeepaliveNetwork(lp);
+
+        final Socket testSocketV4 = new Socket();
+        final Socket testSocketV6 = new Socket();
+
+        TestSocketKeepaliveCallback callback = new TestSocketKeepaliveCallback();
+        SocketKeepalive ka;
+
+        // Attempt to start Tcp keepalives with invalid parameters and check for errors.
+        // Invalid network.
+        ka = mCm.createSocketKeepalive(notMyNet, testSocketV4, executor, callback);
+        ka.start(validKaInterval);
+        callback.expectError(SocketKeepalive.ERROR_INVALID_NETWORK);
+
+        // Invalid Socket (socket is not bound with IPv4 address).
+        ka = mCm.createSocketKeepalive(myNet, testSocketV4, executor, callback);
+        ka.start(validKaInterval);
+        callback.expectError(SocketKeepalive.ERROR_INVALID_SOCKET);
+
+        // Invalid Socket (socket is not bound with IPv6 address).
+        ka = mCm.createSocketKeepalive(myNet, testSocketV6, executor, callback);
+        ka.start(validKaInterval);
+        callback.expectError(SocketKeepalive.ERROR_INVALID_SOCKET);
+
+        // Bind the socket address
+        testSocketV4.bind(new InetSocketAddress(myIPv4, srcPortV4));
+        testSocketV6.bind(new InetSocketAddress(myIPv6, srcPortV6));
+
+        // Invalid Socket (socket is bound with IPv4 address).
+        ka = mCm.createSocketKeepalive(myNet, testSocketV4, executor, callback);
+        ka.start(validKaInterval);
+        callback.expectError(SocketKeepalive.ERROR_INVALID_SOCKET);
+
+        // Invalid Socket (socket is bound with IPv6 address).
+        ka = mCm.createSocketKeepalive(myNet, testSocketV6, executor, callback);
+        ka.start(validKaInterval);
+        callback.expectError(SocketKeepalive.ERROR_INVALID_SOCKET);
+
+        // Due to the permission restriction of Mock ConnectivityService in this process,
+        // when creating TCP keep alive mechanism and switching to TCP Repair mode
+        // {@link TcpKeepaliveController#switchToRepairMode}, atest process fails to set
+        // TCP Repair mode by calling {@link Os#setsockoptInt} because of missing CAP_NET_ADMIN
+        // permission, so move more connected socket tests to CTS.
+
+        testSocketV4.close();
+        testSocketV6.close();
+
+        executor.shutdown();
     }
 
     @Test
