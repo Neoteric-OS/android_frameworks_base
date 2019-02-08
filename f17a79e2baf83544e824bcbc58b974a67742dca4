@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4e82c24_21801a80",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-08T00:04:13Z",
+      "side": 1,
+      "message": "They don\u0027t have to be the SIMs in the device. As a matter of fact, LPA team plans to use this before downloading a profile (so, it is not on the device yet).\n\nThe reason why I mentioned \"one for each SIM slot\" here is that items in the input list are not processed independently, but we also apply multisim policy and so the specific position of a certain carrier or the presence of another SIM in the list might matter.",
+      "parentUuid": "2b4f716a_6839431a",
+      "range": {
+        "startLine": 177,
+        "startChar": 61,
+        "endLine": 177,
+        "endChar": 96
+      },
+      "revId": "f17a79e2baf83544e824bcbc58b974a67742dca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1330ef29_a06d6e07",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d728395_8f765db2",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-08T00:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1330ef29_a06d6e07",
+      "range": {
+        "startLine": 178,
+        "startChar": 83,
+        "endLine": 178,
+        "endChar": 91
+      },
+      "revId": "f17a79e2baf83544e824bcbc58b974a67742dca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d6761e_e37014ea",
         "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "f17a79e2baf83544e824bcbc58b974a67742dca4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34f6f6a_e0169b76",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-08T00:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d6761e_e37014ea",
+      "revId": "f17a79e2baf83544e824bcbc58b974a67742dca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
