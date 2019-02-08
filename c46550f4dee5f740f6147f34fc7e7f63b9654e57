@@ -22,6 +22,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e28ddd_d6dc456d",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-08T13:47:51Z",
+      "side": 1,
+      "message": "I think you might be right. But  why others paths, like /product/lib, are added explicitly here?",
+      "parentUuid": "49f47018_9c98b0fe",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
