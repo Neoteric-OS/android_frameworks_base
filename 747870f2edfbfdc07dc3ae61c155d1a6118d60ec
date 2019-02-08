@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "704c394b_c5d0a7ce",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-02-08T23:46:29Z",
+      "side": 1,
+      "message": "There are not. There wasn\u0027t one for the original \"content://mms-sms\" endpoint. I could have made one for this new \"content://rcs/canonical-address\" endpoint, but I have the hope that the only interaction with this endpoint will be through this helper function. If we need it later, we could add it, but I wanted to avoid putting it in the contract class.\n\nI have also talked with Sahin, we may decide to remove the use of the mms-sms canonical addresses table to avoid issues (b/124128938).",
+      "parentUuid": "f9dbe3e8_6560d760",
+      "range": {
+        "startLine": 2672,
+        "startChar": 38,
+        "endLine": 2672,
+        "endChar": 57
+      },
+      "revId": "747870f2edfbfdc07dc3ae61c155d1a6118d60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3adf3dd_33032f60",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-07T00:57:49Z",
       "side": 1,
       "message": "I thought you didn\u0027t use _ID column in any table. Did you in this one?",
+      "range": {
+        "startLine": 2678,
+        "startChar": 68,
+        "endLine": 2678,
+        "endChar": 83
+      },
+      "revId": "747870f2edfbfdc07dc3ae61c155d1a6118d60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fac33ca_229079c9",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2678,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-02-08T23:46:29Z",
+      "side": 1,
+      "message": "The underlying table behind this endpoint is the existing MMS/SMS canonical-addresses table, so it uses the columns existing in that table. I tried to reword the doc comments to make this more clear as well.",
+      "parentUuid": "a3adf3dd_33032f60",
       "range": {
         "startLine": 2678,
         "startChar": 68,
