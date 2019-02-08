@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80455293_ec9a4938",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-02-08T05:14:42Z",
+      "side": 1,
+      "message": "Done. Used a companion object, since I find that using the AtomicReference semantics here a little confusing (creation of a new TestNetworkService every time the getTestNetworkService() is called, which may be set or discarded)",
+      "parentUuid": "905627c3_361ec816",
+      "revId": "c2708ab14951432172ac0c58697554a9d2201e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1f21e5_1021dceb",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-10T13:58:00Z",
       "side": 1,
       "message": "Actually I think we\u0027d be better served if this was a real network, not a test network. VPNs behave specially in a number of ways (for example, they attract traffic, instead of being selected by apps) and are a minority use case. If this class is to be generally useful, it should be representative of the more common use case.",
+      "range": {
+        "startLine": 5721,
+        "startChar": 41,
+        "endLine": 5721,
+        "endChar": 72
+      },
+      "revId": "c2708ab14951432172ac0c58697554a9d2201e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4d6811_84a5294d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5721,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-02-08T05:14:42Z",
+      "side": 1,
+      "message": "Done. Currently verifying to check that this doesn\u0027t get reaped.",
+      "parentUuid": "0c1f21e5_1021dceb",
       "range": {
         "startLine": 5721,
         "startChar": 41,
