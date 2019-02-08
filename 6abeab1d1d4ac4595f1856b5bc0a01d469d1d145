@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fc9b88_ff73b208",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-08T13:14:37Z",
+      "side": 1,
+      "message": "Suggest renaming to mVpns or mVpnInfos for consistency with the other arrays just above it.",
+      "range": {
+        "startLine": 273,
+        "startChar": 22,
+        "endLine": 273,
+        "endChar": 31
+      },
+      "revId": "6abeab1d1d4ac4595f1856b5bc0a01d469d1d145",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2051d233_30c71b51",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-08T13:14:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment adds much value since it describes a simple operation and the method it\u0027s in is small and straightfoward. Remove?",
+      "revId": "6abeab1d1d4ac4595f1856b5bc0a01d469d1d145",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a009b4e_ebbeae58",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-08T13:14:37Z",
+      "side": 1,
+      "message": "You probably want to do this inside the wakelock. Put it just before updateIfacesLocked?",
+      "range": {
+        "startLine": 1175,
+        "startChar": 0,
+        "endLine": 1176,
+        "endChar": 33
+      },
+      "revId": "6abeab1d1d4ac4595f1856b5bc0a01d469d1d145",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
