@@ -70,6 +70,24 @@
       "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4894e58b_522f21cd",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-02-08T02:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814f238c_efeace19",
+      "revId": "309fc2d4a804d6c46c6df183f616e325759762ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
