@@ -70,6 +70,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080325ef_899e073a",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2019-02-08T14:47:13Z",
+      "side": 1,
+      "message": "The comment above tries to explain that. The way I read it, having a path in defaultSearchPaths means all libraries there are loadable, but putting it here makes it subject to public.libraries.txt. I doubt I got that right though, since provided /system/lib comes from java.library.path, we should certainly apply public.libraries.txt to that (and the lib dir in the APEX is no different).\n\nJiyong, you added this bit, can you give some guidance?\n\nMy principle is that we\u0027re adding another location which in most respects is just a split-off from /system/lib, so the closer to that setting this is, the better.",
+      "parentUuid": "c7e28ddd_d6dc456d",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
