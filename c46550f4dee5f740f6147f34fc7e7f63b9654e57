@@ -94,6 +94,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc424159_f864572f",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-02-08T16:07:07Z",
+      "side": 1,
+      "message": "java.library.path comes from the search paths of the default linker namespace. We can\u0027t add these paths there.\n\nI also feel uncomfortable with this, but I don\u0027t have better option.\n\nPerhaps, do you think we can change libcore so that a file is not tested on these directories upon System.loadLibrary()? See #864.",
+      "parentUuid": "080325ef_899e073a",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
