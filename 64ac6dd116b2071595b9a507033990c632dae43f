@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c07c518c_1eedadb0",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-09T00:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e0d869_06da2ccc",
+      "revId": "64ac6dd116b2071595b9a507033990c632dae43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db10af8f_464788bc",
         "filename": "core/java/android/os/AsyncTask.java",
         "patchSetId": 2
@@ -105,6 +123,30 @@
       "revId": "64ac6dd116b2071595b9a507033990c632dae43f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022f0cb2_26b5bdf7",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-09T00:51:10Z",
+      "side": 1,
+      "message": "Implemented in PS3.",
+      "parentUuid": "f68c36ab_a0043ca9",
+      "range": {
+        "startLine": 235,
+        "startChar": 27,
+        "endLine": 235,
+        "endChar": 54
+      },
+      "revId": "64ac6dd116b2071595b9a507033990c632dae43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
