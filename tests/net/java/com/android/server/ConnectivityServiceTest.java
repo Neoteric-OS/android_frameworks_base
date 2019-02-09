@@ -20,6 +20,7 @@ import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -890,6 +891,9 @@ public class ConnectivityServiceTest {
 
         @Override
         public int getNetId() {
+            if (mMockNetworkAgent == null) {
+                return NETID_UNSET;
+            }
             return mMockNetworkAgent.getNetwork().netId;
         }
 
@@ -911,12 +915,13 @@ public class ConnectivityServiceTest {
         }
 
         @Override
-        public void updateCapabilities(Network defaultNetwork) {
-            if (!mConnected) return;
+        public NetworkCapabilities updateCapabilities(Network defaultNetwork) {
+            if (!mConnected) return null;
             super.updateCapabilities(defaultNetwork);
             // Because super.updateCapabilities will update the capabilities of the agent but not
             // the mock agent, the mock agent needs to know about them.
             copyCapabilitiesToNetworkAgent();
+            return new NetworkCapabilities(mNetworkCapabilities);
         }
 
         private void copyCapabilitiesToNetworkAgent() {
