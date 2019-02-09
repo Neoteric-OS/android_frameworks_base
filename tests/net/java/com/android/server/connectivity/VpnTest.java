@@ -404,7 +404,7 @@ public class VpnTest {
 
         // Add the restricted user.
         setMockedUsers(primaryUser, tempProfile);
-        vpn.onUserAdded(tempProfile.id, null /* defaultNetwork */);
+        vpn.onUserAdded(tempProfile.id);
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
             new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
@@ -412,7 +412,7 @@ public class VpnTest {
 
         // Remove the restricted user.
         tempProfile.partial = true;
-        vpn.onUserRemoved(tempProfile.id, null /* defaultNetwork */);
+        vpn.onUserRemoved(tempProfile.id);
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
             new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
             new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
@@ -566,7 +566,7 @@ public class VpnTest {
 
         final NetworkCapabilities caps = new NetworkCapabilities();
 
-        Vpn.updateCapabilities(
+        Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager, new Network[] {}, caps, false /* isAlwaysMetered */);
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
@@ -577,7 +577,7 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
-        Vpn.updateCapabilities(
+        Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager,
                 new Network[] {mobile},
                 caps,
@@ -591,7 +591,7 @@ public class VpnTest {
         assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
-        Vpn.updateCapabilities(
+        Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager, new Network[] {wifi}, caps, false /* isAlwaysMetered */);
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
@@ -602,7 +602,7 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
-        Vpn.updateCapabilities(
+        Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager, new Network[] {wifi}, caps, true /* isAlwaysMetered */);
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
@@ -613,7 +613,7 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
-        Vpn.updateCapabilities(
+        Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager,
                 new Network[] {mobile, wifi},
                 caps,
