@@ -22,6 +22,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f307a608_19371259",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-09T01:43:51Z",
+      "side": 1,
+      "message": "The thread that queues up the work could indeed end up sleeping for a total of about 200 msec in your example. But that\u0027s only if the sleeps don\u0027t allow the executor to catch up.\n\nI don\u0027t think just using a LinkedBlockingQueue works. That\u0027s basically the same issue as with the current code. The problem is that, based on the documentation:\n\n1) The queue will be used when CORE_POOL_SIZE threads are started. Before that every task will start a new thread. Thus a large CORE_POOL_SIZE is bad.\n\n2) If there is an unbounded queue, no more threads will be created once CORE_POOL_SIZE threads are started. Thus a small CORE_POOL_SIZE is bad.\n\nThe SynchronousQueue with a small CORE_POOL_SIZE means that we will have fewer threads around for light users, but can still grow to MAXIMUM_POOL_SIZE, since the queue is always full.\n\nStandard usages either have CORE_POOL_SIZE \u003d MAXIMUM_POOL_SIZE, or use a SynchronousQueue.\n\nI suspect you have a much better intuition than me for how to tune the constants here. Increasing the number of threads in the backup executor is probably OK, since it never gets created in my manual AOSP tests. And if it does get created, the threads time out fairly quickly. But again max pool size doesn\u0027t matter there; we would have to increase the core pool size.\n\nThe fact that the time constant in the sleep is one msec is another plausible guess that we could certainly adjust.",
+      "parentUuid": "7f5cf80c_cb658013",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
