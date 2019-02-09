@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5cf80c_cb658013",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2019-02-09T01:11:02Z",
+      "side": 1,
+      "message": "why not just give this an unbounded LinkedBlockingQueue? The rejected execution handler seems rather aggressive. If an app queues up 40 things in a burst they will have gone from that work being drained by a dozen threads to 20 of those being split over 20 threads, 20 of them drained by a single thread, and their thread that queued up the work constantly preempted by a Thread.sleep().\n\nEven if that\u0027s a rare use it seems too opinionated for such a generic utility.",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
