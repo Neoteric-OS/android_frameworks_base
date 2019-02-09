@@ -268,14 +268,16 @@ public class Vpn {
     }
 
     /**
-     * Updates VPN capabilities based on its current underlying networks.
+     * Returns updated capabilities based on current underlying networks.
      *
-     * <p>Should be called on ConnectivityService thread.
+     * <p>Does not propagate updated capabilities to apps.
+     *
+     * @param defaultNetwork underlying network for VPNs following platform's default
      */
-    public synchronized void updateCapabilities(@Nullable Network defaultNetwork) {
+    public synchronized NetworkCapabilities updateCapabilities(@Nullable Network defaultNetwork) {
         if (mConfig == null) {
             // VPN is not running.
-            return;
+            return null;
         }
 
         Network[] underlyingNetworks = mConfig.underlyingNetworks;
@@ -289,9 +291,7 @@ public class Vpn {
         updateCapabilities(mContext.getSystemService(ConnectivityManager.class), underlyingNetworks,
                 mNetworkCapabilities, isAlwaysMetered);
 
-        if (mNetworkAgent != null) {
-            mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
-        }
+        return new NetworkCapabilities(mNetworkCapabilities);
     }
 
     @VisibleForTesting
@@ -1272,7 +1272,7 @@ public class Vpn {
      *
      * <p>Should be called on primary ConnectivityService thread.
      */
-    public void onUserAdded(int userHandle, @Nullable Network defaultNetwork) {
+    public void onUserAdded(int userHandle) {
         // If the user is restricted tie them to the parent user's VPN
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1283,7 +1283,6 @@ public class Vpn {
                         addUserToRanges(existingRanges, userHandle, mConfig.allowedApplications,
                                 mConfig.disallowedApplications);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to add restricted user to owner", e);
                     }
@@ -1298,7 +1297,7 @@ public class Vpn {
      *
      * <p>Should be called on primary ConnectivityService thread.
      */
-    public void onUserRemoved(int userHandle, @Nullable Network defaultNetwork) {
+    public void onUserRemoved(int userHandle) {
         // clean up if restricted
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1310,7 +1309,6 @@ public class Vpn {
                             uidRangesForUser(userHandle, existingRanges);
                         existingRanges.removeAll(removedRanges);
                         mNetworkCapabilities.setUids(existingRanges);
-                        updateCapabilities(defaultNetwork);
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to remove restricted user to owner", e);
                     }
@@ -1526,8 +1524,8 @@ public class Vpn {
     /**
      * Updates underlying network set.
      *
-     * <p>Note: Does not updates capabilities. Caller needs to call {@link #updateCapabilities} from
-     * ConnectivityService thread for update to actually propagate to apps.
+     * <p>Note: Does not updates capabilities. Call {@link #updateCapabilities} from
+     * ConnectivityService thread to get updated capabilities.
      */
     public synchronized boolean setUnderlyingNetworks(Network[] networks) {
         if (!isCallerEstablishedOwnerLocked()) {
