@@ -118,6 +118,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7c175e_281e6465",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-11T19:34:12Z",
+      "side": 1,
+      "message": "Re jiyong@: I don\u0027t know why we can\u0027t change libcore. But I think libcore still needs to hard-code some search path /apex/com.android.runtime/lib to find the library, since System.loadLibrary(\"icuuc\") does not have a full path.\n\nRe Martin/Nicolas: I can\u0027t find the code actually setting the value of  java.library.path. But as the comment and jiyong@ said, it\u0027s the search path of default namespace. I think we should not add /apex/com.android.runtime/lib into the search path of default namespace. Right?",
+      "parentUuid": "cc424159_f864572f",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
