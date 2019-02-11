@@ -46,6 +46,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4accd29_dccee5bc",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2019-02-11T23:30:16Z",
+      "side": 1,
+      "message": "Oh I get the problem now. ThreadPoolExecutor does not behave at all like what I\u0027d have expected.  It doesn\u0027t even attempt to re-use an idle thread if the current thread count is below corePoolSize :(\n\nMy primary concern with behavior changes here would be if it\u0027s worse at any of the cases the previous version was fine with. But it seems like the previous version also had it\u0027s own unique badness.\n\nWhat if AsyncTask\u0027s THREAD_POOL_EXECUTOR was just ForkJoinPool\u0027s commonPool?",
+      "parentUuid": "f307a608_19371259",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
