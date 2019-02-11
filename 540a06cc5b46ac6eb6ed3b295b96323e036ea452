@@ -70,6 +70,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5017dc_bcf5b02d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2019-02-11T23:31:34Z",
+      "side": 1,
+      "message": "Alternatively slap a @Deprecate on this class and point people at something else like ForkJoinPool\u0027s commonPool(), with a mention that onPostExecute can be handled via:\n\nForkJoinPool.commonPool().execute {\n    //do thing\n\n    Handler(Looper.getMainLooper()).post {\n        // onPostExecute\n    }\n}",
+      "parentUuid": "e4accd29_dccee5bc",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
