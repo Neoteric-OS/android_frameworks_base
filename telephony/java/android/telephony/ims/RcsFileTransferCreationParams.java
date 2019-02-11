@@ -18,6 +18,7 @@ package android.telephony.ims;
 import android.annotation.CheckResult;
 import android.net.Uri;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 
 /**
@@ -27,14 +28,14 @@ import android.os.Parcelable;
  */
 public final class RcsFileTransferCreationParams implements Parcelable {
     private String mRcsFileTransferSessionId;
-    private Uri mContentUri;
+    private ParcelFileDescriptor mFileDescriptor;
     private String mContentMimeType;
     private long mFileSize;
     private long mTransferOffset;
     private int mWidth;
     private int mHeight;
     private long mMediaDuration;
-    private Uri mPreviewUri;
+    private ParcelFileDescriptor mPreviewFileDescriptor;
     private String mPreviewMimeType;
     private @RcsFileTransferPart.RcsFileTransferStatus int mFileTransferStatus;
 
@@ -47,10 +48,22 @@ public final class RcsFileTransferCreationParams implements Parcelable {
     }
 
     /**
+     * @return Returns the {@link ParcelFileDescriptor} for the content of the
+     * {@link RcsFileTransferPart} to be created
+     *
+     * @hide - TODO - make public
+     */
+    public ParcelFileDescriptor getFileDescriptor() {
+        return mFileDescriptor;
+    }
+
+    /**
      * @return Returns the URI for the content of the {@link RcsFileTransferPart} to be created
+     *
+     * TODO - delete
      */
     public Uri getContentUri() {
-        return mContentUri;
+        return null;
     }
 
     /**
@@ -101,11 +114,23 @@ public final class RcsFileTransferCreationParams implements Parcelable {
     }
 
     /**
+     * @return Returns the {@link ParcelFileDescriptor} of the preview of the content of the
+     * {@link RcsFileTransferPart} to be created. This should only be used for multi-media files.
+     *
+     * @hide - TODO - make public
+     */
+    public ParcelFileDescriptor getPreviewFileDescriptor() {
+        return mPreviewFileDescriptor;
+    }
+
+    /**
      * @return Returns the URI of the preview of the content of the {@link RcsFileTransferPart} to
      * be created. This should only be used for multi-media files.
+     *
+     * TODO - delete
      */
     public Uri getPreviewUri() {
-        return mPreviewUri;
+        return null;
     }
 
     /**
@@ -128,14 +153,14 @@ public final class RcsFileTransferCreationParams implements Parcelable {
      */
     RcsFileTransferCreationParams(Builder builder) {
         mRcsFileTransferSessionId = builder.mRcsFileTransferSessionId;
-        mContentUri = builder.mContentUri;
+        mFileDescriptor = builder.mFileDescriptor;
         mContentMimeType = builder.mContentMimeType;
         mFileSize = builder.mFileSize;
         mTransferOffset = builder.mTransferOffset;
         mWidth = builder.mWidth;
         mHeight = builder.mHeight;
         mMediaDuration = builder.mLength;
-        mPreviewUri = builder.mPreviewUri;
+        mPreviewFileDescriptor = builder.mPreviewFileDescriptor;
         mPreviewMimeType = builder.mPreviewMimeType;
         mFileTransferStatus = builder.mFileTransferStatus;
     }
@@ -145,14 +170,14 @@ public final class RcsFileTransferCreationParams implements Parcelable {
      */
     public class Builder {
         private String mRcsFileTransferSessionId;
-        private Uri mContentUri;
+        private ParcelFileDescriptor mFileDescriptor;
         private String mContentMimeType;
         private long mFileSize;
         private long mTransferOffset;
         private int mWidth;
         private int mHeight;
         private long mLength;
-        private Uri mPreviewUri;
+        private ParcelFileDescriptor mPreviewFileDescriptor;
         private String mPreviewMimeType;
         private @RcsFileTransferPart.RcsFileTransferStatus int mFileTransferStatus;
 
@@ -174,10 +199,26 @@ public final class RcsFileTransferCreationParams implements Parcelable {
          *
          * @param contentUri The URI for the file
          * @return The same instance of {@link Builder} to chain methods
+         *
+         * TODO - delete.
          */
         @CheckResult
         public Builder setContentUri(Uri contentUri) {
-            mContentUri = contentUri;
+            return this;
+        }
+
+        /**
+         * Sets the URI for the content of the {@link RcsFileTransferPart} to be created
+         *
+         * @param parcelFileDescriptor The {@link ParcelFileDescriptor} that refers to the file
+         *                             transfer.
+         * @return The same instance of {@link Builder} to chain methods
+         *
+         * @hide TODO - make public
+         */
+        @CheckResult
+        public Builder setFileDescriptor(ParcelFileDescriptor parcelFileDescriptor) {
+            mFileDescriptor = parcelFileDescriptor;
             return this;
         }
 
@@ -264,10 +305,27 @@ public final class RcsFileTransferCreationParams implements Parcelable {
          *
          * @param previewUri The URI of the preview of the file transfer
          * @return The same instance of {@link Builder} to chain methods
+         *
+         * TODO - delete
          */
         @CheckResult
         public Builder setPreviewUri(Uri previewUri) {
-            mPreviewUri = previewUri;
+            return this;
+        }
+
+        /**
+         * Sets the URI of the preview of the content of the {@link RcsFileTransferPart} to be
+         * created. This should only be used for multi-media files.
+         *
+         * @param previewParcelFileDescriptor The {@link ParcelFileDescriptor} that refers to the
+         *                                    preview of the file transfer.
+         * @return The same instance of {@link Builder} to chain methods
+         *
+         * @hide TODO - make public
+         */
+        @CheckResult
+        public Builder setPreviewFileDescriptor(ParcelFileDescriptor previewParcelFileDescriptor) {
+            mPreviewFileDescriptor = previewParcelFileDescriptor;
             return this;
         }
 
@@ -311,14 +369,14 @@ public final class RcsFileTransferCreationParams implements Parcelable {
 
     private RcsFileTransferCreationParams(Parcel in) {
         mRcsFileTransferSessionId = in.readString();
-        mContentUri = in.readParcelable(Uri.class.getClassLoader());
+        mFileDescriptor = in.readFileDescriptor();
         mContentMimeType = in.readString();
         mFileSize = in.readLong();
         mTransferOffset = in.readLong();
         mWidth = in.readInt();
         mHeight = in.readInt();
         mMediaDuration = in.readLong();
-        mPreviewUri = in.readParcelable(Uri.class.getClassLoader());
+        mPreviewFileDescriptor = in.readFileDescriptor();
         mPreviewMimeType = in.readString();
         mFileTransferStatus = in.readInt();
     }
@@ -344,14 +402,14 @@ public final class RcsFileTransferCreationParams implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mRcsFileTransferSessionId);
-        dest.writeParcelable(mContentUri, flags);
+        dest.writeParcelable(mFileDescriptor, flags);
         dest.writeString(mContentMimeType);
         dest.writeLong(mFileSize);
         dest.writeLong(mTransferOffset);
         dest.writeInt(mWidth);
         dest.writeInt(mHeight);
         dest.writeLong(mMediaDuration);
-        dest.writeParcelable(mPreviewUri, flags);
+        dest.writeParcelable(mPreviewFileDescriptor, flags);
         dest.writeString(mPreviewMimeType);
         dest.writeInt(mFileTransferStatus);
     }

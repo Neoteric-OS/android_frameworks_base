@@ -2437,6 +2437,18 @@ public final class Telephony {
                     FILE_TRANSFER_URI_PART);
 
             /**
+             * The path in {@link com.android.providers.telephony.RcsProvider} that allows inserting
+             * raw file transfer content.
+             */
+            String FILE_CONTENT_PART = "file_content";
+
+            /**
+             * The URI to query, insert or delete raw file transfer content on
+             * {@link com.android.providers.telephony.RcsProvider}
+             */
+            Uri FILE_CONTENT_URI = Uri.withAppendedPath(CONTENT_AND_AUTHORITY, FILE_CONTENT_PART);
+
+            /**
              * The globally unique file transfer ID for this RCS file transfer.
              */
             String FILE_TRANSFER_ID_COLUMN = "rcs_file_transfer_id";

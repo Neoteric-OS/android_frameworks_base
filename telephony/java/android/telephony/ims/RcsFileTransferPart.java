@@ -19,6 +19,7 @@ import android.annotation.IntDef;
 import android.annotation.Nullable;
 import android.annotation.WorkerThread;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -150,20 +151,52 @@ public class RcsFileTransferPart {
      *
      * @param contentUri The URI for this file transfer.
      * @throws RcsMessageStoreException if the value could not be persisted into storage
+     *
+     * TODO - delete
      */
     @WorkerThread
     public void setContentUri(Uri contentUri) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setFileTransferContentUri(mId, contentUri));
     }
 
     /**
      * @return Returns the URI for this file transfer
      * @throws RcsMessageStoreException if the value could not be read from the storage
+     *
+     * TODO - delete
      */
     @Nullable
     @WorkerThread
     public Uri getContentUri() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getFileTransferContentUri(mId));
+        return null;
+    }
+
+    /**
+     * Sets the content URI for this file transfer and persists into storage. The file transfer
+     * should be reachable using this URI.
+     *
+     * @param fileDescriptor The active file descriptor for this file transfer.
+     * @throws RcsMessageStoreException if the value could not be persisted into storage
+     *
+     * @hide TODO - make public
+     */
+    @WorkerThread
+    public void setFileDescriptor(ParcelFileDescriptor fileDescriptor)
+            throws RcsMessageStoreException {
+        RcsControllerCall
+                .callWithNoReturn(iRcs -> iRcs.setFileTransferDescriptor(mId, fileDescriptor));
+    }
+
+    /**
+     * @return Returns an active {@link ParcelFileDescriptor} that points to the stored file
+     * transfer, or {@code null} if there is no file transfer stored.
+     * @throws RcsMessageStoreException if the value could not be read from the storage
+     *
+     * @hide TODO - make public
+     */
+    @Nullable
+    @WorkerThread
+    public ParcelFileDescriptor getFileDescriptor() throws RcsMessageStoreException {
+        return RcsControllerCall.call(iRcs -> iRcs.getFileTransferDescriptor(mId));
     }
 
     /**
@@ -218,6 +251,8 @@ public class RcsFileTransferPart {
      * @param transferOffset The transfer offset for this file transfer.
      * @throws RcsMessageStoreException if the value could not be persisted into storage
      */
+
+    //TODO - delete?
     @WorkerThread
     public void setTransferOffset(long transferOffset) throws RcsMessageStoreException {
         RcsControllerCall.callWithNoReturn(
@@ -228,6 +263,8 @@ public class RcsFileTransferPart {
      * @return Returns the number of bytes that have successfully transferred.
      * @throws RcsMessageStoreException if the value could not be read from the storage
      */
+
+    //TODO - delete?
     @WorkerThread
     public long getTransferOffset() throws RcsMessageStoreException {
         return RcsControllerCall.call(iRcs -> iRcs.getFileTransferTransferOffset(mId));
@@ -318,10 +355,12 @@ public class RcsFileTransferPart {
      * @return Returns the URI for the preview of this multi-media file (e.g. an image thumbnail for
      * a video)
      * @throws RcsMessageStoreException if the value could not be read from the storage
+     *
+     * TODO - delete
      */
     @WorkerThread
     public Uri getPreviewUri() throws RcsMessageStoreException {
-        return RcsControllerCall.call(iRcs -> iRcs.getFileTransferPreviewUri(mId));
+        return null;
     }
 
     /**
@@ -329,10 +368,38 @@ public class RcsFileTransferPart {
      *
      * @param previewUri The URI to access to the preview file.
      * @throws RcsMessageStoreException if the value could not be persisted into storage
+     *
+     * TODO - delete
      */
     @WorkerThread
     public void setPreviewUri(Uri previewUri) throws RcsMessageStoreException {
-        RcsControllerCall.callWithNoReturn(iRcs -> iRcs.setFileTransferPreviewUri(mId, previewUri));
+    }
+
+    /**
+     * @return Returns the URI for the preview of this multi-media file (e.g. an image thumbnail for
+     * a video)
+     * @throws RcsMessageStoreException if the value could not be read from the storage
+     *
+     * @hide TODO - make public
+     */
+    @WorkerThread
+    public ParcelFileDescriptor getPreviewFileDescriptor() throws RcsMessageStoreException {
+        return RcsControllerCall.call(iRcs -> iRcs.getPreviewFileDescriptor(mId));
+    }
+
+    /**
+     * Sets the URI for the preview of this multi-media file and persists into storage.
+     *
+     * @param previewFileDescriptor The URI to access to the preview file.
+     * @throws RcsMessageStoreException if the value could not be persisted into storage
+     *
+     * @hide TODO - make public
+     */
+    @WorkerThread
+    public void setPreviewFileDescriptor(ParcelFileDescriptor previewFileDescriptor)
+            throws RcsMessageStoreException {
+        RcsControllerCall.callWithNoReturn(
+                iRcs -> iRcs.setPreviewFileDescriptor(mId, previewFileDescriptor));
     }
 
     /**
