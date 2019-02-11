@@ -43613,13 +43613,13 @@ package android.telephony.ims {
   public final class RcsFileTransferCreationParams implements android.os.Parcelable {
     method public int describeContents();
     method public String getContentMimeType();
-    method public android.net.Uri getContentUri();
+    method public android.os.ParcelFileDescriptor getFileDescriptor();
     method public long getFileSize();
     method @android.telephony.ims.RcsFileTransferPart.RcsFileTransferStatus public int getFileTransferStatus();
     method public int getHeight();
     method public long getMediaDuration();
+    method public android.os.ParcelFileDescriptor getPreviewFileDescriptor();
     method public String getPreviewMimeType();
-    method public android.net.Uri getPreviewUri();
     method public String getRcsFileTransferSessionId();
     method public long getTransferOffset();
     method public int getWidth();
@@ -43631,39 +43631,39 @@ package android.telephony.ims {
     ctor public RcsFileTransferCreationParams.Builder();
     method public android.telephony.ims.RcsFileTransferCreationParams build();
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setContentMimeType(String);
-    method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setContentUri(android.net.Uri);
+    method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setFileDescriptor(android.os.ParcelFileDescriptor);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setFileSize(long);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setFileTransferSessionId(String);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setFileTransferStatus(@android.telephony.ims.RcsFileTransferPart.RcsFileTransferStatus int);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setHeight(int);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setMediaDuration(long);
+    method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setPreviewFileDescriptor(android.os.ParcelFileDescriptor);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setPreviewMimeType(String);
-    method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setPreviewUri(android.net.Uri);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setTransferOffset(long);
     method @CheckResult public android.telephony.ims.RcsFileTransferCreationParams.Builder setWidth(int);
   }
 
   public class RcsFileTransferPart {
     method @WorkerThread @Nullable public String getContentMimeType() throws android.telephony.ims.RcsMessageStoreException;
-    method @Nullable @WorkerThread public android.net.Uri getContentUri() throws android.telephony.ims.RcsMessageStoreException;
+    method @Nullable @WorkerThread public android.os.ParcelFileDescriptor getFileDescriptor() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public long getFileSize() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public String getFileTransferSessionId() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread @android.telephony.ims.RcsFileTransferPart.RcsFileTransferStatus public int getFileTransferStatus() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public int getHeight() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public long getLength() throws android.telephony.ims.RcsMessageStoreException;
+    method @WorkerThread public android.os.ParcelFileDescriptor getPreviewFileDescriptor() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public String getPreviewMimeType() throws android.telephony.ims.RcsMessageStoreException;
-    method @WorkerThread public android.net.Uri getPreviewUri() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public long getTransferOffset() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public int getWidth() throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setContentMimeType(String) throws android.telephony.ims.RcsMessageStoreException;
-    method @WorkerThread public void setContentUri(android.net.Uri) throws android.telephony.ims.RcsMessageStoreException;
+    method @WorkerThread public void setFileDescriptor(android.os.ParcelFileDescriptor) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setFileSize(long) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setFileTransferSessionId(String) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setFileTransferStatus(@android.telephony.ims.RcsFileTransferPart.RcsFileTransferStatus int) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setHeight(int) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setLength(long) throws android.telephony.ims.RcsMessageStoreException;
+    method @WorkerThread public void setPreviewFileDescriptor(android.os.ParcelFileDescriptor) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setPreviewMimeType(String) throws android.telephony.ims.RcsMessageStoreException;
-    method @WorkerThread public void setPreviewUri(android.net.Uri) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setTransferOffset(long) throws android.telephony.ims.RcsMessageStoreException;
     method @WorkerThread public void setWidth(int) throws android.telephony.ims.RcsMessageStoreException;
     field public static final int DOWNLOADING = 6; // 0x6

@@ -30,6 +30,7 @@ import android.telephony.ims.RcsParticipantQueryResult;
 import android.telephony.ims.RcsQueryContinuationToken;
 import android.telephony.ims.RcsThreadQueryParams;
 import android.telephony.ims.RcsThreadQueryResult;
+import android.os.ParcelFileDescriptor;
 
 /**
  * RPC definition between RCS storage APIs and phone process.
@@ -211,9 +212,9 @@ interface IRcs {
 
     String getFileTransferSessionId(int partId);
 
-    void setFileTransferContentUri(int partId, in Uri contentUri);
+    void setFileTransferDescriptor(int partId, in ParcelFileDescriptor fileDescriptor);
 
-    Uri getFileTransferContentUri(int partId);
+    ParcelFileDescriptor getFileTransferDescriptor(int partId);
 
     void setFileTransferContentType(int partId, String contentType);
 
@@ -243,9 +244,9 @@ interface IRcs {
 
     long getFileTransferLength(int partId);
 
-    void setFileTransferPreviewUri(int partId, in Uri uri);
+    void setPreviewFileDescriptor(int partId, in ParcelFileDescriptor fileDescriptor);
 
-    Uri getFileTransferPreviewUri(int partId);
+    ParcelFileDescriptor getPreviewFileDescriptor(int partId);
 
     void setFileTransferPreviewType(int partId, String type);
 
