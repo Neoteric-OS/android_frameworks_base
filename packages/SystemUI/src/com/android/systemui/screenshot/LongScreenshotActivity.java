@@ -384,10 +384,11 @@ public class LongScreenshotActivity extends Activity {
         }
 
         updateImageDimensions();
-
         mOutputBitmap = renderBitmap(drawable, bounds);
+        String appLabel = ScreenshotUtil.getEnglishAppLabel(mPreview.getContext());
         ListenableFuture<ImageExporter.Result> exportFuture = mImageExporter.export(
-                mBackgroundExecutor, UUID.randomUUID(), mOutputBitmap, ZonedDateTime.now());
+                mBackgroundExecutor, UUID.randomUUID(), mOutputBitmap, ZonedDateTime.now(),
+                appLabel);
         exportFuture.addListener(() -> onExportCompleted(action, exportFuture), mUiExecutor);
     }
 

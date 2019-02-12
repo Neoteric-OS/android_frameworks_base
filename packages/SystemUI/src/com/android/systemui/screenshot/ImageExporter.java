@@ -58,8 +58,9 @@ class ImageExporter {
 
     static final Duration PENDING_ENTRY_TTL = Duration.ofHours(24);
 
-    // ex: 'Screenshot_20201215-090626.png'
-    private static final String FILENAME_PATTERN = "Screenshot_%1$tY%<tm%<td-%<tH%<tM%<tS.%2$s";
+    // ex: 'Screenshot_20201215-090626_Settings.png'
+    private static final String FILENAME_PATTERN =
+            "Screenshot_%1$tY%<tm%<td-%<tH%<tM%<tS_%2$s.%3$s";
     private static final String SCREENSHOTS_PATH = Environment.DIRECTORY_PICTURES
             + File.separator + Environment.DIRECTORY_SCREENSHOTS;
 
@@ -142,8 +143,9 @@ class ImageExporter {
      *
      * @return a listenable future result
      */
-    ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap) {
-        return export(executor, requestId, bitmap, ZonedDateTime.now());
+    ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
+                String appLabel) {
+        return export(executor, requestId, bitmap, ZonedDateTime.now(), appLabel);
     }
 
     /**
@@ -155,10 +157,10 @@ class ImageExporter {
      * @return a listenable future result
      */
     ListenableFuture<Result> export(Executor executor, UUID requestId, Bitmap bitmap,
-            ZonedDateTime captureTime) {
+            ZonedDateTime captureTime, String appLabel) {
 
         final Task task = new Task(mResolver, requestId, bitmap, captureTime, mCompressFormat,
-                mQuality, /* publish */ true);
+                mQuality, /* publish */ true, appLabel);
 
         return CallbackToFutureAdapter.getFuture(
                 (completer) -> {
@@ -231,14 +233,14 @@ class ImageExporter {
         private final boolean mPublish;
 
         Task(ContentResolver resolver, UUID requestId, Bitmap bitmap, ZonedDateTime captureTime,
-                CompressFormat format, int quality, boolean publish) {
+                CompressFormat format, int quality, boolean publish, String appLabel) {
             mResolver = resolver;
             mRequestId = requestId;
             mBitmap = bitmap;
             mCaptureTime = captureTime;
             mFormat = format;
             mQuality = quality;
-            mFileName = createFilename(mCaptureTime, mFormat);
+            mFileName = createFilename(mCaptureTime, appLabel, mFormat);
             mPublish = publish;
         }
 
@@ -377,8 +379,8 @@ class ImageExporter {
     }
 
     @VisibleForTesting
-    static String createFilename(ZonedDateTime time, CompressFormat format) {
-        return String.format(FILENAME_PATTERN, time, fileExtension(format));
+    static String createFilename(ZonedDateTime time, String appLabel, CompressFormat format) {
+        return String.format(FILENAME_PATTERN, time, appLabel, fileExtension(format));
     }
 
     static ContentValues createMetadata(ZonedDateTime captureTime, CompressFormat format,

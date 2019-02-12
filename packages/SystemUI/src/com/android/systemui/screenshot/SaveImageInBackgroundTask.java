@@ -70,7 +70,7 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = logTag(SaveImageInBackgroundTask.class);
 
     private static final String SCREENSHOT_ID_TEMPLATE = "Screenshot_%s";
-    private static final String SCREENSHOT_SHARE_SUBJECT_TEMPLATE = "Screenshot (%s)";
+    private static final String SCREENSHOT_SHARE_SUBJECT_TEMPLATE = "Screenshot (%s %s)";
 
     private final Context mContext;
     private final ScreenshotSmartActions mScreenshotSmartActions;
@@ -85,6 +85,7 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
     private final Supplier<ActionTransition> mSharedElementTransition;
     private final ImageExporter mImageExporter;
     private long mImageTime;
+    private String mAppLabel;
 
     SaveImageInBackgroundTask(Context context, ImageExporter exporter,
             ScreenshotSmartActions screenshotSmartActions,
@@ -138,9 +139,11 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
                 queryQuickShareAction(image, user);
             }
 
+            mAppLabel = ScreenshotUtil.getEnglishAppLabel(mContext);
+
             // Call synchronously here since already on a background thread.
             ListenableFuture<ImageExporter.Result> future =
-                    mImageExporter.export(Runnable::run, requestId, image);
+                    mImageExporter.export(Runnable::run, requestId, image, mAppLabel);
             ImageExporter.Result result = future.get();
             final Uri uri = result.uri;
             mImageTime = result.timestamp;
@@ -235,7 +238,9 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
             // Create a share intent, this will always go through the chooser activity first
             // which should not trigger auto-enter PiP
             String subjectDate = DateFormat.getDateTimeInstance().format(new Date(mImageTime));
-            String subject = String.format(SCREENSHOT_SHARE_SUBJECT_TEMPLATE, subjectDate);
+            String subject = String.format(SCREENSHOT_SHARE_SUBJECT_TEMPLATE, subjectDate,
+                    mAppLabel);
+
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setDataAndType(uri, "image/png");
             sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -422,7 +427,8 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
         sharingIntent.setType("image/png");
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
         String subjectDate = DateFormat.getDateTimeInstance().format(new Date(mImageTime));
-        String subject = String.format(SCREENSHOT_SHARE_SUBJECT_TEMPLATE, subjectDate);
+        String subject = String.format(SCREENSHOT_SHARE_SUBJECT_TEMPLATE, subjectDate,
+                    mAppLabel);
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         // Include URI in ClipData also, so that grantPermission picks it up.
         // We don't use setData here because some apps interpret this as "to:".

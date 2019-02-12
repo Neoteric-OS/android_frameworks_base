@@ -69,8 +69,8 @@ public class ImageExporterTest extends SysuiTestCase {
 
     @Test
     public void testImageFilename() {
-        assertEquals("image file name", "Screenshot_20201215-131500.png",
-                ImageExporter.createFilename(CAPTURE_TIME, CompressFormat.PNG));
+        assertEquals("image file name", "Screenshot_20201215-131500_Test.png",
+                ImageExporter.createFilename(CAPTURE_TIME, "Test", CompressFormat.PNG));
     }
 
     @Test
@@ -97,14 +97,14 @@ public class ImageExporterTest extends SysuiTestCase {
         Bitmap original = createCheckerBitmap(10, 10, 10);
 
         ListenableFuture<ImageExporter.Result> direct =
-                exporter.export(DIRECT_EXECUTOR, requestId, original, CAPTURE_TIME);
+                exporter.export(DIRECT_EXECUTOR, requestId, original, CAPTURE_TIME, "Test");
         assertTrue("future should be done", direct.isDone());
         assertFalse("future should not be canceled", direct.isCancelled());
         ImageExporter.Result result = direct.get();
 
         assertEquals("Result should contain the same request id", requestId, result.requestId);
         assertEquals("Filename should contain the correct filename",
-                "Screenshot_20201215-131500.png", result.fileName);
+                "Screenshot_20201215-131500_Test.png", result.fileName);
         assertNotNull("CompressFormat should be set", result.format);
         assertEquals("The default CompressFormat should be PNG", CompressFormat.PNG, result.format);
         assertNotNull("Uri should not be null", result.uri);
@@ -150,11 +150,11 @@ public class ImageExporterTest extends SysuiTestCase {
 
     @Test
     public void testMediaStoreMetadata() {
-        String name = ImageExporter.createFilename(CAPTURE_TIME, CompressFormat.PNG);
+        String name = ImageExporter.createFilename(CAPTURE_TIME, "Test", CompressFormat.PNG);
         ContentValues values = ImageExporter.createMetadata(CAPTURE_TIME, CompressFormat.PNG, name);
         assertEquals("Pictures/Screenshots",
                 values.getAsString(MediaStore.MediaColumns.RELATIVE_PATH));
-        assertEquals("Screenshot_20201215-131500.png",
+        assertEquals("Screenshot_20201215-131500_Test.png",
                 values.getAsString(MediaStore.MediaColumns.DISPLAY_NAME));
         assertEquals("image/png", values.getAsString(MediaStore.MediaColumns.MIME_TYPE));
         assertEquals(Long.valueOf(1608056100L),
