@@ -22,6 +22,30 @@
       "revId": "32f983f7106efc692af9e1776d8d57a706411ed3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63af8f8b_632aaab9",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-12T18:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be720c23_67d89d0c",
+      "range": {
+        "startLine": 853,
+        "startChar": 11,
+        "endLine": 853,
+        "endChar": 49
+      },
+      "revId": "32f983f7106efc692af9e1776d8d57a706411ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
