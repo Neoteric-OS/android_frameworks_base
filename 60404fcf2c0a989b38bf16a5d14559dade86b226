@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1469169_62c0afb8",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "I didn\u0027t know we used enum in Android. #rebel",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0023b811_d04dddc8",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "If you\u0027re using a builder, then generally you don\u0027t want public access to these, especially if they aren\u0027t final. You could make them final, or forfeit the swanky builder pattern.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de7f8a2_8ef8d48d",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "Are any of these fields mandatory to be called? If so, probably should call out that they *must* be set for the logic to behave sanely?",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eae60e8_88d31d89",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "To me this looks like it would be cleaner as a switch.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 55
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad002cc2_69937c17",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "does this boolean mean \"hasManifestPermission\"?",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51995353_7f92a792",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-12T02:49:48Z",
+      "side": 1,
+      "message": "I know that streams are all the rage now, but In practice I think you might have saved 1 line of code at a cost of a lot more cognitive load (and worse performance). :-(",
+      "range": {
+        "startLine": 1882,
+        "startChar": 21,
+        "endLine": 1882,
+        "endChar": 24
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
