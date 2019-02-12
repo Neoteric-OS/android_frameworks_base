@@ -22,6 +22,30 @@
       "revId": "085657945dba7aa41a4cb9be559b46b671ab048d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f65824_b672138d",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1233139
+      },
+      "writtenOn": "2019-02-12T08:00:44Z",
+      "side": 1,
+      "message": "I\u0027ve removed the definition of constant and modified format.",
+      "parentUuid": "a66f1761_8a747c24",
+      "range": {
+        "startLine": 139,
+        "startChar": 72,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "085657945dba7aa41a4cb9be559b46b671ab048d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
