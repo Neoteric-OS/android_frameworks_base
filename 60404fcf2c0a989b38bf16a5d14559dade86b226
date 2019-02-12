@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cf390a51_8158055b",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-12T19:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0023b811_d04dddc8",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de7f8a2_8ef8d48d",
         "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
         "patchSetId": 8
@@ -68,6 +92,30 @@
       "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d96785_deee84aa",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-12T19:38:19Z",
+      "side": 1,
+      "message": "It\u0027s a hidden API, but yes good to call it out.",
+      "parentUuid": "1de7f8a2_8ef8d48d",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "8372d102_5cf6f83e",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-12T19:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eae60e8_88d31d89",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 55
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad002cc2_69937c17",
         "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
         "patchSetId": 8
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "07984744_e148ca4d",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-12T19:38:19Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "ad002cc2_69937c17",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51995353_7f92a792",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 8
@@ -128,6 +224,30 @@
       "writtenOn": "2019-02-12T02:49:48Z",
       "side": 1,
       "message": "I know that streams are all the rage now, but In practice I think you might have saved 1 line of code at a cost of a lot more cognitive load (and worse performance). :-(",
+      "range": {
+        "startLine": 1882,
+        "startChar": 21,
+        "endLine": 1882,
+        "endChar": 24
+      },
+      "revId": "60404fcf2c0a989b38bf16a5d14559dade86b226",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e42e8d_57076ec2",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-12T19:38:19Z",
+      "side": 1,
+      "message": "In traditional syntax it\u0027d look like\n            ArrayList\u003cNetworkRegistrationState\u003e sanitizedStates \u003d\n                    new ArrayList\u003c\u003e(state.mNetworkRegistrationStates.size());\n            for (NetworkRegistrationState regState : state.mNetworkRegistrationStates) {\n                sanitizedStates.add(regState.sanitizeLocationInfo());\n            }\n            state.mNetworkRegistrationStates \u003d sanitizedStates;\n\nNot sure if that looks any cleaner. Also I don\u0027t think there\u0027s much of a performance impact since NetworkRegistrationState is a pretty heavyweight object whose allocations are gonna happen anyway. Do you think this is going to be a performance-critical piece of code? I can profile it and see if so",
+      "parentUuid": "51995353_7f92a792",
       "range": {
         "startLine": 1882,
         "startChar": 21,
