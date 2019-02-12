@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66f1761_8a747c24",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-02-12T01:32:12Z",
+      "side": 1,
+      "message": "k isn\u0027t really used outside japan.\n\ni suggest just using ISO format...  \"yyyy-MM-dd HH:mm:ssZ\".\n\nalso, don\u0027t create a constant that\u0027s only used once. just inline this at the single call site.",
+      "range": {
+        "startLine": 139,
+        "startChar": 72,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "085657945dba7aa41a4cb9be559b46b671ab048d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
