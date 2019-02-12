@@ -22,6 +22,23 @@
       "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be54d520_4e209195",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5983,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-12T03:45:45Z",
+      "side": 1,
+      "message": "Should this be in disconnectAndDestroyNetwork, instead of here?",
+      "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
