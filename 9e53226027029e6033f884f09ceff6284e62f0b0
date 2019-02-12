@@ -257,6 +257,30 @@
       "revId": "9e53226027029e6033f884f09ceff6284e62f0b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6036ec9_8d25a2c8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-12T01:56:38Z",
+      "side": 1,
+      "message": "I\u0027ve attempted to fix this in the CL above. PTAL.\n\u0027atest FrameworksNet\u0027 passes. Also ran manual tests with some VPN apps to verify that this is working correctly and DownloadManager is downloading stuff based on meteredness (tested via play store).",
+      "parentUuid": "5425fc33_e51ae3e9",
+      "range": {
+        "startLine": 293,
+        "startChar": 25,
+        "endLine": 293,
+        "endChar": 49
+      },
+      "revId": "9e53226027029e6033f884f09ceff6284e62f0b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
