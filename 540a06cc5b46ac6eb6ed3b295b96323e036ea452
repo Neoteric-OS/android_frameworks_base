@@ -94,6 +94,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce5e0ff_31e1e0cd",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-12T02:06:23Z",
+      "side": 1,
+      "message": "I currently don\u0027t understand ForkJoinPool\u0027s characteristics well enough, when (ab)used in this way, to tell whether this could work. I might be able to get Doug Lea\u0027s opinion, if we want to ask him.\n\nIt seems risky. ForkJoinPool has some complicated mechanisms that are designed for it\u0027s intended use case of parallelizing highly recursive computation. I can\u0027t quickly tell how many of those get instantiated, and if so how long they stay around, if you don\u0027t use them at all.\n\nMy impression is that people have some success with abusing ForkJoinPools as regular thread pools. But I think that was generally in less constrained environments were an extra 100 threads weren\u0027t a big deal.\n\nAFAICT, deprecating this would cause some issues. I think it\u0027s fairly widely used, both as AsyncTask, and just for THREAD_POOL_EXECUTOR. Simple replacements often work, but cancellation requires that you also use futures. To me it seems cleaner to fix the executor and perhaps the cancellation semantics, but otherwise leave it. Especially with increased backup executor thread counts, this seems pretty safe.",
+      "parentUuid": "fe5017dc_bcf5b02d",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
