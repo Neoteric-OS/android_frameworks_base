@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4cab72e_6e435a7e",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-12T00:31:20Z",
+      "side": 1,
+      "message": "it\u0027s better to move this line to after line 94.",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "69ea222e3937dfc9a12436626f02187b4491b3f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d424da_2d06ebb5",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2019-02-12T00:31:20Z",
+      "side": 1,
+      "message": "int result \u003d native_readAt(offset, size);\nif (!mIsConnected.get()) {\n   return -1;\n} else {\n    return result;\n}",
+      "range": {
+        "startLine": 339,
+        "startChar": 8,
+        "endLine": 339,
+        "endChar": 43
+      },
+      "revId": "69ea222e3937dfc9a12436626f02187b4491b3f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
