@@ -190,6 +190,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491b863a_b29f9b96",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-12T14:14:49Z",
+      "side": 1,
+      "message": "As discussed offline with Nicolas, it\u0027s a separate clean-up, since /product and /vendor have been doing this for long time. I filed b/124295177. \n\nCould I submit this CL as-is?",
+      "parentUuid": "213a00fe_df711a8d",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
