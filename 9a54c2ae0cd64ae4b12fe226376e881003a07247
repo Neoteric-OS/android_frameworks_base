@@ -116,6 +116,30 @@
       "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05568dbf_ec034365",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2019-02-12T01:40:29Z",
+      "side": 1,
+      "message": "not need to add this because of just having one orginal address for 3gpp2.\nhere origSubaddress can indicate the destination sub address that reflects the sub address of sender.",
+      "parentUuid": "38c5999c_f8a49684",
+      "range": {
+        "startLine": 669,
+        "startChar": 8,
+        "endLine": 669,
+        "endChar": 37
+      },
+      "revId": "9a54c2ae0cd64ae4b12fe226376e881003a07247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
