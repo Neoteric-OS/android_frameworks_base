@@ -118,6 +118,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a1bacb_1a0c508a",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2019-02-12T17:42:50Z",
+      "side": 1,
+      "message": "Ack. The SynchronousQueue w/ fallback then SGTM. I\u0027m a bit uncomfortable with the Thread.sleep() for rate limiting, though, just because the typical usage of AsyncTask is for offloading work from the main thread specifically, which is a thread where every millisecond counts.\n\nAny objections to removing the Thread.sleep?",
+      "parentUuid": "fce5e0ff_31e1e0cd",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
