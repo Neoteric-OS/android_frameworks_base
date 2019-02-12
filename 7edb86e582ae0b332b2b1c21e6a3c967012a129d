@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01724ba9_74e30a79",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2019-02-12T18:18:08Z",
+      "side": 1,
+      "message": "this should use getAndSet(), check the return value, and only create the new Thread if the previous value was true",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 32
+      },
+      "revId": "7edb86e582ae0b332b2b1c21e6a3c967012a129d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
