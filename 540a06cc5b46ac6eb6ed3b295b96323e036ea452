@@ -142,6 +142,30 @@
       "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5888d90d_4b5988da",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-02-12T21:04:28Z",
+      "side": 1,
+      "message": "My intuition is that\u0027s OK if we bump at the thread count for the backup executor to something closer to a typical number of cores, say 5. (I\u0027m not sure it should really be core count dependent, since I think these tasks may need either CPU or IO bandwidth, with the latter perhaps being a bit more common?) I don\u0027t think the exact number is critical, since they will very rarely be created, and probably never in more than one process at a time. We could even be more generous.\n\nWith a count of 1 or 2, I do think we need the sleep(), since I think we\u0027d need the flow control to avoid long queues, if we ever get into that mode.",
+      "parentUuid": "a7a1bacb_1a0c508a",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "540a06cc5b46ac6eb6ed3b295b96323e036ea452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
