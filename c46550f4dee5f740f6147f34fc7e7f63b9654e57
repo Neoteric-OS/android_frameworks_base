@@ -166,6 +166,30 @@
       "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213a00fe_df711a8d",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-02-12T09:23:15Z",
+      "side": 1,
+      "message": "Yeah, I think we can achieve the same with both (dynamic linker or java.library.path), so it\u0027s really just a matter of taste where we want things to be handled (today\u0027s hybrid mode isn\u0027t great though). One thing to keep in mind is that we should make sure standalne invocations (dalvikvm) and host still work.",
+      "parentUuid": "2b80c324_ff519883",
+      "range": {
+        "startLine": 873,
+        "startChar": 8,
+        "endLine": 875,
+        "endChar": 9
+      },
+      "revId": "c46550f4dee5f740f6147f34fc7e7f63b9654e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
