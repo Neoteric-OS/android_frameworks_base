@@ -16,6 +16,7 @@
 
 package com.android.systemui.screenshot;
 
+import android.app.ActivityManager;
 import android.app.ActivityTaskManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -26,6 +27,9 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
@@ -51,6 +55,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
+import com.android.systemui.shared.system.ActivityManagerWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +70,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
@@ -76,7 +82,7 @@ import java.util.concurrent.CompletableFuture;
 class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "SaveImageInBackgroundTask";
 
-    private static final String SCREENSHOT_FILE_NAME_TEMPLATE = "Screenshot_%s.png";
+    private static final String SCREENSHOT_FILE_NAME_TEMPLATE = "Screenshot_%s_%s.png";
     private static final String SCREENSHOT_ID_TEMPLATE = "Screenshot_%s";
     private static final String SCREENSHOT_SHARE_SUBJECT_TEMPLATE = "Screenshot (%s)";
 
@@ -98,7 +104,8 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
         mParams = data;
         mImageTime = System.currentTimeMillis();
         String imageDate = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(mImageTime));
-        mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE, imageDate);
+        String appLabel = getEnglishAppLabel(context);
+        mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE, imageDate, appLabel);
         mScreenshotId = String.format(SCREENSHOT_ID_TEMPLATE, UUID.randomUUID());
 
         // Initialize screenshot notification smart actions provider.
@@ -113,6 +120,34 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
             // If smart actions is not enabled use empty implementation.
             mSmartActionsProvider = new ScreenshotNotificationSmartActionsProvider();
         }
+    }
+
+    private String getEnglishAppLabel(Context context) {
+        String appLabel = null;
+        ActivityManager.RunningTaskInfo runningTask =
+                ActivityManagerWrapper.getInstance().getRunningTask();
+        final String packageName = runningTask != null
+                ? runningTask.baseActivity.getPackageName()
+                : null;
+        if (packageName != null) {
+            PackageManager pm = context.getPackageManager();
+            try {
+                ApplicationInfo appInfo = pm.getApplicationInfo(packageName,
+                        PackageManager.GET_META_DATA);
+                if (appInfo != null) {
+                    final Configuration config = new Configuration();
+                    config.locale = new Locale("en");
+                    final Resources res = pm.getResourcesForApplication(packageName);
+                    res.updateConfiguration(config, context.getResources().getDisplayMetrics());
+                    appLabel = res.getString(appInfo.labelRes);
+                    // Sanitise the application label string.
+                    appLabel = appLabel.replaceAll("\\s+", "_");
+                    appLabel = appLabel.replaceAll("[^a-zA-Z0-9_\\-]", "");
+                }
+            } catch (PackageManager.NameNotFoundException ignore) {
+            }
+        }
+        return !TextUtils.isEmpty(appLabel) ? appLabel : "unknown_app";
     }
 
     @Override
