@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6a7cdd_06997c16",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-02-12T14:28:02Z",
+      "side": 1,
+      "message": "paths",
+      "range": {
+        "startLine": 854,
+        "startChar": 46,
+        "endLine": 854,
+        "endChar": 50
+      },
+      "revId": "71e29571db38dd1e7337c8e6dc5e28311b81f1eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
