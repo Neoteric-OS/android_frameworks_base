@@ -39,6 +39,48 @@
       "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14556213_fb5ade9c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5983,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-02-12T04:30:35Z",
+      "side": 1,
+      "message": "I will try to add test for this.\nBut there are some issues need to be fixed.\nMaybe we can merge this commit first, then adding test in another commit.",
+      "parentUuid": "df5a29f4_7092ecd1",
+      "range": {
+        "startLine": 5983,
+        "startChar": 22,
+        "endLine": 5983,
+        "endChar": 39
+      },
+      "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf2455c_afcd4be5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5983,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-02-12T04:30:35Z",
+      "side": 1,
+      "message": "Yes, it\u0027s more safer to add this line into disconnectAndDestroyNetwork().\nThanks.",
+      "parentUuid": "be54d520_4e209195",
+      "revId": "e4dd7d0801c95819f949e6c53af1da713777f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
