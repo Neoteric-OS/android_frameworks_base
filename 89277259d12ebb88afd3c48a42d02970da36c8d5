@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390ca8b1_9979c3c0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-13T04:44:38Z",
+      "side": 1,
+      "message": "Why make a copy here instead of returning mNetworkCapabilities? The constructor is a shallow copy constructor anyway.\n\nIf you really want a completely new one of these, you need to use something other than the copy constructor.",
+      "range": {
+        "startLine": 294,
+        "startChar": 15,
+        "endLine": 294,
+        "endChar": 18
+      },
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
