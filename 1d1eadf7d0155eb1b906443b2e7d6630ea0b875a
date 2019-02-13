@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db86c5e5_3137b6b5",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-13T00:35:36Z",
+      "side": 1,
+      "message": "Any reason why an enum was used here? Why not an intdef?",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "1d1eadf7d0155eb1b906443b2e7d6630ea0b875a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
