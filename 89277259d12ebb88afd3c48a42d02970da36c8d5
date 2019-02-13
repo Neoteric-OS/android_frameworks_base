@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4e6f103b_5a8dda21",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:17:23Z",
+      "side": 1,
+      "message": "I agree. Its a better thing to do in practice - http://go/java-practices/mutability#defensive",
+      "parentUuid": "7561ac70_689187a5",
+      "range": {
+        "startLine": 294,
+        "startChar": 15,
+        "endLine": 294,
+        "endChar": 18
+      },
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0dbe7db_920c4509",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "writtenOn": "2019-02-13T10:35:52Z",
       "side": 1,
       "message": "Ouch. We should not do this. If this code runs on the ConnectivityService handler thread, then there is no need to ask ConnectivityManager for the NetworkCapabilities of underlying networks. We should just get these in CS, since CS is what is authoritative for them. \n\nI think the right thing to do here is to move this function to ConnectivityService entirely and rename it to calculateVpnCapabilities or similar. The only thing VPN-specific to this code at all is the fact that it needs the VPN\u0027s underlying networks and the isAlwaysMetered bit. CS can already get the former by calling vpn.getUnderlyingNetworks(). We just need an accessor for isAlwaysMetered. The rest of the information is available in the NetworkCapabilities that are passed in.\n\nThis only works because this code now *never* calls sendNetworkCapabilities. We should ensure that we document that in a comment somewhere.",
+      "range": {
+        "startLine": 312,
+        "startChar": 59,
+        "endLine": 312,
+        "endChar": 84
+      },
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff5509d_1647ba5c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:17:23Z",
+      "side": 1,
+      "message": "\u003e This only works because this code now *never* calls sendNetworkCapabilities\n\nI have documented that in line 273. I will rename this method to getUpdateCapabilities per Nathan\u0027s suggestion which will make this more clear.\n\n\u003e Ouch. We should not do this.\n\nI don\u0027t think this is a big problem right now, since all of these calls are made on CS handler thread. I do agree though that getting stuff in general thru CM does not make much sense.\n\nKeeping in mind that we may have to cherry-pick this change (including CL below) to P, do you think maybe we can skip doing this refactor for now? My plan right now is to squash this CL with below CL and cherry-pick just one change to P (possibly keeping the surface area of change to minimum). Once this is done, I can fix what you suggested for Q (will file a bug to track that). Let me know if that sounds reasonable?",
+      "parentUuid": "b0dbe7db_920c4509",
       "range": {
         "startLine": 312,
         "startChar": 59,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "9c80db7e_111fb363",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:17:23Z",
+      "side": 1,
+      "message": "This is representing the case where VPN sets its underlying network to an empty array (and not null). In other words we shouldn\u0027t be looking at default network\u0027s caps for empty array case.",
+      "parentUuid": "e6f325a4_54bdcce3",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 9
+      },
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b83f9da1_2253cb2c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 5
@@ -133,6 +205,24 @@
       "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193de89a_696ddf6d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b83f9da1_2253cb2c",
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +246,30 @@
       "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74f51f3_706e78a6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d47b366_1e4cad25",
+      "range": {
+        "startLine": 1311,
+        "startChar": 68,
+        "endLine": 1311,
+        "endChar": 69
+      },
+      "revId": "89277259d12ebb88afd3c48a42d02970da36c8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
