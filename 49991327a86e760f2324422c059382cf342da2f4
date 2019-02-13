@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b24ff8a_11c996a6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 4452,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-13T04:13:08Z",
+      "side": 1,
+      "message": "this function should be called getDefaultNetworkAgentInfo(), or getDefaultNai()... definitely out of scope for this change, but it\u0027s part of the problem here with all the naming being wonky. @lorenzo, thoughts?",
+      "range": {
+        "startLine": 4452,
+        "startChar": 46,
+        "endLine": 4452,
+        "endChar": 63
+      },
+      "revId": "49991327a86e760f2324422c059382cf342da2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f423dd18_5fb288c3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5044,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-13T04:13:08Z",
+      "side": 1,
+      "message": "getNetworkFromNai() ?",
+      "range": {
+        "startLine": 5044,
+        "startChar": 20,
+        "endLine": 5044,
+        "endChar": 32
+      },
+      "revId": "49991327a86e760f2324422c059382cf342da2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
