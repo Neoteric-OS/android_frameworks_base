@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b04af5_3314e728",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-13T10:16:52Z",
+      "side": 1,
+      "message": "Why are we sending this callback? Is it a no-op? Can we avoid sending it?",
+      "range": {
+        "startLine": 4681,
+        "startChar": 8,
+        "endLine": 4681,
+        "endChar": 99
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbe40ec_5bbb576b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4767,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-13T10:16:52Z",
+      "side": 1,
+      "message": "Nit: you don\u0027t need this, since if there is any unexpected callback here, the test will fail at line 4772.",
+      "range": {
+        "startLine": 4767,
+        "startChar": 8,
+        "endLine": 4767,
+        "endChar": 43
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9936402f_1914667c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4913,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-13T10:16:52Z",
+      "side": 1,
+      "message": "Consider using expectCapabilitiesLike instead of synchronous getters. But this is fine too.",
+      "range": {
+        "startLine": 4913,
+        "startChar": 17,
+        "endLine": 4913,
+        "endChar": 39
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
