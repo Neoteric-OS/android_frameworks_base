@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b46702_b869a796",
+        "filename": "core/java/android/util/apk/ApkSignatureVerifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2019-02-13T17:45:54Z",
+      "side": 1,
+      "message": "nit: merge into 1 line",
+      "range": {
+        "startLine": 400,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 51
+      },
+      "revId": "7a9f8c3e147dd7dd0ec3e6b73f25431f7134be88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
