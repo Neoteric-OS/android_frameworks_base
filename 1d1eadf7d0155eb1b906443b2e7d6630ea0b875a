@@ -46,6 +46,30 @@
       "revId": "1d1eadf7d0155eb1b906443b2e7d6630ea0b875a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0928760_41672d03",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-13T17:45:35Z",
+      "side": 1,
+      "message": "I think the issues I have seen aren\u0027t only in api surface limitations, but in code bloat due to enums being ~800 bytes, which is a lot of overhead to add to define constants. But, as long as this is only being used internally in telephony, I think it is a fine tradeoff for readability/checking.",
+      "parentUuid": "9d2847bf_7c75f407",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "1d1eadf7d0155eb1b906443b2e7d6630ea0b875a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
