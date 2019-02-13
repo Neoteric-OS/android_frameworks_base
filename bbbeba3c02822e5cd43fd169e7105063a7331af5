@@ -22,6 +22,30 @@
       "revId": "bbbeba3c02822e5cd43fd169e7105063a7331af5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f083ab_7df68e25",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:16:32Z",
+      "side": 0,
+      "message": "Yeah this seems to be testing an invalid scenario. VPN network (AFAIK) is always validated by platform. Also, registerDefaultNetworkCallback tracks INTERNET|NOT_RESTRICTED|TRUSTED capabilities. In other words VPN not being VALIDATED has anything to do with callback.\nThis is evident from the test in here (http://cs/aosp-master/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java?l\u003d4661) where VPN is not validated, but hasInternet, and therefore sees available and unvalidated on defaultCallback. \n\nNow, interesting question is why was this passing earlier. And I\u0027m not sure what could be the cause for that.",
+      "parentUuid": "a51b31ab_f06972e8",
+      "range": {
+        "startLine": 4767,
+        "startChar": 0,
+        "endLine": 4773,
+        "endChar": 43
+      },
+      "revId": "bbbeba3c02822e5cd43fd169e7105063a7331af5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

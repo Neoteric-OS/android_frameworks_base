@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f753771_9a7b30a1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:16:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure. At first I thought this was because MockNetworkAgent#setUids notifies CS (http://cs/aosp-master/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java?l\u003d586). \n\nBut then if you look at the CL above that sort of fixes this. These are no longer being sent with above CL. http://r.android.com/c/platform/frameworks/base/+/901041/5/tests/net/java/com/android/server/ConnectivityServiceTest.java#b4681",
+      "parentUuid": "04b04af5_3314e728",
+      "range": {
+        "startLine": 4681,
+        "startChar": 8,
+        "endLine": 4681,
+        "endChar": 99
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbe40ec_5bbb576b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0f08d380_2cffc960",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4767,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:16:32Z",
+      "side": 1,
+      "message": "Makes sense. Removing.",
+      "parentUuid": "0dbe40ec_5bbb576b",
+      "range": {
+        "startLine": 4767,
+        "startChar": 8,
+        "endLine": 4767,
+        "endChar": 43
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9936402f_1914667c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb8bd68_18cd5917",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4913,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-13T21:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9936402f_1914667c",
+      "range": {
+        "startLine": 4913,
+        "startChar": 17,
+        "endLine": 4913,
+        "endChar": 39
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
