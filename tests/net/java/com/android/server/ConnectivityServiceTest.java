@@ -148,8 +148,9 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.mock.MockContentResolver;
+import android.testing.AndroidTestingRunner;
+import android.testing.TestableLooper.RunWithLooper;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
@@ -206,9 +207,10 @@ import java.util.function.Predicate;
  * Tests for {@link ConnectivityService}.
  *
  * Build, install and run with:
- *  runtest frameworks-net -c com.android.server.ConnectivityServiceTest
+ *  atest com.android.server.ConnectivityServiceTest
  */
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidTestingRunner.class)
+@RunWithLooper
 @SmallTest
 public class ConnectivityServiceTest {
     private static final String TAG = "ConnectivityServiceTest";
@@ -1133,12 +1135,6 @@ public class ConnectivityServiceTest {
 
         MockitoAnnotations.initMocks(this);
         when(mMetricsService.defaultNetworkMetrics()).thenReturn(mDefaultNetworkMetrics);
-
-        // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
-        // http://b/25897652 .
-        if (Looper.myLooper() == null) {
-            Looper.prepare();
-        }
 
         FakeSettingsProvider.clearSettingsProvider();
         mServiceContext = new MockContext(InstrumentationRegistry.getContext(),
