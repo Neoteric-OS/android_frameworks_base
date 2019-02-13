@@ -19,7 +19,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     platform-test-annotations \
     services.core \
     services.ipmemorystore \
-    services.net
+    services.net \
+    testables
 
 LOCAL_JAVA_LIBRARIES := \
     android.test.runner \
