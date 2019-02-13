@@ -22,6 +22,30 @@
       "revId": "1d1eadf7d0155eb1b906443b2e7d6630ea0b875a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2847bf_7c75f407",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-02-13T01:10:27Z",
+      "side": 1,
+      "message": "Intdefs are a workaround for some sort of limitation in the public api surface, which doesn\u0027t apply here because it\u0027s @hide (and always will be -- there\u0027s no way public-facing apps are ever going to get access to this class). Enums are a lot cleaner looking and are checked by the compiler.",
+      "parentUuid": "db86c5e5_3137b6b5",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "1d1eadf7d0155eb1b906443b2e7d6630ea0b875a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
