@@ -22,12 +22,10 @@ java_library {
     installable: true,
     srcs: [
         "src/**/*.java",
-        ":framework-networkstack-shared-srcs",
-        ":services-networkstack-shared-srcs",
+        ":framework-networkstack-shared-annotations",
     ],
     static_libs: [
-        "netd_aidl_interface-java",
-        "networkstack-aidl-interfaces-java",
+        "networkstack-shared",
     ]
 }
 
@@ -38,8 +36,23 @@ android_app {
     certificate: "platform",
     privileged: true,
     static_libs: [
-        "NetworkStackLib"
+        "NetworkStackLib",
     ],
     manifest: "AndroidManifest.xml",
     required: ["NetworkStackPermissionStub"],
+}
+
+java_library {
+    name: "networkstack-shared",
+    srcs: [
+        ":framework-networkstack-shared-srcs",
+        ":framework-networkstack-shared-annotations",
+        ":services-networkstack-shared-srcs",
+    ],
+    static_libs: [
+        "netd_aidl_interface-java",
+        "networkstack-aidl-interfaces-java",
+    ],
+    sdk_version: "system_current",
+    jarjar_rules: "jarjar-rules-shared.txt",
 }

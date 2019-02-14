@@ -19,7 +19,7 @@ package com.android.server.connectivity.tethering;
 import android.content.Context;
 import android.net.NetworkRequest;
 import android.net.ip.IpServer;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.os.Handler;
 import android.telephony.SubscriptionManager;
 

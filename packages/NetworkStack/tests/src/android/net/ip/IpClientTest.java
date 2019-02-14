@@ -16,7 +16,7 @@
 
 package android.net.ip;
 
-import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
+import static android.net.networkstack.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -43,9 +43,9 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.RouteInfo;
-import android.net.shared.InitialConfiguration;
-import android.net.shared.ProvisioningConfiguration;
-import android.net.util.InterfaceParams;
+import android.net.networkstack.shared.InitialConfiguration;
+import android.net.networkstack.shared.ProvisioningConfiguration;
+import android.net.networkstack.util.InterfaceParams;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;

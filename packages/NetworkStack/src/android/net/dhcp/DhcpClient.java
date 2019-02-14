@@ -44,13 +44,13 @@ import static android.system.OsConstants.SO_REUSEADDR;
 import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ANY;
 
 import android.content.Context;
-import android.net.DhcpResults;
+import android.net.networkstack.DhcpResults;
 import android.net.TrafficStats;
 import android.net.ip.IpClient;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.IpConnectivityLog;
-import android.net.util.InterfaceParams;
+import android.net.networkstack.util.InterfaceParams;
 import android.net.util.SocketUtils;
 import android.os.Message;
 import android.os.SystemClock;
@@ -60,11 +60,11 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.android.internal.util.HexDump;
-import com.android.internal.util.MessageUtils;
-import com.android.internal.util.State;
-import com.android.internal.util.StateMachine;
-import com.android.internal.util.WakeupMessage;
+import android.net.networkstack.util.HexDump;
+import android.net.networkstack.util.MessageUtils;
+import android.net.networkstack.util.State;
+import android.net.networkstack.util.StateMachine;
+import android.net.networkstack.util.WakeupMessage;
 
 import java.io.FileDescriptor;
 import java.io.IOException;

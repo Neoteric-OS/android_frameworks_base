@@ -19,7 +19,7 @@ package android.net.ip;
 import android.net.INetd;
 import android.net.InterfaceConfigurationParcel;
 import android.net.LinkAddress;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.system.OsConstants;

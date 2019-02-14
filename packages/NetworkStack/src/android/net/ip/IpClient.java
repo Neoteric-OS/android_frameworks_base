@@ -17,16 +17,15 @@
 package android.net.ip;
 
 import static android.net.RouteInfo.RTN_UNICAST;
-import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
-import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
-import static android.net.shared.LinkPropertiesParcelableUtil.toStableParcelable;
+import static android.net.networkstack.shared.IpConfigurationParcelableUtil.toStableParcelable;
+import static android.net.networkstack.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
+import static android.net.networkstack.shared.LinkPropertiesParcelableUtil.toStableParcelable;
 
 import static com.android.server.util.PermissionUtil.checkNetworkStackCallingPermission;
 
 import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.DhcpResults;
 import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -35,16 +34,25 @@ import android.net.ProvisioningConfigurationParcelable;
 import android.net.ProxyInfo;
 import android.net.ProxyInfoParcelable;
 import android.net.RouteInfo;
-import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
-import android.net.shared.InitialConfiguration;
-import android.net.shared.ProvisioningConfiguration;
-import android.net.util.InterfaceParams;
-import android.net.util.SharedLog;
+import android.net.networkstack.DhcpResults;
+import android.net.networkstack.TcpKeepalivePacketDataParcelable;
+import android.net.networkstack.ip.InterfaceController;
+import android.net.networkstack.shared.InitialConfiguration;
+import android.net.networkstack.shared.ProvisioningConfiguration;
+import android.net.networkstack.shared.SharedLog;
+import android.net.networkstack.util.IState;
+import android.net.networkstack.util.IndentingPrintWriter;
+import android.net.networkstack.util.InterfaceParams;
+import android.net.networkstack.util.MessageUtils;
+import android.net.networkstack.util.Preconditions;
+import android.net.networkstack.util.State;
+import android.net.networkstack.util.StateMachine;
+import android.net.networkstack.util.WakeupMessage;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.Message;
@@ -56,13 +64,6 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.IState;
-import com.android.internal.util.IndentingPrintWriter;
-import com.android.internal.util.MessageUtils;
-import com.android.internal.util.Preconditions;
-import com.android.internal.util.State;
-import com.android.internal.util.StateMachine;
-import com.android.internal.util.WakeupMessage;
 import com.android.server.NetworkObserverRegistry;
 
 import java.io.FileDescriptor;
@@ -356,7 +357,7 @@ public class IpClient extends StateMachine {
      * Non-final member variables accessed only from within our StateMachine.
      */
     private LinkProperties mLinkProperties;
-    private android.net.shared.ProvisioningConfiguration mConfiguration;
+    private ProvisioningConfiguration mConfiguration;
     private IpReachabilityMonitor mIpReachabilityMonitor;
     private DhcpClient mDhcpClient;
     private DhcpResults mDhcpResults;
@@ -602,7 +603,7 @@ public class IpClient extends StateMachine {
         }
 
         mCallback.setNeighborDiscoveryOffload(true);
-        sendMessage(CMD_START, new android.net.shared.ProvisioningConfiguration(req));
+        sendMessage(CMD_START, new ProvisioningConfiguration(req));
     }
 
     /**
@@ -693,7 +694,7 @@ public class IpClient extends StateMachine {
 
         // Thread-unsafe access to mApfFilter but just used for debugging.
         final ApfFilter apfFilter = mApfFilter;
-        final android.net.shared.ProvisioningConfiguration provisioningConfig = mConfiguration;
+        final ProvisioningConfiguration provisioningConfig = mConfiguration;
         final ApfCapabilities apfCapabilities = (provisioningConfig != null)
                 ? provisioningConfig.mApfCapabilities : null;
 
@@ -1236,7 +1237,7 @@ public class IpClient extends StateMachine {
                     break;
 
                 case CMD_START:
-                    mConfiguration = (android.net.shared.ProvisioningConfiguration) msg.obj;
+                    mConfiguration = (ProvisioningConfiguration) msg.obj;
                     transitionTo(mStartedState);
                     break;
 

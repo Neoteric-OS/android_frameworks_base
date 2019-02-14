@@ -19,7 +19,7 @@ package com.android.server;
 import static android.net.dhcp.IDhcpServer.STATUS_INVALID_ARGUMENT;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.dhcp.IDhcpServer.STATUS_UNKNOWN_ERROR;
-import static android.net.shared.NetworkParcelableUtil.fromStableParcelable;
+import static android.net.networkstack.shared.NetworkParcelableUtil.fromStableParcelable;
 
 import static com.android.server.util.PermissionUtil.checkDumpPermission;
 import static com.android.server.util.PermissionUtil.checkNetworkStackCallingPermission;
@@ -43,13 +43,13 @@ import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
 import android.net.ip.IpClient;
-import android.net.shared.PrivateDnsConfig;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.PrivateDnsConfig;
+import android.net.networkstack.shared.SharedLog;
+import android.net.networkstack.util.IndentingPrintWriter;
 import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.NetworkMonitor;
 
 import java.io.FileDescriptor;

@@ -32,7 +32,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;

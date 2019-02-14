@@ -16,8 +16,8 @@
 
 package android.net.dhcp;
 
-import static android.net.shared.Inet4AddressUtils.getPrefixMaskAsInet4Address;
-import static android.net.shared.Inet4AddressUtils.intToInet4AddressHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.getPrefixMaskAsInet4Address;
+import static android.net.networkstack.shared.Inet4AddressUtils.intToInet4AddressHTH;
 
 import static com.android.server.util.NetworkStackConstants.INFINITE_LEASE;
 import static com.android.server.util.NetworkStackConstants.IPV4_MAX_MTU;
@@ -29,7 +29,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
-import android.net.shared.Inet4AddressUtils;
+import android.net.networkstack.shared.Inet4AddressUtils;
 import android.util.ArraySet;
 
 import java.net.Inet4Address;

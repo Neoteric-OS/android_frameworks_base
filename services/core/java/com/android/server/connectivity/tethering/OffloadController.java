@@ -34,7 +34,7 @@ import android.net.netlink.ConntrackMessage;
 import android.net.netlink.NetlinkConstants;
 import android.net.netlink.NetlinkSocket;
 import android.net.util.IpUtils;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.INetworkManagementService;
@@ -60,7 +60,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A class to encapsulate the business logic of programming the tethering

@@ -22,7 +22,7 @@ import android.net.MacAddress;
 import android.os.SystemClock;
 import android.text.TextUtils;
 
-import com.android.internal.util.HexDump;
+import android.net.networkstack.util.HexDump;
 
 import java.net.Inet4Address;
 import java.util.Arrays;

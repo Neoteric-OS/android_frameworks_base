@@ -704,7 +704,7 @@ java_defaults {
         "android.hardware.vibrator-V1.1-java",
         "android.hardware.vibrator-V1.2-java",
         "android.hardware.wifi-V1.0-java-constants",
-        "networkstack-aidl-interfaces-java",
+        "networkstack-aidl-frameworkdeps-java",
         "netd_aidl_parcelables-java",
     ],
 
@@ -818,7 +818,6 @@ aidl_interface {
         "core/java/android/net/DhcpResultsParcelable.aidl",
         "core/java/android/net/INetworkMonitor.aidl",
         "core/java/android/net/INetworkMonitorCallbacks.aidl",
-        "core/java/android/net/IIpMemoryStore.aidl",
         "core/java/android/net/INetworkStackConnector.aidl",
         "core/java/android/net/INetworkStackStatusCallback.aidl",
         "core/java/android/net/InitialConfigurationParcelable.aidl",
@@ -837,6 +836,17 @@ aidl_interface {
         "core/java/android/net/dhcp/IDhcpServerCallbacks.aidl",
         "core/java/android/net/ip/IIpClient.aidl",
         "core/java/android/net/ip/IIpClientCallbacks.aidl",
+    ],
+    api_dir: "aidl/networkstack",
+}
+
+aidl_interface {
+    name: "networkstack-aidl-frameworkdeps",
+    local_include_dir: "core/java",
+    srcs: [
+        "core/java/android/net/TcpKeepalivePacketDataParcelable.aidl",
+        // TODO: move IpMemoryStore usages out of framework.jar
+        "core/java/android/net/IIpMemoryStore.aidl",
         "core/java/android/net/ipmemorystore/**/*.aidl",
     ],
     api_dir: "aidl/networkstack",
@@ -845,16 +855,8 @@ aidl_interface {
 filegroup {
     name: "framework-networkstack-shared-srcs",
     srcs: [
-        // TODO: remove these annotations as soon as we can use andoid.support.annotations.*
-        "core/java/android/annotation/NonNull.java",
-        "core/java/android/annotation/Nullable.java",
-        "core/java/android/annotation/IntDef.java",
-        "core/java/android/annotation/IntRange.java",
-        "core/java/android/annotation/UnsupportedAppUsage.java",
         "core/java/android/net/DhcpResults.java",
         "core/java/android/util/LocalLog.java",
-        "core/java/com/android/internal/annotations/GuardedBy.java",
-        "core/java/com/android/internal/annotations/VisibleForTesting.java",
         "core/java/com/android/internal/util/HexDump.java",
         "core/java/com/android/internal/util/IndentingPrintWriter.java",
         "core/java/com/android/internal/util/IState.java",
@@ -865,6 +867,20 @@ filegroup {
         "core/java/com/android/internal/util/StateMachine.java",
         "core/java/com/android/internal/util/WakeupMessage.java",
         "core/java/android/net/shared/*.java",
+    ]
+}
+
+filegroup {
+    name: "framework-networkstack-shared-annotations",
+    srcs: [
+        // TODO: remove these annotations as soon as we can use android.support.annotations.*
+        "core/java/android/annotation/NonNull.java",
+        "core/java/android/annotation/Nullable.java",
+        "core/java/android/annotation/IntDef.java",
+        "core/java/android/annotation/IntRange.java",
+        "core/java/android/annotation/UnsupportedAppUsage.java",
+        "core/java/com/android/internal/annotations/GuardedBy.java",
+        "core/java/com/android/internal/annotations/VisibleForTesting.java",
     ]
 }
 

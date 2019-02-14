@@ -24,7 +24,7 @@ import static android.system.OsConstants.SOCK_NONBLOCK;
 import static android.system.OsConstants.SOCK_RAW;
 
 import android.net.util.ConnectivityPacketSummary;
-import android.net.util.InterfaceParams;
+import android.net.networkstack.util.InterfaceParams;
 import android.net.util.PacketReader;
 import android.net.util.SocketUtils;
 import android.os.Handler;
@@ -34,7 +34,7 @@ import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
 
-import com.android.internal.util.HexDump;
+import android.net.networkstack.util.HexDump;
 
 import java.io.FileDescriptor;
 import java.io.IOException;

@@ -18,9 +18,9 @@ package android.net.dhcp;
 
 import static android.net.dhcp.DhcpLease.EXPIRATION_NEVER;
 import static android.net.dhcp.DhcpLease.inet4AddrToString;
-import static android.net.shared.Inet4AddressUtils.inet4AddressToIntHTH;
-import static android.net.shared.Inet4AddressUtils.intToInet4AddressHTH;
-import static android.net.shared.Inet4AddressUtils.prefixLengthToV4NetmaskIntHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.inet4AddressToIntHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.intToInet4AddressHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.prefixLengthToV4NetmaskIntHTH;
 
 import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ANY;
 import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_BITS;
@@ -32,7 +32,7 @@ import android.annotation.Nullable;
 import android.net.IpPrefix;
 import android.net.MacAddress;
 import android.net.dhcp.DhcpServer.Clock;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.SharedLog;
 import android.util.ArrayMap;
 
 import java.net.Inet4Address;

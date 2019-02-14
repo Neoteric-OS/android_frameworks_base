@@ -53,9 +53,12 @@ import android.net.captiveportal.CaptivePortalProbeSpec;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.metrics.ValidationProbeEvent;
-import android.net.shared.NetworkMonitorUtils;
-import android.net.shared.PrivateDnsConfig;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.NetworkMonitorUtils;
+import android.net.networkstack.shared.PrivateDnsConfig;
+import android.net.networkstack.shared.SharedLog;
+import android.net.networkstack.util.RingBufferIndices;
+import android.net.networkstack.util.State;
+import android.net.networkstack.util.StateMachine;
 import android.net.util.Stopwatch;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -79,9 +82,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.RingBufferIndices;
-import com.android.internal.util.State;
-import com.android.internal.util.StateMachine;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

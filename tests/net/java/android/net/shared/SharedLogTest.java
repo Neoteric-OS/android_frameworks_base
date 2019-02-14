@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.android.server.util;
+package android.net.shared;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -37,17 +37,17 @@ public class SharedLogTest {
 
     @Test
     public void testBasicOperation() {
-        final SharedLog logTop = new SharedLog("top");
+        final android.net.shared.SharedLog logTop = new android.net.shared.SharedLog("top");
         logTop.mark("first post!");
 
-        final SharedLog logLevel2a = logTop.forSubComponent("twoA");
-        final SharedLog logLevel2b = logTop.forSubComponent("twoB");
+        final android.net.shared.SharedLog logLevel2a = logTop.forSubComponent("twoA");
+        final android.net.shared.SharedLog logLevel2b = logTop.forSubComponent("twoB");
         logLevel2b.e("2b or not 2b");
         logLevel2b.e("No exception", null);
         logLevel2b.e("Wait, here's one", new Exception("Test"));
         logLevel2a.w("second post?");
 
-        final SharedLog logLevel3 = logLevel2a.forSubComponent("three");
+        final android.net.shared.SharedLog logLevel3 = logLevel2a.forSubComponent("three");
         logTop.log("still logging");
         logLevel3.log("3 >> 2");
         logLevel2a.mark("ok: last post");

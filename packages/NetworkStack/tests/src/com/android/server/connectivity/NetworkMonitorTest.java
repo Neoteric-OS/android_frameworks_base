@@ -49,7 +49,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.SharedLog;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.ConditionVariable;

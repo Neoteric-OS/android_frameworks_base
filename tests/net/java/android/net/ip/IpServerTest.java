@@ -61,7 +61,7 @@ import android.net.dhcp.IDhcpServer;
 import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.test.TestLooper;

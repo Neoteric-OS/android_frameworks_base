@@ -49,7 +49,7 @@ import android.net.dhcp.DhcpLeaseRepository.InvalidAddressException;
 import android.net.dhcp.DhcpLeaseRepository.OutOfAddressesException;
 import android.net.dhcp.DhcpServer.Clock;
 import android.net.dhcp.DhcpServer.Dependencies;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.SharedLog;
 import android.os.HandlerThread;
 import android.support.test.filters.SmallTest;
 import android.testing.AndroidTestingRunner;

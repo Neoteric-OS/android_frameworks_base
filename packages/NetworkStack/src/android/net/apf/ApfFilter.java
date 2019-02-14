@@ -39,7 +39,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
-import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
 import android.net.ip.IpClient.IpClientCallbacksWrapper;
@@ -47,7 +46,10 @@ import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.ApfStats;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.RaEvent;
-import android.net.util.InterfaceParams;
+import android.net.networkstack.TcpKeepalivePacketDataParcelable;
+import android.net.networkstack.util.HexDump;
+import android.net.networkstack.util.IndentingPrintWriter;
+import android.net.networkstack.util.InterfaceParams;
 import android.net.util.NetworkStackUtils;
 import android.net.util.SocketUtils;
 import android.os.PowerManager;
@@ -61,8 +63,6 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.HexDump;
-import com.android.internal.util.IndentingPrintWriter;
 
 import java.io.FileDescriptor;
 import java.io.IOException;

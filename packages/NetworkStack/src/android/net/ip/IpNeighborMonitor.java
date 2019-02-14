@@ -16,9 +16,9 @@
 
 package android.net.ip;
 
-import static android.net.netlink.NetlinkConstants.RTM_DELNEIGH;
-import static android.net.netlink.NetlinkConstants.hexify;
-import static android.net.netlink.NetlinkConstants.stringForNlMsgType;
+import static android.net.networkstack.netlink.NetlinkConstants.RTM_DELNEIGH;
+import static android.net.networkstack.netlink.NetlinkConstants.hexify;
+import static android.net.networkstack.netlink.NetlinkConstants.stringForNlMsgType;
 import static android.net.util.SocketUtils.makeNetlinkSocketAddress;
 import static android.system.OsConstants.AF_NETLINK;
 import static android.system.OsConstants.NETLINK_ROUTE;
@@ -26,14 +26,14 @@ import static android.system.OsConstants.SOCK_DGRAM;
 import static android.system.OsConstants.SOCK_NONBLOCK;
 
 import android.net.MacAddress;
-import android.net.netlink.NetlinkErrorMessage;
-import android.net.netlink.NetlinkMessage;
-import android.net.netlink.NetlinkSocket;
-import android.net.netlink.RtNetlinkNeighborMessage;
-import android.net.netlink.StructNdMsg;
+import android.net.networkstack.netlink.NetlinkErrorMessage;
+import android.net.networkstack.netlink.NetlinkMessage;
+import android.net.networkstack.netlink.NetlinkSocket;
+import android.net.networkstack.netlink.RtNetlinkNeighborMessage;
+import android.net.networkstack.netlink.StructNdMsg;
+import android.net.networkstack.shared.SharedLog;
 import android.net.util.NetworkStackUtils;
 import android.net.util.PacketReader;
-import android.net.util.SharedLog;
 import android.net.util.SocketUtils;
 import android.os.Handler;
 import android.os.SystemClock;

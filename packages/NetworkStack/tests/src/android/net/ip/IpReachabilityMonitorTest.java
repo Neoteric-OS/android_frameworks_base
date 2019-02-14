@@ -20,8 +20,8 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
-import android.net.util.InterfaceParams;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.SharedLog;
+import android.net.networkstack.util.InterfaceParams;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.test.filters.SmallTest;

@@ -25,7 +25,7 @@ import android.hardware.tetheroffload.control.V1_0.NetworkProtocol;
 import android.hardware.tetheroffload.control.V1_0.OffloadCallbackEvent;
 import android.os.Handler;
 import android.os.RemoteException;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.system.OsConstants;
 
 import java.util.ArrayList;

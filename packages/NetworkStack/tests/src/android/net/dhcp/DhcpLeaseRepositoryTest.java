@@ -38,7 +38,7 @@ import android.annotation.Nullable;
 import android.net.IpPrefix;
 import android.net.MacAddress;
 import android.net.dhcp.DhcpServer.Clock;
-import android.net.util.SharedLog;
+import android.net.networkstack.shared.SharedLog;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 

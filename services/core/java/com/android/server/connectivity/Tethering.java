@@ -72,7 +72,7 @@ import android.net.NetworkUtils;
 import android.net.ip.IpServer;
 import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.net.util.VersionedBroadcastListener;
 import android.net.wifi.WifiManager;
 import android.os.Binder;

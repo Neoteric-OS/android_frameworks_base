@@ -1,0 +1,14 @@
+rule android.net.shared.** android.net.networkstack.shared.@1
+rule android.net.netlink.** android.net.networkstack.netlink.@1
+rule com.android.internal.util.** android.net.networkstack.util.@1
+
+rule android.net.DhcpResults* android.net.networkstack.DhcpResults@1
+rule android.net.LocalLog* android.net.networkstack.LocalLog@1
+rule android.net.ip.InterfaceController* android.net.networkstack.ip.InterfaceController@1
+rule android.net.util.InterfaceParams* android.net.networkstack.util.InterfaceParams@1
+rule android.net.util.SharedLog* android.net.networkstack.util.SharedLog@1
+
+rule android.net.InterfaceConfigurationParcel* android.net.networkstack.InterfaceConfigurationParcel@1
+rule android.net.TetherStatsParcel* android.net.networkstack.TetherStatsParcel@1
+rule android.net.UidRangeParcel* android.net.networkstack.UidRangeParcel@1
+rule android.net.TcpKeepalivePacketDataParcelable* android.net.networkstack.TcpKeepalivePacketDataParcelable@1

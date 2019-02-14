@@ -34,8 +34,8 @@ import static android.net.dhcp.DhcpPacket.ENCAP_L3;
 import static android.net.dhcp.DhcpPacket.INADDR_ANY;
 import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
 import static android.net.dhcp.DhcpPacket.ParseException;
-import static android.net.shared.Inet4AddressUtils.getBroadcastAddress;
-import static android.net.shared.Inet4AddressUtils.getPrefixMaskAsInet4Address;
+import static android.net.networkstack.shared.Inet4AddressUtils.getBroadcastAddress;
+import static android.net.networkstack.shared.Inet4AddressUtils.getPrefixMaskAsInet4Address;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,10 +44,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import android.annotation.Nullable;
-import android.net.DhcpResults;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.metrics.DhcpErrorEvent;
+import android.net.networkstack.DhcpResults;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 

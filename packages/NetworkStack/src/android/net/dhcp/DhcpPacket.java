@@ -4,10 +4,10 @@ import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ALL;
 import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ANY;
 
 import android.annotation.Nullable;
-import android.net.DhcpResults;
+import android.net.networkstack.DhcpResults;
 import android.net.LinkAddress;
 import android.net.metrics.DhcpErrorEvent;
-import android.net.shared.Inet4AddressUtils;
+import android.net.networkstack.shared.Inet4AddressUtils;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.system.OsConstants;

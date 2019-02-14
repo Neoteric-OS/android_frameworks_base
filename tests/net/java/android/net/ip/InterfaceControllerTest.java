@@ -27,7 +27,7 @@ import android.net.INetd;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
 import android.net.LinkAddress;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 

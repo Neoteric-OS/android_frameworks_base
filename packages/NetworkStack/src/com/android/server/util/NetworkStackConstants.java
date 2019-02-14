@@ -16,7 +16,7 @@
 
 package com.android.server.util;
 
-import static android.net.shared.Inet4AddressUtils.intToInet4AddressHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.intToInet4AddressHTH;
 
 import java.net.Inet4Address;
 

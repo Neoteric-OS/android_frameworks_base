@@ -49,8 +49,9 @@ import android.net.ip.IIpClientCallbacks;
 import android.net.ip.IpClient.IpClientCallbacksWrapper;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.RaEvent;
-import android.net.util.InterfaceParams;
-import android.net.util.SharedLog;
+import android.net.networkstack.TcpKeepalivePacketDataParcelable;
+import android.net.networkstack.shared.SharedLog;
+import android.net.networkstack.util.InterfaceParams;
 import android.os.ConditionVariable;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -1549,7 +1550,7 @@ public class ApfTest {
         final TcpKeepalivePacketData ipv4TcpKeepalivePacket =
                 TcpKeepalivePacketData.tcpKeepalivePacket(v4Tsi);
 
-        apfFilter.addKeepalivePacketFilter(slot1, ipv4TcpKeepalivePacket.toStableParcelable());
+        apfFilter.addKeepalivePacketFilter(slot1, toStableParcelable(ipv4TcpKeepalivePacket));
         program = cb.getApfProgram();
 
         // Verify IPv4 keepalive ack packet is dropped
@@ -1582,7 +1583,7 @@ public class ApfTest {
                     srcAddr, srcPort, dstAddr, dstPort, seqNum, ackNum, window, windowScale);
             final TcpKeepalivePacketData ipv6TcpKeepalivePacket =
                     TcpKeepalivePacketData.tcpKeepalivePacket(v6Tsi);
-            apfFilter.addKeepalivePacketFilter(slot1, ipv6TcpKeepalivePacket.toStableParcelable());
+            apfFilter.addKeepalivePacketFilter(slot1, toStableParcelable(ipv6TcpKeepalivePacket));
             program = cb.getApfProgram();
 
             // Verify IPv6 keepalive ack packet is dropped
@@ -1604,8 +1605,8 @@ public class ApfTest {
             apfFilter.removeKeepalivePacketFilter(slot1);
 
             // Verify multiple filters
-            apfFilter.addKeepalivePacketFilter(slot1, ipv4TcpKeepalivePacket.toStableParcelable());
-            apfFilter.addKeepalivePacketFilter(slot2, ipv6TcpKeepalivePacket.toStableParcelable());
+            apfFilter.addKeepalivePacketFilter(slot1, toStableParcelable(ipv4TcpKeepalivePacket));
+            apfFilter.addKeepalivePacketFilter(slot2, toStableParcelable(ipv6TcpKeepalivePacket));
             program = cb.getApfProgram();
 
             // Verify IPv4 keepalive ack packet is dropped
@@ -1662,6 +1663,20 @@ public class ApfTest {
                         dstPort, anotherSeqNum, anotherAckNum));
 
         apfFilter.shutdown();
+    }
+
+    // TODO: move toStableParcelable out of TcpKeepalivePacketData into a static method in shared
+    private TcpKeepalivePacketDataParcelable toStableParcelable(TcpKeepalivePacketData data) {
+        final TcpKeepalivePacketDataParcelable p = new TcpKeepalivePacketDataParcelable();
+        final android.net.TcpKeepalivePacketDataParcelable original = data.toStableParcelable();
+        p.srcAddress = original.srcAddress;
+        p.srcPort = original.srcPort;
+        p.dstAddress = original.dstAddress;
+        p.dstPort = original.dstPort;
+        p.ack = original.ack;
+        p.seq = original.seq;
+
+        return p;
     }
 
     private static byte[] ipv4Packet(byte[] sip, byte[] tip, int sport,

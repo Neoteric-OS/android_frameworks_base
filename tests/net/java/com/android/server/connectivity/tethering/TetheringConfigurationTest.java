@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.util.SharedLog;
+import android.net.shared.SharedLog;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;

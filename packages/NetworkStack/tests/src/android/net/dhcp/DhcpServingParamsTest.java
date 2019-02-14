@@ -18,7 +18,7 @@ package android.net.dhcp;
 
 import static android.net.InetAddresses.parseNumericAddress;
 import static android.net.dhcp.DhcpServingParams.MTU_UNSET;
-import static android.net.shared.Inet4AddressUtils.inet4AddressToIntHTH;
+import static android.net.networkstack.shared.Inet4AddressUtils.inet4AddressToIntHTH;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -28,7 +28,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.LinkAddress;
 import android.net.dhcp.DhcpServingParams.InvalidParameterException;
-import android.net.shared.Inet4AddressUtils;
+import android.net.networkstack.shared.Inet4AddressUtils;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
