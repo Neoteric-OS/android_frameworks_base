@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2691015_52d4d1c4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10167,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-02-14T19:21:29Z",
+      "side": 1,
+      "message": "In fact this should become public now as it has a broader definition, as carrier apps will should query it before trying to switch to dsds.",
+      "range": {
+        "startLine": 10167,
+        "startChar": 0,
+        "endLine": 10167,
+        "endChar": 14
+      },
+      "revId": "7342de1e203a9c3bb085058097884c89c536bbd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
