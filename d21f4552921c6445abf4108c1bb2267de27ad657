@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280f5196_d0164eb3",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T13:12:02Z",
+      "side": 1,
+      "message": "Consider adding:\n\n    \u0026\u0026 nextOutputEntry !\u003d entry\n\nso that if there are no entries set \u003e\u003d SET_DEBUG_START, this function doesn\u0027t need to do any writes.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 43,
+        "endLine": 1026,
+        "endChar": 44
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024c1359_e3eccc30",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T13:12:02Z",
+      "side": 1,
+      "message": "What does \"migrated VPN stats\" mean? Does it mean that the stats maintained here are the result of performing TUN migration on mLastUidDetailSnapshot? Or...? Would be good to explain in a comment.",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 38
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b81dc57_e94c0cc8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T13:12:02Z",
+      "side": 1,
+      "message": "This will slow down the NetworkStats polls by callers such as BatteryStatsImpl, which pass in a restricted list of interfaces. Previously that filter would have caused us to assemble and return only the stats for those interfaces, but now we grab stats for all interfaces regardless.\n\nIs it possible to avoid this performance penalty, at least in the common case where no VPNs are connected and thus no traffic needs to be migrated? Perhaps if requiredIfaces is not null, then find all the VPN underlying interfaces, and append all of them to requiredIfaces? Or if that\u0027s too complicated to attempt at this time, maybe add a TODO?",
+      "range": {
+        "startLine": 826,
+        "startChar": 67,
+        "endLine": 826,
+        "endChar": 81
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
