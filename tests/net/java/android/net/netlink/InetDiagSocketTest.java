@@ -30,6 +30,7 @@ import static android.system.OsConstants.SO_RCVTIMEO;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -157,9 +158,12 @@ public class InetDiagSocketTest {
 
     private void checkConnectionOwnerUid(int protocol, InetSocketAddress local,
                                          InetSocketAddress remote, boolean expectSuccess) {
-        final int expectedUid = expectSuccess ? Process.myUid() : INVALID_UID;
         final int uid = mCm.getConnectionOwnerUid(protocol, local, remote);
-        assertEquals(expectedUid, uid);
+        if (expectSuccess) {
+            assertEquals(Process.myUid(), uid);
+        } else {
+            assertNotEquals(Process.myUid(), uid);
+        }
     }
 
     private int findLikelyFreeUdpPort(UdpConnection conn) throws Exception {
