@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c9c8833_87cb53db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4066,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T03:23:07Z",
+      "side": 1,
+      "message": "Would simplify to:\n\n    if (underlyingNetworks \u003d\u003d null) {\n        NetworkAgentInfo defaultNetwork \u003d getDefaultNetwork();\n        if (defaultNetwork !\u003d null) {\n            underlyingNetworks \u003d new Network[] { defaultNetwork.network };\n        }\n    }\n\n    List\u003cString\u003e interfaces \u003d new ArrayList\u003c\u003e();\n    for (Network network : underlyingNetworks) {\n        ...\n    }\n    if (!interfaces.isEmpty()) {\n       ...\n    }\n\n    return ...",
+      "range": {
+        "startLine": 4049,
+        "startChar": 0,
+        "endLine": 4066,
+        "endChar": 9
+      },
+      "revId": "fe199f560c0b64adf2df657f8df02f1bfdc16496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a04a07_1c3947ba",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T03:23:07Z",
+      "side": 1,
+      "message": "Does this mean that UID_RED gets billed for consuming 2000 bytes (1000 on cell and 1000 on wifi), even though it only actually only consumed 1000 bytes? That seems incorrect.\n\nShouldn\u0027t UID_RED be billed for a total of 1000 bytes (e.g., 500 bytes on cell and 500 bytes on wifi), and UID_VPN be billed for 1200 bytes? After all, if the VPN carries 1000 app bytes and causes 2200 network bytes, then the extra 1200 bytes were caused by the VPN and it should be billed for them.\n\nIt does seem a good idea if VPNs apps can consume as much data as they want for their own purposes, and present that data as having been consumed by the apps that they provide service to. It also seems to contradict this comment in migrateTun:\n\n        // If tunIface \u003c underlyingIface, it leaves the overhead traffic in the VPN app.\n        // If tunIface \u003e underlyingIface, the VPN app doesn\u0027t get credit for data compression.",
+      "range": {
+        "startLine": 989,
+        "startChar": 0,
+        "endLine": 990,
+        "endChar": 56
+      },
+      "revId": "fe199f560c0b64adf2df657f8df02f1bfdc16496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
