@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02be095_ee7575ad",
+        "filename": "tests/net/java/com/android/server/connectivity/LingerMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-14T09:13:03Z",
+      "side": 0,
+      "message": "Yes, this test still passes",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "99d7ee048a12c9edc9adc7286bfb8a507f59112c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
