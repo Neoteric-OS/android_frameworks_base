@@ -22,6 +22,30 @@
       "revId": "7a9f8c3e147dd7dd0ec3e6b73f25431f7134be88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f28a8_7ea936da",
+        "filename": "core/java/android/util/apk/ApkSignatureVerifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1233205
+      },
+      "writtenOn": "2019-02-14T00:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b46702_b869a796",
+      "range": {
+        "startLine": 400,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 51
+      },
+      "revId": "7a9f8c3e147dd7dd0ec3e6b73f25431f7134be88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
