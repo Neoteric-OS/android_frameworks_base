@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e12c5ad7_bf3e7ab8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T14:06:16Z",
+      "side": 1,
+      "message": "Can you check whether it\u0027s possible to use TYPE_NONE for this? If so, then let\u0027s use it. If not, maybe update this comment.",
+      "range": {
+        "startLine": 688,
+        "startChar": 44,
+        "endLine": 688,
+        "endChar": 94
+      },
+      "revId": "89ce5e3c1bdf068c152e9cfc3b6d8a95f02dbc19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
