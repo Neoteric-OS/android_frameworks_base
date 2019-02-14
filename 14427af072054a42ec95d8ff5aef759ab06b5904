@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a18299ca_dcfd3447",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-14T21:58:50Z",
+      "side": 1,
+      "message": "\u003e When does this callback actually fire? Is it after the code calls setUids in line 4679, or is it before that?\n\nGood call. It seems like this is indeed fired before. Moving these up.\n\n\u003e Are the capabilities different from the previous capabilities, or are they duplicates? If different, how?\n\nIt seems like they\u0027re different. I tested out by logging onAvailable/onCapsChanged/onLost callbacks for vpnNetworkCallback. Here\u0027s the o/p:\n\n02-14 21:02:27.697  7632  7657 E ConnectivityServiceTest: vaanand: onAvailable: 102\n02-14 21:02:27.698  7632  7657 E ConnectivityServiceTest: vaanand: onCapsChanged, net: 102, caps: [ Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026FOREGROUND\u0026NOT_SUSPENDED]\n02-14 21:02:27.708  7632  7657 E ConnectivityServiceTest: vaanand: onCapsChanged, net: 102, caps: [ Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED]\n02-14 21:02:27.711  7632  7657 E ConnectivityServiceTest: vaanand: onCapsChanged, net: 102, caps: [ Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026VALIDATED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED]\n\n\nFirst onAvailable and onCapsChanged are matched as part of vpnNetworkCallback.expectAvailableCallbacksUnvalidated (line 4668). Here\u0027s the caps for all 3 onCapsChanged callbacks:\n1) Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026FOREGROUND\u0026NOT_SUSPENDED\n2) Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED\n3) Transports: VPN Capabilities: INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026VALIDATED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED\n\nB/w 1) and 2) NOT_ROAMING and NOT_CONGESTED got added.\n\nB/w 2) and 3) VALIDATED got added.",
+      "parentUuid": "c8536f71_0699a03b",
+      "range": {
+        "startLine": 4681,
+        "startChar": 8,
+        "endLine": 4681,
+        "endChar": 99
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbe40ec_5bbb576b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
