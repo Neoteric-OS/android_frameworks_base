@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc500e6b_c79414c1",
+        "filename": "telecomm/java/android/telecom/StatusHints.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-02-14T16:09:57Z",
+      "side": 1,
+      "message": "This is still adding carrier and SIM implementation details into a class that did not have these dependencies before.  The StatusHints class should not require any modification to display the correct icon in Dialer.  It is up to the TelephonyConnectionService to provide an icon in the status hints based on its knowledge of carriers, sims, sub, slots, etc. \n\nThis approach assumes the Dialer side is where the correct icon is going to be chosen; would prefer this happens in Telephony. \n\nNo API change should be required.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "f25f866c43f9fe56d3313a5076f668c675faf6b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
