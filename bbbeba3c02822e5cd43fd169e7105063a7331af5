@@ -46,6 +46,30 @@
       "revId": "bbbeba3c02822e5cd43fd169e7105063a7331af5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd037db8_cdd3465d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T07:22:50Z",
+      "side": 0,
+      "message": "I think I understand. In this test, NetworkMonitors are mocked out so networks don\u0027t actually ever validate. Validation is simulated by connect(), and it doesn\u0027t happen if validated\u003dtrue is passed. So this test isn\u0027t very realistic.",
+      "parentUuid": "05f083ab_7df68e25",
+      "range": {
+        "startLine": 4767,
+        "startChar": 0,
+        "endLine": 4773,
+        "endChar": 43
+      },
+      "revId": "bbbeba3c02822e5cd43fd169e7105063a7331af5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

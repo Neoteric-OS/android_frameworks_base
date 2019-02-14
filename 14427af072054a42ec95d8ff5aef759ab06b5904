@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c8536f71_0699a03b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T07:22:50Z",
+      "side": 1,
+      "message": "Ideally, we should try to understand why this is happening in this CL since I think we\u0027re still discussing the next CL.\n\nI\u0027d say we should try to determine:\n- When does this callback actually fire? Is it after the code calls setUids in line 4679, or is it before that?\n- Are the capabilities different from the previous capabilities, or are they duplicates? If different, how? \n- Are we sending a NetworkCapabilities update with an empty set of UID ranges to a caller that should not get that update, because those ranges don\u0027t cover the caller\u0027s UID? That would be a bug.",
+      "parentUuid": "9f753771_9a7b30a1",
+      "range": {
+        "startLine": 4681,
+        "startChar": 8,
+        "endLine": 4681,
+        "endChar": 99
+      },
+      "revId": "14427af072054a42ec95d8ff5aef759ab06b5904",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbe40ec_5bbb576b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
