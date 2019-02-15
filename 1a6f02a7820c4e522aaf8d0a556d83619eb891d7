@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbefcf7c_6e55c58d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Why do this only for user 0? What if an app is not installed in user 0 but installed in another user? If this code is correct, add a comment to explain why it is.\n\nAlso prefer unintending.\n\n    if (UserHandle.getUserId(uid) !\u003d UserHandle.USER_SYSTEM) {\n        continue;\n    }",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 86
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f30817_352af267",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "before?",
+      "range": {
+        "startLine": 348,
+        "startChar": 32,
+        "endLine": 348,
+        "endChar": 37
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a42ab58_9911060f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Given the comments in the netd CL about interfaces vs. netIds, I assume this will become an interface name, right?",
+      "range": {
+        "startLine": 389,
+        "startChar": 49,
+        "endLine": 389,
+        "endChar": 58
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512f56ff_58a29447",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "them",
+      "range": {
+        "startLine": 398,
+        "startChar": 80,
+        "endLine": 398,
+        "endChar": 82
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43761b5f_1fbbd775",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Prefer unindenting.\n\n    if (existingRanges \u003d\u003d null) {\n        loge(\"Remove unknown VPN range on \"...);\n        return;\n    }\n\n    existingRanges.removeAll(ranges);\n    if (...\n    ...",
+      "range": {
+        "startLine": 414,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 37
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7459ade_c9c84363",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Thanks for adding the comment. If you have time to write a unit test, that would be appreciated.",
+      "range": {
+        "startLine": 424,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 7
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c251dbd9_2ff3ab1a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Should this be called \"uid\"? A range can\u0027t be expressed by a single integer.",
+      "range": {
+        "startLine": 446,
+        "startChar": 55,
+        "endLine": 446,
+        "endChar": 61
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e55baa_1799eae5",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Presumably you won\u0027t need this logging given that you\u0027ll have logging of the binder IPC in NetdNativeService.",
+      "range": {
+        "startLine": 466,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 76
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e242f3_f055617e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Use String.join or StringJoiner.",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 13
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb7a45e_08350f38",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Looks like this could be useful for debugging, and is not too verbose. Maybe make this dump() method public and (optionally?) call it from ConnectivityService? (The AllApps dump below probably isn\u0027t very useful)",
+      "range": {
+        "startLine": 477,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 9
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23918f8b_51bb61f1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T14:12:49Z",
+      "side": 1,
+      "message": "Looks like there was a bug in this code. What was it? Can split this fix out into a separate CL, and maybe add a unit test for it?",
+      "range": {
+        "startLine": 897,
+        "startChar": 12,
+        "endLine": 897,
+        "endChar": 71
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
