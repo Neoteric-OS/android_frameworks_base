@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69e04f60_db5aa457",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4112,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27ebf916_01a63602",
+      "range": {
+        "startLine": 4112,
+        "startChar": 17,
+        "endLine": 4112,
+        "endChar": 44
+      },
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0c5abf_af29a39b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc178dad_2a2c92be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4121,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "8e0c5abf_af29a39b",
+      "range": {
+        "startLine": 4114,
+        "startChar": 0,
+        "endLine": 4121,
+        "endChar": 9
+      },
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d4b7862a_56b557c1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Agreed! Renamed it per Nathan\u0027s suggestion.",
+      "parentUuid": "184a372d_c15d56c6",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c7e7768_8e0d790c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c5573f_3e490423",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c7e7768_8e0d790c",
+      "range": {
+        "startLine": 271,
+        "startChar": 7,
+        "endLine": 271,
+        "endChar": 14
+      },
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "08c17b6f_5cca91ff",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a902a2ce_686c648f",
+      "range": {
+        "startLine": 299,
+        "startChar": 23,
+        "endLine": 299,
+        "endChar": 41
+      },
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd20e2f_a7694eae",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 7
@@ -131,6 +251,24 @@
       "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589aeb6d_7b281c71",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4701,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-15T00:35:04Z",
+      "side": 1,
+      "message": "Coz MockVpn calls updateCapabilities which previously used to send capabilities to CS via NetworkAgent. This CL removed that indirection, hence this call needs to be there.\n\nThe only other place where we call mMockVpn.setUids() without calling vpnNetworkAgent.setUids() is in line 4660. There similar effect is achieved via vpnNetworkAgent.connect() which calls NetworkAgent#sendNetworkCapabilities.",
+      "parentUuid": "7cd20e2f_a7694eae",
+      "revId": "44ac315a0ec46edd89258f5b1768659da6b2a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
