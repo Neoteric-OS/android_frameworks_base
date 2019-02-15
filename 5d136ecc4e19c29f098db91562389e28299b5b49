@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b818d164_b47650de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8aa04bd_0e03344b",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2d0fa09_4f98a2cc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fcd62a_c5d88dd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d0fa09_4f98a2cc",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fc695633_4fefd8c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ad965e_53a436b4",
+      "range": {
+        "startLine": 16,
+        "startChar": 57,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f9f281_75e785a7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "38b99baa_b4f5c864",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f9f281_75e785a7",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae422a5_42e7e7fd",
         "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4e3c86_4b337f18",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fae422a5_42e7e7fd",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ee1bfae4_ecf869f0",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "439e90fb_02cb8122",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 63
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "867e7d5b_fba4dec8",
         "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
         "patchSetId": 4
@@ -142,6 +268,30 @@
       "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70783b2c_390da06e",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867e7d5b_fba4dec8",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 42
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "fde90fbc_b3b6d004",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f40142d8_03dfdac1",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 90
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23f49d1_0b625fe8",
         "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
         "patchSetId": 4
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "2ae6ef1b_d14aaf3e",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23f49d1_0b625fe8",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aa7b204_5a61e5d1",
         "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
         "patchSetId": 4
@@ -196,6 +388,30 @@
       "writtenOn": "2019-02-15T06:43:30Z",
       "side": 1,
       "message": "These can probably be removed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99a9156_2e6f91f8",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "This requires a change to the parcelables build rules to not include them in the Android.bp of the framework. I\u0027m working on a cleanup CL for these rules already: will remove from here once it\u0027s merged. Added TODO.",
+      "parentUuid": "7aa7b204_5a61e5d1",
       "range": {
         "startLine": 11,
         "startChar": 0,
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "2e1e4c9e_a65f01fb",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5307a54f_0e9aead9",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691c72ae_6ae55463",
         "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
         "patchSetId": 4
@@ -245,6 +485,24 @@
       "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aaa9c32_df46a1cc",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-15T08:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "691c72ae_6ae55463",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
