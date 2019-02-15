@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8aa04bd_0e03344b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "Typo, precedence.",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d0fa09_4f98a2cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "prevents the networkstack from using these classes due to",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ad965e_53a436b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "services.net",
+      "range": {
+        "startLine": 16,
+        "startChar": 57,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f9f281_75e785a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "Can you add a some text here explaining how you decided to jarjar the app copy instead of, say, editing frameworks/base/core/java/jarjar-rules.txt? One good reason is that we can\u0027t update the framework file without an OTA.",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae422a5_42e7e7fd",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "If the jarjar parser is https://github.com/pantsbuild/jarjar/blob/master/src/main/java/org/pantsbuild/jarjar/RulesFileParser.java , then it looks like it supports comments.",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439e90fb_02cb8122",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "Only used in services.jar?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 63
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867e7d5b_fba4dec8",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "# Ignore DhcpResultsParcelable, but jarjar DhcpResults.\n# TODO: move DhcpResults into services.net and delete from here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 42
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40142d8_03dfdac1",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "Per in-person: do we need to jarjar this? It\u0027s in services/net.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 90
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23f49d1_0b625fe8",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "Also in services.net? Many of these also seem unused in the framework and thus don\u0027t need to be jarjar\u0027d.",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa7b204_5a61e5d1",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "These can probably be removed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5307a54f_0e9aead9",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "# Used by UidRange, which is used by framework classes such as NetworkCapabilities.",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691c72ae_6ae55463",
+        "filename": "packages/NetworkStack/jarjar-rules-shared.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-15T06:43:30Z",
+      "side": 1,
+      "message": "# TODO: remove.",
+      "revId": "5d136ecc4e19c29f098db91562389e28299b5b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
