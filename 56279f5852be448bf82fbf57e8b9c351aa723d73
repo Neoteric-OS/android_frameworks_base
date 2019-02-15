@@ -16,6 +16,24 @@
       "revId": "56279f5852be448bf82fbf57e8b9c351aa723d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d729b97_f7f24840",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2019-02-15T00:28:07Z",
+      "side": 1,
+      "message": "Yes... Removed",
+      "parentUuid": "e9928f2f_8d35ac68",
+      "revId": "56279f5852be448bf82fbf57e8b9c351aa723d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
