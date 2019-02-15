@@ -252,6 +252,30 @@
       "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77adca31_2389fdc9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-15T14:18:00Z",
+      "side": 1,
+      "message": "Yup I filed b/122652441 previously with a quick fix. Will add a unit test to that.",
+      "parentUuid": "23918f8b_51bb61f1",
+      "range": {
+        "startLine": 897,
+        "startChar": 12,
+        "endLine": 897,
+        "endChar": 71
+      },
+      "revId": "1a6f02a7820c4e522aaf8d0a556d83619eb891d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
