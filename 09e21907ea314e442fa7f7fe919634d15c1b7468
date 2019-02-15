@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f93c91_991a1a5d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10227,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-02-15T19:43:56Z",
+      "side": 1,
+      "message": "this should be:\n\n    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges\n    @RequiresPermission(anyOf \u003d {android.Manifest.permission.READ_PHONE_STATE,\n            android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE})",
+      "range": {
+        "startLine": 10227,
+        "startChar": 0,
+        "endLine": 10227,
+        "endChar": 69
+      },
+      "revId": "09e21907ea314e442fa7f7fe919634d15c1b7468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
