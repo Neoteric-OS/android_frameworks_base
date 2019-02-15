@@ -3574,9 +3574,15 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
             final int orientation = super.getOrientation();
             boolean isCar = mService.mContext.getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_AUTOMOTIVE);
-            if (isCar) {
+            boolean isTv = mContext.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_LEANBACK);
+
+            if (isCar || isTv) {
                 // In a car, you cannot physically rotate the screen, so it doesn't make sense to
                 // allow anything but the default orientation.
+
+                // It is also not make sense to rotate the tv display. Tv panel is usually big  and has fixed display orientation.
+
                 if (DEBUG_ORIENTATION) Slog.v(TAG_WM,
                         "Forcing UNSPECIFIED orientation in car for display id=" + mDisplayId
                                 + ". Ignoring " + orientation);
