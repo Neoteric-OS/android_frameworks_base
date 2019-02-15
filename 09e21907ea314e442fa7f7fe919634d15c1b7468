@@ -22,6 +22,30 @@
       "revId": "09e21907ea314e442fa7f7fe919634d15c1b7468",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e23d3b_75de6f26",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10227,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-02-15T22:36:03Z",
+      "side": 1,
+      "message": "I was under the impression that an app with READ_PRIVILEGED permission would also have the READ permission, and so the lowest between the two was sufficient.\n\nRegarding the @SuppressAutoDoc: should this be executable with carrier privileges? If so, I would need to make one additional change in PhoneInterfaceManager to use enforeceCallingOrSelfReadPhoneStatePermissionOrCarrierPrivilege() instead of checkCallingOrSelfReadPhoneState().\n\nDone",
+      "parentUuid": "a6f93c91_991a1a5d",
+      "range": {
+        "startLine": 10227,
+        "startChar": 0,
+        "endLine": 10227,
+        "endChar": 69
+      },
+      "revId": "09e21907ea314e442fa7f7fe919634d15c1b7468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
