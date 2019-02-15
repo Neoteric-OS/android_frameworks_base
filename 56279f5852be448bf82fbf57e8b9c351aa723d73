@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9928f2f_8d35ac68",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2019-02-15T00:12:57Z",
+      "side": 1,
+      "message": "copy/paste error?",
+      "revId": "56279f5852be448bf82fbf57e8b9c351aa723d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
