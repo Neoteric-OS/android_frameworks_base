@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26509c5_95b3d504",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-02-15T22:48:19Z",
+      "side": 1,
+      "message": "nit: split into 2 lines similar to old version",
+      "range": {
+        "startLine": 104,
+        "startChar": 88,
+        "endLine": 104,
+        "endChar": 100
+      },
+      "revId": "4b482426753b4ddd1c73182b404223fcb10a6566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c6e2af_905db4cb",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-02-15T22:48:19Z",
+      "side": 1,
+      "message": "new UnrecoverableKeyException(e);",
+      "range": {
+        "startLine": 106,
+        "startChar": 48,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "4b482426753b4ddd1c73182b404223fcb10a6566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
