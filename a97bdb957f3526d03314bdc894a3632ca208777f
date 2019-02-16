@@ -46,6 +46,30 @@
       "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4865d55_5f2242d1",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-02-16T02:32:11Z",
+      "side": 0,
+      "message": "Yes, I think it might take longer for the new device to be added into TIF since requesting OSD name and vendor ID both take time and could take longer if there is retry and timeout. \n\nThis might cause the TV respond slowly on Routing related cec commands coming from the new device. For example, if the new device is trying to do OneTouchPlay. This could be a worse user experience than using default OSD name I assume.\n\nAccording to the code, the OSD name should be updated if the new device responds correctly later. Otherwise the change might not be able to update the OSD name either.",
+      "parentUuid": "3e8eb10c_c015beb4",
+      "range": {
+        "startLine": 586,
+        "startChar": 7,
+        "endLine": 586,
+        "endChar": 33
+      },
+      "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
