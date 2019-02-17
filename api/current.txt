@@ -43754,7 +43754,7 @@ package android.telephony.ims {
     field public static final android.os.Parcelable.Creator<android.telephony.ims.RcsIncomingMessageCreationParams> CREATOR;
   }
 
-  public static class RcsIncomingMessageCreationParams.Builder extends android.telephony.ims.RcsMessageCreationParams.Builder {
+  public static class RcsIncomingMessageCreationParams.Builder extends android.telephony.ims.RcsMessageCreationParams.Builder<android.telephony.ims.RcsIncomingMessageCreationParams.Builder> {
     ctor public RcsIncomingMessageCreationParams.Builder(long, long, int);
     method public android.telephony.ims.RcsIncomingMessageCreationParams build();
     method @CheckResult public android.telephony.ims.RcsIncomingMessageCreationParams.Builder setArrivalTimestamp(long);
@@ -43811,7 +43811,7 @@ package android.telephony.ims {
     method @Nullable public String getText();
   }
 
-  public static class RcsMessageCreationParams.Builder {
+  public abstract static class RcsMessageCreationParams.Builder<T extends android.telephony.ims.RcsMessageCreationParams.Builder<T>> {
     method public android.telephony.ims.RcsMessageCreationParams build();
     method @CheckResult public android.telephony.ims.RcsMessageCreationParams.Builder setLatitude(double);
     method @CheckResult public android.telephony.ims.RcsMessageCreationParams.Builder setLongitude(double);
@@ -43902,7 +43902,7 @@ package android.telephony.ims {
     field public static final android.os.Parcelable.Creator<android.telephony.ims.RcsOutgoingMessageCreationParams> CREATOR;
   }
 
-  public static class RcsOutgoingMessageCreationParams.Builder extends android.telephony.ims.RcsMessageCreationParams.Builder {
+  public static class RcsOutgoingMessageCreationParams.Builder extends android.telephony.ims.RcsMessageCreationParams.Builder<android.telephony.ims.RcsOutgoingMessageCreationParams.Builder> {
     ctor public RcsOutgoingMessageCreationParams.Builder(long, int);
     method public android.telephony.ims.RcsOutgoingMessageCreationParams build();
   }

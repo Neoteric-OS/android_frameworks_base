@@ -29,7 +29,7 @@ public final class RcsOutgoingMessageCreationParams extends RcsMessageCreationPa
     /**
      * A builder to instantiate and persist an {@link RcsOutgoingMessage}
      */
-    public static class Builder extends RcsMessageCreationParams.Builder {
+    public static class Builder extends RcsMessageCreationParams.Builder<Builder> {
 
         /**
          * Creates a new {@link Builder} to create an instance of
@@ -51,6 +51,14 @@ public final class RcsOutgoingMessageCreationParams extends RcsMessageCreationPa
          */
         public RcsOutgoingMessageCreationParams build() {
             return new RcsOutgoingMessageCreationParams(this);
+        }
+
+        /**
+         * @hide
+         */
+        @Override
+        Builder self() {
+            return this;
         }
     }
 
