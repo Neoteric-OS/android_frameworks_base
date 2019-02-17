@@ -39,7 +39,7 @@ public final class RcsIncomingMessageCreationParams extends RcsMessageCreationPa
      *
      * @see RcsThread#addIncomingMessage(RcsIncomingMessageCreationParams)
      */
-    public static class Builder extends RcsMessageCreationParams.Builder {
+    public static class Builder extends RcsMessageCreationParams.Builder<Builder> {
         private RcsParticipant mSenderParticipant;
         private long mArrivalTimestamp;
         private long mSeenTimestamp;
@@ -106,6 +106,14 @@ public final class RcsIncomingMessageCreationParams extends RcsMessageCreationPa
          */
         public RcsIncomingMessageCreationParams build() {
             return new RcsIncomingMessageCreationParams(this);
+        }
+
+        /**
+         * @hide
+         */
+        @Override
+        Builder self() {
+            return this;
         }
     }
 

@@ -106,9 +106,11 @@ public class RcsMessageCreationParams {
     /**
      * The base builder for creating {@link RcsMessage}s on {@link RcsThread}s.
      *
+     * @param <T> The child class that implements this base class. This is required for the setters
+     *            to return the correct type.
      * @see RcsIncomingMessageCreationParams
      */
-    public static class Builder {
+    public abstract static class Builder<T extends Builder<T>> {
         private String mRcsMessageGlobalId;
         private int mSubId;
         private @RcsMessage.RcsMessageStatus int mMessageStatus;
@@ -133,9 +135,9 @@ public class RcsMessageCreationParams {
          * @see RcsMessage#setStatus(int)
          */
         @CheckResult
-        public Builder setStatus(@RcsMessage.RcsMessageStatus int rcsMessageStatus) {
+        public T setStatus(@RcsMessage.RcsMessageStatus int rcsMessageStatus) {
             mMessageStatus = rcsMessageStatus;
-            return this;
+            return self();
         }
 
         /**
@@ -148,9 +150,9 @@ public class RcsMessageCreationParams {
          * @see RcsMessage#setRcsMessageId(String)
          */
         @CheckResult
-        public Builder setRcsMessageId(String rcsMessageId) {
+        public T setRcsMessageId(String rcsMessageId) {
             mRcsMessageGlobalId = rcsMessageId;
-            return this;
+            return self();
         }
 
         /**
@@ -161,9 +163,9 @@ public class RcsMessageCreationParams {
          * @see RcsMessage#setText(String)
          */
         @CheckResult
-        public Builder setText(String text) {
+        public T setText(String text) {
             mText = text;
-            return this;
+            return self();
         }
 
         /**
@@ -175,9 +177,9 @@ public class RcsMessageCreationParams {
          * @see RcsMessage#setLatitude(double)
          */
         @CheckResult
-        public Builder setLatitude(double latitude) {
+        public T setLatitude(double latitude) {
             mLatitude = latitude;
-            return this;
+            return self();
         }
 
         /**
@@ -189,9 +191,9 @@ public class RcsMessageCreationParams {
          * @see RcsMessage#setLongitude(double)
          */
         @CheckResult
-        public Builder setLongitude(double longitude) {
+        public T setLongitude(double longitude) {
             mLongitude = longitude;
-            return this;
+            return self();
         }
 
         /**
@@ -200,6 +202,11 @@ public class RcsMessageCreationParams {
         public RcsMessageCreationParams build() {
             return new RcsMessageCreationParams(this);
         }
+
+        /**
+         * @hide
+         */
+        abstract T self();
     }
 
     protected RcsMessageCreationParams(Builder builder) {
