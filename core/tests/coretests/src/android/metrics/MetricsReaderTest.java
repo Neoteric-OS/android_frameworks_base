@@ -16,7 +16,8 @@
 package android.metrics;
 
 import android.metrics.MetricsReader.Event;
-import android.support.test.filters.LargeTest;
+
+import androidx.test.filters.LargeTest;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 

@@ -16,7 +16,8 @@
 package com.android.internal.os;
 
 import android.os.BatteryStats;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import junit.framework.TestCase;
 

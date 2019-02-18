@@ -27,11 +27,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.UserHandle;
-import android.support.test.filters.LargeTest;
 import android.test.FlakyTest;
 import android.util.Log;
 
-import java.util.Arrays;
+import androidx.test.filters.LargeTest;
 
 @LargeTest
 public class BroadcastTest extends ActivityTestsBase {

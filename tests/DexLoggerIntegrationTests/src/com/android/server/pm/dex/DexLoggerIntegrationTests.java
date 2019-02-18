@@ -19,14 +19,13 @@ package com.android.server.pm.dex;
 import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
 import android.util.EventLog;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.LargeTest;
+
 import dalvik.system.DexClassLoader;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

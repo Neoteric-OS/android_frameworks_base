@@ -29,12 +29,13 @@ import static org.junit.Assert.assertTrue;
 import android.content.Context;
 import android.os.FileUtils.MemoryPipe;
 import android.provider.DocumentsContract.Document;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
-import libcore.io.Streams;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.google.android.collect.Sets;
+
+import libcore.io.Streams;
 
 import org.junit.After;
 import org.junit.Before;

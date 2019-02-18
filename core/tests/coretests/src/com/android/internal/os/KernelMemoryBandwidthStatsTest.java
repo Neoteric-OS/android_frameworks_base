@@ -1,11 +1,11 @@
 package com.android.internal.os;
 
-import android.support.test.filters.SmallTest;
 import android.util.LongSparseLongArray;
+
+import androidx.test.filters.SmallTest;
 
 import junit.framework.TestCase;
 
-import org.junit.Assert;
 import org.mockito.Mockito;
 
 import java.io.BufferedReader;

@@ -16,9 +16,6 @@
 
 package android.widget.focus;
 
-import android.widget.focus.VerticalFocusSearch;
-
-import android.support.test.filters.LargeTest;
 import android.test.ActivityInstrumentationTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 import android.view.FocusFinder;
@@ -26,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import androidx.test.filters.LargeTest;
 
 /**
  * Tests that focus searching works on a vertical linear layout of buttons of

@@ -16,7 +16,7 @@ package com.google.android.startop.iorap
 
 import android.net.Uri
 import android.os.ServiceManager
-import android.support.test.filters.MediumTest
+import androidx.test.filters.MediumTest
 import org.junit.Test
 import org.junit.Ignore
 import org.mockito.Mockito.*
