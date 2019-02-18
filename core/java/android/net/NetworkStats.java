@@ -1175,72 +1175,81 @@ public class NetworkStats implements Parcelable {
     /**
      * VPN accounting. Move some VPN's underlying traffic to other UIDs that use tun0 iface.
      *
-     * This method should only be called on delta NetworkStats. Do not call this method on a
-     * snapshot {@link NetworkStats} object because the tunUid and/or the underlyingIface may
-     * change over time.
+     * <p>This method should only be called on delta NetworkStats. Do not call this method on a
+     * snapshot {@link NetworkStats} object because the tunUid and/or the underlyingIface may change
+     * over time.
      *
-     * This method performs adjustments for one active VPN package and one VPN iface at a time.
-     *
-     * It is possible for the VPN software to use multiple underlying networks. This method
-     * only migrates traffic for the primary underlying network.
+     * <p>This method performs adjustments for one active VPN package and one VPN iface at a time.
      *
      * @param tunUid uid of the VPN application
      * @param tunIface iface of the vpn tunnel
-     * @param underlyingIface the primary underlying network iface used by the VPN application
-     * @return true if it successfully adjusts the accounting for VPN, false otherwise
+     * @param underlyingIfaces underlying network ifaces used by the VPN application
      */
-    public boolean migrateTun(int tunUid, String tunIface, String underlyingIface) {
+    public void migrateTun(int tunUid, String tunIface, String[] underlyingIfaces) {
         Entry tunIfaceTotal = new Entry();
-        Entry underlyingIfaceTotal = new Entry();
+        Entry[] underlyingIfacesTotal = new Entry[underlyingIfaces.length];
+        for (int i = 0; i < underlyingIfacesTotal.length; i++) {
+            underlyingIfacesTotal[i] = new Entry();
+        }
 
-        tunAdjustmentInit(tunUid, tunIface, underlyingIface, tunIfaceTotal, underlyingIfaceTotal);
+        tunAdjustmentInit(tunUid, tunIface, underlyingIfaces, tunIfaceTotal, underlyingIfacesTotal);
 
-        // If tunIface < underlyingIface, it leaves the overhead traffic in the VPN app.
-        // If tunIface > underlyingIface, the VPN app doesn't get credit for data compression.
+        Entry sumUnderlyingIfaces = new Entry();
+        for (int i = 0; i < underlyingIfacesTotal.length; i++) {
+            sumUnderlyingIfaces.add(underlyingIfacesTotal[i]);
+        }
+
+        // If tunIface < sumUnderlyingIfaces, it leaves the overhead traffic in the VPN app.
+        // If tunIface > sumUnderlyingIfaces, the VPN app doesn't get credit for data compression.
         // Negative stats should be avoided.
-        Entry pool = tunGetPool(tunIfaceTotal, underlyingIfaceTotal);
-        if (pool.isEmpty()) {
-            return true;
-        }
-        Entry moved =
-                addTrafficToApplications(tunUid, tunIface, underlyingIface, tunIfaceTotal, pool);
-        deductTrafficFromVpnApp(tunUid, underlyingIface, moved);
-
-        if (!moved.isEmpty()) {
-            Slog.wtf(TAG, "Failed to deduct underlying network traffic from VPN package. Moved="
-                    + moved);
-            return false;
-        }
-        return true;
+        Entry[] moved =
+                addTrafficToApplications(
+                        tunUid,
+                        tunIface,
+                        underlyingIfaces,
+                        tunIfaceTotal,
+                        underlyingIfacesTotal,
+                        sumUnderlyingIfaces);
+        deductTrafficFromVpnApp(tunUid, underlyingIfaces, moved);
     }
 
     /**
      * Initializes the data used by the migrateTun() method.
      *
-     * This is the first pass iteration which does the following work:
-     * (1) Adds up all the traffic through the tunUid's underlyingIface
-     *     (both foreground and background).
-     * (2) Adds up all the traffic through tun0 excluding traffic from the vpn app itself.
+     * <p>This is the first pass iteration which does the following work: (1) Adds up all the
+     * traffic through the tunUid's underlyingIfaces (both foreground and background). (2) Adds up
+     * all the traffic through tun0 excluding traffic from the vpn app itself.
      */
-    private void tunAdjustmentInit(int tunUid, String tunIface, String underlyingIface,
-            Entry tunIfaceTotal, Entry underlyingIfaceTotal) {
+    private void tunAdjustmentInit(
+            int tunUid,
+            String tunIface,
+            String[] underlyingIfaces,
+            Entry tunIfaceTotal,
+            Entry[] underlyingIfacesTotal) {
         Entry recycle = new Entry();
         for (int i = 0; i < size; i++) {
             getValues(i, recycle);
             if (recycle.uid == UID_ALL) {
                 throw new IllegalStateException(
                         "Cannot adjust VPN accounting on an iface aggregated NetworkStats.");
-            } if (recycle.set == SET_DBG_VPN_IN || recycle.set == SET_DBG_VPN_OUT) {
+            }
+            if (recycle.set == SET_DBG_VPN_IN || recycle.set == SET_DBG_VPN_OUT) {
                 throw new IllegalStateException(
                         "Cannot adjust VPN accounting on a NetworkStats containing SET_DBG_VPN_*");
             }
 
-            if (recycle.uid == tunUid && recycle.tag == TAG_NONE
-                    && Objects.equals(underlyingIface, recycle.iface)) {
-                underlyingIfaceTotal.add(recycle);
+            if (recycle.uid == tunUid && recycle.tag == TAG_NONE) {
+                // Add up traffic through tunUid's underlying interfaces.
+                for (int j = 0; j < underlyingIfaces.length; j++) {
+                    if (Objects.equals(underlyingIfaces[j], recycle.iface)) {
+                        underlyingIfacesTotal[j].add(recycle);
+                        break;
+                    }
+                }
             }
 
-            if (recycle.uid != tunUid && recycle.tag == TAG_NONE
+            if (recycle.uid != tunUid
+                    && recycle.tag == TAG_NONE
                     && Objects.equals(tunIface, recycle.iface)) {
                 // Add up all tunIface traffic excluding traffic from the vpn app itself.
                 tunIfaceTotal.add(recycle);
@@ -1248,97 +1257,159 @@ public class NetworkStats implements Parcelable {
         }
     }
 
-    private static Entry tunGetPool(Entry tunIfaceTotal, Entry underlyingIfaceTotal) {
-        Entry pool = new Entry();
-        pool.rxBytes = Math.min(tunIfaceTotal.rxBytes, underlyingIfaceTotal.rxBytes);
-        pool.rxPackets = Math.min(tunIfaceTotal.rxPackets, underlyingIfaceTotal.rxPackets);
-        pool.txBytes = Math.min(tunIfaceTotal.txBytes, underlyingIfaceTotal.txBytes);
-        pool.txPackets = Math.min(tunIfaceTotal.txPackets, underlyingIfaceTotal.txPackets);
-        pool.operations = Math.min(tunIfaceTotal.operations, underlyingIfaceTotal.operations);
-        return pool;
-    }
-
-    private Entry addTrafficToApplications(int tunUid, String tunIface, String underlyingIface,
-            Entry tunIfaceTotal, Entry pool) {
-        Entry moved = new Entry();
+    private Entry[] addTrafficToApplications(
+            int tunUid,
+            String tunIface,
+            String[] underlyingIfaces,
+            Entry tunIfaceTotal,
+            Entry[] underlyingIfacesTotal,
+            Entry sumUnderlyingIfaces) {
+        // Traffic moved off of each underlying interface.
+        Entry[] moved = new Entry[underlyingIfaces.length];
+        for (int i = 0; i < underlyingIfaces.length; i++) {
+            moved[i] = new Entry();
+        }
         Entry tmpEntry = new Entry();
-        tmpEntry.iface = underlyingIface;
         for (int i = 0; i < size; i++) {
             // the vpn app is excluded from the redistribution but all moved traffic will be
             // deducted from the vpn app (see deductTrafficFromVpnApp below).
             if (Objects.equals(iface[i], tunIface) && uid[i] != tunUid) {
+                // compute total rx/tx bytes/packets, operations; and then split them across
+                // underlying ifaces.
+                long totalRxBytes = 0;
                 if (tunIfaceTotal.rxBytes > 0) {
-                    tmpEntry.rxBytes = pool.rxBytes * rxBytes[i] / tunIfaceTotal.rxBytes;
-                } else {
-                    tmpEntry.rxBytes = 0;
+                    long rxBytesAcrossUnderlyingIfaces =
+                            sumUnderlyingIfaces.rxBytes * rxBytes[i] / tunIfaceTotal.rxBytes;
+                    // app must not be blamed for more than it consumed on tunIface
+                    totalRxBytes = Math.min(rxBytes[i], rxBytesAcrossUnderlyingIfaces);
                 }
+                long totalRxPackets = 0;
                 if (tunIfaceTotal.rxPackets > 0) {
-                    tmpEntry.rxPackets = pool.rxPackets * rxPackets[i] / tunIfaceTotal.rxPackets;
-                } else {
-                    tmpEntry.rxPackets = 0;
+                    long rxPacketsAcrossUnderlyingIfaces =
+                            sumUnderlyingIfaces.rxPackets * rxPackets[i] / tunIfaceTotal.rxPackets;
+                    totalRxPackets = Math.min(rxPackets[i], rxPacketsAcrossUnderlyingIfaces);
                 }
+                long totalTxBytes = 0;
                 if (tunIfaceTotal.txBytes > 0) {
-                    tmpEntry.txBytes = pool.txBytes * txBytes[i] / tunIfaceTotal.txBytes;
-                } else {
-                    tmpEntry.txBytes = 0;
+                    long txBytesAcrossUnderlyingIfaces =
+                            sumUnderlyingIfaces.txBytes * txBytes[i] / tunIfaceTotal.txBytes;
+                    totalTxBytes = Math.min(txBytes[i], txBytesAcrossUnderlyingIfaces);
                 }
+                long totalTxPackets = 0;
                 if (tunIfaceTotal.txPackets > 0) {
-                    tmpEntry.txPackets = pool.txPackets * txPackets[i] / tunIfaceTotal.txPackets;
-                } else {
-                    tmpEntry.txPackets = 0;
+                    long txPacketsAcrossUnderlyingIfaces =
+                            sumUnderlyingIfaces.txPackets * txPackets[i] / tunIfaceTotal.txPackets;
+                    totalTxPackets = Math.min(txPackets[i], txPacketsAcrossUnderlyingIfaces);
                 }
+                long totalOperations = 0;
                 if (tunIfaceTotal.operations > 0) {
-                    tmpEntry.operations =
-                            pool.operations * operations[i] / tunIfaceTotal.operations;
-                } else {
-                    tmpEntry.operations = 0;
+                    long operationsAcrossUnderlyingIfaces =
+                            sumUnderlyingIfaces.operations
+                                    * operations[i]
+                                    / tunIfaceTotal.operations;
+                    totalOperations = Math.min(operations[i], operationsAcrossUnderlyingIfaces);
                 }
-                tmpEntry.uid = uid[i];
-                tmpEntry.tag = tag[i];
-                tmpEntry.set = set[i];
-                tmpEntry.metered = metered[i];
-                tmpEntry.roaming = roaming[i];
-                tmpEntry.defaultNetwork = defaultNetwork[i];
-                combineValues(tmpEntry);
-                if (tag[i] == TAG_NONE) {
-                    moved.add(tmpEntry);
-                    // Add debug info
-                    tmpEntry.set = SET_DBG_VPN_IN;
+                // now split total* across underlying ifaces.
+                for (int j = 0; j < underlyingIfaces.length; j++) {
+                    tmpEntry.iface = underlyingIfaces[j];
+                    tmpEntry.rxBytes = 0;
+                    if (sumUnderlyingIfaces.rxBytes > 0) {
+                        tmpEntry.rxBytes =
+                                totalRxBytes
+                                        * underlyingIfacesTotal[j].rxBytes
+                                        / sumUnderlyingIfaces.rxBytes;
+                    }
+                    tmpEntry.rxPackets = 0;
+                    if (sumUnderlyingIfaces.rxPackets > 0) {
+                        tmpEntry.rxPackets =
+                                totalRxPackets
+                                        * underlyingIfacesTotal[j].rxPackets
+                                        / sumUnderlyingIfaces.rxPackets;
+                    }
+                    tmpEntry.txBytes = 0;
+                    if (sumUnderlyingIfaces.txBytes > 0) {
+                        tmpEntry.txBytes =
+                                totalTxBytes
+                                        * underlyingIfacesTotal[j].txBytes
+                                        / sumUnderlyingIfaces.txBytes;
+                    }
+                    tmpEntry.txPackets = 0;
+                    if (sumUnderlyingIfaces.txPackets > 0) {
+                        tmpEntry.txPackets =
+                                totalTxPackets
+                                        * underlyingIfacesTotal[j].txPackets
+                                        / sumUnderlyingIfaces.txPackets;
+                    }
+                    tmpEntry.operations = 0;
+                    if (sumUnderlyingIfaces.operations > 0) {
+                        tmpEntry.operations =
+                                totalOperations
+                                        * underlyingIfacesTotal[j].operations
+                                        / sumUnderlyingIfaces.operations;
+                    }
+                    tmpEntry.uid = uid[i];
+                    tmpEntry.tag = tag[i];
+                    tmpEntry.set = set[i];
+                    tmpEntry.metered = metered[i];
+                    tmpEntry.roaming = roaming[i];
+                    tmpEntry.defaultNetwork = defaultNetwork[i];
                     combineValues(tmpEntry);
+                    if (tag[i] == TAG_NONE) {
+                        moved[j].add(tmpEntry);
+                        // Add debug info
+                        tmpEntry.set = SET_DBG_VPN_IN;
+                        combineValues(tmpEntry);
+                    }
                 }
             }
         }
         return moved;
     }
 
-    private void deductTrafficFromVpnApp(int tunUid, String underlyingIface, Entry moved) {
-        // Add debug info
-        moved.uid = tunUid;
-        moved.set = SET_DBG_VPN_OUT;
-        moved.tag = TAG_NONE;
-        moved.iface = underlyingIface;
-        moved.metered = METERED_ALL;
-        moved.roaming = ROAMING_ALL;
-        moved.defaultNetwork = DEFAULT_NETWORK_ALL;
-        combineValues(moved);
+    private void deductTrafficFromVpnApp(int tunUid, String[] underlyingIfaces, Entry[] moved) {
+        for (int i = 0; i < underlyingIfaces.length; i++) {
+            // Add debug info
+            moved[i].uid = tunUid;
+            moved[i].set = SET_DBG_VPN_OUT;
+            moved[i].tag = TAG_NONE;
+            moved[i].iface = underlyingIfaces[i];
+            moved[i].metered = METERED_ALL;
+            moved[i].roaming = ROAMING_ALL;
+            moved[i].defaultNetwork = DEFAULT_NETWORK_ALL;
+            combineValues(moved[i]);
 
-        // Caveat: if the vpn software uses tag, the total tagged traffic may be greater than
-        // the TAG_NONE traffic.
-        //
-        // Relies on the fact that the underlying traffic only has state ROAMING_NO and METERED_NO,
-        // which should be the case as it comes directly from the /proc file. We only blend in the
-        // roaming data after applying these adjustments, by checking the NetworkIdentity of the
-        // underlying iface.
-        int idxVpnBackground = findIndex(underlyingIface, tunUid, SET_DEFAULT, TAG_NONE,
-                METERED_NO, ROAMING_NO, DEFAULT_NETWORK_NO);
-        if (idxVpnBackground != -1) {
-            tunSubtract(idxVpnBackground, this, moved);
-        }
+            // Caveat: if the vpn software uses tag, the total tagged traffic may be greater than
+            // the TAG_NONE traffic.
+            //
+            // Relies on the fact that the underlying traffic only has state ROAMING_NO and
+            // METERED_NO, which should be the case as it comes directly from the /proc file.
+            // We only blend in the roaming data after applying these adjustments, by checking the
+            // NetworkIdentity of the underlying iface.
+            int idxVpnBackground =
+                    findIndex(
+                            underlyingIfaces[i],
+                            tunUid,
+                            SET_DEFAULT,
+                            TAG_NONE,
+                            METERED_NO,
+                            ROAMING_NO,
+                            DEFAULT_NETWORK_NO);
+            if (idxVpnBackground != -1) {
+                tunSubtract(idxVpnBackground, this, moved[i]);
+            }
 
-        int idxVpnForeground = findIndex(underlyingIface, tunUid, SET_FOREGROUND, TAG_NONE,
-                METERED_NO, ROAMING_NO, DEFAULT_NETWORK_NO);
-        if (idxVpnForeground != -1) {
-            tunSubtract(idxVpnForeground, this, moved);
+            int idxVpnForeground =
+                    findIndex(
+                            underlyingIfaces[i],
+                            tunUid,
+                            SET_FOREGROUND,
+                            TAG_NONE,
+                            METERED_NO,
+                            ROAMING_NO,
+                            DEFAULT_NETWORK_NO);
+            if (idxVpnForeground != -1) {
+                tunSubtract(idxVpnForeground, this, moved[i]);
+            }
         }
     }
 
