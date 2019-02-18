@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da26f303_3f44bd59",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2019-02-18T21:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b26509c5_95b3d504",
+      "range": {
+        "startLine": 104,
+        "startChar": 88,
+        "endLine": 104,
+        "endChar": 100
+      },
+      "revId": "4b482426753b4ddd1c73182b404223fcb10a6566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c6e2af_905db4cb",
         "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-15T22:48:19Z",
       "side": 1,
       "message": "new UnrecoverableKeyException(e);",
+      "range": {
+        "startLine": 106,
+        "startChar": 48,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "4b482426753b4ddd1c73182b404223fcb10a6566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47118fc6_2da9b081",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2019-02-18T21:10:04Z",
+      "side": 1,
+      "message": "UnrecoverableKeyException can only be initialized with a string, not a throwable. There\u0027s a build exception for using e alone.",
+      "parentUuid": "b5c6e2af_905db4cb",
       "range": {
         "startLine": 106,
         "startChar": 48,
