@@ -28,7 +28,7 @@ LOCAL_SRC_FILES := \
 LOCAL_JAVA_LIBRARIES := android.test.runner
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-	android-support-test
+	androidx.test.rules
 
 LOCAL_PACKAGE_NAME := WebViewLoadingTests
 LOCAL_PRIVATE_PLATFORM_APIS := true

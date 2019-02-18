@@ -18,15 +18,16 @@ package android.widget;
 
 import static org.junit.Assert.assertEquals;
 
-import static java.util.function.Function.identity;
-
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.support.test.filters.LargeTest;
+
+import androidx.test.filters.LargeTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import static java.util.function.Function.identity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

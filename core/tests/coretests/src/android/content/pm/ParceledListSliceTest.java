@@ -2,7 +2,8 @@ package android.content.pm;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.test.filters.LargeTest;
+
+import androidx.test.filters.LargeTest;
 
 import junit.framework.TestCase;
 

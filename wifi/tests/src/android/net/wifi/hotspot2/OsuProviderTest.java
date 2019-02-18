@@ -23,12 +23,12 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.net.wifi.WifiSsid;
 import android.os.Parcel;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

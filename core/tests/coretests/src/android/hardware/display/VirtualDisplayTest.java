@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.test.filters.LargeTest;
 import android.test.AndroidTestCase;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -39,6 +38,8 @@ import android.view.Surface;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import androidx.test.filters.LargeTest;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.locks.Lock;

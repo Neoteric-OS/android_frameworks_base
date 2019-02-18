@@ -16,45 +16,29 @@
 
 package android.widget;
 
-import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.UNSPECIFIED;
+import static android.widget.TextView.UNKNOWN_BORING;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.graphics.Canvas;
 import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
-import android.text.PrecomputedText;
-import android.text.Layout;
 import android.text.BoringLayout;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
+import android.text.Layout;
+import android.text.PrecomputedText;
 import android.text.TextPaint;
-import android.text.style.TextAppearanceSpan;
-import android.view.LayoutInflater;
 import android.text.TextPerfUtils;
-import android.view.View.MeasureSpec;
 import android.view.DisplayListCanvas;
 import android.view.RenderNode;
+import android.view.View.MeasureSpec;
 
-import com.android.perftests.core.R;
-
-import java.util.Random;
-import java.util.Locale;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertTrue;
-
-import static android.widget.TextView.UNKNOWN_BORING;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)

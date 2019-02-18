@@ -39,10 +39,11 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     metrics-helper-lib \
-    android-support-test \
+    androidx.test.rules \
     mockito-target-inline-minus-junit4 \
     testables \
     truth-prebuilt \
+    hamcrest-library
 
 LOCAL_MULTILIB := both
 

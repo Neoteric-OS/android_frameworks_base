@@ -56,10 +56,11 @@ import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.Settings;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +77,6 @@ import java.net.URL;
 import java.util.Random;
 
 import javax.net.ssl.SSLHandshakeException;
-
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest

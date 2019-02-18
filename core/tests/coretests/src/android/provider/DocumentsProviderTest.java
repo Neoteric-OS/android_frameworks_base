@@ -20,11 +20,11 @@ import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.DocumentsContract.Path;
-import android.support.test.filters.SmallTest;
 import android.test.ProviderTestCase2;
 
+import androidx.test.filters.SmallTest;
+
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Unit tests for {@link DocumentsProvider}.

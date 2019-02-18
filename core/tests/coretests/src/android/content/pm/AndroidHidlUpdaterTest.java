@@ -20,7 +20,8 @@ import static android.content.pm.SharedLibraryNames.ANDROID_HIDL_BASE;
 import static android.content.pm.SharedLibraryNames.ANDROID_HIDL_MANAGER;
 
 import android.os.Build;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

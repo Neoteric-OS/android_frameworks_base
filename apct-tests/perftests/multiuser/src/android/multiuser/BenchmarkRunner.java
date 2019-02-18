@@ -17,8 +17,9 @@ package android.multiuser;
 
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
+
+import androidx.test.InstrumentationRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;

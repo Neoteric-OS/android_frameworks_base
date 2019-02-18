@@ -16,15 +16,15 @@
 
 package android.util;
 
-import android.support.test.filters.LargeTest;
+import androidx.test.filters.LargeTest;
+
+import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Random;
-import junit.framework.TestCase;
 
 @LargeTest
 public class Base64Test extends TestCase {

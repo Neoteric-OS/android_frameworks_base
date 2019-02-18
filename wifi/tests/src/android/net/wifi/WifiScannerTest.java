@@ -22,11 +22,12 @@ import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.net.wifi.WifiScanner.ScanSettings;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.test.TestLooper;
-import android.support.test.filters.SmallTest;
-import android.net.wifi.WifiScanner.ScanSettings;
+
+import androidx.test.filters.SmallTest;
 
 import com.android.internal.util.test.BidirectionalAsyncChannelServer;
 
@@ -35,7 +36,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 
 /**
  * Unit tests for {@link android.net.wifi.WifiScanner}.

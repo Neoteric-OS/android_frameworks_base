@@ -15,12 +15,12 @@
  */
 package android.util;
 
-import android.support.test.filters.SmallTest;
+import androidx.test.filters.SmallTest;
+
+import junit.framework.TestCase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import junit.framework.TestCase;
 
 public class PatternsTest extends TestCase {
 

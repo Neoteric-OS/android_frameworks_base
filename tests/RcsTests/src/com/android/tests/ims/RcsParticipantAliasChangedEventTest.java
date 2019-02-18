@@ -18,9 +18,10 @@ package com.android.tests.ims;
 import static com.google.common.truth.Truth.assertThat;
 
 import android.os.Parcel;
-import android.support.test.runner.AndroidJUnit4;
 import android.telephony.ims.RcsParticipant;
 import android.telephony.ims.RcsParticipantAliasChangedEvent;
+
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;

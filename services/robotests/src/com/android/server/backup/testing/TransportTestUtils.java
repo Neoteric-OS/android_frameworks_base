@@ -24,15 +24,14 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import static java.util.stream.Collectors.toList;
-
 import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.os.RemoteException;
-import android.support.annotation.IntDef;
+
+import androidx.annotation.IntDef;
 
 import com.android.internal.backup.IBackupTransport;
 import com.android.server.backup.TransportManager;
@@ -41,6 +40,8 @@ import com.android.server.backup.transport.TransportNotAvailableException;
 import com.android.server.backup.transport.TransportNotRegisteredException;
 
 import org.robolectric.shadows.ShadowPackageManager;
+
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import java.util.stream.Stream;
