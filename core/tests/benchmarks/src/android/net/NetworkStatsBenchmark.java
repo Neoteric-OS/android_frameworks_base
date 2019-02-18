@@ -63,7 +63,7 @@ public class NetworkStatsBenchmark {
     public void timeMigrateTun(int reps) {
         for (int i = 0; i < reps; i++) {
             NetworkStats stats = mNetworkStats.clone();
-            stats.migrateTun(TUN_UID, TUN_IFACE, UNDERLYING_IFACE);
+            stats.migrateTun(TUN_UID, TUN_IFACE, new String[] {UNDERLYING_IFACE});
         }
     }
 
