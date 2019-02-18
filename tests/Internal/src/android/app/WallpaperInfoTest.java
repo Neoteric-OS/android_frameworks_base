@@ -25,9 +25,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Parcel;
 import android.service.wallpaper.WallpaperService;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

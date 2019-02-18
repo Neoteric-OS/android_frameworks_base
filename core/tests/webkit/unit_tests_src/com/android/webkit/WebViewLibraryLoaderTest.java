@@ -25,21 +25,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
-import android.support.test.filters.MediumTest;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.InstrumentationRegistry;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.MediumTest;
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.zip.ZipFile;
 
 /**
  * Unit tests for {@link WebViewLibraryLoader}.
@@ -48,7 +46,7 @@ import org.junit.runner.RunWith;
  * && adb install -r -d \
  * ${ANDROID_PRODUCT_OUT}/data/app/WebViewLoadingTests/WebViewLoadingTests.apk \
  * && adb shell am instrument -e class 'android.webkit.WebViewLibraryLoaderTest' -w \
- * 'com.android.webkit.tests/android.support.test.runner.AndroidJUnitRunner'
+ * 'com.android.webkit.tests/androidx.test.runner.AndroidJUnitRunner'
  */
 @RunWith(AndroidJUnit4.class)
 public final class WebViewLibraryLoaderTest {

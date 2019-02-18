@@ -20,7 +20,8 @@ import static android.content.pm.SharedLibraryNames.ANDROID_TEST_MOCK;
 import static android.content.pm.SharedLibraryNames.ANDROID_TEST_RUNNER;
 
 import android.content.pm.PackageBackwardCompatibility.AndroidTestRunnerSplitUpdater;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -20,9 +20,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.platform.test.annotations.Presubmit;
-import android.support.test.filters.SmallTest;
-import android.support.test.filters.Suppress;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.filters.Suppress;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

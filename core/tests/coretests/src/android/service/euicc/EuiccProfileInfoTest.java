@@ -23,9 +23,10 @@ import static org.junit.Assert.assertTrue;
 
 import android.os.Parcel;
 import android.service.carrier.CarrierIdentifier;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.telephony.UiccAccessRule;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -30,11 +30,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import android.os.BatteryStats;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Display;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.util.ArrayUtils;
 

@@ -25,7 +25,7 @@ android_test {
         "src/com/android/providers/settings/SettingsHelper.java",
     ],
     static_libs: [
-        "android-support-test",
+        "androidx.test.rules",
         "truth-prebuilt",
     ],
     libs: ["android.test.base"],

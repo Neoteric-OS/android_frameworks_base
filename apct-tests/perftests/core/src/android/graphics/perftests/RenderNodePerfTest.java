@@ -19,14 +19,13 @@ package android.graphics.perftests;
 import android.graphics.Outline;
 import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
-import android.support.test.filters.LargeTest;
 import android.view.DisplayListCanvas;
 import android.view.RenderNode;
 
+import androidx.test.filters.LargeTest;
+
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 @LargeTest
 public class RenderNodePerfTest {

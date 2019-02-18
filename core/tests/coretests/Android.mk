@@ -36,12 +36,12 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     frameworks-core-util-lib \
     mockwebserver \
     guava \
-    android-support-test \
+    androidx.test.rules \
     mockito-target-minus-junit4 \
-    espresso-core \
+    androidx.test.espresso.core \
     ub-uiautomator \
     platform-test-annotations \
-    compatibility-device-util \
+    compatibility-device-util-axt \
     truth-prebuilt \
     print-test-util-lib
 

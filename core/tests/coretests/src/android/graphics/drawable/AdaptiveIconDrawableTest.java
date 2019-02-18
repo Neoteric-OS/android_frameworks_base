@@ -11,10 +11,11 @@ import android.graphics.Path.Direction;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.support.test.filters.LargeTest;
 import android.test.AndroidTestCase;
 import android.util.Log;
 import android.util.PathParser;
+
+import androidx.test.filters.LargeTest;
 
 import org.junit.Test;
 

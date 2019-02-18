@@ -36,9 +36,10 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.LocaleList;
 import android.service.textclassifier.TextClassifierService;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;

@@ -21,8 +21,9 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.FontFamily;
 import android.graphics.Typeface;
-import android.support.test.InstrumentationRegistry;
 import android.util.ArrayMap;
+
+import androidx.test.InstrumentationRegistry;
 
 import java.io.File;
 import java.io.FileOutputStream;

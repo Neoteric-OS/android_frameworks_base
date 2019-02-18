@@ -16,47 +16,11 @@
 
 package com.android.internal.accessibility;
 
-import android.accessibilityservice.AccessibilityServiceInfo;
-import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
-import android.os.Handler;
-import android.os.Vibrator;
-import android.provider.Settings;
-import android.support.test.runner.AndroidJUnit4;
-
-import android.test.mock.MockContentResolver;
-import android.text.TextUtils;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.accessibility.AccessibilityManager;
-import android.view.accessibility.IAccessibilityManager;
-import android.widget.Toast;
-import com.android.internal.R;
-import com.android.internal.util.test.FakeSettingsProvider;
-import com.android.internal.accessibility.AccessibilityShortcutController.FrameworkObjectProvider;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.Map;
-
 import static android.provider.Settings.Secure.ACCESSIBILITY_SHORTCUT_DIALOG_SHOWN;
 import static android.provider.Settings.Secure.ACCESSIBILITY_SHORTCUT_ENABLED;
 import static android.provider.Settings.Secure.ACCESSIBILITY_SHORTCUT_ON_LOCK_SCREEN;
 import static android.provider.Settings.Secure.ACCESSIBILITY_SHORTCUT_TARGET_SERVICE;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -73,6 +37,44 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
+import android.os.Handler;
+import android.os.Vibrator;
+import android.provider.Settings;
+import android.test.mock.MockContentResolver;
+import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.IAccessibilityManager;
+import android.widget.Toast;
+
+import androidx.test.runner.AndroidJUnit4;
+
+import com.android.internal.R;
+import com.android.internal.accessibility.AccessibilityShortcutController.FrameworkObjectProvider;
+import com.android.internal.util.test.FakeSettingsProvider;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class AccessibilityShortcutControllerTest {

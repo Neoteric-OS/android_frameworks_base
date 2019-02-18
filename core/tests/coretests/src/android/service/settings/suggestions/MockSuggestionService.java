@@ -16,7 +16,7 @@
 
 package android.service.settings.suggestions;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.List;

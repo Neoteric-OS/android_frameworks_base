@@ -73,7 +73,7 @@ LOCAL_AIDL_INCLUDES := \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     platform-robolectric-android-all-stubs \
-    android-support-test \
+    androidx.test.rules \
     mockito-robolectric-prebuilt \
     platform-test-annotations \
     truth-prebuilt \

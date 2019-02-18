@@ -23,11 +23,12 @@ import static org.junit.Assert.assertTrue;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.view.inputmethod.InputMethodSubtype.InputMethodSubtypeBuilder;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.inputmethod.InputMethodSubtypeSwitchingController.ControllerImpl;
 import com.android.internal.inputmethod.InputMethodSubtypeSwitchingController.ImeSubtypeListItem;

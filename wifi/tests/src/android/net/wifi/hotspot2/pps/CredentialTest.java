@@ -22,16 +22,16 @@ import static org.junit.Assert.assertTrue;
 import android.net.wifi.EAPConstants;
 import android.net.wifi.FakeKeys;
 import android.os.Parcel;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
+
+import org.junit.Test;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-
-import org.junit.Test;
 
 /**
  * Unit tests for {@link android.net.wifi.hotspot2.pps.CredentialTest}.

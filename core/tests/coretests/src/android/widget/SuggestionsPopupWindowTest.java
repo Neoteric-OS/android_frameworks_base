@@ -16,15 +16,6 @@
 
 package android.widget;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.clearText;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.widget.espresso.DragHandleUtils.onHandleView;
 import static android.widget.espresso.FloatingToolbarEspressoUtils.assertFloatingToolbarContainsItem;
 import static android.widget.espresso.FloatingToolbarEspressoUtils.clickFloatingToolbarItem;
@@ -36,13 +27,22 @@ import static android.widget.espresso.SuggestionsPopupwindowUtils.clickSuggestio
 import static android.widget.espresso.SuggestionsPopupwindowUtils.onSuggestionsPopup;
 import static android.widget.espresso.TextViewActions.clickOnTextAtIndex;
 import static android.widget.espresso.TextViewActions.longPressOnTextAtIndex;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.action.ViewActions.clearText;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
 import static org.hamcrest.Matchers.is;
+
 import android.content.res.TypedArray;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.test.suitebuilder.annotation.Suppress;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -50,6 +50,9 @@ import android.text.TextPaint;
 import android.text.style.SuggestionSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
+
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 
 import com.android.frameworks.coretests.R;
 

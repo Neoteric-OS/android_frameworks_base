@@ -20,10 +20,11 @@ import static android.text.Layout.Alignment.ALIGN_NORMAL;
 import android.graphics.Canvas;
 import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
-import android.support.test.filters.LargeTest;
 import android.text.NonEditableTextGenerator.TextType;
 import android.view.DisplayListCanvas;
 import android.view.RenderNode;
+
+import androidx.test.filters.LargeTest;
 
 import org.junit.Rule;
 import org.junit.Test;

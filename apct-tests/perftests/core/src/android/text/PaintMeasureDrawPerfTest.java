@@ -19,9 +19,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
-import android.support.test.filters.LargeTest;
 import android.view.DisplayListCanvas;
 import android.view.RenderNode;
+
+import androidx.test.filters.LargeTest;
 
 import org.junit.Rule;
 import org.junit.Test;

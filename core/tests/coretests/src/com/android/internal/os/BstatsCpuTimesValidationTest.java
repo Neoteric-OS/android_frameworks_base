@@ -33,9 +33,6 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
-import com.android.frameworks.coretests.aidl.ICmdCallback;
-import com.android.frameworks.coretests.aidl.ICmdReceiver;
-
 import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.content.ComponentName;
@@ -52,13 +49,17 @@ import android.os.PowerManager;
 import android.os.Process;
 import android.os.SystemClock;
 import android.provider.Settings;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.text.TextUtils;
 import android.util.DebugUtils;
 import android.util.Log;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
+
+import com.android.frameworks.coretests.aidl.ICmdCallback;
+import com.android.frameworks.coretests.aidl.ICmdReceiver;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

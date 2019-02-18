@@ -17,8 +17,9 @@ package android.content;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.test.filters.LargeTest;
 import android.test.AndroidTestCase;
+
+import androidx.test.filters.LargeTest;
 
 import java.util.Arrays;
 import java.util.HashSet;

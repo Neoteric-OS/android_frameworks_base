@@ -20,7 +20,8 @@ import static android.content.pm.SharedLibraryNames.ORG_APACHE_HTTP_LEGACY;
 
 import android.content.pm.PackageBackwardCompatibility.RemoveUnnecessaryOrgApacheHttpLegacyLibrary;
 import android.os.Build;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.filters.SmallTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
