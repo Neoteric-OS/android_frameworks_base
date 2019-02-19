@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a11c4a0c_c2a365ac",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-02-19T09:27:31Z",
+      "side": 1,
+      "message": "Follows the same conversion rules of the native code (ns_name.c in libc)",
+      "range": {
+        "startLine": 137,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 63
+      },
+      "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71943808_95bb60ee",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-02-19T09:27:31Z",
+      "side": 1,
+      "message": "\"Parsing name failed, too many labels\"\n\nor\n\n\"Failed to parse name, too many labels\"",
+      "range": {
+        "startLine": 165,
+        "startChar": 42,
+        "endLine": 165,
+        "endChar": 58
+      },
+      "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde45d9b_56e69040",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-02-19T09:27:31Z",
+      "side": 1,
+      "message": "Suggested phrasing: \"it may not respond at all, leading to a timeout.\"\n\nAlso, isn\u0027t there a better place for this comment? Maybe at the class level, or in the documentation for query()?",
+      "range": {
+        "startLine": 88,
+        "startChar": 52,
+        "endLine": 88,
+        "endChar": 42
+      },
+      "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
