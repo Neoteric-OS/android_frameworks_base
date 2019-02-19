@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f65461c_b7dc4c4e",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-02-19T23:16:41Z",
+      "side": 1,
+      "message": "Hmm; just thought of this; if the VPN is using a metered network while there are unmetered options available, isn\u0027t that the VPN\u0027s \"fault\", rather than the app\u0027s?\n\nWould it be confusing to specifically turn off all background metered/mobile data for apps, and find that it still has data usage? (Or does this get covered by the capabilities update changes?)\n\nJust food for thought. Maybe this is the closest we can get.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 0,
+        "endLine": 1041,
+        "endChar": 83
+      },
+      "revId": "a917610d0d96ca0af5621eaafe719decd37fe07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfc09a5_98bada8a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-02-19T23:16:41Z",
+      "side": 1,
+      "message": "attributed",
+      "revId": "a917610d0d96ca0af5621eaafe719decd37fe07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
