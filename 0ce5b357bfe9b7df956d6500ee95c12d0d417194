@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e79ed2d_06da5acf",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-19T08:17:33Z",
+      "side": 1,
+      "message": "In general I think we prefer naming like \"isRapidCommitEnabled()\". \"Flag\" could be a flag set on a packet.",
+      "range": {
+        "startLine": 299,
+        "startChar": 26,
+        "endLine": 299,
+        "endChar": 48
+      },
+      "revId": "0ce5b357bfe9b7df956d6500ee95c12d0d417194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564aeaf7_f296afce",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-19T08:17:33Z",
+      "side": 1,
+      "message": "Typo: rapidCommitFlag",
+      "range": {
+        "startLine": 821,
+        "startChar": 20,
+        "endLine": 821,
+        "endChar": 36
+      },
+      "revId": "0ce5b357bfe9b7df956d6500ee95c12d0d417194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba59d7f_eb066750",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-19T08:17:33Z",
+      "side": 1,
+      "message": "This is duplicate code with DhcpRequestingState: could you factor it out ?",
+      "range": {
+        "startLine": 827,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 69
+      },
+      "revId": "0ce5b357bfe9b7df956d6500ee95c12d0d417194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa06beac_6f543829",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-19T08:17:33Z",
+      "side": 1,
+      "message": "It\u0027s not common to change the structure of the code for comments: could you move the comments above the if() saying \"If we receive a DHCPACK packet without...\" and remove the else ?",
+      "range": {
+        "startLine": 831,
+        "startChar": 22,
+        "endLine": 835,
+        "endChar": 21
+      },
+      "revId": "0ce5b357bfe9b7df956d6500ee95c12d0d417194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
