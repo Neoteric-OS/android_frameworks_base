@@ -143,6 +143,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_NOT_CONGESTED,
             NET_CAPABILITY_NOT_SUSPENDED,
             NET_CAPABILITY_OEM_PAID,
+            NET_CAPABILITY_PARTIAL_CONNECTIVITY,
     })
     public @interface NetCapability { }
 
@@ -297,8 +298,15 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi
     public static final int NET_CAPABILITY_OEM_PAID = 22;
 
+    /**
+     * Indicates that this network may provide partial connectivity.
+     * @hide
+     */
+    @SystemApi
+    public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 23;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -313,7 +321,8 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_ROAMING)
             | (1 << NET_CAPABILITY_FOREGROUND)
             | (1 << NET_CAPABILITY_NOT_CONGESTED)
-            | (1 << NET_CAPABILITY_NOT_SUSPENDED);
+            | (1 << NET_CAPABILITY_NOT_SUSPENDED)
+            | (1 << NET_CAPABILITY_PARTIAL_CONNECTIVITY);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -365,6 +374,15 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_MMS) |
             (1 << NET_CAPABILITY_SUPL) |
             (1 << NET_CAPABILITY_WIFI_P2P);
+
+    /**
+     * Capabilities that are managed by ConnectivityService.
+     */
+    private static final long CONNECTIVITY_MANAGED_CAPABILITIES =
+            (1 << NET_CAPABILITY_VALIDATED)
+            | (1 << NET_CAPABILITY_CAPTIVE_PORTAL)
+            | (1 << NET_CAPABILITY_FOREGROUND)
+            | (1 << NET_CAPABILITY_PARTIAL_CONNECTIVITY);
 
     /**
      * Adds the given capability to this {@code NetworkCapability} instance.
@@ -497,6 +515,14 @@ public final class NetworkCapabilities implements Parcelable {
     public boolean hasUnwantedCapability(@NetCapability int capability) {
         return isValidCapability(capability)
                 && ((mUnwantedNetworkCapabilities & (1 << capability)) != 0);
+    }
+
+    /**
+     * Check if this NetworkCapabilities has system managed capabilities or not.
+     * @hide
+     */
+    public boolean hasConnectivityManagedCapability() {
+        return ((mNetworkCapabilities & CONNECTIVITY_MANAGED_CAPABILITIES) != 0);
     }
 
     /** Note this method may result in having the same capability in wanted and unwanted lists. */
@@ -1591,30 +1617,31 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static String capabilityNameOf(@NetCapability int capability) {
         switch (capability) {
-            case NET_CAPABILITY_MMS:            return "MMS";
-            case NET_CAPABILITY_SUPL:           return "SUPL";
-            case NET_CAPABILITY_DUN:            return "DUN";
-            case NET_CAPABILITY_FOTA:           return "FOTA";
-            case NET_CAPABILITY_IMS:            return "IMS";
-            case NET_CAPABILITY_CBS:            return "CBS";
-            case NET_CAPABILITY_WIFI_P2P:       return "WIFI_P2P";
-            case NET_CAPABILITY_IA:             return "IA";
-            case NET_CAPABILITY_RCS:            return "RCS";
-            case NET_CAPABILITY_XCAP:           return "XCAP";
-            case NET_CAPABILITY_EIMS:           return "EIMS";
-            case NET_CAPABILITY_NOT_METERED:    return "NOT_METERED";
-            case NET_CAPABILITY_INTERNET:       return "INTERNET";
-            case NET_CAPABILITY_NOT_RESTRICTED: return "NOT_RESTRICTED";
-            case NET_CAPABILITY_TRUSTED:        return "TRUSTED";
-            case NET_CAPABILITY_NOT_VPN:        return "NOT_VPN";
-            case NET_CAPABILITY_VALIDATED:      return "VALIDATED";
-            case NET_CAPABILITY_CAPTIVE_PORTAL: return "CAPTIVE_PORTAL";
-            case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
-            case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
-            case NET_CAPABILITY_NOT_CONGESTED:  return "NOT_CONGESTED";
-            case NET_CAPABILITY_NOT_SUSPENDED:  return "NOT_SUSPENDED";
-            case NET_CAPABILITY_OEM_PAID:       return "OEM_PAID";
-            default:                            return Integer.toString(capability);
+            case NET_CAPABILITY_MMS:                  return "MMS";
+            case NET_CAPABILITY_SUPL:                 return "SUPL";
+            case NET_CAPABILITY_DUN:                  return "DUN";
+            case NET_CAPABILITY_FOTA:                 return "FOTA";
+            case NET_CAPABILITY_IMS:                  return "IMS";
+            case NET_CAPABILITY_CBS:                  return "CBS";
+            case NET_CAPABILITY_WIFI_P2P:             return "WIFI_P2P";
+            case NET_CAPABILITY_IA:                   return "IA";
+            case NET_CAPABILITY_RCS:                  return "RCS";
+            case NET_CAPABILITY_XCAP:                 return "XCAP";
+            case NET_CAPABILITY_EIMS:                 return "EIMS";
+            case NET_CAPABILITY_NOT_METERED:          return "NOT_METERED";
+            case NET_CAPABILITY_INTERNET:             return "INTERNET";
+            case NET_CAPABILITY_NOT_RESTRICTED:       return "NOT_RESTRICTED";
+            case NET_CAPABILITY_TRUSTED:              return "TRUSTED";
+            case NET_CAPABILITY_NOT_VPN:              return "NOT_VPN";
+            case NET_CAPABILITY_VALIDATED:            return "VALIDATED";
+            case NET_CAPABILITY_CAPTIVE_PORTAL:       return "CAPTIVE_PORTAL";
+            case NET_CAPABILITY_NOT_ROAMING:          return "NOT_ROAMING";
+            case NET_CAPABILITY_FOREGROUND:           return "FOREGROUND";
+            case NET_CAPABILITY_NOT_CONGESTED:        return "NOT_CONGESTED";
+            case NET_CAPABILITY_NOT_SUSPENDED:        return "NOT_SUSPENDED";
+            case NET_CAPABILITY_OEM_PAID:             return "OEM_PAID";
+            case NET_CAPABILITY_PARTIAL_CONNECTIVITY: return "PARTIAL_CONNECTIVITY";
+            default:                                  return Integer.toString(capability);
         }
     }
 
