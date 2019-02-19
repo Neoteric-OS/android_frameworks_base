@@ -309,6 +309,24 @@ static jobject nativeCaptureLayers(JNIEnv* env, jclass clazz, jobject layerHandl
                                        (jlong)buffer.get());
 }
 
+static void nativeStartSurfaceAnimation(JNIEnv* env, jclass clazz, jlong transactionObj, jlong nativeObject, jstring args)
+{
+    auto transaction = reinterpret_cast<SurfaceComposerClient::Transaction*>(transactionObj);
+    SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
+    
+    const char *cstr = env->GetStringUTFChars(args, NULL);
+    std::string stdstr = std::string(cstr);
+
+    // parse string to list of floats
+    std::vector<float> data;
+    std::istringstream iss(stdstr);
+    std::copy(std::istream_iterator<float>(iss), std::istream_iterator<float>(), std::back_inserter(data));
+        
+    env->ReleaseStringUTFChars(args, cstr);
+    transaction->startSurfaceAnimation(ctrl, data);
+}
+
+
 static void nativeApplyTransaction(JNIEnv* env, jclass clazz, jlong transactionObj, jboolean sync) {
     auto transaction = reinterpret_cast<SurfaceComposerClient::Transaction*>(transactionObj);
     transaction->apply(sync);
@@ -1030,6 +1048,9 @@ static const JNINativeMethod sSurfaceControlMethods[] = {
      (void*)nativeScreenshotToBuffer },
     {"nativeCaptureLayers", "(Landroid/os/IBinder;Landroid/graphics/Rect;F)Landroid/graphics/GraphicBuffer;",
             (void*)nativeCaptureLayers },
+    {"nativeStartSurfaceAnimation", "(JJLjava/lang/String;)V",
+            (void*)nativeStartSurfaceAnimation },
+
 };
 
 int register_android_view_SurfaceControl(JNIEnv* env)

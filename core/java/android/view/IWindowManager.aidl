@@ -435,4 +435,6 @@ interface IWindowManager
      * @param displayId The id of the display.
      */
     void dontOverrideDisplayInfo(int displayId);
+
+    oneway void startSurfaceAnimation(in IBinder window, in String args);
 }

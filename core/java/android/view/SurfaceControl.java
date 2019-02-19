@@ -104,6 +104,8 @@ public class SurfaceControl implements Parcelable {
     private static native void nativeSetMatrix(long transactionObj, long nativeObject,
             float dsdx, float dtdx,
             float dtdy, float dsdy);
+    private static native void nativeStartSurfaceAnimation(long transactionObj, long nativeObject,
+            String args);
     private static native void nativeSetColor(long transactionObj, long nativeObject, float[] color);
     private static native void nativeSetFlags(long transactionObj, long nativeObject,
             int flags, int mask);
@@ -952,6 +954,19 @@ public class SurfaceControl implements Parcelable {
     }
 
     /**
+     * Starts a compositor-level animation for a Surface.
+     * See SurfaceEffects.java for arguments
+     *
+     * @param args arguments in string format
+     */
+    public void startSurfaceAnimation(String args) {
+        checkNotReleased();
+        synchronized (SurfaceControl.class) {
+            sGlobalTransaction.startSurfaceAnimation(this, args);
+        }
+    }
+
+    /**
      * Sets the transform and position of a {@link SurfaceControl} from a 3x3 transformation matrix.
      *
      * @param matrix The matrix to apply.
@@ -1516,6 +1531,12 @@ public class SurfaceControl implements Parcelable {
             setMatrix(sc, float9[MSCALE_X], float9[MSKEW_Y],
                     float9[MSKEW_X], float9[MSCALE_Y]);
             setPosition(sc, float9[MTRANS_X], float9[MTRANS_Y]);
+            return this;
+        }
+
+        public Transaction startSurfaceAnimation(SurfaceControl sc, String args) {
+            sc.checkNotReleased();
+            nativeStartSurfaceAnimation(mNativeObject, sc.mNativeObject, args);
             return this;
         }
 

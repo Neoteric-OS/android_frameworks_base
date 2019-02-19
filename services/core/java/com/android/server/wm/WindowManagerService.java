@@ -225,7 +225,6 @@ import android.view.WindowManagerPolicyConstants.PointerEventListener;
 import android.view.inputmethod.InputMethodManagerInternal;
 
 import com.android.internal.R;
-import com.android.internal.graphics.SfVsyncFrameCallbackProvider;
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.policy.IShortcutService;
@@ -7617,5 +7616,20 @@ public class WindowManagerService extends IWindowManager.Stub
                 mWindowPlacerLocked.performSurfacePlacement();
             }
         }
+    }
+
+    @Override
+    public void startSurfaceAnimation(IBinder window, String args) {
+        WindowState ws = null;
+        synchronized (mWindowMap) {
+            ws = mWindowMap.get(window);
+            if (ws == null) {
+                Log.e(TAG, "WindowState not found");
+                return;
+            }
+        }
+        WindowStateAnimator winStateAnimator = ws.mWinAnimator;
+        WindowSurfaceController surfaceController = winStateAnimator.mSurfaceController;
+        surfaceController.startSurfaceAnimation(args);
     }
 }
