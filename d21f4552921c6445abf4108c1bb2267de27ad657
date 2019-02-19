@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c977f72_02410d39",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-19T05:47:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "280f5196_d0164eb3",
+      "range": {
+        "startLine": 1026,
+        "startChar": 43,
+        "endLine": 1026,
+        "endChar": 44
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024c1359_e3eccc30",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f33b448_06c9af2b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-19T05:47:04Z",
+      "side": 1,
+      "message": "good call. Done.",
+      "parentUuid": "024c1359_e3eccc30",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 38
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b81dc57_e94c0cc8",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1481d8_7426c198",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-19T05:47:04Z",
+      "side": 1,
+      "message": "So the reason why we snapshot against all ifaces is bcoz NSS queries for that as part of its periodic polls and other callbacks. Thus for consistent delta, this also needs to do the same.\n\nI agree that compared to before, there would be performance penalty. However, that shouldn\u0027t matter much as BatteryStats only calls this upon certain triggers (like charger connected etc.).\n\nWill add a TODO for now.",
+      "parentUuid": "4b81dc57_e94c0cc8",
+      "range": {
+        "startLine": 826,
+        "startChar": 67,
+        "endLine": 826,
+        "endChar": 81
+      },
+      "revId": "d21f4552921c6445abf4108c1bb2267de27ad657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
