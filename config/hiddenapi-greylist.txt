@@ -3094,8 +3094,6 @@ Lcom/android/internal/telephony/imsphone/ImsPhone;->isVolteEnabled()Z
 Lcom/android/internal/telephony/imsphone/ImsPhone;->mCT:Lcom/android/internal/telephony/imsphone/ImsPhoneCallTracker;
 Lcom/android/internal/telephony/imsphone/ImsPhone;->mPendingMMIs:Ljava/util/ArrayList;
 Lcom/android/internal/telephony/imsphone/ImsPhone;->mSS:Landroid/telephony/ServiceState;
-Lcom/android/internal/telephony/imsphone/ImsPhone;->notifyCallForwardingIndicator()V
-Lcom/android/internal/telephony/imsphone/ImsPhone;->notifyPreciseCallStateChanged()V
 Lcom/android/internal/telephony/imsphone/ImsPhone;->notifyUnknownConnection(Lcom/android/internal/telephony/Connection;)V
 Lcom/android/internal/telephony/imsphone/ImsPhone;->onMMIDone(Lcom/android/internal/telephony/imsphone/ImsPhoneMmiCode;)V
 Lcom/android/internal/telephony/imsphone/ImsPhone;->sendErrorResponse(Landroid/os/Message;)V
