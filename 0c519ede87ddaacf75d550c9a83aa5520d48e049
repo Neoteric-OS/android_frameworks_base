@@ -22,6 +22,30 @@
       "revId": "0c519ede87ddaacf75d550c9a83aa5520d48e049",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01ca65f_29387d61",
+        "filename": "telephony/java/android/telephony/CellIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-20T18:23:20Z",
+      "side": 1,
+      "message": "This isn\u0027t a log per-se; this should generate a bug report so that we can send it to the chipset vendor.",
+      "parentUuid": "0b54692a_144e316d",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "0c519ede87ddaacf75d550c9a83aa5520d48e049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
