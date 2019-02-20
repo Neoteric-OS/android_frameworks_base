@@ -156,6 +156,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // last detected.
     public boolean captivePortalLoginNotified;
 
+    public boolean lastManagementPageDetected;
+
     // Networks are lingered when they become unneeded as a result of their NetworkRequests being
     // satisfied by a higher-scoring network. so as to allow communication to wrap up before the
     // network is taken down.  This usually only happens to the default network. Lingering ends with

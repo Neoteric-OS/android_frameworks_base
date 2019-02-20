@@ -17,10 +17,10 @@
 package com.android.server;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
-import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -62,6 +62,8 @@ import static android.net.shared.NetworkParcelableUtil.fromStableParcelable;
 
 import static com.android.internal.util.TestUtils.waitForIdleHandler;
 import static com.android.internal.util.TestUtils.waitForIdleLooper;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.LOGGED_IN;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.LOGGED_IN_MANAGEABLE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -86,6 +88,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -130,6 +133,7 @@ import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
+import android.net.Uri;
 import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
@@ -177,6 +181,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -247,6 +252,8 @@ public class ConnectivityServiceTest {
     @Mock INetworkPolicyManager mNpm;
     @Mock INetd mMockNetd;
     @Mock NetworkStackClient mNetworkStack;
+    @Mock NotificationManager mNotificationManager;
+    @Captor ArgumentCaptor<Notification> mNoteCaptor;
 
     private ArgumentCaptor<String[]> mStringArrayCaptor = ArgumentCaptor.forClass(String[].class);
 
@@ -315,7 +322,7 @@ public class ConnectivityServiceTest {
         @Override
         public Object getSystemService(String name) {
             if (Context.CONNECTIVITY_SERVICE.equals(name)) return mCm;
-            if (Context.NOTIFICATION_SERVICE.equals(name)) return mock(NotificationManager.class);
+            if (Context.NOTIFICATION_SERVICE.equals(name)) return mNotificationManager;
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
             return super.getSystemService(name);
         }
@@ -423,6 +430,7 @@ public class ConnectivityServiceTest {
         private INetworkMonitorCallbacks mNmCallbacks;
         private int mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
         private String mNmValidationRedirectUrl = null;
+        private String mNmValidationManagementUrl = null;
         private boolean mNmProvNotificationRequested = false;
 
         void setNetworkValid() {
@@ -438,6 +446,11 @@ public class ConnectivityServiceTest {
         void setNetworkPortal(String redirectUrl) {
             setNetworkInvalid();
             mNmValidationRedirectUrl = redirectUrl;
+        }
+
+        void setNetworkManagable(String managementUrl) {
+            setNetworkValid();
+            mNmValidationManagementUrl = managementUrl;
         }
 
         MockNetworkAgent(int transport) {
@@ -551,7 +564,7 @@ public class ConnectivityServiceTest {
                 }
 
                 mNmCallbacks.notifyNetworkTested(
-                        mNmValidationResult, mNmValidationRedirectUrl);
+                        mNmValidationResult, mNmValidationRedirectUrl, mNmValidationManagementUrl);
 
                 if (mNmValidationRedirectUrl != null) {
                     mNmCallbacks.showProvisioningNotification(
@@ -1143,6 +1156,8 @@ public class ConnectivityServiceTest {
 
         MockitoAnnotations.initMocks(this);
         when(mMetricsService.defaultNetworkMetrics()).thenReturn(mDefaultNetworkMetrics);
+        doNothing().when(mNotificationManager).notifyAsUser(
+                any(), anyInt(), mNoteCaptor.capture(), any());
 
         // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
         // http://b/25897652 .
@@ -2570,6 +2585,12 @@ public class ConnectivityServiceTest {
         validatedCallback.expectAvailableCallbacksValidated(mWiFiNetworkAgent);
         captivePortalCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
 
+        // Verify that the connected notification is shown
+        verify(mNotificationManager, times(1)).notifyAsUser(
+                any(), eq(LOGGED_IN.eventId), any(), eq(UserHandle.ALL));
+        final Intent intent = mNoteCaptor.getValue().contentIntent.getIntent();
+        assertEquals(Settings.ACTION_WIFI_SETTINGS, intent.getAction());
+
         mCm.unregisterNetworkCallback(validatedCallback);
         mCm.unregisterNetworkCallback(captivePortalCallback);
     }
@@ -2599,6 +2620,29 @@ public class ConnectivityServiceTest {
         waitFor(avoidCv);
 
         assertNoCallbacks(captivePortalCallback, validatedCallback);
+    }
+
+    @Test
+    public void testManagementNotification() {
+        final TestNetworkCallback validatedCallback = new TestNetworkCallback();
+        final NetworkRequest validatedRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_VALIDATED).build();
+        mCm.registerNetworkCallback(validatedRequest, validatedCallback);
+
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        final String managementUrl = "http://example.com/manage";
+        mWiFiNetworkAgent.setNetworkManagable(managementUrl);
+        mWiFiNetworkAgent.connect(true);
+
+        validatedCallback.expectAvailableCallbacksValidated(mWiFiNetworkAgent);
+        verify(mNotificationManager, times(1)).notifyAsUser(
+                any(), eq(LOGGED_IN_MANAGEABLE.eventId), any(), eq(UserHandle.ALL));
+
+        final Intent intent = mNoteCaptor.getValue().contentIntent.getIntent();
+        assertEquals(Intent.ACTION_VIEW, intent.getAction());
+        assertEquals(Uri.parse(managementUrl), intent.getData());
+
+        mCm.unregisterNetworkCallback(validatedCallback);
     }
 
     private NetworkRequest.Builder newWifiRequestBuilder() {

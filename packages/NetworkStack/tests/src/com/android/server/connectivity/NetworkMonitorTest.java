@@ -455,7 +455,7 @@ public class NetworkMonitorTest {
         nm.notifyNetworkConnected();
 
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
-                .notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+                .notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null, null);
     }
 
     @Test
@@ -466,7 +466,7 @@ public class NetworkMonitorTest {
         nm.notifyNetworkConnected();
 
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
-                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
+                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null, null);
         verify(mNetwork, never()).openConnection(any());
     }
 
@@ -502,7 +502,7 @@ public class NetworkMonitorTest {
 
         nm.notifyCaptivePortalAppFinished(APP_RETURN_DISMISSED);
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
-                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
+                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null, null);
     }
 
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
