@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b7e1d734_26f9a620",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-02-20T11:06:05Z",
+      "side": 1,
+      "message": "I am sorry to postpone this, what you said is feasible. Need to push another CL in cts. But I don\u0027t know why if the device doesn\u0027t have a gps/network provider, the location will still be enabled, and maybe there are some hacking code in the GSI that can keep the location open.\n\nSettings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF) always returns 1 on first boot.",
+      "parentUuid": "450047ed_e969c9d9",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "f65128ac658e1b798ab01289953fd112ce52e5b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2f5f65_1a1ba27f",
         "filename": "packages/StubNetworkLocation/MODULE_LICENSE_APACHE2",
         "patchSetId": 3
