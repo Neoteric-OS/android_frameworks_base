@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b54692a_144e316d",
+        "filename": "telephony/java/android/telephony/CellIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-02-20T18:20:32Z",
+      "side": 1,
+      "message": "Logging it here can let us know this kind of thing happened, but it can\u0027t tell us which network/carrier doesn\u0027t behave as expected. Should we log in SST?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "0c519ede87ddaacf75d550c9a83aa5520d48e049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
