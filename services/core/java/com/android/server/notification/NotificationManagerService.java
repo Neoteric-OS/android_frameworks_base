@@ -6964,8 +6964,8 @@ public class NotificationManagerService extends SystemService {
         if (record.getSbn().isGroup() && record.getNotification().suppressAlertingDueToGrouping()) {
             return false;
         }
-        // not if in call or the screen's on
-        if (isInCall() || mScreenOn) {
+        // not if in call
+        if (isInCall()) {
             return false;
         }
         // check current user
