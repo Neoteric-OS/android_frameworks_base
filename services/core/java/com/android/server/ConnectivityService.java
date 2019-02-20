@@ -29,6 +29,7 @@ import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_MANAGEABLE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
@@ -2521,13 +2522,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final boolean valid = (msg.arg1 == NETWORK_TEST_RESULT_VALID);
                     final boolean wasValidated = nai.lastValidated;
                     final boolean wasDefault = isDefaultNetwork(nai);
-                    if (nai.everCaptivePortalDetected && !nai.captivePortalLoginNotified
-                            && valid) {
-                        nai.captivePortalLoginNotified = true;
-                        showNetworkNotification(nai, NotificationType.LOGGED_IN);
-                    }
-
                     final String redirectUrl = (msg.obj instanceof String) ? (String) msg.obj : "";
+                    final Uri managementUrl = (msg.obj instanceof Uri) ? (Uri) msg.obj : null;
+
+                    nai.lastManagementPageDetected = valid && managementUrl != null;
+                    final boolean manageableChange = nai.networkCapabilities.hasCapability(
+                            NET_CAPABILITY_MANAGEABLE) != nai.lastManagementPageDetected;
+                    if ((nai.everCaptivePortalDetected || nai.lastManagementPageDetected)
+                            && !nai.captivePortalLoginNotified && valid) {
+                        nai.captivePortalLoginNotified = true;
+                        showLoggedInNotification(nai, managementUrl);
+                    }
 
                     if (DBG) {
                         final String logMsg = !TextUtils.isEmpty(redirectUrl)
@@ -2555,6 +2560,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             mNotifier.clearNotification(nai.network.netId,
                                     NotificationType.LOST_INTERNET);
                         }
+                    } else if (manageableChange) {
+                        updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
                     }
                     updateInetCondition(nai);
                     // Let the NetworkAgent know the state of its network
@@ -2664,9 +2671,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @Override
-        public void notifyNetworkTested(int testResult, @Nullable String redirectUrl) {
+        public void notifyNetworkTested(int testResult, @Nullable String redirectUrl,
+                @Nullable String managementUrl) {
+
+            final Object objExtra = managementUrl != null
+                    ? Uri.parse(managementUrl)
+                    : redirectUrl;
             mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(EVENT_NETWORK_TESTED,
-                    testResult, mNai.network.netId, redirectUrl));
+                    testResult, mNai.network.netId, objExtra));
         }
 
         @Override
@@ -3362,15 +3374,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.decreaseIndent();
     }
 
+    private void showLoggedInNotification(NetworkAgentInfo nai, @Nullable Uri managementUrl) {
+        final NotificationType type;
+        final Intent intent;
+        if (managementUrl == null) {
+            type = NotificationType.LOGGED_IN;
+            intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+            intent.setData(Uri.fromParts("netId", Integer.toString(nai.network.netId), null));
+            intent.setClassName("com.android.settings",
+                    "com.android.settings.wifi.WifiNoInternetDialog");
+
+            mHandler.removeMessages(EVENT_TIMEOUT_NOTIFICATION);
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(EVENT_TIMEOUT_NOTIFICATION,
+                    nai.network.netId, 0), TIMEOUT_NOTIFICATION_DELAY_MS);
+        } else {
+            type = NotificationType.LOGGED_IN_MANAGEABLE;
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(managementUrl);
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        showNetworkNotification(intent, type, nai);
+    }
+
     private void showNetworkNotification(NetworkAgentInfo nai, NotificationType type) {
         final String action;
         switch (type) {
-            case LOGGED_IN:
-                action = Settings.ACTION_WIFI_SETTINGS;
-                mHandler.removeMessages(EVENT_TIMEOUT_NOTIFICATION);
-                mHandler.sendMessageDelayed(mHandler.obtainMessage(EVENT_TIMEOUT_NOTIFICATION,
-                        nai.network.netId, 0), TIMEOUT_NOTIFICATION_DELAY_MS);
-                break;
             case NO_INTERNET:
                 action = ConnectivityManager.ACTION_PROMPT_UNVALIDATED;
                 break;
@@ -3383,13 +3412,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         Intent intent = new Intent(action);
-        if (type != NotificationType.LOGGED_IN) {
-            intent.setData(Uri.fromParts("netId", Integer.toString(nai.network.netId), null));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setClassName("com.android.settings",
-                    "com.android.settings.wifi.WifiNoInternetDialog");
-        }
+        intent.setData(Uri.fromParts("netId", Integer.toString(nai.network.netId), null));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClassName("com.android.settings",
+                "com.android.settings.wifi.WifiNoInternetDialog");
 
+        showNetworkNotification(intent, type, nai);
+    }
+
+    private void showNetworkNotification(Intent intent, NotificationType type,
+            NetworkAgentInfo nai) {
         PendingIntent pendingIntent = PendingIntent.getActivityAsUser(
                 mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT, null, UserHandle.CURRENT);
         mNotifier.showNotification(nai.network.netId, type, nai, null, pendingIntent, true);
@@ -5411,6 +5443,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.removeCapability(NET_CAPABILITY_NOT_SUSPENDED);
         } else {
             newNc.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        }
+        if (nai.lastManagementPageDetected) {
+            newNc.addCapability(NET_CAPABILITY_MANAGEABLE);
+        } else {
+            newNc.removeCapability(NET_CAPABILITY_MANAGEABLE);
         }
 
         return newNc;

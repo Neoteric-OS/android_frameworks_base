@@ -1059,6 +1059,7 @@
   <java-symbol type="string" name="wifi_available_sign_in" />
   <java-symbol type="string" name="network_available_sign_in" />
   <java-symbol type="string" name="network_available_sign_in_detailed" />
+  <java-symbol type="string" name="network_logged_in_manageable_detailed" />
   <java-symbol type="string" name="network_switch_metered" />
   <java-symbol type="string" name="network_switch_metered_detail" />
   <java-symbol type="string" name="network_switch_metered_toast" />

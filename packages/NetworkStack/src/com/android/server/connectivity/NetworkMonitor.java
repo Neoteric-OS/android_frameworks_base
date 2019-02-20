@@ -491,7 +491,7 @@ public class NetworkMonitor extends StateMachine {
 
     private void notifyNetworkTested(int result, @Nullable String redirectUrl) {
         try {
-            mCallback.notifyNetworkTested(result, redirectUrl);
+            mCallback.notifyNetworkTested(result, redirectUrl, null /* managementUrl */);
         } catch (RemoteException e) {
             Log.e(TAG, "Error sending network test result", e);
         }

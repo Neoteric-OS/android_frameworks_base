@@ -48,7 +48,8 @@ public class NetworkNotificationManager {
         NETWORK_SWITCH(SystemMessage.NOTE_NETWORK_SWITCH),
         NO_INTERNET(SystemMessage.NOTE_NETWORK_NO_INTERNET),
         SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN),
-        LOGGED_IN(SystemMessage.NOTE_NETWORK_LOGGED_IN);
+        LOGGED_IN(SystemMessage.NOTE_NETWORK_LOGGED_IN),
+        LOGGED_IN_MANAGEABLE(SystemMessage.NOTE_NETWORK_LOGGED_IN_MANAGEABLE);
 
         public final int eventId;
 
@@ -196,6 +197,9 @@ public class NetworkNotificationManager {
         } else if (notifyType == NotificationType.LOGGED_IN) {
             title = WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID());
             details = r.getString(R.string.captive_portal_logged_in_detailed);
+        } else if (notifyType == NotificationType.LOGGED_IN_MANAGEABLE) {
+            title = WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID());
+            details = r.getString(R.string.network_logged_in_manageable_detailed);
         } else if (notifyType == NotificationType.NETWORK_SWITCH) {
             String fromTransport = getTransportName(transportType);
             String toTransport = getTransportName(getFirstTransportType(switchToNai));
@@ -214,7 +218,7 @@ public class NetworkNotificationManager {
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(notifyType == NotificationType.NETWORK_SWITCH)
                 .setSmallIcon(icon)
-                .setAutoCancel(true)
+                .setAutoCancel(notifyType != NotificationType.LOGGED_IN_MANAGEABLE)
                 .setTicker(title)
                 .setColor(mContext.getColor(
                         com.android.internal.R.color.system_notification_accent_color))
@@ -323,6 +327,7 @@ public class NetworkNotificationManager {
                 return 2;
             case LOST_INTERNET:
             case LOGGED_IN:
+            case LOGGED_IN_MANAGEABLE:
                 return 1;
             default:
                 return 0;
