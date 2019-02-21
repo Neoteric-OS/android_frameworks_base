@@ -20,26 +20,25 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.util.Log;
-
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.RoSystemProperties;
-import com.android.org.conscrypt.Conscrypt;
-import com.android.org.conscrypt.OpenSSLContextImpl;
+import com.android.org.conscrypt.ClientSessionContext;
 import com.android.org.conscrypt.OpenSSLSocketImpl;
 import com.android.org.conscrypt.SSLClientSessionCache;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-
 import javax.net.SocketFactory;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
@@ -251,11 +250,12 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     private SSLSocketFactory makeSocketFactory(
             KeyManager[] keyManagers, TrustManager[] trustManagers) {
         try {
-            OpenSSLContextImpl sslContext =  (OpenSSLContextImpl) Conscrypt.newPreferredSSLContextSpi();
-            sslContext.engineInit(keyManagers, trustManagers, null);
-            sslContext.engineGetClientSessionContext().setPersistentCache(mSessionCache);
-            return sslContext.engineGetSocketFactory();
-        } catch (KeyManagementException e) {
+            SSLContext sslContext = SSLContext.getInstance("TLS", "AndroidOpenSSL");
+            sslContext.init(keyManagers, trustManagers, null);
+            ((ClientSessionContext) sslContext.getClientSessionContext())
+                .setPersistentCache(mSessionCache);
+            return sslContext.getSocketFactory();
+        } catch (KeyManagementException | NoSuchAlgorithmException | NoSuchProviderException e) {
             Log.wtf(TAG, e);
             return (SSLSocketFactory) SSLSocketFactory.getDefault();  // Fallback
         }
