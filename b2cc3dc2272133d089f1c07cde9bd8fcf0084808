@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53000912_6700ea2d",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreSpi.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2019-02-21T00:08:36Z",
+      "side": 1,
+      "message": "nit: simple return statement should work fine.",
+      "range": {
+        "startLine": 104,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "b2cc3dc2272133d089f1c07cde9bd8fcf0084808",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
