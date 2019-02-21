@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.RoSystemProperties;
+import com.android.org.conscrypt.ClientSessionContext;
 import com.android.org.conscrypt.Conscrypt;
 import com.android.org.conscrypt.OpenSSLContextImpl;
 import com.android.org.conscrypt.OpenSSLSocketImpl;
@@ -253,7 +254,8 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
         try {
             OpenSSLContextImpl sslContext =  (OpenSSLContextImpl) Conscrypt.newPreferredSSLContextSpi();
             sslContext.engineInit(keyManagers, trustManagers, null);
-            sslContext.engineGetClientSessionContext().setPersistentCache(mSessionCache);
+            ((ClientSessionContext) sslContext.engineGetClientSessionContext())
+                .setPersistentCache(mSessionCache);
             return sslContext.engineGetSocketFactory();
         } catch (KeyManagementException e) {
             Log.wtf(TAG, e);
