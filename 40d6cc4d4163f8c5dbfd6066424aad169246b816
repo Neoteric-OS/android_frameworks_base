@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9669910_08792ba8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T16:41:08Z",
+      "side": 1,
+      "message": "No need to add this boilerplate code. Just call netd directly from PermissionMonitor.",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1755,
+        "endChar": 5
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
