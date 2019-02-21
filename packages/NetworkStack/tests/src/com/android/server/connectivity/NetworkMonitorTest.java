@@ -39,6 +39,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetworkMonitorCallbacks;
@@ -48,8 +49,10 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.captiveportal.CaptivePortalProbeResult;
+import android.net.metrics.DataStallDetectionStats;
 import android.net.metrics.IpConnectivityLog;
 import android.net.util.SharedLog;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.ConditionVariable;
@@ -58,6 +61,7 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.CellSignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 
@@ -98,6 +102,7 @@ public class NetworkMonitorTest {
     private @Mock NetworkMonitor.Dependencies mDependencies;
     private @Mock INetworkMonitorCallbacks mCallbacks;
     private @Spy Network mNetwork = new Network(TEST_NETID);
+    private @Mock WifiInfo mWifiInfo;
 
     private static final int TEST_NETID = 4242;
 
@@ -105,6 +110,7 @@ public class NetworkMonitorTest {
     private static final String TEST_HTTPS_URL = "https://www.google.com/gen_204";
     private static final String TEST_FALLBACK_URL = "http://fallback.google.com/gen_204";
     private static final String TEST_OTHER_FALLBACK_URL = "http://otherfallback.google.com/gen_204";
+    private static final String TEST_MCCMNC = "123456";
 
     private static final int DATA_STALL_EVALUATION_TYPE_DNS = 1;
     private static final int RETURN_CODE_DNS_SUCCESS = 0;
@@ -198,6 +204,11 @@ public class NetworkMonitorTest {
 
         protected void setLastProbeTime(long time) {
             mProbeTime = time;
+        }
+
+        @Override
+        protected void addDnsEvents(@NonNull final DataStallDetectionStats.Builder stats) {
+            generateTimeoutDnsEvent(stats, 5);
         }
     }
 
@@ -505,6 +516,42 @@ public class NetworkMonitorTest {
                 .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
     }
 
+    @Test
+    public void testCollectDataStallMetrics() {
+        WrappedNetworkMonitor wrappedMonitor = makeNotMeteredWrappedNetworkMonitor();
+
+        when(mTelephony.getDataNetworkType()).thenReturn(TelephonyManager.NETWORK_TYPE_LTE);
+        when(mTelephony.getNetworkOperator()).thenReturn(TEST_MCCMNC);
+        when(mTelephony.getSimOperator()).thenReturn(TEST_MCCMNC);
+
+        DataStallDetectionStats.Builder stats = new DataStallDetectionStats.Builder();
+        stats.setEvaluationType(DATA_STALL_EVALUATION_TYPE_DNS);
+        stats.setNetworkType(NetworkCapabilities.TRANSPORT_CELLULAR);
+        stats.setCellData(
+                TelephonyManager.NETWORK_TYPE_LTE /* ratType */,
+                false /* roaming */,
+                TEST_MCCMNC /* networkMccmnc */,
+                TEST_MCCMNC /* simMccmnc */,
+                CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN /* signalStrength */);
+        generateTimeoutDnsEvent(stats, 5);
+
+        assertEquals(
+                wrappedMonitor.buildDataStallDetectionStats(NetworkCapabilities.TRANSPORT_CELLULAR),
+                        stats.build());
+
+        when(mWifi.getConnectionInfo()).thenReturn(mWifiInfo);
+
+        stats = new DataStallDetectionStats.Builder();
+        stats.setEvaluationType(DATA_STALL_EVALUATION_TYPE_DNS);
+        stats.setNetworkType(NetworkCapabilities.TRANSPORT_WIFI);
+        stats.setWiFiData(mWifiInfo.getRssi(), mWifiInfo);
+        generateTimeoutDnsEvent(stats, 5);
+
+        assertEquals(
+                wrappedMonitor.buildDataStallDetectionStats(NetworkCapabilities.TRANSPORT_WIFI),
+                stats.build());
+    }
+
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
         for (int i = 0; i < count; i++) {
             wrappedMonitor.getDnsStallDetector().accumulateConsecutiveDnsTimeoutCount(
@@ -593,6 +640,12 @@ public class NetworkMonitorTest {
 
     private void setStatus(HttpURLConnection connection, int status) throws IOException {
         doReturn(status).when(connection).getResponseCode();
+    }
+
+    private void generateTimeoutDnsEvent(DataStallDetectionStats.Builder stats, int num) {
+        for (int i = 0; i < num; i++) {
+            stats.addDnsEvent(RETURN_CODE_DNS_TIMEOUT, 123456789 /* timeMs */);
+        }
     }
 }
 
