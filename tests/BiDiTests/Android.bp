@@ -1,5 +1,4 @@
-//
-// Copyright (C) 2016 The Android Open Source Project
+// Copyright (C) 2011 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-java_library {
-    name: "frameworks-base-testutils",
-    srcs: ["java/**/*.java"],
-    static_libs: ["android-support-test"],
-    libs: [
-        "android.test.runner",
-        "android.test.base",
-        "android.test.mock",
-        "mockito-target-minus-junit4",
-    ],
+android_test {
+    name: "BiDiTests",
+    // Only compile source java files in this apk.
+    srcs: ["src/**/*.java"],
+    sdk_version: "current",
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
 }

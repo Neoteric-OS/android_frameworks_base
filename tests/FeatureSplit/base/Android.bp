@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2016 The Android Open Source Project
+// Copyright (C) 2014 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +14,9 @@
 // limitations under the License.
 //
 
-java_library {
-    name: "frameworks-base-testutils",
-    srcs: ["java/**/*.java"],
-    static_libs: ["android-support-test"],
-    libs: [
-        "android.test.runner",
-        "android.test.base",
-        "android.test.mock",
-        "mockito-target-minus-junit4",
-    ],
+android_test_helper_app {
+    name: "FeatureSplitBase",
+    srcs: ["**/*.java"],
+    sdk_version: "current",
+    export_package_resources: true,
 }
