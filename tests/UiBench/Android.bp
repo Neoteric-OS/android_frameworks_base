@@ -1,5 +1,6 @@
 android_test {
     name: "UiBench",
+<<<<<<< HEAD
     sdk_version: "current",
     min_sdk_version: "21",
     // omit gradle 'build' dir

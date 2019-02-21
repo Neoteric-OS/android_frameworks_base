@@ -1,0 +1,17 @@
+android_app {
+    name: "LockTaskTests",
+XXXXX
+    local_module_path: {
+        var: "PRODUCT_OUT",
+        fixed: "/system/priv-app",
+    },
+
+    sdk_version: "current",
+    certificate: "platform",
+
+    srcs: [
+        "src/**/I*.aidl",
+        "src/**/*.java",
+    ],
+
+}
