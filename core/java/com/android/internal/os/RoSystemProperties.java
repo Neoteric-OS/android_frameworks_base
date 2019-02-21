@@ -44,7 +44,7 @@ public class RoSystemProperties {
             SystemProperties.getBoolean("ro.fw.system_user_split", false);
 
     // ------ ro.crypto.* -------- //
-    public static final String CRYPTO_STATE = SystemProperties.get("ro.crypto.state");
+    public static final String CRYPTO_STATE = CryptoProperties.state().orElse("unsupported");
     public static final String CRYPTO_TYPE = CryptoProperties.type().orElse("none");
     // These are pseudo-properties
     public static final boolean CRYPTO_ENCRYPTABLE =
