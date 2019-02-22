@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab0bc02c_cb736e37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Is there anything we need to do in lockdown mode, or is it already working to your satisfaction ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "055ed29c_24756877",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Maybe also mention that the allowBypass bit can\u0027t be changed without reconnecting",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631b9a71_fa3c4f72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "* When a new user or profile is added ?\n* When the VPN adds or removes routes ?\n  (This can happen in seamless handover and your code depends on whether there is a default route. Realistically it\u0027s very unlikely this can happen without dis/re-connection because a change in INTERNET capability disqualifies the VPN from seamless handover, and changing whether a default route is present will concretely change that in all practical cases, but strictly speaking it is possible by just adding large coverage with no default routes. Concretely you need to do this when the VPN updates its LinkProperties if the updates changes whether there is a defaut route).",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bef5c23_6a311592",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Nit (not feeling strongly) : \"filtering rules\" reads to me like we want to put in place some complex rules but there is no argument to tell what these rules are. Maybe we want to rename this to firewallAddUidInterfaceDropRules or something ?\nOr is this standard speak for dropping ?",
+      "range": {
+        "startLine": 433,
+        "startChar": 32,
+        "endLine": 433,
+        "endChar": 46
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81f11219_6ac46a78",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "There is a logical problem here : you only *update* things if filtering *should* be applied, which means when it stops shoulding, you don\u0027t update.\n\nAlso see my comment on the cover comment as it touches this place too",
+      "range": {
+        "startLine": 5116,
+        "startChar": 12,
+        "endLine": 5116,
+        "endChar": 41
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9669910_08792ba8",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 2
@@ -18,6 +133,167 @@
         "startChar": 0,
         "endLine": 1755,
         "endChar": 5
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed961c7d_31046180",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "@GuardedBy(\"this\") and likewise below. Sorry that these are missing from existing members \u003e.\u003e",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 58
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed8c6a8_d1e76698",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Maybe you want to put this comment on mApps instead",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 78
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5b1af4_11b95b5e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "!s",
+      "range": {
+        "startLine": 119,
+        "startChar": 50,
+        "endLine": 119,
+        "endChar": 51
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af12f0d7_332da7d0",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Style : useless blank",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8aa1aa_731b3c4a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "nit : extra line. Better yet : javadoc arguments :)",
+      "range": {
+        "startLine": 391,
+        "startChar": 4,
+        "endLine": 391,
+        "endChar": 6
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca3fc07_68145d84",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "I\u0027m a bit bullish about the naming because \"intersect\" has a common, specific meaning that designates exactly 1 + 2. Because of this I wouldn\u0027t expect an \"intersectUids\" method to also perform 3 and 4.\nThis can be solved by touching up the name, or having a separate filtering method, or even judicious comments on the call sites to signal the slightly unusual semantics. In this case I tend to think the separate method is best, as there doesn\u0027t seem to be any performance concerns with it :\n\nuids \u003d intersectUids(...)\nuids.remove {appId -\u003e mApps.getOrDefault(appId, NETWORK) !\u003d SYSTEM}\nuids.remove(vpnAppUid)",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 37
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fcabe7_00943570",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T02:30:50Z",
+      "side": 1,
+      "message": "Is this comment complete ?",
+      "range": {
+        "startLine": 459,
+        "startChar": 20,
+        "endLine": 459,
+        "endChar": 21
       },
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
