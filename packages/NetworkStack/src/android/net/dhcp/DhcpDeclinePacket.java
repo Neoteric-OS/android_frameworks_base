@@ -43,7 +43,7 @@ class DhcpDeclinePacket extends DhcpPacket {
     public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
         ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
 
-        fillInPacket(encap, mClientIp, mYourIp, destUdp, srcUdp, result,
+        fillInPacket(encap, INADDR_BROADCAST, mYourIp, destUdp, srcUdp, result,
             DHCP_BOOTREQUEST, false);
         result.flip();
         return result;
@@ -55,6 +55,13 @@ class DhcpDeclinePacket extends DhcpPacket {
     void finishPacket(ByteBuffer buffer) {
         addTlv(buffer, DHCP_MESSAGE_TYPE, DHCP_MESSAGE_TYPE_DECLINE);
         addTlv(buffer, DHCP_CLIENT_IDENTIFIER, getClientId());
+        if (!INADDR_ANY.equals(mRequestedIp)) {
+            addTlv(buffer, DHCP_REQUESTED_IP, mRequestedIp);
+        }
+
+        if (!INADDR_ANY.equals(mServerIdentifier)) {
+            addTlv(buffer, DHCP_SERVER_IDENTIFIER, mServerIdentifier);
+        }
         // RFC 2131 says we MUST NOT include our common client TLVs or the parameter request list.
         addTlvEnd(buffer);
     }

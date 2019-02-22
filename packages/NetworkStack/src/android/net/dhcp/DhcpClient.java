@@ -44,14 +44,18 @@ import static android.system.OsConstants.SO_REUSEADDR;
 import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ANY;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpResults;
 import android.net.TrafficStats;
 import android.net.ip.IpClient;
+import android.net.LinkProperties;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.net.util.InterfaceParams;
 import android.net.util.SocketUtils;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiInfo;
 import android.os.Message;
 import android.os.SystemClock;
 import android.system.ErrnoException;
@@ -123,6 +127,9 @@ public class DhcpClient extends StateMachine {
     // t=0, t=2, t=6, t=14, t=30, allowing for 10% jitter.
     private static final int DHCP_TIMEOUT_MS    =  36 * SECONDS;
 
+    private static final int IP CONFLICT_TIMEOUT_MS =  2 * SECONDS;
+    private static final int DECLINED_MAX_TIMES     = 3;
+
     // DhcpClient uses IpClient's handler.
     private static final int PUBLIC_BASE = IpClient.DHCPCLIENT_CMD_BASE;
 
@@ -161,6 +168,8 @@ public class DhcpClient extends StateMachine {
     private static final int CMD_RENEW_DHCP       = PRIVATE_BASE + 4;
     private static final int CMD_REBIND_DHCP      = PRIVATE_BASE + 5;
     private static final int CMD_EXPIRE_DHCP      = PRIVATE_BASE + 6;
+    private static final int CMD_IP_CONFLICT      = PRIVATE_BASE + 7;
+    private static final int CMD_IP_NOT_CONFLICT  = PRIVATE_BASE + 8;
 
     // For message logging.
     private static final Class[] sMessageClasses = { DhcpClient.class };
@@ -222,6 +231,9 @@ public class DhcpClient extends StateMachine {
     private long mLastInitEnterTime;
     private long mLastBoundExitTime;
 
+    private String mArpUuidStr = "";
+    private int mDeclinedTimes = 0;
+
     // States.
     private State mStoppedState = new StoppedState();
     private State mDhcpState = new DhcpState();
@@ -237,6 +249,8 @@ public class DhcpClient extends StateMachine {
     private State mDhcpRebootingState = new DhcpRebootingState();
     private State mWaitBeforeStartState = new WaitBeforeStartState(mDhcpInitState);
     private State mWaitBeforeRenewalState = new WaitBeforeRenewalState(mDhcpRenewingState);
+    private State mIpCheckingState = new IpCheckingState();
+    private State mDeclineState = new DeclineState();
 
     private WakeupMessage makeWakeupMessage(String cmdName, int cmd) {
         cmdName = DhcpClient.class.getSimpleName() + "." + mIfaceName + "." + cmdName;
@@ -258,7 +272,9 @@ public class DhcpClient extends StateMachine {
             addState(mDhcpSelectingState, mDhcpState);
             addState(mDhcpRequestingState, mDhcpState);
             addState(mDhcpHaveLeaseState, mDhcpState);
-                addState(mConfiguringInterfaceState, mDhcpHaveLeaseState);
+                addState(mDeclineState, mDhcpState);
+                addState(mConfiguringInterfaceState, mDhcpState);
+                addState(mIpCheckingState, mDhcpState);
                 addState(mDhcpBoundState, mDhcpHaveLeaseState);
                 addState(mWaitBeforeRenewalState, mDhcpHaveLeaseState);
                 addState(mDhcpRenewingState, mDhcpHaveLeaseState);
@@ -833,6 +849,236 @@ public class DhcpClient extends StateMachine {
         }
     }
 
+    class IpCheckingState extends PacketRetransmittingState {
+        public IpCheckingState() {
+            mTimeout = ARP_TIMEOUT_MS * 2;
+        }
+
+        @Override
+        public void enter() {
+            maybeInitTimeout();
+            sendPacket();
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                case CMD_IP_CONFLICT:
+                    if (!mArpUuidStr.equals(message.obj)) {
+                        Log.d(TAG, "CMD_IP_CONFLICT, ArpUuid: " + mArpUuidStr + "ArpUuidThread: " + message.obj);
+                        return HANDLED;
+                    }
+                    transitionTo(mDeclineState);
+                    return HANDLED;
+                case CMD_IP_NOT_CONFLICT:
+                    if (!mArpUuidStr.equals(message.obj)) {
+                        Log.d(TAG, "CMD_IP_NOT_CONFLICT, ArpUuid: " + mArpUuidStr + "ArpUuidThread: " + message.obj);
+                        return HANDLED;
+                    }
+                    transitionTo(mDhcpBoundState);
+                    return HANDLED;
+                case CMD_TIMEOUT:
+                    timeout();
+                    return HANDLED;
+                default:
+                    return NOT_HANDLED;
+            }
+        }
+
+        protected boolean sendPacket() {
+            mArpUuidStr = UUID.randomUUID().toString();
+            if (mDeclinedTimes >= DECLINED_TIMES_MAX) {
+                transitionTo(mDhcpBoundState);
+                return true;
+            }
+
+            new Thread(new Runnable() {
+                final String arpThreadUuidStr = mArpUuidStr;
+                public void run() {
+                    try {
+                        /* todo: doIpConflictTest need rawsockets to send arp packets*/
+                        if (doIpConflictTest(DEFAULT_NUM_ARP_PINGS, DEFAULT_PING_TIMEOUT_MS, (Inet4Address) mDhcpLease.ipAddress.getAddress())) {
+                            Log.d(TAG, "Received ARP response, sendCMD_IP_CONFLICT message");
+                            sendMessage(CMD_IP_CONFLICT, arpThreadUuidStr);
+                        } else {
+                            Log.d(TAG, "Not received ARP response, send CMD_IP_NOT_CONFLICT message");
+                            sendMessage(CMD_IP_NOT_CONFLICT, arpThreadUuidStr);
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Failed to sendArpPacket" + e.toString());
+                    }
+                }
+            }).start();
+
+            return true;
+        }
+
+        protected void receivePacket(DhcpPacket packet) {
+            return;
+        }
+
+        protected void maybeInitTimeout() {
+            if (mTimeout > 0) {
+                long alarmTime = SystemClock.elapsedRealtime() + mTimeout;
+                mTimeoutAlarm.schedule(alarmTime);
+            }
+        }
+
+        @Override
+        protected void timeout() {
+            Log.d(TAG, "Returning to bound state");
+            transitionTo(mDhcpBoundState);
+        }
+
+        @Override
+        public void exit() {
+            mTimeoutAlarm.cancel();
+        }
+
+        private static final int DEFAULT_NUM_ARP_PINGS   = 3;
+        private static final int DEFAULT_PING_TIMEOUT_MS = 800;
+
+        private static final int MAX_LENGTH    = 1500;
+        private static final int ETHERNET_TYPE = 1;
+        private static final int ARP_LENGTH    = 28;
+        private static final int MAC_ADDR_LENGTH = 6;
+        private static final int IPV4_LENGTH   = 4;
+
+        private boolean doIpConflictTest(int detectNum, int timeout, Inet4Address requestedAddress) {
+
+            WifiManager wm = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            String linkIfName = (linkProperties != null) ? linkProperties.getInterfaceName() : "wlan0";
+
+            WifiInfo wifiInfo = wm.getConnectionInfo();
+
+            String macAddr = null;
+            InetAddress linkAdd = null;
+
+            if (wifiInfo != null) {
+                String macAddr = wifiInfo.getMacAddress();
+                InetAddress linkAddr = NetworkUtils.intToInetAddress(wifiInfo.getIpAddress());
+                if (linkAddr instanceof Inet6Address ) {
+                    return false;
+                }
+            }
+
+            byte[] senderMac = new byte[6];
+            if (macAddr != null) {
+                for (int i = 0; i < MAC_ADDR_LENGTH; i++) {
+                    senderMac[i] = (byte) Integer.parseInt(macAddr.substring(
+                                i*3, (i*3) + 2), 16);
+                }
+            }
+
+            for (int i = 0; i < detectNum; i++) {
+                if (doRawSocketArp(timeout, linkIfName, senderMac, requestedAddress)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Returns the MAC address (or null if timeout) for the requested
+         * peer.
+         */
+        private boolean doRawSocketArp(int timeoutMillis, String ifaceName, byte[] senderMac, Inet4Address requestedAddress) {
+            ByteBuffer buf = ByteBuffer.allocate(MAX_LENGTH);
+            byte[] desiredIp = requestedAddress.getAddress();
+            long timeout = SystemClock.elapsedRealtime() + timeoutMillis;
+            RawSocket rawSocket = new RawSocket(ifaceName, RawSocket.ETH_P_ARP);
+            byte[] L2_BROADCAST = new byte[MAC_ADDR_LENGTH];
+            Arrays.fill(L2_BROADCAST, (byte) 0xFF);
+
+            // construct ARP request packet, using a ByteBuffer as a
+            // convenient container
+            buf.clear();
+            buf.order(ByteOrder.BIG_ENDIAN);
+
+            buf.putShort((short) ETHERNET_TYPE); // Ethernet type, 16 bits
+            buf.putShort(RawSocket.ETH_P_IP); // Protocol type IP, 16 bits
+            buf.put((byte)MAC_ADDR_LENGTH);  // MAC address length, 6 bytes
+            buf.put((byte)IPV4_LENGTH);  // IPv4 protocol size
+            buf.putShort((short) 1); // ARP opcode 1: 'request'
+            buf.put(senderMac);        // six bytes: sender MAC
+            buf.put(new byte[IPV4_LENGTH]);  // four bytes: sender IP address
+            buf.put(new byte[MAC_ADDR_LENGTH]); // target MAC address: unknown
+            buf.put(desiredIp); // target IP address, 4 bytes
+            buf.flip();
+            rawSocket.write(L2_BROADCAST, buf.array(), 0, buf.limit());
+
+            byte[] recvBuf = new byte[MAX_LENGTH];
+
+            while (SystemClock.elapsedRealtime() < timeout) {
+                long duration = (long) timeout - SystemClock.elapsedRealtime();
+                int readLen = rawSocket.read(recvBuf, 0, recvBuf.length, -1,
+                    (int) duration);
+
+                // Verify packet details. see RFC 826
+                if ((readLen >= ARP_LENGTH) // trailing bytes at times
+                    && (recvBuf[0] == 0) && (recvBuf[1] == ETHERNET_TYPE) // type Ethernet
+                    && (recvBuf[2] == 8) && (recvBuf[3] == 0) // protocol IP
+                    && (recvBuf[4] == MAC_ADDR_LENGTH) // mac length
+                    && (recvBuf[5] == IPV4_LENGTH) // IPv4 protocol size
+                    && (recvBuf[6] == 0) && (recvBuf[7] == 2) // ARP reply
+                    // verify desired IP address
+                    && (recvBuf[14] == desiredIp[0]) && (recvBuf[15] == desiredIp[1])
+                    && (recvBuf[16] == desiredIp[2]) && (recvBuf[17] == desiredIp[3]))
+                {
+                    Log.d(TAG, "doRawSocketArp() return true ");
+                    rawSocket.close();
+                    // looks good.
+                    return true;
+                }
+            }
+
+            rawSocket.close();
+            return false;
+        }
+    }
+
+    class DeclineState extends PacketRetransmittingState {
+        protected boolean mRet = false;
+
+        public DeclineState() {
+            mTimeout = ARP_TIMEOUT_MS / 2;
+        }
+
+        @Override
+        public void enter() {
+            maybeInitTimeout();
+            sendPacket();
+        }
+
+        protected boolean sendPacket() {
+            /* todo: sendDeclinePacket */
+            mRet = sendDeclinePacket(
+                        INADDR_ANY,
+                        (Inet4Address) mDhcpLease.ipAddress.getAddress(),
+                        (Inet4Address) mDhcpLease.serverAddress,
+                        INADDR_BROADCAST);
+            if (mRet){
+                mDeclinedTimes++;
+                transitionTo(mDhcpInitState);
+            }
+
+            return mRet;
+        }
+
+        protected void receivePacket(DhcpPacket packet) {
+            return;
+        }
+
+        @Override
+        protected void timeout() {
+            Log.d(TAG, "After sending ARP unresponse for a while, go to config IP");
+            transitionTo(mDhcpInitState);
+        }
+    }
+
     class DhcpHaveLeaseState extends State {
         @Override
         public boolean processMessage(Message message) {
@@ -873,7 +1119,8 @@ public class DhcpClient extends StateMachine {
             super.processMessage(message);
             switch (message.what) {
                 case EVENT_LINKADDRESS_CONFIGURED:
-                    transitionTo(mDhcpBoundState);
+                    Log.d(TAG, "process EVENT_LINKADDRESS_CONFIGURED, do ip conflict check");
+                    transitionTo(mIpCheckingState);
                     return HANDLED;
                 default:
                     return NOT_HANDLED;
