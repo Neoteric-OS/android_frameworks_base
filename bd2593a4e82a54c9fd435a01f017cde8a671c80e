@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96de4891_c892c23a",
+        "filename": "core/java/android/app/Instrumentation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-02-22T22:00:52Z",
+      "side": 1,
+      "message": "Unfortunately, CTS is not allowed to use non-public (or non-test) API. If we wanted to do it this way, we should go through the new API process. Is there any way that we can use InputManager.injectInputEvent directly in the CTS test for now?",
+      "range": {
+        "startLine": 1108,
+        "startChar": 7,
+        "endLine": 1108,
+        "endChar": 12
+      },
+      "revId": "bd2593a4e82a54c9fd435a01f017cde8a671c80e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
