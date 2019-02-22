@@ -204,6 +204,24 @@
     },
     {
       "key": {
+        "uuid": "ad8f8b7b_8f68d456",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T16:39:33Z",
+      "side": 1,
+      "message": "Given that:\n 1. in Vpn, it looks like we have all informations (ranges, vpn uid, vpn iface), except the permission of uids, which might be collected from permissionMonitor.\n 2. it looks like we don\u0027t gain much advantage from residing inside permissionMonitor, where many functions are new and they are more like vpn things.\n\nAlternatively, if we don\u0027t want to make Vpn.java bigger, is it better if we use a standalone class to implement this?",
+      "parentUuid": "404c8eb7_60a50e2b",
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "790a8aa3_efc4521e",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
