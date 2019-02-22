@@ -3764,6 +3764,31 @@ public final class Telephony {
          */
         public static final String CARRIER_ID = "carrier_id";
 
+        /**
+         * The skip 464xlat flag. Flag works as follows. -1 is default.
+         *  - 1: the APN will skip 464xlat
+         *  - 0: the APN will NOT skip 464xlat
+         *  - others: the APN will skip only APN is IMS and no internet.
+         * <p>Type: INTEGER</p>
+         * @hide
+         */
+        public static final String SKIP464XLAT = "skip464xlat";
+
+        /**
+         * Possible value for the {@link #SKIP464XLAT} field.
+         * <p>Type: INTEGER</p>
+         * @hide
+         */
+        public static final int SKIP464XLAT_DISABLE = 0;
+
+        /**
+         * Possible value for the {@link #SKIP464XLAT} field.
+         * <p>Type: INTEGER</p>
+         * @hide
+         */
+        public static final int SKIP464XLAT_ENABLE = 1;
+
+
         /** @hide */
         @IntDef({
                 UNEDITED,
