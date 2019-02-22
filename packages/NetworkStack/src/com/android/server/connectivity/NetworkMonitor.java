@@ -98,6 +98,10 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+/* begin:add by huawei for portal flag */
+import android.net.wifi.WifiConfiguration;
+/* end:add by huawei for portal flag */
+
 
 /**
  * {@hide}
@@ -870,6 +874,9 @@ public class NetworkMonitor extends StateMachine {
 
         @Override
         public void enter() {
+            /* begin:add by huawei for portal flag */
+            setWifiConfigWithPortalConnect();
+            /* end:add by huawei for portal flag */
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.CAPTIVE_PORTAL));
             // Don't annoy user with sign-in notifications.
@@ -1808,4 +1815,27 @@ public class NetworkMonitor extends StateMachine {
 
         return result;
     }
+
+    /* begin:add by huawei for portal flag */
+    private void setWifiConfigWithPortalConnect() {
+        WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+        if (null != wifiInfo) {
+            int networkId = wifiInfo.getNetworkId();
+            if (WifiConfiguration.INVALID_NETWORK_ID != networkId) {
+                final List<WifiConfiguration> configs = mWifiManager.getConfiguredNetworks();
+                if (configs != null) {
+                    for (WifiConfiguration config : configs) {
+                        if (null != config && networkId == config.networkId) {
+                            log("update wifi config(netId:" + config.networkId + ",ssid:"
+                                    + config.SSID + "), set isPortalConnect-->true");
+                            config.isPortalConnect = true;
+                            mWifiManager.updateNetwork(config);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /* end:add by huawei for portal flag */
 }

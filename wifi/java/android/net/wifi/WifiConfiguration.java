@@ -433,6 +433,13 @@ public class WifiConfiguration implements Parcelable {
      */
     public boolean isHomeProviderNetwork;
 
+    /* begin:add by huawei for portal flag */
+    /**
+     * @hide
+     */
+    public boolean isPortalNetwork;
+    /* end:add by huawei for portal flag */
+
     /**
      * Roaming Consortium Id list for Passpoint credential; identifies a set of networks where
      * Passpoint credential will be considered valid
