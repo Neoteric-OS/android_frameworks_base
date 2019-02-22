@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "7af9a407_2467dc7c",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T14:15:29Z",
+      "side": 1,
+      "message": "+1 with jean, the naming also confused me.\nBut anyway it is better you call netd directly.\nso I think we could delete this.",
+      "parentUuid": "9bef5c23_6a311592",
+      "range": {
+        "startLine": 433,
+        "startChar": 32,
+        "endLine": 433,
+        "endChar": 46
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81f11219_6ac46a78",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -156,6 +180,46 @@
         "startChar": 45,
         "endLine": 86,
         "endChar": 58
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404c8eb7_60a50e2b",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T14:15:29Z",
+      "side": 1,
+      "message": "Is it better if we implement all these in Vpn.java instead of PermissionMonitor?",
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790a8aa3_efc4521e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T14:15:29Z",
+      "side": 1,
+      "message": "Do we must keep tracking all the apps?\n\nCan we \n 1. query the list from PackageManager when needed? Or\n 2. use (the uid ranges - system uids - vpn app) as our list?",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 39
       },
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -249,6 +313,23 @@
         "endLine": 150,
         "endChar": 0
       },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f98b0af_a380287a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T14:15:29Z",
+      "side": 1,
+      "message": "redundant new line",
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
