@@ -209,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "7c3302fd_3b70b794",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T09:25:56Z",
+      "side": 1,
+      "message": "Did you find this is useful ?\n\nMy reading of the code is that this code should always run as USER_SYSTEM, therefore any package returned by getInstalledPackages() will always be for that user.",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 68
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af12f0d7_332da7d0",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -294,6 +317,29 @@
         "startChar": 20,
         "endLine": 459,
         "endChar": 21
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0692199_0a666619",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T09:25:56Z",
+      "side": 1,
+      "message": "Did you want to also check things happening correctly when the VPN updates their UIDs ?",
+      "range": {
+        "startLine": 359,
+        "startChar": 5,
+        "endLine": 359,
+        "endChar": 9
       },
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
