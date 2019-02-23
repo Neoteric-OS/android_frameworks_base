@@ -143,9 +143,14 @@ std::unique_ptr<const ApkAssets> ApkAssets::LoadImpl(
   // Must retain ownership of the IDMAP Asset so that all pointers to its mmapped data remain valid.
   loaded_apk->idmap_asset_ = std::move(idmap_asset);
 
-  const StringPiece data(
-      reinterpret_cast<const char*>(loaded_apk->resources_asset_->getBuffer(true /*wordAligned*/)),
-      loaded_apk->resources_asset_->getLength());
+  const char* buffer = reinterpret_cast<const char*>(loaded_apk->resources_asset_->getBuffer(true /*wordAligned*/));
+  const size_t bufLength = static_cast<size_t>(loaded_apk->resources_asset_->getLength());
+  if (buffer == NULL || bufLength <= 0) {
+    LOG(ERROR) << "Failed to load(NULL) '" << kResourcesArsc << "' in APK '" << path << "'.";
+    return {};
+  }
+
+  const StringPiece data(buffer,bufLength);
   loaded_apk->loaded_arsc_ =
       LoadedArsc::Load(data, loaded_idmap.get(), system, load_as_shared_library);
   if (loaded_apk->loaded_arsc_ == nullptr) {
