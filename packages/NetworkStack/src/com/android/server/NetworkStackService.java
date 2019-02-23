@@ -59,6 +59,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+/*add by huawei for portal check interface begin*/
+import android.net.INetworkChecker;
+/*add by huawei for portal check interface end */
 
 /**
  * Android service used to start the network stack when bound to via an intent.
@@ -299,5 +302,12 @@ public class NetworkStackService extends Service {
             checkNetworkStackCallingPermission();
             mNm.notifyNetworkCapabilitiesChanged();
         }
+        /*add by huawei for portal check interface begin*/
+        @Override
+        public void registerNetworkChecker(INetworkChecker checker) {
+            checkNetworkStackCallingPermission();
+            mNm.registerNetworkChecker(checker);
+        }
+        /*add by huawei for portal check interface end*/
     }
 }

@@ -16,6 +16,9 @@
 package android.net;
 
 import android.net.PrivateDnsConfigParcel;
+/*add by huawei for portal check interface begin*/
+import android.net.INetworkChecker;
+/*add by huawei for portal check interface end*/
 
 /** @hide */
 oneway interface INetworkMonitor {
@@ -43,4 +46,7 @@ oneway interface INetworkMonitor {
     void notifyNetworkDisconnected();
     void notifyLinkPropertiesChanged();
     void notifyNetworkCapabilitiesChanged();
+    /*add by huawei for portal check interface begin*/
+    void registerNetworkChecker(in INetworkChecker checker);
+    /*add by huawei for portal check interface end*/
 }

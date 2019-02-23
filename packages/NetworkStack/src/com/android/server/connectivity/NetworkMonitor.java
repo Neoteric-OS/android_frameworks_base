@@ -98,6 +98,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+/*add by huawei for portal check interface begin*/
+import android.net.INetworkChecker;
+/*add by huawei for portal check interface end*/
 
 /**
  * {@hide}
@@ -314,6 +317,11 @@ public class NetworkMonitor extends StateMachine {
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics = false;
 
+    /*add by huawei for portal check interface begin*/
+    private boolean mIsVendorCheckerEnable = false;
+    private INetworkChecker mVendorChecker  = null;
+    /*add by huawei for portal check interface end*/
+
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
         this(context, cb, network, new IpConnectivityLog(), validationLog,
@@ -453,6 +461,18 @@ public class NetworkMonitor extends StateMachine {
             updateNetworkCapabilities();
         });
     }
+
+    /*add by huawei for portal check interface begin*/
+    /**
+     * register checker interface for vendor
+     */
+    public void registerNetworkChecker(INetworkChecker checker) {
+        if(!mIsVendorCheckerEnable){
+            mIsVendorCheckerEnable = true;
+            mVendorChecker = checker;
+        }
+    }
+    /*add by huawei for portal check interface end*/
 
     private void updateNetworkCapabilities() {
         final NetworkCapabilities nc = mCm.getNetworkCapabilities(mNetwork);
@@ -1287,12 +1307,29 @@ public class NetworkMonitor extends StateMachine {
         long startTime = SystemClock.elapsedRealtime();
 
         final CaptivePortalProbeResult result;
-        if (pacUrl != null) {
-            result = sendDnsAndHttpProbes(null, pacUrl, ValidationProbeEvent.PROBE_PAC);
-        } else if (mUseHttps) {
-            result = sendParallelHttpProbes(proxyInfo, httpsUrl, httpUrl);
-        } else {
-            result = sendDnsAndHttpProbes(proxyInfo, httpUrl, ValidationProbeEvent.PROBE_HTTP);
+        /*add by huawei for portal check interface begin*/
+        // use vendor check interface 
+        if(mIsVendorCheckerEnable && mVendorChecker != null){
+            int responseCode = CaptivePortalProbeResult.FAILED_CODE;
+            String redirectUrl = null;
+            String detectUrl = null;
+            try{
+                responseCode = mVendorChecker.getResponseCode();
+                redirectUrl = mVendorChecker.getRedirectUrl();
+                detectUrl = mVendorChecker.getDetectUrl();
+            }catch (RemoteException e){
+                Log.e(TAG, "Error get response from vendor", e);
+            }
+            result = new CaptivePortalProbeResult(responseCode,redirectUrl,detectUrl);
+        } else{
+        /*add by huawei for portal check interface end*/
+            if (pacUrl != null) {
+                result = sendDnsAndHttpProbes(null, pacUrl, ValidationProbeEvent.PROBE_PAC);
+            } else if (mUseHttps) {
+                result = sendParallelHttpProbes(proxyInfo, httpsUrl, httpUrl);
+            } else {
+                result = sendDnsAndHttpProbes(proxyInfo, httpUrl, ValidationProbeEvent.PROBE_HTTP);
+            }
         }
 
         long endTime = SystemClock.elapsedRealtime();

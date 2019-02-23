@@ -817,6 +817,9 @@ aidl_interface {
     srcs: [
         "core/java/android/net/ApfCapabilitiesParcelable.aidl",
         "core/java/android/net/DhcpResultsParcelable.aidl",
+        /*add by huawei for portal check interface begin*/
+        "core/java/android/net/INetworkChecker.aidl",
+        /*add by huawei for portal check interface end*/
         "core/java/android/net/INetworkMonitor.aidl",
         "core/java/android/net/INetworkMonitorCallbacks.aidl",
         "core/java/android/net/INetworkStackConnector.aidl",
