@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c448d736_ca34c36d",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-25T07:52:58Z",
+      "side": 1,
+      "message": "What I find a bit unsettling here is that if you encode() a profile where the proxy is null, you\u0027ll decode a profile with a ProxyInfo with empty values.\n\nI suggest you fix this along the following lines :\n\n  ...\n  profile.ipsecServerCert \u003d (values.length \u003e 14) ? values[14] : \"\";\n  if (values.length \u003e 15) {\n    // Your current code\n    String host \u003d ...\n    ...\n    if (pacFileUrl.isEmpty()) {\n      ...\n    } else {\n      ...\n    }\n  } // else profile.proxy \u003d null",
+      "range": {
+        "startLine": 168,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 45
+      },
+      "revId": "6bcb6be93cc4f4a1940a1a79235642d97bb5ed8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
