@@ -191,17 +191,25 @@ public class IpSecService extends IIpSecService.Stub {
         private final List<RefcountedResource> mChildren;
         int mRefCount = 1; // starts at 1 for user's reference.
         IBinder mBinder;
+        boolean mUserReleased = false;
 
-        RefcountedResource(T resource, IBinder binder, RefcountedResource... children) {
+        RefcountedResource(T resource, RefcountedResource... children) {
             synchronized (IpSecService.this) {
                 this.mResource = resource;
                 this.mChildren = new ArrayList<>(children.length);
-                this.mBinder = binder;
 
                 for (RefcountedResource child : children) {
                     mChildren.add(child);
                     child.mRefCount++;
                 }
+            }
+        }
+
+        RefcountedResource(T resource, IBinder binder, RefcountedResource... children) {
+            this(resource, children);
+
+            synchronized (IpSecService.this) {
+                this.mBinder = binder;
 
                 try {
                     mBinder.linkToDeath(this, 0);
@@ -245,17 +253,24 @@ public class IpSecService extends IIpSecService.Stub {
         @GuardedBy("IpSecService.this")
         public void userRelease() throws RemoteException {
             // Prevent users from putting reference counts into a bad state by calling
-            // userRelease() multiple times.
-            if (mBinder == null) {
+            // userRelease() multiple times. Cannot be conditioned on mBinder or mResource,
+            // since their lifetimes may not exactly match (We can have a resource that has
+            // been released, but has other resources that are dependent on it, so we have
+            // to keep it around.)
+            if (mUserReleased) {
                 return;
             }
 
-            mBinder.unlinkToDeath(this, 0);
-            mBinder = null;
+            if (mBinder != null) {
+                mBinder.unlinkToDeath(this, 0);
+                mBinder = null;
+            }
 
             mResource.invalidate();
 
             releaseReference();
+
+            mUserReleased = true;
         }
 
         /**
@@ -379,6 +394,8 @@ public class IpSecService extends IIpSecService.Stub {
                 new RefcountedResourceArray<>(EncapSocketRecord.class.getSimpleName());
         final RefcountedResourceArray<TunnelInterfaceRecord> mTunnelInterfaceRecords =
                 new RefcountedResourceArray<>(TunnelInterfaceRecord.class.getSimpleName());
+        final RefcountedResourceArray<NattKeepaliveRecord> mNattKeepaliveRecords =
+                new RefcountedResourceArray<>(NattKeepaliveRecord.class.getSimpleName());
 
         /**
          * Trackers for quotas for each of the OwnedResource types.
@@ -393,6 +410,7 @@ public class IpSecService extends IIpSecService.Stub {
         final ResourceTracker mTransformQuotaTracker = new ResourceTracker(MAX_NUM_TRANSFORMS);
         final ResourceTracker mSocketQuotaTracker = new ResourceTracker(MAX_NUM_ENCAP_SOCKETS);
         final ResourceTracker mTunnelQuotaTracker = new ResourceTracker(MAX_NUM_TUNNEL_INTERFACES);
+        // No quota for NATT keepalive, since a pre-requisite is having a EncapSocket resource.
 
         void removeSpiRecord(int resourceId) {
             mSpiRecords.remove(resourceId);
@@ -408,6 +426,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         void removeEncapSocketRecord(int resourceId) {
             mEncapSocketRecords.remove(resourceId);
+        }
+
+        void removeNattKeepaliveRecord(int resourceId) {
+            mNattKeepaliveRecords.remove(resourceId);
         }
 
         @Override
@@ -493,7 +515,9 @@ public class IpSecService extends IIpSecService.Stub {
             pid = Binder.getCallingPid();
             uid = Binder.getCallingUid();
 
-            getResourceTracker().take();
+            if (getResourceTracker() != null) {
+                getResourceTracker().take();
+            }
         }
 
         @Override
@@ -569,6 +593,11 @@ public class IpSecService extends IIpSecService.Stub {
 
         void remove(int key) {
             mArray.remove(key);
+        }
+
+        @VisibleForTesting
+        int size() {
+            return mArray.size();
         }
 
         @Override
@@ -976,6 +1005,51 @@ public class IpSecService extends IIpSecService.Stub {
                     .append(mSocket)
                     .append(", mPort=")
                     .append(mPort)
+                    .append("}")
+                    .toString();
+        }
+    }
+
+    /**
+     * Tracks a NATT-keepalive instance
+     *
+     * <p>This class ensures that while a NATT-keepalive is active, the UDP encap socket that it is
+     * supporting will stay open until the NATT-keepalive is finished. NATT-keepalive offload
+     * lifecycles will be managed by ConnectivityService, which will validate that the UDP Encap
+     * socket is owned by the requester, and take a reference to it via this NattKeepaliveRecord
+     *
+     * <p>This class will NOT be resource counted, as the number for any given user has an upper
+     * bound of the number of UDP keeplive sockets open for that user.
+     *
+     * <p>It shall be the responsibility of the caller to ensure that instances of an EncapSocket do
+     * not spawn multiple instances of NATT keepalives (and thereby register duplicate records)
+     */
+    private final class NattKeepaliveRecord extends OwnedResourceRecord {
+        NattKeepaliveRecord(int resourceId) {
+            super(resourceId);
+        }
+
+        /** always guarded by IpSecService#this */
+        @Override
+        public void freeUnderlyingResources() {
+            Log.d(TAG, "Natt Keepalive released: " + mResourceId);
+        }
+
+        @Override
+        protected ResourceTracker getResourceTracker() {
+            return null;
+        }
+
+        @Override
+        public void invalidate() {
+            getUserRecord().removeNattKeepaliveRecord(mResourceId);
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{super=")
+                    .append(super.toString())
                     .append("}")
                     .toString();
         }
@@ -1814,6 +1888,49 @@ public class IpSecService extends IIpSecService.Stub {
                 throw e;
             }
         }
+    }
+
+    /**
+     * Validates that a provided UID owns the encapSocket, and creates a NATT keepalive record
+     *
+     * <p>For system server use only. Caller must have NETWORK_STACK permission
+     *
+     * @param encapSocketResourceId resource identifier of the encap socket record
+     * @param ownerUid the UID of the caller. Used to verify ownership.
+     * @return
+     */
+    public synchronized int lockEncapSocketForNattKeepalive(
+            int encapSocketResourceId, int ownerUid) {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.NETWORK_STACK, TAG);
+
+        // Verify ownership. Will throw IllegalArgumentException if the UID specified does not
+        // own the specified UDP encapsulation socket
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(ownerUid);
+        RefcountedResource<EncapSocketRecord> refcountedSocketRecord =
+                userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(encapSocketResourceId);
+
+        // Build NattKeepaliveRecord
+        final int resourceId = mNextResourceId++;
+        userRecord.mNattKeepaliveRecords.put(
+                resourceId,
+                new RefcountedResource<NattKeepaliveRecord>(
+                        new NattKeepaliveRecord(resourceId), refcountedSocketRecord));
+
+        return resourceId;
+    }
+
+    /**
+     * Release a previously allocated NattKeepalive that has been registered with the system server
+     */
+    @Override
+    public synchronized void releaseNattKeepalive(int nattKeepaliveResourceId, int ownerUid)
+            throws RemoteException {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.NETWORK_STACK, TAG);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(ownerUid);
+        releaseResource(userRecord.mNattKeepaliveRecords, nattKeepaliveResourceId);
     }
 
     @Override
