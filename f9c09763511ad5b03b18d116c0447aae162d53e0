@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca2dad01_24c6e004",
+        "filename": "telephony/java/android/telephony/CellIdentityNr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-02-25T22:11:12Z",
+      "side": 1,
+      "message": "Any way we could explain what a Nrarfcn isnt?  It sounds Klingon.\nI\u0027d gather its New Radio Absolute Radio Frequency Channel Number?\nI guarantee this rename will cause confusion in API council.",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 25
+      },
+      "revId": "f9c09763511ad5b03b18d116c0447aae162d53e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
