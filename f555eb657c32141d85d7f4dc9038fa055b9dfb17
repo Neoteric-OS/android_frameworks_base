@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92df4f81_32ba36d2",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-26T03:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc78efea_5a8ff806",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 13
+      },
+      "revId": "f555eb657c32141d85d7f4dc9038fa055b9dfb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3432e925_1cc45ca2",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-26T02:55:34Z",
       "side": 1,
       "message": "Nit: this should probably be a constant at the class level, to match the value used in addDnsEvents. But again, probably not worth spending too much time on that.",
+      "range": {
+        "startLine": 567,
+        "startChar": 39,
+        "endLine": 567,
+        "endChar": 40
+      },
+      "revId": "f555eb657c32141d85d7f4dc9038fa055b9dfb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26d6bc8d_b1a834a7",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-26T03:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3432e925_1cc45ca2",
       "range": {
         "startLine": 567,
         "startChar": 39,
