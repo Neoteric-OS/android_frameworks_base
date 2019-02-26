@@ -35,6 +35,15 @@ public final class DexoptUtils {
             ClassLoaderFactory.getPathClassLoaderName();
 
     private DexoptUtils() {}
+    
+    public static String getClassLoaderContext(SharedLibraryInfo info) {
+        String sharedLibrariesContext = "";
+        if (info.getDependencies() != null) {
+            sharedLibrariesContext = encodeSharedLibraries(info.getDependencies());
+        }
+        return encodeClassLoader(
+                "", SHARED_LIBRARY_LOADER_TYPE, sharedLibrariesContext);
+    }
 
     /**
      * Creates the class loader context dependencies for each of the application code paths.
