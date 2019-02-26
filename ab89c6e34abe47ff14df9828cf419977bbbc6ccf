@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "72b58f4c_b0b24ef6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "s/ne/en/",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ed2f7f_8428d0f7",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "I appreciate the intention, but I think you can do this in a vastly simpler, faster and easier to understand way.\n\nEXPIRYDATE is in the scale of System.currentTimeMillis(), and is the expiry date. In other words, the list of expired records is all where EXPIRYDATE \u003c System.currentTimeMillis. Then, the list of keys to delete is :\n\ndb.query(NetworkAttributesContract.TABLENAME, [L2KEY], COLNAME_EXPIRYDATE + \" \u003c ?\", [System.currentTimeMillis()])\n\n\nIf you feel fancy, you can even install a trigger at the start :\n\n  CREATE TRIGGER delete_cascade_to_private DELETE ON `NetworkAttributesContract.TABLENAME` BEGIN DELETE FROM `PrivateDataContract.TABLENAME` WHERE OLD.`NetworkAttributesContract.COLNAME_L2KEY` \u003d `PrivateDataContract.COLNAME_L2KEY`; END;\n\nOnce this is done, any DELETE on the NetworkAttributes table will delete the row with the same key in PrivateData, if any. Therefore you could afford to simply say :\n\n  DELETE FROM `NetworkAttributesContract.TABLENAME` WHERE COLNAME_EXPIRYDATE \u003c ?\n  (bind ? to System.currentTimeMillis)\n\n...or in Java :\n\n  db.delete(NetworkAttributesContract.TABLENAME, NetworkAttributesContract.COLNAME_L2KEY + \"\u003c ?\", new String[] { Long.toString(System.currentTimeMillis()) } );\n\n\n\n\nNote that as of now, the only case where we delete stuff is when it\u0027s expired. Therefore it\u0027s safe to install the trigger at table creation time (you\u0027ll need to bump up the schema version so that existing devices recreate their tables). But if in the future there is some case where we may want to delete a row from NetworkAttributes without deleting it from PrivateData, then this won\u0027t work, and you\u0027d have to enclose setting the trigger in a transaction : begin transaction, install the trigger, perform the delete, remove the trigger, end transaction.\n\n\nNote there may be other ways to delete from multiple tables in one statement. Some SQL engines support \"DELETE FROM table1, table2 WHERE...\" or \"DELETE FROM table1 LEFT JOIN table2 WHERE...\", but I just tried and it seems SQLite does not support this. There might be other ways that I\u0027m not aware of (I\u0027m not an SQL expert at all.)",
+      "range": {
+        "startLine": 503,
+        "startChar": 15,
+        "endLine": 503,
+        "endChar": 36
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325a9ac3_4744ef31",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -13,6 +59,144 @@
       "writtenOn": "2019-02-20T09:31:11Z",
       "side": 1,
       "message": "For long if statement, for better readability, is it better if we use {} with newline?\nhttp://go/java-style#s4.1.1-braces-always-used\nThe same for all other places.",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559835a4_d3ece642",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "This contract is difficult to understand. Imagine you didn\u0027t know about the calling functions : this deletes from one table with one argument and from another with the other argument. It should be symmetrical at least, or separated into two functions.",
+      "range": {
+        "startLine": 561,
+        "startChar": 8,
+        "endLine": 561,
+        "endChar": 98
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f14b90_d132836e",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "It is probably much faster to do something like\n\nsj \u003d new StringJoiner(\",\")\nfor (i \u003d l2Keys.size(); i \u003e 0; --i) sj.add(\"?\")\ndb.delete(TABLENAME, COLNAME_L2KEY + \" IN (\" + sj.toString() + \")\", l2Keys.toArray(new String[0]))\n\n...you can make this marginally faster by having a constant for the String[0] array. (but don\u0027t pass the size of the list, that\u0027s actually worse for complex reasons)\n\n\nThat being said, if you have the trigger you don\u0027t need to do this at all.",
+      "range": {
+        "startLine": 572,
+        "startChar": 37,
+        "endLine": 572,
+        "endChar": 43
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116b8a91_85eb3afb",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "getTotalNumberOfRecords\n\n(RecordNumber is not wrong, but it kind of sounds like the number of a record instead of the number of records)",
+      "range": {
+        "startLine": 584,
+        "startChar": 23,
+        "endLine": 584,
+        "endChar": 35
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e528a6_8a595bc2",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "You can just say COUNT(*) here. Then you get a 1-line answer with the count, and take up a lot less memory.",
+      "range": {
+        "startLine": 587,
+        "startChar": 16,
+        "endLine": 587,
+        "endChar": 43
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a1129e_d97d8cd3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "It\u0027s almost always a bad idea to do stuff in systemReady, because what it means is that you\u0027re causing the system to be not really ready for longer.\n\nWon\u0027t this work in the constructor ? If the service is constructed, AFAICT it means some component called it, and the system is therefore ready.",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 27
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ade165f_6a70218c",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "met ? I don\u0027t understand this word",
+      "range": {
+        "startLine": 423,
+        "startChar": 36,
+        "endLine": 423,
+        "endChar": 39
+      },
       "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -82,6 +266,93 @@
     },
     {
       "key": {
+        "uuid": "7b8b6efb_7133bd82",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "Well spotted.",
+      "parentUuid": "e8661953_509af26f",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f311023c_d2c6faa7",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "This needs comments ; I don\u0027t think I understand the logic. I understand you\u0027re trying to estimate how many records you need to drop to get under the threshold, but you\u0027re then multiplying the ratio by 0.5.\n\nIf your estimate is sound and all the records represent about the same size, then you\u0027ll remove about half what you need to remove. Then you\u0027ll remove half again. You start with a 12MB database, you\u0027ll remove 1MB worth of records, then 500k worth of records, then 250k worth of records, and so on.",
+      "range": {
+        "startLine": 471,
+        "startChar": 32,
+        "endLine": 471,
+        "endChar": 95
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43cae88_9d9de21b",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "Remove this comment, the method is already called that.",
+      "range": {
+        "startLine": 474,
+        "startChar": 27,
+        "endLine": 474,
+        "endChar": 49
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6d44b4_8f58c156",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "Maybe in this odd case drop 10 or so.",
+      "range": {
+        "startLine": 476,
+        "startChar": 52,
+        "endLine": 476,
+        "endChar": 54
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17b18f93_1785eed4",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -98,6 +369,161 @@
         "startChar": 29,
         "endLine": 477,
         "endChar": 38
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86157e2_cc9b56e7",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "How did you choose this ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 53,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fcb597_f8f82fcd",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "You need to call jobFinished() to indicate the job is complete.",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3b08ad_439f85da",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "I think you mean true.\n\nFrom the doc for JobService : return value for onStartJob :\n\ttrue if your service will continue running, using a separate thread when appropriate. false means that this job has completed its work.\n\nIn this case this certainly needs to continue running.",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7352777f_75074b7f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "You need to interrupt the job here. Once you return from this method, the wakelock is not held any more and everything might start looking ugly.\n\nWhat that means for you is you need to have the maintenance code check for a stopping criterion reasonably often, and this should set that criterion. Ideally, you\u0027ll bound remaining execution time and join here with the background execution so that onStopJob does not return until the job is actually interrupted.",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9da274_217e7ee9",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "I\u0027m sorry but you\u0027ll need to rebase this file on top of aosp/906908",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bfc799_174bd6f0",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "- 1\n\n(just in case things are very very fast and the code tries to remove stuff within the same millisecond)",
+      "range": {
+        "startLine": 521,
+        "startChar": 52,
+        "endLine": 521,
+        "endChar": 53
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610abca5_edaf4ff0",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-26T06:16:04Z",
+      "side": 1,
+      "message": "expire",
+      "range": {
+        "startLine": 526,
+        "startChar": 45,
+        "endLine": 526,
+        "endChar": 56
       },
       "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
