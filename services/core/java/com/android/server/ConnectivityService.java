@@ -25,6 +25,7 @@ import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeValid;
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
@@ -34,6 +35,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
@@ -486,6 +488,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * This event can handle dismissing notification by given network id.
      */
     public static final int EVENT_TIMEOUT_NOTIFICATION = 44;
+
+    /**
+     * Used to specify whether a network should be used even if connectivity is partial.
+     * arg1 = whether to accept the network if its connectivity is partial (1 for true or 0 for
+     * false)
+     * arg2 = whether to remember this choice in the future (1 for true or 0 for false)
+     * obj  = network
+     */
+    private static final int EVENT_SET_ACCEPT_PARTIAL_CONNECTIVITY = 45;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2486,9 +2497,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             switch (msg.what) {
                 case NetworkAgent.EVENT_NETWORK_CAPABILITIES_CHANGED: {
                     final NetworkCapabilities networkCapabilities = (NetworkCapabilities) msg.obj;
-                    if (networkCapabilities.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL) ||
-                            networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED) ||
-                            networkCapabilities.hasCapability(NET_CAPABILITY_FOREGROUND)) {
+                    if (networkCapabilities.hasConnectivityManagedCapability()) {
                         Slog.wtf(TAG, "BUG: " + nai + " has CS-managed capability.");
                     }
                     updateCapabilities(nai.getCurrentScore(), nai, networkCapabilities);
@@ -2513,6 +2522,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                     nai.networkMisc.explicitlySelected = true;
                     nai.networkMisc.acceptUnvalidated = msg.arg1 == 1;
+                    // Mark the network as temporarily accepting partial connectivity so that it
+                    // will be validated (and possibly become default) even if it only provides
+                    // partial internet access. Note that if user connects to partial connectivity
+                    // and choose "don't ask again", then wifi disconnected by some reasons(maybe
+                    // out of wifi coverage) and if the same wifi is available again, the device
+                    // will auto connect to this wifi even though the wifi has "no internet".
+                    // TODO: Evaluate using a separate setting in IpMemoryStore.
+                    nai.networkMisc.acceptPartialConnectivity = msg.arg1 == 1;
                     break;
                 }
                 case NetworkAgent.EVENT_SOCKET_KEEPALIVE: {
@@ -2530,6 +2547,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
                     if (nai == null) break;
 
+                    nai.partialConnectivity =
+                            (msg.arg1 == NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY)
+                            // If user accepts partial connectivity network, NetworkMonitor will
+                            // skip https probing. It will make partial connectivity network
+                            // becomes valid. But user still need to know this network is limited.
+                            // So, it's needed to refer to acceptPartialConnectivity to add
+                            // NET_CAPABILITY_PARTIAL_CONNECTIVITY into NetworkCapabilities of this
+                            // network. So that user can see "Limited connection" in the settings.
+                            || (nai.networkMisc.acceptPartialConnectivity
+                            && nai.networkCapabilities.hasCapability(
+                            NET_CAPABILITY_PARTIAL_CONNECTIVITY));
                     final boolean valid = (msg.arg1 == NETWORK_TEST_RESULT_VALID);
                     final boolean wasValidated = nai.lastValidated;
                     final boolean wasDefault = isDefaultNetwork(nai);
@@ -2537,6 +2565,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             && valid) {
                         nai.captivePortalLoginNotified = true;
                         showNetworkNotification(nai, NotificationType.LOGGED_IN);
+                    }
+                    final boolean partialConnectivityChange =
+                            nai.networkCapabilities.hasCapability(
+                            NET_CAPABILITY_PARTIAL_CONNECTIVITY) != nai.partialConnectivity;
+                    if ((msg.arg1 == NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY)
+                            && nai.networkMisc.acceptPartialConnectivity) {
+                        try {
+                            nai.networkMonitor().notifyAcceptPartialConnectivity();
+                        } catch (RemoteException e) {
+                            e.rethrowFromSystemServer();
+                        }
                     }
 
                     final String redirectUrl = (msg.obj instanceof String) ? (String) msg.obj : "";
@@ -2567,6 +2606,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             mNotifier.clearNotification(nai.network.netId,
                                     NotificationType.LOST_INTERNET);
                         }
+                    } else if (partialConnectivityChange) {
+                        updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
                     }
                     updateInetCondition(nai);
                     // Let the NetworkAgent know the state of its network
@@ -2576,7 +2617,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             NetworkAgent.CMD_REPORT_NETWORK_STATUS,
                             (valid ? NetworkAgent.VALID_NETWORK : NetworkAgent.INVALID_NETWORK),
                             0, redirectUrlBundle);
-                    if (wasValidated && !nai.lastValidated) {
+                    if ((wasValidated && !nai.lastValidated)
+                            // If user ever accepted the unvalidated network, we should also popup
+                            // the notification to notify user when the network becomes partial
+                            // connectivity. Or settings will only update the description to
+                            // "Limited connection" but not remove "x" from wifi icon.
+                            || (partialConnectivityChange && nai.networkMisc.acceptUnvalidated)) {
                         handleNetworkUnvalidated(nai);
                     }
                     break;
@@ -2605,7 +2651,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                     if (!visible) {
                         // Only clear SIGN_IN and NETWORK_SWITCH notifications here, or else other
-                        // notifications belong to the same network may be cleared unexpected.
+                        // notifications belong to the same network may be cleared unexpectedly.
                         mNotifier.clearNotification(netId, NotificationType.SIGN_IN);
                         mNotifier.clearNotification(netId, NotificationType.NETWORK_SWITCH);
                     } else {
@@ -3191,14 +3237,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void setAcceptUnvalidated(Network network, boolean accept, boolean always) {
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackSettingsOrSetup();
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_ACCEPT_UNVALIDATED,
                 encodeBool(accept), encodeBool(always), network));
     }
 
     @Override
+    public void setAcceptPartialConnectivity(Network network, boolean accept, boolean always) {
+        enforceNetworkStackSettingsOrSetup();
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_ACCEPT_PARTIAL_CONNECTIVITY,
+                encodeBool(accept), encodeBool(always), network));
+    }
+
+    @Override
     public void setAvoidUnvalidated(Network network) {
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackSettingsOrSetup();
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_AVOID_UNVALIDATED, network));
     }
 
@@ -3240,6 +3293,48 @@ public class ConnectivityService extends IConnectivityManager.Stub
             teardownUnneededNetwork(nai);
         }
 
+    }
+
+    private void handleSetAcceptPartialConnectivity(Network network, boolean accept,
+            boolean always) {
+        if (DBG) {
+            log("handleSetAcceptPartialConnectivity network=" + network + " accept=" + accept
+                    + " always=" + always);
+        }
+
+        final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
+        if (nai == null) {
+            // Nothing to do.
+            return;
+        }
+
+        if (nai.lastValidated) {
+            // The network validated while the dialog box was up. Take no action.
+            return;
+        }
+
+        if (accept != nai.networkMisc.acceptPartialConnectivity) {
+            nai.networkMisc.acceptPartialConnectivity = accept;
+        }
+
+        // TODO: Use the current design or save the user choice into IpMemoryStore.
+        if (always) {
+            nai.asyncChannel.sendMessage(
+                    NetworkAgent.CMD_SAVE_ACCEPT_UNVALIDATED, encodeBool(accept));
+        }
+
+        if (!accept) {
+            // Tell the NetworkAgent to not automatically reconnect to the network.
+            nai.asyncChannel.sendMessage(NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
+            // Tear down the network.
+            teardownUnneededNetwork(nai);
+        } else {
+            try {
+                nai.networkMonitor().notifyAcceptPartialConnectivity();
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        }
     }
 
     private void handleSetAvoidUnvalidated(Network network) {
@@ -3412,6 +3507,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             case LOST_INTERNET:
                 action = ConnectivityManager.ACTION_PROMPT_LOST_VALIDATION;
                 break;
+            case PARTIAL_CONNECTIVITY:
+                action = ConnectivityManager.ACTION_PROMPT_PARTIAL_CONNECTIVITY;
+                break;
             default:
                 Slog.wtf(TAG, "Unknown notification type " + type);
                 return;
@@ -3434,22 +3532,42 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (VDBG || DDBG) log("handlePromptUnvalidated " + network);
         NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
 
-        // Only prompt if the network is unvalidated and was explicitly selected by the user, and if
-        // we haven't already been told to switch to it regardless of whether it validated or not.
-        // Also don't prompt on captive portals because we're already prompting the user to sign in.
-        if (nai == null || nai.everValidated || nai.everCaptivePortalDetected ||
-                !nai.networkMisc.explicitlySelected || nai.networkMisc.acceptUnvalidated) {
+        // Only prompt if the network is unvalidated or network has partial internet connectivity
+        // and was explicitly selected by the user, and if we haven't already been told to switch
+        // to it regardless of whether it validated or not. Also don't prompt on captive portals
+        // because we're already prompting the user to sign in.
+        if (nai == null || nai.everValidated || nai.everCaptivePortalDetected
+                || !nai.networkMisc.explicitlySelected || nai.networkMisc.acceptUnvalidated
+                || nai.networkMisc.acceptPartialConnectivity) {
             return;
         }
-        showNetworkNotification(nai, NotificationType.NO_INTERNET);
+        // TODO: It's unnecessary to wait 8 seconds for triggering notification when NetworkMonitor
+        // detect the network is partial connectivity. Need to change the design to popup the
+        // notification immediately when the network is partial connectivity.
+        if (nai.partialConnectivity) {
+            showNetworkNotification(nai, NotificationType.PARTIAL_CONNECTIVITY);
+        } else {
+            showNetworkNotification(nai, NotificationType.NO_INTERNET);
+        }
     }
 
     private void handleNetworkUnvalidated(NetworkAgentInfo nai) {
         NetworkCapabilities nc = nai.networkCapabilities;
         if (DBG) log("handleNetworkUnvalidated " + nai.name() + " cap=" + nc);
 
-        if (nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) &&
-            mMultinetworkPolicyTracker.shouldNotifyWifiUnvalidated()) {
+        if (!nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            return;
+        }
+
+        if (nai.partialConnectivity && !nai.networkMisc.acceptPartialConnectivity) {
+            // Only popup a notification if user never accepted this partial internet connectivity
+            // network. Once user accepts this network, there is no needed to popup this
+            // notification again.
+            showNetworkNotification(nai, NotificationType.PARTIAL_CONNECTIVITY);
+            return;
+        }
+
+        if (mMultinetworkPolicyTracker.shouldNotifyWifiUnvalidated()) {
             showNetworkNotification(nai, NotificationType.LOST_INTERNET);
         }
     }
@@ -3538,6 +3656,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 case EVENT_SET_ACCEPT_UNVALIDATED: {
                     Network network = (Network) msg.obj;
                     handleSetAcceptUnvalidated(network, toBool(msg.arg1), toBool(msg.arg2));
+                    break;
+                }
+                case EVENT_SET_ACCEPT_PARTIAL_CONNECTIVITY: {
+                    Network network = (Network) msg.obj;
+                    handleSetAcceptPartialConnectivity(network, toBool(msg.arg1),
+                            toBool(msg.arg2));
                     break;
                 }
                 case EVENT_SET_AVOID_UNVALIDATED: {
@@ -5447,6 +5571,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.removeCapability(NET_CAPABILITY_NOT_SUSPENDED);
         } else {
             newNc.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        }
+        if (nai.partialConnectivity) {
+            newNc.addCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY);
+        } else {
+            newNc.removeCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY);
         }
 
         return newNc;
