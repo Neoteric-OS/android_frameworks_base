@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24692736_49620606",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-26T08:33:57Z",
+      "side": 1,
+      "message": "Can you use a constant value to replace this?",
+      "range": {
+        "startLine": 534,
+        "startChar": 40,
+        "endLine": 534,
+        "endChar": 76
+      },
+      "revId": "95489ca49ecb2deac91ad63845325b69fccfe1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c774bc5b_7452faed",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-26T08:33:57Z",
+      "side": 1,
+      "message": "Why don\u0027t you also fake the signal strength value like others parameters? Are you sure TelephonyManager.getSignalStrength() will always get null value?",
+      "range": {
+        "startLine": 556,
+        "startChar": 24,
+        "endLine": 556,
+        "endChar": 74
+      },
+      "revId": "95489ca49ecb2deac91ad63845325b69fccfe1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
