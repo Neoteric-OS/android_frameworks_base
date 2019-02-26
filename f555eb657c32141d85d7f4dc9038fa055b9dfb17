@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc78efea_5a8ff806",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-26T02:55:34Z",
+      "side": 1,
+      "message": "Nit: I think you don\u0027t need to repeat the \"stats.\" since each method should return the builder.\nMay not be worth respinning TH or even another CL just for this though.",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 13
+      },
+      "revId": "f555eb657c32141d85d7f4dc9038fa055b9dfb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3432e925_1cc45ca2",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-26T02:55:34Z",
+      "side": 1,
+      "message": "Nit: this should probably be a constant at the class level, to match the value used in addDnsEvents. But again, probably not worth spending too much time on that.",
+      "range": {
+        "startLine": 567,
+        "startChar": 39,
+        "endLine": 567,
+        "endChar": 40
+      },
+      "revId": "f555eb657c32141d85d7f4dc9038fa055b9dfb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
