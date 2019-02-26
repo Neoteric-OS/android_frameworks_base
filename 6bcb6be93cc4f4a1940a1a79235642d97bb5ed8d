@@ -22,6 +22,30 @@
       "revId": "6bcb6be93cc4f4a1940a1a79235642d97bb5ed8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0a447d_6f01fd1b",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1159753
+      },
+      "writtenOn": "2019-02-26T03:26:41Z",
+      "side": 1,
+      "message": "Thanks for pointing out, fixed.",
+      "parentUuid": "c448d736_ca34c36d",
+      "range": {
+        "startLine": 168,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 45
+      },
+      "revId": "6bcb6be93cc4f4a1940a1a79235642d97bb5ed8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
