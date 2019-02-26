@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f019fc_a02be5bb",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-26T02:28:38Z",
+      "side": 1,
+      "message": "1. It looks like we don\u0027t pass fd to verify the ownership here.\nThe problem is more likely to my self, but please help to answer it if you know that:\nIs it any case that resourceId is correct but fd is fake?\n\n2. do we need to say throws IllegalArgumentException and/or RemoteException?",
+      "range": {
+        "startLine": 1902,
+        "startChar": 28,
+        "endLine": 1902,
+        "endChar": 59
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
