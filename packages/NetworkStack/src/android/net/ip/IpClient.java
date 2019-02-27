@@ -19,7 +19,7 @@ package android.net.ip;
 import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
 import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
-import static android.net.shared.LinkPropertiesParcelableUtil.toStableParcelable;
+
 
 import static com.android.server.util.PermissionUtil.checkNetworkStackCallingPermission;
 
@@ -201,7 +201,7 @@ public class IpClient extends StateMachine {
         public void onProvisioningSuccess(LinkProperties newLp) {
             log("onProvisioningSuccess({" + newLp + "})");
             try {
-                mCallback.onProvisioningSuccess(toStableParcelable(newLp));
+                mCallback.onProvisioningSuccess(newLp);
             } catch (RemoteException e) {
                 log("Failed to call onProvisioningSuccess", e);
             }
@@ -210,7 +210,7 @@ public class IpClient extends StateMachine {
         public void onProvisioningFailure(LinkProperties newLp) {
             log("onProvisioningFailure({" + newLp + "})");
             try {
-                mCallback.onProvisioningFailure(toStableParcelable(newLp));
+                mCallback.onProvisioningFailure(newLp);
             } catch (RemoteException e) {
                 log("Failed to call onProvisioningFailure", e);
             }
@@ -219,7 +219,7 @@ public class IpClient extends StateMachine {
         public void onLinkPropertiesChange(LinkProperties newLp) {
             log("onLinkPropertiesChange({" + newLp + "})");
             try {
-                mCallback.onLinkPropertiesChange(toStableParcelable(newLp));
+                mCallback.onLinkPropertiesChange(newLp);
             } catch (RemoteException e) {
                 log("Failed to call onLinkPropertiesChange", e);
             }
