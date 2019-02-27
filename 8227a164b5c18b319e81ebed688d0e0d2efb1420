@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd7f8e1_59d7cb5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-02-27T10:25:36Z",
+      "side": 1,
+      "message": "Please make it obvious how to find each of those changes. Either http://r.android.com/886734 , or (slightly better) \"commit 1bb4969e57b7b2145c8954edf6adfb7a9c91f09a\", or both.",
+      "range": {
+        "startLine": 17,
+        "startChar": 36,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "8227a164b5c18b319e81ebed688d0e0d2efb1420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
