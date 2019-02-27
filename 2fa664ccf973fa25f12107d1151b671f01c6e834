@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554dc346_a1435ee2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-02-27T17:58:08Z",
+      "side": 1,
+      "message": "Optional nit: I don\u0027t really think this comment is necessary. If we decide the downstream status is valuable, we can always add it :-).",
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a6247b_35739fd5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-02-27T17:58:08Z",
+      "side": 1,
+      "message": "Do we need to worry about the hashcode of this class? Java\u0027s default hashcode will roughly use the internal address of the object, but what happens if a subclass overrides hashcode? It seems like we could end up with some subtle bugs there. I may be overthinking this a bit, but I want to make sure we\u0027re covering our bases.",
+      "range": {
+        "startLine": 2565,
+        "startChar": 27,
+        "endLine": 2565,
+        "endChar": 51
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53739ae5_3842b0e5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-02-27T17:58:08Z",
+      "side": 1,
+      "message": "Same comment as above. I don\u0027t think this is needed.",
+      "range": {
+        "startLine": 2569,
+        "startChar": 59,
+        "endLine": 2570,
+        "endChar": 93
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
