@@ -19,6 +19,7 @@ package android.net;
 import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.LinkProperties;
+import android.net.ITetheringEventListener;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -205,4 +206,7 @@ interface IConnectivityManager
 
     void getLatestTetheringEntitlementValue(int type, in ResultReceiver receiver,
             boolean showEntitlementUi, String callerPkg);
+
+    void registerTetheringEventListener(ITetheringEventListener listener, String callerPkg);
+    void unregisterTetheringEventListener(ITetheringEventListener listener, String callerPkg);
 }

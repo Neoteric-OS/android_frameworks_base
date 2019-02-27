@@ -2542,6 +2542,93 @@ public class ConnectivityManager {
     }
 
     /**
+     * Callback for use with {@link registerTetheringEventListener} to find out tethering
+     * upstream status.
+     *
+     *@hide
+     */
+    @SystemApi
+    public abstract static class OnTetheringEventListener {
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time.
+         *
+         * @param network the {@link Network} of tethering upstream. This can be null and null
+         * means tethering doesn't have any upstream.
+         */
+        public void onUpstreamChanged(@Nullable Network network) {}
+
+        // TODO: Consider to provide downstream status in this callback.
+    }
+
+    private final ArrayMap<OnTetheringEventListener, ITetheringEventListener>
+            mTetheringEventListener = new ArrayMap<>();
+
+    /**
+     * Start listening to reports tethering change events. So far the callback only proivde
+     * tethering upstream changed event. May also add downstream changed event in the future.
+     * Any new added listener would receives the last tethering upstream status right away.
+     * If listener is registered when tethering is not active, the
+     * {@link OnTetheringEventListener#onUpstreamChanged} with null network would be called.
+     *
+     * @param listener the listener to be told when tethering has change events.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    public void registerTetheringEventListener(
+            @NonNull final OnTetheringEventListener listener,
+            @Nullable Handler handler) {
+        Preconditions.checkNotNull(listener, "OnTetheringEventChangedListener cannot be null.");
+        ITetheringEventListener remoteListener = new ITetheringEventListener.Stub() {
+            @Override
+            public void onUpstreamChanged(Network network) throws RemoteException {
+                if (handler != null) {
+                    handler.post(() -> {
+                        listener.onUpstreamChanged(network);
+                    });
+                } else {
+                    listener.onUpstreamChanged(network);
+                }
+            }
+        };
+
+        try {
+            String pkgName = mContext.getOpPackageName();
+            Log.i(TAG, "registerTetheringUpstreamListener:" + pkgName);
+            mService.registerTetheringEventListener(remoteListener, pkgName);
+            mTetheringEventListener.put(listener, remoteListener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Remove tethering event listener previously registered with
+     * {@link #registerTetheringEventListener}.
+     *
+     * @param listener previously registered listener.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    public void unregisterTetheringEventListener(
+            @NonNull final OnTetheringEventListener listener) {
+        ITetheringEventListener remoteListener = mTetheringEventListener.remove(listener);
+        Preconditions.checkNotNull(remoteListener, "listener was not registered.");
+
+        try {
+            String pkgName = mContext.getOpPackageName();
+            Log.i(TAG, "unregisterTetheringEventListener:" + pkgName);
+            mService.unregisterTetheringEventListener(remoteListener, pkgName);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+
+    /**
      * Get the list of regular expressions that define any tetherable
      * USB network interfaces.  If USB tethering is not supported by the
      * device, this list should be empty.

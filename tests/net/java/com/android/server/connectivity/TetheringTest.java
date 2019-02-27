@@ -38,6 +38,7 @@ import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -68,6 +69,7 @@ import android.hardware.usb.UsbManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITetheringEventListener;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -917,6 +919,69 @@ public class TetheringTest {
                 expectedInteractionsWithShowNotification);
     }
 
+    private class TestTetheringEventListener extends ITetheringEventListener.Stub {
+        public Network actualNetwork = null;
+        public boolean onUpstreamChanged = false;
+
+        public void reset() {
+            actualNetwork = null;
+            onUpstreamChanged = false;
+        }
+
+        @Override
+        public void onUpstreamChanged(Network network) throws RemoteException {
+            actualNetwork = network;
+            onUpstreamChanged = true;
+        }
+    }
+
+    @Test
+    public void testRegisterTetheringEventListener() throws Exception {
+        TestTetheringEventListener listener1 = new TestTetheringEventListener();
+        TestTetheringEventListener listener2 = new TestTetheringEventListener();
+
+        // 1. Register one callback and run usb tethering.
+        mTethering.registerTetheringEventListener(listener1);
+        assertEquals(null, listener1.actualNetwork);
+        assertTrue(listener1.onUpstreamChanged);
+        listener1.reset();
+        NetworkState upstreamState = buildMobileDualStackUpstreamState();
+        runUsbTethering(upstreamState);
+        assertEquals(upstreamState.network, listener1.actualNetwork);
+        assertTrue(listener1.onUpstreamChanged);
+        listener1.reset();
+        // 2. Reigster second callback.
+        mTethering.registerTetheringEventListener(listener2);
+        assertEquals(upstreamState.network, listener2.actualNetwork);
+        assertTrue(listener2.onUpstreamChanged);
+        listener2.reset();
+        // 3. Disable usb tethering.
+        mTethering.stopTethering(TETHERING_USB);
+        mLooper.dispatchAll();
+        sendUsbBroadcast(false, false, false);
+        mLooper.dispatchAll();
+        assertEquals(null, listener1.actualNetwork);
+        assertTrue(listener1.onUpstreamChanged);
+        listener1.reset();
+        assertEquals(null, listener2.actualNetwork);
+        assertTrue(listener2.onUpstreamChanged);
+        listener2.reset();
+        // 4. Unregister first callback and run hotspot.
+        mTethering.unregisterTetheringEventListener(listener1);
+        when(mUpstreamNetworkMonitor.getCurrentPreferredUpstream()).thenReturn(upstreamState);
+        when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any()))
+                .thenReturn(upstreamState);
+        when(mWifiManager.startSoftAp(any(WifiConfiguration.class))).thenReturn(true);
+        mTethering.startTethering(TETHERING_WIFI, null, false);
+        mLooper.dispatchAll();
+        mTethering.interfaceStatusChanged(TEST_WLAN_IFNAME, true);
+        sendWifiApStateChanged(WIFI_AP_STATE_ENABLED, TEST_WLAN_IFNAME, IFACE_IP_MODE_TETHERED);
+        mLooper.dispatchAll();
+        assertFalse(listener1.onUpstreamChanged);
+        assertEquals(upstreamState.network, listener2.actualNetwork);
+        assertTrue(listener2.onUpstreamChanged);
+        listener2.reset();
+    }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
     // already operating tethering mode interface.

@@ -62,6 +62,7 @@ import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITetheringEventListener;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -82,6 +83,7 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.UserHandle;
@@ -184,6 +186,8 @@ public class Tethering extends BaseNetworkObserver {
     private final VersionedBroadcastListener mDefaultSubscriptionChange;
     private final TetheringDependencies mDeps;
     private final EntitlementManager mEntitlementMgr;
+    private final RemoteCallbackList<ITetheringEventListener> mTetheringEventListeners =
+            new RemoteCallbackList<>();
 
     private volatile TetheringConfiguration mConfig;
     private InterfaceSet mCurrentUpstreamIfaceSet;
@@ -193,6 +197,7 @@ public class Tethering extends BaseNetworkObserver {
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     // True iff. WiFi tethering should be started when soft AP is ready.
     private boolean mWifiTetherRequested;
+    private Network mTetherUpstream;
 
     public Tethering(Context context, INetworkManagementService nmService,
             INetworkStatsService statsService, INetworkPolicyManager policyManager,
@@ -1229,7 +1234,14 @@ public class Tethering extends BaseNetworkObserver {
                     sendMessageDelayed(CMD_RETRY_UPSTREAM, UPSTREAM_SETTLE_TIME_MS);
                 }
             }
-            mUpstreamNetworkMonitor.setCurrentUpstream((ns != null) ? ns.network : null);
+            final Network newUpstream = (ns != null) ? ns.network : null;
+            synchronized (mPublicSync) {
+                if (mTetherUpstream != newUpstream) {
+                    mTetherUpstream = newUpstream;
+                    mUpstreamNetworkMonitor.setCurrentUpstream(mTetherUpstream);
+                    reportUpstreamChanged(mTetherUpstream);
+                }
+            }
             setUpstreamNetwork(ns);
         }
 
@@ -1413,6 +1425,12 @@ public class Tethering extends BaseNetworkObserver {
                 mUpstreamNetworkMonitor.stop();
                 notifyDownstreamsOfNewUpstreamIface(null);
                 handleNewUpstreamNetworkState(null);
+                synchronized (mPublicSync) {
+                    if (mTetherUpstream != null) {
+                        mTetherUpstream = null;
+                        reportUpstreamChanged(null);
+                    }
+                }
             }
 
             private boolean updateUpstreamWanted() {
@@ -1681,6 +1699,40 @@ public class Tethering extends BaseNetworkObserver {
             boolean showEntitlementUi) {
         if (receiver != null) {
             mEntitlementMgr.getLatestTetheringEntitlementValue(type, receiver, showEntitlementUi);
+        }
+    }
+
+    /** Register tethering event listener */
+    public void registerTetheringEventListener(ITetheringEventListener listener) {
+        synchronized (mPublicSync) {
+            try {
+                listener.onUpstreamChanged(mTetherUpstream);
+            } catch (RemoteException e) {
+                // Not really very much to do here.
+            }
+            mTetheringEventListeners.register(listener);
+        }
+    }
+
+    /** Unregister tethering event listener */
+    public void unregisterTetheringEventListener(ITetheringEventListener listener) {
+        synchronized (mPublicSync) {
+            mTetheringEventListeners.unregister(listener);
+        }
+    }
+
+    private void reportUpstreamChanged(Network network) {
+        final int length = mTetheringEventListeners.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventListeners.getBroadcastItem(i).onUpstreamChanged(network);
+                } catch (RemoteException | RuntimeException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventListeners.finishBroadcast();
         }
     }
 
