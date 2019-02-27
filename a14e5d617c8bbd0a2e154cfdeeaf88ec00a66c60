@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd7480f_8acecba3",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-27T02:37:35Z",
+      "side": 1,
+      "message": "Is this realistic? A reinstall would also involve a remove, right?",
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c0d6b9_1dd48615",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-27T02:37:35Z",
+      "side": 1,
+      "message": "Do we need to do any special testing for upgrades? I think upgrades are an uninstall with a special extra (PACKAGE_REPLACED?) followed by an install.",
+      "range": {
+        "startLine": 462,
+        "startChar": 16,
+        "endLine": 462,
+        "endChar": 41
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29608007_079051a0",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-27T02:37:35Z",
+      "side": 1,
+      "message": "Great that you have this test for shared UIDs.\n\nShould we have a test for the same app ID being installed/uninstalled in multiple different users? This would represent the case of having the same app (e.g., chrome) installed/uninstalled in the personal profile and the work profile.",
+      "range": {
+        "startLine": 475,
+        "startChar": 16,
+        "endLine": 475,
+        "endChar": 56
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
