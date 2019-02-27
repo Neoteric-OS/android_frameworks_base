@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f5466b2_dd6071e2",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-27T02:46:08Z",
+      "side": 1,
+      "message": "use @param annotation for parameters?",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a11c4a0c_c2a365ac",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 5
@@ -64,6 +87,29 @@
         "startChar": 52,
         "endLine": 88,
         "endChar": 42
+      },
+      "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40952fa7_c277139a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-27T02:46:08Z",
+      "side": 1,
+      "message": "(Moving the comment from another commit)\n\n1. The 7-parameter function scares me.\n Maybe we want to avoid long parameter list to increase readability?\n  Context: go/tott/550\n\n2. It looks strange to me that:\n  a. we make query with primitive parameters in the arguments, but\n  b. aggregate the results in a well defined structure.\n\nIt makes more sense to me if we \"build\" a dns request with a Builder class,\ninstead of creating various types of query function.\nE.g. DnsQueryBuilder dqb \u003d new DnsQueryBuilder().setClass(CLASS_IN).setType()...\nfinally:\n   dqb.query() or mDns.query(dqb.build());",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 21
       },
       "revId": "56edcd91e8271ea2ef7096644c3fa5342ba9ef0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
