@@ -175,7 +175,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         String addrStr = null;
         try {
             addrStr = mNetd.clatdStart(baseIface, mNat64Prefix.toString());
-        } catch (RemoteException | IllegalStateException e) {
+        } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error starting clatd on " + baseIface, e);
         }
         mIface = CLAT_PREFIX + baseIface;
@@ -248,7 +248,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         Slog.i(TAG, "Stopping clatd on " + mBaseIface);
         try {
             mNetd.clatdStop(mBaseIface);
-        } catch (RemoteException | IllegalStateException e) {
+        } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error stopping clatd on " + mBaseIface, e);
         }
 
