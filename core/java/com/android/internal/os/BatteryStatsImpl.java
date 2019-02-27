@@ -1028,8 +1028,17 @@ public class BatteryStatsImpl extends BatteryStats {
 
     @Override
     public int getEstimatedBatteryCapacity() {
-        return mEstimatedBatteryCapacity;
-    }
+        if ( -1 == mEstimatedBatteryCapacity ) {
+            final BatteryStatsHelper helper = null;
+            if (null == helper ) {
+                helper = new BatteryStatsHelper(context, false, wifiOnly);
+                helper.create(this);
+            }
+            helper.refreshStats(which, UserHandle.USER_ALL);
+            estimatedBatteryCapacity = (int)helper.getPowerProfile().getBatteryCapacity();
+        }  
+        return mEstimatedBatteryCapacity;    
+    }  
 
     @Override
     public int getMinLearnedBatteryCapacity() {
