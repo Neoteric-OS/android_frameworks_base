@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6c08e86a_13538e53",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Thanks for your suggestion. I will study how to use sqlite trigger.",
+      "parentUuid": "00ed2f7f_8428d0f7",
+      "range": {
+        "startLine": 503,
+        "startChar": 15,
+        "endLine": 503,
+        "endChar": 36
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325a9ac3_4744ef31",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -62,6 +86,24 @@
       "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc092cfc_72e80c95",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "325a9ac3_4744ef31",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "aacddb97_565e528a",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "559835a4_d3ece642",
+      "range": {
+        "startLine": 561,
+        "startChar": 8,
+        "endLine": 561,
+        "endChar": 98
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f14b90_d132836e",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -99,6 +165,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "It is probably much faster to do something like\n\nsj \u003d new StringJoiner(\",\")\nfor (i \u003d l2Keys.size(); i \u003e 0; --i) sj.add(\"?\")\ndb.delete(TABLENAME, COLNAME_L2KEY + \" IN (\" + sj.toString() + \")\", l2Keys.toArray(new String[0]))\n\n...you can make this marginally faster by having a constant for the String[0] array. (but don\u0027t pass the size of the list, that\u0027s actually worse for complex reasons)\n\n\nThat being said, if you have the trigger you don\u0027t need to do this at all.",
+      "range": {
+        "startLine": 572,
+        "startChar": 37,
+        "endLine": 572,
+        "endChar": 43
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f978953_1654b17c",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "I have tried this method that seems be more efficient to delete data. However, it indeed had size limit that needed to separate into multiple times to do this action if key array size is very large(500 or more). It became more complicated to use this method. And I used my test case (5000 data) to compare the efficiency of two method, the execution time was almost equal. Thus, I chose the simple method here finally. Anyway, this part should be replaced by the trigger.",
+      "parentUuid": "c8f14b90_d132836e",
       "range": {
         "startLine": 572,
         "startChar": 37,
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "6584aefc_c9958ff9",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "116b8a91_85eb3afb",
+      "range": {
+        "startLine": 584,
+        "startChar": 23,
+        "endLine": 584,
+        "endChar": 35
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5e528a6_8a595bc2",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -145,6 +259,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "You can just say COUNT(*) here. Then you get a 1-line answer with the count, and take up a lot less memory.",
+      "range": {
+        "startLine": 587,
+        "startChar": 16,
+        "endLine": 587,
+        "endChar": 43
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec1b912_164b992e",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Awesome. I don\u0027t know this.",
+      "parentUuid": "f5e528a6_8a595bc2",
       "range": {
         "startLine": 587,
         "startChar": 16,
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "bd57f314_2200207e",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Basically, RegularMaintenanceJobService.schedule should be registered in constructor but it will get an exception if I put the method into constructor. It\u0027s caused by JobService was launched after IpMemoryStoreService. So I used systemReady method to wait all services were ready and then did the registration. If you don\u0027t like to use this, perhaps we can use boot completed intent to replace it. How do you think?",
+      "parentUuid": "55a1129e_d97d8cd3",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 27
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ade165f_6a70218c",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -191,6 +353,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "met ? I don\u0027t understand this word",
+      "range": {
+        "startLine": 423,
+        "startChar": 36,
+        "endLine": 423,
+        "endChar": 39
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f56401_030cb6f9",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Sorry, I forgot to change the description after separated functions. This description should be \u0027Return zero value if can\u0027t get exactly disk usage\u0027.",
+      "parentUuid": "8ade165f_6a70218c",
       "range": {
         "startLine": 423,
         "startChar": 36,
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "09f6324f_bfaac25a",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "I\u0027d like to use \"over\"",
+      "parentUuid": "a17fb7e9_0fd23e09",
+      "range": {
+        "startLine": 430,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 32
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c09f6146_0a95643f",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -246,6 +456,30 @@
       "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48638b7c_2801747d",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c09f6146_0a95643f",
+      "range": {
+        "startLine": 466,
+        "startChar": 54,
+        "endLine": 466,
+        "endChar": 57
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +518,24 @@
     },
     {
       "key": {
+        "uuid": "3c084f93_204159e6",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Yes, dbSize would be zero if we got exception when call file#length().",
+      "parentUuid": "7b8b6efb_7133bd82",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f311023c_d2c6faa7",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -295,6 +547,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "This needs comments ; I don\u0027t think I understand the logic. I understand you\u0027re trying to estimate how many records you need to drop to get under the threshold, but you\u0027re then multiplying the ratio by 0.5.\n\nIf your estimate is sound and all the records represent about the same size, then you\u0027ll remove about half what you need to remove. Then you\u0027ll remove half again. You start with a 12MB database, you\u0027ll remove 1MB worth of records, then 500k worth of records, then 250k worth of records, and so on.",
+      "range": {
+        "startLine": 471,
+        "startChar": 32,
+        "endLine": 471,
+        "endChar": 95
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087de9f1_97744203",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "I assume that each record represent different size but I can only know the average size for each record(12MB database, 6000 records, average size of record is 2k). If I just delete the number of record(1000 records) to meet the threshold, it might delete too much records. So I think the safe way was delete half of record first. Nevertheless, if we don\u0027t care about deleting too much  or all the records represent about the same size, we can simply calculate total number and delete them.",
+      "parentUuid": "f311023c_d2c6faa7",
       "range": {
         "startLine": 471,
         "startChar": 32,
@@ -330,6 +606,30 @@
     },
     {
       "key": {
+        "uuid": "1115f5af_1b35e8d0",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a43cae88_9d9de21b",
+      "range": {
+        "startLine": 474,
+        "startChar": 27,
+        "endLine": 474,
+        "endChar": 49
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6d44b4_8f58c156",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -341,6 +641,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "Maybe in this odd case drop 10 or so.",
+      "range": {
+        "startLine": 476,
+        "startChar": 52,
+        "endLine": 476,
+        "endChar": 54
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97961950_f2799b56",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "I think 10 might be too much. How about 5?",
+      "parentUuid": "fb6d44b4_8f58c156",
       "range": {
         "startLine": 476,
         "startChar": 52,
@@ -376,6 +700,30 @@
     },
     {
       "key": {
+        "uuid": "53845cd5_be120764",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17b18f93_1785eed4",
+      "range": {
+        "startLine": 477,
+        "startChar": 29,
+        "endLine": 477,
+        "endChar": 38
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a86157e2_cc9b56e7",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 8
@@ -387,6 +735,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "How did you choose this ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 53,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885afc91_d71780af",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "I just chose a unique number. But I didn\u0027t exactly know whether any module have used this number.",
+      "parentUuid": "a86157e2_cc9b56e7",
       "range": {
         "startLine": 41,
         "startChar": 53,
@@ -422,6 +794,30 @@
     },
     {
       "key": {
+        "uuid": "0b0d63ac_e7570640",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "ACK. I have a question here, as you can see, I only printed log when full maintenance was failed because I didn\u0027t know what could I do more here. Could you give me some suggestion?\nFurthermore, we may ignore the result of full maintenance, right? It seems not be necessary.",
+      "parentUuid": "e4fcb597_f8f82fcd",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b3b08ad_439f85da",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 8
@@ -433,6 +829,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "I think you mean true.\n\nFrom the doc for JobService : return value for onStartJob :\n\ttrue if your service will continue running, using a separate thread when appropriate. false means that this job has completed its work.\n\nIn this case this certainly needs to continue running.",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7144473_2db33f26",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Yes, you are right.",
+      "parentUuid": "2b3b08ad_439f85da",
       "range": {
         "startLine": 63,
         "startChar": 15,
@@ -468,6 +888,30 @@
     },
     {
       "key": {
+        "uuid": "8e83adcc_01e54515",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "You mean I need to interrupt maintenance job, something like break while loop even it\u0027s not met the threshold yet. Or I misunderstood your meaning?",
+      "parentUuid": "7352777f_75074b7f",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9da274_217e7ee9",
         "filename": "services/java/com/android/server/SystemServer.java",
         "patchSetId": 8
@@ -485,6 +929,24 @@
     },
     {
       "key": {
+        "uuid": "78c3f8be_54d2905f",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f9da274_217e7ee9",
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51bfc799_174bd6f0",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 8
@@ -496,6 +958,30 @@
       "writtenOn": "2019-02-26T06:16:04Z",
       "side": 1,
       "message": "- 1\n\n(just in case things are very very fast and the code tries to remove stuff within the same millisecond)",
+      "range": {
+        "startLine": 521,
+        "startChar": 52,
+        "endLine": 521,
+        "endChar": 53
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5186865f_19f891d0",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t know your meaning.",
+      "parentUuid": "51bfc799_174bd6f0",
       "range": {
         "startLine": 521,
         "startChar": 52,
@@ -528,6 +1014,30 @@
       "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855ead19_8a3d1106",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-02-27T08:53:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "610abca5_edaf4ff0",
+      "range": {
+        "startLine": 526,
+        "startChar": 45,
+        "endLine": 526,
+        "endChar": 56
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
