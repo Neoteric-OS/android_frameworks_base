@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "24164696_e6a6b737",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-27T03:55:54Z",
+      "side": 1,
+      "message": "Theoretically the refactoring should be in another commit.\nis it better if we:\n1. split commit, or\n2. add some description in commit message?",
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4343c164_cc242c7c",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
