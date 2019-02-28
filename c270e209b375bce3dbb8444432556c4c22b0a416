@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fab1d55_4d6f9c87",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-28T22:05:30Z",
+      "side": 1,
+      "message": "nit: no",
+      "range": {
+        "startLine": 808,
+        "startChar": 97,
+        "endLine": 808,
+        "endChar": 100
+      },
+      "revId": "c270e209b375bce3dbb8444432556c4c22b0a416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad1e8c0_4ce7d32b",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-28T22:05:30Z",
+      "side": 1,
+      "message": "nit: spelled incorrectly",
+      "range": {
+        "startLine": 809,
+        "startChar": 21,
+        "endLine": 809,
+        "endChar": 30
+      },
+      "revId": "c270e209b375bce3dbb8444432556c4c22b0a416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
