@@ -1501,9 +1501,21 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    private void requestSwapActiveStatsMap() {
+        // Ask netd to do a active map stats swap. When the binder call successfully return,
+        // the system server should be able to safely read and clean the inactive map
+        // without race problem.
+        try {
+            mNetdService.trafficSwapActiveStatsMap();
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Override
     public NetworkStats getNetworkStatsDetail() {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        requestSwapActiveStatsMap();
         try {
             return mStatsFactory.readNetworkStatsDetail(UID_ALL, null, TAG_ALL, null);
         } catch (IOException e) {
@@ -1798,6 +1810,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     @Override
     public NetworkStats getNetworkStatsUidDetail(int uid, String[] ifaces) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        requestSwapActiveStatsMap();
         try {
             return mStatsFactory.readNetworkStatsDetail(uid, ifaces, TAG_ALL, null);
         } catch (IOException e) {
