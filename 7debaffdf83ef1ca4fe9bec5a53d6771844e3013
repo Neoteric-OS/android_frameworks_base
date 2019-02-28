@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1fa1156_44e81f5b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3726,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-28T04:36:38Z",
+      "side": 1,
+      "message": "Whether this is worth doing is an interesting question. This can happen if a user is stopped while we\u0027re processing an establishVpn() IPC from an app. But if the user is being stopped the app is being killed. Even if we win the race with the app being killed, an NPE here is only going to result in us attempting to send the NPE back to the app via binder, and failing to do so because the app is no longer running.",
+      "range": {
+        "startLine": 3726,
+        "startChar": 19,
+        "endLine": 3726,
+        "endChar": 30
+      },
+      "revId": "7debaffdf83ef1ca4fe9bec5a53d6771844e3013",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
