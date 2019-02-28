@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5be0a513_f73adfbf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "The NIAP certification does not have specific requirement on VPN lockdown mode so I would leave it as it for now. (For the record RULE_PRIORITY_PROHIBIT_NON_VPN does not block incoming traffic when I just tried it)",
+      "parentUuid": "ab0bc02c_cb736e37",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055ed29c_24756877",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3826e38_d15caeb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055ed29c_24756877",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631b9a71_fa3c4f72",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d825030c_cd619d34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "* When a new user or profile is added\nThere is a recent change aosp/906754 that triggers a NetworkCapabilities update when restricted profile of an active VPN is added/removed. That will result in a CS.setUids() invocation which will in turn call PermissionMonitor.onVpnUidRangesAdded/Removed() so I think we are covered there. If the hosting user of the VPN is deleted, that should trigger the normal VPN disconnection flow so we are also covered on that front.\n\n* When the VPN adds or removes routes\nGood point, fixed in CS.",
+      "parentUuid": "631b9a71_fa3c4f72",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a3672e73_44f4ec18",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done (removed from NetworkManagementService)",
+      "parentUuid": "7af9a407_2467dc7c",
+      "range": {
+        "startLine": 433,
+        "startChar": 32,
+        "endLine": 433,
+        "endChar": 46
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81f11219_6ac46a78",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -161,6 +257,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7ab330_e38816d8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9669910_08792ba8",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1755,
+        "endChar": 5
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +342,48 @@
     },
     {
       "key": {
+        "uuid": "40c8186f_6f119850",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Lorenzo originally suggested moving the logic here (https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/5980122/1/services/core/java/com/android/server/ConnectivityService.java#5227). \n\nI can move this functionality to a separate class / VPN.java, there is a small caveat that during package installation, the new class will need to call into PermissionMonitor after PermissionMonitor has updated its knowledge of the new uid\u0027s permission, so we are effectively introducing an implicit timing constraint between the two\u0027s interaction, which could cause subtle bugs. \n\nLorenzo/Chalard, WDYT about moving the new logic out of PermissionMonitor?",
+      "parentUuid": "ad8f8b7b_8f68d456",
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545107f0_f3d3a9a4",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed961c7d_31046180",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 58
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790a8aa3_efc4521e",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -242,6 +404,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5c7f1c_2d37ddc9",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "1. PackageManager.getInstalledPackages() is an expensive operation so I feel doing the incremental maintenance is better performance-wise.\n2. We need to expand the list to individual uids which the eBPF program accepts. The VPN uid range is often 0-99999 to cover the entire uid possibilities for a single android user (http://cs/android/frameworks/base/core/java/android/net/UidRange.java?l\u003d39\u0026rcl\u003d4fecb6af1a432d1c17cc18751d9d67221f3db965), expanding that naively to uids without intersecting it with the list of installed apps will result in a very large list.",
+      "parentUuid": "790a8aa3_efc4521e",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -268,6 +454,30 @@
     },
     {
       "key": {
+        "uuid": "defd1fc0_c5d36823",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Looks like this was fixed recently https://android-review.googlesource.com/c/platform/frameworks/base/+/885995/16/services/core/java/com/android/server/connectivity/PermissionMonitor.java#159 so I removed this comment.",
+      "parentUuid": "fed8c6a8_d1e76698",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 78
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b5b1af4_11b95b5e",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -291,6 +501,30 @@
     },
     {
       "key": {
+        "uuid": "6cf204a6_ec8738e8",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5b1af4_11b95b5e",
+      "range": {
+        "startLine": 119,
+        "startChar": 50,
+        "endLine": 119,
+        "endChar": 51
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c3302fd_3b70b794",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -311,6 +545,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4a7813_7ea5940c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "We call getInstalledPackages() with a MATCH_ANY_USER flag, so it should return packages from all users on the device.\n\nEDIT: this is changed (see cs link in the comment above) so I removed this condition from my CL.",
+      "parentUuid": "7c3302fd_3b70b794",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 68
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -354,6 +612,48 @@
     },
     {
       "key": {
+        "uuid": "2f99893c_25876380",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af12f0d7_332da7d0",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03345f74_0845eb97",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f98b0af_a380287a",
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a8aa1aa_731b3c4a",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -374,6 +674,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a08514_72f62b57",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a8aa1aa_731b3c4a",
+      "range": {
+        "startLine": 391,
+        "startChar": 4,
+        "endLine": 391,
+        "endChar": 6
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -400,6 +724,30 @@
     },
     {
       "key": {
+        "uuid": "ab2d5735_5ddc8e19",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bca3fc07_68145d84",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 37
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fcabe7_00943570",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -423,6 +771,30 @@
     },
     {
       "key": {
+        "uuid": "7c3e6cee_1329070d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fcabe7_00943570",
+      "range": {
+        "startLine": 459,
+        "startChar": 20,
+        "endLine": 459,
+        "endChar": 21
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0692199_0a666619",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 2
@@ -443,6 +815,30 @@
       "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877d949d_440cae68",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-02-28T00:18:47Z",
+      "side": 1,
+      "message": "Added the uid update scenario to the VPN Connect/Disconnect tests.",
+      "parentUuid": "b0692199_0a666619",
+      "range": {
+        "startLine": 359,
+        "startChar": 5,
+        "endLine": 359,
+        "endChar": 9
+      },
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
