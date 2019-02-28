@@ -48,6 +48,7 @@ public final class CacheManager {
      *
      * @deprecated Access to the HTTP cache will be removed in a future release.
      */
+    @UnsupportedAppUsage
     @Deprecated
     public static class CacheResult {
         // these fields are saved to the database
