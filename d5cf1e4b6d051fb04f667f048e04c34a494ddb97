@@ -22,6 +22,30 @@
       "revId": "d5cf1e4b6d051fb04f667f048e04c34a494ddb97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec5bcd2_93f751fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 6713,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-02-28T01:55:19Z",
+      "side": 1,
+      "message": "Ahh, apologies. Legacy of a past patch. This was for appops.",
+      "parentUuid": "b5d791f7_837d00d7",
+      "range": {
+        "startLine": 6713,
+        "startChar": 48,
+        "endLine": 6713,
+        "endChar": 62
+      },
+      "revId": "d5cf1e4b6d051fb04f667f048e04c34a494ddb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
