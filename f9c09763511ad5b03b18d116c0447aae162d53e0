@@ -46,6 +46,30 @@
       "revId": "f9c09763511ad5b03b18d116c0447aae162d53e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408e1de5_82386331",
+        "filename": "telephony/java/android/telephony/CellIdentityNr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-02-28T16:09:59Z",
+      "side": 1,
+      "message": "We started into some of these in API council; most councilors choked when they saw the names.  :)",
+      "parentUuid": "b311bae6_2d7e58e6",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 25
+      },
+      "revId": "f9c09763511ad5b03b18d116c0447aae162d53e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
