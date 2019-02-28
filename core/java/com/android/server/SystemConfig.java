@@ -175,6 +175,14 @@ public class SystemConfig {
 
     final ArrayMap<String, ArrayMap<String, Boolean>> mOemPermissions = new ArrayMap<>();
 
+    // Allowed associations between applications.  If there are any entries
+    // for an app, those are the only associations allowed; otherwise, all associations
+    // are allowed.  Allowing an association from app A to app B means app A can not
+    // associate with any other apps, but does not limit what apps B can associate with.
+    final ArrayMap<String, ArraySet<String>> mAllowedAssociations = new ArrayMap<>();
+
+    private final ArraySet<String> mBugreportWhitelistedPackages = new ArraySet<>();
+
     public static SystemConfig getInstance() {
         synchronized (SystemConfig.class) {
             if (sInstance == null) {
@@ -286,6 +294,14 @@ public class SystemConfig {
             return oemPermissions;
         }
         return Collections.emptyMap();
+    }
+
+    public ArrayMap<String, ArraySet<String>> getAllowedAssociations() {
+        return mAllowedAssociations;
+    }
+
+    public ArraySet<String> getBugreportWhitelistedPackages() {
+        return mBugreportWhitelistedPackages;
     }
 
     SystemConfig() {
@@ -705,6 +721,15 @@ public class SystemConfig {
                                 + " at " + parser.getPositionDescription());
                     } else {
                         mHiddenApiPackageWhitelist.add(pkgname);
+                    }
+                    XmlUtils.skipCurrentTag(parser);
+                } else if ("bugreport-whitelisted".equals(name)) {
+                    String pkgname = parser.getAttributeValue(null, "package");
+                    if (pkgname == null) {
+                        Slog.w(TAG, "<" + name + "> without package in " + permFile
+                                + " at " + parser.getPositionDescription());
+                    } else {
+                        mBugreportWhitelistedPackages.add(pkgname);
                     }
                     XmlUtils.skipCurrentTag(parser);
                 } else {
