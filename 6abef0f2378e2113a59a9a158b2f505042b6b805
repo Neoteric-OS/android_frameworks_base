@@ -22,6 +22,29 @@
       "revId": "6abef0f2378e2113a59a9a158b2f505042b6b805",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fac23b_c3b4ee37",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3878,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-28T04:48:21Z",
+      "side": 1,
+      "message": "There\u0027s a good question here. Does the code use the mVpns lock only to protect the integrity of the array itself? If so, this is fine.\n\nBut... if the code actually (whether by intent or by chance) uses the mVpns lock as a mutex for writes to the individual elements of mVpns, then we could have a problem. Superficially, we\u0027d conclude that such accesses are just reads, and just put them behind a read lock, but that could then result in concurrent writes to individual VPN objects which would cause data races.\n\nIf in addition to adding this read-write lock we were able to to ensure that all accesses to a given Vpn object coming from the array are in a synchronized (thatVpn) block, then that might work.",
+      "range": {
+        "startLine": 3878,
+        "startChar": 18,
+        "endLine": 3878,
+        "endChar": 26
+      },
+      "revId": "6abef0f2378e2113a59a9a158b2f505042b6b805",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
