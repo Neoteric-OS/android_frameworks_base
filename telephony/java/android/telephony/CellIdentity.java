@@ -137,6 +137,16 @@ public abstract class CellIdentity implements Parcelable {
         return mAlphaShort;
     }
 
+    /** @hide */
+    public String getMccStr() {
+        return mMccStr;
+    }
+
+    /** @hide */
+    public String getMncStr() {
+        return mMncStr;
+    }
+
     /**
      * @return a CellLocation object for this CellIdentity
      * @hide

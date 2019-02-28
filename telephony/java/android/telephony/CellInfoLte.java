@@ -96,6 +96,15 @@ public final class CellInfoLte extends CellInfo implements Parcelable {
         if (DBG) log("getCellSignalStrength: " + mCellSignalStrengthLte);
         return mCellSignalStrengthLte;
     }
+
+    /** @hide */
+    @Override
+    public CellInfo sanitizeLocationInfo() {
+        CellInfoLte result = new CellInfoLte(this);
+        result.mCellIdentityLte = mCellIdentityLte.sanitizeLocationInfo();
+        return this;
+    }
+
     /** @hide */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCellSignalStrength(CellSignalStrengthLte css) {
