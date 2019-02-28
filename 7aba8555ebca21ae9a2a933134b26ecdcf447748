@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c905c5bc_d427afb1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-28T04:37:01Z",
+      "side": 1,
+      "message": "This \u0027protected\u0027 is scary (because \u0027protected\u0027 is a superset of package visibility, so this gives access to this lock to everyone in com.android.server), but if mVpns is protected it probably needs to be protected.\n\nTodo : see what tests are using mVpns and deduce the right choice here.",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 13
+      },
+      "revId": "7aba8555ebca21ae9a2a933134b26ecdcf447748",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
