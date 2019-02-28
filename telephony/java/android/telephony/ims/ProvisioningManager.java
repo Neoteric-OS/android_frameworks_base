@@ -33,6 +33,8 @@ import android.telephony.ims.feature.MmTelFeature;
 import android.telephony.ims.stub.ImsConfigImplBase;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 
+import androidx.annotation.Nullable;
+
 import com.android.internal.telephony.ITelephony;
 
 import java.util.concurrent.Executor;
@@ -177,7 +179,7 @@ public class ProvisioningManager {
      * @see android.telephony.SubscriptionManager#getActiveSubscriptionInfoList()
      * @throws IllegalArgumentException if the subscription is invalid.
      */
-    public static ProvisioningManager createForSubscriptionId(int subId) {
+    public static @NonNull ProvisioningManager createForSubscriptionId(int subId) {
         if (!SubscriptionManager.isValidSubscriptionId(subId)) {
             throw new IllegalArgumentException("Invalid subscription ID");
         }
@@ -206,7 +208,7 @@ public class ProvisioningManager {
      * reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public void registerProvisioningChangedCallback(@CallbackExecutor Executor executor,
+    public void registerProvisioningChangedCallback(@NonNull @CallbackExecutor Executor executor,
             @NonNull Callback callback) throws ImsException {
         callback.setExecutor(executor);
         try {
@@ -271,7 +273,7 @@ public class ProvisioningManager {
      */
     @WorkerThread
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public String getProvisioningStringValue(int key) {
+    public @Nullable String getProvisioningStringValue(int key) {
         try {
             return getITelephony().getImsProvisioningString(mSubId, key);
         } catch (RemoteException e) {
@@ -313,7 +315,7 @@ public class ProvisioningManager {
     @WorkerThread
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public @ImsConfigImplBase.SetConfigResult int setProvisioningStringValue(int key,
-            String value) {
+            @NonNull String value) {
         try {
             return getITelephony().setImsProvisioningString(mSubId, key, value);
         } catch (RemoteException e) {
