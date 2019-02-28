@@ -193,6 +193,11 @@ public abstract class CellInfo implements Parcelable {
     @NonNull
     public abstract CellSignalStrength getCellSignalStrength();
 
+    /** @hide */
+    public CellInfo sanitizeLocationInfo() {
+        return null;
+    }
+
     /**
      * Gets the connection status of this cell.
      *

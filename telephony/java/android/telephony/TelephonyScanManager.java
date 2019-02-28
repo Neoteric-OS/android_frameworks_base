@@ -48,11 +48,16 @@ public final class TelephonyScanManager {
     public static final String SCAN_RESULT_KEY = "scanResult";
 
     /** @hide */
+    public static final String SCAN_CARRIER_ID_KEY = "scanResultCarrierIds";
+
+    /** @hide */
     public static final int CALLBACK_SCAN_RESULTS = 1;
     /** @hide */
     public static final int CALLBACK_SCAN_ERROR = 2;
     /** @hide */
     public static final int CALLBACK_SCAN_COMPLETE = 3;
+    /** @hide */
+    public static final int CALLBACK_RESTRICTED_SCAN_RESULTS = 4;
 
     /**
      * The caller of
@@ -64,6 +69,15 @@ public final class TelephonyScanManager {
     public static abstract class NetworkScanCallback {
         /** Returns the scan results to the user, this callback will be called multiple times. */
         public void onResults(List<CellInfo> results) {}
+
+        /**
+         * Returns scan results that have had location-sensitive data stripped out.
+         * @param cellInfos A list of {@link CellInfo} objects that have had location-sensitive
+         *                  data stripped out.
+         * @param carrierIds A list of carrier IDs with the same length as {@code cellInfos},
+         *                   specifying the carrier operating the corresponding {@link CellInfo}.
+         */
+        public void onRestrictedResults(List<CellInfo> cellInfos, List<Integer> carrierIds) {}
 
         /**
          * Informs the user that the scan has stopped.
@@ -129,6 +143,7 @@ public final class TelephonyScanManager {
                 }
 
                 switch (message.what) {
+                    case CALLBACK_RESTRICTED_SCAN_RESULTS:
                     case CALLBACK_SCAN_RESULTS:
                         try {
                             final Bundle b = message.getData();
@@ -137,10 +152,20 @@ public final class TelephonyScanManager {
                             for (int i = 0; i < parcelables.length; i++) {
                                 ci[i] = (CellInfo) parcelables[i];
                             }
-                            executor.execute(() ->{
-                                Rlog.d(TAG, "onResults: " + ci.toString());
-                                callback.onResults((List<CellInfo>) Arrays.asList(ci));
-                            });
+                            if (message.what == CALLBACK_SCAN_RESULTS) {
+                                executor.execute(() -> {
+                                    Rlog.d(TAG, "onResults: " + ci.toString());
+                                    callback.onResults(Arrays.asList(ci));
+                                });
+                            } else if (message.what == CALLBACK_RESTRICTED_SCAN_RESULTS) {
+                                List<Integer> carrierIds =
+                                        b.getIntegerArrayList(SCAN_CARRIER_ID_KEY);
+
+                                executor.execute(() -> {
+                                    Rlog.d(TAG, "onResults: " + ci.toString());
+                                    callback.onRestrictedResults(Arrays.asList(ci), carrierIds);
+                                });
+                            }
                         } catch (Exception e) {
                             Rlog.e(TAG, "Exception in networkscan callback onResults", e);
                         }

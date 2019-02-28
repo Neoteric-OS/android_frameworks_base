@@ -43234,6 +43234,7 @@ package android.telephony {
     ctor public TelephonyScanManager.NetworkScanCallback();
     method public void onComplete();
     method public void onError(int);
+    method public void onRestrictedResults(java.util.List<android.telephony.CellInfo>, java.util.List<java.lang.Integer>);
     method public void onResults(java.util.List<android.telephony.CellInfo>);
   }
 

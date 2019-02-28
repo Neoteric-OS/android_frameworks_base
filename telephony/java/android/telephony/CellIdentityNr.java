@@ -54,6 +54,17 @@ public final class CellIdentityNr extends CellIdentity {
     }
 
     /**
+     * @hide
+     */
+    public CellIdentityNr() {
+        super(TAG, CellInfo.TYPE_NR, null, null, null, null);
+        mNci = CellInfo.UNAVAILABLE;
+        mPci = CellInfo.UNAVAILABLE;
+        mTac = CellInfo.UNAVAILABLE;
+        mNrArfcn = CellInfo.UNAVAILABLE;
+    }
+
+    /**
      * @return a CellLocation object for this CellIdentity.
      * @hide
      */
