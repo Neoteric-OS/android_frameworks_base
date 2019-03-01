@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.net;
+package com.android.server.net;
 
 import android.net.NetworkStats;
 import android.os.SystemClock;
