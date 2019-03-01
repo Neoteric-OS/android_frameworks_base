@@ -33,6 +33,7 @@ cc_library_static {
         "com_android_server_lights_LightsService.cpp",
         "com_android_server_location_GnssLocationProvider.cpp",
         "com_android_server_locksettings_SyntheticPasswordManager.cpp",
+        "com_android_server_net_NetworkStatsFactory.cpp",
         "com_android_server_net_NetworkStatsService.cpp",
         "com_android_server_power_PowerManagerService.cpp",
         "com_android_server_SerialService.cpp",
@@ -138,4 +139,37 @@ cc_defaults {
             ],
         }
     }
+}
+
+cc_library_shared {
+    name: "libnetworkstatsfactorytestjni",
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wthread-safety",
+
+        "-DEGL_EGLEXT_PROTOTYPES",
+        "-DGL_GLEXT_PROTOTYPES",
+    ],
+
+    srcs: [
+        "com_android_server_net_NetworkStatsFactory.cpp",
+        "test_onload.cpp"
+    ],
+
+    shared_libs: [
+        "libbpf_android",
+        "liblog",
+        "libnativehelper",
+        "libnetdbpf",
+        "libnetdutils",
+    ],
+    include_dirs: [
+        "bionic/libc/private",
+        "frameworks/base/libs",
+        "frameworks/native/services",
+        "system/gatekeeper/include",
+    ],
 }

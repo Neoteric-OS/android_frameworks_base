@@ -26,6 +26,44 @@ LOCAL_JAVA_LIBRARIES := \
     android.test.base \
     android.test.mock
 
+LOCAL_JNI_SHARED_LIBRARIES := \
+    libartbase \
+    libbacktrace \
+    libbase \
+    libbinder \
+    libbinderthreadstate \
+    libbpf \
+    libbpf_android \
+    libc++ \
+    libcrypto \
+    libcutils \
+    libdexfile \
+    libhidl-gen-utils \
+    libhidlbase \
+    libhidltransport \
+    libhwbinder \
+    libjsoncpp \
+    liblog \
+    liblzma \
+    libnativehelper \
+    libnetdbpf \
+    libnetdutils \
+    libpackagelistparser \
+    libpcre2 \
+    libprocessgroup \
+    libselinux \
+    libui \
+    libutils \
+    libvintf \
+    libvndksupport \
+    libtinyxml2 \
+    libunwindstack \
+    libutilscallstack \
+    libziparchive \
+    libz \
+    netd_aidl_interface-cpp \
+    libnetworkstatsfactorytestjni
+
 LOCAL_PACKAGE_NAME := FrameworksNetTests
 LOCAL_PRIVATE_PLATFORM_APIS := true
 LOCAL_COMPATIBILITY_SUITE := device-tests
