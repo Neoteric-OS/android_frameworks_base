@@ -22,6 +22,30 @@
       "revId": "0095418bac3114ba32f29f56f3a9113aae36ced8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b77237_55533d96",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-03-01T23:22:27Z",
+      "side": 1,
+      "message": "Sorry, unit tests that *depend on* this class.",
+      "parentUuid": "baa9bc3a_d81e46fd",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "0095418bac3114ba32f29f56f3a9113aae36ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
