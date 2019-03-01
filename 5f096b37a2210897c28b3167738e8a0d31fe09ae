@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3206de52_8b50afa9",
+        "filename": "telephony/java/android/telephony/CellIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-01T00:20:00Z",
+      "side": 1,
+      "message": "These do not belong here. I\u0027d like to clean this up, but let\u0027s not go further in this direction.",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "5f096b37a2210897c28b3167738e8a0d31fe09ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
