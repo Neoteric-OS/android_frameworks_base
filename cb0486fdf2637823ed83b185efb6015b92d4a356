@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7a17b3_125cbe85",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-01T08:35:17Z",
+      "side": 1,
+      "message": "Are you sure you want to make this static ?\n- This prevents us from having different settings for different clients for different networks. Maybe we never plan to do this, but I still think theoretically it\u0027s better to split. It\u0027s not like the DhcpClient is a singleton.\n- It may become especially important for testing. It\u0027s especially true that when you call setRapidCommitOption() on one instance of DhcpClient you don\u0027t expect other instances to be affected.\n\nWhat does this give you ?",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 18
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdbb5cd_d8100b08",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-01T08:35:17Z",
+      "side": 1,
+      "message": "I find that private methods calling transitionTo() tend to obfuscate code in StateMachine subclasses. The reason for this is that when you\u0027re reading the code of a state, you typically expect to see all the edges clearly written there, and this is hiding the edge away.\n\nMy suggestion would be to either :\n- Remove transitionTo() and call it immediately after confirmDhcpLease in every case.\n- Rename this method to confirmDhcpLeaseAndTransitionTo().\n\nI\u0027d be happy with either solution.\n\n+reminv@ you suggested this is refactored together ; do you have any opinion in the light of my comment ?",
+      "range": {
+        "startLine": 322,
+        "startChar": 8,
+        "endLine": 322,
+        "endChar": 20
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba37023e_29c9cbef",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-01T08:35:17Z",
+      "side": 1,
+      "message": "Our code tends to use return-fast instead of brackets. It\u0027s a general tendency inside google ( http://go/tott/553 ) and it certainly is local style here.\n\nSuggest :\n// [your comment]\nif (!sRapidCommitEnabled || !packet.mRapidCommit) return;\n[the rest of the code here]",
+      "range": {
+        "startLine": 838,
+        "startChar": 16,
+        "endLine": 838,
+        "endChar": 42
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
