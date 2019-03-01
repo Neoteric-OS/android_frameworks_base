@@ -37,6 +37,10 @@ import java.net.URL;
 import java.net.UnknownServiceException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /** @hide */
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
@@ -67,6 +71,9 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private final static int HTTP_TEMP_REDIRECT = 307;
     private final static int MAX_REDIRECTS = 20;
 
+    private ExecutorService mExecutor = null;
+    private CompletableFuture<Integer> mReadAtResult = null;
+
     @UnsupportedAppUsage
     public MediaHTTPConnection() {
         CookieHandler cookieHandler = CookieHandler.getDefault();
@@ -75,6 +82,9 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
         }
 
         native_setup();
+        synchronized (this) {
+            mExecutor = Executors.newFixedThreadPool(1);
+        }
     }
 
     @Override
@@ -139,9 +149,20 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public void disconnect() {
-        teardownConnection();
-        mHeaders = null;
-        mURL = null;
+        synchronized (this) {
+            if (mReadAtResult != null && !mReadAtResult.isDone()) {
+                mReadAtResult.complete(-1);
+            }
+            mReadAtResult = null;
+        }
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                teardownConnection();
+                mHeaders = null;
+                mURL = null;
+            }
+        });
     }
 
     private void teardownConnection() {
@@ -324,7 +345,21 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     @Override
     @UnsupportedAppUsage
     public int readAt(long offset, int size) {
-        return native_readAt(offset, size);
+        try {
+            mReadAtResult = (CompletableFuture<Integer>) (
+                    mExecutor.submit(new Callable<Integer>() {
+                        @Override
+                        public Integer call() throws Exception {
+                            return native_readAt(offset, size);
+                        }
+                    }));
+            return mReadAtResult.get();
+        } catch (Exception e) {
+            if (VERBOSE) {
+                Log.d(TAG, "readAt " + offset + " / " + size + " => -1");
+            }
+            return -1;
+        }
     }
 
     private int readAt(long offset, byte[] data, int size) {
