@@ -61,7 +61,7 @@ import java.util.Objects;
  * @hide
  */
 @SystemApi
-public final class CarrierRestrictionRules implements Parcelable {
+public class CarrierRestrictionRules implements Parcelable {
     /**
      * The device only allows usage of carriers that are present in the allowed list and not
      * present in the excluded list. This implies that if a carrier is not present in either list,
@@ -177,7 +177,8 @@ public final class CarrierRestrictionRules implements Parcelable {
      * @return a list of boolean with the same size as input, indicating if each
      * {@link CarrierIdentifier} is allowed or not.
      */
-    public List<Boolean> isCarrierIdentifiersAllowed(@NonNull List<CarrierIdentifier> carrierIds) {
+    public @NonNull List<Boolean> areCarrierIdentifiersAllowed(
+            @NonNull List<CarrierIdentifier> carrierIds) {
         ArrayList<Boolean> result = new ArrayList<>(carrierIds.size());
 
         // First calculate the result for each slot independently
@@ -332,7 +333,7 @@ public final class CarrierRestrictionRules implements Parcelable {
     /**
      * Builder for a {@link CarrierRestrictionRules}.
      */
-    public static class Builder {
+    public static final class Builder {
         private final CarrierRestrictionRules mRules;
 
         /** {@hide} */
@@ -341,14 +342,14 @@ public final class CarrierRestrictionRules implements Parcelable {
         }
 
         /** build command */
-        public CarrierRestrictionRules build() {
+        public @NonNull CarrierRestrictionRules build() {
             return mRules;
         }
 
         /**
          * Indicate that all carriers are allowed.
          */
-        public Builder setAllCarriersAllowed() {
+        public @NonNull Builder setAllCarriersAllowed() {
             mRules.mAllowedCarriers.clear();
             mRules.mExcludedCarriers.clear();
             mRules.mCarrierRestrictionDefault = CARRIER_RESTRICTION_DEFAULT_ALLOWED;
@@ -360,7 +361,8 @@ public final class CarrierRestrictionRules implements Parcelable {
          *
          * @param allowedCarriers list of allowed carriers
          */
-        public Builder setAllowedCarriers(List<CarrierIdentifier> allowedCarriers) {
+        public @NonNull Builder setAllowedCarriers(
+                @NonNull List<CarrierIdentifier> allowedCarriers) {
             mRules.mAllowedCarriers = new ArrayList<CarrierIdentifier>(allowedCarriers);
             return this;
         }
@@ -370,7 +372,8 @@ public final class CarrierRestrictionRules implements Parcelable {
          *
          * @param excludedCarriers list of excluded carriers
          */
-        public Builder setExcludedCarriers(List<CarrierIdentifier> excludedCarriers) {
+        public @NonNull Builder setExcludedCarriers(
+                @NonNull List<CarrierIdentifier> excludedCarriers) {
             mRules.mExcludedCarriers = new ArrayList<CarrierIdentifier>(excludedCarriers);
             return this;
         }
@@ -380,7 +383,7 @@ public final class CarrierRestrictionRules implements Parcelable {
          *
          * @param carrierRestrictionDefault prioritized carrier list
          */
-        public Builder setDefaultCarrierRestriction(
+        public @NonNull Builder setDefaultCarrierRestriction(
                 @CarrierRestrictionDefault int carrierRestrictionDefault) {
             mRules.mCarrierRestrictionDefault = carrierRestrictionDefault;
             return this;
@@ -391,7 +394,7 @@ public final class CarrierRestrictionRules implements Parcelable {
          *
          * @param multiSimPolicy multi SIM policy
          */
-        public Builder setMultiSimPolicy(@MultiSimPolicy int multiSimPolicy) {
+        public @NonNull Builder setMultiSimPolicy(@MultiSimPolicy int multiSimPolicy) {
             mRules.mMultiSimPolicy = multiSimPolicy;
             return this;
         }
