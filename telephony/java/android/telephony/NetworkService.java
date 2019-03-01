@@ -82,27 +82,30 @@ public abstract class NetworkService extends Service {
      * service is associated with one physical SIM slot.
      */
     public abstract class NetworkServiceProvider implements AutoCloseable {
-        private final int mSlotId;
+        private final int mSlotIndex;
 
         private final List<INetworkServiceCallback>
                 mNetworkRegistrationStateChangedCallbacks = new ArrayList<>();
 
-        public NetworkServiceProvider(int slotId) {
-            mSlotId = slotId;
+        /**
+         * Constructor
+         * @param slotIndex SIM slot id the data service provider associated with.
+         */
+        public NetworkServiceProvider(int slotIndex) {
+            mSlotIndex = slotIndex;
         }
 
         /**
          * @return SIM slot id the network service associated with.
          */
         public final int getSlotId() {
-            return mSlotId;
+            return mSlotIndex;
         }
 
         /**
          * API to get network registration state. The result will be passed to the callback.
          * @param domain Network domain
          * @param callback The callback for reporting network registration state
-         * @return SIM slot id the network service associated with.
          */
         public void getNetworkRegistrationState(@Domain int domain,
                                                 @NonNull NetworkServiceCallback callback) {
@@ -110,9 +113,12 @@ public abstract class NetworkService extends Service {
                     NetworkServiceCallback.RESULT_ERROR_UNSUPPORTED, null);
         }
 
+        /**
+         * Notify the system that network registration state is changed.
+         */
         public final void notifyNetworkRegistrationStateChanged() {
             mHandler.obtainMessage(NETWORK_SERVICE_INDICATION_NETWORK_STATE_CHANGED,
-                    mSlotId, 0, null).sendToTarget();
+                    mSlotIndex, 0, null).sendToTarget();
         }
 
         private void registerForStateChanged(@NonNull INetworkServiceCallback callback) {
@@ -163,7 +169,7 @@ public abstract class NetworkService extends Service {
                 case NETWORK_SERVICE_CREATE_NETWORK_SERVICE_PROVIDER:
                     // If the service provider doesn't exist yet, we try to create it.
                     if (serviceProvider == null) {
-                        mServiceMap.put(slotId, createNetworkServiceProvider(slotId));
+                        mServiceMap.put(slotId, onCreateNetworkServiceProvider(slotId));
                     }
                     break;
                 case NETWORK_SERVICE_REMOVE_NETWORK_SERVICE_PROVIDER:
@@ -226,9 +232,8 @@ public abstract class NetworkService extends Service {
      * @param slotId SIM slot id the network service associated with.
      * @return Network service object
      */
-    protected abstract NetworkServiceProvider createNetworkServiceProvider(int slotId);
+    public abstract NetworkServiceProvider onCreateNetworkServiceProvider(int slotId);
 
-    /** @hide */
     @Override
     public IBinder onBind(Intent intent) {
         if (intent == null || !NETWORK_SERVICE_INTERFACE.equals(intent.getAction())) {
@@ -239,7 +244,6 @@ public abstract class NetworkService extends Service {
         return mBinder;
     }
 
-    /** @hide */
     @Override
     public boolean onUnbind(Intent intent) {
         mHandler.obtainMessage(NETWORK_SERVICE_REMOVE_ALL_NETWORK_SERVICE_PROVIDERS, 0,
@@ -252,6 +256,7 @@ public abstract class NetworkService extends Service {
     @Override
     public void onDestroy() {
         mHandlerThread.quit();
+        super.onDestroy();
     }
 
     /**

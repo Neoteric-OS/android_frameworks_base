@@ -116,23 +116,23 @@ public abstract class DataService extends Service {
      */
     public abstract class DataServiceProvider implements AutoCloseable {
 
-        private final int mSlotId;
+        private final int mSlotIndex;
 
         private final List<IDataServiceCallback> mDataCallListChangedCallbacks = new ArrayList<>();
 
         /**
          * Constructor
-         * @param slotId SIM slot id the data service provider associated with.
+         * @param slotIndex SIM slot index the data service provider associated with.
          */
-        public DataServiceProvider(int slotId) {
-            mSlotId = slotId;
+        public DataServiceProvider(int slotIndex) {
+            mSlotIndex = slotIndex;
         }
 
         /**
          * @return SIM slot id the data service provider associated with.
          */
         public final int getSlotId() {
-            return mSlotId;
+            return mSlotIndex;
         }
 
         /**
@@ -251,9 +251,9 @@ public abstract class DataService extends Service {
         public final void notifyDataCallListChanged(List<DataCallResponse> dataCallList) {
             synchronized (mDataCallListChangedCallbacks) {
                 for (IDataServiceCallback callback : mDataCallListChangedCallbacks) {
-                    mHandler.obtainMessage(DATA_SERVICE_INDICATION_DATA_CALL_LIST_CHANGED, mSlotId,
-                            0, new DataCallListChangedIndication(dataCallList, callback))
-                            .sendToTarget();
+                    mHandler.obtainMessage(DATA_SERVICE_INDICATION_DATA_CALL_LIST_CHANGED,
+                            mSlotIndex, 0, new DataCallListChangedIndication(dataCallList,
+                                    callback)).sendToTarget();
                 }
             }
         }
@@ -347,7 +347,7 @@ public abstract class DataService extends Service {
 
             switch (message.what) {
                 case DATA_SERVICE_CREATE_DATA_SERVICE_PROVIDER:
-                    serviceProvider = createDataServiceProvider(message.arg1);
+                    serviceProvider = onCreateDataServiceProvider(message.arg1);
                     if (serviceProvider != null) {
                         mServiceMap.put(slotId, serviceProvider);
                     }
@@ -457,9 +457,8 @@ public abstract class DataService extends Service {
      * @param slotId SIM slot id the data service associated with.
      * @return Data service object
      */
-    public abstract DataServiceProvider createDataServiceProvider(int slotId);
+    public abstract DataServiceProvider onCreateDataServiceProvider(int slotId);
 
-    /** @hide */
     @Override
     public IBinder onBind(Intent intent) {
         if (intent == null || !DATA_SERVICE_INTERFACE.equals(intent.getAction())) {
@@ -469,17 +468,16 @@ public abstract class DataService extends Service {
         return mBinder;
     }
 
-    /** @hide */
     @Override
     public boolean onUnbind(Intent intent) {
         mHandler.obtainMessage(DATA_SERVICE_REMOVE_ALL_DATA_SERVICE_PROVIDERS).sendToTarget();
         return false;
     }
 
-    /** @hide */
     @Override
     public void onDestroy() {
         mHandlerThread.quit();
+        super.onDestroy();
     }
 
     /**
