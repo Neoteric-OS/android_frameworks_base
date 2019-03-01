@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eca20c2_d4661f3b",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-01T09:30:05Z",
+      "side": 1,
+      "message": "s/It\u0027s used both/Superclass/",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "60ed2e27f5b71f670d2980887aa8b6f6a0004194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
