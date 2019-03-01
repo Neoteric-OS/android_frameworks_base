@@ -46,6 +46,30 @@
       "revId": "0095418bac3114ba32f29f56f3a9113aae36ced8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9859d571_2a98fd18",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2019-03-01T23:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b77237_55533d96",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "0095418bac3114ba32f29f56f3a9113aae36ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
