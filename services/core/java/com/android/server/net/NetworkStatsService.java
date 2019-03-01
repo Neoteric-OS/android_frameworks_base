@@ -18,6 +18,7 @@ package com.android.server.net;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
+import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.READ_NETWORK_USAGE_HISTORY;
 import static android.content.Intent.ACTION_SHUTDOWN;
 import static android.content.Intent.ACTION_UID_REMOVED;
@@ -860,7 +861,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             VpnInfo[] vpnArray,
             NetworkState[] networkStates,
             String activeIface) {
-        mContext.enforceCallingOrSelfPermission(READ_NETWORK_USAGE_HISTORY, TAG);
+        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
         assertBandwidthControlEnabled();
 
         final long token = Binder.clearCallingIdentity();
