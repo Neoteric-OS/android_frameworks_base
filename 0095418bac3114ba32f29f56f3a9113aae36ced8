@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa9bc3a_d81e46fd",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-03-01T23:21:58Z",
+      "side": 1,
+      "message": "Is it possible to make this non-final? Currently I can\u0027t write unit tests for this class because:\n\n1. Cannot @Mock final classes\n2. newBuilder() is @hide\n3. Builder() constructor is @hide\n\nChanging any one of these 3 would do the trick.",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "0095418bac3114ba32f29f56f3a9113aae36ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
