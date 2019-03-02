@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abbf8d89_c57654cc",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27472,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-02T03:28:46Z",
+      "side": 1,
+      "message": "Is this a generally-understood term in the industry, like IMS is? If so then this is fine. If not, then this should probably be spelled out as NET_CAPABILITY_MISSION_CRITICAL_SERVICES or NET_CAPABILITY_MISSION_CRITICAL, etc.",
+      "range": {
+        "startLine": 27472,
+        "startChar": 34,
+        "endLine": 27472,
+        "endChar": 52
+      },
+      "revId": "fd3ee5783e9a335bf343caf4d4768d1246155508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
