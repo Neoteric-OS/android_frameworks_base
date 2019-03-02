@@ -63,6 +63,24 @@
       "revId": "a917610d0d96ca0af5621eaafe719decd37fe07f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d3ec25_0cad91cb",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-02T04:23:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dfc09a5_98bada8a",
+      "revId": "a917610d0d96ca0af5621eaafe719decd37fe07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
