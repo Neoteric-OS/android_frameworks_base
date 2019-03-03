@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85cf1d2b_b4f5a182",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-03T02:58:57Z",
+      "side": 1,
+      "message": "Yes, a good suggestion. Actually I only considered that DhcpClient is applied to wifi network so far. Maybe we will have another plan to apply this class for Ethernet or something else. Absolutely we don\u0027t want to affect other instances. Updated. Thanks.",
+      "parentUuid": "5f7a17b3_125cbe85",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 18
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcdbb5cd_d8100b08",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7b675d4_0e3e79a3",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-03T02:58:57Z",
+      "side": 1,
+      "message": "Agree. Maybe option 1 would be more clear. Remi, please let me know your option.",
+      "parentUuid": "fcdbb5cd_d8100b08",
+      "range": {
+        "startLine": 322,
+        "startChar": 8,
+        "endLine": 322,
+        "endChar": 20
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba37023e_29c9cbef",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c702a478_e617335b",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-03T02:58:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ba37023e_29c9cbef",
+      "range": {
+        "startLine": 838,
+        "startChar": 16,
+        "endLine": 838,
+        "endChar": 42
+      },
+      "revId": "cb0486fdf2637823ed83b185efb6015b92d4a356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
