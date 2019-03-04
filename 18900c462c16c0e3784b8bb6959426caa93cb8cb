@@ -22,6 +22,30 @@
       "revId": "18900c462c16c0e3784b8bb6959426caa93cb8cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d8f208_0636efd5",
+        "filename": "telephony/java/android/telephony/CarrierRestrictionRules.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-03-04T18:51:37Z",
+      "side": 0,
+      "message": "Looks like our unbundled branch might be using an outdated Mockito version. I\u0027ll file a bug to bring it up to date.",
+      "parentUuid": "e2af4dfa_38a8a72e",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "18900c462c16c0e3784b8bb6959426caa93cb8cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
