@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97041c10_3ba7339d",
+        "filename": "tests/AccessoryDisplay/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This file doesn\u0027t need to exist",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0a6b36_89e9bfdf",
+        "filename": "tests/AccessoryDisplay/common/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This should just be a java_library_static",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28907ae8_cdd7c67a",
+        "filename": "tests/AppLaunch/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This can be removed",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc6e2a7_792a7857",
+        "filename": "tests/AppLaunchWear/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This can be removed",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de246a7c_49c1776c",
+        "filename": "tests/BrowserPowerTest/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t make sense anymore, just remove it",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cd645c_e706c686",
+        "filename": "tests/Camera2Tests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This file can be removed",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3c0af3_d7673977",
+        "filename": "tests/Camera2Tests/SmartCamera/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This file can be removed",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378d0654_cbc4c9db",
+        "filename": "tests/CoreTests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This file can be removed",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a329fd1_6b72d659",
+        "filename": "tests/FeatureSplit/base/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "Pretty sure this should be an android_test_helper_app",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ca0769_860c50d3",
+        "filename": "tests/FeatureSplit/feature1/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "Same here -- android_test_helper_app",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77dca3a_7570bdfb",
+        "filename": "tests/FeatureSplit/feature2/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "Same here, android_test_helper_app",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328fefe1_633a2d09",
+        "filename": "tests/SmokeTest/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-04T21:15:53Z",
+      "side": 1,
+      "message": "This can be removed",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
