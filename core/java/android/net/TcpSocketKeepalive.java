@@ -79,4 +79,9 @@ final class TcpSocketKeepalive extends SocketKeepalive {
             }
         });
     }
+
+    @Override
+    void closeImpl() {
+        stop();
+    }
 }

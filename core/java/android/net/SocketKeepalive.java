@@ -232,8 +232,10 @@ public abstract class SocketKeepalive implements AutoCloseable {
      */
     @Override
     public final void close() {
-        stop();
+        closeImpl();
     }
+
+    abstract void closeImpl();
 
     /**
      * The callback which app can use to learn the status changes of {@link SocketKeepalive}. See

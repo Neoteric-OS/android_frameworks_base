@@ -17,10 +17,11 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 
-import java.io.FileDescriptor;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.Executor;
 
@@ -31,12 +32,12 @@ public final class NattSocketKeepalive extends SocketKeepalive {
 
     @NonNull private final InetAddress mSource;
     @NonNull private final InetAddress mDestination;
-    @NonNull private final FileDescriptor mFd;
+    @NonNull private final ParcelFileDescriptor mPfd;
     private final int mResourceId;
 
     NattSocketKeepalive(@NonNull IConnectivityManager service,
             @NonNull Network network,
-            @NonNull FileDescriptor fd,
+            @NonNull ParcelFileDescriptor pfd,
             int resourceId,
             @NonNull InetAddress source,
             @NonNull InetAddress destination,
@@ -45,7 +46,7 @@ public final class NattSocketKeepalive extends SocketKeepalive {
         super(service, network, executor, callback);
         mSource = source;
         mDestination = destination;
-        mFd = fd;
+        mPfd = pfd;
         mResourceId = resourceId;
     }
 
@@ -53,8 +54,8 @@ public final class NattSocketKeepalive extends SocketKeepalive {
     void startImpl(int intervalSec) {
         mExecutor.execute(() -> {
             try {
-                mService.startNattKeepaliveWithFd(mNetwork, mFd, mResourceId, intervalSec,
-                        mCallback,
+                mService.startNattKeepaliveWithFd(mNetwork, mPfd.getFileDescriptor(), mResourceId,
+                        intervalSec, mCallback,
                         mSource.getHostAddress(), mDestination.getHostAddress());
             } catch (RemoteException e) {
                 Log.e(TAG, "Error starting socket keepalive: ", e);
@@ -75,6 +76,15 @@ public final class NattSocketKeepalive extends SocketKeepalive {
                 throw e.rethrowFromSystemServer();
             }
         });
+    }
 
+    @Override
+    void closeImpl() {
+        stop();
+        try {
+            mPfd.close();
+        } catch (IOException e) {
+            // Nothing much can be done.
+        }
     }
 }
