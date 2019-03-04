@@ -17,6 +17,8 @@
 package android.telephony.data;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.net.LinkProperties;
 import android.os.RemoteException;
@@ -74,7 +76,8 @@ public class DataServiceCallback {
      * @param result The result code. Must be one of the {@link ResultCode}.
      * @param response Setup data call response.
      */
-    public void onSetupDataCallComplete(@ResultCode int result, DataCallResponse response) {
+    public void onSetupDataCallComplete(@ResultCode int result,
+                                        @Nullable DataCallResponse response) {
         IDataServiceCallback callback = mCallback.get();
         if (callback != null) {
             try {
@@ -144,7 +147,7 @@ public class DataServiceCallback {
      * @param dataCallList List of the current active data connection.
      */
     public void onGetDataCallListComplete(@ResultCode int result,
-                                          List<DataCallResponse> dataCallList) {
+                                          @Nullable List<DataCallResponse> dataCallList) {
         IDataServiceCallback callback = mCallback.get();
         if (callback != null) {
             try {
@@ -160,7 +163,7 @@ public class DataServiceCallback {
      *
      * @param dataCallList List of the current active data connection.
      */
-    public void onDataCallListChanged(List<DataCallResponse> dataCallList) {
+    public void onDataCallListChanged(@NonNull List<DataCallResponse> dataCallList) {
         IDataServiceCallback callback = mCallback.get();
         if (callback != null) {
             try {
