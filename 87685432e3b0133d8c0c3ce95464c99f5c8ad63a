@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc00d22_b176457f",
+        "filename": "libs/androidfw/ApkAssets.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2019-03-04T19:06:40Z",
+      "side": 1,
+      "message": "const StringPiece data(\n      reinterpret_cast\u003cconst char*\u003e(loaded_apk-\u003eresources_asset_-\u003egetBuffer(true /*wordAligned*/)),\n      loaded_apk-\u003eresources_asset_-\u003egetLength());\n\n+ if (data.data() \u003d\u003d nullptr || data.size() \u003d\u003d 0) {\n+   LOG(ERROR) \u003c\u003c \"Failed to read \u0027\" \u003c\u003c kResourcesArsc \u003c\u003c \"\u0027 in APK \u0027\" \u003c\u003c path \u003c\u003c \"\u0027.\";\n+   return {};\n+ }\n\n...",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 43
+      },
+      "revId": "87685432e3b0133d8c0c3ce95464c99f5c8ad63a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
