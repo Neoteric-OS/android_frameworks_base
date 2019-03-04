@@ -71,7 +71,7 @@ public abstract class DnsPacket {
     }
 
     /**
-     * It's used both for DNS questions and DNS resource records.
+     * Superclass for DNS questions and DNS resource records.
      *
      * DNS questions (No TTL/RDATA)
      * DNS resource records (With TTL/RDATA)
@@ -96,12 +96,13 @@ public abstract class DnsPacket {
         /**
          * Create a new DnsRecord from a positioned ByteBuffer.
          *
-         * @param ByteBuffer input of record, must be in network byte order
-         *         (which is the default).
          * Reads the passed ByteBuffer from its current position and decodes a DNS record.
          * When this constructor returns, the reading position of the ByteBuffer has been
          * advanced to the end of the DNS header record.
          * This is meant to chain with other methods reading a DNS response in sequence.
+         *
+         * @param ByteBuffer input of record, must be in network byte order
+         *         (which is the default).
          */
         DnsRecord(int recordType, @NonNull ByteBuffer buf)
                 throws BufferUnderflowException, ParseException {

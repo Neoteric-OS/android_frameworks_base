@@ -17,7 +17,7 @@
 package android.net;
 
 /**
- * Thrown when parsing a URL fails.
+ * Thrown when parsing failed.
  */
 // See non-public class {@link WebAddress}.
 public class ParseException extends RuntimeException {
@@ -25,6 +25,11 @@ public class ParseException extends RuntimeException {
 
     ParseException(String response) {
         super(response);
+        this.response = response;
+    }
+
+    ParseException(String response, Throwable cause) {
+        super(response, cause);
         this.response = response;
     }
 }
