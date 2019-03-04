@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9221da59_b494b7b9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-04T07:43:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "554dc346_a1435ee2",
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a6247b_35739fd5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-02-27T17:58:08Z",
       "side": 1,
       "message": "Do we need to worry about the hashcode of this class? Java\u0027s default hashcode will roughly use the internal address of the object, but what happens if a subclass overrides hashcode? It seems like we could end up with some subtle bugs there. I may be overthinking this a bit, but I want to make sure we\u0027re covering our bases.",
+      "range": {
+        "startLine": 2565,
+        "startChar": 27,
+        "endLine": 2565,
+        "endChar": 51
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f1628a_0cf3af12",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-04T07:43:11Z",
+      "side": 1,
+      "message": "I couldn’t catch what you said.If two different OnTetheringEventListener objects have the same hashcode, they would still be different key in ArrayMap.  Could you share what subtle bugs would happen ??",
+      "parentUuid": "43a6247b_35739fd5",
       "range": {
         "startLine": 2565,
         "startChar": 27,
@@ -62,6 +104,30 @@
       "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef34428_8bcdc86a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-04T07:43:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53739ae5_3842b0e5",
+      "range": {
+        "startLine": 2569,
+        "startChar": 59,
+        "endLine": 2570,
+        "endChar": 93
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
