@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "1553716d_172e78c0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-04T20:08:25Z",
+      "side": 1,
+      "message": "I may be missing something about the implementation of ArrayMap, but afaict, if two different OnTetheringEventListener objects have the same hashcode, they would have the same map key:\n\nhttps://cs.corp.google.com/android/frameworks/base/core/java/android/util/ArrayMap.java?rcl\u003d475f8da097c0589f8bcd148d04c260a5b1030819\u0026l\u003d506\n\nThe only way they don\u0027t is if you set mIdentityHashCode to true using the hidden constructor (which may be a good option here).",
+      "parentUuid": "84f1628a_0cf3af12",
+      "range": {
+        "startLine": 2565,
+        "startChar": 27,
+        "endLine": 2565,
+        "endChar": 51
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53739ae5_3842b0e5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
