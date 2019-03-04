@@ -343,6 +343,7 @@ public class NetworkRegistrationState implements Parcelable {
     /**
      * @return The cell information.
      */
+    @Nullable
     public CellIdentity getCellIdentity() {
         return mCellIdentity;
     }
