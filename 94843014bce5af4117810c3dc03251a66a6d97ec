@@ -22,6 +22,30 @@
       "revId": "94843014bce5af4117810c3dc03251a66a6d97ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696c9764_c73de253",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-04T12:17:45Z",
+      "side": 1,
+      "message": "Thinking some more, I\u0027m guessing that the parent thread doesn\u0027t change the state of mInputStream, mConnection after creating the background thread here?\n\nIf so, then I think that means that the _read_ access to mInputStream, mConnection from the unnamed background thread is safe (\"effectively immutable\", Java Concurrency in Practice chapter 3.5.4, page 53).\n\nAs far as I can tell, the _write_ access to mConnection, mInputStream, mCurrentOffset by the unnamed background thread is not synchronized or safely published back to the parent thread.\n\nDoes that make sense?",
+      "parentUuid": "a3a5e6c1_2154c595",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 38
+      },
+      "revId": "94843014bce5af4117810c3dc03251a66a6d97ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
