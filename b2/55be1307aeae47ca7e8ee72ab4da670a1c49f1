@@ -1,0 +1,9 @@
+Code-Review+2: Slava Shklyaev <slavash@google.com>
+Autosubmit+1: Slava Shklyaev <slavash@google.com>
+Presubmit-Ready+1: Slava Shklyaev <slavash@google.com>
+Build-Cop-Override+1: Slava Shklyaev <slavash@google.com>
+Submitted-by: Slava Shklyaev <slavash@google.com>
+Submitted-at: Mon, 04 Mar 2019 11:49:33 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/915965
+Project: platform/frameworks/base
+Branch: refs/heads/master
