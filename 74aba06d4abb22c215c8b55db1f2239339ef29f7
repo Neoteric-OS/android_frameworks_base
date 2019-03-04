@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acadc151_98f60f9d",
+        "filename": "telephony/java/android/telephony/data/DataServiceCallback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-03-04T21:55:00Z",
+      "side": 1,
+      "message": "Is null a possibility here?  Would an empty list be a safer return?",
+      "revId": "74aba06d4abb22c215c8b55db1f2239339ef29f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f073c85_0a4b4e55",
+        "filename": "telephony/java/android/telephony/data/DataServiceCallback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-03-04T21:55:00Z",
+      "side": 1,
+      "message": "Is null a possibility here?  Would an empty list be a safer return?",
+      "revId": "74aba06d4abb22c215c8b55db1f2239339ef29f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
