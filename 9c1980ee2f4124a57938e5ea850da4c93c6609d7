@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18655174_5b2eda04",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/ResourceManagerInvocationHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-04T08:33:15Z",
+      "side": 1,
+      "message": "Method.getReturnType is not annotated as NonNull. Is this possible to get a null object? If yes,  will that be safer to write as String.class.equals(method.getReturnType()) to prevent NPE?\n\nAnd we could use String.class.equals(resType) to prevent calling getReturnType() again?",
+      "revId": "9c1980ee2f4124a57938e5ea850da4c93c6609d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f2c0ea_e3864da8",
+        "filename": "packages/NetworkStack/tests/src/com/android/networkstack/IResourceManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-04T08:33:15Z",
+      "side": 1,
+      "message": "2019?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "9c1980ee2f4124a57938e5ea850da4c93c6609d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
