@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52be183f_688f67f7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "Unfortunately there are other ways for a VPN to be fully routed. You could get a more precise answer with NetworkUtils.routedIPv{4,6}AddressCount (for usage, see the infamous Vpn#providesRoutesToMostDestinations which I believe you are already familiar with), but that\u0027s expensive. You could compute it once and for all and store it in networkMisc or in the Vpn object when the network connects, for example.\n\nOr, you may decide you don\u0027t mind and this is good enough. Maybe +lorenzo@ has an opinion.",
+      "range": {
+        "startLine": 5587,
+        "startChar": 23,
+        "endLine": 5587,
+        "endChar": 42
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a642de_ace08b48",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": ", and go/avoidwe",
+      "range": {
+        "startLine": 511,
+        "startChar": 81,
+        "endLine": 511,
+        "endChar": 85
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f67309_0a4d6e5c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "I don\u0027t think a UidRange is guaranteed to only contain UIDs for a single user. getStartUser() only returns the user for the first UID in the range, but your code assumes the range can\u0027t cover multiple users.",
+      "range": {
+        "startLine": 560,
+        "startChar": 37,
+        "endLine": 560,
+        "endChar": 49
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2e30c1_62fefcb7",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "Maybe this should be a utility function in UidRange. Vpn#isBlockingUid already contains this code.",
+      "range": {
+        "startLine": 571,
+        "startChar": 20,
+        "endLine": 571,
+        "endChar": 31
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d77f2c5_f1b56b38",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "Nit : this sounds like the Uids are bypassable. Maybe \"removeUidsThatCanBypass\" or \"removeBypassingUids\" or something ?",
+      "range": {
+        "startLine": 589,
+        "startChar": 17,
+        "endLine": 589,
+        "endChar": 37
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab23cdc_23af58ed",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "filtering",
+      "range": {
+        "startLine": 598,
+        "startChar": 54,
+        "endLine": 598,
+        "endChar": 62
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a6382b_b824f116",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:26:52Z",
+      "side": 1,
+      "message": "This function is unused",
+      "range": {
+        "startLine": 434,
+        "startChar": 25,
+        "endLine": 434,
+        "endChar": 31
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
