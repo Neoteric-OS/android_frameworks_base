@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c56115_2c01ad99",
+        "filename": "telephony/java/android/telephony/NetworkService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-03-04T18:15:35Z",
+      "side": 1,
+      "message": "somehow I couldn\u0027t find this API in internal master? wondered if there is any missing changes",
+      "range": {
+        "startLine": 237,
+        "startChar": 43,
+        "endLine": 237,
+        "endChar": 73
+      },
+      "revId": "82bd9a213c5e78147461bd20517d6241aef5443e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
