@@ -6703,7 +6703,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             ISocketKeepaliveCallback cb, String srcAddr, int srcPort, String dstAddr) {
         enforceKeepalivePermission();
         mKeepaliveTracker.startNattKeepalive(
-                getNetworkAgentInfoForNetwork(network),
+                getNetworkAgentInfoForNetwork(network), null /* fd */,
                 intervalSeconds, cb,
                 srcAddr, srcPort, dstAddr, NattSocketKeepalive.NATT_PORT);
     }

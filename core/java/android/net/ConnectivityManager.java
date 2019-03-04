@@ -44,6 +44,7 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -63,7 +64,6 @@ import com.android.internal.util.Protocol;
 
 import libcore.net.event.NetworkEventDispatcher;
 
-import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
@@ -1919,8 +1919,11 @@ public class ConnectivityManager {
      *
      * @return A {@link SocketKeepalive} object that can be used to control the keepalive on the
      *         given socket.
+     * @hide
      **/
-    public SocketKeepalive createSocketKeepalive(@NonNull Network network,
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD)
+    public @NonNull SocketKeepalive createSocketKeepalive(@NonNull Network network,
             @NonNull UdpEncapsulationSocket socket,
             @NonNull InetAddress source,
             @NonNull InetAddress destination,
@@ -1935,9 +1938,9 @@ public class ConnectivityManager {
      * by system apps which don't use IpSecService to create {@link UdpEncapsulationSocket}.
      *
      * @param network The {@link Network} the socket is on.
-     * @param fd The {@link FileDescriptor} that needs to be kept alive. The provided
-     *        {@link FileDescriptor} must be bound to a port and the keepalives will be sent from
-     *        that port.
+     * @param pfd The {@link ParcelFileDescriptor} that needs to be kept alive. The provided
+     *        {@link ParcelFileDescriptor} must be bound to a port and the keepalives will be sent
+     *        from that port.
      * @param source The source address of the {@link UdpEncapsulationSocket}.
      * @param destination The destination address of the {@link UdpEncapsulationSocket}. The
      *        keepalive packets will always be sent to port 4500 of the given {@code destination}.
@@ -1953,14 +1956,14 @@ public class ConnectivityManager {
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD)
-    public SocketKeepalive createNattKeepalive(@NonNull Network network,
-            @NonNull FileDescriptor fd,
+    public @NonNull SocketKeepalive createNattKeepalive(@NonNull Network network,
+            @NonNull ParcelFileDescriptor pfd,
             @NonNull InetAddress source,
             @NonNull InetAddress destination,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull Callback callback) {
-        return new NattSocketKeepalive(mService, network, fd, INVALID_RESOURCE_ID /* Unused */,
-                source, destination, executor, callback);
+        return new NattSocketKeepalive(mService, network, pfd.getFileDescriptor(),
+                INVALID_RESOURCE_ID /* Unused */, source, destination, executor, callback);
     }
 
     /**
@@ -1984,7 +1987,7 @@ public class ConnectivityManager {
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD)
-    public SocketKeepalive createSocketKeepalive(@NonNull Network network,
+    public @NonNull SocketKeepalive createSocketKeepalive(@NonNull Network network,
             @NonNull Socket socket,
             @NonNull Executor executor,
             @NonNull Callback callback) {
@@ -3320,7 +3323,7 @@ public class ConnectivityManager {
          * @param network The {@link Network} whose blocked status has changed.
          * @param blocked The blocked status of this {@link Network}.
          */
-        public void onBlockedStatusChanged(Network network, boolean blocked) {}
+        public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {}
 
         private NetworkRequest networkRequest;
     }
