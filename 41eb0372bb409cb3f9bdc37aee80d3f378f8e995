@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cbf4bd67_04d261c0",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a642de_ace08b48",
+      "range": {
+        "startLine": 511,
+        "startChar": 81,
+        "endLine": 511,
+        "endChar": 85
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f67309_0a4d6e5c",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 5
@@ -68,6 +92,30 @@
       "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c10ba9_22e1a17f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "It does for uids created from VPNs. But fixed for correctness.",
+      "parentUuid": "17f67309_0a4d6e5c",
+      "range": {
+        "startLine": 560,
+        "startChar": 37,
+        "endLine": 560,
+        "endChar": 49
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "73a10dd2_29535708",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e2e30c1_62fefcb7",
+      "range": {
+        "startLine": 571,
+        "startChar": 20,
+        "endLine": 571,
+        "endChar": 31
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d77f2c5_f1b56b38",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 5
@@ -114,6 +186,30 @@
       "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb08c22c_083e195b",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d77f2c5_f1b56b38",
+      "range": {
+        "startLine": 589,
+        "startChar": 17,
+        "endLine": 589,
+        "endChar": 37
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "49c99c52_b79abb7f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab23cdc_23af58ed",
+      "range": {
+        "startLine": 598,
+        "startChar": 54,
+        "endLine": 598,
+        "endChar": 62
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8a6382b_b824f116",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 5
@@ -160,6 +280,30 @@
       "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11d01b3_ddf18437",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-03-04T23:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a6382b_b824f116",
+      "range": {
+        "startLine": 434,
+        "startChar": 25,
+        "endLine": 434,
+        "endChar": 31
+      },
+      "revId": "41eb0372bb409cb3f9bdc37aee80d3f378f8e995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
