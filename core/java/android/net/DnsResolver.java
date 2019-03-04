@@ -37,8 +37,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-
 
 /**
  * Dns resolver class for asynchronous dns querying
@@ -81,66 +79,124 @@ public final class DnsResolver {
     public static final int FLAG_NO_CACHE_STORE = 1 << 1;
     public static final int FLAG_NO_CACHE_LOOKUP = 1 << 2;
 
-    private static final int DNS_RAW_RESPONSE = 1;
+    @IntDef(prefix = { "ERROR_" }, value = {
+            ERROR_INTERNAL,
+            ERROR_PARSE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface QueryError {}
+    public static final int ERROR_INTERNAL = 1;
+    public static final int ERROR_PARSE = 2;
 
     private static final int NETID_UNSET = 0;
 
     private static final DnsResolver sInstance = new DnsResolver();
 
     /**
-     * listener for receiving raw answers
-     */
-    public interface RawAnswerListener {
-        /**
-         * {@code byte[]} is {@code null} if query timed out
-         */
-        void onAnswer(@Nullable byte[] answer);
-    }
-
-    /**
-     * listener for receiving parsed answers
-     */
-    public interface InetAddressAnswerListener {
-        /**
-         * Will be called exactly once with all the answers to the query.
-         * size of addresses will be zero if no available answer could be parsed.
-         */
-        void onAnswer(@NonNull List<InetAddress> addresses);
-    }
-
-    /**
      * Get instance for DnsResolver
      */
-    public static DnsResolver getInstance() {
+    public static @NonNull DnsResolver getInstance() {
         return sInstance;
     }
 
     private DnsResolver() {}
 
     /**
+     * Callback for receiving answers
+     *
+     * @param <T> The type of answers
+     */
+    public abstract static class AnswerCallback<T> {
+        /**
+         * Invoked when there is a raw response to
+         * {@link android.net.DnsResolver#query query()}
+         *
+         * Callers of {@link android.net.DnsResolver#query} could override
+         * this function to convert raw response to <T> answer.
+         * Then call onAnswer for coverting success, onError for fail.
+         *
+         * @param result the raw answers to be handled
+         *
+         * {@see android.net.DnsResolver#query query()}
+         */
+        public abstract void onReceive(@NonNull byte [] result);
+
+        /**
+         * Success response to
+         * {@link android.net.DnsResolver#query query()}.
+         *
+         * Invoked when there is a successful parsed answer to
+         * {@link android.net.DnsResolver#query query()}.
+         *
+         * @param answer raw answers of query.
+         *
+         * {@see android.net.DnsResolver#query query()}
+         */
+        public abstract void onAnswer(@NonNull T answer);
+
+        /**
+         * Error response to
+         * {@link android.net.DnsResolver#query query()}.
+         *
+         * Invoked when there is no valid answer to
+         * {@link android.net.DnsResolver#query query()}
+         *
+         * @param errorCode an error code as a combination of the ERROR_* constants
+         *     indicating the type of failure.
+         * @param detail a {@link Throwable} object with additional detail regarding the failure if
+         *     available, otherwise null.
+         */
+        public abstract void onError(@QueryError int errorCode, @Nullable Throwable detail);
+    }
+
+    /**
+     * Callback for receiving raw answers
+     */
+    public abstract static class RawAnswerCallback extends AnswerCallback<byte[]> {
+        @Override
+        public final void onReceive(@NonNull byte[] result) {
+            onAnswer(result);
+        }
+    }
+
+    /**
+     * Callback for receiving parsed {@link InetAddress} answers
+     */
+    public abstract static class InetAddressAnswerCallback
+            extends AnswerCallback<List<InetAddress>> {
+        @Override
+        public final void onReceive(@NonNull byte[] result) {
+            try {
+                onAnswer(new DnsAddressAnswer(result).getAddresses());
+            } catch (DnsPacket.ParseException | UnknownHostException e) {
+                onError(ERROR_PARSE, e);
+            }
+        }
+    }
+
+    /**
      * Pass in a blob and corresponding setting,
-     * get a blob back asynchronously with the entire raw answer.
+     * Get an answer back asynchronously based on {@link AnswerCallback}.
      *
      * @param network {@link Network} specifying which network for querying.
      *         {@code null} for query on default network.
      * @param query blob message
      * @param flags flags as a combination of the FLAGS_* constants
      * @param handler {@link Handler} to specify the thread
-     *         upon which the {@link RawAnswerListener} will be invoked.
-     * @param listener a {@link RawAnswerListener} which will be called to notify the caller
+     *         upon which the {@link AnswerCallback} will be invoked.
+     * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull byte[] query, @QueryFlag int flags,
-            @NonNull Handler handler, @NonNull RawAnswerListener listener) throws ErrnoException {
+            @NonNull Handler handler, @NonNull AnswerCallback callback) throws ErrnoException {
         final FileDescriptor queryfd = resNetworkSend((network != null
                 ? network.netId : NETID_UNSET), query, query.length, flags);
-        registerFDListener(handler.getLooper().getQueue(), queryfd,
-                answerbuf -> listener.onAnswer(answerbuf));
+        registerFDListener(handler.getLooper().getQueue(), queryfd, callback);
     }
 
     /**
      * Pass in a domain name and corresponding setting,
-     * get a blob back asynchronously with the entire raw answer.
+     * Get an answer back asynchronously based on {@link AnswerCallback}.
      *
      * @param network {@link Network} specifying which network for querying.
      *         {@code null} for query on default network.
@@ -149,52 +205,20 @@ public final class DnsResolver {
      * @param nsType dns resource record (RR) type as one of the TYPE_* constants
      * @param flags flags as a combination of the FLAGS_* constants
      * @param handler {@link Handler} to specify the thread
-     *         upon which the {@link RawAnswerListener} will be invoked.
-     * @param listener a {@link RawAnswerListener} which will be called to notify the caller
+     *         upon which the {@link AnswerCallback} will be invoked.
+     * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull String domain, @QueryClass int nsClass,
-            @QueryType int nsType, @QueryFlag int flags,
-            @NonNull Handler handler, @NonNull RawAnswerListener listener) throws ErrnoException {
+            @QueryType int nsType, @QueryFlag int flags, @NonNull Handler handler,
+            @NonNull AnswerCallback callback) throws ErrnoException {
         final FileDescriptor queryfd = resNetworkQuery((network != null
                 ? network.netId : NETID_UNSET), domain, nsClass, nsType, flags);
-        registerFDListener(handler.getLooper().getQueue(), queryfd,
-                answerbuf -> listener.onAnswer(answerbuf));
+        registerFDListener(handler.getLooper().getQueue(), queryfd, callback);
     }
 
-    /**
-     * Pass in a domain name and corresponding setting,
-     * get back a set of InetAddresses asynchronously.
-     *
-     * @param network {@link Network} specifying which network for querying.
-     *         {@code null} for query on default network.
-     * @param domain domain name for querying
-     * @param flags flags as a combination of the FLAGS_* constants
-     * @param handler {@link Handler} to specify the thread
-     *         upon which the {@link InetAddressAnswerListener} will be invoked.
-     * @param listener an {@link InetAddressAnswerListener} which will be called to
-     *         notify the caller of the result of dns query.
-     *
-     */
-    public void query(@Nullable Network network, @NonNull String domain, @QueryFlag int flags,
-            @NonNull Handler handler, @NonNull InetAddressAnswerListener listener)
-            throws ErrnoException {
-        final FileDescriptor v4fd = resNetworkQuery((network != null
-                ? network.netId : NETID_UNSET), domain, CLASS_IN, TYPE_A, flags);
-        final FileDescriptor v6fd = resNetworkQuery((network != null
-                ? network.netId : NETID_UNSET), domain, CLASS_IN, TYPE_AAAA, flags);
-
-        final InetAddressAnswerAccumulator accmulator =
-                new InetAddressAnswerAccumulator(2, listener);
-        final Consumer<byte[]> consumer = answerbuf ->
-                accmulator.accumulate(parseAnswers(answerbuf));
-
-        registerFDListener(handler.getLooper().getQueue(), v4fd, consumer);
-        registerFDListener(handler.getLooper().getQueue(), v6fd, consumer);
-    }
-
-    private void registerFDListener(@NonNull MessageQueue queue,
-            @NonNull FileDescriptor queryfd, @NonNull Consumer<byte[]> answerConsumer) {
+    private <T> void registerFDListener(@NonNull MessageQueue queue,
+            @NonNull FileDescriptor queryfd, @NonNull AnswerCallback<T> answerCallback) {
         queue.addOnFileDescriptorEventListener(
                 queryfd,
                 FD_EVENTS,
@@ -207,15 +231,18 @@ public final class DnsResolver {
                         answerbuf = resNetworkResult(fd);
                     } catch (ErrnoException e) {
                         Log.e(TAG, "resNetworkResult:" + e.toString());
+                        answerCallback.onError(ERROR_INTERNAL, e);
+                        return 0;
                     }
-                    answerConsumer.accept(answerbuf);
+
+                    answerCallback.onReceive(answerbuf);
 
                     // Unregister this fd listener
                     return 0;
                 });
     }
 
-    private class DnsAddressAnswer extends DnsPacket {
+    private static class DnsAddressAnswer extends DnsPacket {
         private static final String TAG = "DnsResolver.DnsAddressAnswer";
         private static final boolean DBG = false;
 
@@ -239,7 +266,7 @@ public final class DnsResolver {
             mQueryType = mRecords[QDSECTION].get(0).nsType;
         }
 
-        public @NonNull List<InetAddress> getAddresses() {
+        public @NonNull List<InetAddress> getAddresses() throws UnknownHostException {
             final List<InetAddress> results = new ArrayList<InetAddress>();
             for (final DnsRecord ansSec : mRecords[ANSECTION]) {
                 // Only support A and AAAA, also ignore answers if query type != answer type.
@@ -255,38 +282,9 @@ public final class DnsResolver {
                     }
                 }
             }
+            if (results.isEmpty()) throw new UnknownHostException("No valid answer");
             return results;
         }
     }
 
-    private @Nullable List<InetAddress> parseAnswers(@Nullable byte[] data) {
-        try {
-            return (data == null) ? null : new DnsAddressAnswer(data).getAddresses();
-        } catch (DnsPacket.ParseException e) {
-            Log.e(TAG, "Parse answer fail " + e.getMessage());
-            return null;
-        }
-    }
-
-    private class InetAddressAnswerAccumulator {
-        private final List<InetAddress> mAllAnswers;
-        private final InetAddressAnswerListener mAnswerListener;
-        private final int mTargetAnswerCount;
-        private int mReceivedAnswerCount = 0;
-
-        InetAddressAnswerAccumulator(int size, @NonNull InetAddressAnswerListener listener) {
-            mTargetAnswerCount = size;
-            mAllAnswers = new ArrayList<>();
-            mAnswerListener = listener;
-        }
-
-        public void accumulate(@Nullable List<InetAddress> answer) {
-            if (null != answer) {
-                mAllAnswers.addAll(answer);
-            }
-            if (++mReceivedAnswerCount == mTargetAnswerCount) {
-                mAnswerListener.onAnswer(mAllAnswers);
-            }
-        }
-    }
 }
