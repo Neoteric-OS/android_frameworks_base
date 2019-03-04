@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de66ec7d_8c7c9c40",
+        "filename": "telephony/java/android/telephony/data/DataServiceCallback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-03-04T22:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acadc151_98f60f9d",
+      "revId": "74aba06d4abb22c215c8b55db1f2239339ef29f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f073c85_0a4b4e55",
         "filename": "telephony/java/android/telephony/data/DataServiceCallback.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "74aba06d4abb22c215c8b55db1f2239339ef29f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d93d30b_28020b88",
+        "filename": "telephony/java/android/telephony/data/DataServiceCallback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-03-04T22:14:04Z",
+      "side": 1,
+      "message": "it\u0027s already a NonNull here. Originally I thought onGetDataCallListComplete can have null data call list for error case, and for onDataCallListChanged, since there is already something there, NonNull should be expected. But I think both can be NonNull.",
+      "parentUuid": "7f073c85_0a4b4e55",
+      "revId": "74aba06d4abb22c215c8b55db1f2239339ef29f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
