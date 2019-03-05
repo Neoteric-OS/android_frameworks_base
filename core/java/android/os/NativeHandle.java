@@ -19,6 +19,7 @@ package android.os;
 import static android.system.OsConstants.F_DUPFD_CLOEXEC;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.system.ErrnoException;
@@ -108,7 +109,7 @@ public final class NativeHandle implements Closeable {
      * If this method is called, this must also be explicitly closed with
      * {@link #close()}.
      */
-    public NativeHandle dup() throws java.io.IOException {
+    public @NonNull NativeHandle dup() throws java.io.IOException {
         FileDescriptor[] fds = new FileDescriptor[mFds.length];
         try {
             for (int i = 0; i < mFds.length; i++) {
@@ -154,7 +155,7 @@ public final class NativeHandle implements Closeable {
      * @throws IllegalStateException if this object contains either zero or
      *         more than one file descriptor, or a non-empty data stream.
      */
-    public FileDescriptor getFileDescriptor() {
+    public @NonNull FileDescriptor getFileDescriptor() {
         if (!hasSingleFileDescriptor()) {
             throw new IllegalStateException(
                     "NativeHandle is not single file descriptor. Contents must"
@@ -182,20 +183,24 @@ public final class NativeHandle implements Closeable {
     }
 
     /**
-     * Fetch file descriptors.
+     * Fetch file descriptors
+     *
+     * May be null if closed.
      *
      * @return the fds.
      */
-    public FileDescriptor[] getFileDescriptors() {
+    public @Nullable FileDescriptor[] getFileDescriptors() {
         return mFds;
     }
 
     /**
      * Fetch opaque ints. Note: This object retains ownership of the data.
      *
+     * May be null if closed.
+     *
      * @return the opaque data stream.
      */
-    public int[] getInts() {
+    public @Nullable int[] getInts() {
         return mInts;
     }
 }
