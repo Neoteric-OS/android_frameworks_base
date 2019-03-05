@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7eabad_96349d9e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-03-05T23:39:23Z",
+      "side": 1,
+      "message": "nit: delete \"May be\"?",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
