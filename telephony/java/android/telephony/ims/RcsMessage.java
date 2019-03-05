@@ -117,7 +117,8 @@ public abstract class RcsMessage {
      * @see android.telephony.SubscriptionInfo#getSubscriptionId
      */
     public int getSubscriptionId() throws RcsMessageStoreException {
-        return mRcsControllerCall.call(iRcs -> iRcs.getMessageSubId(mId, isIncoming()));
+        return mRcsControllerCall.call(
+                (iRcs, callingPackage) -> iRcs.getMessageSubId(mId, isIncoming(), callingPackage));
     }
 
     /**
@@ -130,7 +131,9 @@ public abstract class RcsMessage {
      */
     @WorkerThread
     public void setSubscriptionId(int subId) throws RcsMessageStoreException {
-        mRcsControllerCall.callWithNoReturn(iRcs -> iRcs.setMessageSubId(mId, isIncoming(), subId));
+        mRcsControllerCall.callWithNoReturn(
+                (iRcs, callingPackage) -> iRcs.setMessageSubId(mId, isIncoming(), subId,
+                        callingPackage));
     }
 
     /**
@@ -142,7 +145,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setStatus(@RcsMessageStatus int rcsMessageStatus) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setMessageStatus(mId, isIncoming(), rcsMessageStatus));
+                (iRcs, callingPackage) -> iRcs.setMessageStatus(mId, isIncoming(), rcsMessageStatus,
+                        callingPackage));
     }
 
     /**
@@ -152,7 +156,8 @@ public abstract class RcsMessage {
      */
     @WorkerThread
     public @RcsMessageStatus int getStatus() throws RcsMessageStoreException {
-        return mRcsControllerCall.call(iRcs -> iRcs.getMessageStatus(mId, isIncoming()));
+        return mRcsControllerCall.call(
+                (iRcs, callingPackage) -> iRcs.getMessageStatus(mId, isIncoming(), callingPackage));
     }
 
     /**
@@ -166,7 +171,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setOriginationTimestamp(long timestamp) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setMessageOriginationTimestamp(mId, isIncoming(), timestamp));
+                (iRcs, callingPackage) -> iRcs.setMessageOriginationTimestamp(mId, isIncoming(),
+                        timestamp, callingPackage));
     }
 
     /**
@@ -178,7 +184,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public long getOriginationTimestamp() throws RcsMessageStoreException {
         return mRcsControllerCall.call(
-                iRcs -> iRcs.getMessageOriginationTimestamp(mId, isIncoming()));
+                (iRcs, callingPackage) -> iRcs.getMessageOriginationTimestamp(mId, isIncoming(),
+                        callingPackage));
     }
 
     /**
@@ -192,7 +199,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setRcsMessageId(String rcsMessageGlobalId) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setGlobalMessageIdForMessage(mId, isIncoming(), rcsMessageGlobalId));
+                (iRcs, callingPackage) -> iRcs.setGlobalMessageIdForMessage(mId, isIncoming(),
+                        rcsMessageGlobalId, callingPackage));
     }
 
     /**
@@ -203,7 +211,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public String getRcsMessageId() throws RcsMessageStoreException {
         return mRcsControllerCall.call(
-                iRcs -> iRcs.getGlobalMessageIdForMessage(mId, isIncoming()));
+                (iRcs, callingPackage) -> iRcs.getGlobalMessageIdForMessage(mId, isIncoming(),
+                        callingPackage));
     }
 
     /**
@@ -212,7 +221,9 @@ public abstract class RcsMessage {
      */
     @WorkerThread
     public String getText() throws RcsMessageStoreException {
-        return mRcsControllerCall.call(iRcs -> iRcs.getTextForMessage(mId, isIncoming()));
+        return mRcsControllerCall.call(
+                (iRcs, callingPackage) -> iRcs.getTextForMessage(mId, isIncoming(),
+                        callingPackage));
     }
 
     /**
@@ -224,18 +235,20 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setText(String text) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setTextForMessage(mId, isIncoming(), text));
+                (iRcs, callingPackage) -> iRcs.setTextForMessage(mId, isIncoming(), text,
+                        callingPackage));
     }
 
     /**
      * @return Returns the associated latitude for this message, or
      * {@link RcsMessage#LOCATION_NOT_SET} if it does not contain a location.
-     *
      * @throws RcsMessageStoreException if the value could not be read from the storage
      */
     @WorkerThread
     public double getLatitude() throws RcsMessageStoreException {
-        return mRcsControllerCall.call(iRcs -> iRcs.getLatitudeForMessage(mId, isIncoming()));
+        return mRcsControllerCall.call(
+                (iRcs, callingPackage) -> iRcs.getLatitudeForMessage(mId, isIncoming(),
+                        callingPackage));
     }
 
     /**
@@ -247,18 +260,20 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setLatitude(double latitude) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setLatitudeForMessage(mId, isIncoming(), latitude));
+                (iRcs, callingPackage) -> iRcs.setLatitudeForMessage(mId, isIncoming(), latitude,
+                        callingPackage));
     }
 
     /**
      * @return Returns the associated longitude for this message, or
      * {@link RcsMessage#LOCATION_NOT_SET} if it does not contain a location.
-     *
      * @throws RcsMessageStoreException if the value could not be read from the storage
      */
     @WorkerThread
     public double getLongitude() throws RcsMessageStoreException {
-        return mRcsControllerCall.call(iRcs -> iRcs.getLongitudeForMessage(mId, isIncoming()));
+        return mRcsControllerCall.call(
+                (iRcs, callingPackage) -> iRcs.getLongitudeForMessage(mId, isIncoming(),
+                        callingPackage));
     }
 
     /**
@@ -270,7 +285,8 @@ public abstract class RcsMessage {
     @WorkerThread
     public void setLongitude(double longitude) throws RcsMessageStoreException {
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.setLongitudeForMessage(mId, isIncoming(), longitude));
+                (iRcs, callingPackage) -> iRcs.setLongitudeForMessage(mId, isIncoming(), longitude,
+                        callingPackage));
     }
 
     /**
@@ -287,7 +303,8 @@ public abstract class RcsMessage {
             RcsFileTransferCreationParams fileTransferCreationParameters)
             throws RcsMessageStoreException {
         return new RcsFileTransferPart(mRcsControllerCall, mRcsControllerCall.call(
-                iRcs -> iRcs.storeFileTransfer(mId, isIncoming(), fileTransferCreationParameters)));
+                (iRcs, callingPackage) -> iRcs.storeFileTransfer(mId, isIncoming(),
+                        fileTransferCreationParameters, callingPackage)));
     }
 
     /**
@@ -301,7 +318,8 @@ public abstract class RcsMessage {
         Set<RcsFileTransferPart> fileTransferParts = new HashSet<>();
 
         int[] fileTransferIds = mRcsControllerCall.call(
-                iRcs -> iRcs.getFileTransfersAttachedToMessage(mId, isIncoming()));
+                (iRcs, callingPackage) -> iRcs.getFileTransfersAttachedToMessage(mId, isIncoming(),
+                        callingPackage));
 
         for (int fileTransfer : fileTransferIds) {
             fileTransferParts.add(new RcsFileTransferPart(mRcsControllerCall, fileTransfer));
@@ -324,7 +342,8 @@ public abstract class RcsMessage {
         }
 
         mRcsControllerCall.callWithNoReturn(
-                iRcs -> iRcs.deleteFileTransfer(fileTransferPart.getId()));
+                (iRcs, callingPackage) -> iRcs.deleteFileTransfer(fileTransferPart.getId(),
+                        callingPackage));
     }
 
     /**
