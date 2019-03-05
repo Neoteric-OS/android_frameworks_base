@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c52e5728_fe08506c",
+        "filename": "tests/AccessoryDisplay/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97041c10_3ba7339d",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c0a6b36_89e9bfdf",
         "filename": "tests/AccessoryDisplay/common/Android.bp",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18285a0_e3873046",
+        "filename": "tests/AccessoryDisplay/common/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c0a6b36_89e9bfdf",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ccc5deff_a5199c41",
+        "filename": "tests/AppLaunch/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28907ae8_cdd7c67a",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc6e2a7_792a7857",
         "filename": "tests/AppLaunchWear/Android.bp",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4fe531_ef3bc455",
+        "filename": "tests/AppLaunchWear/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfc6e2a7_792a7857",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "04e32560_8a135053",
+        "filename": "tests/BrowserPowerTest/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de246a7c_49c1776c",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78cd645c_e706c686",
         "filename": "tests/Camera2Tests/Android.bp",
         "patchSetId": 5
@@ -125,6 +239,24 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd849677_9b842256",
+        "filename": "tests/Camera2Tests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78cd645c_e706c686",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "9b4f661e_71254b50",
+        "filename": "tests/Camera2Tests/SmartCamera/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3c0af3_d7673977",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "378d0654_cbc4c9db",
         "filename": "tests/CoreTests/Android.bp",
         "patchSetId": 5
@@ -159,6 +309,24 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176e0770_69ec24f1",
+        "filename": "tests/CoreTests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378d0654_cbc4c9db",
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "291a8f95_a7eb7c78",
+        "filename": "tests/FeatureSplit/base/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a329fd1_6b72d659",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ca0769_860c50d3",
         "filename": "tests/FeatureSplit/feature1/Android.bp",
         "patchSetId": 5
@@ -205,6 +397,30 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f089edd_f08d79a9",
+        "filename": "tests/FeatureSplit/feature1/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "IMHO it\u0027s the test. It\u0027s not referenced by any other module.",
+      "parentUuid": "34ca0769_860c50d3",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "988e9fb7_f836123c",
+        "filename": "tests/FeatureSplit/feature2/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Same as FeatureSplit1",
+      "parentUuid": "f77dca3a_7570bdfb",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328fefe1_633a2d09",
         "filename": "tests/SmokeTest/Android.bp",
         "patchSetId": 5
@@ -251,6 +491,30 @@
       "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad825df_a683fe6f",
+        "filename": "tests/SmokeTest/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-05T02:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "328fefe1_633a2d09",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "1819e0b78fd5ae8d4a335a41687cb099499561a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
