@@ -25,6 +25,7 @@ import android.os.IBinder.DeathRecipient;
 import android.os.IDynamicAndroidService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.util.Slog;
 
 /**
@@ -34,6 +35,7 @@ import android.util.Slog;
 public class DynamicAndroidService extends IDynamicAndroidService.Stub implements DeathRecipient {
     private static final String TAG = "DynamicAndroidService";
     private static final String NO_SERVICE_ERROR = "no gsiservice";
+    private static final int GSID_TIMEOUT_MS = 5000;
 
     private Context mContext;
     private volatile IGsiService mGsiService;
@@ -66,12 +68,27 @@ public class DynamicAndroidService extends IDynamicAndroidService.Stub implement
 
     private IGsiService getGsiService() throws RemoteException {
         checkPermission();
-        synchronized (this) {
-            if (mGsiService == null) {
-                mGsiService = connect(this);
-            }
-            return mGsiService;
+        if (!"running".equals(SystemProperties.get("init.svc.gsid"))) {
+            SystemProperties.set("ctl.start", "gsid");
         }
+        for (int sleep_ms = 64; sleep_ms < GSID_TIMEOUT_MS; sleep_ms <<= 1) {
+            try {
+                Thread.sleep(sleep_ms);
+            } catch (InterruptedException e) {
+                Slog.e(TAG, "Interrupted when waiting for GSID");
+                break;
+            }
+            if ("running".equals(SystemProperties.get("init.svc.gsid"))) {
+                synchronized (this) {
+                    if (mGsiService == null) {
+                        mGsiService = connect(this);
+                    }
+                    return mGsiService;
+                }
+            }
+        }
+        Slog.e(TAG, "Unable to start gsid");
+        return null;
     }
 
     private void checkPermission() {
