@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d36368f_57d6a7f5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17bd81c7_0a4c6149",
+      "range": {
+        "startLine": 2557,
+        "startChar": 69,
+        "endLine": 2557,
+        "endChar": 94
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8fc9859_484dafc1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f2bfd8_10594580",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8fc9859_484dafc1",
+      "range": {
+        "startLine": 2567,
+        "startChar": 26,
+        "endLine": 2567,
+        "endChar": 33
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "79a07083_c5120e7d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "964e9ce9_618d0776",
+      "range": {
+        "startLine": 2567,
+        "startChar": 82,
+        "endLine": 2568,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7298bb33_26abf458",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2fd41313_374eb154",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7298bb33_26abf458",
+      "range": {
+        "startLine": 2569,
+        "startChar": 32,
+        "endLine": 2569,
+        "endChar": 35
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62bf212f_dccac2c5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16139287_75007d77",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62bf212f_dccac2c5",
+      "range": {
+        "startLine": 2570,
+        "startChar": 7,
+        "endLine": 2570,
+        "endChar": 41
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +277,48 @@
     },
     {
       "key": {
+        "uuid": "f4954a21_b8dc9963",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35e97cbb_c860018b",
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6aeeff1_b90a74fb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d3dd4cd_1028bea9",
+      "range": {
+        "startLine": 2572,
+        "startChar": 42,
+        "endLine": 2572,
+        "endChar": 46
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe49f88c_24deec7c",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -177,6 +339,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4d090b_8ccab1cb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2578,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe49f88c_24deec7c",
+      "range": {
+        "startLine": 2578,
+        "startChar": 22,
+        "endLine": 2578,
+        "endChar": 29
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "dddbea3c_5e1428c9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be59b4d9_4cbfc400",
+      "range": {
+        "startLine": 2588,
+        "startChar": 18,
+        "endLine": 2588,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d6a1f4_561135d1",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -223,6 +433,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7f60ff_ea04fe85",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c4d6a1f4_561135d1",
+      "range": {
+        "startLine": 189,
+        "startChar": 62,
+        "endLine": 189,
+        "endChar": 86
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "733822c5_39852813",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63301d1c_aa3385c4",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 19
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9d1652_5b95f409",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "894ee7f0_75a26291",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d9d1652_5b95f409",
+      "range": {
+        "startLine": 1241,
+        "startChar": 20,
+        "endLine": 1241,
+        "endChar": 43
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "865ed0fa_72446791",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -292,6 +574,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b99a43_13bf7e1c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "865ed0fa_72446791",
+      "range": {
+        "startLine": 1708,
+        "startChar": 12,
+        "endLine": 1708,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +648,30 @@
     },
     {
       "key": {
+        "uuid": "132941d8_aec200f4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "reportUpstreamChanged would always be called under the mPublicSync lock. Looks I need to add the comment for this. See line 1238~1244 and line 1428 ~1433, mTetherUpstream and reportUpstreamChanged() should be protected by same synchronized at the same time. This is why I don\u0027t lock mPublicSync inner reportUpstreamChanged function.",
+      "parentUuid": "aab5d00a_cd04fcbf",
+      "range": {
+        "startLine": 1725,
+        "startChar": 27,
+        "endLine": 1725,
+        "endChar": 51
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f965a18_bf642074",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -353,6 +683,30 @@
       "writtenOn": "2019-03-05T07:45:05Z",
       "side": 1,
       "message": "Catching RuntimeException is a code smell. In this case I suspect you are doing this to catch the possible OOB and NPE from removing while iterating, but you also need to account for the add case. Also if you have a call to remove while iterating, you will miss calling one of the callbacks : if e.g. you have four callbacks in the list\n(A, B, C, D)\n\nIterate, call index 1 \u003d A\nIterate, call index 2 \u003d B\nRemove index 1\nIterate, call index 3 \u003d D\nIterate, call index 4, NPE, catch RuntimeException\n\n...you never called C.",
+      "range": {
+        "startLine": 1730,
+        "startChar": 43,
+        "endLine": 1730,
+        "endChar": 59
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a1af18_65a1f6d6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "As above explanation, mTetheringEventListeners operation would always under mPublicSync lock. So the case of removing while iterating should not happen.",
+      "parentUuid": "2f965a18_bf642074",
       "range": {
         "startLine": 1730,
         "startChar": 43,
@@ -388,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "7278c816_0d67c880",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8f60db4_25e72d3d",
+      "range": {
+        "startLine": 924,
+        "startChar": 15,
+        "endLine": 924,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926f9e90_2b88ef1f",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 2
@@ -411,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "144f660c_e9e2c471",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "926f9e90_2b88ef1f",
+      "range": {
+        "startLine": 932,
+        "startChar": 20,
+        "endLine": 932,
+        "endChar": 37
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8757ac26_c6f216c5",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 2
@@ -431,6 +833,30 @@
       "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27214fe_faa1feb5",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T08:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8757ac26_c6f216c5",
+      "range": {
+        "startLine": 953,
+        "startChar": 14,
+        "endLine": 953,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
