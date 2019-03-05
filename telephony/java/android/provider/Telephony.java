@@ -2064,7 +2064,7 @@ public final class Telephony {
         // TODO(sahinc): Turn this to true once the schema finalizes, so that people can update
         //  their messaging databases. NOTE: move the switch/case update in MmsSmsDatabaseHelper to
         //  the latest version of the database before turning this flag to true.
-        boolean IS_RCS_TABLE_SCHEMA_CODE_COMPLETE = false;
+        boolean IS_RCS_TABLE_SCHEMA_CODE_COMPLETE = true;
 
         /**
          * The authority for the content provider
