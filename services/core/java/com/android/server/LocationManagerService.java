@@ -2587,7 +2587,7 @@ public class LocationManagerService extends ILocationManager.Stub {
                         Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
                         userId);
                 if (allowedProviders == null) {
-                    return false;
+                    return isLocationEnabledForUserWithPFallback(userId);
                 }
                 final List<String> providerList = Arrays.asList(allowedProviders.split(","));
                 for(String provider : mRealProviders.keySet()) {
@@ -2599,10 +2599,22 @@ public class LocationManagerService extends ILocationManager.Stub {
                         return true;
                     }
                 }
-                return false;
+                return isLocationEnabledForUserWithPFallback(userId);
             }
         } finally {
             Binder.restoreCallingIdentity(identity);
+        }
+    }
+
+    private boolean isLocationEnabledForUserWithPFallback(int userId) {
+        try {
+            int mode = Integer.parseInt(Settings.Secure.getStringForUser(
+                    mContext.getContentResolver(),
+                    Settings.Secure.LOCATION_MODE,
+                    userId));
+            return mode != Settings.Secure.LOCATION_MODE_OFF;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -2658,6 +2670,12 @@ public class LocationManagerService extends ILocationManager.Stub {
                         mContext.getContentResolver(),
                         Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
                         locationProvidersAllowed.toString(),
+                        userId);
+                Settings.Secure.putStringForUser(
+                        mContext.getContentResolver(),
+                        Settings.Secure.LOCATION_MODE,
+                        Integer.toString(enabled ? Settings.Secure.LOCATION_MODE_HIGH_ACCURACY
+                                : Settings.Secure.LOCATION_MODE_OFF),
                         userId);
             }
         } finally {
