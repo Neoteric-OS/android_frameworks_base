@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ae18f4_14a92026",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-05T15:04:56Z",
+      "side": 1,
+      "message": "Ah, this is what I meant on the art/ CL - Mathew wants to keep the flags here, so don\u0027t filter them out. Do:\n\n  new_flags \u003d csv[1:]\n  if FLAG_PUBLIC_API in new_flags:\n    new_flags \u003d new_flags + [ FLAG_WHITELIST ]\n  elif (FLAG_SYSTEM_API in new_flags) or (...):\n    new_flags \u003d new_flags + [ FLAG_GREYLIST ]\n  ...dict...update(new_flags)",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 60
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f2ad1b_25728fed",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-05T15:04:56Z",
+      "side": 1,
+      "message": "Do you have an example of where you get a conflict? I think we should be able to make it conflict-less.",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 83
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
