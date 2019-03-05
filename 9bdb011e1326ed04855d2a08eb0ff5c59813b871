@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "475ab91f_85103040",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-05T15:51:09Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ve commented on the other CL at the spot where you should make the change.",
+      "parentUuid": "6a73f305_e2e50089",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 60
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f2ad1b_25728fed",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Sure!\nCheck failed: success out/soong/hiddenapi/hiddenapi-flags.csv:1: Some flags were not recognized: Landroid/Manifest$permission;-\u003e\u003cinit\u003e()V,greylist,public-api,system-api,test-api,whitelist\n\n(also, checking the hiddenapi-stub-flags.txt for apis marked with public-api, system-api and test-api at the same time yields ~90k results)",
       "parentUuid": "d6f2ad1b_25728fed",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 83
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967876a6_006fc367",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-05T15:51:09Z",
+      "side": 1,
+      "message": "Ok, you should get rid of that with the change above and then this filter should not be needed.",
+      "parentUuid": "dd86066e_5144c976",
       "range": {
         "startLine": 309,
         "startChar": 4,
