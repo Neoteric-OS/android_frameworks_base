@@ -672,6 +672,30 @@
     },
     {
       "key": {
+        "uuid": "020c37e0_6239e208",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T08:27:43Z",
+      "side": 1,
+      "message": "Ah I see. Thanks.\n\nIn this case, rename it to reportUpstreamChangedLocked and annotate it with @GuardedBy(\"mPublicSync\").",
+      "parentUuid": "132941d8_aec200f4",
+      "range": {
+        "startLine": 1725,
+        "startChar": 27,
+        "endLine": 1725,
+        "endChar": 51
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f965a18_bf642074",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -707,6 +731,30 @@
       "side": 1,
       "message": "As above explanation, mTetheringEventListeners operation would always under mPublicSync lock. So the case of removing while iterating should not happen.",
       "parentUuid": "2f965a18_bf642074",
+      "range": {
+        "startLine": 1730,
+        "startChar": 43,
+        "endLine": 1730,
+        "endChar": 59
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c358fbcc_8fdd9dc4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T08:27:43Z",
+      "side": 1,
+      "message": "Indeed. Then you can remove the catch for RuntimeException.",
+      "parentUuid": "93a1af18_65a1f6d6",
       "range": {
         "startLine": 1730,
         "startChar": 43,
