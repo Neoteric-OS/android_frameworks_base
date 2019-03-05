@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c598b75_47549468",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7304,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2019-03-05T10:52:05Z",
+      "side": 1,
+      "message": "nit: use spaces",
+      "revId": "95f00bc88f773b16fc1b150f92b8202682dbee7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
