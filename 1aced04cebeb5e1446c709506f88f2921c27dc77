@@ -22,6 +22,30 @@
       "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676392e7_79bfe7a2",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-03-05T23:49:04Z",
+      "side": 1,
+      "message": "If you feel strongly about it.\n\nThe other thing is (and maybe Michael has an answer to this is), since \u0027close\u0027 states that the object is invalidated after it is called, these methods should never be called at that point. So, is @NonNull acceptable here?",
+      "parentUuid": "1d7eabad_96349d9e",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
