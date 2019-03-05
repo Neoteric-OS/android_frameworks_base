@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c101accd_a62bc636",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-05T18:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475ab91f_85103040",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 60
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6f2ad1b_25728fed",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -141,6 +165,30 @@
       "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62d094c_27a3eed0",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-05T18:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967876a6_006fc367",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 83
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
