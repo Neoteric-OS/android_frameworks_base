@@ -318,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "aab5d00a_cd04fcbf",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:46:29Z",
+      "side": 1,
+      "message": "More realistically the best thing to do is probably to lock, make a copy, unlock and then iterate on the copy.",
+      "parentUuid": "54a96ac0_6d4bdc8a",
+      "range": {
+        "startLine": 1725,
+        "startChar": 27,
+        "endLine": 1725,
+        "endChar": 51
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f965a18_bf642074",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
