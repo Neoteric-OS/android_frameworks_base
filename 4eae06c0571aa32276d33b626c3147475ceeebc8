@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4f7bfc_40bc3e86",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-05T07:53:10Z",
+      "side": 1,
+      "message": "SystemProperties.addChangeCallback brings overhead so just sleep here.",
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
