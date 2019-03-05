@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17bd81c7_0a4c6149",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "You can just say \"Null means...\". It\u0027s obvious that it can be null both because you mention explicitly that null has a specific meaning and because it\u0027s @Nullable.",
+      "range": {
+        "startLine": 2557,
+        "startChar": 69,
+        "endLine": 2557,
+        "endChar": 94
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fc9859_484dafc1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "s/reports //",
+      "range": {
+        "startLine": 2567,
+        "startChar": 26,
+        "endLine": 2567,
+        "endChar": 33
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964e9ce9_618d0776",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "will receive",
+      "range": {
+        "startLine": 2567,
+        "startChar": 82,
+        "endLine": 2568,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7298bb33_26abf458",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "s/the //",
+      "range": {
+        "startLine": 2569,
+        "startChar": 32,
+        "endLine": 2569,
+        "endChar": 35
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bf212f_dccac2c5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "will be call with a null argument.",
+      "range": {
+        "startLine": 2570,
+        "startChar": 7,
+        "endLine": 2570,
+        "endChar": 41
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3dd4cd_1028bea9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "called.",
+      "range": {
+        "startLine": 2572,
+        "startChar": 42,
+        "endLine": 2572,
+        "endChar": 46
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e97cbb_c860018b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Please also @param document the other argument",
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe49f88c_24deec7c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2578,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Can we use an Executor (with @CallbackExecutor annotation) instead ? This is the current guidance from the API council :\n\nhttps://docs.google.com/document/d/1GAzXERdykuhyubY-KEXNcaNB1KW-Vw4Qen8_4DulrT0/edit#heading\u003dh.tv05td1f2vhx",
+      "range": {
+        "startLine": 2578,
+        "startChar": 22,
+        "endLine": 2578,
+        "endChar": 29
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be59b4d9_4cbfc400",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "If you pass an executor then you can dispense with this and mark it @NonNull, because it\u0027s trivial for developers to pass an inline executor to get this same effect.",
+      "range": {
+        "startLine": 2588,
+        "startChar": 18,
+        "endLine": 2588,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d6a1f4_561135d1",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "@GuardedBy(\"mPublicSync\")",
+      "range": {
+        "startLine": 189,
+        "startChar": 62,
+        "endLine": 189,
+        "endChar": 86
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63301d1c_aa3385c4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "@GuardedBy(\"mPublicSync\") ?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 19
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9d1652_5b95f409",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Can you please add a comment about calling under lock ? Something like :\n\n// Calling setCummentUpstream under lock is safe because it never blocks",
+      "range": {
+        "startLine": 1241,
+        "startChar": 20,
+        "endLine": 1241,
+        "endChar": 43
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865ed0fa_72446791",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Maybe you want to add a check here that this listener is not already registered, and throw otherwise.\n\nLikewise for unregister.",
+      "range": {
+        "startLine": 1708,
+        "startChar": 12,
+        "endLine": 1708,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a96ac0_6d4bdc8a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Looks to me like you need to lock mPublicSync. Otherwise you might have a remove in the middle of the iteration and NPE or OOB, or an add in the middle of the loop and then miss sending an update to it.",
+      "range": {
+        "startLine": 1725,
+        "startChar": 27,
+        "endLine": 1725,
+        "endChar": 51
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f965a18_bf642074",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Catching RuntimeException is a code smell. In this case I suspect you are doing this to catch the possible OOB and NPE from removing while iterating, but you also need to account for the add case. Also if you have a call to remove while iterating, you will miss calling one of the callbacks : if e.g. you have four callbacks in the list\n(A, B, C, D)\n\nIterate, call index 1 \u003d A\nIterate, call index 2 \u003d B\nRemove index 1\nIterate, call index 3 \u003d D\nIterate, call index 4, NPE, catch RuntimeException\n\n...you never called C.",
+      "range": {
+        "startLine": 1730,
+        "startChar": 43,
+        "endLine": 1730,
+        "endChar": 59
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f60db4_25e72d3d",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Instead of a boolean I suggest you have an int, or better yet an array of expected networks. The main reason is to detect duplicated calls. It is also easier to convert later to a semaphore if we want to perform actual thread testing.\n\nA typical way of doing this is to provide an expectations method :\n\n  private final ArrayList\u003cNetwork\u003e expectedUpstreamChanges \u003d new ArrayList\u003c\u003e();\n  public void expectUpstreamChanged(Network... networks) {\n    expectedUpstream.addAll(Arrays.asList(networks));\n  }\n\n  public void onUpstreamChanged(Network network) {\n    assertEquals(network, expectUpstreamChanged.remove(0)) // throws OOB if no expectations\n  }\n\n  public void assertNoCallback() {\n    assertTrue(expectUpstreamChanged.isEmpty());\n  }\n\n\nThen you can use like this :\n\n  listener1.expectUpstreamChanged(upstreamState.network)\n  runUsbTethering(upstreamState);\n  listener1.assertNoCallback();\n\n\nThere are many variations on this depending on your needs and your tastes (for example, you could prefer to throw in expectUpstreamChanged if the array is not empty ; you could have an array of Predicate\u003cNetwork\u003e instead of an array of Network for versatility (and then you could say expectUpstreamChanged(Network::equals) or expectUpstreamChanged({ true }) to accept anything but also other richer expressions) ; you could modify the logic to remember previous calls instead so you can say expect() after the callback has been issued...).\n\nWe are doing something similar in ConnectivityServiceTest#MockNetworkFactory or TestNetworkAgent.",
+      "range": {
+        "startLine": 924,
+        "startChar": 15,
+        "endLine": 924,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926f9e90_2b88ef1f",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Alternatively, you could completely remove TestTetheringEventListener, and just create a mock :\n\ncaptor \u003d ArgumentCaptor.forClass(Network.class)\nlistener1 \u003d Mockito.mock(ITetheringEventListener.Stub.class)\n\n\n// Then later :\nrunUsbTethering(upstreamState);\nverify(listener1, times(1)).onUpstreamChanged(captor.capture());\nassertEquals(upstreamState.network, captor.getValue())\nlistener1.reset();\n\nIn fact this is probably even simpler.",
+      "range": {
+        "startLine": 932,
+        "startChar": 20,
+        "endLine": 932,
+        "endChar": 37
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8757ac26_c6f216c5",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "register",
+      "range": {
+        "startLine": 953,
+        "startChar": 14,
+        "endLine": 953,
+        "endChar": 22
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

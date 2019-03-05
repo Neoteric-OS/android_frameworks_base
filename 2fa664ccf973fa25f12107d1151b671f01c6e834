@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "1e3e3c54_3b2e4f4b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T07:45:05Z",
+      "side": 1,
+      "message": "Well you still in principle can get the same trouble if that class also goes out of its way to implement equals() in such a way that two different objects are equals().\n\nI don\u0027t think we need to worry about this. This will cause trouble in app space and that\u0027s all ; it does not seem to me like the system server is vulnerable from doing this dance in here.",
+      "parentUuid": "75200ce6_7fc44452",
+      "range": {
+        "startLine": 2565,
+        "startChar": 27,
+        "endLine": 2565,
+        "endChar": 51
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53739ae5_3842b0e5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
