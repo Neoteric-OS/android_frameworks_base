@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "6a2ec7dc_3b593bba",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T06:18:48Z",
+      "side": 1,
+      "message": "The key still be object of OnTetheringEventListener instead of hashcode. Same hashcode for different OnTetheringEventListener objects would not map to the same key. If I read the code correctly, it support same hashcode for different keys. It would use hashcode to binary search the a hash index first. Then, linear search for a matching key from all matching hash.\nhttps://cs.corp.google.com/android/frameworks/base/core/java/android/util/ArrayMap.java?rcl\u003d475f8da097c0589f8bcd148d04c260a5b1030819\u0026l\u003d129",
+      "parentUuid": "1553716d_172e78c0",
+      "range": {
+        "startLine": 2565,
+        "startChar": 27,
+        "endLine": 2565,
+        "endChar": 51
+      },
+      "revId": "2fa664ccf973fa25f12107d1151b671f01c6e834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53739ae5_3842b0e5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
