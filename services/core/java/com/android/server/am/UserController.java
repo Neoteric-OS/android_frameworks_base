@@ -563,7 +563,7 @@ class UserController implements Handler.Callback {
             public void userStopped(final int userId) {
                 // Post to the same handler that this callback is called from to ensure the user
                 // cleanup is complete before restarting.
-                mHandler.post(() -> startUser(userId, foreground));
+                mHandler.postDelayed(() -> startUser(userId, foreground),5000);
             }
             @Override
             public void userStopAborted(final int userId) {}
