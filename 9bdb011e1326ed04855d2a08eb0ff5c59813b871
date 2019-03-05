@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a73f305_e2e50089",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-05T15:43:19Z",
+      "side": 1,
+      "message": "Oh, yeah, that would fix the conflict below. But I was under the impression that we would not _add_ them here, just replace them. I guess this means that these new flags need to also be ignored by hiddenapi encode ?",
+      "parentUuid": "e2ae18f4_14a92026",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 60
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f2ad1b_25728fed",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-05T15:04:56Z",
       "side": 1,
       "message": "Do you have an example of where you get a conflict? I think we should be able to make it conflict-less.",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 83
+      },
+      "revId": "9bdb011e1326ed04855d2a08eb0ff5c59813b871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd86066e_5144c976",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-05T15:43:19Z",
+      "side": 1,
+      "message": "Sure!\nCheck failed: success out/soong/hiddenapi/hiddenapi-flags.csv:1: Some flags were not recognized: Landroid/Manifest$permission;-\u003e\u003cinit\u003e()V,greylist,public-api,system-api,test-api,whitelist\n\n(also, checking the hiddenapi-stub-flags.txt for apis marked with public-api, system-api and test-api at the same time yields ~90k results)",
+      "parentUuid": "d6f2ad1b_25728fed",
       "range": {
         "startLine": 309,
         "startChar": 4,
