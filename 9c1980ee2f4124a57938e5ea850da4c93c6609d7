@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f820687_4ebbdc79",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/ResourceManagerInvocationHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-05T09:42:36Z",
+      "side": 1,
+      "message": "I looked at it briefly and don\u0027t think it can return null, but in any case String.class.equals sounds like a better practice - done (also for the resType comment)",
+      "parentUuid": "18655174_5b2eda04",
+      "revId": "9c1980ee2f4124a57938e5ea850da4c93c6609d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89f2c0ea_e3864da8",
         "filename": "packages/NetworkStack/tests/src/com/android/networkstack/IResourceManagerTest.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "9c1980ee2f4124a57938e5ea850da4c93c6609d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b13518_979c11d8",
+        "filename": "packages/NetworkStack/tests/src/com/android/networkstack/IResourceManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-05T09:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f2c0ea_e3864da8",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "9c1980ee2f4124a57938e5ea850da4c93c6609d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
