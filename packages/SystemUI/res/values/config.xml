@@ -368,10 +368,13 @@
     <!-- Whether to show a warning notification when the device reaches a certain temperature. -->
     <integer name="config_showTemperatureWarning">0</integer>
 
-    <!-- Temp at which to show a warning notification if config_showTemperatureWarning is true.
-         If < 0, uses the skin temperature sensor shutdown value from
+    <!-- Temp at which to show a warning notification if config_showTemperatureWarning is 1.
+         If < 0, uses the temperature sensor shutdown value from
          HardwarePropertiesManager#getDeviceTemperatures - config_warningTemperatureTolerance. -->
-    <integer name="config_warningTemperature">-1</integer>
+    <integer name="config_warningTemperatureCpu">-1</integer>
+    <integer name="config_warningTemperatureGpu">-1</integer>
+    <integer name="config_warningTemperatureSkin">-1</integer>
+    <integer name="config_warningTemperatureBattery">-1</integer>
 
     <!-- Fudge factor for how much below the shutdown temp to show the warning. -->
     <integer name="config_warningTemperatureTolerance">2</integer>

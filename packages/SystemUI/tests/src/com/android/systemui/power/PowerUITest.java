@@ -14,6 +14,9 @@
 
 package com.android.systemui.power;
 
+import static android.os.HardwarePropertiesManager.DEVICE_TEMPERATURE_BATTERY;
+import static android.os.HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU;
+import static android.os.HardwarePropertiesManager.DEVICE_TEMPERATURE_GPU;
 import static android.os.HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN;
 import static android.os.HardwarePropertiesManager.TEMPERATURE_CURRENT;
 import static android.os.HardwarePropertiesManager.TEMPERATURE_SHUTDOWN;
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
@@ -42,6 +46,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.android.settingslib.utils.ThreadUtils;
 import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
+import com.android.systemui.power.PowerUI.ThermalTemperatures;
 import com.android.systemui.power.PowerUI.WarningsUI;
 import com.android.systemui.statusbar.phone.StatusBar;
 
@@ -95,7 +100,7 @@ public class PowerUITest extends SysuiTestCase {
         Settings.Global.putString(mContext.getContentResolver(), SHOW_TEMPERATURE_WARNING, null);
         TestableResources resources = mContext.getOrCreateTestableResources();
         resources.addOverride(R.integer.config_showTemperatureWarning, 0);
-        resources.addOverride(R.integer.config_warningTemperature, 55);
+        resources.addOverride(R.integer.config_warningTemperatureSkin, 55);
 
         mPowerUI.start();
         verify(mMockWarnings, never()).showHighTemperatureWarning();
@@ -107,7 +112,7 @@ public class PowerUITest extends SysuiTestCase {
         Settings.Global.putString(mContext.getContentResolver(), SHOW_TEMPERATURE_WARNING, null);
         TestableResources resources = mContext.getOrCreateTestableResources();
         resources.addOverride(R.integer.config_showTemperatureWarning, 1);
-        resources.addOverride(R.integer.config_warningTemperature, 55);
+        resources.addOverride(R.integer.config_warningTemperatureSkin, 55);
 
         mPowerUI.start();
         verify(mMockWarnings, never()).showHighTemperatureWarning();
@@ -119,7 +124,7 @@ public class PowerUITest extends SysuiTestCase {
         Settings.Global.putString(mContext.getContentResolver(), SHOW_TEMPERATURE_WARNING, null);
         TestableResources resources = mContext.getOrCreateTestableResources();
         resources.addOverride(R.integer.config_showTemperatureWarning, 1);
-        resources.addOverride(R.integer.config_warningTemperature, 55);
+        resources.addOverride(R.integer.config_warningTemperatureSkin, 55);
 
         mPowerUI.start();
         verify(mMockWarnings).showHighTemperatureWarning();
@@ -131,7 +136,7 @@ public class PowerUITest extends SysuiTestCase {
         Settings.Global.putInt(mContext.getContentResolver(), SHOW_TEMPERATURE_WARNING, 1);
         TestableResources resources = mContext.getOrCreateTestableResources();
         resources.addOverride(R.integer.config_showTemperatureWarning, 0);
-        resources.addOverride(R.integer.config_warningTemperature, 55);
+        resources.addOverride(R.integer.config_warningTemperatureSkin, 55);
 
         mPowerUI.start();
         verify(mMockWarnings).showHighTemperatureWarning();
@@ -143,16 +148,16 @@ public class PowerUITest extends SysuiTestCase {
         Settings.Global.putString(mContext.getContentResolver(), SHOW_TEMPERATURE_WARNING, null);
         TestableResources resources = mContext.getOrCreateTestableResources();
         resources.addOverride(R.integer.config_showTemperatureWarning, 1);
-        resources.addOverride(R.integer.config_warningTemperature, -1);
+        resources.addOverride(R.integer.config_warningTemperatureSkin, -1);
         resources.addOverride(R.integer.config_warningTemperatureTolerance, tolerance);
         when(mHardProps.getDeviceTemperatures(DEVICE_TEMPERATURE_SKIN, TEMPERATURE_SHUTDOWN))
                 .thenReturn(new float[] { 55 + tolerance });
 
-        setCurrentTemp(54); // Below threshold.
+        setCurrentTemp(DEVICE_TEMPERATURE_SKIN, 54); // Below threshold.
         mPowerUI.start();
         verify(mMockWarnings, never()).showHighTemperatureWarning();
 
-        setCurrentTemp(56); // Above threshold.
+        setCurrentTemp(DEVICE_TEMPERATURE_SKIN, 56); // Above threshold.
         mPowerUI.updateTemperatureWarning();
         verify(mMockWarnings).showHighTemperatureWarning();
     }
@@ -493,17 +498,41 @@ public class PowerUITest extends SysuiTestCase {
         verify(mEnhancedEstimates, times(2)).getEstimate();
     }
 
-    private void setCurrentTemp(float temp) {
-        when(mHardProps.getDeviceTemperatures(DEVICE_TEMPERATURE_SKIN, TEMPERATURE_CURRENT))
+    @Test
+    public void testThermalTemperaturesConstructor() {
+        mPowerUI.start();
+        ThermalTemperatures thermalTemperatures = mPowerUI.mThermalTemperatures;
+        ContentResolver resolver = mContext.getContentResolver();
+        TestableResources resources = mContext.getOrCreateTestableResources();
+
+        resources.addOverride(R.integer.config_warningTemperatureCpu, 100);
+        resources.addOverride(R.integer.config_warningTemperatureGpu, 90);
+        resources.addOverride(R.integer.config_warningTemperatureBattery, 70);
+        thermalTemperatures.addThermalTemperature("cpu_temp", DEVICE_TEMPERATURE_CPU,
+                R.integer.config_warningTemperatureCpu);
+        thermalTemperatures.addThermalTemperature("gpu_temp", DEVICE_TEMPERATURE_GPU,
+                R.integer.config_warningTemperatureGpu);
+        thermalTemperatures.addThermalTemperature("skin_temp", DEVICE_TEMPERATURE_SKIN,
+                R.integer.config_warningTemperatureSkin);
+        thermalTemperatures.addThermalTemperature("battery_temp", DEVICE_TEMPERATURE_BATTERY,
+                R.integer.config_warningTemperatureBattery);
+
+        setCurrentTemp(DEVICE_TEMPERATURE_CPU, 105); // Make one of them above threshold.
+        mPowerUI.updateTemperatureWarning();
+        verify(mMockWarnings).showHighTemperatureWarning();
+    }
+
+    private void setCurrentTemp(int temperatureID, float temp) {
+        when(mHardProps.getDeviceTemperatures(temperatureID, TEMPERATURE_CURRENT))
                 .thenReturn(new float[] { temp });
     }
 
     private void setOverThreshold() {
-        setCurrentTemp(50000);
+        setCurrentTemp(DEVICE_TEMPERATURE_SKIN, 50000);
     }
 
     private void setUnderThreshold() {
-        setCurrentTemp(5);
+        setCurrentTemp(DEVICE_TEMPERATURE_SKIN, 5);
     }
 
     private void createPowerUi() {
