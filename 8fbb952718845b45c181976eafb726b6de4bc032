@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daef4f1d_4c362659",
+        "filename": "services/core/xsd/default-permissions.xsd",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-06T06:15:50Z",
+      "side": 1,
+      "message": "it is either sha or brand or both, but at least one must be there.",
+      "revId": "8fbb952718845b45c181976eafb726b6de4bc032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
