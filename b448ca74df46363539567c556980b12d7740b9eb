@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2c316170_0162241c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:08:51Z",
+      "side": 1,
+      "message": "Make sense, will follow up your suggestion.",
+      "parentUuid": "1976ee09_3c7d975a",
+      "range": {
+        "startLine": 2704,
+        "startChar": 29,
+        "endLine": 2704,
+        "endChar": 30
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bddd18_0c60fa85",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
