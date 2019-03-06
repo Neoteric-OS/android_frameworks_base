@@ -22,6 +22,30 @@
       "revId": "35e5e6abbaaef7ef90b1575fb2a9cfa64c94e9ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730a4852_b8805019",
+        "filename": "telephony/java/android/telephony/CellIdentityNr.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2019-03-06T19:07:03Z",
+      "side": 1,
+      "message": "They define different range for NR-ARFCN.",
+      "parentUuid": "a362a743_65aab257",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 79
+      },
+      "revId": "35e5e6abbaaef7ef90b1575fb2a9cfa64c94e9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
