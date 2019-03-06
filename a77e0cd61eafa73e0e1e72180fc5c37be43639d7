@@ -649,6 +649,30 @@
     },
     {
       "key": {
+        "uuid": "1222d5d4_440d710a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:24:50Z",
+      "side": 1,
+      "message": "Yes, you are right that the exception would only crash the binder thread. But I still think we don\u0027t need to add duplicated callback register in here by below reason.\n1. We already make sure the callback would be removed atomically if binder died. If app bypass  ConnectivityManager and register the duplicated callback, this should be their fault.\n2. The callbacks is stored in RemoteCallbackList. If we want to prevent duplicated register here, we need to loop callback list. I think add a loop just for preventing this seems not a good idea.\n+ Lorenzo to vote. Should we add duplicated register check in here ??",
+      "parentUuid": "47fdb1da_34e0e231",
+      "range": {
+        "startLine": 1708,
+        "startChar": 12,
+        "endLine": 1708,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a96ac0_6d4bdc8a",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
