@@ -46,6 +46,30 @@
       "revId": "4a775a94dd3a8271acfa9387635a07ab32a14b2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb20129_4f4c7210",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-03-06T10:34:34Z",
+      "side": 1,
+      "message": "Moreover, this does indicate another issue: when fused, network, and gps provider are all not available, this API will return early. However, according to \nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/res/res/values/config.xml#1590\nAND\nhttps://android.googlesource.com/platform/build/+/master/target/product/handheld_system.mk#50\n\nFused location provider is included by default for AOSP builds. As result, we never observe this crash the failure of this API with this fix in the past.",
+      "parentUuid": "1b9c0f23_bb50ab0e",
+      "range": {
+        "startLine": 2668,
+        "startChar": 16,
+        "endLine": 2668,
+        "endChar": 90
+      },
+      "revId": "4a775a94dd3a8271acfa9387635a07ab32a14b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
