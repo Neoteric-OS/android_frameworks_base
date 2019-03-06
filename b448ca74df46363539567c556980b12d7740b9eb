@@ -97,6 +97,63 @@
     },
     {
       "key": {
+        "uuid": "2d0c3bdd_ba56145b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-06T22:11:52Z",
+      "side": 1,
+      "message": "Like on the other CL, is now a good opportunity to switch from Handler to Executor here or is that going to make things messy with the ResultReceiver?",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d09f3b_b5091776",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-06T22:11:52Z",
+      "side": 1,
+      "message": "Why switch the parameter order here? Isn\u0027t it standard to have the handler last (especially if it\u0027s nullable)?",
+      "range": {
+        "startLine": 2748,
+        "startChar": 0,
+        "endLine": 2748,
+        "endChar": 38
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd128e30_4cfda2f5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-06T22:11:52Z",
+      "side": 1,
+      "message": "What\u0027s the plan here for removing this API? The problem is that at this point, v25 is already partially rolled out to stable, so it\u0027s extremely late for us to CP a change there that would remove our call to this or switch to the new API. We\u0027re even cutting it really close on V26 at this point.",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88bddd18_0c60fa85",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
