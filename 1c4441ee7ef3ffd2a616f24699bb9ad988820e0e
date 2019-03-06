@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e11cf0f_a6fd41e4",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-03-06T02:07:12Z",
+      "side": 1,
+      "message": "in hindsight, I might better have put this in a separate change, but it\u0027s affect is to make NonNull below true.",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "1c4441ee7ef3ffd2a616f24699bb9ad988820e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
