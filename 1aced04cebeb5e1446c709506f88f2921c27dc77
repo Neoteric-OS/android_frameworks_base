@@ -46,6 +46,30 @@
       "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec93c9c_8c92f120",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-03-06T00:30:54Z",
+      "side": 1,
+      "message": "Could we throw an ISE if this is null? That way we *actually* only return non-null and the site of error is more obvious (rather than an NPE that happens down the road with the return value that wasn\u0027t expected to be null here).",
+      "parentUuid": "676392e7_79bfe7a2",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
