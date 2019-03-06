@@ -933,6 +933,30 @@
     },
     {
       "key": {
+        "uuid": "c8b65bd5_24e09a53",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T03:38:09Z",
+      "side": 1,
+      "message": "Will keep use TestTetheringEventListener instead of mock because Tethering maintain the callback list by RemoteCallbackList. RemoteCallbackList maintains the ArrayMap\u003cIBinder, Callback\u003e data structure. Real callback object can obtain IBinder easily.",
+      "parentUuid": "144f660c_e9e2c471",
+      "range": {
+        "startLine": 932,
+        "startChar": 20,
+        "endLine": 932,
+        "endChar": 37
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8757ac26_c6f216c5",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 2
