@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ca83abe_0c198081",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T14:39:20Z",
+      "side": 1,
+      "message": "Ack, I think we already use @intdef for result code. The original possible result code comment seems be redundant.\n--\nOriginal comment:\n@param resultCode a int value of entitlement result. It may be one of\n         {@link #TETHER_ERROR_NO_ERROR},\n         {@link #TETHER_ERROR_PROVISION_FAILED}, or\n         {@link #TETHER_ERROR_ENTITLEMENT_UNKONWN}.",
+      "parentUuid": "2186d8fb_1267bf97",
+      "range": {
+        "startLine": 2704,
+        "startChar": 29,
+        "endLine": 2704,
+        "endChar": 30
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bddd18_0c60fa85",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-06T13:54:44Z",
       "side": 1,
       "message": "Can you just call getLatestTetheringEntitlementResult ?",
+      "range": {
+        "startLine": 2775,
+        "startChar": 7,
+        "endLine": 2789,
+        "endChar": 46
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd031d07_cfc7ac34",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T14:39:20Z",
+      "side": 1,
+      "message": "Since the input argument is different(TetheringEntitlementValueListener \u003c-\u003e OnTetheringEntitlementResultListener), it is hard to reuse getLatestTetheringEntitlementResult",
+      "parentUuid": "88bddd18_0c60fa85",
       "range": {
         "startLine": 2775,
         "startChar": 7,
