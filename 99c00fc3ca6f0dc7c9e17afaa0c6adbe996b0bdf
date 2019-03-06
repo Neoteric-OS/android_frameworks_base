@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8bfc86_456b436f",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-03-06T12:49:41Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "99c00fc3ca6f0dc7c9e17afaa0c6adbe996b0bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce728a0f_88c63425",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-03-06T12:49:41Z",
+      "side": 1,
+      "message": "do we want to greylist system APIs?\n\nThere are potential ramifications: there are efforts underway to eliminate all greylist usage from 1P apps, and this will move the goalposts for them. And system API usage is ok/WAI for many 1P apps. We will need to ensure that all the other tooling (e.g. veridex) can differentiate between greylist \u0026 system API, so it can allow the latter.\n\nOn balance, I feel it\u0027s better to leave systemAPI on the whitelist for now. Greylisting test-API is fine.\n\ncc+ dariofreni since he\u0027s been involved in the efforts to eliminate 1P app greylist usage.",
+      "range": {
+        "startLine": 217,
+        "startChar": 46,
+        "endLine": 217,
+        "endChar": 60
+      },
+      "revId": "99c00fc3ca6f0dc7c9e17afaa0c6adbe996b0bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
