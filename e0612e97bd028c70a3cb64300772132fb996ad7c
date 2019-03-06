@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83038738_93ba4ccd",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-03-06T10:52:26Z",
+      "side": 1,
+      "message": "Question to Soonil, according to the source code of Settings.Secure.putStringForUser at:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/provider/Settings.java#4981\n\nDoes writing to Settings.Secure.LOCATION_MODE effectively write \"+gps,+network\" to Settings.Secure.LOCATION_PROVIDERS_ALLOWED?",
+      "range": {
+        "startLine": 2675,
+        "startChar": 24,
+        "endLine": 2675,
+        "endChar": 53
+      },
+      "revId": "e0612e97bd028c70a3cb64300772132fb996ad7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
