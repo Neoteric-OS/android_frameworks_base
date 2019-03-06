@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1976ee09_3c7d975a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:47:37Z",
+      "side": 1,
+      "message": "It\u0027s true, but it\u0027s doc. I tend to think it\u0027s nice for devs to see that here.",
+      "parentUuid": "4ca83abe_0c198081",
+      "range": {
+        "startLine": 2704,
+        "startChar": 29,
+        "endLine": 2704,
+        "endChar": 30
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bddd18_0c60fa85",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "b448ca74df46363539567c556980b12d7740b9eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de59ef95_e1470c11",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:47:37Z",
+      "side": 1,
+      "message": "Ah right. I had forgotten that.",
+      "parentUuid": "fd031d07_cfc7ac34",
+      "range": {
+        "startLine": 2775,
+        "startChar": 7,
+        "endLine": 2789,
+        "endChar": 46
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
