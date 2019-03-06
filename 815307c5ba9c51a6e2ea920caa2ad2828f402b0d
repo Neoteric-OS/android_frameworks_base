@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d61bdd0d_1aed208a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2563,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "Looks like this should be guarded by a lock (or made a concurrent data structure). Otherwise, if a caller calls registerTetheringEventCallback() concurrently on multiple threads, there will be data corruption or crashes.",
+      "range": {
+        "startLine": 2563,
+        "startChar": 18,
+        "endLine": 2563,
+        "endChar": 26
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558bba19_6d86f0b8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "Clarify if the callback be called with null when tethering loses its upstream and/or is disabled.\n\nMaybe also say that the came callback object cannot be registered twice.",
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470d0244_f4b1d802",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "immediately be",
+      "range": {
+        "startLine": 2570,
+        "startChar": 12,
+        "endLine": 2570,
+        "endChar": 14
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b2deaa_ede4cd90",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "Why is this synchronized block necessary? It wasn\u0027t there before, and IIRC this code is always ever run on the same thread (i.e., the Handler thread). It seems like it would be simpler to do one of the following:\n\n1. Move the callback registration and unregistration to the handler thread. In other words, have registerTetheringEventCallback and unregisterTetheringEventCallback just post a lambda to the Handler. I think this can be done because these functions do not return anything. Also ISTM that even if the caller calls register() and unregister() one after the other (or even on different threads?), it\u0027s still safe because the operations will be done in the correct order.\n\n2. Instead of locking on mPublicSync, lock on mTetheringEventCallbacks. If possible (but it may not be possible to do it correctly) it would be even better to just move the locking inside reportUpstreamChangedLocked(), registerTetheringEventCallback and unregisterTetheringEventCallback.",
+      "range": {
+        "startLine": 1240,
+        "startChar": 12,
+        "endLine": 1240,
+        "endChar": 40
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6222ad6a_ea5d06a3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "Suggest also mentioning that reportUpstreamChangedLocked should not block because ITetheringEventCallback is a one-way interface.",
+      "range": {
+        "startLine": 1243,
+        "startChar": 92,
+        "endLine": 1243,
+        "endChar": 93
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b31436_686a92c5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "Cumment -\u003e Current",
+      "range": {
+        "startLine": 1243,
+        "startChar": 31,
+        "endLine": 1243,
+        "endChar": 49
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0bb078_943b2c7e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "It looks like you are informing the callbacks of the new upstream before the new upstream actually takes effect. Should the callbacks be called after setUpstreamNetwork, instead of before it?",
+      "range": {
+        "startLine": 1245,
+        "startChar": 20,
+        "endLine": 1245,
+        "endChar": 47
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cbc2a9_3614251f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-06T09:41:36Z",
+      "side": 1,
+      "message": "See above comment on synchronization.",
+      "range": {
+        "startLine": 1431,
+        "startChar": 16,
+        "endLine": 1431,
+        "endChar": 44
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
