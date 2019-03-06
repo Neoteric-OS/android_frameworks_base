@@ -33,6 +33,24 @@
       "revId": "6d599c57374ee1bfcddbc2e55d63d86017a33ecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b33521_1edc2838",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-06T06:36:18Z",
+      "side": 1,
+      "message": "+1 with lorenzo,\nprotection inside NetworkStatsFactory might be better,\nand it is even better if only has one method.",
+      "parentUuid": "1d86b587_696fea2f",
+      "revId": "6d599c57374ee1bfcddbc2e55d63d86017a33ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
