@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9207b88f_49bfafad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-06T06:22:48Z",
+      "side": 1,
+      "message": "potential?",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "3e7e81ee506a13b0fa9402a80d2cfe9f93d8ba0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa0a25b_3cbb8fb9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-06T06:22:48Z",
+      "side": 1,
+      "message": "1. It looks like every function call of this will result in a swap.\nIn the case of concurrently invoke getNetworkStatsDetail and getNetworkStatusUidDetail, is it possible to read wrong map? \nE.g. map swapped due to l.1524, then swapped again at l.1819, and stats read at l.1821.\n\n2. don\u0027t have context about how you design it in netd.\nIs it possible that status unsync, and cause you read the active map all the time?\nE.g. swap active map to A, and read A; then swap ative map to B, and read B",
+      "range": {
+        "startLine": 1522,
+        "startChar": 24,
+        "endLine": 1522,
+        "endChar": 45
+      },
+      "revId": "3e7e81ee506a13b0fa9402a80d2cfe9f93d8ba0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
