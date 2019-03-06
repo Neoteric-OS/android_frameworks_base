@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2186d8fb_1267bf97",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T13:54:44Z",
+      "side": 1,
+      "message": "an\n\nBut I think you can just copy the original comment.",
+      "range": {
+        "startLine": 2704,
+        "startChar": 29,
+        "endLine": 2704,
+        "endChar": 30
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bddd18_0c60fa85",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T13:54:44Z",
+      "side": 1,
+      "message": "Can you just call getLatestTetheringEntitlementResult ?",
+      "range": {
+        "startLine": 2775,
+        "startChar": 7,
+        "endLine": 2789,
+        "endChar": 46
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
