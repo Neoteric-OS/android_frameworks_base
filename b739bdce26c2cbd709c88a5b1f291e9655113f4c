@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "547e29aa_b35849b3",
+        "filename": "core/java/android/preference/DialogPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-03-06T00:54:39Z",
+      "side": 1,
+      "message": "I assume that no decor view implies we\u0027ve already been dismissed? if so, can you leave a comment here stating that?",
+      "revId": "b739bdce26c2cbd709c88a5b1f291e9655113f4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
