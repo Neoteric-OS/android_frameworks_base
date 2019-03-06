@@ -22,6 +22,30 @@
       "revId": "e0612e97bd028c70a3cb64300772132fb996ad7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09008d_c1a90cb5",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-03-06T12:01:55Z",
+      "side": 1,
+      "message": "I think this API will not change the value of \"location_mode\", only the \"location_providers_allowed\"\nIn my opinion, Settings.secure.getStringForUser(Settings.Secure.LOCATION_MODE) will always return null. \nActually, I used \"settings get secure location_mode\" to get the value, the result is null,\nMaybe we also need to update the \"location_mode\" in Settings.java\n\nJust a suggestion:\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/provider/Settings.java#8500\n\nadd this:\nboolean contentSuccess \u003d sNameValueCache.putStringForUser(cr, LOCATION_MODE, Integer.toString(mode), null, false, userId);\nreturn gpsSuccess \u0026\u0026 nlpSuccess \u0026\u0026 contentSuccess;",
+      "parentUuid": "83038738_93ba4ccd",
+      "range": {
+        "startLine": 2675,
+        "startChar": 24,
+        "endLine": 2675,
+        "endChar": 53
+      },
+      "revId": "e0612e97bd028c70a3cb64300772132fb996ad7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
