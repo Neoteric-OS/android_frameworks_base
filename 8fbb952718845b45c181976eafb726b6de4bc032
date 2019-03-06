@@ -34,6 +34,24 @@
       "revId": "8fbb952718845b45c181976eafb726b6de4bc032",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edbbe953_e42b217e",
+        "filename": "services/core/xsd/default-permissions.xsd",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-06T11:56:21Z",
+      "side": 1,
+      "message": "aosp/920534",
+      "parentUuid": "015c0358_cfc050a6",
+      "revId": "8fbb952718845b45c181976eafb726b6de4bc032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
