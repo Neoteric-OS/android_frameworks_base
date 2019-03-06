@@ -625,6 +625,30 @@
     },
     {
       "key": {
+        "uuid": "47fdb1da_34e0e231",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T10:37:59Z",
+      "side": 1,
+      "message": "We do it in ConnectivityManager, but apps may bypass that.\n\nThis is a binder thread right ? The call is coming from an external app. If you throw an exception here, you crash the app, not the system. That\u0027s what happens in the caller for this method : ConnectivityService#registerTetheringEventListener throws SecurityException if the caller app does not have the correct permissions.",
+      "parentUuid": "f1feb052_d07a4aff",
+      "range": {
+        "startLine": 1708,
+        "startChar": 12,
+        "endLine": 1708,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a96ac0_6d4bdc8a",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
