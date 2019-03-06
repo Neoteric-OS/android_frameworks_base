@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7a0d30da_84adce61",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "Hm, I see. I\u0027d want to say that it\u0027s not surprising there is almost no difference on workloads as small as 5000 records and that we\u0027d want to try with many more... but in fact you\u0027re right, there is absolutely no point optimizing for workloads we\u0027ll never see. The entire point of doing this work is to ensure there won\u0027t ever be millions of records, ensuring there is never any noticeable difference.\n\nThanks for the explanation.",
+      "parentUuid": "3f978953_1654b17c",
+      "range": {
+        "startLine": 572,
+        "startChar": 37,
+        "endLine": 572,
+        "endChar": 43
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "116b8a91_85eb3afb",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 8
@@ -330,6 +354,30 @@
       "side": 1,
       "message": "Basically, RegularMaintenanceJobService.schedule should be registered in constructor but it will get an exception if I put the method into constructor. It\u0027s caused by JobService was launched after IpMemoryStoreService. So I used systemReady method to wait all services were ready and then did the registration. If you don\u0027t like to use this, perhaps we can use boot completed intent to replace it. How do you think?",
       "parentUuid": "55a1129e_d97d8cd3",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 27
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ab0293_e0a8fac8",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "Hopefully after the memory store is moved to the network stack this should not happen any more I hope, because the NetworkStack process can only be started after PackageManager has started (according to reminv@).\nLet\u0027s get aosp/906907 merged asap and rebase this.",
+      "parentUuid": "bd57f314_2200207e",
       "range": {
         "startLine": 139,
         "startChar": 16,
@@ -583,6 +631,30 @@
     },
     {
       "key": {
+        "uuid": "e96cbf89_7e465d6f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "I see. I think it\u0027s a matter of outlook : you\u0027re trying to drop as little as possible and get as close to the limit as possible. That\u0027s a nice consideration.\n\nHowever I think that if the device is in a state where the DB size exceeds the limit is already a pathological case where the amount of data is growing too fast. It\u0027s very likely such a device will fill up the space again pretty soon – in fact, if you managed to remove exactly as many records as necessary to get under the cap, the next insertion would likely push you over the cap again.\n\nI think it\u0027s better to tip the bias the other way. It doesn\u0027t really matter if we delete a bit too much I think. For example if the DB is 12MB when maintenance starts, it\u0027s fine if it\u0027s 8MB or 9MB when it\u0027s done.\n\nAt least I would like to avoid the pattern where you always delete only half what\u0027s needed because that would make you loop for a long time. I think the 0.5 factor is best left out.",
+      "parentUuid": "087de9f1_97744203",
+      "range": {
+        "startLine": 471,
+        "startChar": 32,
+        "endLine": 471,
+        "endChar": 95
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a43cae88_9d9de21b",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -665,6 +737,30 @@
       "side": 1,
       "message": "I think 10 might be too much. How about 5?",
       "parentUuid": "fb6d44b4_8f58c156",
+      "range": {
+        "startLine": 476,
+        "startChar": 52,
+        "endLine": 476,
+        "endChar": 54
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42620c1_891de399",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "5 is fine.\n\nAlthough now I understand better why you had 1, it\u0027s because you\u0027re dividing by 2 every time so at some point you reach 1, and if you don\u0027t do this you\u0027ll just have an infinite loop. Now that I understand better the thinking, I think 1 was reasonable.\n\nBut if you agree with me on deleting a little bit more, then the \"1\" case should not happen routinely any more, in which case 5 is fine.",
+      "parentUuid": "97961950_f2799b56",
       "range": {
         "startLine": 476,
         "startChar": 52,
@@ -771,6 +867,30 @@
     },
     {
       "key": {
+        "uuid": "1c0066eb_d8e3e34a",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "I see. I tried to survey the code and reach out to jsharkey@, but it seems everyone is doing the same thing and we don\u0027t have a better option :/\nThanks for the clarification. Let\u0027s keep your code.",
+      "parentUuid": "885afc91_d71780af",
+      "range": {
+        "startLine": 41,
+        "startChar": 53,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4fcb597_f8f82fcd",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 8
@@ -806,6 +926,30 @@
       "side": 1,
       "message": "ACK. I have a question here, as you can see, I only printed log when full maintenance was failed because I didn\u0027t know what could I do more here. Could you give me some suggestion?\nFurthermore, we may ignore the result of full maintenance, right? It seems not be necessary.",
       "parentUuid": "e4fcb597_f8f82fcd",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0760273c_2bad95d7",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "Yes, there isn\u0027t much we can do. I see three main options :\n1. Do nothing and log.\n2. Reschedule and try again later.\n3. Wipe the database.\n\nI think the best option is a combination of 2 and 3 : reschedule 5 times, and if it fails 5 times, wipe.\nBut this is more complex. We can do this as an improvement later. For now, you can keep 1, or you can decide to wipe immediately if you think that\u0027s safer.",
+      "parentUuid": "0b0d63ac_e7570640",
       "range": {
         "startLine": 55,
         "startChar": 16,
@@ -912,6 +1056,30 @@
     },
     {
       "key": {
+        "uuid": "30540fb7_f3ee1b31",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "Yes, you understood correctly. It\u0027s something like this :\n\ninterrupted \u003d false;\nfunction maintenance() {\n  while (still_work_to_do) {\n    if (interrupted) break;\n    do_work();\n  }\n  clean_up();\n}\n\nonStopJob() {\n  interrupted \u003d true;\n}\n\n\nWe need to stop the job as soon as possible (only take care to leave the DB in a consistent state). JobScheduler will reschedule maintenance soon anyway.",
+      "parentUuid": "8e83adcc_01e54515",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9da274_217e7ee9",
         "filename": "services/java/com/android/server/SystemServer.java",
         "patchSetId": 8
@@ -982,6 +1150,30 @@
       "side": 1,
       "message": "Sorry, I don\u0027t know your meaning.",
       "parentUuid": "51bfc799_174bd6f0",
+      "range": {
+        "startLine": 521,
+        "startChar": 52,
+        "endLine": 521,
+        "endChar": 53
+      },
+      "revId": "ab89c6e34abe47ff14df9828cf419977bbbc6ccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb502c13_043de8e4",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T14:39:15Z",
+      "side": 1,
+      "message": "Heh, sorry, Gerrit laid out my text in an unexpected way.\n\nI meant you should subtract one to this to make sure the time is in the past.\n\n  final long time \u003d System.currentTimeMillis() - 1;",
+      "parentUuid": "5186865f_19f891d0",
       "range": {
         "startLine": 521,
         "startChar": 52,
