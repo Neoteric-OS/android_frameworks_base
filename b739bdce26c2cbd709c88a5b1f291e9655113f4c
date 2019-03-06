@@ -16,6 +16,24 @@
       "revId": "b739bdce26c2cbd709c88a5b1f291e9655113f4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbb85ca_f0bfb8cb",
+        "filename": "core/java/android/preference/DialogPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-03-06T19:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "547e29aa_b35849b3",
+      "revId": "b739bdce26c2cbd709c88a5b1f291e9655113f4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

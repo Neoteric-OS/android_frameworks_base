@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c66399f_45251e3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-03-06T19:23:45Z",
+      "side": 1,
+      "message": "Just to clarify, I wasn\u0027t actually able to repro this, before or after the patch.\nBut I talked to OP and she said this issue was only observed once in testing, so it must be really rare. Still, I think the CL is necessary.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 73
+      },
+      "revId": "d0de1cd170b84c1c02f9c8e39bb88b764d4bd90f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
