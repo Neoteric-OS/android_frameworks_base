@@ -22,6 +22,30 @@
       "revId": "4a775a94dd3a8271acfa9387635a07ab32a14b2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9c0f23_bb50ab0e",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-03-06T10:22:54Z",
+      "side": 1,
+      "message": "Ken, thanks for the comment. I think you are right that there is a potential IndexOutOfBoundsException. This will only happen when:\n\n1. The device has a fused location provider and no gps nor network providers, since only fused, gps, and network providers are added to mRealProviders. \n2. This will make allProvidersSet only contains fused provider and pass the empty check in line 2650\n3. for loop in line 2658 will skip adding fused provider to locationProvidersAllowed\n4. Hence locationProvidersAllowed can be empty at line 2668\n\nHowever, this would be a separate issue orthogonal to what we are trying to fix in this CL. I can put another CL to fix this exception after verifying the crash.",
+      "parentUuid": "22a9e57d_e6303e3a",
+      "range": {
+        "startLine": 2668,
+        "startChar": 16,
+        "endLine": 2668,
+        "endChar": 90
+      },
+      "revId": "4a775a94dd3a8271acfa9387635a07ab32a14b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
