@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e5d4ad6_9085b7fc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2563,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61bdd0d_1aed208a",
+      "range": {
+        "startLine": 2563,
+        "startChar": 18,
+        "endLine": 2563,
+        "endChar": 26
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "558bba19_6d86f0b8",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "58d92deb_5a0204f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "470d0244_f4b1d802",
+      "range": {
+        "startLine": 2570,
+        "startChar": 12,
+        "endLine": 2570,
+        "endChar": 14
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e50c635f_191234b6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558bba19_6d86f0b8",
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b2deaa_ede4cd90",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63226d78_ad62f02e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b2deaa_ede4cd90",
+      "range": {
+        "startLine": 1240,
+        "startChar": 12,
+        "endLine": 1240,
+        "endChar": 40
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "db291358_4ff54f3d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b31436_686a92c5",
+      "range": {
+        "startLine": 1243,
+        "startChar": 31,
+        "endLine": 1243,
+        "endChar": 49
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d08a9_9309e174",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Just remove the comment because we don\u0027t use lock in new patch.",
+      "parentUuid": "6222ad6a_ea5d06a3",
+      "range": {
+        "startLine": 1243,
+        "startChar": 92,
+        "endLine": 1243,
+        "endChar": 93
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f0bb078_943b2c7e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "094759ed_8ef70505",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f0bb078_943b2c7e",
+      "range": {
+        "startLine": 1245,
+        "startChar": 20,
+        "endLine": 1245,
+        "endChar": 47
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8cbc2a9_3614251f",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
@@ -177,6 +339,30 @@
       "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ccc8eb_ef242cea",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8cbc2a9_3614251f",
+      "range": {
+        "startLine": 1431,
+        "startChar": 16,
+        "endLine": 1431,
+        "endChar": 44
+      },
+      "revId": "815307c5ba9c51a6e2ea920caa2ad2828f402b0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
