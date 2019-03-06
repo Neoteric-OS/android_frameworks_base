@@ -22,6 +22,40 @@
       "revId": "1c4441ee7ef3ffd2a616f24699bb9ad988820e0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1682629c_ed2350e4",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-03-06T10:32:02Z",
+      "side": 1,
+      "message": "nit: stale comment",
+      "revId": "1c4441ee7ef3ffd2a616f24699bb9ad988820e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f189d1c_fd3d4af9",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-03-06T10:32:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1c4441ee7ef3ffd2a616f24699bb9ad988820e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
