@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a9e57d_e6303e3a",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2019-03-06T10:04:43Z",
+      "side": 1,
+      "message": "If the device does not have any provider (network/gps), locationProvidersAllowed.length() will be 0, and setLength(-1) will cause a crash.",
+      "range": {
+        "startLine": 2668,
+        "startChar": 16,
+        "endLine": 2668,
+        "endChar": 90
+      },
+      "revId": "4a775a94dd3a8271acfa9387635a07ab32a14b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
