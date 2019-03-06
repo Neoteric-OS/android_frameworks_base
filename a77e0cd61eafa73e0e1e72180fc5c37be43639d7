@@ -601,6 +601,30 @@
     },
     {
       "key": {
+        "uuid": "f1feb052_d07a4aff",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-06T03:15:41Z",
+      "side": 1,
+      "message": "Look the code again, I think we don\u0027t need to check whether listener is already registered.\nHere is reason:\n1. We already check whether listener is registered in ConnectivityManager.\n2. If binder died(process of app is down), the callback would be removed from mTetheringEventListeners automatically.\n3. throw exception would crash the system, I don\u0027t think it is a good idea to crash system only for duplicated callback register. User should response for not registered duplicated callback.",
+      "parentUuid": "f8b99a43_13bf7e1c",
+      "range": {
+        "startLine": 1708,
+        "startChar": 12,
+        "endLine": 1708,
+        "endChar": 15
+      },
+      "revId": "a77e0cd61eafa73e0e1e72180fc5c37be43639d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a96ac0_6d4bdc8a",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
