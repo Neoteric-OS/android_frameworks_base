@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5daa1a7a_8409de2d",
+        "filename": "services/core/xsd/schema/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-06T03:22:54Z",
+      "side": 1,
+      "message": "No need to create this doc multiple times. Create it once and put it at a central place. Then refer from each individual README file to the main doc.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "f027c6f37b4f51c0fc2b2a05a8a46f1f86c9c39f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
