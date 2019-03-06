@@ -43069,8 +43069,8 @@ package android.telephony {
     method public String getSimCountryIso();
     method public String getSimOperator();
     method public String getSimOperatorName();
-    method public int getSimPreciseCarrierId();
-    method @Nullable public CharSequence getSimPreciseCarrierIdName();
+    method public int getSimSpecificCarrierId();
+    method @Nullable public CharSequence getSimSpecificCarrierIdName();
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getSimSerialNumber();
     method public int getSimState();
     method public int getSimState(int);
@@ -43131,7 +43131,7 @@ package android.telephony {
     field public static final String ACTION_SECRET_CODE = "android.telephony.action.SECRET_CODE";
     field public static final String ACTION_SHOW_VOICEMAIL_NOTIFICATION = "android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION";
     field public static final String ACTION_SUBSCRIPTION_CARRIER_IDENTITY_CHANGED = "android.telephony.action.SUBSCRIPTION_CARRIER_IDENTITY_CHANGED";
-    field public static final String ACTION_SUBSCRIPTION_PRECISE_CARRIER_IDENTITY_CHANGED = "android.telephony.action.SUBSCRIPTION_PRECISE_CARRIER_IDENTITY_CHANGED";
+    field public static final String ACTION_SUBSCRIPTION_SPECIFIC_CARRIER_IDENTITY_CHANGED = "android.telephony.action.SUBSCRIPTION_SPECIFIC_CARRIER_IDENTITY_CHANGED";
     field public static final int APPTYPE_CSIM = 4; // 0x4
     field public static final int APPTYPE_ISIM = 5; // 0x5
     field public static final int APPTYPE_RUIM = 3; // 0x3
@@ -43166,8 +43166,8 @@ package android.telephony {
     field public static final String EXTRA_NETWORK_COUNTRY = "android.telephony.extra.NETWORK_COUNTRY";
     field public static final String EXTRA_NOTIFICATION_COUNT = "android.telephony.extra.NOTIFICATION_COUNT";
     field public static final String EXTRA_PHONE_ACCOUNT_HANDLE = "android.telephony.extra.PHONE_ACCOUNT_HANDLE";
-    field public static final String EXTRA_PRECISE_CARRIER_ID = "android.telephony.extra.PRECISE_CARRIER_ID";
-    field public static final String EXTRA_PRECISE_CARRIER_NAME = "android.telephony.extra.PRECISE_CARRIER_NAME";
+    field public static final String EXTRA_SPECIFIC_CARRIER_ID = "android.telephony.extra.SPECIFIC_CARRIER_ID";
+    field public static final String EXTRA_SPECIFIC_CARRIER_NAME = "android.telephony.extra.SPECIFIC_CARRIER_NAME";
     field public static final String EXTRA_STATE = "state";
     field public static final String EXTRA_STATE_IDLE;
     field public static final String EXTRA_STATE_OFFHOOK;
