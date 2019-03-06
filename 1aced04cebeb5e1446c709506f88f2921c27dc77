@@ -70,6 +70,30 @@
       "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecbc6cf_1337f121",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-03-06T00:33:15Z",
+      "side": 1,
+      "message": "If it shouldn\u0027t be called after close(), +1 to IllegalStateException()",
+      "parentUuid": "8ec93c9c_8c92f120",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "1aced04cebeb5e1446c709506f88f2921c27dc77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
