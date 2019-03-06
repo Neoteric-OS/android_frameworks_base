@@ -53,6 +53,7 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PowerUI extends SystemUI {
@@ -86,11 +87,10 @@ public class PowerUI extends SystemUI {
 
     private long mScreenOffTime = -1;
 
-    private float mThresholdTemp;
-    private float[] mRecentTemps = new float[MAX_RECENT_TEMPS];
     private int mNumTemps;
     private long mNextLogTime;
     private IThermalService mThermalService;
+    @VisibleForTesting ThermalTemperatures mThermalTemperatures = new ThermalTemperatures();
 
     @VisibleForTesting int mBatteryLevel = 100;
     @VisibleForTesting int mBatteryStatus = BatteryManager.BATTERY_STATUS_UNKNOWN;
@@ -372,22 +372,7 @@ public class PowerUI extends SystemUI {
             return;
         }
 
-        mThresholdTemp = Settings.Global.getFloat(resolver, Settings.Global.WARNING_TEMPERATURE,
-                resources.getInteger(R.integer.config_warningTemperature));
-
-        if (mThresholdTemp < 0f) {
-            // Get the shutdown temperature, adjust for warning tolerance.
-            float[] throttlingTemps = mHardwarePropertiesManager.getDeviceTemperatures(
-                    HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN,
-                    HardwarePropertiesManager.TEMPERATURE_SHUTDOWN);
-            if (throttlingTemps == null
-                    || throttlingTemps.length == 0
-                    || throttlingTemps[0] == HardwarePropertiesManager.UNDEFINED_TEMPERATURE) {
-                return;
-            }
-            mThresholdTemp = throttlingTemps[0] -
-                    resources.getInteger(R.integer.config_warningTemperatureTolerance);
-        }
+        mThermalTemperatures.initTempSources(resolver, resources);
 
         if (mThermalService == null) {
             // Enable push notifications of throttling from vendor thermal
@@ -428,36 +413,29 @@ public class PowerUI extends SystemUI {
 
     @VisibleForTesting
     protected void updateTemperatureWarning() {
-        float[] temps = mHardwarePropertiesManager.getDeviceTemperatures(
-                HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN,
-                HardwarePropertiesManager.TEMPERATURE_CURRENT);
-        if (temps.length != 0) {
-            float temp = temps[0];
-            mRecentTemps[mNumTemps++] = temp;
+        boolean overThreshold = mThermalTemperatures.isOverThreshold();
 
-            StatusBar statusBar = getComponent(StatusBar.class);
-            if (statusBar != null && !statusBar.isDeviceInVrMode()
-                    && temp >= mThresholdTemp) {
-                logAtTemperatureThreshold(temp);
-                mWarnings.showHighTemperatureWarning();
-            } else {
-                mWarnings.dismissHighTemperatureWarning();
-            }
+        if (overThreshold) {
+            mWarnings.showHighTemperatureWarning();
+        } else {
+            mWarnings.dismissHighTemperatureWarning();
         }
 
+        mNumTemps++;
         logTemperatureStats();
 
         mHandler.postDelayed(mUpdateTempCallback, TEMPERATURE_INTERVAL);
     }
 
-    private void logAtTemperatureThreshold(float temp) {
+    private void logAtTemperatureThreshold(float temp, ThermalTemperature temperature) {
         StringBuilder sb = new StringBuilder();
         sb.append("currentTemp=").append(temp)
-                .append(",thresholdTemp=").append(mThresholdTemp)
-                .append(",batteryStatus=").append(mBatteryStatus)
-                .append(",recentTemps=");
+            .append(",thresholdTemp=").append(temperature.mThreshold)
+            .append(",batteryStatus=").append(mBatteryStatus)
+            .append(",recent ").append(temperature.mName).append(":");
+
         for (int i = 0; i < mNumTemps; i++) {
-            sb.append(mRecentTemps[i]).append(',');
+            sb.append(temperature.mRecentTemps[i]).append(',');
         }
         Slog.i(TAG, sb.toString());
     }
@@ -472,24 +450,35 @@ public class PowerUI extends SystemUI {
             return;
         }
 
-        if (mNumTemps > 0) {
-            float sum = mRecentTemps[0], min = mRecentTemps[0], max = mRecentTemps[0];
-            for (int i = 1; i < mNumTemps; i++) {
-                float temp = mRecentTemps[i];
-                sum += temp;
-                if (temp > max) {
-                    max = temp;
-                }
-                if (temp < min) {
-                    min = temp;
-                }
+        for (int i = 0; i < mThermalTemperatures.mTemperatures.size(); i++) {
+            ThermalTemperature temperature = mThermalTemperatures.mTemperatures.get(i);
+            if (!temperature.mValid) {
+                continue;
             }
 
-            float avg = sum / mNumTemps;
-            Slog.i(TAG, "avg=" + avg + ",min=" + min + ",max=" + max);
-            MetricsLogger.histogram(mContext, "device_skin_temp_avg", (int) avg);
-            MetricsLogger.histogram(mContext, "device_skin_temp_min", (int) min);
-            MetricsLogger.histogram(mContext, "device_skin_temp_max", (int) max);
+            float[] recentTemps = temperature.mRecentTemps;
+            if (mNumTemps > 0) {
+                float sum = recentTemps[0], min = recentTemps[0], max = recentTemps[0];
+                for (int j = 1; j < mNumTemps; j++) {
+                    float temp = recentTemps[j];
+                    sum += temp;
+                    if (temp > max) {
+                        max = temp;
+                    }
+                    if (temp < min) {
+                        min = temp;
+                    }
+                }
+
+                float avg = sum / mNumTemps;
+                Slog.i(TAG, "avg=" + avg + ",min=" + min + ",max=" + max);
+                MetricsLogger.histogram(mContext, "device_"
+                        + temperature.mName + "_avg", (int) avg);
+                MetricsLogger.histogram(mContext, "device_"
+                        + temperature.mName + "_min", (int) min);
+                MetricsLogger.histogram(mContext, "device_"
+                        + temperature.mName + "_max", (int) max);
+            }
         }
         setNextLogTime();
         mNumTemps = 0;
@@ -525,8 +514,11 @@ public class PowerUI extends SystemUI {
                 Settings.Global.LOW_BATTERY_SOUND_TIMEOUT, 0));
         pw.print("bucket: ");
         pw.println(Integer.toString(findBatteryLevelBucket(mBatteryLevel)));
-        pw.print("mThresholdTemp=");
-        pw.println(Float.toString(mThresholdTemp));
+        pw.print("ThresholdTemps ");
+        for (int i = 0; i < mThermalTemperatures.mTemperatures.size(); i++) {
+            pw.println(mThermalTemperatures.mTemperatures.get(i).mName + ":"
+                    + mThermalTemperatures.mTemperatures.get(i).mThreshold + " ");
+        }
         pw.print("mNextLogTime=");
         pw.println(Long.toString(mNextLogTime));
         mWarnings.dump(pw);
@@ -557,6 +549,113 @@ public class PowerUI extends SystemUI {
             // callback; updateTemperatureWarning will schedule another one.
             mHandler.removeCallbacks(mUpdateTempCallback);
             updateTemperatureWarning();
+        }
+    }
+
+    private class ThermalTemperature {
+        public String mName;
+        public boolean mValid;
+        public int mTempResource;
+        public int mWarningResource;
+        public float mThreshold;
+        public float[] mRecentTemps;
+
+        ThermalTemperature(String name, int tempResource, int warningResource) {
+            mName = name;
+            mValid = false;
+            mTempResource = tempResource;
+            mWarningResource = warningResource;
+            mThreshold = -1;
+            mRecentTemps = new float[MAX_RECENT_TEMPS];
+        }
+    }
+
+    @VisibleForTesting
+    class ThermalTemperatures {
+        public ArrayList<ThermalTemperature> mTemperatures;
+        public int mShowTemperatureWarning;
+
+        ThermalTemperatures() {
+            mTemperatures =  new ArrayList<ThermalTemperature>();
+            mShowTemperatureWarning = 0;
+        }
+
+        public void addThermalTemperature(String name, int tempResource, int warningResource) {
+            mTemperatures.add(new ThermalTemperature(name, tempResource, warningResource));
+        }
+
+        public void initTempSources(ContentResolver resolver, Resources resources) {
+            addThermalTemperature("cpu_temp",
+                        HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU,
+                        R.integer.config_warningTemperatureCpu);
+            addThermalTemperature("gpu_temp",
+                        HardwarePropertiesManager.DEVICE_TEMPERATURE_GPU,
+                        R.integer.config_warningTemperatureGpu);
+            addThermalTemperature("skin_temp",
+                        HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN,
+                        R.integer.config_warningTemperatureSkin);
+            addThermalTemperature("battery_temp",
+                        HardwarePropertiesManager.DEVICE_TEMPERATURE_BATTERY,
+                        R.integer.config_warningTemperatureBattery);
+
+            for (int i = 0; i < mTemperatures.size(); i++) {
+                ThermalTemperature temperature = mTemperatures.get(i);
+                temperature.mThreshold = Settings.Global.getFloat(resolver,
+                        Settings.Global.WARNING_TEMPERATURE,
+                        resources.getInteger(temperature.mWarningResource));
+                Slog.d(TAG, "initTemperatureWarning" + i + ": mThresholdTemp:"
+                        + temperature.mThreshold);
+
+                if (temperature.mThreshold < 0f) {
+                    // Get the shutdown temperature, adjust for warning tolerance.
+                    float[] throttlingTemps = mHardwarePropertiesManager.getDeviceTemperatures(
+                            temperature.mTempResource,
+                            HardwarePropertiesManager.TEMPERATURE_SHUTDOWN);
+                    if (throttlingTemps == null
+                            || throttlingTemps.length == 0
+                            || throttlingTemps[0]
+                               == HardwarePropertiesManager.UNDEFINED_TEMPERATURE) {
+                        continue;
+                    }
+                    temperature.mThreshold = throttlingTemps[0]
+                        - resources.getInteger(R.integer.config_warningTemperatureTolerance);
+                }
+                temperature.mValid = true;
+            }
+
+            mShowTemperatureWarning = Settings.Global.getInt(resolver,
+                    Settings.Global.SHOW_TEMPERATURE_WARNING,
+                    resources.getInteger(R.integer.config_showTemperatureWarning));
+        }
+
+        public boolean isOverThreshold() {
+            boolean overThreshold = false;
+            if (mShowTemperatureWarning != 0) {
+                for (int i = 0; i < mTemperatures.size(); i++) {
+                    ThermalTemperature temperature = mTemperatures.get(i);
+                    if (!temperature.mValid) {
+                        continue;
+                    }
+
+                    float[] temps = mHardwarePropertiesManager.getDeviceTemperatures(
+                            temperature.mTempResource,
+                            HardwarePropertiesManager.TEMPERATURE_CURRENT);
+                    if (temps != null && temps.length != 0) {
+                        float temp = temps[0];
+                        temperature.mRecentTemps[mNumTemps] = temp;
+                        StatusBar statusBar = getComponent(StatusBar.class);
+                        if (statusBar != null && !statusBar.isDeviceInVrMode()
+                                && temp >= temperature.mThreshold) {
+                            logAtTemperatureThreshold(temp, temperature);
+                            overThreshold = true;
+                        }
+                    }
+                }
+            } else {
+                Slog.d(TAG, "showTemperatureWarning not enabled, skip");
+            }
+
+            return overThreshold;
         }
     }
 }
