@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77883c80_ad0d57d7",
+        "filename": "services/core/xsd/default-permissions.xsd",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-06T05:02:47Z",
+      "side": 1,
+      "message": "According to https://cs.corp.google.com/arc-nyc-mr1/vendor/xts/gts-tests/tests/permission/src/com/google/android/permission/gts/DefaultPermissionGrantPolicyTest.java?type\u003dcs\u0026q\u003d%22sha256-cert-digest%22+f:java\u0026g\u003d0\u0026l\u003d1233 we need either a sha or a brand",
+      "revId": "983704abd24a42dfad040b7c1f0895d90b115891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
