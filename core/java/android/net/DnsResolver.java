@@ -25,8 +25,7 @@ import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.os.Handler;
-import android.os.MessageQueue;
+import android.os.Looper;
 import android.system.ErrnoException;
 import android.util.Log;
 
@@ -37,6 +36,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * Dns resolver class for asynchronous dns querying
@@ -116,8 +116,6 @@ public final class DnsResolver {
          * Then call onAnswer for coverting success, onError for fail.
          *
          * @param result the raw answers to be handled
-         *
-         * {@see android.net.DnsResolver#query query()}
          */
         public abstract void onRecieve(@NonNull byte [] result);
 
@@ -129,8 +127,6 @@ public final class DnsResolver {
          * {@link android.net.DnsResolver#query query()}.
          *
          * @param answer raw answers of query.
-         *
-         * {@see android.net.DnsResolver#query query()}
          */
         public abstract void onAnswer(@NonNull T answer);
 
@@ -175,28 +171,28 @@ public final class DnsResolver {
     }
 
     /**
-     * Pass in a blob and corresponding setting,
-     * get a answer back asynchronously based on {@link AnswerCallback}.
+     * Pass in a blob and corresponding setting, and poll the {@code FD_EVENTS}
+     * on main looper. get a answer back asynchronously based on {@link AnswerCallback}.
      *
      * @param network {@link Network} specifying which network for querying.
      *         {@code null} for query on default network.
      * @param query blob message
      * @param flags flags as a combination of the FLAGS_* constants
-     * @param handler {@link Handler} to specify the thread
-     *         upon which the {@link AnswerCallback} will be invoked.
+     * @param executor The {@link Executor} that callbacks should be executed on.
      * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull byte[] query, @QueryFlag int flags,
-            @NonNull Handler handler, @NonNull AnswerCallback callback) throws ErrnoException {
+            @NonNull Executor executor, @NonNull AnswerCallback callback) throws ErrnoException {
         final FileDescriptor queryfd = resNetworkSend((network != null
                 ? network.netId : NETID_UNSET), query, query.length, flags);
-        registerFDListener(handler.getLooper().getQueue(), queryfd, callback);
+        registerFDListener(executor, queryfd, callback);
     }
 
     /**
-     * Pass in a domain name and corresponding setting,
-     * get a answer back asynchronously based on {@link AnswerCallback}.
+     * Pass in a domain name and corresponding setting, and poll the {@code FD_EVENTS}
+     * on main looper. get a answer back asynchronously based on {@link AnswerCallback}.
+     *
      *
      * @param network {@link Network} specifying which network for querying.
      *         {@code null} for query on default network.
@@ -204,39 +200,37 @@ public final class DnsResolver {
      * @param nsClass dns class as one of the CLASS_* constants
      * @param nsType dns resource record (RR) type as one of the TYPE_* constants
      * @param flags flags as a combination of the FLAGS_* constants
-     * @param handler {@link Handler} to specify the thread
-     *         upon which the {@link AnswerCallback} will be invoked.
+     * @param executor The {@link Executor} that callbacks should be executed on.
      * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull String domain, @QueryClass int nsClass,
             @QueryType int nsType, @QueryFlag int flags,
-            @NonNull Handler handler, @NonNull AnswerCallback callback) throws ErrnoException {
+            @NonNull Executor executor, @NonNull AnswerCallback callback) throws ErrnoException {
         final FileDescriptor queryfd = resNetworkQuery((network != null
                 ? network.netId : NETID_UNSET), domain, nsClass, nsType, flags);
-        registerFDListener(handler.getLooper().getQueue(), queryfd, callback);
+        registerFDListener(executor, queryfd, callback);
     }
 
-    private <T> void registerFDListener(@NonNull MessageQueue queue,
-            @NonNull FileDescriptor queryfd, @NonNull AnswerCallback<T> answerCallback) {
-        queue.addOnFileDescriptorEventListener(
+    private void registerFDListener(@NonNull Executor executor,
+            @NonNull FileDescriptor queryfd, @NonNull AnswerCallback answerCallback) {
+        Looper.getMainLooper().getQueue().addOnFileDescriptorEventListener(
                 queryfd,
                 FD_EVENTS,
                 (fd, events) -> {
-                    byte[] answerbuf = null;
-                    try {
-                    // TODO: Implement result function in Java side instead of using JNI
-                    //       Because JNI method close fd prior than unregistering fd on
-                    //       event listener.
-                        answerbuf = resNetworkResult(fd);
-                    } catch (ErrnoException e) {
-                        Log.e(TAG, "resNetworkResult:" + e.toString());
-                        answerCallback.onError(ERROR_INTERNAL, e);
-                        return 0;
-                    }
+                    executor.execute(
+                            () -> {
+                                byte[] answerbuf = null;
+                                try {
+                                    answerbuf = resNetworkResult(fd);
+                                } catch (ErrnoException e) {
+                                    Log.e(TAG, "resNetworkResult:" + e.toString());
+                                    answerCallback.onError(ERROR_INTERNAL, e);
+                                    return;
+                                }
 
-                    answerCallback.onRecieve(answerbuf);
-
+                                answerCallback.onRecieve(answerbuf);
+                        });
                     // Unregister this fd listener
                     return 0;
                 });
