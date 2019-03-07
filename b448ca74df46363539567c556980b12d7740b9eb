@@ -179,6 +179,48 @@
     },
     {
       "key": {
+        "uuid": "f6332abe_067f75c9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-07T04:21:35Z",
+      "side": 1,
+      "message": "What ?\n\nThis is absolutely trivial to fix. The only place where the handler is used is right here in line 2751. ResultReceiver is happy to take a null handler you know, and then it runs onReceiveResult on the current thread.\n\n  public void getLatestTetheringEntitlementResult(int type, boolean showEntitlementUi,\n          @NonNull Executor executor,\n          @NonNull final OnTetheringEntitlementResultListener listener) {\n      Preconditions.checkNotNull(listener, \"TetheringEntitlementResultListener cannot be null.\");\n      ResultReceiver wrappedListener \u003d new ResultReceiver(null) {\n          @Override\n          protected void onReceiveResult(int resultCode, Bundle resultData) {\n              executor.execute(() -\u003e listener.onEntitlementResult(resultCode));\n          }\n      };\n      ...",
+      "parentUuid": "33e757f7_e4422014",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215ea6a6_079b5e58",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-07T04:21:35Z",
+      "side": 1,
+      "message": "As Mark points out, it\u0027s standard for listeners (and generally SAM types) to be put last.\n\nThe reason is you frequently want to write the listener as a lambda, but thinking about the code you want to put in the lambda is best done after everything else has been written, so you typically prefer to have the lambda at the end.\nIt\u0027s more visible in languages supporting lambdas as a first-class citizen. Consider :\n\n  public void addOnClickListener(OnClickListener listener, Handler handler);\n\nThe Kotlin calls look like :\n\n  addOnClickListener({ view -\u003e\n      validateForm()\n      stuffToDo.forEach { stuff -\u003e stuff.do() }\n  }, handler);\n\nNow consider :\n\n  public void onClick(OnClickListener listener, Handler handler);\n\nThe Kotlin call looks like :\n\n  onClick(handler) { view -\u003e\n      validateForm()\n      stuffToDo.forEach { stuff -\u003e stuff.do() }\n  }\n\n...the latter is much nicer. And because Java does not have named arguments, putting the SAM last is the only way to get this benefit.",
+      "parentUuid": "7117ce0f_9383ba5d",
+      "range": {
+        "startLine": 2748,
+        "startChar": 0,
+        "endLine": 2748,
+        "endChar": 38
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd128e30_4cfda2f5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -211,6 +253,24 @@
       "revId": "b448ca74df46363539567c556980b12d7740b9eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8022e907_d244eb63",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-07T04:21:35Z",
+      "side": 1,
+      "message": "I think generally speaking the plan is to remove this API as soon as you can tell us it\u0027s okay. Typically this will mean R, because it\u0027s the soonest that you will be able to tell us no GMSCore version that uses this call will ever run on R.\nDepending on what\u0027s in GMSCore future it\u0027s also possible we have to keep this for much longer because maybe you can\u0027t ever guarantee GMSCore 26 can\u0027t run on R.\n\nThen there are the @UnsupportedAppUsage considerations that come into play for @SystemApi, which hopefully can\u0027t affect this thanks to the permissions check.\n\nThat\u0027s why we weren\u0027t very keen on being asked to provide something immediately that we can\u0027t change : it\u0027s typically a multi-year commitment for us. But the ship has sailed on this.",
+      "parentUuid": "86380c83_12ef25df",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
