@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e30d69f_c2125918",
+        "filename": "core/java/android/preference/DialogPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-03-07T19:16:16Z",
+      "side": 1,
+      "message": "nit: put this before the method, it isn\u0027t actually a type annotation, it\u0027s a method / parameter / field annotation.",
+      "revId": "8629f0e2f028a76f1a067bea0f3a35ab12901805",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
