@@ -221,6 +221,24 @@
     },
     {
       "key": {
+        "uuid": "d88a46c9_f7e70fb7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T04:38:46Z",
+      "side": 1,
+      "message": "Indeed, thanks to correct me. I just thought it complicated to replace onReceiveResult.",
+      "parentUuid": "f6332abe_067f75c9",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd128e30_4cfda2f5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
