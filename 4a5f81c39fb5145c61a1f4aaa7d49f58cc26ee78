@@ -57,6 +57,24 @@
       "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277c55be_4fa7872a",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-07T17:08:12Z",
+      "side": 1,
+      "message": "(1)\nso for each possible complex type\n\n-all\n-choice\n-sequence\n\nyou have a different suffix\n\n(2)\nJust out of curiosity. How do you enforce that the ordering in a sequence is not changed?",
+      "parentUuid": "a84bff31_dc6a10e4",
+      "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
