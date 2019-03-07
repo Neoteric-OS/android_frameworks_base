@@ -45,6 +45,30 @@
       "revId": "3e7e81ee506a13b0fa9402a80d2cfe9f93d8ba0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838af213_8257eabd",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-07T03:41:18Z",
+      "side": 1,
+      "message": "Yes, so we need to have a lock inside networkStatsFactory to prevent that.",
+      "parentUuid": "6aa0a25b_3cbb8fb9",
+      "range": {
+        "startLine": 1522,
+        "startChar": 24,
+        "endLine": 1522,
+        "endChar": 45
+      },
+      "revId": "3e7e81ee506a13b0fa9402a80d2cfe9f93d8ba0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
