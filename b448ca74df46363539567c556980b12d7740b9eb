@@ -137,6 +137,48 @@
     },
     {
       "key": {
+        "uuid": "33e757f7_e4422014",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T03:05:06Z",
+      "side": 1,
+      "message": "Yes, the problem is we need to pass handler to ResultReceiver. I have consider to rework this part in the future. Maybe in R ? But the handler is still needed for current design.",
+      "parentUuid": "2d0c3bdd_ba56145b",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7117ce0f_9383ba5d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T03:05:06Z",
+      "side": 1,
+      "message": "The change is base on the the suggestion of API review b/126701557\n\nWarning M3: Listeners should always be at end of argument list\n    in method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void getLatestTetheringEntitlementValue(int, boolean, @NonNull android.net.ConnectivityManager.TetheringEntitlementValueListener, @Nullable android.os.Handler)\n    in public class ConnectivityManager\n    in package android.net\n    at line 4028\n    last modified by markchien@google.com in f27312788000",
+      "parentUuid": "a1d09f3b_b5091776",
+      "range": {
+        "startLine": 2748,
+        "startChar": 0,
+        "endLine": 2748,
+        "endChar": 38
+      },
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd128e30_4cfda2f5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -148,6 +190,24 @@
       "writtenOn": "2019-03-06T22:11:52Z",
       "side": 1,
       "message": "What\u0027s the plan here for removing this API? The problem is that at this point, v25 is already partially rolled out to stable, so it\u0027s extremely late for us to CP a change there that would remove our call to this or switch to the new API. We\u0027re even cutting it really close on V26 at this point.",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86380c83_12ef25df",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T03:05:06Z",
+      "side": 1,
+      "message": "If V26 is impossible, is it feasible for V27 ?",
+      "parentUuid": "fd128e30_4cfda2f5",
       "revId": "b448ca74df46363539567c556980b12d7740b9eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
