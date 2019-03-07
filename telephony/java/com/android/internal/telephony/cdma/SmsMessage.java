@@ -673,6 +673,90 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
+     * Extract CT WDP Header from User Data for China Telecom WAP SMS. WDP SMS User Data is prefixed
+     * with additional Message Identifier for China Telecom WAP.
+     *
+     * - WDP SMS User Data Subparameter for CT =
+     *   |User Data SUBPARAMETER_ID ~ NUM_FIELDS| + |CHARi| + |RESERVED|
+     *
+     * - WDP SMS User Data Subparameter CHARi for CT =
+     *   |New Message Identifier Subparameter(HEADER_IND = 0)| +
+     *   |New User Data Subparameter(MSG_ENCODING = 0)|
+     *
+     * @param sms SmsMessage.
+     * @return true if decoding is successful, false otherwise.
+     */
+    protected boolean processCdmaCTWdpHeader(SmsMessage sms) {
+        try {
+            BitwiseInputStream inStream = new BitwiseInputStream(sms.getUserData());
+
+            /* Decode WDP Messsage Identifier */
+            // Message Identifier SUBPARAMETER_ID(0x00)
+            if (inStream.read(8) != 0x00) {
+                Rlog.e(LOG_TAG, "Invalid CT WDP Header Message Identifier SUBPARAMETER_ID");
+                return false;
+            }
+
+            // Message Identifier SUBPARAM_LEN(0x03)
+            if (inStream.read(8) != 0x03) {
+                Rlog.e(LOG_TAG, "Invalid CT WDP Header Message Identifier SUBPARAM_LEN");
+                return false;
+            }
+
+            // Message Identifier MESSAGE_TYPE
+            sms.mBearerData.messageType = inStream.read(4);
+
+            // Message Identifier MESSAGE_ID
+            int msgId = inStream.read(8) << 8;
+            msgId |= inStream.read(8);
+            sms.mBearerData.messageId = msgId;
+            sms.mMessageRef = msgId;
+
+            // Message Identifier HEADER_IND
+            sms.mBearerData.hasUserDataHeader = (inStream.read(1) == 1);
+            if (sms.mBearerData.hasUserDataHeader) {
+                Rlog.e(LOG_TAG, "Invalid CT WDP Header Message Identifier HEADER_IND");
+                return false;
+            }
+
+            // Message Identifier RESERVED
+            inStream.skip(3);
+
+            /* Decode WDP User Data */
+            // User Data SUBPARAMETER_ID(0x01)
+            if (inStream.read(8) != 0x01) {
+                Rlog.e(LOG_TAG, "Invalid CT WDP Header User Data SUBPARAMETER_ID");
+                return false;
+            }
+
+            // User Data SUBPARAM_LEN
+            int userDataLen = inStream.read(8) * 8;
+
+            // User Data MSG_ENCODING
+            sms.mBearerData.userData.msgEncoding = inStream.read(5);
+            int consumedBits = 5;
+            if (sms.mBearerData.userData.msgEncoding != UserData.ENCODING_OCTET) {
+                Rlog.e(LOG_TAG, "Invalid CT WDP Header User Data MSG_ENCODING");
+                return false;
+            }
+
+            // User Data NUM_FIELDS
+            sms.mBearerData.userData.numFields = inStream.read(8);
+            consumedBits += 8;
+
+            int remainingBits = userDataLen - consumedBits;
+            int dataBits = sms.mBearerData.userData.numFields * 8;
+            dataBits = dataBits < remainingBits ? dataBits : remainingBits;
+            sms.mBearerData.userData.payload = inStream.readByteArray(dataBits);
+            sms.mUserData = sms.mBearerData.userData.payload;
+            return true;
+        } catch (BitwiseInputStream.AccessException ex) {
+            Rlog.e(LOG_TAG, "Fail to decoder CT WDP Header: " + ex);
+        }
+        return false;
+    }
+
+    /**
      * Parses a SMS message from its BearerData stream.
      */
     public void parseSms() {
