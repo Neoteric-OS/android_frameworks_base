@@ -39,6 +39,24 @@
       "revId": "d0de1cd170b84c1c02f9c8e39bb88b764d4bd90f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e801a64f_f6856fb9",
+        "filename": "core/java/android/preference/DialogPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-03-07T17:01:19Z",
+      "side": 1,
+      "message": "Will do in a separate patch (since +1 / +2 is not sticky in aosp, I believe)",
+      "parentUuid": "26542adb_4dd9ec31",
+      "revId": "d0de1cd170b84c1c02f9c8e39bb88b764d4bd90f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
