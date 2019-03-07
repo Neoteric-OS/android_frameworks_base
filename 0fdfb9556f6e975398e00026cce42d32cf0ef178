@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376e2458_df5e19cb",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-07T08:47:29Z",
+      "side": 1,
+      "message": "While you\u0027re here : might as well make this a Collection\u003cUidRange\u003e",
+      "range": {
+        "startLine": 110,
+        "startChar": 38,
+        "endLine": 110,
+        "endChar": 41
+      },
+      "revId": "0fdfb9556f6e975398e00026cce42d32cf0ef178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d06971_f8cd0ef4",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-07T08:47:29Z",
+      "side": 1,
+      "message": "This reads to me like you want to crash when it\u0027s another error code than EOPNOSUPP, but you just log. Is this expected ? (I\u0027m happy with this behavior, just checking)",
+      "range": {
+        "startLine": 611,
+        "startChar": 13,
+        "endLine": 611,
+        "endChar": 66
+      },
+      "revId": "0fdfb9556f6e975398e00026cce42d32cf0ef178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
