@@ -22,6 +22,29 @@
       "revId": "5f096b37a2210897c28b3167738e8a0d31fe09ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff69d63_94f4ce58",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2019-03-07T01:30:23Z",
+      "side": 1,
+      "message": "why not just keep CellSignalStrength here",
+      "range": {
+        "startLine": 80,
+        "startChar": 55,
+        "endLine": 80,
+        "endChar": 64
+      },
+      "revId": "5f096b37a2210897c28b3167738e8a0d31fe09ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
