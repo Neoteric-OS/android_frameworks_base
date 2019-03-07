@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e7f3252_94e30b6a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-07T04:36:33Z",
+      "side": 1,
+      "message": "Do we have debug info in native that could help us to know why the parsing was failed?",
+      "revId": "d0e14383025089ba2d49b28ec5a14f0dd4f6c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b518f5ab_c2c38a3a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-07T04:36:33Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 320,
+        "startChar": 20,
+        "endLine": 320,
+        "endChar": 32
+      },
+      "revId": "d0e14383025089ba2d49b28ec5a14f0dd4f6c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
