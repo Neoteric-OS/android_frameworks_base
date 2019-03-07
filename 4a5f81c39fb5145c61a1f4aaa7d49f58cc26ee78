@@ -39,6 +39,24 @@
       "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84bff31_dc6a10e4",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-07T07:35:10Z",
+      "side": 1,
+      "message": "(2)\nIf you use the choice instead of sequence, we add the \"_optional\" suffix.\nSo, the API checker can catch this.\n(1)\nI\u0027ll find other way.",
+      "parentUuid": "116daf28_76b855ee",
+      "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
