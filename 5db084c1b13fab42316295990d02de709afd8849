@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4609d42f_f8b01b5d",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-07T15:07:25Z",
+      "side": 1,
+      "message": "Can we add a cancel method here too? It might be possible to implement this by adding to the callback class a FileDescriptor and an @hide method to set the fd. Then the cancel method can simply call IoUtils.closeQuietly on the fd.",
+      "range": {
+        "startLine": 27254,
+        "startChar": 2,
+        "endLine": 27254,
+        "endChar": 3
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
