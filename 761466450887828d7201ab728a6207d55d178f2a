@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dea96e69_6307bb5a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2563,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T13:59:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4a3dffc_1bc9cef7",
+      "range": {
+        "startLine": 2563,
+        "startChar": 4,
+        "endLine": 2563,
+        "endChar": 11
+      },
+      "revId": "761466450887828d7201ab728a6207d55d178f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "023d00aa_93113dba",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "761466450887828d7201ab728a6207d55d178f2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0d5be8_60bac754",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T13:59:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "023d00aa_93113dba",
+      "range": {
+        "startLine": 2564,
+        "startChar": 12,
+        "endLine": 2564,
+        "endChar": 35
+      },
+      "revId": "761466450887828d7201ab728a6207d55d178f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6e93c03_ddb45a9c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T13:59:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b465aba6_8ead89ad",
+      "range": {
+        "startLine": 189,
+        "startChar": 26,
+        "endLine": 189,
+        "endChar": 40
+      },
+      "revId": "761466450887828d7201ab728a6207d55d178f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6a2453_f4a8bad7",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 5
@@ -82,6 +154,24 @@
       "writtenOn": "2019-03-07T13:45:45Z",
       "side": 1,
       "message": "Have you verified that it is safe/correct to change the ordering of mUpstreamMonitor.setCurrentUpstream() and setUpstreamNetwork()?\n\nI took a quick look and it seemed fine, but I might have missed something.",
+      "revId": "761466450887828d7201ab728a6207d55d178f2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2e6463_882cf6b0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T13:59:07Z",
+      "side": 1,
+      "message": "Currently the purpose of mUpstreamMonitor.setCurrentUpstream() just pass network to UpstreamNetworkMonitor and this network is used to record the logs. Thus, I think changing the ordering is pretty safe.",
+      "parentUuid": "5a6a2453_f4a8bad7",
       "revId": "761466450887828d7201ab728a6207d55d178f2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
