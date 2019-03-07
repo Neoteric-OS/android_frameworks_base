@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0ad48d_642b1a97",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-07T05:09:55Z",
+      "side": 1,
+      "message": "Can you add a \"configfile\" or so in there to distinguish classes defined in the Java code from classes auto-generated for your parser.\n\nThis does not matter for the sake of API checking but it does matter when using your generated code.",
+      "range": {
+        "startLine": 2,
+        "startChar": 8,
+        "endLine": 2,
+        "endChar": 40
+      },
+      "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116daf28_76b855ee",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-07T05:09:55Z",
+      "side": 1,
+      "message": "(1)\nThe generated code seems two methods that a similar beside their returnType? I thought this is not allowed in java. For the sake for API checking this does not matter, but if someone uses the parser it should not compile.\n\n(2)\nIf I used to have:\n\n\u003cxs:schema\u003e\n    \u003cxs:element name\u003d\"parent\"\u003e\n        \u003cxs:complexType\u003e\n            \u003cxs:sequence\u003e\n                \u003cxs:element name\u003d\"child\" type\u003d\"boy\" maxOccurs\u003d\"unbounded\"/\u003e\n                \u003cxs:element name\u003d\"child\" type\u003d\"girl\" maxOccurs\u003d\"unbounded\"/\u003e\n            \u003c/xs:sequence\u003e\n        \u003c/xs:complexType\u003e\n    \u003c/xs:element\u003e\n\u003c/xs:schema\u003e\n\nand change it to:\n\n\u003cxs:schema\u003e\n    \u003cxs:element name\u003d\"parent\"\u003e\n        \u003cxs:complexType\u003e\n            \u003cxs:choice\u003e\n                \u003cxs:element name\u003d\"child\" type\u003d\"boy\" maxOccurs\u003d\"unbounded\"/\u003e\n                \u003cxs:element name\u003d\"child\" type\u003d\"girl\" maxOccurs\u003d\"unbounded\"/\u003e\n            \u003c/xs:choice\u003e\n        \u003c/xs:complexType\u003e\n    \u003c/xs:element\u003e\n\u003c/xs:schema\u003e\n\nI made a incompatible change. Would the API checker catch that incompatible change?",
+      "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
