@@ -292,6 +292,24 @@
     },
     {
       "key": {
+        "uuid": "64d3e4b6_e23909fa",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-07T18:06:26Z",
+      "side": 1,
+      "message": "R is probably fine in this case :-). I just wanted to make sure that you weren\u0027t hoping to remove it on the Q timeframe (in the next few weeks).",
+      "parentUuid": "8022e907_d244eb63",
+      "revId": "b448ca74df46363539567c556980b12d7740b9eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bddd18_0c60fa85",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
