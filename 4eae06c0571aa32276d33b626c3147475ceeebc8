@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "29958ff8_833b1349",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-08T12:13:31Z",
+      "side": 1,
+      "message": "full command line is preferable to this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d33859f_b25c63bc",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-08T12:13:31Z",
+      "side": 1,
+      "message": "This log statement doesn\u0027t add much value, i\u0027d suggest removing it.",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 54
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67c3aae_08840d63",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-08T12:13:31Z",
+      "side": 1,
+      "message": "I think it would be better to have a fixed timeout (e.g 5 seconds) and to try (with backoff) until we reach that timeout. BugReportManagerServiceImpl has an example of such a thing.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd4f7bfc_40bc3e86",
         "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
         "patchSetId": 1
@@ -13,6 +82,29 @@
       "writtenOn": "2019-03-05T07:53:10Z",
       "side": 1,
       "message": "SystemProperties.addChangeCallback brings overhead so just sleep here.",
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9cebf4_3dcfa5c3",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-08T12:13:31Z",
+      "side": 1,
+      "message": "For future reference: catch specific interruptions (InterruptedException, in this case) and add a clearer log message. Also, you should return early if your thread was interrupted.",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 13
+      },
       "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
