@@ -2152,7 +2152,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (VDBG) log("identical MTU - not setting");
             return;
         }
-        if (LinkProperties.isValidMtu(mtu, newLp.hasGlobalIPv6Address()) == false) {
+        if (LinkProperties.isValidMtu(mtu, newLp.hasGlobalIpv6Address()) == false) {
             if (mtu != 0) loge("Unexpected mtu value: " + mtu + ", " + iface);
             return;
         }

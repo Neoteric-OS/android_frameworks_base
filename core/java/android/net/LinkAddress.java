@@ -26,6 +26,7 @@ import static android.system.OsConstants.RT_SCOPE_SITE;
 import static android.system.OsConstants.RT_SCOPE_UNIVERSE;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
@@ -107,8 +108,8 @@ public class LinkAddress implements Parcelable {
      *
      * Per RFC 4193 section 8, fc00::/7 identifies these addresses.
      */
-    private boolean isIPv6ULA() {
-        if (isIPv6()) {
+    private boolean isIpv6ULA() {
+        if (isIpv6()) {
             byte[] bytes = address.getAddress();
             return ((bytes[0] & (byte)0xfe) == (byte)0xfc);
         }
@@ -121,7 +122,7 @@ public class LinkAddress implements Parcelable {
      */
     @TestApi
     @SystemApi
-    public boolean isIPv6() {
+    public boolean isIpv6() {
         return address instanceof Inet6Address;
     }
 
@@ -131,7 +132,7 @@ public class LinkAddress implements Parcelable {
      */
     @TestApi
     @SystemApi
-    public boolean isIPv4() {
+    public boolean isIpv4() {
         return address instanceof Inet4Address;
     }
 
@@ -178,7 +179,7 @@ public class LinkAddress implements Parcelable {
      */
     @SystemApi
     @TestApi
-    public LinkAddress(@NonNull InetAddress address, int prefixLength) {
+    public LinkAddress(InetAddress address, int prefixLength) {
         this(address, prefixLength, 0, 0);
         this.scope = scopeForUnicastAddress(address);
     }
@@ -217,7 +218,7 @@ public class LinkAddress implements Parcelable {
      */
     @SystemApi
     @TestApi
-    public LinkAddress(String address, int flags, int scope) {
+    public LinkAddress(@NonNull String address, int flags, int scope) {
         // This may throw an IllegalArgumentException; catching it is the caller's responsibility.
         // TODO: consider rejecting mapped IPv4 addresses such as "::ffff:192.0.2.5/24".
         Pair<InetAddress, Integer> ipAndMask = NetworkUtils.parseIpAndMask(address);
@@ -276,7 +277,10 @@ public class LinkAddress implements Parcelable {
      */
     @TestApi
     @SystemApi
-    public boolean isSameAddressAs(LinkAddress other) {
+    public boolean isSameAddressAs(@Nullable LinkAddress other) {
+        if (other == null) {
+            return false;
+        }
         return address.equals(other.address) && prefixLength == other.prefixLength;
     }
 
@@ -332,7 +336,7 @@ public class LinkAddress implements Parcelable {
          * flags are cleared regardless).
          */
         return (scope == RT_SCOPE_UNIVERSE &&
-                !isIPv6ULA() &&
+                !isIpv6ULA() &&
                 (flags & (IFA_F_DADFAILED | IFA_F_DEPRECATED)) == 0L &&
                 ((flags & IFA_F_TENTATIVE) == 0L || (flags & IFA_F_OPTIMISTIC) != 0L));
     }

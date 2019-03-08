@@ -186,7 +186,7 @@ public class NetworkDiagnostics {
         // TODO: we could use mLinkProperties.isReachable(TEST_DNS6) here, because we won't set any
         // DNS servers for which isReachable() is false, but since this is diagnostic code, be extra
         // careful.
-        if (mLinkProperties.hasGlobalIPv6Address() || mLinkProperties.hasIPv6DefaultRoute()) {
+        if (mLinkProperties.hasGlobalIpv6Address() || mLinkProperties.hasIpv6DefaultRoute()) {
             mLinkProperties.addDnsServer(TEST_DNS6);
         }
 

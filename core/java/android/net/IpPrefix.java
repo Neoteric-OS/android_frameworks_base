@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Parcel;
@@ -70,7 +71,7 @@ public final class IpPrefix implements Parcelable {
      *
      * @hide
      */
-    public IpPrefix(byte[] address, int prefixLength) {
+    public IpPrefix(@NonNull byte[] address, int prefixLength) {
         this.address = address.clone();
         this.prefixLength = prefixLength;
         checkAndMaskAddressAndPrefixLength();
@@ -106,7 +107,7 @@ public final class IpPrefix implements Parcelable {
      */
     @SystemApi
     @TestApi
-    public IpPrefix(String prefix) {
+    public IpPrefix(@NonNull String prefix) {
         // We don't reuse the (InetAddress, int) constructor because "error: call to this must be
         // first statement in constructor". We could factor out setting the member variables to an
         // init() method, but if we did, then we'd have to make the members non-final, or "error:
