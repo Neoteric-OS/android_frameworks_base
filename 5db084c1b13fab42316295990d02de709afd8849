@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "75146d1e_6c7a4f3b",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27248,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "This name is confusing, see suggestions in the code.",
+      "range": {
+        "startLine": 27248,
+        "startChar": 32,
+        "endLine": 27248,
+        "endChar": 41
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af46a3e_8ba74b19",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "This should be @hide in the subclasses, right? Users can\u0027t override this, and there\u0027s no reason for them to call it.",
+      "range": {
+        "startLine": 27253,
+        "startChar": 29,
+        "endLine": 27253,
+        "endChar": 38
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4609d42f_f8b01b5d",
         "filename": "api/current.txt",
         "patchSetId": 2
@@ -42,6 +88,369 @@
         "startChar": 2,
         "endLine": 27254,
         "endChar": 3
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfdfb3c_1e2fc8d6",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "I didn\u0027t know about CancellationSignal. :-) You mean that the app will pass in a CancellationSignal, and the DNS code will do something like this?\n\n    if (signal !\u003d null) {\n        signal.setCancellationListener(() -\u003e {\n            queue.removeOnFileDescriptorEventListener(queryFd);\n            resNetworkCancel(queryFd));\n        });\n    }\n\nThat seems like a better idea, thanks!",
+      "parentUuid": "39843f7c_3fb38f2b",
+      "range": {
+        "startLine": 27254,
+        "startChar": 2,
+        "endLine": 27254,
+        "endChar": 3
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee83069c_a973ed14",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27258,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "Should be called onAnswer I think.",
+      "range": {
+        "startLine": 27258,
+        "startChar": 29,
+        "endLine": 27258,
+        "endChar": 38
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ce6dda_9ccdf2cc",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "Base class for answer parsing.\n\nUsers can provide concrete implementations of this class should override {@link #parseAnswer} to parse raw DNS answers and convert them into the desired type, then call {@link #onAnswer} with the converted types if the conversion succeeded or {@link #onError} if the conversion failed.",
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92dac5d_80eabe69",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "the parsed answer",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4005d7_87294a88",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "Should this just say \"response\" instead of \"raw response\"? The response itself is not raw, it\u0027s just a response.",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 47
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f1b286_f4ba9855",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "Concrete subclasses must",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3d0e63_d98ac336",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "the raw",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 39
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93141638_38f418bc",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "method",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802c65bc_4786ac4c",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "if the conversion succeeded, onError if it failed.\n\nAlso we should say that the system will call onError if an error happens when issuing the DNS query or receiving the result.",
+      "range": {
+        "startLine": 116,
+        "startChar": 30,
+        "endLine": 116,
+        "endChar": 70
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d319e6_ff5551a3",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "answer to be converted",
+      "range": {
+        "startLine": 118,
+        "startChar": 33,
+        "endLine": 118,
+        "endChar": 54
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16081948_ce740a59",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "This should probably be called parseAnswer or onRawAnswer.",
+      "range": {
+        "startLine": 122,
+        "startChar": 29,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d3dddc_abef2f60",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "the answer to a query was successfully parsed.",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 129,
+        "endChar": 57
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d83e88_30883039",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "Per discussion with Jean, it does not seem useful to have onError take both an error code and a throwable. Maybe just have the exception instead? Maybe throw android.net.ParseException for parse errors, and ErrnoException for failures in sending the query?",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 92
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233c4770_05fcdc92",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "flags",
+      "range": {
+        "startLine": 178,
+        "startChar": 40,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2c2a20_4e079735",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "an answer",
+      "range": {
+        "startLine": 179,
+        "startChar": 11,
+        "endLine": 179,
+        "endChar": 19
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d197d19_55bdbced",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:16:39Z",
+      "side": 1,
+      "message": "through",
+      "range": {
+        "startLine": 179,
+        "startChar": 40,
+        "endLine": 179,
+        "endChar": 48
       },
       "revId": "5db084c1b13fab42316295990d02de709afd8849",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
