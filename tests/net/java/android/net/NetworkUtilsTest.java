@@ -18,7 +18,7 @@ package android.net;
 
 import static junit.framework.Assert.assertEquals;
 
-import androidx.test.runner.AndroidJUnit4;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ import java.math.BigInteger;
 import java.util.TreeSet;
 
 @RunWith(AndroidJUnit4.class)
-@androidx.test.filters.SmallTest
+@android.support.test.filters.SmallTest
 public class NetworkUtilsTest {
     @Test
     public void testRoutedIPv4AddressCount() {

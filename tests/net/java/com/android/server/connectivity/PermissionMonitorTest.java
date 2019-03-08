@@ -50,9 +50,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.INetworkManagementService;
 import android.os.UserHandle;
-
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;

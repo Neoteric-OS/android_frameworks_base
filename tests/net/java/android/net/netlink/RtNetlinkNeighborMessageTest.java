@@ -25,21 +25,22 @@ import android.net.netlink.NetlinkMessage;
 import android.net.netlink.RtNetlinkNeighborMessage;
 import android.net.netlink.StructNdMsg;
 import android.net.netlink.StructNlMsgHdr;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.filters.SmallTest;
 import android.system.OsConstants;
-
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
-
-import libcore.util.HexEncoding;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import android.util.Log;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
+import libcore.util.HexEncoding;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
