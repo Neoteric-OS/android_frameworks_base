@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.NonNull;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -451,7 +452,7 @@ public class NetworkInfo implements Parcelable {
      *             the device and let apps react more easily and quickly to changes.
      */
     @Deprecated
-    public DetailedState getDetailedState() {
+    public @NonNull DetailedState getDetailedState() {
         synchronized (this) {
             return mDetailedState;
         }
