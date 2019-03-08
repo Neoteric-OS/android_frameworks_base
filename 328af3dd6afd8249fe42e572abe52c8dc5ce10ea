@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd42a0f_43351aa6",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "Suggest calling this cancellationSignal. (Noun instead of verb.)",
+      "range": {
+        "startLine": 191,
+        "startChar": 69,
+        "endLine": 191,
+        "endChar": 75
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fa0e8c_c4453590",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "Per http://go/android-api/L1 , add the @CallbackExecutor annotation to all the executors.",
+      "range": {
+        "startLine": 191,
+        "startChar": 21,
+        "endLine": 191,
+        "endChar": 29
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323fa23e_8f44a717",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "Instead of throwing here, call onError.",
+      "range": {
+        "startLine": 192,
+        "startChar": 46,
+        "endLine": 192,
+        "endChar": 67
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a1adda_9721f49c",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "Why not resNetworkCancel? That way, if we add things to resNetworkCancel before or after the close, this code will correctly do those things as well.",
+      "range": {
+        "startLine": 205,
+        "startChar": 24,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9d2d78_60e1928a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "Not for this CL, but... can you check that the callback is called even if the query succeeds before registerFDListener is called? Should be easy to do, just put a sleep statement before registerFDListener.",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 26
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350bf5cd_8ccc59f7",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:54:05Z",
+      "side": 1,
+      "message": "resNetworkCancel",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 243,
+        "endChar": 54
+      },
+      "revId": "328af3dd6afd8249fe42e572abe52c8dc5ce10ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
