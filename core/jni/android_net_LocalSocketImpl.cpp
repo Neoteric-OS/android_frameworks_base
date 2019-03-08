@@ -34,6 +34,7 @@
 #include <sys/ioctl.h>
 
 #include <android-base/cmsg.h>
+#include <android-base/logging.h>
 #include <android-base/macros.h>
 #include <cutils/sockets.h>
 #include <netinet/tcp.h>
@@ -145,6 +146,32 @@ static ssize_t socket_read_all(JNIEnv *env, jobject thisJ, int fd,
     }
 
     if (received_fds.size() > 0) {
+        // Close whatever fds are in the array before we assign to it.
+        // This can't throw, because we know thisJ exists and is of the proper type.
+        jobjectArray previousFds = static_cast<jobjectArray>(
+            env->GetObjectField(thisJ, field_inboundFileDescriptors));
+        if (previousFds != nullptr) {
+            jsize len = env->GetArrayLength(previousFds);
+            for (jsize i = 0; i < len; ++i) {
+                // Access to the fd array is synchronized, and the only method that leaks the
+                // array to the outside assigns null to it, so we know that we're the only ones
+                // that have access to this array, so the following statement can't throw unless
+                // someone is poking around in our internals with reflection.
+                jobject fdObject = env->GetObjectArrayElement(previousFds, i);
+                if (fdObject == nullptr) {
+                    LOG(FATAL) << "null FileDescriptor in LocalSocketImpl::inboundFileDescriptors";
+                }
+
+                int fd = jniGetFDFromFileDescriptor(env, fdObject);
+                if (fd == -1) {
+                    LOG(FATAL) << "-1 FileDescriptor in LocalSocketImpl::inboundFileDescriptors";
+                }
+
+                close(fd);
+            }
+        }
+        env->SetObjectField(thisJ, field_inboundFileDescriptors, nullptr);
+
         jobjectArray fdArray = env->NewObjectArray(received_fds.size(), class_FileDescriptor, NULL);
 
         if (fdArray == NULL) {
