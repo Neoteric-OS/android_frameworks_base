@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1265972b_dc34a43d",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2019-03-08T18:53:15Z",
+      "side": 1,
+      "message": "I\u0027m curious where this magic number comes from.  I\u0027ve never seen it before.",
+      "revId": "ba7f1cd7b6b799a861834a25dde4e8275989ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0b0120_7953511d",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2019-03-08T18:53:15Z",
+      "side": 1,
+      "message": "Ditto, and this is (2^16-1)*10",
+      "revId": "ba7f1cd7b6b799a861834a25dde4e8275989ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
