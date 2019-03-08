@@ -22,6 +22,30 @@
       "revId": "da8d137bf7ff3869467be7eee6f5a4bff8df1bb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a1eb7d_1215f596",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T11:41:11Z",
+      "side": 1,
+      "message": "Lolwut. Thanks for the review :O",
+      "parentUuid": "4f96ac2a_0fbc3a49",
+      "range": {
+        "startLine": 293,
+        "startChar": 18,
+        "endLine": 293,
+        "endChar": 19
+      },
+      "revId": "da8d137bf7ff3869467be7eee6f5a4bff8df1bb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
