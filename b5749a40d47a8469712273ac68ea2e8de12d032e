@@ -93,6 +93,30 @@
       "revId": "b5749a40d47a8469712273ac68ea2e8de12d032e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16455d1_a23e42c7",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T12:37:31Z",
+      "side": 1,
+      "message": "Makes total sense, how did I miss that.\nThanks.",
+      "parentUuid": "5715985b_30e5375d",
+      "range": {
+        "startLine": 208,
+        "startChar": 34,
+        "endLine": 208,
+        "endChar": 42
+      },
+      "revId": "b5749a40d47a8469712273ac68ea2e8de12d032e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
