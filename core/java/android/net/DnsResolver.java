@@ -25,9 +25,12 @@ import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.os.CancellationSignal;
 import android.os.Looper;
 import android.system.ErrnoException;
 import android.util.Log;
+
+import libcore.io.IoUtils;
 
 import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
@@ -179,13 +182,29 @@ public final class DnsResolver {
      * @param query blob message
      * @param flags flags as a combination of the FLAGS_* constants
      * @param executor The {@link Executor} that callbacks should be executed on.
+     * @param cancel used by the caller to signal if the query should be
+     *            cancelled. May be {@code null}.
      * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull byte[] query, @QueryFlag int flags,
-            @NonNull Executor executor, @NonNull AnswerCallback callback) throws ErrnoException {
+            @NonNull Executor executor, @Nullable CancellationSignal cancel,
+            @NonNull AnswerCallback callback) throws ErrnoException {
+        if (cancel != null && cancel.isCanceled()) {
+            Log.w(TAG, "query already canceled");
+            return;
+        }
+
         final FileDescriptor queryfd = resNetworkSend((network != null
                 ? network.netId : NETID_UNSET), query, query.length, flags);
+        if (cancel != null) {
+            cancel.setOnCancelListener(
+                    () -> {
+                        Looper.getMainLooper().getQueue()
+                                .removeOnFileDescriptorEventListener(queryfd);
+                        IoUtils.closeQuietly(queryfd);
+                });
+        }
         registerFDListener(executor, queryfd, callback);
     }
 
@@ -200,14 +219,30 @@ public final class DnsResolver {
      * @param nsType dns resource record (RR) type as one of the TYPE_* constants
      * @param flags flags as a combination of the FLAGS_* constants
      * @param executor The {@link Executor} that callbacks should be executed on.
+     * @param cancel used by the caller to signal if the query should be
+     *            cancelled. May be {@code null}.
      * @param callback a {@link AnswerCallback} which will be called to notify the caller
      *         of the result of dns query.
      */
     public void query(@Nullable Network network, @NonNull String domain, @QueryClass int nsClass,
             @QueryType int nsType, @QueryFlag int flags, @NonNull Executor executor,
-            @NonNull AnswerCallback callback) throws ErrnoException {
+            @Nullable CancellationSignal cancel, @NonNull AnswerCallback callback)
+            throws ErrnoException {
+        if (cancel != null && cancel.isCanceled()) {
+            Log.w(TAG, "query already canceled");
+            return;
+        }
+
         final FileDescriptor queryfd = resNetworkQuery((network != null
                 ? network.netId : NETID_UNSET), domain, nsClass, nsType, flags);
+        if (cancel != null) {
+            cancel.setOnCancelListener(
+                    () -> {
+                        Looper.getMainLooper().getQueue()
+                                .removeOnFileDescriptorEventListener(queryfd);
+                        IoUtils.closeQuietly(queryfd);
+                });
+        }
         registerFDListener(executor, queryfd, callback);
     }
 

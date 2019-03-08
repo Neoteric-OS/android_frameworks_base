@@ -27228,8 +27228,8 @@ package android.net {
 
   public final class DnsResolver {
     method @NonNull public static android.net.DnsResolver getInstance();
-    method public void query(@Nullable android.net.Network, @NonNull byte[], int, @NonNull java.util.concurrent.Executor, @NonNull android.net.DnsResolver.AnswerCallback) throws android.system.ErrnoException;
-    method public void query(@Nullable android.net.Network, @NonNull String, int, int, int, @NonNull java.util.concurrent.Executor, @NonNull android.net.DnsResolver.AnswerCallback) throws android.system.ErrnoException;
+    method public void query(@Nullable android.net.Network, @NonNull byte[], int, @NonNull java.util.concurrent.Executor, @Nullable android.os.CancellationSignal, @NonNull android.net.DnsResolver.AnswerCallback) throws android.system.ErrnoException;
+    method public void query(@Nullable android.net.Network, @NonNull String, int, int, int, @NonNull java.util.concurrent.Executor, @Nullable android.os.CancellationSignal, @NonNull android.net.DnsResolver.AnswerCallback) throws android.system.ErrnoException;
     field public static final int CLASS_IN = 1; // 0x1
     field public static final int ERROR_INTERNAL = 1; // 0x1
     field public static final int ERROR_PARSE = 2; // 0x2
