@@ -3703,14 +3703,27 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
                         .show(mSplitScreenDividerAnchor);
                 scheduleAnimation();
             } else {
-                mAppAnimationLayer.destroy();
+                // BEGIN Motorola, huangjy, 2019-03-07, IKSWP-66292
+                // For cts testStackFocusSwitchOnDisplayRemoved3
+                // At this time mBoostedAppAnimationLayer may be used for animating,
+                // and ResizeableActivity is in it. mBoostedAppAnimationLayer.destroy()
+                // can also destroy the surface of ResizeableActivity, but the surface will
+                // be used after. So change to use transaction to call destroy to delay it,
+                // and ResizeableActivity is not in mBoostedAppAnimationLayer.
+                getPendingTransaction()
+                        .destroy(mAppAnimationLayer)
+                        .destroy(mBoostedAppAnimationLayer)
+                        .destroy(mHomeAppAnimationLayer)
+                        .destroy(mSplitScreenDividerAnchor);
+                //mAppAnimationLayer.destroy();
                 mAppAnimationLayer = null;
-                mBoostedAppAnimationLayer.destroy();
+                //mBoostedAppAnimationLayer.destroy();
                 mBoostedAppAnimationLayer = null;
-                mHomeAppAnimationLayer.destroy();
+                //mHomeAppAnimationLayer.destroy();
                 mHomeAppAnimationLayer = null;
-                mSplitScreenDividerAnchor.destroy();
+                //mSplitScreenDividerAnchor.destroy();
                 mSplitScreenDividerAnchor = null;
+                // END Motorola, huangjy, 2019-03-07, IKSWP-66292
             }
         }
     }
