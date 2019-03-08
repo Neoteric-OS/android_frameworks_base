@@ -22,6 +22,30 @@
       "revId": "5db084c1b13fab42316295990d02de709afd8849",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39843f7c_3fb38f2b",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27254,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-08T06:44:50Z",
+      "side": 1,
+      "message": "Sure, we should have some way for canceling. I will do it in other CL.\n\nDo you mean to add something as below to AnswerCallback? By the way, api_lint_hook will give us an error for naming should be onFoo() style in CallBack.\n        /** @hide */\n        @UnsupportedAppUsage\n        public final void setQueryFd(@NonNull FileDescriptor fd) {\n            mQueryfd \u003d fd;\n        }\n        public final void cancel() {\n            IoUtils.closeQuietly(mQueryfd);\n        }\n\nHoweber, my plan is that using a @Nullable CancellationSignal as a parameter in #query.\nThen callers don\u0027t need to have different callback per query. \nWhat do u think?",
+      "parentUuid": "4609d42f_f8b01b5d",
+      "range": {
+        "startLine": 27254,
+        "startChar": 2,
+        "endLine": 27254,
+        "endChar": 3
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
