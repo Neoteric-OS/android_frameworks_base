@@ -311,6 +311,10 @@ public class LocalSocket implements Closeable {
      * and then returns null until a new set arrives.
      * File descriptors may only be passed along with regular data, so this
      * method can only return a non-null after a read operation.
+     * <p>
+     * <strong>WARNING:</strong> Prior to API level 29, reading multiple times
+     * without calling this function potentially leads to the file descriptors
+     * received in the first read being leaked.
      *
      * @return null or file descriptor array
      * @throws IOException
