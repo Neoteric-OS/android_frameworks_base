@@ -298,8 +298,13 @@ public class LocalSocket implements Closeable {
      * is one deep. The file descriptors will be sent with the next write
      * of normal data, and will be delivered in a single ancillary message.
      * See "man 7 unix" SCM_RIGHTS on a desktop Linux machine.
+     * <p>
+     * <strong>WARNING:</strong> File descriptors set by this function will be
+     * sent upon <em>every</em> call to LocalSocket's OutputStream's write
+     * until setFileDescriptorsForSend is called again with null or an empty
+     * array.
      *
-     * @param fds non-null; file descriptors to send.
+     * @param fds null or file descriptor array
      */
     public void setFileDescriptorsForSend(FileDescriptor[] fds) {
         impl.setFileDescriptorsForSend(fds);
