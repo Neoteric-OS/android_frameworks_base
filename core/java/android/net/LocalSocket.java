@@ -332,7 +332,7 @@ public class LocalSocket implements Closeable {
      * Retrieves the credentials of this socket's peer. Only valid on
      * connected sockets.
      *
-     * @return non-null; peer credentials
+     * @return null or peer credentials
      * @throws IOException
      */
     public Credentials getPeerCredentials() throws IOException {
