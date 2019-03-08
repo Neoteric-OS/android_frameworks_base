@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465dc362_ed726923",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-03-08T18:55:41Z",
+      "side": 1,
+      "message": "Removing the @SystemApi on this function breaks GmsCore builds. I\u0027m going to spin up a CL to add it back alongside the @Deprecated annotation.",
+      "range": {
+        "startLine": 2716,
+        "startChar": 0,
+        "endLine": 2716,
+        "endChar": 15
+      },
+      "revId": "9554abf9ed2556a92dee0ccce7972691a44d5ec7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
