@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decb7c3a_f7b53cd9",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2674,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-03-08T11:09:33Z",
+      "side": 1,
+      "message": "This won\u0027t work either since putIntForUser() eventually calls putStringForUser(), which modifies LOCATION_PROVIDERS_ALLOWED instead of LOCATION_MODE due to a workaround in Settings.java\n\nAn alternative way might be adding a special method in Settings.Secure such as:\n\n- setLocationModeForUser(resolver, value, userId)\n- getLocationModeForUser(resolver, value, userId)\n\nwhich stores the boolean value using LOCATION_MODE as a key independently.",
+      "revId": "f154cb8b2800782e8087ac2ffecb8bfb341d5949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
