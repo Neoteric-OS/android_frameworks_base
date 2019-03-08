@@ -3147,7 +3147,7 @@ package android.net {
     ctor public LinkProperties(android.net.LinkProperties);
     method public boolean addDnsServer(java.net.InetAddress);
     method public boolean addLinkAddress(android.net.LinkAddress);
-    method public boolean addRoute(android.net.RouteInfo);
+    method public boolean addRoute(@Nullable android.net.RouteInfo);
     method public void clear();
     method @Nullable public android.net.IpPrefix getNat64Prefix();
     method public java.util.List<java.net.InetAddress> getPcscfServers();
@@ -3163,11 +3163,11 @@ package android.net {
     method public boolean removeDnsServer(java.net.InetAddress);
     method public boolean removeLinkAddress(android.net.LinkAddress);
     method public boolean removeRoute(android.net.RouteInfo);
-    method public void setDnsServers(java.util.Collection<java.net.InetAddress>);
-    method public void setDomains(String);
-    method public void setHttpProxy(android.net.ProxyInfo);
-    method public void setInterfaceName(String);
-    method public void setLinkAddresses(java.util.Collection<android.net.LinkAddress>);
+    method public void setDnsServers(@NonNull java.util.Collection<java.net.InetAddress>);
+    method public void setDomains(@NonNull String);
+    method public void setHttpProxy(@Nullable android.net.ProxyInfo);
+    method public void setInterfaceName(@Nullable String);
+    method public void setLinkAddresses(@NonNull java.util.Collection<android.net.LinkAddress>);
     method public void setMtu(int);
     method public void setNat64Prefix(android.net.IpPrefix);
     method public void setPcscfServers(java.util.Collection<java.net.InetAddress>);
@@ -3206,7 +3206,7 @@ package android.net {
   }
 
   public static class NetworkRequest.Builder {
-    method public android.net.NetworkRequest.Builder setSignalStrength(int);
+    method @NonNull public android.net.NetworkRequest.Builder setSignalStrength(int);
   }
 
   public class NetworkScoreManager {

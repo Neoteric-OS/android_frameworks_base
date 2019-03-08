@@ -205,7 +205,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void setInterfaceName(String iface) {
+    public void setInterfaceName(@Nullable String iface) {
         mIfaceName = iface;
         ArrayList<RouteInfo> newRoutes = new ArrayList<>(mRoutes.size());
         for (RouteInfo route : mRoutes) {
@@ -359,7 +359,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void setLinkAddresses(Collection<LinkAddress> addresses) {
+    public void setLinkAddresses(@NonNull Collection<LinkAddress> addresses) {
         mLinkAddresses.clear();
         for (LinkAddress address: addresses) {
             addLinkAddress(address);
@@ -407,7 +407,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void setDnsServers(Collection<InetAddress> dnsServers) {
+    public void setDnsServers(@NonNull Collection<InetAddress> dnsServers) {
         mDnses.clear();
         for (InetAddress dnsServer: dnsServers) {
             addDnsServer(dnsServer);
@@ -610,7 +610,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void setDomains(String domains) {
+    public void setDomains(@NonNull String domains) {
         mDomains = domains;
     }
 
@@ -694,7 +694,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public boolean addRoute(RouteInfo route) {
+    public boolean addRoute(@Nullable RouteInfo route) {
         if (route != null) {
             String routeIface = route.getInterface();
             if (routeIface != null && !routeIface.equals(mIfaceName)) {
@@ -770,7 +770,7 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void setHttpProxy(ProxyInfo proxy) {
+    public void setHttpProxy(@Nullable ProxyInfo proxy) {
         mHttpProxy = proxy;
     }
 
