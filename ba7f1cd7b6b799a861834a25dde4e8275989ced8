@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8914f47_32aa01f9",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1243029
+      },
+      "writtenOn": "2019-03-08T23:40:51Z",
+      "side": 1,
+      "message": "This is changed as Lajos mentioned above. This is min value used in L1107.",
+      "parentUuid": "1265972b_dc34a43d",
+      "revId": "ba7f1cd7b6b799a861834a25dde4e8275989ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f0b0120_7953511d",
         "filename": "media/java/android/media/MediaCodecInfo.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-03-08T18:53:15Z",
       "side": 1,
       "message": "Ditto, and this is (2^16-1)*10",
+      "revId": "ba7f1cd7b6b799a861834a25dde4e8275989ced8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e6b41a_0bac8e25",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1243029
+      },
+      "writtenOn": "2019-03-08T23:40:51Z",
+      "side": 1,
+      "message": "This is changed as Lajos mentioned above. This is min value used in L1127.",
+      "parentUuid": "5f0b0120_7953511d",
       "revId": "ba7f1cd7b6b799a861834a25dde4e8275989ced8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
