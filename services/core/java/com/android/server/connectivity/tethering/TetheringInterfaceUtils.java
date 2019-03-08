@@ -70,9 +70,9 @@ public final class TetheringInterfaceUtils {
                 (ns != null) && (ns.network != null) &&
                 (ns.linkProperties != null) && (ns.networkCapabilities != null) &&
                 // At least one upstream DNS server:
-                ns.linkProperties.hasIPv6DnsServer() &&
+                ns.linkProperties.hasIpv6DnsServer() &&
                 // Minimal amount of IPv6 provisioning:
-                ns.linkProperties.hasGlobalIPv6Address() &&
+                ns.linkProperties.hasGlobalIpv6Address() &&
                 // Temporary approximation of "dedicated prefix":
                 ns.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
 

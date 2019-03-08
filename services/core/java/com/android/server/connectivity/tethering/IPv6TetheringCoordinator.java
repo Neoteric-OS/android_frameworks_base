@@ -191,7 +191,7 @@ public class IPv6TetheringCoordinator {
         if (currentActive != null && currentActive.ipServer == ipServer) {
             final LinkProperties lp = getIPv6OnlyLinkProperties(
                     mUpstreamNetworkState.linkProperties);
-            if (lp.hasIPv6DefaultRoute() && lp.hasGlobalIPv6Address()) {
+            if (lp.hasIpv6DefaultRoute() && lp.hasGlobalIpv6Address()) {
                 return lp;
             }
         }
