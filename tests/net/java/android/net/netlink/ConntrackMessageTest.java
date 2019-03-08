@@ -20,18 +20,19 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assume.assumeTrue;
 
 import android.system.OsConstants;
-
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
-
 import libcore.util.HexEncoding;
 
-import org.junit.Test;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import org.junit.runner.RunWith;
+import org.junit.Test;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
+
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest

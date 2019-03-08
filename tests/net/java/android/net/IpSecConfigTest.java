@@ -22,8 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.os.Parcel;
-
-import androidx.test.filters.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

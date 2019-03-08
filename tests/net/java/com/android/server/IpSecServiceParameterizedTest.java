@@ -18,7 +18,6 @@ package com.android.server;
 
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -46,20 +45,19 @@ import android.net.Network;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
+import android.support.test.filters.SmallTest;
 import android.system.Os;
 import android.test.mock.MockContext;
 
-import androidx.test.filters.SmallTest;
+import java.net.Socket;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import java.net.Socket;
-import java.util.Arrays;
-import java.util.Collection;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest

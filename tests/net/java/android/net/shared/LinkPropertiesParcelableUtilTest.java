@@ -29,9 +29,8 @@ import android.net.LinkProperties;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.Uri;
-
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
