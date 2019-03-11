@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "4a0703ba_4eb01b8b",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T09:08:10Z",
+      "side": 1,
+      "message": "Alternatively, could we solve this problem by having two interfaces? Jean and I looked at it for a while and came up with the following suggestion:\n\n\n    interface AnswerParser\u003cT\u003e {\n        T parse(byte[] rawAnswer) throws ParseException;\n    }\n\n    abstract class AnswerCallback\u003cT\u003e {\n        // @hide\n        public final AnswerParser\u003cT\u003e parser;\n\n        public AnswerCallback(AnswerParser\u003cT\u003e parser) { this.parser \u003d parser; };\n        abstract void onAnswer(T answer);\n        abstract void onParseException(ParseException e);\n        abstract void onQueryException(ErrnoException e);\n    }\n\n\n    AnswerParser myParser \u003d new AnswerParser() {\n        @Override public String parse(byte[] rawAnswer) { return \"hello\"; }\n    };\n\n    AnswerCallback\u003cString\u003e c \u003d new AnswerCallback\u003cString\u003e(myParser) {\n        void onAnswer(String answer) {}\n        void onParseException(ParseException e) {}\n        void onQueryException(ErrnoException e) {}\n    };\n\n\n\nThen the query method can just take an AnswerCallback\u003cT\u003e. We can provide two pre-canned AnswerCallback classes, one for List\u003cInetAddress\u003e and one for byte[], plus the user can re-use their own.\n\nInternally the query method would do something like:\n\n    try {\n        queryfd \u003d resNetworkSend(...);\n    } catch (ErrnoException e) {\n        callback.onQueryException(e);\n    }\n\n    registerFDListener(handler.getLooper().getQueue(), queryfd, callback);\n\n\nand the registerFDListener would do, instead of just calling asnwerCallback.onAnswer:\n\n                    try {\n                        answerCallback.onAnswer(answerCallback.parser.parse());\n                    } catch (ParseException e) {\n                        answerCallback.onParseException(e);\n                    }",
+      "parentUuid": "83225173_d3c00c94",
+      "range": {
+        "startLine": 27253,
+        "startChar": 29,
+        "endLine": 27253,
+        "endChar": 38
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4609d42f_f8b01b5d",
         "filename": "api/current.txt",
         "patchSetId": 2

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409188a4_b190f897",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T09:08:10Z",
+      "side": 1,
+      "message": "This sentence doesn\u0027t seem to make sense. Maybe just say \"Concrete implementations of this class should...\"",
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed25a0_9afe1488",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T09:08:10Z",
+      "side": 1,
+      "message": "to the",
+      "range": {
+        "startLine": 126,
+        "startChar": 39,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65154adf_3c946060",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T09:08:10Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
