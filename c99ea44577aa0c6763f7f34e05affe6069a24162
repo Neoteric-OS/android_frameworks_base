@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "a920251c_6242a888",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "Optionally suggest replacing this code with :\n\nthis.mChildren \u003d Collections.unmodifiableList(Array.asList(children));\nfor (RefcountedResource child : children) {\n  child.mRefCount++;\n}",
+      "range": {
+        "startLine": 199,
+        "startChar": 33,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f862bbd2_02aa5c58",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "I think you\u0027d be better off with a design like the following :\n\n  @Nonnull\n  private final T mResource;\n  @NonNull\n  private final List\u003cRefcountedResource\u003e mChildren;\n  @Nullable\n  IBinder mBinder;\n\n  RefcountedResource(@NonNull T resource, @Nullable IBinder binder, @NonNull RefcountedResource... children) {\n  ...\n  }\n\n  RefcountedResource(@NonNull T resource, @NonNull RefcountedResource... children) {\n    this(resource, null, children);\n  }\n\n\nI think this is much more idiomatic Java, and gives you some guarantees about nullability.",
+      "range": {
+        "startLine": 212,
+        "startChar": 16,
+        "endLine": 212,
+        "endChar": 38
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd153fa_33819704",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "So let me get this straight :\nThis is a reference counted resource that increments their refcount by being added to a parent, and decrements them when a parent is fully released. But it can also be released by the user, and *that\u0027s* when it frees its resources. Well some of them, the ones in invalidate().\n\nIs there any way to make this simpler and closer to what we usually call a \"reference counted\" object ? Or to rename it to better reflect what it is ?\n(not for this patch obviously)",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 31
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c416678_e30f3806",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "we who ?",
+      "range": {
+        "startLine": 257,
+        "startChar": 60,
+        "endLine": 257,
+        "endChar": 62
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9a414a_1c570879",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "Is there any way we can avoid this bizarre split of responsibilities, where mBinder is indicating the same thing as mUserReleased for everything but your new resource, just because your new resource does not have a binder ? ISTM it would be infinitely less confusing if you just created your new resource and passed a \"new Binder()\" to it.",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 34
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6e2eb7_e8f6f8e1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "So hopefully connectivity service won\u0027t let you do that. But at the time of writing this, it will :/",
+      "range": {
+        "startLine": 1025,
+        "startChar": 68,
+        "endLine": 1025,
+        "endChar": 93
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28d2ea3_4506b3ab",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "Can you annotate with @GuardedBy(\"IpSecService.this\") then ?",
+      "range": {
+        "startLine": 1032,
+        "startChar": 13,
+        "endLine": 1032,
+        "endChar": 47
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f862f050_3069707e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "This seems to me like it flies in the face of the contract for OwnedResourceRecord AND the comment in 1022. A ResourceTracker object is just a glorified semaphore (sans the thread-safety :/), why not make one and initialize it to the rlimit for FDs or something ?\n\nI do find it dangerous to say hey, this method that used to never return null, well now it can",
+      "range": {
+        "startLine": 1040,
+        "startChar": 19,
+        "endLine": 1040,
+        "endChar": 23
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8327de23_cd8010e6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "Well okay but you don\u0027t know super of what, or what \"this\" is. What about \"{NattKeepaliveRecord\u003d\" instead ?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 30,
+        "endLine": 1051,
+        "endChar": 35
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08f019fc_a02be5bb",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -18,6 +225,29 @@
         "startChar": 28,
         "endLine": 1902,
         "endChar": 59
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b81bd04_a8f83e73",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:26:23Z",
+      "side": 1,
+      "message": "While you\u0027re at it can you also accept MAINLINE_NETWORK_STACK ? Or are we 100% sure this will never come from the network stack mainline module ?",
+      "range": {
+        "startLine": 1905,
+        "startChar": 44,
+        "endLine": 1905,
+        "endChar": 57
       },
       "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
