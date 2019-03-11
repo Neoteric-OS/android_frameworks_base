@@ -18,6 +18,7 @@ package android.telephony;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -54,7 +55,9 @@ public abstract class NetworkService extends Service {
 
     private final String TAG = NetworkService.class.getSimpleName();
 
-    public static final String NETWORK_SERVICE_INTERFACE = "android.telephony.NetworkService";
+    /** Network service interface. Use this for creating intent to bind the data service. */
+    @SdkConstant(SdkConstant.SdkConstantType.SERVICE_ACTION)
+    public static final String SERVICE_INTERFACE = "android.telephony.NetworkService";
 
     private static final int NETWORK_SERVICE_CREATE_NETWORK_SERVICE_PROVIDER                 = 1;
     private static final int NETWORK_SERVICE_REMOVE_NETWORK_SERVICE_PROVIDER                 = 2;
@@ -238,7 +241,7 @@ public abstract class NetworkService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        if (intent == null || !NETWORK_SERVICE_INTERFACE.equals(intent.getAction())) {
+        if (intent == null || !SERVICE_INTERFACE.equals(intent.getAction())) {
             loge("Unexpected intent " + intent);
             return null;
         }

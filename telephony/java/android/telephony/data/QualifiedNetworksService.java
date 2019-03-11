@@ -18,6 +18,7 @@ package android.telephony.data;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -52,7 +53,9 @@ import com.android.internal.annotations.VisibleForTesting;
 public abstract class QualifiedNetworksService extends Service {
     private static final String TAG = QualifiedNetworksService.class.getSimpleName();
 
-    public static final String QUALIFIED_NETWORKS_SERVICE_INTERFACE =
+    /** Qualified network service interface. Use this for creating intent to bind the service. */
+    @SdkConstant(SdkConstant.SdkConstantType.SERVICE_ACTION)
+    public static final String SERVICE_INTERFACE =
             "android.telephony.data.QualifiedNetworksService";
 
     private static final int QNS_CREATE_NETWORK_AVAILABILITY_UPDATER                = 1;
@@ -241,7 +244,7 @@ public abstract class QualifiedNetworksService extends Service {
     /** @hide */
     @Override
     public IBinder onBind(Intent intent) {
-        if (intent == null || !QUALIFIED_NETWORKS_SERVICE_INTERFACE.equals(intent.getAction())) {
+        if (intent == null || !SERVICE_INTERFACE.equals(intent.getAction())) {
             loge("Unexpected intent " + intent);
             return null;
         }
