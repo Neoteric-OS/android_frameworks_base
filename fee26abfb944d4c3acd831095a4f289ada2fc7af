@@ -22,6 +22,30 @@
       "revId": "fee26abfb944d4c3acd831095a4f289ada2fc7af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae94e41_6fb8d0af",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T09:33:15Z",
+      "side": 1,
+      "message": "I see. We can\u0027t change the public name of the method in ConnectivityManager, but then ConnectivityManager does not have a getGlobalProxy method, so I think it\u0027s fine to rename the internal methods, especially since getDefaultProxy is now only used in this file and in tests. Done.",
+      "parentUuid": "831cfeda_33d7c630",
+      "range": {
+        "startLine": 129,
+        "startChar": 21,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "fee26abfb944d4c3acd831095a4f289ada2fc7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
