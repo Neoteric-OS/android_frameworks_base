@@ -16,6 +16,24 @@
       "revId": "842310e44361284935fe487dffd9e5423aa00e69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b5d108_f9c004da",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2719,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-11T04:43:56Z",
+      "side": 1,
+      "message": "Should I remove OnTetheringEntitlementResultListener ?? TetheringEntitlementValueListener already be used for existing system app, we can\u0027t remove it.",
+      "parentUuid": "4b7239b4_2b9120be",
+      "revId": "842310e44361284935fe487dffd9e5423aa00e69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
