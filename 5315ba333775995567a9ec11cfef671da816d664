@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da9acdfd_1af7d282",
+        "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T09:33:00Z",
+      "side": 1,
+      "message": "No, something probably changed since I wrote this test. Fixed.",
+      "parentUuid": "88e12a47_705017ce",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 49
+      },
+      "revId": "5315ba333775995567a9ec11cfef671da816d664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f8d314c_cf0db049",
         "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "5315ba333775995567a9ec11cfef671da816d664",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31444298_660416a3",
+        "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T09:33:00Z",
+      "side": 1,
+      "message": "Unfortunately... yes. If you look at the implementation, there is asymmetry. :(",
+      "parentUuid": "6f8d314c_cf0db049",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 81
+      },
+      "revId": "5315ba333775995567a9ec11cfef671da816d664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
