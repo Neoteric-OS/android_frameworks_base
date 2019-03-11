@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b7239b4_2b9120be",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2719,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T04:40:10Z",
+      "side": 1,
+      "message": "This is essentially identical to OnTetheringEntitlementResultListener above. We should not have two essentially identical classes in the API surface.",
+      "revId": "842310e44361284935fe487dffd9e5423aa00e69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
