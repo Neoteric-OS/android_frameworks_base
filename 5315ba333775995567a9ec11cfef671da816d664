@@ -93,6 +93,30 @@
       "revId": "5315ba333775995567a9ec11cfef671da816d664",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40fec09d_bbd80b14",
+        "filename": "tests/net/java/com/android/server/connectivity/ProxyTrackerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-11T10:44:34Z",
+      "side": 1,
+      "message": "This might surprise people who use it.\nIs it better if we make the implementation symmetrical?\nBut I guess you already considered about it.",
+      "parentUuid": "31444298_660416a3",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 81
+      },
+      "revId": "5315ba333775995567a9ec11cfef671da816d664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
