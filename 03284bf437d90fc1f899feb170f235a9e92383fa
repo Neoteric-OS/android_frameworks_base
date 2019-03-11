@@ -16,6 +16,63 @@
       "revId": "03284bf437d90fc1f899feb170f235a9e92383fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbf4e19_ba13b6a5",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T06:29:45Z",
+      "side": 1,
+      "message": "Wow. This really seems unrelated. Is it actually necessary? Why?",
+      "revId": "03284bf437d90fc1f899feb170f235a9e92383fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ff44dc_d88a4b50",
+        "filename": "services/core/jni/test_onload.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T06:29:45Z",
+      "side": 1,
+      "message": "Could this go into frameworks/base/tests/net/jni instead?",
+      "revId": "03284bf437d90fc1f899feb170f235a9e92383fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea0f7dc_2f694363",
+        "filename": "services/core/jni/test_onload.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-11T06:29:45Z",
+      "side": 1,
+      "message": "1",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "03284bf437d90fc1f899feb170f235a9e92383fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
