@@ -22,6 +22,30 @@
       "revId": "9554abf9ed2556a92dee0ccce7972691a44d5ec7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c505e245_805c3566",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-11T04:03:44Z",
+      "side": 1,
+      "message": "Ohh, sorry for the breaks. Here is the CL aosp/924874.",
+      "parentUuid": "465dc362_ed726923",
+      "range": {
+        "startLine": 2716,
+        "startChar": 0,
+        "endLine": 2716,
+        "endChar": 15
+      },
+      "revId": "9554abf9ed2556a92dee0ccce7972691a44d5ec7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
