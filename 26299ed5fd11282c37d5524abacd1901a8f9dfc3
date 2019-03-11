@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267fb479_b5ce03f8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T17:03:43Z",
+      "side": 1,
+      "message": "has no upstream\n\n(\"loses\" implies an action of going from having one to not having one, which means it doesn\u0027t make sense with \"when\" and it\u0027s pretty unclear what is meant)",
+      "range": {
+        "startLine": 2570,
+        "startChar": 77,
+        "endLine": 2570,
+        "endChar": 96
+      },
+      "revId": "26299ed5fd11282c37d5524abacd1901a8f9dfc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
