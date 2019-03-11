@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62bfc835_0442c992",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-11T14:45:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29958ff8_833b1349",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d33859f_b25c63bc",
         "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e08363c6_d01196bf",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-11T14:45:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d33859f_b25c63bc",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 54
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b67c3aae_08840d63",
         "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-08T12:13:31Z",
       "side": 1,
       "message": "I think it would be better to have a fixed timeout (e.g 5 seconds) and to try (with backoff) until we reach that timeout. BugReportManagerServiceImpl has an example of such a thing.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd87843_fd4db7cd",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-11T14:45:57Z",
+      "side": 1,
+      "message": "That\u0027s a great idea. I add a binary back off according my understanding.",
+      "parentUuid": "b67c3aae_08840d63",
       "range": {
         "startLine": 75,
         "startChar": 7,
@@ -108,6 +180,30 @@
       "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c4c344_1963caf5",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-11T14:45:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf9cebf4_3dcfa5c3",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "4eae06c0571aa32276d33b626c3147475ceeebc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
