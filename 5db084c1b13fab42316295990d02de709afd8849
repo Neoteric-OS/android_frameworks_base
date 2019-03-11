@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "054cc3d3_11a71c11",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27253,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-11T08:30:39Z",
+      "side": 1,
+      "message": "I think that AnswerCallback and its on* methods are all public and no @hide, so we can\u0027t hide any of them on subclass.\nAnd the reason for why no onError or onAnswer here is that they are not implemented, still abstract.",
+      "parentUuid": "83225173_d3c00c94",
+      "range": {
+        "startLine": 27253,
+        "startChar": 29,
+        "endLine": 27253,
+        "endChar": 38
+      },
+      "revId": "5db084c1b13fab42316295990d02de709afd8849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4609d42f_f8b01b5d",
         "filename": "api/current.txt",
         "patchSetId": 2
