@@ -2712,7 +2712,9 @@ public class ConnectivityManager {
     /**
      * @removed
      * @deprecated This API would be removed when all of caller has been updated.
-     * */
+     * {@hide}
+     */
+    @SystemApi
     @Deprecated
     public abstract static class TetheringEntitlementValueListener  {
         /**
@@ -2774,7 +2776,9 @@ public class ConnectivityManager {
     /**
      * @removed
      * @deprecated This API would be removed when all of caller has been updated.
-     * */
+     * {@hide}
+     */
+    @SystemApi
     @Deprecated
     public void getLatestTetheringEntitlementValue(int type, boolean showEntitlementUi,
             @NonNull final TetheringEntitlementValueListener listener, @Nullable Handler handler) {
