@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab16fb6_dcb14edf",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-11T05:13:09Z",
+      "side": 1,
+      "message": "Nits: missing new line?",
+      "revId": "03284bf437d90fc1f899feb170f235a9e92383fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
