@@ -75,6 +75,24 @@
       "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8079c588_4a1a9035",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-12T19:52:27Z",
+      "side": 1,
+      "message": "(1)\nI missed the all tag. I uploaded the CL(aosp/927413).\n(2)\nThe parsing code don\u0027t check it. But we can check the ordering by vts.",
+      "parentUuid": "277c55be_4fa7872a",
+      "revId": "4a5f81c39fb5145c61a1f4aaa7d49f58cc26ee78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
