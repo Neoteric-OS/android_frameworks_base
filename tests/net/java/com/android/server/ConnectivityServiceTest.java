@@ -2522,11 +2522,13 @@ public class ConnectivityServiceTest {
         // Bring up validated mobile data.
         mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
         mCellNetworkAgent.connect(true);
+        waitForIdle();
         callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
 
         // Bring up wifi with partial connectivity.
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connectWithPartialConnectivity();
+        waitForIdle();
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
 
@@ -2559,6 +2561,7 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connectWithPartialConnectivity();
+        waitForIdle();
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
 
@@ -2577,6 +2580,7 @@ public class ConnectivityServiceTest {
         // acceptUnvalidated is also used as setting for accepting partial networks.
         mWiFiNetworkAgent.explicitlySelected(true /* acceptUnvalidated */);
         mWiFiNetworkAgent.connect(true);
+        waitForIdle();
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
         nc = callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
@@ -2592,6 +2596,7 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.explicitlySelected(true /* acceptUnvalidated */);
         mWiFiNetworkAgent.connectWithPartialConnectivity();
+        waitForIdle();
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         // TODO: If the user accepted partial connectivity, we shouldn't switch to wifi until
         // NetworkMonitor detects partial connectivity
