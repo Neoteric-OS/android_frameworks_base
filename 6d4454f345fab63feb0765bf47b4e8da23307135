@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94328e90_ace6a58d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-12T09:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409188a4_b190f897",
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ed25a0_9afe1488",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "983079de_a18013c9",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-12T09:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6ed25a0_9afe1488",
+      "range": {
+        "startLine": 126,
+        "startChar": 39,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65154adf_3c946060",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 5
@@ -62,6 +104,30 @@
       "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98a99f2_2696e17d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-12T09:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65154adf_3c946060",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "6d4454f345fab63feb0765bf47b4e8da23307135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
