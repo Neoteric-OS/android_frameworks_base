@@ -46,6 +46,30 @@
       "revId": "e0612e97bd028c70a3cb64300772132fb996ad7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca93822a_16f981b0",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-03-12T07:55:26Z",
+      "side": 1,
+      "message": "Latest patch set modifies LOCATION_MODE using putIntForUser() and getIntForUser() directly.",
+      "parentUuid": "3a09008d_c1a90cb5",
+      "range": {
+        "startLine": 2675,
+        "startChar": 24,
+        "endLine": 2675,
+        "endChar": 53
+      },
+      "revId": "e0612e97bd028c70a3cb64300772132fb996ad7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
