@@ -80,7 +80,7 @@ static void SkiaGetGlyphWidthAndExtents(SkPaint* paint, hb_codepoint_t codepoint
     }
 }
 
-static hb_bool_t harfbuzzGetGlyph(hb_font_t* hbFont, void* fontData, hb_codepoint_t unicode, hb_codepoint_t variationSelector, hb_codepoint_t* glyph, void* userData)
+static hb_bool_t harfbuzzGetNominalGlyph(hb_font_t* hbFont, void* fontData, hb_codepoint_t unicode, hb_codepoint_t* glyph, void* userData)
 {
     HarfBuzzFontData* hbFontData = reinterpret_cast<HarfBuzzFontData*>(fontData);
     SkPaint* paint = hbFontData->m_paint;
@@ -129,7 +129,7 @@ static hb_font_funcs_t* harfbuzzSkiaGetFontFuncs()
     // Harfbuzz will use the fallback implementation if they aren't set.
     if (!harfbuzzSkiaFontFuncs) {
         harfbuzzSkiaFontFuncs = hb_font_funcs_create();
-        hb_font_funcs_set_glyph_func(harfbuzzSkiaFontFuncs, harfbuzzGetGlyph, 0, 0);
+        hb_font_funcs_set_nominal_glyph_func(harfbuzzSkiaFontFuncs, harfbuzzGetNominalGlyph, 0, 0);
         hb_font_funcs_set_glyph_h_advance_func(harfbuzzSkiaFontFuncs, harfbuzzGetGlyphHorizontalAdvance, 0, 0);
         hb_font_funcs_set_glyph_h_origin_func(harfbuzzSkiaFontFuncs, harfbuzzGetGlyphHorizontalOrigin, 0, 0);
         hb_font_funcs_set_glyph_extents_func(harfbuzzSkiaFontFuncs, harfbuzzGetGlyphExtents, 0, 0);
