@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "435244ae_7296d17a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T08:30:51Z",
+      "side": 1,
+      "message": "Why @NonNull? I believe mDomains is actually null by default.",
+      "range": {
+        "startLine": 613,
+        "startChar": 27,
+        "endLine": 613,
+        "endChar": 35
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d106f04c_688c92bb",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T08:30:51Z",
+      "side": 1,
+      "message": "Should this actually be @NonNull instead? Calling it with null doesn\u0027t crash but it also silently does nothing. So definitely the intent is \"don\u0027t call this will null\".\n\nOn the other hand, if we mark this as @NonNull, then what if someone does:\n\n    lp.addRoute(otherFunctionThatCanReturnNull())?\n\nShould linters and errorprone flag this, because we\u0027re passing a nullable value to a @NonNull\nargument?\n\nJean?",
+      "range": {
+        "startLine": 697,
+        "startChar": 28,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

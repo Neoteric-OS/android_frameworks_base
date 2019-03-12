@@ -117,6 +117,30 @@
       "revId": "b5749a40d47a8469712273ac68ea2e8de12d032e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "570ebf87_e7952a1e",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T08:30:51Z",
+      "side": 1,
+      "message": "It\u0027s also null by default when the constructor is called.",
+      "parentUuid": "c16455d1_a23e42c7",
+      "range": {
+        "startLine": 208,
+        "startChar": 34,
+        "endLine": 208,
+        "endChar": 42
+      },
+      "revId": "b5749a40d47a8469712273ac68ea2e8de12d032e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
