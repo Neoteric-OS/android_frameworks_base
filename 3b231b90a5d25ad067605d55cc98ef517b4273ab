@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34da8c49_fb5ad552",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParams.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-03-12T20:43:16Z",
+      "side": 1,
+      "message": "I haven\u0027t seen similar usage in Android, maybe put these in imports?",
+      "range": {
+        "startLine": 295,
+        "startChar": 25,
+        "endLine": 295,
+        "endChar": 32
+      },
+      "revId": "3b231b90a5d25ad067605d55cc98ef517b4273ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
