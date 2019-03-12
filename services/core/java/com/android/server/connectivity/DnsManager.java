@@ -329,6 +329,7 @@ public class DnsManager {
                               .collect(Collectors.toList()))
                 : useTls ? assignedServers  // Opportunistic
                 : new String[0];            // Off
+        final String[] tlsFingerprints = new String[0];
 
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
@@ -343,10 +344,12 @@ public class DnsManager {
 
         Slog.d(TAG, String.format("setDnsConfigurationForNetwork(%d, %s, %s, %s, %s, %s)",
                 netId, Arrays.toString(assignedServers), Arrays.toString(domainStrs),
-                Arrays.toString(params), tlsHostname, Arrays.toString(tlsServers)));
+                Arrays.toString(params), tlsHostname, Arrays.toString(tlsServers),
+                Arrays.toString(tlsFingerprints)));
         try {
             mNMS.setDnsConfigurationForNetwork(
-                    netId, assignedServers, domainStrs, params, tlsHostname, tlsServers);
+                    netId, assignedServers, domainStrs, params, tlsHostname, tlsServers,
+                    tlsFingerprints);
         } catch (Exception e) {
             Slog.e(TAG, "Error setting DNS configuration: " + e);
             return;

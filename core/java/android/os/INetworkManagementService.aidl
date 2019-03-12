@@ -355,7 +355,7 @@ interface INetworkManagementService
      * Configure name servers, search paths, and resolver parameters for the given network.
      */
     void setDnsConfigurationForNetwork(int netId, in String[] servers, in String[] domains,
-            in int[] params, String tlsHostname, in String[] tlsServers);
+            in int[] params, String tlsHostname, in String[] tlsServers, in String[] tlsFingerprints);
 
     void setFirewallEnabled(boolean enabled);
     boolean isFirewallEnabled();

@@ -59,6 +59,7 @@ import android.net.Network;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkStats;
 import android.net.NetworkUtils;
+import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
@@ -1868,15 +1869,45 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         return stats;
     }
 
+    private static ResolverParamsParcel makeResolverParamsParcel(int netId, int[] params,
+                     String[] servers, String[] domains, String tlsHostname, String[] tlsServers,
+                     String[] tlsFingerprints) {
+        ResolverParamsParcel paramsParcel = new ResolverParamsParcel();
+
+        paramsParcel.netId = netId;
+        paramsParcel.sampleValidity = params[INetd.RESOLVER_PARAMS_SAMPLE_VALIDITY];
+        paramsParcel.successThreshold = params[INetd.RESOLVER_PARAMS_SUCCESS_THRESHOLD];
+        paramsParcel.minSamples = params[INetd.RESOLVER_PARAMS_MIN_SAMPLES];
+        paramsParcel.maxSamples = params[INetd.RESOLVER_PARAMS_MAX_SAMPLES];
+        if (params.length > INetd.RESOLVER_PARAMS_BASE_TIMEOUT_MSEC) {
+            paramsParcel.baseTimeoutMsec = params[INetd.RESOLVER_PARAMS_BASE_TIMEOUT_MSEC];
+        } else {
+            paramsParcel.baseTimeoutMsec = 0;
+        }
+        if (params.length > INetd.RESOLVER_PARAMS_RETRY_COUNT) {
+            paramsParcel.retryCount = params[INetd.RESOLVER_PARAMS_RETRY_COUNT];
+        } else {
+            paramsParcel.retryCount = 0;
+        }
+
+        paramsParcel.servers = (servers == null) ? new String[0] : servers;
+        paramsParcel.domains = (domains == null) ? new String[0] : domains;
+        paramsParcel.tlsName = (tlsHostname == null) ? "" : tlsHostname;
+        paramsParcel.tlsServers = (tlsServers == null) ? new String[0] : tlsServers;
+        paramsParcel.tlsFingerprints = tlsFingerprints;
+
+        return paramsParcel;
+    }
+
     @Override
     public void setDnsConfigurationForNetwork(int netId, String[] servers, String[] domains,
-                    int[] params, String tlsHostname, String[] tlsServers) {
+                    int[] params, String tlsHostname, String[] tlsServers,
+                    String[] tlsFingerprints) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-
-        final String[] tlsFingerprints = new String[0];
         try {
-            mNetdService.setResolverConfiguration(
-                    netId, servers, domains, params, tlsHostname, tlsServers, tlsFingerprints);
+            final ResolverParamsParcel resolverParams = makeResolverParamsParcel(netId, params,
+                    servers, domains, tlsHostname, tlsServers, tlsFingerprints);
+            mNetdService.setResolverConfiguration(resolverParams);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
