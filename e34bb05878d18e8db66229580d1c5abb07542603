@@ -22,6 +22,30 @@
       "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0facfb31_06abca65",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-03-13T16:19:40Z",
+      "side": 1,
+      "message": "The OTA will generate artifacts. So doing fstrim earlier will just discard blocks that will then be used. That \"duplicate\" work seemed unnecessary.\n\nThe original design for A/B is to be applied during idle maintenance. The update modules (inside GMS) doesn\u0027t always honor that, so there are anyways bugs open because dex2oat might be felt. I don\u0027t think the 30s (compared to 20-25m average OTA time) are significant.\n\nAs GMS doesn\u0027t honor idle-maintenance, that might not happen before reboot.",
+      "parentUuid": "41cf99b3_aa587e35",
+      "range": {
+        "startLine": 475,
+        "startChar": 13,
+        "endLine": 475,
+        "endChar": 51
+      },
+      "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
