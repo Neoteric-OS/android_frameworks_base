@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24dbb360_44b06024",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T09:34:58Z",
+      "side": 1,
+      "message": "Nit: might want to put this on the previous line, so you can unindent the rest.",
+      "revId": "ef7142288ea45d84c9cc9790307760fed9ec160e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
