@@ -93,6 +93,30 @@
       "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7780540f_066face6",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-13T07:53:22Z",
+      "side": 1,
+      "message": "To answer the question about the linters :\n\n@Nullable Route functionThatCanReturnNull() {}\nRoute functionThatMaybeCanReturnNull() {}\n@NonNull Route functionThatNeverReturnsNull() {}\n\npublic boolean addRoute(@NonNull Route route) {}\n\n\nJava :\naddRoute(functionThatCanReturnNull()) → linter warning\naddRoute(functionThatCanMaybeReturnNull()) → nothing\naddRoute(functionThatNeverReturnsNull()) → nothing\n\n\nAs for Kotlin, these functions have the following signature :\nfunctionThatCanReturnNull() : Route?\nfunctionThatMaybeCanReturnNull() : Route!\nfunctionThatNeverReturnsNull() : Route\naddRoute(Route)\n\nSo when you call :\naddRoute(functionThatCanReturnNull()) → compile error\naddRoute(functionThatCanMaybeReturnNull()) → weak warning\naddRoute(functionThatNeverReturnsNull()) → nothing\n\nYou can also write :\nfunctionThatCanReturnNull()?.let { addRoute(it) } → doesn\u0027t call if null\n...or of course declare a local and do it like in Java.\n\nIf you find you have a lot of these in your code you can also just define a local function like this :\nprivate fun LinkProperties.addRoute(r : Route?) \u003d if (r !\u003d null) addRoute(r)\n...and go on your merry way calling lp.addRoute(null) in this file, but only in this file.",
+      "parentUuid": "9779df2b_b9260b29",
+      "range": {
+        "startLine": 697,
+        "startChar": 28,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
