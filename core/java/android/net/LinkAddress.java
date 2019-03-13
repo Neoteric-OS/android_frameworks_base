@@ -170,6 +170,17 @@ public class LinkAddress implements Parcelable {
     }
 
     /**
+     * Copy constructor for LinkAddress.
+     * @param linkAddress LinkAddress to copy.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public LinkAddress(@NonNull LinkAddress linkAddress) {
+        this(linkAddress.address, linkAddress.prefixLength, linkAddress.flags, linkAddress.scope);
+    }
+
+    /**
      * Constructs a new {@code LinkAddress} from an {@code InetAddress} and a prefix length.
      * The flags are set to zero and the scope is determined from the address.
      * @param address The IP address.

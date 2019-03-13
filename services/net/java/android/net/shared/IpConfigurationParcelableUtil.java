@@ -24,6 +24,7 @@ import android.net.ApfCapabilitiesParcelable;
 import android.net.DhcpResults;
 import android.net.DhcpResultsParcelable;
 import android.net.InetAddresses;
+import android.net.LinkAddress;
 import android.net.StaticIpConfiguration;
 import android.net.StaticIpConfigurationParcelable;
 import android.net.apf.ApfCapabilities;
@@ -44,7 +45,7 @@ public final class IpConfigurationParcelableUtil {
             @Nullable StaticIpConfiguration config) {
         if (config == null) return null;
         final StaticIpConfigurationParcelable p = new StaticIpConfigurationParcelable();
-        p.ipAddress = LinkPropertiesParcelableUtil.toStableParcelable(config.getIpAddress());
+        p.ipAddress = clone(config.getIpAddress());
         p.gateway = parcelAddress(config.getGateway());
         p.dnsServers = toParcelableArray(
                 config.getDnsServers(), IpConfigurationParcelableUtil::parcelAddress, String.class);
@@ -59,7 +60,7 @@ public final class IpConfigurationParcelableUtil {
             @Nullable StaticIpConfigurationParcelable p) {
         if (p == null) return null;
         final StaticIpConfiguration config = new StaticIpConfiguration();
-        config.setIpAddress(LinkPropertiesParcelableUtil.fromStableParcelable(p.ipAddress));
+        config.setIpAddress(clone(p.ipAddress));
         config.setGateway(unparcelAddress(p.gateway));
         for (InetAddress addr : fromParcelableArray(
                 p.dnsServers, IpConfigurationParcelableUtil::unparcelAddress)) {
@@ -133,5 +134,10 @@ public final class IpConfigurationParcelableUtil {
     public static InetAddress unparcelAddress(@Nullable String addr) {
         if (addr == null) return null;
         return InetAddresses.parseNumericAddress(addr);
+    }
+
+    private static LinkAddress clone(@Nullable LinkAddress address) {
+        if (address == null) return null;
+        return new LinkAddress(address);
     }
 }
