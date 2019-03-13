@@ -69,6 +69,30 @@
       "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9779df2b_b9260b29",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-13T07:35:20Z",
+      "side": 1,
+      "message": "We discussed it with lorenzo@ and we think we should try making this @NonNull and completely remove the check in line 698.\n\nThe null behavior is not useful to anyone and hopefully nobody is ever passing null here. If they do, this will crash hard time and we should have time to fix it.",
+      "parentUuid": "d106f04c_688c92bb",
+      "range": {
+        "startLine": 697,
+        "startChar": 28,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
