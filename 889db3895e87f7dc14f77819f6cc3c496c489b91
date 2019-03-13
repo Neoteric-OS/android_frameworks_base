@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665f5adf_428aedd1",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T10:12:48Z",
+      "side": 1,
+      "message": "Is this log message useful?",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 49
+      },
+      "revId": "889db3895e87f7dc14f77819f6cc3c496c489b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0a7aa8_7f95d3c9",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T10:12:48Z",
+      "side": 1,
+      "message": "You do this twice. Factor out to a separate method? maybeAddCancellationSignal(@Nullable cancellationSignal, int queryfd)?",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "889db3895e87f7dc14f77819f6cc3c496c489b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68583ead_78d1aee0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T10:12:48Z",
+      "side": 1,
+      "message": "Not for this CL, but it would be good if calling cancel() guaranteed that the callback is never called.\n\nWhat we could do is:\n\n- Add a lock object to this function\n- Pass cancellationSignal and lock as an argument to registerFdListener\n- Wrap the body of the cancellation lamda into synchronized (lock)\n- In the body of the callback lambda, on the executor, wrap the call to answerCallback in a synchronized (lock). Before calling answerCallback, check cancellationSignal.isCanceled, and if it returns true, don\u0027t call the callback.\n\nThe reason for having a separate lock object and not locking on cancellationSignal or on callback is that they are supplied by the user, so we would be interfering with user code. And of course any of those could already be locked.\n\nBut again, probably not for this CL.",
+      "revId": "889db3895e87f7dc14f77819f6cc3c496c489b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
