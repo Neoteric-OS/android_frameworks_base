@@ -320,6 +320,7 @@ public class NetworkMonitor extends StateMachine {
     private long mLastProbeTime;
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics = false;
+    private boolean mAcceptPartialConnectivity = false;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
@@ -391,6 +392,14 @@ public class NetworkMonitor extends StateMachine {
      */
     public void notifyAcceptPartialConnectivity() {
         sendMessage(EVENT_ACCEPT_PARTIAL_CONNECTIVITY);
+    }
+
+    /**
+     * ConnectivityService notifies NetworkMonitor that the user already accepted partial
+     * connectivity previously, so NetworkMonitor can go straight to validated state.
+     */
+    public void setAcceptPartialConnectivity(boolean acceptPartialConnectivity) {
+        mAcceptPartialConnectivity = acceptPartialConnectivity;
     }
 
     /**
@@ -692,6 +701,8 @@ public class NetworkMonitor extends StateMachine {
                         transitionTo(mEvaluatingState);
                     }
                     break;
+                case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
+                    break;
                 default:
                     return NOT_HANDLED;
             }
@@ -961,6 +972,8 @@ public class NetworkMonitor extends StateMachine {
                     // All good!
                     transitionTo(mValidatedState);
                     break;
+                case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
+                    break;
                 default:
                     return NOT_HANDLED;
             }
@@ -1081,7 +1094,12 @@ public class NetworkMonitor extends StateMachine {
                         logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
                         notifyNetworkTested(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY,
                                 probeResult.redirectUrl);
-                        transitionTo(mWaitingForNextProbeState);
+                        if (mAcceptPartialConnectivity) {
+                            mUseHttps = false;
+                            transitionTo(mEvaluatingPrivateDnsState);
+                        } else {
+                            transitionTo(mWaitingForNextProbeState);
+                        }
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
                         notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
@@ -1544,8 +1562,7 @@ public class NetworkMonitor extends StateMachine {
             }
             httpsProbe.join();
             final boolean isHttpSuccessful =
-                    (httpProbe.result().isSuccessful()
-                    || (fallbackProbeResult != null && fallbackProbeResult.isSuccessful()));
+                    (fallbackProbeResult != null && fallbackProbeResult.isSuccessful());
             if (httpsProbe.result().isFailed() && isHttpSuccessful) {
                 return CaptivePortalProbeResult.PARTIAL;
             }
