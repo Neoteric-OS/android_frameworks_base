@@ -902,7 +902,7 @@ public class UsageStatsService extends SystemService implements
             } catch (RemoteException re) {
                 throw re.rethrowFromSystemServer();
             }
-            getContext().enforceCallingPermission(Manifest.permission.CHANGE_APP_IDLE_STATE,
+            getContext().enforceCallingOrSelfPermission(Manifest.permission.CHANGE_APP_IDLE_STATE,
                     "No permission to change app idle state");
             final long token = Binder.clearCallingIdentity();
             try {
