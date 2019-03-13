@@ -274,6 +274,30 @@
     },
     {
       "key": {
+        "uuid": "14735215_db996611",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T09:45:43Z",
+      "side": 1,
+      "message": "Never mind. It\u0027s necessary precisely because it is not an android.net.ParseException.",
+      "parentUuid": "1a57e696_1b8bba7e",
+      "range": {
+        "startLine": 180,
+        "startChar": 25,
+        "endLine": 180,
+        "endChar": 35
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26e4eb55_e5ebb4ee",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
