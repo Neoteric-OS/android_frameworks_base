@@ -32,6 +32,7 @@ import static com.android.internal.R.array.config_tether_wifi_regexs;
 import static com.android.internal.R.bool.config_tether_upstream_automatic;
 import static com.android.internal.R.integer.config_mobile_hotspot_provision_check_period;
 import static com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui;
+import static com.android.internal.R.string.config_mobile_hotspot_provision_response;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -95,6 +96,7 @@ public class TetheringConfiguration {
 
     public final String[] provisioningApp;
     public final String provisioningAppNoUi;
+    public final String provisionResponse;
     public final int provisioningCheckPeriod;
 
     public final int subId;
@@ -122,7 +124,8 @@ public class TetheringConfiguration {
         enableLegacyDhcpServer = getEnableLegacyDhcpServer(ctx);
 
         provisioningApp = getResourceStringArray(res, config_mobile_hotspot_provision_app);
-        provisioningAppNoUi = getProvisioningAppNoUi(res);
+        provisioningAppNoUi = getResourceString(res, config_mobile_hotspot_provision_app_no_ui, "");
+        provisionResponse = getResourceString(res, config_mobile_hotspot_provision_response, "");
         provisioningCheckPeriod = getResourceInteger(res,
                 config_mobile_hotspot_provision_check_period,
                 0 /* No periodic re-check */);
@@ -291,19 +294,19 @@ public class TetheringConfiguration {
         return copy(LEGACY_DHCP_DEFAULT_RANGE);
     }
 
-    private static String getProvisioningAppNoUi(Resources res) {
-        try {
-            return res.getString(config_mobile_hotspot_provision_app_no_ui);
-        } catch (Resources.NotFoundException e) {
-            return "";
-        }
-    }
-
     private static boolean getResourceBoolean(Resources res, int resId) {
         try {
             return res.getBoolean(resId);
         } catch (Resources.NotFoundException e404) {
             return false;
+        }
+    }
+
+    private static String getResourceString(Resources res, int resId, String defaultValue) {
+        try {
+            return res.getString(resId);
+        } catch (Resources.NotFoundException e404) {
+            return defaultValue;
         }
     }
 
