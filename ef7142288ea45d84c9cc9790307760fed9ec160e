@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cee7cca_3c216399",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T09:41:28Z",
+      "side": 1,
+      "message": "This is an implementation detail, right? If so, it\u0027s not appropriate for the javadoc of a public method. Maybe just say:\n\n /**\n  * Send a raw DNS query. The answer will be provided asynchronously through the provided {@link AnswerCallback}.",
+      "range": {
+        "startLine": 189,
+        "startChar": 47,
+        "endLine": 190,
+        "endChar": 22
+      },
+      "revId": "ef7142288ea45d84c9cc9790307760fed9ec160e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38824c47_c9a57c36",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T09:41:28Z",
+      "side": 1,
+      "message": "the callback",
+      "range": {
+        "startLine": 196,
+        "startChar": 49,
+        "endLine": 196,
+        "endChar": 58
+      },
+      "revId": "ef7142288ea45d84c9cc9790307760fed9ec160e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdbdf7c_3c0f1420",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T09:41:28Z",
+      "side": 1,
+      "message": "Ditto. \n\n/**\n * Send a DNS query with the specified name, class and query type. will be provided asynchronously through the provided {@link AnswerCallback}.",
+      "range": {
+        "startLine": 215,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 22
+      },
+      "revId": "ef7142288ea45d84c9cc9790307760fed9ec160e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24dbb360_44b06024",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 5
