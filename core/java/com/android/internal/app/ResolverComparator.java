@@ -167,6 +167,12 @@ class ResolverComparator implements Comparator<ResolvedComponentInfo> {
 
     public ResolverComparator(Context context, Intent intent, String referrerPackage,
                               AfterCompute afterCompute) {
+        // Copy intent to ensure we do not corrupt the state of the original
+        // intent as it will be passed on to the target. This could happen
+        // for example if the extras contained a parcelable unknown to our
+        // classloader resulting in a BadParcelException.
+        intent = new Intent(intent);
+
         mCollator = Collator.getInstance(context.getResources().getConfiguration().locale);
         String scheme = intent.getScheme();
         mHttp = "http".equals(scheme) || "https".equals(scheme);
@@ -188,8 +194,12 @@ class ResolverComparator implements Comparator<ResolvedComponentInfo> {
 
     // get annotations of content from intent.
     public void getContentAnnotations(Intent intent) {
-        ArrayList<String> annotations = intent.getStringArrayListExtra(
-                Intent.EXTRA_CONTENT_ANNOTATIONS);
+        ArrayList<String> annotations = null;
+        try {
+            annotations = intent.getStringArrayListExtra(Intent.EXTRA_CONTENT_ANNOTATIONS);
+        } catch (BadParcelableException e) {
+            Log.w(TAG, "Failed to unparcel content annotations", e);
+        }
         if (annotations != null) {
             int size = annotations.size();
             if (size > NUM_OF_TOP_ANNOTATIONS_TO_USE) {
