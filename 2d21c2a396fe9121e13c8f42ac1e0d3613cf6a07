@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ead229_9180676c",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T00:40:18Z",
+      "side": 1,
+      "message": "Would be good to note that this starts the service as well. startOrGetTestNetworkService?",
+      "range": {
+        "startLine": 335,
+        "startChar": 45,
+        "endLine": 335,
+        "endChar": 48
+      },
+      "revId": "2d21c2a396fe9121e13c8f42ac1e0d3613cf6a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce8b225_34bdd995",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T00:40:18Z",
+      "side": 1,
+      "message": "Probably shouldn\u0027t reindent this file.",
+      "range": {
+        "startLine": 2998,
+        "startChar": 0,
+        "endLine": 2998,
+        "endChar": 16
+      },
+      "revId": "2d21c2a396fe9121e13c8f42ac1e0d3613cf6a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
