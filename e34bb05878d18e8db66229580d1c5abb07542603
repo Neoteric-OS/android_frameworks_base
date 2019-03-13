@@ -70,6 +70,30 @@
       "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978adcc5_30f2c602",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-03-13T16:53:15Z",
+      "side": 1,
+      "message": "That would leave the shutdown-for-reboot as the only viable place, and I don\u0027t think it\u0027s reasonable to block shutdown for the amount of time fstrim might take.",
+      "parentUuid": "c10a8eba_1c77379c",
+      "range": {
+        "startLine": 475,
+        "startChar": 13,
+        "endLine": 475,
+        "endChar": 51
+      },
+      "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
