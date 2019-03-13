@@ -428,6 +428,7 @@ public class ConnectivityServiceTest {
         private int mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
         private String mNmValidationRedirectUrl = null;
         private boolean mNmProvNotificationRequested = false;
+        private boolean mAcceptPartialConnectivity = false;
 
         void setNetworkValid() {
             mNmValidationResult = NETWORK_TEST_RESULT_VALID;
@@ -444,9 +445,10 @@ public class ConnectivityServiceTest {
             mNmValidationRedirectUrl = redirectUrl;
         }
 
-        void setNetworkPartial() {
+        void setNetworkPartial(boolean acceptPartialConnectivity) {
             mNmValidationResult = NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
             mNmValidationRedirectUrl = null;
+            mAcceptPartialConnectivity = acceptPartialConnectivity;
         }
 
         MockNetworkAgent(int transport) {
@@ -568,6 +570,15 @@ public class ConnectivityServiceTest {
                             "test_provisioning_notif_action", "com.android.test.package");
                     mNmProvNotificationRequested = true;
                 }
+
+                // If user accepted partial connectivity, we should set mNmValidationResult to
+                // NETWORK_TEST_RESULT_VALID after sending NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY
+                // to ConnectivityService to simulate the real code flow.
+                if (mAcceptPartialConnectivity
+                        && mNmValidationResult == NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY) {
+                    mNmValidationResult = NETWORK_TEST_RESULT_VALID;
+                    mAcceptPartialConnectivity = false;
+                }
             } catch (RemoteException e) {
                 fail(e.getMessage());
             }
@@ -677,8 +688,8 @@ public class ConnectivityServiceTest {
             connect(false);
         }
 
-        public void connectWithPartialConnectivity() {
-            setNetworkPartial();
+        public void connectWithPartialConnectivity(boolean acceptPartialConnectivity) {
+            setNetworkPartial(acceptPartialConnectivity);
             connect(false);
         }
 
@@ -2526,7 +2537,7 @@ public class ConnectivityServiceTest {
 
         // Bring up wifi with partial connectivity.
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
-        mWiFiNetworkAgent.connectWithPartialConnectivity();
+        mWiFiNetworkAgent.connectWithPartialConnectivity(false /* acceptPartialConnectivity */);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
 
@@ -2558,7 +2569,7 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.disconnect();
         callback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
-        mWiFiNetworkAgent.connectWithPartialConnectivity();
+        mWiFiNetworkAgent.connectWithPartialConnectivity(false /* acceptPartialConnectivity */);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
 
@@ -2591,13 +2602,11 @@ public class ConnectivityServiceTest {
         // NET_CAPABILITY_PARTIAL_CONNECTIVITY.
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.explicitlySelected(true /* acceptUnvalidated */);
-        mWiFiNetworkAgent.connectWithPartialConnectivity();
+        mWiFiNetworkAgent.connectWithPartialConnectivity(true /* acceptPartialConnectivity */);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         // TODO: If the user accepted partial connectivity, we shouldn't switch to wifi until
         // NetworkMonitor detects partial connectivity
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
-        mWiFiNetworkAgent.setNetworkValid();
-        waitForIdle();
         try {
             verify(mWiFiNetworkAgent.mNetworkMonitor,
                     timeout(TIMEOUT_MS).times(1)).notifyAcceptPartialConnectivity();
