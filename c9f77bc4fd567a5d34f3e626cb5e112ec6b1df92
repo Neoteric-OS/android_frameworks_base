@@ -251,6 +251,30 @@
     },
     {
       "key": {
+        "uuid": "825df1e0_4f294948",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-13T09:46:54Z",
+      "side": 1,
+      "message": "I think it gives another reason of using a Builder.\nLike what we did in ka2.5 of socketKeepalive, if an object is used to bookkeeping all the information, and an indirect callback is used.\nThen we can give the information back to user, e.g.\n\nDnsQuery q \u003d DnsQueryBuilder.setDName(xyz).setType().setClass().build();\nq.query(new MyXyzCallback());\n\nclass DnsQuery {\n  void query(AnswerCallback answerCallback) {\n    mCallback \u003d new InternalCallback() {\n       @Override\n       void onQueryException(e) {\n           executor.execute(() -\u003e answerCallback.onQueryException(this, e));\n       }\n    };\n    \n    // do the query with the parameters we stored.\n    if(...)\n       resolver.queryVersion1(mDName, mClass, mType, ..., mCallback);\n    else\n       resolver.queryVersion2(..., mCallback);\n   }\n}\n\n\nI\u0027m not sure if this make sense.\nBut, yes, as you said, users can still manage it by having different instances.\nSo I don\u0027t have strong opinion about this.",
+      "parentUuid": "40725c73_d56fd542",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57e696_1b8bba7e",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
@@ -411,6 +435,30 @@
       "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f8d7d7_2cfad0b0",
+        "filename": "core/java/android/net/ParseException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-13T09:46:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c847ee7c_a654b4e9",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
