@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd99841_ddb4cc90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-13T06:13:57Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def2c143_9dbf7e8d",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-13T06:13:57Z",
+      "side": 1,
+      "message": "the description confusing me that it implied you have other options.\nBut you say \"must be\" just above.\nIs it better if we remove this?",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e060a453_409b689a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-13T06:13:57Z",
+      "side": 1,
+      "message": "The abstract class here implies that in standard use case, user will need to @Override 3 callbacks every time they want to use the api instead of lambda expression.\nThus, is it possible that user wants to use named inherited class and use it everywhere to decrease complexity?\nE.g.\nclass MyXyzCallback extends InetAddresAnswerCallback\n\nIf yes, in the case of user wants to use MyXyzCallback,\nis it better if we:\n1. provide some info about the corresponding query when invoking callback? \nE.g. onQueryException(query, exception);\n2. provide basic empty callbacks in case user don\u0027t want to handle some of them?",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
