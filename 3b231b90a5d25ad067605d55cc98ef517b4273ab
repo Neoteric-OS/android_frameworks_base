@@ -46,6 +46,30 @@
       "revId": "3b231b90a5d25ad067605d55cc98ef517b4273ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d781430_187d2873",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParams.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-03-13T17:22:58Z",
+      "side": 1,
+      "message": "Will do in a follow up.",
+      "parentUuid": "c17575ae_15cf4e85",
+      "range": {
+        "startLine": 295,
+        "startChar": 25,
+        "endLine": 295,
+        "endChar": 32
+      },
+      "revId": "3b231b90a5d25ad067605d55cc98ef517b4273ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
