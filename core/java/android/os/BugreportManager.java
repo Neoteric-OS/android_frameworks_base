@@ -24,10 +24,12 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.util.Slog;
 
 import com.android.internal.util.Preconditions;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Executor;
@@ -123,6 +125,9 @@ public class BugreportManager {
      * <p>The bugreport artifacts will be copied over to the given file descriptors only if the
      * user consents to sharing with the calling app.
      *
+     * <p>If this method returns successfully, {@code bugreportFd} and {@code screenshotFd} will be
+     * managed by {@link BugreportManager}.
+     *
      * @param bugreportFd file to write the bugreport. This should be opened in write-only,
      *     append mode.
      * @param screenshotFd file to write the screenshot, if necessary. This should be opened
@@ -140,7 +145,8 @@ public class BugreportManager {
         Preconditions.checkNotNull(params);
         Preconditions.checkNotNull(executor);
         Preconditions.checkNotNull(callback);
-        DumpstateListener dsListener = new DumpstateListener(executor, callback);
+        DumpstateListener dsListener = new DumpstateListener(executor, callback, bugreportFd,
+                screenshotFd);
         try {
             // Note: mBinder can get callingUid from the binder transaction.
             mBinder.startBugreport(-1 /* callingUid */,
@@ -169,10 +175,15 @@ public class BugreportManager {
     private final class DumpstateListener extends IDumpstateListener.Stub {
         private final Executor mExecutor;
         private final BugreportCallback mCallback;
+        private final ParcelFileDescriptor mBugreportFd;
+        @Nullable private final ParcelFileDescriptor mScreenshotFd;
 
-        DumpstateListener(Executor executor, @Nullable BugreportCallback callback) {
+        DumpstateListener(Executor executor, BugreportCallback callback,
+                ParcelFileDescriptor bugreportFd, ParcelFileDescriptor screenshotFd) {
             mExecutor = executor;
             mCallback = callback;
+            mBugreportFd = bugreportFd;
+            mScreenshotFd = screenshotFd;
         }
 
         @Override
@@ -196,6 +207,7 @@ public class BugreportManager {
                 });
             } finally {
                 Binder.restoreCallingIdentity(identity);
+                closeFds();
             }
         }
 
@@ -208,6 +220,7 @@ public class BugreportManager {
                 });
             } finally {
                 Binder.restoreCallingIdentity(identity);
+                closeFds();
             }
         }
 
@@ -226,6 +239,23 @@ public class BugreportManager {
         public void onSectionComplete(String title, int status, int size, int durationMs)
                 throws RemoteException {
             // TODO(b/111441001): remove from interface
+        }
+
+        private void closeFds() {
+            try {
+                mBugreportFd.close();
+            } catch (IOException e) {
+                Slog.e(TAG, "Could not close bugreport fd", e);
+            }
+
+            if (mScreenshotFd != null) {
+                try {
+                    mScreenshotFd.close();
+                } catch (IOException e) {
+                    Slog.e(TAG, "Could not close screenshot fd", e);
+                }
+            }
+
         }
     }
 }
