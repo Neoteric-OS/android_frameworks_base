@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6e9278c_73dc2720",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-13T07:20:04Z",
+      "side": 1,
+      "message": "Yes, this should be @Nullable.",
+      "parentUuid": "435244ae_7296d17a",
+      "range": {
+        "startLine": 613,
+        "startChar": 27,
+        "endLine": 613,
+        "endChar": 35
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d106f04c_688c92bb",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 2
