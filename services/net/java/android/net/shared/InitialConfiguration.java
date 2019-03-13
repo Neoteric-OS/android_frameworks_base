@@ -23,9 +23,7 @@ import static android.text.TextUtils.join;
 import android.net.InetAddresses;
 import android.net.InitialConfigurationParcelable;
 import android.net.IpPrefix;
-import android.net.IpPrefixParcelable;
 import android.net.LinkAddress;
-import android.net.LinkAddressParcelable;
 import android.net.RouteInfo;
 
 import java.net.Inet4Address;
@@ -148,10 +146,9 @@ public class InitialConfiguration {
      */
     public InitialConfigurationParcelable toStableParcelable() {
         final InitialConfigurationParcelable p = new InitialConfigurationParcelable();
-        p.ipAddresses = toParcelableArray(ipAddresses,
-                LinkPropertiesParcelableUtil::toStableParcelable, LinkAddressParcelable.class);
+        p.ipAddresses = toParcelableArray(ipAddresses, LinkAddress::new, LinkAddress.class);
         p.directlyConnectedRoutes = toParcelableArray(directlyConnectedRoutes,
-                LinkPropertiesParcelableUtil::toStableParcelable, IpPrefixParcelable.class);
+                IpPrefix::new, IpPrefix.class);
         p.dnsServers = toParcelableArray(
                 dnsServers, IpConfigurationParcelableUtil::parcelAddress, String.class);
         return p;
@@ -164,10 +161,9 @@ public class InitialConfiguration {
     public static InitialConfiguration fromStableParcelable(InitialConfigurationParcelable p) {
         if (p == null) return null;
         final InitialConfiguration config = new InitialConfiguration();
-        config.ipAddresses.addAll(fromParcelableArray(
-                p.ipAddresses, LinkPropertiesParcelableUtil::fromStableParcelable));
+        config.ipAddresses.addAll(fromParcelableArray(p.ipAddresses, LinkAddress::new));
         config.directlyConnectedRoutes.addAll(fromParcelableArray(
-                p.directlyConnectedRoutes, LinkPropertiesParcelableUtil::fromStableParcelable));
+                p.directlyConnectedRoutes, IpPrefix::new));
         config.dnsServers.addAll(
                 fromParcelableArray(p.dnsServers, IpConfigurationParcelableUtil::unparcelAddress));
         return config;

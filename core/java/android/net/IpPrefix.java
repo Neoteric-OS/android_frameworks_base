@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Parcel;
@@ -93,6 +94,19 @@ public final class IpPrefix implements Parcelable {
         this.address = address.getAddress();
         this.prefixLength = prefixLength;
         checkAndMaskAddressAndPrefixLength();
+    }
+
+    /**
+     * Constructs a new IpPrefix that is a deep copy of the provided prefix.
+     *
+     * @param prefix the IpPrefix to copy
+     *
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public IpPrefix(@NonNull IpPrefix prefix) {
+        this(prefix.address, prefix.getPrefixLength());
     }
 
     /**
