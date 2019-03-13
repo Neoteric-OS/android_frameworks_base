@@ -48,6 +48,162 @@
     },
     {
       "key": {
+        "uuid": "2657ae78_3c891b44",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Well, it\u0027s true that ByteBuffer can have multiple orderings, and that network byte order is the default.",
+      "parentUuid": "def2c143_9dbf7e8d",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7e8823_cc12036b",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "a",
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc929f0e_169c1260",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": ", if parsing failed",
+      "range": {
+        "startLine": 105,
+        "startChar": 56,
+        "endLine": 105,
+        "endChar": 73
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d60b5b1_9a61ffe0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Will this cause the docs to contain \"ParseException ParseException\" twice in the docs?",
+      "range": {
+        "startLine": 105,
+        "startChar": 19,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2952df6_071ce82e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "answer callbacks",
+      "range": {
+        "startLine": 112,
+        "startChar": 22,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed25540e_e41c0a4f",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Is @param the right tag for a generic like this one? I\u0027ve only seen it used for method parameters.",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28725431_3f9eeca0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 143,
+        "startChar": 28,
+        "endLine": 143,
+        "endChar": 30
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e060a453_409b689a",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
@@ -71,6 +227,122 @@
     },
     {
       "key": {
+        "uuid": "40725c73_d56fd542",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Good points.\n\nI don\u0027t think it\u0027s a good idea to provide empty implementations of error callbacks, it will make it too easy to ignore errors.\n\nAs for passing in the query, I\u0027m not sure how we can do that given that we have two different query methods with two different signatures.\n\nEven if the user wants to use a named class, they don\u0027t have to use the same instance everywhere. The subclass can take a user-supplied tag in the constructor if desired:\n\n    resolver.query(\"www.google.com\", CLASS_IN, TYPE_AAAA, new MyXyzCallback(123));\n    resolver.query(\"www.googleapis.com\", CLASS_IN, TYPE_AAAA, new MyXyzCallback(456));",
+      "parentUuid": "e060a453_409b689a",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a57e696_1b8bba7e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Nit: Why is this necessary? If just plain \"ParseException\" won\u0027t work, then android.net.ParseException?",
+      "range": {
+        "startLine": 180,
+        "startChar": 25,
+        "endLine": 180,
+        "endChar": 35
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e4eb55_e5ebb4ee",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 24
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63345ba_07a14ddc",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Why throw instead of simply returning an empty list?",
+      "range": {
+        "startLine": 312,
+        "startChar": 35,
+        "endLine": 312,
+        "endChar": 65
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63e0ecb_68706d2f",
+        "filename": "core/java/android/net/ParseException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "Jean points out that we need to unhide at least one of these constructors otherwise users will never be able to throw ParseException. We probably want to unhide both of them.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5950b9f6_01720e8c",
         "filename": "core/java/android/net/ParseException.java",
         "patchSetId": 6
@@ -82,6 +354,30 @@
       "writtenOn": "2019-03-13T07:55:37Z",
       "side": 1,
       "message": "looks like this is unused?",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c847ee7c_a654b4e9",
+        "filename": "core/java/android/net/ParseException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-13T08:55:59Z",
+      "side": 1,
+      "message": "It\u0027s a public field, so users can just look at it, and modify it. Not a good design, but it\u0027s been around since 2008.",
+      "parentUuid": "5950b9f6_01720e8c",
       "range": {
         "startLine": 28,
         "startChar": 8,
