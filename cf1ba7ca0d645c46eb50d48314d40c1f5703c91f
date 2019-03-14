@@ -117,6 +117,30 @@
       "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c855d52_a7b6edb5",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-14T07:58:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7780540f_066face6",
+      "range": {
+        "startLine": 697,
+        "startChar": 28,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "cf1ba7ca0d645c46eb50d48314d40c1f5703c91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
