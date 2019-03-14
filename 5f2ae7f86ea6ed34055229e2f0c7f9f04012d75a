@@ -377,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "1388de0f_3da0089a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-14T13:36:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11d205b6_475c47de",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852af238_12afcc6d",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 3
@@ -482,6 +506,30 @@
       "writtenOn": "2019-03-14T09:04:56Z",
       "side": 1,
       "message": "So the point is that if size() \u003e 1, then we are already doing it, so don\u0027t run it again ? If that\u0027s the thinking I think it warrants a comment",
+      "range": {
+        "startLine": 290,
+        "startChar": 43,
+        "endLine": 290,
+        "endChar": 46
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae7d6a3_09a59940",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-14T13:36:55Z",
+      "side": 1,
+      "message": "Sure, I will add the comment here.\nI want to follow up TetherService existing design that running provisioning check sequentially. TetherService start running next check when it receive the result of previous check.\nHere, new provisioning request would just enqueue if size() \u003e 1. When EntitlementManager receive the provisioning result at line.511, it would process next one at line.539.",
+      "parentUuid": "47c257a1_80a41624",
       "range": {
         "startLine": 290,
         "startChar": 43,
@@ -608,6 +656,30 @@
       "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9213cbac_d09c3930",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-14T13:36:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0e7e31f_0f01db7e",
+      "range": {
+        "startLine": 387,
+        "startChar": 16,
+        "endLine": 387,
+        "endChar": 53
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -799,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "22fc7537_0b8c7368",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-14T13:36:55Z",
+      "side": 1,
+      "message": "Ack, will follow up to keep it.",
+      "parentUuid": "d3f99ea4_ab4031d6",
+      "range": {
+        "startLine": 514,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 51
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccafeba2_8a0e6281",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 3
@@ -810,6 +906,30 @@
       "writtenOn": "2019-03-14T09:04:56Z",
       "side": 1,
       "message": "I\u0027m pretty sure you can just say mSilentProvisioningList.remove(type) and it will work.",
+      "range": {
+        "startLine": 527,
+        "startChar": 1,
+        "endLine": 528,
+        "endChar": 63
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf211cb_56407226",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-14T13:36:55Z",
+      "side": 1,
+      "message": "Why ?? mSilentProvisioningList is ArrayList. ArrayList has two remove method, remove(int index) and remove(Object o).\nIf I just say mSilentProvisioningList.remove(type), how it know I want to use remove(int index) or remove(Object o). I think the result would be remove(int index). But I want to pass object.",
+      "parentUuid": "ccafeba2_8a0e6281",
       "range": {
         "startLine": 527,
         "startChar": 1,
