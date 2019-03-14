@@ -1,0 +1,504 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76b16e31_c61b2682",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "is created",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08aee150_70a96534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Sorry, what does this mean? mid processing?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e940a1_8b9d5266",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Maybe only say carrier SIM or SIM is also fine.",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1db11f8_51ab0f1d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "I thinks it\u0027s generally defined as \"tetherType\".",
+      "range": {
+        "startLine": 85,
+        "startChar": 52,
+        "endLine": 85,
+        "endChar": 63
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf92fc85_e825a733",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "entitlementResult",
+      "range": {
+        "startLine": 87,
+        "startChar": 59,
+        "endLine": 87,
+        "endChar": 76
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2868158_e17bf306",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Will \"Entitlement\" better?",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a15983_76ebb496",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "I understand that this is moved from TetherService to here. but could we name it as ENTITLEMENT_RESULT_* or something which may easier to understand? RESULT_DEFAULT or RESULT_OK looks no much different for me between Activity.RESULT_CANCELED and Activity.RESULT_OK.",
+      "range": {
+        "startLine": 94,
+        "startChar": 29,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff774016_135f3327",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Can we also mark Nullable/NonNull for this?",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 61
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852af238_12afcc6d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Do we need to move this to Line after Line 160?\n\nThe point is if tethering provisioning is not required, provisionResponse is the same nor response is empty we do not need to assign the conf to mConfig. It does not look like a workable configuration change.",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 23
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b53ad5_ee896de2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "We do not need to reset mNeedReRunProvisioningUi? The logic looks different.",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 42
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65cc21c_546caf4d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "@Nonull final",
+      "range": {
+        "startLine": 377,
+        "startChar": 41,
+        "endLine": 377,
+        "endChar": 47
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a97604_8f5bc381",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "You may also want to do null check. The documentation says that an empty list or null is returned if there are no matching receivers.",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 34
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35223333_ee944ff3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Could we have a comment on it like false /* inactive */",
+      "range": {
+        "startLine": 391,
+        "startChar": 62,
+        "endLine": 391,
+        "endChar": 67
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4540280_ae530b5b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Don\u0027t We need to reset the app inactive state? App inactive state will finally reset?\n\nCould we have some comments here to explain why we need to do this? This may able to keep the app alive to finish the entitlement check?",
+      "range": {
+        "startLine": 391,
+        "startChar": 34,
+        "endLine": 391,
+        "endChar": 48
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e797c7_20c07a2b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Will this happen? It means you register a null intent and also able to receive the intent notification?",
+      "range": {
+        "startLine": 514,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 51
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26e96ba_ed2136ab",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Could you write it as \n final int entitlementValue \u003d (result !\u003d RESULT_OK) ? TETHER_ERROR_PROVISION_FAILED\n                        : TETHER_ERROR_NO_ERROR;",
+      "range": {
+        "startLine": 534,
+        "startChar": 16,
+        "endLine": 535,
+        "endChar": 48
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ae69de_e3a14dac",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "final",
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08cd7a9e_76f14efe",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Do you want to add some @Nullable/@NonNull annotation here?\nE.g. you may assume the res will not be null here. Otherwise, you may get NPE when you try to use it.",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 92
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282c8ced_b16a690d",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "This seems risky. Why do you need to change this? Suppose it\u0027s called from the handler thread. Does it not have permission?",
+      "range": {
+        "startLine": 905,
+        "startChar": 25,
+        "endLine": 905,
+        "endChar": 55
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42b2eaf_7d730025",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "probably \"no_ui_response\"? The string is defined as NO_XXX but the string mapping could not event see it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 63,
+        "endLine": 79,
+        "endChar": 76
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11718beb_1869e481",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "If you do not need to do anything special here, you can just remove the override. Why do you need this?",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e49b848_f007395f",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-14T06:44:58Z",
+      "side": 1,
+      "message": "Suggest to write as \n(fakeEntitlementResult \u003d\u003d TETHER_ERROR_NO_ERROR) ? Activity.RESULT_OK : Activity.RESULT_CANCELED",
+      "range": {
+        "startLine": 145,
+        "startChar": 35,
+        "endLine": 146,
+        "endChar": 68
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
