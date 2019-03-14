@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "85f09107_cca9394f",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T08:06:20Z",
+      "side": 1,
+      "message": "Sure, but right now we know for a fact that nobody is doing this (otherwise this would crash). So I see little incentive in permitting this.",
+      "parentUuid": "15a374ca_62be55d0",
+      "range": {
+        "startLine": 1231,
+        "startChar": 9,
+        "endLine": 1233,
+        "endChar": 9
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aec7e48_f0e92b5c",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 4
