@@ -196,12 +196,12 @@ public abstract class CallRedirectionService extends Service {
     }
 
     @Override
-    public final IBinder onBind(Intent intent) {
+    public final @NonNull IBinder onBind(@NonNull Intent intent) {
         return new CallRedirectionBinder();
     }
 
     @Override
-    public final boolean onUnbind(Intent intent) {
+    public final boolean onUnbind(@NonNull Intent intent) {
         return false;
     }
 }
