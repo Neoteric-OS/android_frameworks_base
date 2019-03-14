@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcd92b2_acae4438",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-03-14T02:28:32Z",
+      "side": 1,
+      "message": "nit: Return or Returns? We have a lot API documents, where sometimes we use the verb with \u0027s\u0027, sometimes we use the verb without \u0027s\u0027.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "0fe6845f7dc00ad7a2f19d08d2f15c4efb288dae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddeb772_2512459b",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-03-14T02:28:32Z",
+      "side": 1,
+      "message": "\"built into\"? According to google search results, \"built in to\" is very rare.",
+      "range": {
+        "startLine": 144,
+        "startChar": 68,
+        "endLine": 144,
+        "endChar": 81
+      },
+      "revId": "0fe6845f7dc00ad7a2f19d08d2f15c4efb288dae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658bf428_d56fdcb5",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-03-14T02:28:32Z",
+      "side": 1,
+      "message": "A little confused after reading this: in what case eUICCs can be removed and in what case eUICCs cannot be removed?",
+      "range": {
+        "startLine": 144,
+        "startChar": 49,
+        "endLine": 144,
+        "endChar": 52
+      },
+      "revId": "0fe6845f7dc00ad7a2f19d08d2f15c4efb288dae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019705d9_ed8cbecb",
+        "filename": "telephony/java/android/telephony/UiccCardInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-03-14T02:28:32Z",
+      "side": 1,
+      "message": "@return {@code true}",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 19
+      },
+      "revId": "0fe6845f7dc00ad7a2f19d08d2f15c4efb288dae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
