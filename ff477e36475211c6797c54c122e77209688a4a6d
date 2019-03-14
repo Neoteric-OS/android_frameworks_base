@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "855ad15d_9586a2c5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T14:53:12Z",
+      "side": 1,
+      "message": "Coming in a bit late, but I thought of a possible improvement on this API design that lets you pass the query in a nicely typed, no-overhead style.\n\n/**\n * Base class for answer callbacks\n *\n * @param \u003cQ\u003e The type of the query\n * @param \u003cT\u003e The type of the parsed answer\n */\npublic abstract static class AnswerCallback\u003cQ, T\u003e {\n    /** @hide */\n    public final AnswerParser\u003cT\u003e parser;\n\n    public AnswerCallback(@NonNull AnswerParser\u003cT\u003e parser) {\n        this.parser \u003d parser;\n    };\n\n    public abstract void onAnswer(@NonNull Q query, @NonNull T answer);\n    public abstract void onParseException(@NonNull ParseException exception);\n    public abstract void onQueryException(@NonNull ErrnoException exception);\n}\n\n\nThen query become :\npublic void query(@Nullable Network, @NonNull byte[] query, @QueryFlag int flags,\n        @NonNull Handler handler, @NonNull AnswerCallback\u003c? super byte[], ? super byte[]\u003e);\n\nand\n\npublic void query(@Nullable Network, @NonNull String domain, @QueryClass int nsClass,\n        @QueryType int nsType, @QueryFlag int flags, @NonNull Handler handler,\n        @NonNull AnswerCallback\u003c? super String, ? super List\u003cInetAddress\u003e\u003e callback);",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8dd68f_ed9c27ff",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T14:53:12Z",
+      "side": 1,
+      "message": "Even if you don\u0027t adopt my suggestion above, this should absolutely have its type parameters and bounds.\nAnswerCallback\u003c? super byte[]\u003e\n\n(or in this case, AnswerCallback\u003cbyte[]\u003e is fine because byte[] extends Object anyway and it doesn\u0027t make a lot of sense taking Object here, but strictly speaking \u003c? super byte[]\u003e is correct)",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a0fc1c_d6acc48d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T14:53:12Z",
+      "side": 1,
+      "message": "AnswerCallback\u003c? super List\u003cInetAddress\u003e\u003e",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 35
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
