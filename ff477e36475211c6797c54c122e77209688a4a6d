@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b585bdc0_f7b5a1a1",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T15:49:19Z",
+      "side": 1,
+      "message": "No sorry this is wrong, please forget this (see next comment if you want to know why it\u0027s wrong)",
+      "parentUuid": "467aa83f_6500d32c",
+      "range": {
+        "startLine": 118,
+        "startChar": 34,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d9f81a_4b24559d",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "39e71f07_db4df000",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T15:49:19Z",
+      "side": 1,
+      "message": "No sorry that\u0027s not correct, if you do that it\u0027s not compatible with the member any more.\n\nI think the only way to do this really correctly is to add a parameter of the form P extends T and to use it in both.\n\nBut I think that\u0027s too complex for very little advantage, so please forget about this.",
+      "parentUuid": "b1d9f81a_4b24559d",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855ad15d_9586a2c5",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-14T14:53:12Z",
       "side": 1,
       "message": "Coming in a bit late, but I thought of a possible improvement on this API design that lets you pass the query in a nicely typed, no-overhead style.\n\n/**\n * Base class for answer callbacks\n *\n * @param \u003cQ\u003e The type of the query\n * @param \u003cT\u003e The type of the parsed answer\n */\npublic abstract static class AnswerCallback\u003cQ, T\u003e {\n    /** @hide */\n    public final AnswerParser\u003cT\u003e parser;\n\n    public AnswerCallback(@NonNull AnswerParser\u003cT\u003e parser) {\n        this.parser \u003d parser;\n    };\n\n    public abstract void onAnswer(@NonNull Q query, @NonNull T answer);\n    public abstract void onParseException(@NonNull ParseException exception);\n    public abstract void onQueryException(@NonNull ErrnoException exception);\n}\n\n\nThen query become :\npublic void query(@Nullable Network, @NonNull byte[] query, @QueryFlag int flags,\n        @NonNull Handler handler, @NonNull AnswerCallback\u003c? super byte[], ? super byte[]\u003e);\n\nand\n\npublic void query(@Nullable Network, @NonNull String domain, @QueryClass int nsClass,\n        @QueryType int nsType, @QueryFlag int flags, @NonNull Handler handler,\n        @NonNull AnswerCallback\u003c? super String, ? super List\u003cInetAddress\u003e\u003e callback);",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6be26f1_d16c6233",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T15:49:19Z",
+      "side": 1,
+      "message": "Likewise I\u0027m tired. I should not try to think about bounds too hard past midnight, but now I won\u0027t be able to sleep if I don\u0027t try and write it right. Let\u0027s try it :\n\npublic abstract static class AnswerCallback\u003cQ, T, P extends T\u003e {\n  public final AnswerParser\u003cP\u003e parser;\n  public AnswerCallback(@NonNull AnswerParser\u003cP\u003e parser)\n  public abstract void onAnswer(@NonNull Q query, @NonNull T answer);\n  onparse\n  onquery\n}\n\npublic void query\u003cT\u003e(...byte[] query... ...AnwserCallback\u003c? super byte[], T, ? extends T\u003e)\npublic void query\u003cT\u003e(...String query... ...AnswerCallback\u003c? super String, T, ? extends T\u003e)\n\n\n...I think this is correct. It\u0027s also probably too complex for its own good, therefore I\u0027d favor the more obvious :\n\n\npublic abstract static class AnswerCallback\u003cQ, T\u003e {\n  public final AnswerParser\u003cT\u003e parser;\n  public AnswerCallback(@NonNull AnswerParser\u003cT\u003e parser)\n  public abstract void onAnswer(@NonNull Q query, @NonNull T answer);\n  onparse\n  onquery\n}\n\npublic void query\u003cT\u003e(...byte[] query... ...AnwserCallback\u003c? super byte[], T\u003e)\npublic void query\u003cT\u003e(...String query... ...AnswerCallback\u003c? super String, T\u003e)",
+      "parentUuid": "855ad15d_9586a2c5",
       "range": {
         "startLine": 200,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7d5da8bb_0044eca7",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T15:49:19Z",
+      "side": 1,
+      "message": "Meh, what I wrote above is completely wrong, you can of course pass whatever you want as an type argument.\n\npublic \u003cT\u003e void query(......., @NonNull AnswerCallback\u003cT\u003e callback)\n\n...is the correct way to write this.",
+      "parentUuid": "1e8dd68f_ed9c27ff",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a0fc1c_d6acc48d",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2019-03-14T14:53:12Z",
       "side": 1,
       "message": "AnswerCallback\u003c? super List\u003cInetAddress\u003e\u003e",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 35
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad574dd7_2db648cf",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T15:49:19Z",
+      "side": 1,
+      "message": "No sorry, I meant\n\npublic \u003cT\u003e void query(.... AnswerCallback\u003cT\u003e callback)",
+      "parentUuid": "c3a0fc1c_d6acc48d",
       "range": {
         "startLine": 231,
         "startChar": 21,
