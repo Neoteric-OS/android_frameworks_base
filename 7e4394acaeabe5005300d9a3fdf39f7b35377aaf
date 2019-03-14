@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5aa5606_2c612a0f",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T07:47:34Z",
+      "side": 1,
+      "message": "After we spoke offline :\nAdd back a method with the old name like this :\n\n/**\n * For backward compatibility.\n * This was annotated with @UnsupportedAppUsage in P, so we can\u0027t remove the method\n * completely just yet\n * @hide\n */\n @UnsupportedAppUsage(maxTargetSdk \u003d Build.VERSION_CODES.P)\n public boolean isIPv6() {\n     return isIpv6();\n }",
+      "parentUuid": "f685b0ed_212b43b4",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 25
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fba9253a_17687e62",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 4
