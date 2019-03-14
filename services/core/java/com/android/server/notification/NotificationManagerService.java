@@ -7498,7 +7498,7 @@ public class NotificationManagerService extends SystemService {
         // light
         // release the light
         boolean wasShowLights = mLights.remove(key);
-        if (canShowLightsLocked(record, aboveThreshold)) {
+        if (canShowLightsLocked(record, aboveThreshold, wasShowLights)) {
             mLights.add(key);
             updateLightsLocked();
             if (mUseAttentionLight && mAttentionLight != null) {
@@ -7539,7 +7539,8 @@ public class NotificationManagerService extends SystemService {
     }
 
     @GuardedBy("mNotificationLock")
-    boolean canShowLightsLocked(final NotificationRecord record, boolean aboveThreshold) {
+    boolean canShowLightsLocked(final NotificationRecord record, boolean aboveThreshold,
+            boolean wasShowLights) {
         // device lacks light
         if (!mHasLight) {
             return false;
@@ -7562,7 +7563,8 @@ public class NotificationManagerService extends SystemService {
         }
         // Suppressed because it's a silent update
         final Notification notification = record.getNotification();
-        if (record.isUpdate && (notification.flags & FLAG_ONLY_ALERT_ONCE) != 0) {
+        if (record.isUpdate && (notification.flags & FLAG_ONLY_ALERT_ONCE) != 0 &&
+                !wasShowLights) {
             return false;
         }
         // Suppressed because another notification in its group handles alerting

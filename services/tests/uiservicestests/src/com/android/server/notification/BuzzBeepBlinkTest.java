@@ -473,6 +473,10 @@ public class BuzzBeepBlinkTest extends UiServiceTestCase {
         verify(mLight, times(1)).setFlashing(anyInt(), anyInt(), anyInt(), anyInt());
     }
 
+    private void verifyLights(int num) {
+        verify(mLight, times(num)).setFlashing(anyInt(), anyInt(), anyInt(), anyInt());
+    }
+
     //
     // Tests
     //
@@ -1323,9 +1327,8 @@ public class BuzzBeepBlinkTest extends UiServiceTestCase {
         r = getLightsOnceNotification();
         r.isUpdate = true;
         mService.buzzBeepBlinkLocked(r);
-        // checks that lights happened once, i.e. this new call didn't trigger them again
-        verifyLights();
-        assertFalse(r.isInterruptive());
+        verifyLights(2);
+        assertTrue(r.isInterruptive());
         assertEquals(-1, r.getLastAudiblyAlertedMs());
     }
 
