@@ -42,6 +42,7 @@ oneway interface INetworkMonitor {
     void launchCaptivePortalApp();
     void notifyCaptivePortalAppFinished(int response);
     void notifyAcceptPartialConnectivity();
+    void setAcceptPartialConnectivity(boolean acceptPartialConnectivity);
     void forceReevaluation(int uid);
     void notifyPrivateDnsChanged(in PrivateDnsConfigParcel config);
     void notifyDnsResponse(int returnCode);

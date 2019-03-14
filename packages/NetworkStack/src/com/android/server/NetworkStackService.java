@@ -259,6 +259,12 @@ public class NetworkStackService extends Service {
         }
 
         @Override
+        public void setAcceptPartialConnectivity(boolean acceptPartialConnectivity) {
+            checkNetworkStackCallingPermission();
+            mNm.setAcceptPartialConnectivity(acceptPartialConnectivity);
+        }
+
+        @Override
         public void forceReevaluation(int uid) {
             checkNetworkStackCallingPermission();
             mNm.forceReevaluation(uid);
