@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f685b0ed_212b43b4",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "No we cannot do this.\n\nThis was changed in last January from @UnsupportedAppUsage.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/879513/3/core/java/android/net/LinkAddress.java#121\n\nWhen adding @SystemApi, removing @UnsupportedAppUsage makes sense and that\u0027s why we did.\nBut now if we change that name we break all apps that were using that, and we know there were at least until P because this was annotated @UnsupportedAppUsage.\n\nWe might need to take another look to the diff.\n\n\nI see two solutions to this :\n- Either we push back against the API Council\u0027s feedback\n- Or we apply this change but also create a method with the old name and @UnsupportedAppUsage that calls the new one.\n\nI favor the latter solution.",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 25
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba9253a_17687e62",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Why remove this ?",
+      "range": {
+        "startLine": 182,
+        "startChar": 23,
+        "endLine": 182,
+        "endChar": 34
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcee446_7d45dd73",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "\"with default values\" sounds to me like it\u0027s clearer and less of a promise. (though the drawback is, it\u0027s still not clear what the defaut values are, but that\u0027s part of the value for us).",
+      "range": {
+        "startLine": 168,
+        "startChar": 47,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c637c559_3f22b89a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you please make mValidatedPrivateDnses final ? I don\u0027t think unmodifiableList can return null even if you pass it null, but it\u0027s effectively final and it would make me feel more comfortable with this.",
+      "range": {
+        "startLine": 540,
+        "startChar": 44,
+        "endLine": 540,
+        "endChar": 66
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3853d758_11ea8a5c",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 598,
+        "startChar": 44,
+        "endLine": 598,
+        "endChar": 51
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d13127_21f86c5c",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Annotate the function (and the member) as @Nullable",
+      "range": {
+        "startLine": 617,
+        "startChar": 11,
+        "endLine": 617,
+        "endChar": 17
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532272e4_287453fd",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "More obvious here but same thing : you can\u0027t change the name of something that\u0027s @UnsupportedAppUsage. In this case because we are not making it public, we must keep the old name.\n\nBecause this is not public API, the council should not really be too concerned about this (and would probably agree that we can\u0027t change its name anyway).\n\n(alternatively we could keep the old name with @deprecated @UnsupportedAppUsage and create a new one with the new name, but I would prefer not)",
+      "range": {
+        "startLine": 1019,
+        "startChar": 19,
+        "endLine": 1019,
+        "endChar": 38
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057aad98_305caf9f",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "I\u0027m not necessarily opposed to this, but because we don\u0027t have such a test right now we know for a fact this is never used with a non-null argument. Why then not just keep it non-null ? While I see the usefulness of passing null to this, I\u0027m not sure it\u0027s actually more valuable than the non-nullity.\n\nCan you justify why this is a good change ? What was your reasoning ?",
+      "range": {
+        "startLine": 1231,
+        "startChar": 9,
+        "endLine": 1233,
+        "endChar": 9
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aec7e48_f0e92b5c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Because we are making getSignalStrength public, this should also be visible.",
+      "range": {
+        "startLine": 997,
+        "startChar": 8,
+        "endLine": 997,
+        "endChar": 12
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab8ccc0_74ae3031",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "As we make getSignalStrength public, this should be visible only up to P.",
+      "range": {
+        "startLine": 1005,
+        "startChar": 5,
+        "endLine": 1005,
+        "endChar": 24
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c748a32c_c6f9d0ef",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to pass null here, it would behave like \"null\" is the separator. If you want to make this nullable then add a test at the start of the method to make the separator \u003d \"\", or simply make this @NonNull.",
+      "range": {
+        "startLine": 1541,
+        "startChar": 56,
+        "endLine": 1541,
+        "endChar": 64
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701868b3_3785f7fc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Also add @Nullable while you\u0027re here",
+      "range": {
+        "startLine": 1589,
+        "startChar": 53,
+        "endLine": 1589,
+        "endChar": 66
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c31cc70_8eca46a0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Also add @Nullable",
+      "range": {
+        "startLine": 1636,
+        "startChar": 52,
+        "endLine": 1636,
+        "endChar": 61
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f12a97_77eeb331",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-14T05:51:02Z",
+      "side": 1,
+      "message": "Can you please also annotate the member with @NonNull ?",
+      "range": {
+        "startLine": 457,
+        "startChar": 19,
+        "endLine": 457,
+        "endChar": 33
+      },
+      "revId": "7e4394acaeabe5005300d9a3fdf39f7b35377aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
