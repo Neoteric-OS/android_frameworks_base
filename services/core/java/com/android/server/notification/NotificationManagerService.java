@@ -7560,11 +7560,6 @@ public class NotificationManagerService extends SystemService {
         if ((record.getSuppressedVisualEffects() & SUPPRESSED_EFFECT_LIGHTS) != 0) {
             return false;
         }
-        // Suppressed because it's a silent update
-        final Notification notification = record.getNotification();
-        if (record.isUpdate && (notification.flags & FLAG_ONLY_ALERT_ONCE) != 0) {
-            return false;
-        }
         // Suppressed because another notification in its group handles alerting
         if (record.getSbn().isGroup() && record.getNotification().suppressAlertingDueToGrouping()) {
             return false;
