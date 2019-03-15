@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "88a7e514_7b7f1c1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-15T07:39:57Z",
+      "side": 1,
+      "message": "mid processing means TetherService has lunch entitlement app but don\u0027t get entitlement result yet. How refine the wording as \"mid processing silent provisioning check\"",
+      "parentUuid": "08aee150_70a96534",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1e940a1_8b9d5266",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -788,6 +812,30 @@
       "writtenOn": "2019-03-14T09:04:56Z",
       "side": 1,
       "message": "Note : generally speaking, it\u0027s preferred that you do this kind of cleanup (or adding the finals) in a separate change. Having this here increases the load for the reviewer, might hide a change (because the reviewer may miss a change on the same line, noticing only the cleanup), increases the risks of conflict and the complexity of a revert if something goes wrong.\n\nOf course there is a middle ground here, since we have an overhead per-change having some drive-by cleanups like this is fine, but when you have many of them in a patch that does some big changes like this it becomes pretty arguable.",
+      "range": {
+        "startLine": 455,
+        "startChar": 12,
+        "endLine": 455,
+        "endChar": 19
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8c4f83_9dafce15",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-15T07:39:57Z",
+      "side": 1,
+      "message": "Make sense. Thanks bring up this. Will separate this kind of change in the future.",
+      "parentUuid": "7ce9c62f_50784604",
       "range": {
         "startLine": 455,
         "startChar": 12,
