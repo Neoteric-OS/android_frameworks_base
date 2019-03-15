@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "ec1ed33f_dec73269",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Sure, I will add some commit since this refactor is trivial.",
+      "parentUuid": "24164696_e6a6b737",
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4343c164_cc242c7c",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
@@ -85,6 +103,30 @@
       "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3054be_66b52f94",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4343c164_cc242c7c",
+      "range": {
+        "startLine": 188,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "50d32d67_31c1f32e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Yes, we have plan to reduce the code duplication in PermissionMonitor and I will look into it after we have some test to verify the behavior.",
+      "parentUuid": "51a43f0d_4f9c767e",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 34
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1eab1e_95f6f714",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 1
@@ -134,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "26b10323_5e007af5",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1eab1e_95f6f714",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 43
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47bb2129_e9e6c0c9",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 1
@@ -145,6 +235,30 @@
       "writtenOn": "2019-02-27T03:17:21Z",
       "side": 1,
       "message": "Is it easier if we just implement mPermissionMonitor.getPackageListObserver() and call it here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 46
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a97c35e_1e57d79a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Yes, we can store the observer in PermissionMonitor and get it here, but I feel this might be better since it doesn\u0027t introduce additional method in permissionMonitor for test only. I will add a comment here to make it easier to understand.",
+      "parentUuid": "47bb2129_e9e6c0c9",
       "range": {
         "startLine": 115,
         "startChar": 8,
@@ -174,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "90791a6b_e0ca2965",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Yes, actually we should not revoke the permission since the other apps share the same uid should still have the permission.",
+      "parentUuid": "0fd7480f_8acecba3",
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c0d6b9_1dd48615",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 1
@@ -197,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "bfce538a_959a8912",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c0d6b9_1dd48615",
+      "range": {
+        "startLine": 462,
+        "startChar": 16,
+        "endLine": 462,
+        "endChar": 41
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29608007_079051a0",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 1
@@ -217,6 +373,30 @@
       "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522f8804_a3ccd0e3",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-03-15T01:02:15Z",
+      "side": 1,
+      "message": "We should only receive the notification from observer when the last user on device removed the app, which means the package itself is removed from the device. This unit test may not be a proper place for such test but we can add a cts test for it.",
+      "parentUuid": "29608007_079051a0",
+      "range": {
+        "startLine": 475,
+        "startChar": 16,
+        "endLine": 475,
+        "endChar": 56
+      },
+      "revId": "a14e5d617c8bbd0a2e154cfdeeaf88ec00a66c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
