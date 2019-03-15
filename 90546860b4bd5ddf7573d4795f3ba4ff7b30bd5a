@@ -45,6 +45,30 @@
       "revId": "90546860b4bd5ddf7573d4795f3ba4ff7b30bd5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855944bd_5730f5dd",
+        "filename": "services/net/java/android/net/shared/ProvisioningConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-15T05:30:16Z",
+      "side": 1,
+      "message": "I missed the immutable part: removed.",
+      "parentUuid": "bae47c07_c48acb74",
+      "range": {
+        "startLine": 242,
+        "startChar": 20,
+        "endLine": 242,
+        "endChar": 36
+      },
+      "revId": "90546860b4bd5ddf7573d4795f3ba4ff7b30bd5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
