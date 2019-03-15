@@ -52,6 +52,10 @@ import java.util.stream.Collectors;
  *   <li>Operator name, short name and numeric id
  *   <li>Network selection mode
  * </ul>
+ *
+ * As a Parcelable, this class should be declared as 'final'. For historical reasons,
+ * this API won't be changed. If you are considering extending the ServiceState class,
+ * strongly reconsider.
  */
 public class ServiceState implements Parcelable {
 
