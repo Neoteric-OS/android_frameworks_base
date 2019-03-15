@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7eeaa03d_b096dc95",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-15T03:29:02Z",
+      "side": 1,
+      "message": "I see, if we want to also pass not only answer but also query in onAnswer, then use 2 type Q and T.\nI think we could do it in other CL. What do you think combine so many query parameter into a class like Junyu\u0027s suggestion?",
+      "parentUuid": "e6be26f1_d16c6233",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8dd68f_ed9c27ff",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Meh, what I wrote above is completely wrong, you can of course pass whatever you want as an type argument.\n\npublic \u003cT\u003e void query(......., @NonNull AnswerCallback\u003cT\u003e callback)\n\n...is the correct way to write this.",
       "parentUuid": "1e8dd68f_ed9c27ff",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfb0a3f_b4c56f98",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-15T03:29:02Z",
+      "side": 1,
+      "message": "We don\u0027t use T in query(), is it necessary to add \u003cT\u003e?",
+      "parentUuid": "7d5da8bb_0044eca7",
       "range": {
         "startLine": 201,
         "startChar": 47,
@@ -234,6 +282,30 @@
       "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c239cf20_2e1991da",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-15T03:29:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad574dd7_2db648cf",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 35
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
