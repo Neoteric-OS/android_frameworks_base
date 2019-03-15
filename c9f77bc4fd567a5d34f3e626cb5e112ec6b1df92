@@ -485,6 +485,30 @@
     },
     {
       "key": {
+        "uuid": "c31c420d_7f326cc6",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T12:35:52Z",
+      "side": 1,
+      "message": "Well I warmed up to the idea after all, in particular because my suggestion does not pass back the domain and type. Sure they are not often useful, but still. It\u0027s also more extensible.\nSo yes, let\u0027s go with this.",
+      "parentUuid": "7da1d2c1_8247709d",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57e696_1b8bba7e",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
