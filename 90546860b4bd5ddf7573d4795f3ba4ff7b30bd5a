@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18346403_45fa6457",
+        "filename": "core/java/android/net/Network.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-15T03:13:22Z",
+      "side": 1,
+      "message": "Wonderful! Thanks all for making this possible.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "90546860b4bd5ddf7573d4795f3ba4ff7b30bd5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae47c07_c48acb74",
+        "filename": "services/net/java/android/net/shared/ProvisioningConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-15T03:13:22Z",
+      "side": 1,
+      "message": "Why this clone()? Network objects are immutable. Is this because we might be dealing with a subclass which is not parcelable, like OneAddressPerFamilyNetwork?",
+      "range": {
+        "startLine": 242,
+        "startChar": 20,
+        "endLine": 242,
+        "endChar": 36
+      },
+      "revId": "90546860b4bd5ddf7573d4795f3ba4ff7b30bd5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
