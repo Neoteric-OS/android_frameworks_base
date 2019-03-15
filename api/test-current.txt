@@ -1498,7 +1498,7 @@ package android.telephony {
     field public static final String MBMS_STREAMING_SERVICE_OVERRIDE_METADATA = "mbms-streaming-service-override";
   }
 
-  public class ServiceState implements android.os.Parcelable {
+  public final class ServiceState implements android.os.Parcelable {
     method public void setCdmaSystemAndNetworkId(int, int);
     method public void setCellBandwidths(int[]);
     method public void setChannelNumber(int);

@@ -42729,7 +42729,7 @@ package android.telephony {
     field public static final android.os.Parcelable.Creator<android.telephony.RadioAccessSpecifier> CREATOR;
   }
 
-  public class ServiceState implements android.os.Parcelable {
+  public final class ServiceState implements android.os.Parcelable {
     ctor public ServiceState();
     ctor public ServiceState(android.telephony.ServiceState);
     ctor @Deprecated public ServiceState(android.os.Parcel);

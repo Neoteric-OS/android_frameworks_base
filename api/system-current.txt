@@ -6266,7 +6266,7 @@ package android.telephony {
     field public static final int USER_NOT_MEMBER_OF_CUG = 87; // 0x57
   }
 
-  public class ServiceState implements android.os.Parcelable {
+  public final class ServiceState implements android.os.Parcelable {
     method @Nullable public android.telephony.NetworkRegistrationState getNetworkRegistrationState(int, int);
     method @NonNull public java.util.List<android.telephony.NetworkRegistrationState> getNetworkRegistrationStates();
     method @Deprecated @NonNull public java.util.List<android.telephony.NetworkRegistrationState> getNetworkRegistrationStates(int);

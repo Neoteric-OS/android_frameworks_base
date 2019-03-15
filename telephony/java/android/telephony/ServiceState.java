@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
  *   <li>Network selection mode
  * </ul>
  */
-public class ServiceState implements Parcelable {
+public final class ServiceState implements Parcelable {
 
     static final String LOG_TAG = "PHONE";
     static final boolean DBG = false;
