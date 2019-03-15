@@ -212,19 +212,6 @@ public abstract class NetworkAgent extends Handler {
      */
     public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
 
-    // TODO : remove these two constructors. They are a stopgap measure to help sheperding a number
-    // of dependent changes that would conflict throughout the automerger graph. Having these
-    // temporarily helps with the process of going through with all these dependent changes across
-    // the entire tree.
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score) {
-        this(looper, context, logTag, ni, nc, lp, score, null, NetworkFactory.SerialNumber.NONE);
-    }
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {
-        this(looper, context, logTag, ni, nc, lp, score, misc, NetworkFactory.SerialNumber.NONE);
-    }
-
     public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
             NetworkCapabilities nc, LinkProperties lp, int score, int factorySerialNumber) {
         this(looper, context, logTag, ni, nc, lp, score, null, factorySerialNumber);
