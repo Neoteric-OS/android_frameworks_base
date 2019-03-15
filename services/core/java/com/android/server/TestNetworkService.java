@@ -29,6 +29,7 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
+import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.RouteInfo;
@@ -72,6 +73,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private final HandlerThread mHandlerThread;
     @NonNull private final Handler mHandler;
 
+    private final int mTestFactorySerialNumber;
+
     // Native method stubs
     private static native int jniCreateTunTap(boolean isTun, @NonNull String iface);
 
@@ -85,6 +88,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         mContext = checkNotNull(context, "missing Context");
         mNMS = checkNotNull(netManager, "missing INetworkManagementService");
         mNetd = checkNotNull(NetdService.getInstance(), "could not get netd instance");
+        mTestFactorySerialNumber = NetworkFactory.SerialNumber.nextSerialNumber();
     }
 
     /**
@@ -169,7 +173,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 int uid,
                 @NonNull IBinder binder)
                 throws RemoteException {
-            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE);
+            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE,
+                    mTestFactorySerialNumber);
 
             mUid = uid;
             mNi = ni;

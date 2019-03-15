@@ -243,24 +243,6 @@ public class NetworkFactory extends Handler {
      * @param servingFactorySerialNumber the serial number of the NetworkFactory that
      *         created the NetworkAgent currently satisfying this request.
      */
-    // TODO : remove this method. It is a stopgap measure to help sheperding a number
-    // of dependent changes that would conflict throughout the automerger graph. Having this
-    // temporarily helps with the process of going through with all these dependent changes across
-    // the entire tree.
-    @VisibleForTesting
-    protected void handleAddRequest(NetworkRequest request, int score) {
-        handleAddRequest(request, score, SerialNumber.NONE);
-    }
-
-    /**
-     * Add a NetworkRequest that the bearer may want to attempt to satisfy.
-     * @see #CMD_REQUEST_NETWORK
-     *
-     * @param request the request to handle.
-     * @param score the score of the NetworkAgent currently satisfying this request.
-     * @param servingFactorySerialNumber the serial number of the NetworkFactory that
-     *         created the NetworkAgent currently satisfying this request.
-     */
     @VisibleForTesting
     protected void handleAddRequest(NetworkRequest request, int score,
             int servingFactorySerialNumber) {
