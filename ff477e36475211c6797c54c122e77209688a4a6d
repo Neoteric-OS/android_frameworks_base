@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a10758ff_678a4a0a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T12:33:18Z",
+      "side": 1,
+      "message": "Yes I tend to prefer a version where we do pass the query. It tends to make things much easier for developers to use.\n\nDoing this in another patch is absolutely fine.\n\nAs for gathering the arguments... it\u0027s a difficult call. I do think than Junyu\u0027s proposal is cleaner, but I wonder if YAGNI. If we go that road then we need a different object for the query with blob and the query with string.\n\nBut yes, I think it\u0027s probably a good idea to implement with Junyu\u0027s suggestion.\n\nHow about something like this :\n\n    public interface AnswerParser\u003cT\u003e {\n        @NonNull T parse(@NonNull byte[] rawAnswer) throws ParseException;\n    }\n\n    public static abstract class AnswerCallback\u003cQueryType extends Query, AnswerType\u003e {\n        // Just checked, this actually works as expected. Surprisingly.\n        public final AnswerParser\u003c? extends AnswerType\u003e parser;\n        public AnswerCallback(AnswerParser\u003c? extends AnswerType\u003e p) { this.parser \u003d p; }\n        public abstract void onAnswer(@NonNull QueryType query, @NonNull AnswerType answer);\n        public abstract void onParseException(@NonNull ParseException exception);\n        public abstract void onQueryException(@NonNull ErrnoException exception);\n    }\n\n    public abstract static class RawAnswerCallback\u003cQueryType extends Query\u003e extends AnswerCallback\u003cQueryType, byte[]\u003e {\n        public RawAnswerCallback() {\n            super(rawAnswer -\u003e rawAnswer);\n        }\n    }\n\n    public abstract static class InetAddressAnswerCallback\u003cQueryType extends Query\u003e extends AnswerCallback\u003cQueryType, List\u003cInetAddress\u003e\u003e {\n        public InetAddressAnswerCallback() {\n            super(rawAnswer -\u003e new ArrayList\u003cInetAddress\u003e());\n        }\n    }\n\n    public \u003cT\u003e void query(RawQuery query, AnswerCallback\u003c? super RawQuery, T\u003e callback) {}\n    public \u003cT\u003e void query(DomainQuery query, AnswerCallback\u003c? super DomainQuery, T\u003e callback) {}\n\n\nWhat\u0027s nice about this is : you can reuse much better, you are sure to get the right answer, and everything is statically checked. You can pass a RawAnwserCallback\u003cDomainQuery\u003e with a domain query if you want to do that, you can pass a InetAddressAnswerCallback\u003cRawQuery\u003e if you want to formulate the query yourself but want to leave it to the platform to parse the answer, you can write a parser that returns an ArrayList and another that returns a LinkedList, but both can be handled by the same callback that takes a List.\n\nThe drawback is that the type argument to RawAnswerCallback and InetAddressAnswerCallback can\u0027t be inferred by the compiler, so you have to write it explicitly, which is redundant. I think it\u0027s still better.",
+      "parentUuid": "7eeaa03d_b096dc95",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8dd68f_ed9c27ff",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "We don\u0027t use T in query(), is it necessary to add \u003cT\u003e?",
       "parentUuid": "7d5da8bb_0044eca7",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a300a0_2603f3ff",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T12:33:18Z",
+      "side": 1,
+      "message": "It\u0027s the other way around : you need to write \u003cT\u003e to the function BECAUSE you should give the type arguments to the AnswerCallback. Otherwise you can\u0027t statically check the call to registerFDListener (once that has been added \u003cT\u003e).",
+      "parentUuid": "7dfb0a3f_b4c56f98",
       "range": {
         "startLine": 201,
         "startChar": 47,
@@ -306,6 +354,29 @@
       "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7c369e7_0f81b213",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T12:33:18Z",
+      "side": 1,
+      "message": "\u003cT\u003e\n\n(which forces you to declare private \u003cT\u003e void registerFDListener).\n\nOtherwise the compiler can\u0027t check statically l.262.",
+      "range": {
+        "startLine": 244,
+        "startChar": 54,
+        "endLine": 244,
+        "endChar": 68
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

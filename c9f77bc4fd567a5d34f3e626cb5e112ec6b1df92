@@ -461,6 +461,30 @@
     },
     {
       "key": {
+        "uuid": "7da1d2c1_8247709d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T12:33:18Z",
+      "side": 1,
+      "message": "I find this very boilerplate-y. I would prefer a version like :\n\ninterface AnswerCallback\u003cQueryType, AnswerType\u003e {\n  public void onAnswer(@NonNull QueryType query, @NonNull AnswerType answer);\n}\n\npublic \u003cT\u003e void query(String query, ..., AnswerCallback\u003c? super String, T\u003e callback)\npublic \u003cT\u003e void query(byte[] query, ..., AnswerCallback\u003c? super byte[], T\u003e callback)\n\nThis reduces boilerplate and object allocation.",
+      "parentUuid": "825df1e0_4f294948",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57e696_1b8bba7e",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
