@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b225d29_5ec4c131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8303d7b_87c2a10a",
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "484d5a3f_fdb7a63d",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339477d2_a10e1d29",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "Ack.\n\nfinal typically isn\u0027t necessary within the local scope. Now, I\u0027ve seen it in a lot of places in platform code (for objects or even worse, Collections) where local scope variables are marked as final without really the need for it (coz it doesn\u0027t guarantee the immutability of the object), which is redundant, and creates a cognitive load and confusion as to why we are making something \"final\".\n\nAlso see http://go/java-practices/final#params_locals",
+      "parentUuid": "484d5a3f_fdb7a63d",
+      "range": {
+        "startLine": 1189,
+        "startChar": 8,
+        "endLine": 1189,
+        "endChar": 13
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "98876ffd_74e93ab7",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "Hmm, point noted. Renaming to following instead:\nunderlyingIfacesTotal -\u003e perInterfaceTotal (underlyingTotalForIfaces still has the same problem, it sounds like something cumulative rather than per interface)\nand\nsumUnderlyingIfaces -\u003e underlyingIfacesTotal",
+      "parentUuid": "0c4431ce_f5a69492",
+      "range": {
+        "startLine": 1195,
+        "startChar": 77,
+        "endLine": 1195,
+        "endChar": 98
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6574f78e_e9970dce",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -85,6 +151,30 @@
       "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2043d3d3_0840bf56",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "migrateTun is the method that sort of creates the blueprint for operations that needs to be performed. Summing across all interfaces is the step that\u0027s followed after we have initialized usages across tun iface and underlying interfaces.\n\nIt can be moved to either of the methods. But having it here sort of makes it more clear IMO. For instance, the comments in line 1202 can\u0027t be placed here if we were to move this to addTrafficToApps.",
+      "parentUuid": "6574f78e_e9970dce",
+      "range": {
+        "startLine": 1197,
+        "startChar": 14,
+        "endLine": 1197,
+        "endChar": 33
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6e1fda38_7f59f396",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "I think what I have is fine (and is more readable). We should in general avoid as much as possible to handcraft these things (there is a reason why we have automated these things in first place).",
+      "parentUuid": "fb15ed2f_ee869ae2",
+      "range": {
+        "startLine": 1207,
+        "startChar": 24,
+        "endLine": 1212,
+        "endChar": 45
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7021b08_6356de24",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -131,6 +245,30 @@
       "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a89b4e4_0e335d55",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7021b08_6356de24",
+      "range": {
+        "startLine": 1219,
+        "startChar": 74,
+        "endLine": 1219,
+        "endChar": 77
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d013b5f8_049ab1de",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "None of these should be nullable AFAICT. As for adding @param, I don\u0027t think that is necessary coz these params are self-explanatory (I\u0027ve renamed some, so it should be better). Also, someone reading through this code would start with migrateTun to understand the picture and will have understanding of what these mean.",
+      "parentUuid": "48763510_002227ac",
+      "range": {
+        "startLine": 1225,
+        "startChar": 12,
+        "endLine": 1225,
+        "endChar": 18
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0ca014_5bb905d1",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "23607c5b_fe0544a6",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "We do actually care about other tags. This is a KI (that needs to be fixed in a separate CL). See http://b/123666283\nI will add a TODO for this. Thanks for pointing out.\nAlso see the existing comments about this in deductTrafficFromVpnApp method below.",
+      "parentUuid": "ef0ca014_5bb905d1",
+      "range": {
+        "startLine": 1241,
+        "startChar": 41,
+        "endLine": 1241,
+        "endChar": 64
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e97ea0_29dfe42d",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -191,6 +377,30 @@
       "writtenOn": "2019-03-15T09:59:52Z",
       "side": 1,
       "message": "1. Given that this feature might be one of the most complex part in NetworkStats.\nmaybe some javadoc will help people to understand the inputs/outputs without going through codes?\n\n2. I think this functions need refactor, there are 2 ideas about this, but I\u0027m not sure if they are helpful.\n2-1. Devide this function into 2:\n a) compute the \"total\" and outputs a new NetworkStats (or Entry[]).\n b) take output of (a) as input, and split across underlying ifaces, add to apps and output moved.\n\n2-2. Simplify it.\nTake computing for uid1 wifi rxbytes for example.\na) IIUC what you are doing can be shown by the following formula:\n uid1 wifi rxbytes \u003d uid1_tun_rxbytes * (MIN(underlying_total,tun_iface_total) / tun_iface_total) * (wifi_total / underlying_total)\n\nb) This can be devide into 2 cases, and reduce separately, where:\nb-1) if underlying_total \u003e tun_iface_total:\n uid1 wifi rxbytes \u003d uid1_tun_rxbytes * (wifi_total / underlying_total)\nb-2) if underlying_total \u003c tun_iface_total:\n uid1 wifi rxbytes \u003d uid1_tun_rxbytes * (wifi_total / tun_iface_total)\n\nc) Combine (b-1) and (b-2), you will get below:\n uid1 wifi rxbytes \u003d uid1_tun_rxbytes * wifi_total / MAX(underlying_total, tun_iface_total)\n\nThus, IIUC, by applying (c) you don\u0027t need 2 phases for this function.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 20,
+        "endLine": 1260,
+        "endChar": 44
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e3f1be_e789e448",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "For (1)\nLook at the new PS, I\u0027ve added more comments in relevant places which I think is better than a javadoc trying to explain everything in one place.\n\nDidn\u0027t get a change to look into (2). Will possibly take a look at it later (will keep this comment open for now). In the meanwhile, take a look at new PS (I\u0027m hoping it should be better in terms of readability)",
+      "parentUuid": "f3e97ea0_29dfe42d",
       "range": {
         "startLine": 1260,
         "startChar": 20,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "e486e8ea_de0ac5d5",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "37814a23_22cfc0e7",
+      "range": {
+        "startLine": 1277,
+        "startChar": 27,
+        "endLine": 1277,
+        "endChar": 32
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfeb331a_bab1c940",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "07636599_a1040252",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "That\u0027s likely not a possibility coz NetworkStatsService has a global threshold set for ~2MB. In other words it tries to do this thing periodically for every 2 MB of data transmitted/received by device (on any interface)",
+      "parentUuid": "cfeb331a_bab1c940",
+      "range": {
+        "startLine": 1282,
+        "startChar": 28,
+        "endLine": 1282,
+        "endChar": 68
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6688e79_8535f6a2",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -269,6 +527,30 @@
       "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183fafe7_26ccc29d",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-16T01:27:28Z",
+      "side": 1,
+      "message": "We could possibly, but I found the pool thing a lot confusing, coz by the time you are deep into this logic, it is hard to keep track of what pool represents which makes it harder to understand the correctness of this code and thus making it less readable.",
+      "parentUuid": "c6688e79_8535f6a2",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 87
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
