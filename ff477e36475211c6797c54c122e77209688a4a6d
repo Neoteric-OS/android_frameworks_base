@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7466a926_64b81148",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "627f4b27_d392c8a2",
+      "range": {
+        "startLine": 102,
+        "startChar": 32,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "467aa83f_6500d32c",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "33a8f8e6_0bdbcd19",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e6ac0ddc_3e7ebb01",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8dd68f_ed9c27ff",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -333,6 +381,30 @@
     },
     {
       "key": {
+        "uuid": "e784d418_d916821e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99a300a0_2603f3ff",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a0fc1c_d6acc48d",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -424,6 +496,30 @@
       "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa989956_da0c212c",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "I am not really familiar with it.\nBut I think the declaration of AnswerCallback ensure its parser shares the same T.\nAnd declaration of AnswerParser ensure they are all under the same T.\nWhy do we still need it?",
+      "parentUuid": "e7c369e7_0f81b213",
+      "range": {
+        "startLine": 244,
+        "startChar": 54,
+        "endLine": 244,
+        "endChar": 68
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

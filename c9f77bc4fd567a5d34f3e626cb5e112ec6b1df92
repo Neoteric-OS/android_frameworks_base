@@ -533,6 +533,30 @@
     },
     {
       "key": {
+        "uuid": "810de6b0_10b1e052",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd599867_0d825550",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a57e696_1b8bba7e",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
@@ -625,6 +649,30 @@
       "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c8e09a_1276b0c0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03ac43d_50a49b7a",
+      "range": {
+        "startLine": 180,
+        "startChar": 25,
+        "endLine": 180,
+        "endChar": 35
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -743,6 +791,30 @@
       "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2575d32_1d5c6456",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-16T11:05:32Z",
+      "side": 1,
+      "message": "Reasonable, change it accordingly.\nBut I wonder if we should let user know rcode when the answer does not contain any IP addresses.",
+      "parentUuid": "168c038a_a786d8b0",
+      "range": {
+        "startLine": 312,
+        "startChar": 35,
+        "endLine": 312,
+        "endChar": 65
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
