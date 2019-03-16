@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "627f4b27_d392c8a2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-16T02:14:38Z",
+      "side": 1,
+      "message": "by parsing the given raw answer.",
+      "range": {
+        "startLine": 102,
+        "startChar": 32,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "467aa83f_6500d32c",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -179,6 +202,30 @@
       "side": 1,
       "message": "Yes I tend to prefer a version where we do pass the query. It tends to make things much easier for developers to use.\n\nDoing this in another patch is absolutely fine.\n\nAs for gathering the arguments... it\u0027s a difficult call. I do think than Junyu\u0027s proposal is cleaner, but I wonder if YAGNI. If we go that road then we need a different object for the query with blob and the query with string.\n\nBut yes, I think it\u0027s probably a good idea to implement with Junyu\u0027s suggestion.\n\nHow about something like this :\n\n    public interface AnswerParser\u003cT\u003e {\n        @NonNull T parse(@NonNull byte[] rawAnswer) throws ParseException;\n    }\n\n    public static abstract class AnswerCallback\u003cQueryType extends Query, AnswerType\u003e {\n        // Just checked, this actually works as expected. Surprisingly.\n        public final AnswerParser\u003c? extends AnswerType\u003e parser;\n        public AnswerCallback(AnswerParser\u003c? extends AnswerType\u003e p) { this.parser \u003d p; }\n        public abstract void onAnswer(@NonNull QueryType query, @NonNull AnswerType answer);\n        public abstract void onParseException(@NonNull ParseException exception);\n        public abstract void onQueryException(@NonNull ErrnoException exception);\n    }\n\n    public abstract static class RawAnswerCallback\u003cQueryType extends Query\u003e extends AnswerCallback\u003cQueryType, byte[]\u003e {\n        public RawAnswerCallback() {\n            super(rawAnswer -\u003e rawAnswer);\n        }\n    }\n\n    public abstract static class InetAddressAnswerCallback\u003cQueryType extends Query\u003e extends AnswerCallback\u003cQueryType, List\u003cInetAddress\u003e\u003e {\n        public InetAddressAnswerCallback() {\n            super(rawAnswer -\u003e new ArrayList\u003cInetAddress\u003e());\n        }\n    }\n\n    public \u003cT\u003e void query(RawQuery query, AnswerCallback\u003c? super RawQuery, T\u003e callback) {}\n    public \u003cT\u003e void query(DomainQuery query, AnswerCallback\u003c? super DomainQuery, T\u003e callback) {}\n\n\nWhat\u0027s nice about this is : you can reuse much better, you are sure to get the right answer, and everything is statically checked. You can pass a RawAnwserCallback\u003cDomainQuery\u003e with a domain query if you want to do that, you can pass a InetAddressAnswerCallback\u003cRawQuery\u003e if you want to formulate the query yourself but want to leave it to the platform to parse the answer, you can write a parser that returns an ArrayList and another that returns a LinkedList, but both can be handled by the same callback that takes a List.\n\nThe drawback is that the type argument to RawAnswerCallback and InetAddressAnswerCallback can\u0027t be inferred by the compiler, so you have to write it explicitly, which is redundant. I think it\u0027s still better.",
       "parentUuid": "7eeaa03d_b096dc95",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "ff477e36475211c6797c54c122e77209688a4a6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ac0ddc_3e7ebb01",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-16T02:14:38Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of having two separate classes to represent a DNS query depending on how that query is constructed. A DNS query is a DNS query.\n\nThe approach you\u0027re proposing requires more classes, and a fair bit more code, because in order for the query object passed to the callback to be useful, we need to add getters on those query classes that mirror the parameters specified in query().\n\nIt\u0027s already possible to pass a raw callback to a query made by passing in name, string and qtype, or an InetAddressCallback to a query made by passing in a blob.\n\nI\u0027d vote for simplicity and keeping this as is.",
+      "parentUuid": "a10758ff_678a4a0a",
       "range": {
         "startLine": 200,
         "startChar": 16,

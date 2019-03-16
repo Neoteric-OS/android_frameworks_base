@@ -509,6 +509,30 @@
     },
     {
       "key": {
+        "uuid": "fd599867_0d825550",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-16T02:14:38Z",
+      "side": 1,
+      "message": "Junyu\u0027s suggestion saves the allocation of a callback object, but requires the allocation of a query object. So it doesn\u0027t seem to result in a savings in code boilerplate or objects over what we have in this CL.\n\nFor it to be useful it also requires adding a DnsQuery class with getters and setters so that the parameters that were used in the original query can be retrieved from the query object. However, that\u0027s not trivial because if the user passes in a query blob, the getter for the hostname would have to parse the blob. That might not even be correct because for example the blob could have two hostnames in the question section, in which case the getter for the hostname would not be able to return a single string. So we can\u0027t just have the query only keep the blob and parse it on demand. We\u0027d have to keep the original parameters, and add a getter in the query object for each of the builder parameters.\n\nThat would be more complicated to implement and I don\u0027t think it buys us much in terms of ease of use. The user can always define an AnswerCallback subclass that takes in the constructor the parameters that they used to create the query. I think what we have in this CL right now is a good balance between API/implementation simplicity and ease of use.",
+      "parentUuid": "c31c420d_7f326cc6",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a57e696_1b8bba7e",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 6
@@ -568,6 +592,30 @@
       "side": 1,
       "message": "Do you think we should unify the Exception? Sounds not bad",
       "parentUuid": "1a57e696_1b8bba7e",
+      "range": {
+        "startLine": 180,
+        "startChar": 25,
+        "endLine": 180,
+        "endChar": 35
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03ac43d_50a49b7a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-16T02:14:38Z",
+      "side": 1,
+      "message": "I think it\u0027s better now that we only have one type of ParseException, yes.",
+      "parentUuid": "fc7d1b66_c2110a17",
       "range": {
         "startLine": 180,
         "startChar": 25,
@@ -662,6 +710,30 @@
       "side": 1,
       "message": "I think onAnswer should contain available answer.(at least 1 INetAddress)\nWhat do you think about it?",
       "parentUuid": "a63345ba_07a14ddc",
+      "range": {
+        "startLine": 312,
+        "startChar": 35,
+        "endLine": 312,
+        "endChar": 65
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168c038a_a786d8b0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-16T02:14:38Z",
+      "side": 1,
+      "message": "I think what you have now will throw ParseException if the user queries a name that does not exist, right? That\u0027s confusing. The response is perfectly valid, it\u0027s just that the name does not exist. In this case, I think it\u0027s better to call onAnswer with [] or null than to throw ParseException.\n\nWe should document this in the docstring for InetAddressCallback. Something like, \"If the answer does not contain any IP addresses, onAnswer will be called with an empty array\". (or \"will be called with null\").",
+      "parentUuid": "c0fbeefa_9215171e",
       "range": {
         "startLine": 312,
         "startChar": 35,
