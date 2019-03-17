@@ -115,6 +115,8 @@ public class Network implements Parcelable {
     /**
      * @hide
      */
+    @SystemApi
+    @TestApi
     public Network(int netId, boolean privateDnsBypass) {
         this.netId = netId;
         this.mPrivateDnsBypass = privateDnsBypass;

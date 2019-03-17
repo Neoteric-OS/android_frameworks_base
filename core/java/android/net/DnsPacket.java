@@ -18,6 +18,8 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.text.TextUtils;
 
 import com.android.internal.util.BitUtils;
@@ -35,6 +37,8 @@ import java.util.List;
  *
  * @hide
  */
+@SystemApi
+@TestApi
 public abstract class DnsPacket {
     public class DnsHeader {
         private static final String TAG = "DnsHeader";
