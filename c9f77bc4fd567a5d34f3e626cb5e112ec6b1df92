@@ -818,6 +818,30 @@
     },
     {
       "key": {
+        "uuid": "7fbbd575_e488be0e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-17T02:08:59Z",
+      "side": 1,
+      "message": "Definitely. Actually it seems like the rcode would be useful in all cases. Maybe do that in a separate CL though?",
+      "parentUuid": "d2575d32_1d5c6456",
+      "range": {
+        "startLine": 312,
+        "startChar": 35,
+        "endLine": 312,
+        "endChar": 65
+      },
+      "revId": "c9f77bc4fd567a5d34f3e626cb5e112ec6b1df92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63e0ecb_68706d2f",
         "filename": "core/java/android/net/ParseException.java",
         "patchSetId": 6

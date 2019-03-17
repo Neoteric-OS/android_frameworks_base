@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecee9739_2f16a58b",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-17T02:08:59Z",
+      "side": 1,
+      "message": "Nit: seems like this should throw ParseException.",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 21
+      },
+      "revId": "304491dba8594a88aa1586a30a21fcebc67a23a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
