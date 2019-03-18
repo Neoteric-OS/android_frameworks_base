@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30669b02_05d8180a",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4520,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2019-03-18T15:13:30Z",
+      "side": 1,
+      "message": "I think this should be mentioned in the javadoc for the other setAlwaysOnVpnPackage variant.",
+      "range": {
+        "startLine": 4519,
+        "startChar": 59,
+        "endLine": 4520,
+        "endChar": 96
+      },
+      "revId": "a33e6951f3d9ed2e9b5b3fb4f12f1785c778f072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0226616c_e4d6612f",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2019-03-18T15:13:30Z",
+      "side": 1,
+      "message": "Nit: Can you elaborate a bit? I\u0027m not sure what it means that the system ensures the service is always running. Something like \"the VPN tunnel is always up\"?",
+      "range": {
+        "startLine": 377,
+        "startChar": 16,
+        "endLine": 377,
+        "endChar": 41
+      },
+      "revId": "a33e6951f3d9ed2e9b5b3fb4f12f1785c778f072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
