@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e203193e_0957517d",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-18T04:47:48Z",
+      "side": 1,
+      "message": "These two will be deleted in aosp/906907 .",
+      "range": {
+        "startLine": 861,
+        "startChar": 0,
+        "endLine": 862,
+        "endChar": 56
+      },
+      "revId": "41a94a512708e7979d938500f549fd7d8e206c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
