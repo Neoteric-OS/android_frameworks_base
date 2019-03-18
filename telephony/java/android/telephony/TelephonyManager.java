@@ -2902,15 +2902,14 @@ public class TelephonyManager {
      * @see #SIM_STATE_CARD_RESTRICTED
      */
     public int getSimState() {
-        int simState = getSimStateIncludingLoaded();
+        int simState = getSimStateIncludingLoaded(getSlotIndex());
         if (simState == SIM_STATE_LOADED) {
             simState = SIM_STATE_READY;
         }
         return simState;
     }
 
-    private int getSimStateIncludingLoaded() {
-        int slotIndex = getSlotIndex();
+    private int getSimStateIncludingLoaded(int slotIndex) {
         // slotIndex may be invalid due to sim being absent. In that case query all slots to get
         // sim state
         if (slotIndex < 0) {
@@ -2971,7 +2970,17 @@ public class TelephonyManager {
      */
     @SystemApi
     public int getSimApplicationState() {
-        int simApplicationState = getSimStateIncludingLoaded();
+        return getSimApplicationState(getSlotIndex());
+    }
+
+    /**
+     * See getSimApplicationState.
+     *
+     * @hide
+     */
+    @SystemApi
+    public int getSimApplicationState(int slotIndex) {
+        int simApplicationState = getSimStateIncludingLoaded(slotIndex);
         switch (simApplicationState) {
             case SIM_STATE_UNKNOWN:
             case SIM_STATE_ABSENT:
