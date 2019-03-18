@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d702e1_6cc2ab2b",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T09:03:00Z",
+      "side": 0,
+      "message": "I don\u0027t think we should be removing the null check: this is not consistent with removeRoute and other add* methods in this class",
+      "range": {
+        "startLine": 698,
+        "startChar": 8,
+        "endLine": 698,
+        "endChar": 28
+      },
+      "revId": "f96cc080668db4442b38e8e48d70db2e010ed354",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

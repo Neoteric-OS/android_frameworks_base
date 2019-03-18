@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f015c39_18def95d",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T09:03:00Z",
+      "side": 1,
+      "message": "I think adding these to public API is really confusing since we\u0027d be documenting methods that don\u0027t allow developers to actually do anything... I tried to explain that in the bug but not sure we\u0027ll get a reply in time for API freeze. Hopefully we can wait a little for some reply though.",
+      "range": {
+        "startLine": 27354,
+        "startChar": 0,
+        "endLine": 27359,
+        "endChar": 35
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e538a3b_0f56dfb0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4077,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T09:03:00Z",
+      "side": 1,
+      "message": "The API will not work properly with null: how about having this @NonNull ?",
+      "range": {
+        "startLine": 4077,
+        "startChar": 38,
+        "endLine": 4077,
+        "endChar": 91
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b51b21e_843a4e50",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T09:03:00Z",
+      "side": 1,
+      "message": "I think this method in particular does not actually have any client listed in the compatibility dashboard: maybe we can just remove it ? Or did I miss one ?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
