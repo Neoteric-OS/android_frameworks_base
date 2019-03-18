@@ -18,6 +18,7 @@ package com.android.server;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.gsi.GsiInstallParams;
 import android.gsi.GsiProgress;
 import android.gsi.IGsiService;
 import android.os.IBinder;
@@ -28,6 +29,8 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.util.Slog;
 
+import java.io.File;
+
 /**
  * DynamicAndroidService implements IDynamicAndroidService. It provides permission check before
  * passing requests to gsid
@@ -36,6 +39,8 @@ public class DynamicAndroidService extends IDynamicAndroidService.Stub implement
     private static final String TAG = "DynamicAndroidService";
     private static final String NO_SERVICE_ERROR = "no gsiservice";
     private static final int GSID_TIMEOUT_MS = 5000;
+    private static final String PATH_DEFAULT = "/data/gsi";
+    private static final String PATH_SDCARD = "/mnt/media_rw/sdcard0";
 
     private Context mContext;
     private volatile IGsiService mGsiService;
@@ -101,7 +106,20 @@ public class DynamicAndroidService extends IDynamicAndroidService.Stub implement
 
     @Override
     public boolean startInstallation(long systemSize, long userdataSize) throws RemoteException {
-        return getGsiService().startGsiInstall(systemSize, userdataSize, true) == 0;
+        // priority from high to low: sysprop -> sdcard -> /data
+        String path = SystemProperties.get("os.aot.path", null);
+        if (path == null) {
+            if (new File(PATH_SDCARD).isDirectory()) {
+                path = PATH_SDCARD;
+            } else {
+                path = PATH_DEFAULT;
+            }
+        }
+        GsiInstallParams installParams = new GsiInstallParams();
+        installParams.installDir = path;
+        installParams.gsiSize = systemSize;
+        installParams.userdataSize = userdataSize;
+        return getGsiService().beginGsiInstall(installParams) == 0;
     }
 
     @Override
