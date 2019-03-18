@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6af32480_33559847",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-18T14:02:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f015c39_18def95d",
+      "range": {
+        "startLine": 27354,
+        "startChar": 0,
+        "endLine": 27359,
+        "endChar": 35
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e538a3b_0f56dfb0",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e6cba28c_24745d5b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4077,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-18T14:02:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e538a3b_0f56dfb0",
+      "range": {
+        "startLine": 4077,
+        "startChar": 38,
+        "endLine": 4077,
+        "endChar": 91
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b51b21e_843a4e50",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-18T09:03:00Z",
       "side": 1,
       "message": "I think this method in particular does not actually have any client listed in the compatibility dashboard: maybe we can just remove it ? Or did I miss one ?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5006f4d9_46df4727",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-18T14:02:40Z",
+      "side": 1,
+      "message": "As discussed with Jean, we should have this method because isIPv6() can still be used for target SDK is lower than P.",
+      "parentUuid": "8b51b21e_843a4e50",
       "range": {
         "startLine": 137,
         "startChar": 4,

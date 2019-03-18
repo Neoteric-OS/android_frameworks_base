@@ -22,6 +22,30 @@
       "revId": "f96cc080668db4442b38e8e48d70db2e010ed354",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6dc998_882cadb1",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-18T14:02:40Z",
+      "side": 0,
+      "message": "Agree. These methods should be consistent.",
+      "parentUuid": "d4d702e1_6cc2ab2b",
+      "range": {
+        "startLine": 698,
+        "startChar": 8,
+        "endLine": 698,
+        "endChar": 28
+      },
+      "revId": "f96cc080668db4442b38e8e48d70db2e010ed354",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
