@@ -173,7 +173,7 @@ public final class AvailableNetworkInfo implements Parcelable {
         return Objects.hash(mSubId, mPriority, mMccMncs, mBands);
     }
 
-    public static final Parcelable.Creator<AvailableNetworkInfo> CREATOR =
+    @NonNull public static final Parcelable.Creator<AvailableNetworkInfo> CREATOR =
             new Creator<AvailableNetworkInfo>() {
                 @Override
                 public AvailableNetworkInfo createFromParcel(Parcel in) {
