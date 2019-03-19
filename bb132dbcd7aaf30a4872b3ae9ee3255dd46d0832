@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7b162f9_50d03118",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 27342,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T05:55:05Z",
+      "side": 1,
+      "message": "I agree this should be @NonNull. I use the CodeSearch to check all java files who are using this method. Obviously, no one will pass the null object to this method. Hence, this should be @NonNull.",
+      "parentUuid": "298167b9_b62d2c08",
+      "range": {
+        "startLine": 27342,
+        "startChar": 35,
+        "endLine": 27342,
+        "endChar": 43
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35151dc7_75742b6a",
         "filename": "api/system-current.txt",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-19T03:40:18Z",
       "side": 1,
       "message": "This should be consistent with addRoute. Either they are both @NonNull or they are both @Nullable.",
+      "range": {
+        "startLine": 3153,
+        "startChar": 39,
+        "endLine": 3153,
+        "endChar": 48
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c337253_f286b327",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3153,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T05:55:05Z",
+      "side": 1,
+      "message": "Yes, this should be @NonNull like addRoute. And the null object should be removed from method as well.",
+      "parentUuid": "35151dc7_75742b6a",
       "range": {
         "startLine": 3153,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c0457ea4_57e44631",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T05:55:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b02e6559_547803e6",
+      "range": {
+        "startLine": 3154,
+        "startChar": 41,
+        "endLine": 3154,
+        "endChar": 50
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "567a8696_a8d8d562",
         "filename": "api/system-current.txt",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2019-03-19T03:40:18Z",
       "side": 1,
       "message": "It\u0027s mildly inconsistent that the addXyz methods are @Nullable, but the setXyz methods are not. But I don\u0027t feel too strongly about this.",
+      "range": {
+        "startLine": 3170,
+        "startChar": 39,
+        "endLine": 3170,
+        "endChar": 47
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87885c6a_890b5adf",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T05:55:05Z",
+      "side": 1,
+      "message": "If we change all addXyz methods to be @NonNull, the setXyz methods are consistent with the addXyz methods.",
+      "parentUuid": "567a8696_a8d8d562",
       "range": {
         "startLine": 3170,
         "startChar": 39,
