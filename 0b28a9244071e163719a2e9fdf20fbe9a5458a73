@@ -22,6 +22,30 @@
       "revId": "0b28a9244071e163719a2e9fdf20fbe9a5458a73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59918710_e223eee1",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-03-19T15:01:57Z",
+      "side": 1,
+      "message": "No, it is stripped out by the -C argument to soong_zip.",
+      "parentUuid": "bec4b367_54f7536e",
+      "range": {
+        "startLine": 203,
+        "startChar": 28,
+        "endLine": 203,
+        "endChar": 34
+      },
+      "revId": "0b28a9244071e163719a2e9fdf20fbe9a5458a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
