@@ -16,6 +16,24 @@
       "revId": "2b46007ee6745efa479d7be8913c4584e8a46246",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f01990c_9d1d1fd2",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-03-19T03:34:56Z",
+      "side": 1,
+      "message": "Ack. Will use Environment.getExternalStorageDirectory instead.",
+      "parentUuid": "71a1c01f_0fac9cb5",
+      "revId": "2b46007ee6745efa479d7be8913c4584e8a46246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
