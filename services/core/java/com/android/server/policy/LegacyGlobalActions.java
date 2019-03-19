@@ -203,6 +203,9 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
                 mDialog.show();
                 mDialog.getWindow().getDecorView().setSystemUiVisibility(
                         View.STATUS_BAR_DISABLE_EXPAND);
+
+                // Close the dialog after a while to avoid possible burn-in.
+                mHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, BURNIN_DISMISS_DELAY);
             }
         }
     }
@@ -786,6 +789,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
     private static final int MESSAGE_REFRESH = 1;
     private static final int MESSAGE_SHOW = 2;
     private static final int DIALOG_DISMISS_DELAY = 300; // ms
+    private static final int BURNIN_DISMISS_DELAY = 60000; // ms
 
     private Handler mHandler = new Handler() {
         @Override
