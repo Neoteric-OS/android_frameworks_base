@@ -261,6 +261,29 @@
     },
     {
       "key": {
+        "uuid": "41fcf508_4de2750f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3365,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-19T11:34:00Z",
+      "side": 1,
+      "message": "This is addressed in b/126698610 with aosp/918533.\nDo you want to revert it or add b/126698610 into commit message?\nI\u0027m fine with either case.",
+      "range": {
+        "startLine": 3365,
+        "startChar": 44,
+        "endLine": 3365,
+        "endChar": 51
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "490ca78f_0add0beb",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 7
