@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e50bf682_a4b7bfe7",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-19T02:10:50Z",
+      "side": 1,
+      "message": "I\u0027d prefer if the existing constructor were re-used. I just got finished removing a bunch of \"specific subset\" constructors from these classes. They tend to multiply, and in this case, I think you can accomplish what you want with just calling the superset constructor.",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 18
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ec09fc_bacccb65",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6719,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-19T02:10:50Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be enforced... this is cherry picking around the CBRS use case. It\u0027s either OK to specify PLMN IDs or it\u0027t not.\n\nAs far as \"associated to the SIM\" does this include EHLMN, OPLMN? The point is: there are networks to which a SIM should be able to attach that aren\u0027t the PLMN of the network, and for roaming or OOS, those use cases are just as valid as CBRS.",
+      "range": {
+        "startLine": 6719,
+        "startChar": 15,
+        "endLine": 6719,
+        "endChar": 18
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
