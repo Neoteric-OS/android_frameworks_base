@@ -158,6 +158,17 @@ public class EntitlementManager {
         }
     }
 
+    /** Get carrier configuration bundle. */
+    public PersistableBundle getCarrierConfig() {
+        final CarrierConfigManager configManager = (CarrierConfigManager) mContext
+                .getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager == null) return null;
+
+        final PersistableBundle carrierConfig = configManager.getConfig();
+
+        return carrierConfig;
+    }
+
     // The logic here is aimed solely at confirming that a CarrierConfig exists
     // and affirms that entitlement checks are not required.
     //
@@ -165,11 +176,7 @@ public class EntitlementManager {
     // entirely so that this is more intuitive.
     private boolean carrierConfigAffirmsEntitlementCheckNotRequired() {
         // Check carrier config for entitlement checks
-        final CarrierConfigManager configManager = (CarrierConfigManager) mContext
-                .getSystemService(Context.CARRIER_CONFIG_SERVICE);
-        if (configManager == null) return false;
-
-        final PersistableBundle carrierConfig = configManager.getConfig();
+        final PersistableBundle carrierConfig = getCarrierConfig();
         if (carrierConfig == null) return false;
 
         // A CarrierConfigManager was found and it has a config.

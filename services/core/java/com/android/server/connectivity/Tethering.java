@@ -83,6 +83,7 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.PersistableBundle;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -90,6 +91,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.UserManagerInternal;
 import android.os.UserManagerInternal.UserRestrictionsListener;
+import android.telephony.CarrierConfigManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -247,7 +249,15 @@ public class Tethering extends BaseNetworkObserver {
                 (Intent ignored) -> {
                     mLog.log("OBSERVED default data subscription change");
                     updateConfiguration();
-                    mEntitlementMgr.reevaluateSimCardProvisioning();
+                    final PersistableBundle carrierConfig = mEntitlementMgr.getCarrierConfig();
+                    // To avoid lunch unexpected provisiongs, ignore re-provisioning when no
+                    // config loaded yet. Assume reevaluateSimCardProvisioning() will be triggered
+                    // again when config loaded.
+                    if (CarrierConfigManager.isConfigForIdentifiedCarrier(carrierConfig)) {
+                        mEntitlementMgr.reevaluateSimCardProvisioning();
+                    } else {
+                        mLog.log("IGNORED reevaluate provisioning due to no carrier config loaded");
+                    }
                 });
         mStateReceiver = new StateReceiver();
 
