@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "0d659dd3_63f4388b",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-19T20:45:52Z",
+      "side": 1,
+      "message": "It shouldn\u0027t allow that here... there\u0027s no such thing for CDMA as an MCC or MNC. That\u0027s why having mcc/mnc on the base class is bogus. In the future I plan to create a CellIdentity3gpp class so that the mcc/mnc functionality can be shared and not insane, but that\u0027s why it\u0027s not available in CDMA. Note that the NetworkScan also doesn\u0027t support CDMA (and can\u0027t because there\u0027s no MCC MNC... instead there is SID/NID).",
+      "parentUuid": "6e58fc75_f3a7e071",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 18
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585ed485_53dabe5a",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-19T20:45:52Z",
+      "side": 1,
+      "message": "Note that in the world of sane technologies mcc and mnc are available in the top-level constructor.",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc10a410_49395030",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
