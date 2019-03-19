@@ -1,3 +1,11 @@
+// HACK! This is here so that anything wanting to be able to include framework
+// AIDL files in frameworks/base/core can do so.
+// TODO: never do this, and figure out a better solution instead.
+aidl_interface {
+    name: "framework-dummy-aidl",
+    srcs: ["Dummy.aidl"],
+}
+
 filegroup {
     name: "IKeyAttestationApplicationIdProvider.aidl",
     srcs: ["android/security/keymaster/IKeyAttestationApplicationIdProvider.aidl"],
