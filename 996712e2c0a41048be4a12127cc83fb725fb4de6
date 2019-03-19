@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b36fdf1_60687ccb",
+        "filename": "services/core/java/com/android/server/DynamicAndroidService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-19T09:34:42Z",
+      "side": 1,
+      "message": "nit: should be sleepMs.\n\nalso, the name GSID_TIMEOUT_MS is misleading because the timeout is really (64+128+256+...4096) ms and not 5 seconds, as advertised.",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "996712e2c0a41048be4a12127cc83fb725fb4de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
