@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec4b367_54f7536e",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1268528
+      },
+      "writtenOn": "2019-03-19T14:55:07Z",
+      "side": 1,
+      "message": "Will this \"protos\" directory also be in the zip file? If so, could we get rid of it?",
+      "range": {
+        "startLine": 203,
+        "startChar": 28,
+        "endLine": 203,
+        "endChar": 34
+      },
+      "revId": "0b28a9244071e163719a2e9fdf20fbe9a5458a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
