@@ -21,16 +21,21 @@ import android.os.Build;
 import android.os.GraphicsEnvironment;
 import android.os.Trace;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import com.android.internal.os.ClassLoaderFactory;
 
 import dalvik.system.PathClassLoader;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** @hide */
 public class ApplicationLoaders {
+    private static final String TAG = "ApplicationLoaders";
+
     @UnsupportedAppUsage
     public static ApplicationLoaders getDefault() {
         return gApplicationLoaders;
@@ -52,6 +57,21 @@ public class ApplicationLoaders {
         // For normal usage the cache key used is the same as the zip path.
         return getClassLoader(zip, targetSdkVersion, isBundled, librarySearchPath,
                               libraryPermittedPath, parent, zip, classLoaderName, sharedLibraries);
+    }
+
+    ClassLoader getSharedLibraryClassLoaderWithSharedLibraries(String zip, int targetSdkVersion,
+            boolean isBundled, String librarySearchPath, String libraryPermittedPath,
+            ClassLoader parent, String classLoaderName, List<ClassLoader> sharedLibraries) {
+        if (mSystemLibsPreloadMap != null && parent == null && classLoaderName == null) {
+            ClassLoader preloaded = mSystemLibsPreloadMap.get(zip);
+            if (preloaded != null) {
+                Log.w(TAG, "Returning preloaded lib: " + zip);
+                return preloaded;
+            }
+        }
+
+        return getClassLoaderWithSharedLibraries(zip, targetSdkVersion, isBundled,
+              librarySearchPath, libraryPermittedPath, parent, classLoaderName, sharedLibraries);
     }
 
     private ClassLoader getClassLoader(String zip, int targetSdkVersion, boolean isBundled,
@@ -108,6 +128,32 @@ public class ApplicationLoaders {
     }
 
     /**
+     * Preloads system libraries which are not on the bootclasspath but are still used by many
+     * system apps.
+     */
+    public void cacheNonBootclasspathSystemLibs(String[] zips) {
+        if (mSystemLibsPreloadMap != null) {
+            Log.wtf(TAG, "already pre-loaded");
+            return;
+        }
+
+        mSystemLibsPreloadMap = new HashMap<String, ClassLoader>();
+
+        for (String zip : zips) {
+            ClassLoader classLoader = getClassLoader(zip, 1000, true /*isBundled*/,
+                    null /*librarySearchPath*/, null /*libraryPermittedPath*/, null /*parent*/,
+                    null /*cacheKey*/, null /*classLoaderName*/, null /*sharedLibraries*/);
+
+            if (classLoader == null) {
+                Log.e(TAG, "Failed to preload " + zip);
+                continue;
+            }
+
+            mSystemLibsPreloadMap.put(zip, classLoader);
+        }
+    }
+
+    /**
      * Creates a classloader for the WebView APK and places it in the cache of loaders maintained
      * by this class. This is used in the WebView zygote, where its presence in the cache speeds up
      * startup and enables memory sharing.
@@ -151,4 +197,6 @@ public class ApplicationLoaders {
     private final ArrayMap<String, ClassLoader> mLoaders = new ArrayMap<>();
 
     private static final ApplicationLoaders gApplicationLoaders = new ApplicationLoaders();
+
+    private Map<String, ClassLoader> mSystemLibsPreloadMap = null;
 }
