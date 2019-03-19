@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4d8963bb_6c76d95d",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-19T20:47:41Z",
+      "side": 1,
+      "message": "OK will change",
+      "parentUuid": "0d659dd3_63f4388b",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 18
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "585ed485_53dabe5a",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 2
