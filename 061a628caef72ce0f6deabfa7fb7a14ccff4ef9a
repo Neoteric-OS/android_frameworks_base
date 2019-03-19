@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9f71339_0bc43edd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-19T12:35:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "747c22c2_d4fa2c80",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "199b3d3a_c99c7a0a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-19T10:20:34Z",
       "side": 1,
       "message": "Suppose to be \"This must to be always ...\"?\n\nHowever, I wonder if we should have some mechanisms to ensure this really work as our expectation. I mean, people may call from the other threads with noticing the comments here and break it.",
+      "range": {
+        "startLine": 149,
+        "startChar": 18,
+        "endLine": 149,
+        "endChar": 66
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccc1ac9_db6bee3f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-19T12:35:30Z",
+      "side": 1,
+      "message": "Actually we can add the check as we do in reevaluateSimCardProvisioning() line.328. But I don\u0027t prefer to do this for each public API. Most of entitlement thing is called from tethering, they don\u0027t be called out of tethering scope so far. People who want to modified Tethering/EntitlementManager should aware we don\u0027t lock and they should run in the same thread. Just like we don\u0027t do any protect in UpstreamNetworkMonitor and most of Tethering method.",
+      "parentUuid": "199b3d3a_c99c7a0a",
       "range": {
         "startLine": 149,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "91ea35da_753733be",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-19T12:35:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a6853f3_1f614884",
+      "range": {
+        "startLine": 290,
+        "startChar": 60,
+        "endLine": 290,
+        "endChar": 66
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "814219ee_ac44e4f0",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec829c4f_75923d8e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-19T12:35:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "814219ee_ac44e4f0",
+      "range": {
+        "startLine": 400,
+        "startChar": 68,
+        "endLine": 400,
+        "endChar": 80
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
