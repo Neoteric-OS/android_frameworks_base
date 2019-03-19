@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "298167b9_b62d2c08",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 27342,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T03:40:18Z",
+      "side": 1,
+      "message": "Do we all agree that this should be @NonNull then? Even though passing in null works fine?",
+      "range": {
+        "startLine": 27342,
+        "startChar": 35,
+        "endLine": 27342,
+        "endChar": 43
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35151dc7_75742b6a",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3153,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T03:40:18Z",
+      "side": 1,
+      "message": "This should be consistent with addRoute. Either they are both @NonNull or they are both @Nullable.",
+      "range": {
+        "startLine": 3153,
+        "startChar": 39,
+        "endLine": 3153,
+        "endChar": 48
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02e6559_547803e6",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T03:40:18Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 3154,
+        "startChar": 41,
+        "endLine": 3154,
+        "endChar": 50
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567a8696_a8d8d562",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T03:40:18Z",
+      "side": 1,
+      "message": "It\u0027s mildly inconsistent that the addXyz methods are @Nullable, but the setXyz methods are not. But I don\u0027t feel too strongly about this.",
+      "range": {
+        "startLine": 3170,
+        "startChar": 39,
+        "endLine": 3170,
+        "endChar": 47
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97b6c2c_d88e8592",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T03:40:18Z",
+      "side": 1,
+      "message": "Should this be public since getSignalStrength is public?",
+      "range": {
+        "startLine": 3206,
+        "startChar": 62,
+        "endLine": 3206,
+        "endChar": 79
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "490ca78f_0add0beb",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 7
