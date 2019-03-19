@@ -19,6 +19,8 @@ package com.android.internal.os;
 import static android.system.OsConstants.S_IRWXG;
 import static android.system.OsConstants.S_IRWXO;
 
+import android.app.ApplicationLoaders;
+import android.content.pm.SharedLibraryInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -139,6 +141,9 @@ public class ZygoteInit {
         bootTimingsTraceLog.traceBegin("PreloadClasses");
         preloadClasses();
         bootTimingsTraceLog.traceEnd(); // PreloadClasses
+        bootTimingsTraceLog.traceBegin("PreloadNonBootclasspathLibs");
+        preloadNonBootclasspathLibs();
+        bootTimingsTraceLog.traceEnd(); // PreloadNonBootclasspathLibs
         bootTimingsTraceLog.traceBegin("PreloadResources");
         preloadResources();
         bootTimingsTraceLog.traceEnd(); // PreloadResources
@@ -342,6 +347,31 @@ public class ZygoteInit {
                 }
             }
         }
+    }
+
+    /**
+     * Load in things which are used by many apps but which cannot be put in the boot
+     * classpath.
+     */
+    private static void preloadNonBootclasspathLibs() {
+        // These libraries used to be part of the bootclasspath, but had to be removed.
+        // Old system applications still get them for backwards compatibility reasons,
+        // so they are preloaded here.
+        SharedLibraryInfo hidlBase = new SharedLibraryInfo(
+                "/system/framework/android.hidl.base-V1.0-java.jar", null /*packageName*/,
+                null /*codePaths*/, null /*name*/, 0 /*version*/, SharedLibraryInfo.TYPE_BUILTIN,
+                null /*declaringPackage*/, null /*dependentPackages*/, null /*dependencies*/);
+        SharedLibraryInfo hidlManager = new SharedLibraryInfo(
+                "/system/framework/android.hidl.manager-V1.0-java.jar", null /*packageName*/,
+                null /*codePaths*/, null /*name*/, 0 /*version*/, SharedLibraryInfo.TYPE_BUILTIN,
+                null /*declaringPackage*/, null /*dependentPackages*/, null /*dependencies*/);
+        hidlManager.addDependency(hidlBase);
+
+        // Only libraries which do not need deps can be used here.
+        ApplicationLoaders.getDefault().cacheNonBootclasspathSystemLibs(new SharedLibraryInfo[]{
+                hidlBase,
+                hidlManager,
+        });
     }
 
     /**
