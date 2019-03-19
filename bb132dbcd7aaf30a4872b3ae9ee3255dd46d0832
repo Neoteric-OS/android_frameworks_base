@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b1263ed6_2616c2bd",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3153,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T07:23:17Z",
+      "side": 1,
+      "message": "Sorry for the typo, I mean null check for the InetAddress object in the method.",
+      "parentUuid": "1c337253_f286b327",
+      "range": {
+        "startLine": 3153,
+        "startChar": 39,
+        "endLine": 3153,
+        "endChar": 48
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b02e6559_547803e6",
         "filename": "api/system-current.txt",
         "patchSetId": 7
