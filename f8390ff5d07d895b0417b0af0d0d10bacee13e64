@@ -223,6 +223,30 @@
       "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "155377d2_1ed459aa",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T13:57:17Z",
+      "side": 1,
+      "message": "I think what Remi said is - our data says there are no callers of this method. So we don\u0027t actually need to keep it, because nobody is calling it.",
+      "parentUuid": "a8ccc04f_f6b848cd",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -73,6 +73,47 @@
     },
     {
       "key": {
+        "uuid": "706e3b40_40a8b02e",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 27342,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T13:57:17Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "b0ea3ca6_96fbec63",
+      "range": {
+        "startLine": 27342,
+        "startChar": 35,
+        "endLine": 27342,
+        "endChar": 43
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a29efed_3a6a0eab",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 27346,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T13:57:17Z",
+      "side": 1,
+      "message": "Should be nullable. Null is the default.",
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35151dc7_75742b6a",
         "filename": "api/system-current.txt",
         "patchSetId": 7
