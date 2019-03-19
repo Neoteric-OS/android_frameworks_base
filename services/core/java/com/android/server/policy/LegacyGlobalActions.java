@@ -48,6 +48,7 @@ import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -117,6 +118,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
     private boolean mHasVibrator;
     private final boolean mShowSilentToggle;
     private final EmergencyAffordanceManager mEmergencyAffordanceManager;
+    private int mGlobalActionDialogTimeout;
 
     /**
      * @param context everything needs a context :(
@@ -151,6 +153,9 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
         mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.AIRPLANE_MODE_ON), true,
                 mAirplaneModeObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.GLOBAL_ACTIONS_TIMEOUT_MILLIS), true,
+                mGlobalActionsTimeoutObserver);
         Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         mHasVibrator = vibrator != null && vibrator.hasVibrator();
 
@@ -158,6 +163,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
                 com.android.internal.R.bool.config_useFixedVolume);
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
+
     }
 
     /**
@@ -207,6 +213,8 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
                 mDialog.show();
                 mDialog.getWindow().getDecorView().setSystemUiVisibility(
                         View.STATUS_BAR_DISABLE_EXPAND);
+
+                rescheduleBurninTimeout(mGlobalActionDialogTimeout);
             }
         }
     }
@@ -265,6 +273,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
             }
         };
         onAirplaneModeChanged();
+        onGlobalActionsTimeoutChanged();
 
         mItems = new ArrayList<Action>();
         String[] defaultActions = mContext.getResources().getStringArray(
@@ -324,7 +333,14 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
         params.mOnClickListener = this;
         params.mForceInverseBackground = true;
 
-        ActionsDialog dialog = new ActionsDialog(mContext, params);
+        ActionsDialog dialog = new ActionsDialog(mContext, params) {
+            @Override
+            public boolean dispatchTouchEvent(MotionEvent event) {
+                rescheduleBurninTimeout(mGlobalActionDialogTimeout);
+                return super.dispatchTouchEvent(event);
+            }
+        };
+
         dialog.setCanceledOnTouchOutside(false); // Handled by the custom class.
 
         dialog.getListView().setItemsCanFocus(true);
@@ -348,6 +364,13 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
         dialog.setOnDismissListener(this);
 
         return dialog;
+    }
+
+    private void rescheduleBurninTimeout(int timeout) {
+        if (timeout > 0) {
+            mHandler.removeMessages(MESSAGE_TIMEOUT_DISMISS);
+            mHandler.sendEmptyMessageDelayed(MESSAGE_TIMEOUT_DISMISS, timeout);
+        }
     }
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {
@@ -787,15 +810,24 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
         }
     };
 
+    private ContentObserver mGlobalActionsTimeoutObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            onGlobalActionsTimeoutChanged();
+        }
+    };
+
     private static final int MESSAGE_DISMISS = 0;
     private static final int MESSAGE_REFRESH = 1;
     private static final int MESSAGE_SHOW = 2;
+    private static final int MESSAGE_TIMEOUT_DISMISS = 3;
     private static final int DIALOG_DISMISS_DELAY = 300; // ms
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+            case MESSAGE_TIMEOUT_DISMISS: // intentional fallthrough
             case MESSAGE_DISMISS:
                 if (mDialog != null) {
                     mDialog.dismiss();
@@ -823,6 +855,15 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
                 0) == 1;
         mAirplaneState = airplaneModeOn ? ToggleAction.State.On : ToggleAction.State.Off;
         mAirplaneModeOn.updateState(mAirplaneState);
+    }
+
+    private void onGlobalActionsTimeoutChanged() {
+        int defaultTimeout = mContext.getResources().getInteger(
+                R.integer.config_globalActionsDialogTimeout);
+        mGlobalActionDialogTimeout = Settings.Global.getInt(
+                mContext.getContentResolver(),
+                Settings.Global.GLOBAL_ACTIONS_TIMEOUT_MILLIS,
+                defaultTimeout);
     }
 
     /**

@@ -213,6 +213,18 @@ public class GlobalActionsDialogLiteTest extends SysuiTestCase {
     }
 
     @Test
+    public void testShouldLogTimeout() {
+        mGlobalActionsDialogLite.onShow(null);
+        verifyLogPosted(GlobalActionsDialogLite.GlobalActionsEvent.GA_POWER_MENU_OPEN);
+        mGlobalActionsDialogLite.rescheduleBurninTimeout(20); // ms
+        try {
+            Thread.sleep(30L);
+        } catch (InterruptedException ignore) {
+        }
+        verifyLogPosted(GlobalActionsDialogLite.GlobalActionsEvent.GA_CLOSE_TIMEOUT);
+    }
+
+    @Test
     public void testShouldLogClose_backButton() {
         mGlobalActionsDialogLite = spy(mGlobalActionsDialogLite);
         doReturn(4).when(mGlobalActionsDialogLite).getMaxShownPowerItems();

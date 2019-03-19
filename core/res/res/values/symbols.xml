@@ -5301,4 +5301,5 @@
   <java-symbol type="bool" name="config_viewBasedRotaryEncoderHapticsEnabled" />
 
   <java-symbol type="bool" name="config_quickSettingsShowMediaPlayer" />
+  <java-symbol type="integer" name="config_globalActionsDialogTimeout" />
 </resources>

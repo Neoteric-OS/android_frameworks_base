@@ -18643,6 +18643,15 @@ public final class Settings {
         public static final String REPAIR_MODE_ACTIVE = "repair_mode_active";
 
         /**
+         * Timeout used to dismiss the Global Actions Dialog to avoid the possibility of
+         * OLED burn-in from the dialog.
+         * @hide
+         */
+        @Readable
+        public static final String GLOBAL_ACTIONS_TIMEOUT_MILLIS =
+                "global_actions_timeout_ms";
+
+        /**
          * Settings migrated from Wear OS settings provider.
          * @hide
          */
