@@ -484,6 +484,8 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mDialog.getWindow().setFlags(FLAG_ALT_FOCUSABLE_IM, FLAG_ALT_FOCUSABLE_IM);
         mDialog.show();
         mWindowManagerFuncs.onGlobalActionsShown();
+
+        rescheduleBurninTimeout();
     }
 
     @VisibleForTesting
@@ -653,12 +655,23 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 mAdapter, mOverflowAdapter, mSysuiColorExtractor,
                 mStatusBarService, mNotificationShadeWindowController,
                 mSysUiState, this::onRotate, mKeyguardShowing, mPowerAdapter, mUiEventLogger,
-                mInfoProvider, mStatusBar);
+                mInfoProvider, mStatusBar) {
+            @Override
+            public boolean dispatchTouchEvent(MotionEvent event) {
+                rescheduleBurninTimeout();
+                return super.dispatchTouchEvent(event);
+            }
+        };
 
         dialog.setOnDismissListener(this);
         dialog.setOnShowListener(this);
 
         return dialog;
+    }
+
+    private void rescheduleBurninTimeout() {
+        mHandler.removeMessages(MESSAGE_DISMISS);
+        mHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, BURNIN_DISMISS_DELAY);
     }
 
     @VisibleForTesting
@@ -2040,6 +2053,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private static final int MESSAGE_REFRESH = 1;
     private static final int DIALOG_DISMISS_DELAY = 300; // ms
     private static final int DIALOG_PRESS_DELAY = 850; // ms
+    private static final int BURNIN_DISMISS_DELAY = 60000; // ms
 
     @VisibleForTesting void setZeroDialogPressDelayForTesting() {
         mDialogPressDelay = 0; // ms
