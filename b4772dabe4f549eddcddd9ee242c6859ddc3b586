@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "380d53f2_fad4dd9b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-19T16:55:50Z",
+      "side": 1,
+      "message": "MODIFY_PHONE_STATE is documented as \"not for use by third party apps\" but for historical reasons it would be @SystemApi. Thus, it\u0027s not the permission that governs this API. This API\u0027s public permission is Carrier Privilege. Sooraj makes a good point... if we\u0027re not happy doing this for carrier apps, then that\u0027s another strike against this proposal.",
+      "parentUuid": "fc10a410_49395030",
+      "range": {
+        "startLine": 6712,
+        "startChar": 26,
+        "endLine": 6712,
+        "endChar": 68
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51ec09fc_bacccb65",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
