@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "490ca78f_0add0beb",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T03:19:44Z",
+      "side": 1,
+      "message": "This is actually @Nullable",
+      "range": {
+        "startLine": 686,
+        "startChar": 29,
+        "endLine": 686,
+        "endChar": 36
+      },
+      "revId": "bb132dbcd7aaf30a4872b3ae9ee3255dd46d0832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
