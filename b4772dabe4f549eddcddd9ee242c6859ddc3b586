@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "288cd64c_90aaeb6e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2019-03-19T17:05:30Z",
+      "side": 1,
+      "message": "Clarifying again. We actually are fine with carrier app using it. But will need to further follow up with privacy team",
+      "parentUuid": "380d53f2_fad4dd9b",
+      "range": {
+        "startLine": 6712,
+        "startChar": 26,
+        "endLine": 6712,
+        "endChar": 68
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51ec09fc_bacccb65",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
