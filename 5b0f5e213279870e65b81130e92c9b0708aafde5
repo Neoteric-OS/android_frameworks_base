@@ -413,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "f9575e1d_44e5a881",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-19T17:58:07Z",
+      "side": 1,
+      "message": "Ok, so I looked a bit more into what you suggested. Thanks for the detailed suggestion. I think it would probably work. My only concern is that over simplification of this logic makes it less readable. Clearly, reading the code the way it was written led you to simplify it even further. But you cannot do the reverse. IOW, it takes longer to prove the correctness with what you\u0027re suggesting. \n\nWhat I have here is sort of broken down into a logical flow of: 1) compute an app\u0027s share based on its usage over TUN iface, 2) split that usage across underlyingIfaces.\n\nThat said, I am open to adding more comments in places where you think it makes sense.",
+      "parentUuid": "c2e3f1be_e789e448",
+      "range": {
+        "startLine": 1260,
+        "startChar": 20,
+        "endLine": 1260,
+        "endChar": 44
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37814a23_22cfc0e7",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
