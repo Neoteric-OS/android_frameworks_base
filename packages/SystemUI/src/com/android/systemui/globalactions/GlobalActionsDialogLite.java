@@ -23,6 +23,7 @@ import static android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_M
 import static android.view.WindowManager.ScreenshotSource.SCREENSHOT_GLOBAL_ACTIONS;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_2BUTTON;
 
+import static com.android.internal.logging.UiEventLogger.UiEventEnum.RESERVE_NEW_UI_EVENT_ID;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.SOME_AUTH_REQUIRED_AFTER_USER_REQUEST;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_NOT_REQUIRED;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
@@ -259,6 +260,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     private final DialogTransitionAnimator mDialogTransitionAnimator;
     private final GlobalActionsInteractor mInteractor;
+    private int mGlobalActionDialogTimeout;
 
     @VisibleForTesting
     public enum GlobalActionsEvent implements UiEventLogger.UiEventEnum {
@@ -317,7 +319,10 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         GA_CLOSE_TAP_OUTSIDE(810),
 
         @UiEvent(doc = "Power menu was closed via power + volume up.")
-        GA_CLOSE_POWER_VOLUP(811);
+        GA_CLOSE_POWER_VOLUP(811),
+
+        @UiEvent(doc = "Power menu was closed due to timeout.")
+        GA_CLOSE_TIMEOUT(RESERVE_NEW_UI_EVENT_ID);
 
         private final int mId;
 
@@ -423,6 +428,10 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mGlobalSettings.registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.AIRPLANE_MODE_ON), true,
                 mAirplaneModeObserver);
+        mGlobalSettings.registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.GLOBAL_ACTIONS_TIMEOUT_MILLIS), true,
+                mGlobalActionsTimeoutObserver);
+
         mHasVibrator = vibrator.hasVibrator();
 
         mShowSilentToggle = SHOW_SILENT_TOGGLE && !resources.getBoolean(
@@ -446,6 +455,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mBroadcastDispatcher.unregisterReceiver(mBroadcastReceiver);
         mTelephonyListenerManager.removeServiceStateListener(mPhoneStateListener);
         mGlobalSettings.unregisterContentObserver(mAirplaneModeObserver);
+        mGlobalSettings.unregisterContentObserver(mGlobalActionsTimeoutObserver);
         mConfigurationController.removeCallback(this);
     }
 
@@ -536,6 +546,8 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
             mDialog.show();
         }
         mWindowManagerFuncs.onGlobalActionsShown();
+
+        rescheduleBurninTimeout(mGlobalActionDialogTimeout);
     }
 
     @VisibleForTesting
@@ -592,6 +604,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         }
         mAirplaneModeOn = new AirplaneModeAction();
         onAirplaneModeChanged();
+        onGlobalActionsTimeoutChanged();
 
         mItems.clear();
         mOverflowItems.clear();
@@ -723,12 +736,26 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 mShadeController,
                 mKeyguardUpdateMonitor,
                 mLockPatternUtils,
-                mSelectedUserInteractor);
+                mSelectedUserInteractor) {
+            @Override
+            public boolean dispatchTouchEvent(MotionEvent event) {
+                rescheduleBurninTimeout(mGlobalActionDialogTimeout);
+                return super.dispatchTouchEvent(event);
+            }
+        };
 
         dialog.setOnDismissListener(this);
         dialog.setOnShowListener(this);
 
         return dialog;
+    }
+
+    @VisibleForTesting
+    protected void rescheduleBurninTimeout(int timeout) {
+        if (timeout > 0) {
+            mHandler.removeMessages(MESSAGE_TIMEOUT_DISMISS);
+            mHandler.sendEmptyMessageDelayed(MESSAGE_TIMEOUT_DISMISS, timeout);
+        }
     }
 
     @VisibleForTesting
@@ -2153,8 +2180,16 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         }
     };
 
+    private ContentObserver mGlobalActionsTimeoutObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            onGlobalActionsTimeoutChanged();
+        }
+    };
+
     private static final int MESSAGE_DISMISS = 0;
     private static final int MESSAGE_REFRESH = 1;
+    private static final int MESSAGE_TIMEOUT_DISMISS = 2;
     private static final int DIALOG_DISMISS_DELAY = 300; // ms
     private static final int DIALOG_PRESS_DELAY = 850; // ms
 
@@ -2165,6 +2200,9 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case MESSAGE_TIMEOUT_DISMISS:
+                    mUiEventLogger.log(GlobalActionsEvent.GA_CLOSE_TIMEOUT);
+                    // fallthrough
                 case MESSAGE_DISMISS:
                     if (mDialog != null) {
                         if (SYSTEM_DIALOG_REASON_DREAM.equals(msg.obj)) {
@@ -2194,6 +2232,14 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 0) == 1;
         mAirplaneState = airplaneModeOn ? ToggleState.On : ToggleState.Off;
         mAirplaneModeOn.updateState(mAirplaneState);
+    }
+
+    private void onGlobalActionsTimeoutChanged() {
+        int defaultTimeout = mContext.getResources().getInteger(
+                R.integer.config_globalActionsDialogTimeout);
+        mGlobalActionDialogTimeout = mGlobalSettings.getInt(
+                Settings.Global.GLOBAL_ACTIONS_TIMEOUT_MILLIS,
+                defaultTimeout);
     }
 
     /**

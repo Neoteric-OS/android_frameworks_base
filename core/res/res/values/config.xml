@@ -6988,4 +6988,8 @@
 
     <!-- The key containing the branching boolean for legacy Search. -->
     <string name="config_defaultContextualSearchLegacyEnabled" translatable="false" />
+
+    <!-- Default dismiss timeout (in milliseconds) for the power menu (Global Actions) dialog to
+         avoid possible screen burn in issues. Set to '0' to disable timeout -->
+    <integer name="config_globalActionsDialogTimeout">60000</integer>
 </resources>
