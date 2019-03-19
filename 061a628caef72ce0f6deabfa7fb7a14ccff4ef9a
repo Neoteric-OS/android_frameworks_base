@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "747c22c2_d4fa2c80",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-19T10:20:34Z",
+      "side": 1,
+      "message": "How about says:\nDefault assumes the entitlement result is negative if we do not receive a positive one.\n\nI could probably understand what you mean but it seems unclear?",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199b3d3a_c99c7a0a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-19T10:20:34Z",
+      "side": 1,
+      "message": "Suppose to be \"This must to be always ...\"?\n\nHowever, I wonder if we should have some mechanisms to ensure this really work as our expectation. I mean, people may call from the other threads with noticing the comments here and break it.",
+      "range": {
+        "startLine": 149,
+        "startChar": 18,
+        "endLine": 149,
+        "endChar": 66
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6853f3_1f614884",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-19T10:20:34Z",
+      "side": 1,
+      "message": "when?",
+      "range": {
+        "startLine": 290,
+        "startChar": 60,
+        "endLine": 290,
+        "endChar": 66
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814219ee_ac44e4f0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-19T10:20:34Z",
+      "side": 1,
+      "message": "Sorry, I may give a bad sample. I think usually it would be parameter for the function. It should be /* idle */",
+      "range": {
+        "startLine": 400,
+        "startChar": 68,
+        "endLine": 400,
+        "endChar": 80
+      },
+      "revId": "061a628caef72ce0f6deabfa7fb7a14ccff4ef9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
