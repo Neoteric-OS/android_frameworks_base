@@ -199,6 +199,30 @@
       "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ccc04f_f6b848cd",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-19T12:47:57Z",
+      "side": 1,
+      "message": "+1 to what Paul said. @UnsupportedApiUsage in P means we can\u0027t afford to stop having such a method in P.",
+      "parentUuid": "5006f4d9_46df4727",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "f8390ff5d07d895b0417b0af0d0d10bacee13e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
