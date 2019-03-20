@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7086f62_d8bcd3f5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7085,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-03-20T23:47:27Z",
+      "side": 1,
+      "message": "Use getSubId(SubscriptionManager.getDefaultDataSubscriptionId()) instead.",
+      "range": {
+        "startLine": 7085,
+        "startChar": 36,
+        "endLine": 7085,
+        "endChar": 86
+      },
+      "revId": "9fab850010c672b37d4694b6ee05180b42338c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb20639_e30ac612",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-03-20T23:47:27Z",
+      "side": 1,
+      "message": "This can be deleted.",
+      "revId": "9fab850010c672b37d4694b6ee05180b42338c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4d3b33_c9c784bf",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-03-20T23:47:27Z",
+      "side": 1,
+      "message": "Add comments.",
+      "revId": "9fab850010c672b37d4694b6ee05180b42338c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee9b10d_ad900207",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-03-20T23:47:27Z",
+      "side": 1,
+      "message": "nit: leave a line please",
+      "revId": "9fab850010c672b37d4694b6ee05180b42338c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
