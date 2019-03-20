@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81020d91_3ad1b8df",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1395292
+      },
+      "writtenOn": "2019-03-20T08:37:25Z",
+      "side": 1,
+      "message": "We should also update this log to isSilenceMode instead.",
+      "range": {
+        "startLine": 1664,
+        "startChar": 24,
+        "endLine": 1664,
+        "endChar": 38
+      },
+      "revId": "87fd18fd9b41874f56bf5d78340dc6c91edde993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
