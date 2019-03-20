@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "e0c18c35_07bd7f44",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I figured. I think it\u0027s right. Thanks.",
+      "parentUuid": "bae7d6a3_09a59940",
+      "range": {
+        "startLine": 290,
+        "startChar": 43,
+        "endLine": 290,
+        "endChar": 46
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65cc21c_546caf4d",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 3
@@ -987,6 +1011,30 @@
       "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb962e8b_dffc219e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Lol yes you\u0027re right. Sorry to have missed this.",
+      "parentUuid": "0bf211cb_56407226",
+      "range": {
+        "startLine": 527,
+        "startChar": 1,
+        "endLine": 528,
+        "endChar": 63
+      },
+      "revId": "5f2ae7f86ea6ed34055229e2f0c7f9f04012d75a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468a2a59_92161938",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Optional : call this mSilentProvisioningQueue to make clear it\u0027s a queue of stuff you\u0027re waiting for. Not feeling too strongly though because you need to call remove(E) which is not part of the normal semantics of what Java usually calls a queue.",
+      "range": {
+        "startLine": 109,
+        "startChar": 65,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93a6571d_d34a85a6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Please have a comment on this var explaining its semantics",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3f83ce_e976ef58",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "I tend to agree with Chiachang that this is confusing – case in point.\n\nThe issue here is that you are calling a method whose return value depends on the current contents of a state member. That\u0027s what\u0027s confusing here, and it\u0027s a common antipattern.\n\nThe standard solution to this is to pass the configuration object to isTetherProvisioningRequired (you don\u0027t have to pass mSystemProperties as this does not contain state changing over the lifetime of EntitlementManager). The change is trivial because in all other places you can just pass mConfig.\n\nThat will also let you use the local instead of the member throughout in this function for cleanliness.\n\nIdeally, I think this change should be preceded by a cleanup where you add the finals and the nullability annotations, the log cleanups, the cleanup to updateEntitlementCacheValue and change isTetherProvisioningRequired to take a config object.",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01292c71_3d638dc8",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "I don\u0027t think the change provides enough context for me to understand whether this is correct or not, but it looks suspicious :\n\n- These are strings and you\u0027re testing for reference equality rather than equals(). Is this really what you want ?\n- It looks to me like you\u0027re managing state and triggering a change when the response changes, but if there used to be a value in mSilentProvisioningResponse and the new one is empty, then you return without resetting mSilentProvisioningResponse. Is this really what you want ? ISTM you should unregister the receiver if that happens.",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 63
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ddcd7a_35b29b2d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "This is only going to work if the entitlement apps don\u0027t target the Settings app as a component for their broadcast. Are you sure this is true across the board ?",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 33
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9e84c8_9cc40991",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "So this looks a bit dangerous to me. I understand the premise, but maybe we need some kind of timeout or something ?\n\nThere are many provisioning apps and we don\u0027t control them ; we should expect some of them to have bugs. Here is the kind of scenario I\u0027m concerned about :\n\n- User enables tethering to mobile.\n- Tethering starts running the silent provisioning flow.\n- The provisioning app has a temporary problem and crashes before it sends the broadcast. Or, the device is under extreme memory pressure and it\u0027s killed by the system before it can send the broadcast.\n- Tethering doesn\u0027t start (that\u0027s not different than before and is unavoidable if the entitlement app crashes, so that\u0027s fine here)\n- Even after the device has recovered, now trying to enable tethering doesn\u0027t do anything until you reboot the device.",
+      "range": {
+        "startLine": 288,
+        "startChar": 36,
+        "endLine": 288,
+        "endChar": 44
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c5ab43_ed0c7112",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Curious : why don\u0027t we need to say the following here ?\n\nmCellularPermitted.put(type, TETHER_ERROR_ENTITLEMENT_UNKONWN);",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 380,
+        "endChar": 5
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc55f81_9a15fd92",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Suggest integrating this test in the test above instead :\n\nif (activityInfo \u003d\u003d null || applicationInfo \u003d\u003d null || !isSystemApp()) continue;\n\n...",
+      "range": {
+        "startLine": 396,
+        "startChar": 17,
+        "endLine": 396,
+        "endChar": 67
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf3460a_791499a3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "I think this needs comments to give a hint of what is happening here. I had to go through the entire log of the bug you pointed out to understand.\n\nSuggested wording :\n\nAfter not being used for a few days (as can easily be the case for tethering) the entitlement app might have been put into the \"app standby\" mode. That would prevent it from accessing the network in the background, making it impossible for it to silently check for provisioning. Therefore, forcibly move the provisioning app out of app standby mode to let it access the network silently.",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 400,
+        "endChar": 48
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3ec841_ab34b303",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in runUiTetherProvisioning(int, ResultReceiver) ?\n\nIIUC, the only point of this 1-argument method is no simplify the call to the 2-arg version, but the 2-arg version is the one doing the actual work. It looks like the 2-arg version is at least called from the tests so recording state into the map should be done in the method doing the work rather than the convenience method.",
+      "range": {
+        "startLine": 411,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 26
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd4a972_4e47dbed",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "This here is a bugfix right ? Argues strongly for moving this to a separate change.",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58156928_8ec70602",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T04:30:44Z",
+      "side": 1,
+      "message": "Can\u0027t we simply give CHANGE_APP_IDLE_STATE to the system server instead of changing the code ?",
+      "range": {
+        "startLine": 905,
+        "startChar": 25,
+        "endLine": 905,
+        "endChar": 55
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
