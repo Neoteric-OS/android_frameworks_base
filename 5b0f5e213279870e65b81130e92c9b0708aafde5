@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "40479d9b_b62b99b1",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T18:19:26Z",
+      "side": 1,
+      "message": "Still no. Refer to my comment on the CTS. Your link is advocating poor semantics that every. modern. language. has been condemning.\n\nI\u0027m not particularly big on insisting on finals all over the place. But suggesting it\u0027s better for locals not to be final is being on the wrong side of history. Locals should generally be final unless there is a need for mutability, and that\u0027s mostly because it reduces the cognitive load when reading the code.",
+      "parentUuid": "339477d2_a10e1d29",
+      "range": {
+        "startLine": 1189,
+        "startChar": 8,
+        "endLine": 1189,
+        "endChar": 13
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4431ce_f5a69492",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
