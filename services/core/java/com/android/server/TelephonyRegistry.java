@@ -157,6 +157,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private final Context mContext;
 
+    private final SubscriptionManager mSubscriptionManager;
+
     // access should be inside synchronized (mRecords) for these two fields
     private final ArrayList<IBinder> mRemoveList = new ArrayList<IBinder>();
     private final ArrayList<Record> mRecords = new ArrayList<Record>();
@@ -260,8 +262,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     static final int ENFORCE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR
                         | PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR
-                        | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST
-                        | PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE;
+                        | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST;
 
     static final int PRECISE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_PRECISE_CALL_STATE |
@@ -367,6 +368,9 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         CellLocation  location = CellLocation.getEmpty();
 
         mContext = context;
+
+        mSubscriptionManager = (SubscriptionManager) mContext.getSystemService(
+                Context.TELEPHONY_SUBSCRIPTION_SERVICE);
         mBatteryStats = BatteryStatsService.getService();
 
         int numPhones = TelephonyManager.getDefault().getPhoneCount();
@@ -1758,20 +1762,31 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             log("notifyActiveDataSubIdChanged: activeDataSubId=" + activeDataSubId);
         }
 
-        synchronized (mRecords) {
-            mActiveDataSubId = activeDataSubId;
+        int[] activeSubIds = mSubscriptionManager.getActiveSubscriptionIdList();
+        ArrayList<Record> copiedRecords = new ArrayList<>(mRecords);
+        mActiveDataSubId = activeDataSubId;
 
-            for (Record r : mRecords) {
+        for (Record r : copiedRecords) {
+            for (int activeSubId : activeSubIds) {
                 if (r.matchPhoneStateListenerEvent(
                         PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE)) {
-                    try {
-                        r.callback.onActiveDataSubIdChanged(activeDataSubId);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
+                    if (TelephonyPermissions.checkReadPhoneStateNoThrow(mContext, activeSubId,
+                            r.callerPid, r.callerUid, r.callingPackage,
+                            "notifyActiveDataSubIdChanged")) {
+                        synchronized (mRecords) {
+                            // Check if the record that is being processed is still in the list
+                            if (mRecords.contains(r)) {
+                                try {
+                                    r.callback.onActiveDataSubIdChanged(activeDataSubId);
+                                } catch (RemoteException ex) {
+                                    mRemoveList.add(r.binder);
+                                }
+                            }
+                            handleRemoveListLocked();
+                        }
                     }
                 }
             }
-            handleRemoveListLocked();
         }
     }
 
