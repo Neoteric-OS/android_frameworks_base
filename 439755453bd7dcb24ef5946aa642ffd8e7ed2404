@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f03fd7e2_10deb4bc",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T06:13:36Z",
+      "side": 1,
+      "message": "As asked in the previous comment please remove this null check now (in a followup change is fine)",
+      "range": {
+        "startLine": 319,
+        "startChar": 8,
+        "endLine": 321,
+        "endChar": 9
+      },
+      "revId": "439755453bd7dcb24ef5946aa642ffd8e7ed2404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7d3c72_f919c2aa",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T06:13:36Z",
+      "side": 1,
+      "message": "Remove the null check as it\u0027s useless now (in a followup change is fine)",
+      "range": {
+        "startLine": 394,
+        "startChar": 7,
+        "endLine": 394,
+        "endChar": 32
+      },
+      "revId": "439755453bd7dcb24ef5946aa642ffd8e7ed2404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
