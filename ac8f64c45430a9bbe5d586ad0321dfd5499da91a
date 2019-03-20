@@ -16,6 +16,24 @@
       "revId": "ac8f64c45430a9bbe5d586ad0321dfd5499da91a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86115aa5_3b9bbfc4",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2019-03-20T04:13:09Z",
+      "side": 1,
+      "message": "typo.\ninclude_dirs: [\"frameworks/base/core/java\",] is right.",
+      "parentUuid": "4b1efcc3_8eb03a96",
+      "revId": "ac8f64c45430a9bbe5d586ad0321dfd5499da91a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
