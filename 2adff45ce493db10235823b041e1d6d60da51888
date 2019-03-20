@@ -539,6 +539,30 @@
       "revId": "2adff45ce493db10235823b041e1d6d60da51888",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51f3e2e_e157980c",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-20T11:20:17Z",
+      "side": 1,
+      "message": "+ Amith,\n  Could you give me some suggestion here ??\n  Any way to let system service force app to active ??",
+      "parentUuid": "27babfb9_0025b51f",
+      "range": {
+        "startLine": 905,
+        "startChar": 25,
+        "endLine": 905,
+        "endChar": 55
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
