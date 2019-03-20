@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1efcc3_8eb03a96",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2019-03-20T02:24:05Z",
+      "side": 1,
+      "message": "you can use local_include_dir: \"frameworks/base/core/java\" instead of this line.\nthe cl(aosp/930740) is under review now.",
+      "revId": "ac8f64c45430a9bbe5d586ad0321dfd5499da91a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
