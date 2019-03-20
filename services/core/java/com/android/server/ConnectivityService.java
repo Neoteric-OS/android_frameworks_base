@@ -236,6 +236,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private static final boolean LOGD_BLOCKED_NETWORKINFO = true;
 
+    private static final String DEFAULT_PORTAL_HTTP_URL =
+            "http://connectivitycheck.gstatic.com/generate_204";
+
     // TODO: create better separation between radio types and network types
 
     // how long to wait before switching back to a radio's default network
@@ -6695,7 +6698,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public String getCaptivePortalServerUrl() {
         enforceConnectivityInternalPermission();
-        return NetworkMonitorUtils.getCaptivePortalServerHttpUrl(mContext);
+        return NetworkMonitorUtils.getCaptivePortalServerHttpUrl(mContext, DEFAULT_PORTAL_HTTP_URL);
     }
 
     @Override

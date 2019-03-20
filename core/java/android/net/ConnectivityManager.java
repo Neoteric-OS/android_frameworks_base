@@ -1351,9 +1351,12 @@ public class ConnectivityManager {
      * 2. This URL must be HTTP as redirect responses are used to find captive portal
      *    sign-in pages. Captive portals cannot respond to HTTPS requests with redirects.
      *
+     * @deprecated Starting from Q, NetworkMonitor may be using different strategies to check for
+     *             captive portals, so this method may not reflect platform behavior.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.LOCAL_MAC_ADDRESS)
     public String getCaptivePortalServerUrl() {
         try {
