@@ -415,6 +415,30 @@
     },
     {
       "key": {
+        "uuid": "93040b71_2c51971a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T18:43:50Z",
+      "side": 1,
+      "message": "I agree with Junyu that some note explaining at least what is in and what is out would help. In fact, building on Junyu\u0027s comment that this is bizarrely doing part of the init while migrateTun is adding up the thing at the end, I think an alternative would be to move the summing up of the totals of the tun interface to migrateTun, in which case you only have one output argument and it can be returned instead of initialized externally and passed. Generally speaking I don\u0027t like too much methods that rely on their callers to modify a passed argument in a custom way, unless it can be argued that the specific adjustment is generally useful and could be used in other methods – and in this case it\u0027s kind of borderline.\n\nIf none of these should be nullable, then they should be @NonNull shouldn\u0027t they ?",
+      "parentUuid": "1e201288_b870e374",
+      "range": {
+        "startLine": 1225,
+        "startChar": 12,
+        "endLine": 1225,
+        "endChar": 18
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef0ca014_5bb905d1",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -557,6 +581,30 @@
     },
     {
       "key": {
+        "uuid": "3e938a57_9fa92c40",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T18:43:50Z",
+      "side": 1,
+      "message": "You can see I actually suggested the same thing about some javadoc by looking at the new patchset, before I even read these comments. I think a javadoc with an overview of what this function is doing would be a lot of help reading the code because you would go in understanding intent, rather than having to piece it together from the formulas.\n\nAs for clarity I don\u0027t have a very strong opinion between the new patchset or Junyu\u0027s suggestion. I observe that Junyu\u0027s suggestion should result in less rounding errors, and by virtue of having one less step of computation lets the reader off with a lot less state in their mind, so I think it would likely result in slightly easier to read code, but maybe not enough to justify the effort of rewriting everything.",
+      "parentUuid": "fdfb3da7_7c719fdd",
+      "range": {
+        "startLine": 1260,
+        "startChar": 20,
+        "endLine": 1260,
+        "endChar": 44
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37814a23_22cfc0e7",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -651,6 +699,30 @@
     },
     {
       "key": {
+        "uuid": "8540a5f6_3c8391fd",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T18:43:50Z",
+      "side": 1,
+      "message": "Agreed with Varun ; at most maybe we want to have a comment. I thought the same thing to myself, but anyway :\n\n- The old code was doing the same thing so I don\u0027t see how this would be worse\n- I think the only real way of addressing the theoretical problem is to use something like BigInteger, and NetworkStats has enough performance friction as it is.\n\nBut more importantly, I think Varun has the stronger argument : this is triggered at most every 2MB, and while inaccuracies and race conditions may make the total usage a bit over that, the probability of this happening is low enough that we can afford not to care.",
+      "parentUuid": "07636599_a1040252",
+      "range": {
+        "startLine": 1282,
+        "startChar": 28,
+        "endLine": 1282,
+        "endChar": 68
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6688e79_8535f6a2",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -710,6 +782,30 @@
       "side": 1,
       "message": "Agree, but I think it doesn\u0027t mean it is better to do the Math.min every time.\nMaybe preserve the logic and make it more understandable?\ne.g. tunedUnderlyingIfaceTotal\n\nBut again, I\u0027m fine with it if other reviewers think it is ok.\nMaybe jchalard@ will have different opinion about this?",
       "parentUuid": "183fafe7_26ccc29d",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 87
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f07868_c0d8125a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T18:43:50Z",
+      "side": 1,
+      "message": "Frankly I\u0027m not too concerned about this. At least Math.min (even every time) is easy to understand, which I agree with Varun the pool is not.",
+      "parentUuid": "41480695_43f0e29f",
       "range": {
         "startLine": 1284,
         "startChar": 20,
