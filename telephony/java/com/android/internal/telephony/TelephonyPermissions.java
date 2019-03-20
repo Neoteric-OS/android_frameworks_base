@@ -135,6 +135,41 @@ public final class TelephonyPermissions {
     }
 
     /**
+     * Check whether the app with the given pid/uid can read phone state, or has carrier
+     * privileges with given subscription ID.
+     *
+     * <p>Using this method, callers cannot tell the difference between M+ apps which declare the
+     * runtime permission but do not have it, and pre-M apps which declare the static permission
+     * but had access revoked via AppOps. Apps in the former category expect SecurityExceptions;
+     * apps in the latter don't. So this method is suitable for use only if the behavior in both
+     * scenarios is meant to be identical.
+     *
+     * @return the same values of what {@link #checkReadPhoneState} returns except it returns
+     * {@code false} instead of throwing exception if the app does not have carrier privilege.
+     */
+    public static boolean checkReadPhoneStateNoThrow(
+            Context context, int subId, int pid, int uid, String callingPackage, String message) {
+        try {
+            return checkReadPhoneStateNoThrow(context, TELEPHONY_SUPPLIER, subId, pid, uid,
+                    callingPackage, message);
+        } catch (SecurityException e) {
+            return false;
+        }
+    }
+
+    @VisibleForTesting
+    public static boolean checkReadPhoneStateNoThrow(
+            Context context, Supplier<ITelephony> telephonySupplier, int subId, int pid, int uid,
+            String callingPackage, String message) {
+        try {
+            return checkReadPhoneState(context, telephonySupplier, subId, pid, uid, callingPackage,
+                    message);
+        } catch (SecurityException e) {
+            return false;
+        }
+    }
+
+    /**
      * Check whether the app with the given pid/uid can read the call log.
      * @return {@code true} if the specified app has the read call log permission and AppOpp granted
      *      to it, {@code false} otherwise.
