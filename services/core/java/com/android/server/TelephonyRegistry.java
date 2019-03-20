@@ -260,8 +260,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     static final int ENFORCE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR
                         | PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR
-                        | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST
-                        | PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE;
+                        | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST;
 
     static final int PRECISE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_PRECISE_CALL_STATE |
@@ -1760,14 +1759,23 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         synchronized (mRecords) {
             mActiveDataSubId = activeDataSubId;
+            SubscriptionManager sm = (SubscriptionManager) mContext.getSystemService(
+                    Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+            int[] activeSubIds = sm.getActiveSubscriptionIdList();
 
             for (Record r : mRecords) {
-                if (r.matchPhoneStateListenerEvent(
-                        PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE)) {
-                    try {
-                        r.callback.onActiveDataSubIdChanged(activeDataSubId);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
+                for (int activeSubId : activeSubIds) {
+                    if (TelephonyPermissions.checkReadPhoneStateNoThrow(mContext, activeSubId,
+                            r.callerPid, r.callerUid, r.callingPackage,
+                            "notifyActiveDataSubIdChanged")) {
+                        if (r.matchPhoneStateListenerEvent(
+                                PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE)) {
+                            try {
+                                r.callback.onActiveDataSubIdChanged(activeDataSubId);
+                            } catch (RemoteException ex) {
+                                mRemoveList.add(r.binder);
+                            }
+                        }
                     }
                 }
             }
