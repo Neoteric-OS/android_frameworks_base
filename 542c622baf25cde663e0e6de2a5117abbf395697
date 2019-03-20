@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a27b883_f4322a85",
+        "filename": "core/java/android/net/metrics/DhcpErrorEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T14:10:40Z",
+      "side": 1,
+      "message": "So honestly I think this is nicer to read if written like \n\n    private static final int L2_ERROR_TYPE \u003d L2_ERROR \u003c\u003c 24;\n    private static final int L3_ERROR_TYPE \u003d L3_ERROR_TOP \u003c\u003c 24;\n    ...\n    public static final int L2_TOO_SHORT      \u003d L2_ERROR_TYPE | 0x10000;\n    public static final int L2_WRONG_ETH_TYPE \u003d L2_ERROR_TYPE | 0x20000;\n\nOr alternatively\n\n    private static final int L2_ERROR_TYPE \u003d L2_ERROR \u003c\u003c 8;\n    private static final int L3_ERROR_TYPE \u003d L3_ERROR_TOP \u003c\u003c 8;\n    ...\n    public static final int L2_TOO_SHORT      \u003d (L2_ERROR_TYPE | 0x1) \u003c\u003c 16;\n    public static final int L2_WRONG_ETH_TYPE \u003d (L2_ERROR_TYPE | 0x2) \u003c\u003c 16;\n\nOr even\n\n    // L2_ERROR group : top byte \u003d L2_ERROR\n    public static final int L2_TOO_SHORT      \u003d 0x01010000;\n    public static final int L2_WRONG_ETH_TYPE \u003d 0x01020000;\n    // L3_ERROR group : top byte \u003d L3_ERROR\n    public static final int L3_TOO_SHORT      \u003d 0x02010000;",
+      "range": {
+        "startLine": 40,
+        "startChar": 57,
+        "endLine": 40,
+        "endChar": 86
+      },
+      "revId": "542c622baf25cde663e0e6de2a5117abbf395697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1783d2_86393f16",
+        "filename": "core/java/android/net/metrics/DhcpErrorEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T14:10:40Z",
+      "side": 1,
+      "message": "This also should probably be moved above line 40.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "542c622baf25cde663e0e6de2a5117abbf395697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
