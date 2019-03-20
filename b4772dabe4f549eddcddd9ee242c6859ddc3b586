@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "0e5f0e54_c308e090",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-20T22:40:10Z",
+      "side": 1,
+      "message": "Added code in PhoneInterfaceManager to check for MODIFY_PHONE_STATE",
+      "parentUuid": "288cd64c_90aaeb6e",
+      "range": {
+        "startLine": 6712,
+        "startChar": 26,
+        "endLine": 6712,
+        "endChar": 68
+      },
+      "revId": "b4772dabe4f549eddcddd9ee242c6859ddc3b586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ec09fc_bacccb65",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
