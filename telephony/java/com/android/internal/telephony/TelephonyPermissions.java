@@ -130,6 +130,53 @@ public final class TelephonyPermissions {
         // We have READ_PHONE_STATE permission, so return true as long as the AppOps bit hasn't been
         // revoked.
         AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        return appOps.noteOp(AppOpsManager.OP_READ_PHONE_STATE, uid, callingPackage)
+                == AppOpsManager.MODE_ALLOWED;
+    }
+
+    /**
+     * Check whether the app with the given pid/uid can read phone state, or has carrier
+     * privileges with given subscription ID.
+     *
+     * @return this method returns the same values of what {@link #checkReadPhoneState} returns
+     * except it returns false instead of throwing exception if it does not have carrier privilege.
+     */
+    public static boolean checkReadPhoneStateNoThrow(
+            Context context, int subId, int pid, int uid, String callingPackage, String message) {
+        return checkReadPhoneStateNothrow(
+                context, TELEPHONY_SUPPLIER, subId, pid, uid, callingPackage, message);
+    }
+
+    private static boolean checkReadPhoneStateNothrow(
+            Context context, Supplier<ITelephony> telephonySupplier, int subId, int pid, int uid,
+            String callingPackage, String message) {
+        try {
+            context.enforcePermission(
+                    android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, pid, uid, message);
+
+            // SKIP checking for run-time permission since caller has PRIVILEGED permission
+            return true;
+        } catch (SecurityException privilegedPhoneStateException) {
+            try {
+                context.enforcePermission(
+                        android.Manifest.permission.READ_PHONE_STATE, pid, uid, message);
+            } catch (SecurityException phoneStateException) {
+                try {
+                    // If we don't have the runtime permission, but do have carrier privileges, that
+                    // suffices for reading phone state.
+                    if (SubscriptionManager.isValidSubscriptionId(subId)) {
+                        enforceCarrierPrivilege(telephonySupplier, subId, uid, message);
+                        return true;
+                    }
+                } catch (SecurityException se) {
+                    Rlog.d(LOG_TAG, "No carrier privilege allowed.");
+                }
+            }
+        }
+
+        // We have READ_PHONE_STATE permission, so return true as long as the AppOps bit hasn't been
+        // revoked.
+        AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         return appOps.noteOp(AppOpsManager.OP_READ_PHONE_STATE, uid, callingPackage) ==
                 AppOpsManager.MODE_ALLOWED;
     }
