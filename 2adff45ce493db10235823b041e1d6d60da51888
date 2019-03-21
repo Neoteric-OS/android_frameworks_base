@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26898087_427e6987",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-21T09:18:43Z",
+      "side": 1,
+      "message": "Thanks sharing for option. I prefer the original one since its operation is belong to list as you point out.",
+      "parentUuid": "468a2a59_92161938",
+      "range": {
+        "startLine": 109,
+        "startChar": 65,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93a6571d_d34a85a6",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
