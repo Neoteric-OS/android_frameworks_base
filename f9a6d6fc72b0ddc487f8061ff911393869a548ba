@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e4f00f_cb06ee74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "Please update to explain how the change fixes the problem.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab769a45_01c9171c",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3707,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 3706,
+        "startChar": 0,
+        "endLine": 3707,
+        "endChar": 64
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882c98fd_18647d2e",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3718,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 3718,
+        "startChar": 16,
+        "endLine": 3718,
+        "endChar": 47
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fa8f63_d80a6c32",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3720,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3720,
+        "startChar": 16,
+        "endLine": 3720,
+        "endChar": 54
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b741880a_d9d2d46a",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3722,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3722,
+        "startChar": 17,
+        "endLine": 3722,
+        "endChar": 51
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09651c6_d4e6c383",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3724,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3724,
+        "startChar": 16,
+        "endLine": 3724,
+        "endChar": 54
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a3b10b_d60c1b63",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3726,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2019-03-21T14:04:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3726,
+        "startChar": 16,
+        "endLine": 3726,
+        "endChar": 65
+      },
+      "revId": "f9a6d6fc72b0ddc487f8061ff911393869a548ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
