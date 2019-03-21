@@ -147,6 +147,10 @@ public class TrafficStats {
     @SystemApi
     @TestApi
     public static final int TAG_SYSTEM_DHCP_SERVER = 0xFFFFFF46;
+    /** @hide */
+    @SystemApi
+    @TestApi
+    public static final int TAG_SYSTEM_DNSPROXY_SERVER = 0xFFFFFF47;
 
     private static INetworkStatsService sStatsService;
 

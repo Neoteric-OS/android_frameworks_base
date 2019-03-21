@@ -3132,6 +3132,31 @@ package android.net {
     method public void onUpstreamChanged(@Nullable android.net.Network);
   }
 
+  public abstract class DnsPacket {
+    ctor protected DnsPacket(@NonNull byte[]) throws android.net.ParseException;
+    field public static final int ANSECTION = 1; // 0x1
+    field public static final int ARSECTION = 3; // 0x3
+    field public static final int NSSECTION = 2; // 0x2
+    field public static final int QDSECTION = 0; // 0x0
+    field protected final android.net.DnsPacket.DnsHeader mHeader;
+    field protected final java.util.List<android.net.DnsPacket.DnsRecord>[] mRecords;
+  }
+
+  public class DnsPacket.DnsHeader {
+    method public int getRecordCount(int);
+    field public final int flags;
+    field public final int id;
+    field public final int rcode;
+  }
+
+  public class DnsPacket.DnsRecord {
+    method @Nullable public byte[] getRR();
+    field public final String dName;
+    field public final int nsClass;
+    field public final int nsType;
+    field public final long ttl;
+  }
+
   public final class IpPrefix implements android.os.Parcelable {
     ctor public IpPrefix(java.net.InetAddress, int);
     ctor public IpPrefix(String);
@@ -3299,6 +3324,7 @@ package android.net {
     method public static void setThreadStatsTagRestore();
     field public static final int TAG_SYSTEM_DHCP = -192; // 0xffffff40
     field public static final int TAG_SYSTEM_DHCP_SERVER = -186; // 0xffffff46
+    field public static final int TAG_SYSTEM_DNSPROXY_SERVER = -185; // 0xffffff47
     field public static final int TAG_SYSTEM_PROBE = -190; // 0xffffff42
   }
 

@@ -9513,6 +9513,17 @@ public final class Settings {
                 "tether_enable_legacy_dhcp_server";
 
         /**
+         * Use the old dnsmasq DnsProxy server for tethering instead of the framework
+         * implementation.
+         *
+         * Integer values are interpreted as boolean, and the absence of an explicit setting
+         * is interpreted as |false|.
+         * @hide
+         */
+        public static final String TETHER_ENABLE_LEGACY_DNSPROXY_SERVER =
+                "tether_enable_legacy_dnsproxy_server";
+
+        /**
          * List of certificate (hex string representation of the application's certificate - SHA-1
          * or SHA-256) and carrier app package pairs which are whitelisted to prompt the user for
          * install when a sim card with matching UICC carrier privilege rules is inserted.  The
