@@ -10149,8 +10149,6 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
                 return telephony.getEmergencyNumberList(mContext.getOpPackageName());
-            } else {
-                throw new IllegalStateException("telephony service is null.");
             }
         } catch (RemoteException ex) {
             Log.e(TAG, "getEmergencyNumberList RemoteException", ex);
@@ -10215,8 +10213,6 @@ public class TelephonyManager {
                     }
                 }
                 return emergencyNumberList;
-            } else {
-                throw new IllegalStateException("telephony service is null.");
             }
         } catch (RemoteException ex) {
             Log.e(TAG, "getEmergencyNumberList with Categories RemoteException", ex);
@@ -10241,8 +10237,6 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
                 return telephony.isEmergencyNumber(number, true);
-            } else {
-                throw new IllegalStateException("telephony service is null.");
             }
         } catch (RemoteException ex) {
             Log.e(TAG, "isEmergencyNumber RemoteException", ex);
@@ -10280,8 +10274,6 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
                 return telephony.isEmergencyNumber(number, false);
-            } else {
-                throw new IllegalStateException("telephony service is null.");
             }
         } catch (RemoteException ex) {
             Log.e(TAG, "isEmergencyNumber RemoteException", ex);
