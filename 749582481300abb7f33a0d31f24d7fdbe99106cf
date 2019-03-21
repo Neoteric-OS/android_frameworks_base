@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79442935_f9e99121",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T12:25:16Z",
+      "side": 1,
+      "message": "I don\u0027t think anything at all in the memory store AIDL interfaces uses any framework parcelable. That being said, it\u0027s likely we\u0027ll need this in the future, so it\u0027s probably okay.",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 79
+      },
+      "revId": "749582481300abb7f33a0d31f24d7fdbe99106cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c91aca6_888d2b8b",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T12:25:16Z",
+      "side": 1,
+      "message": "Do we need an api_dir rule here ? I expect those files should go in the same dir as the networkstack-aidl-interfaces.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "749582481300abb7f33a0d31f24d7fdbe99106cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb175ba5_53f3b134",
+        "filename": "services/net/java/android/net/TcpKeepalivePacketDataParcelable.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T12:25:16Z",
+      "side": 1,
+      "message": "You will need to rebase on top of aosp/930868",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "749582481300abb7f33a0d31f24d7fdbe99106cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
