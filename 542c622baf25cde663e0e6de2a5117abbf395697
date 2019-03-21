@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d15e076_95d3e0a9",
+        "filename": "core/java/android/net/metrics/DhcpErrorEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-21T13:57:09Z",
+      "side": 1,
+      "message": "I like option 2, but I\u0027d prefer to change this syntax in a CL on top considering the API deadline (refactoring to that syntax should not affect the API file). I\u0027ll prepare another CL.",
+      "parentUuid": "4a27b883_f4322a85",
+      "range": {
+        "startLine": 40,
+        "startChar": 57,
+        "endLine": 40,
+        "endChar": 86
+      },
+      "revId": "542c622baf25cde663e0e6de2a5117abbf395697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba1783d2_86393f16",
         "filename": "core/java/android/net/metrics/DhcpErrorEvent.java",
         "patchSetId": 1
