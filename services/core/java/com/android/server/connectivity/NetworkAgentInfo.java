@@ -487,7 +487,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         int score = currentScore;
-        if (!lastValidated && !pretendValidated && !ignoreWifiUnvalidationPenalty()) {
+        if (!lastValidated && !pretendValidated && !ignoreWifiUnvalidationPenalty() && !isVPN()) {
             score -= ConnectivityConstants.UNVALIDATED_SCORE_PENALTY;
         }
         if (score < 0) score = 0;
