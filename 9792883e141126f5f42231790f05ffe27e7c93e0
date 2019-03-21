@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f15e3c9_880103fe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2648,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-21T10:54:39Z",
+      "side": 1,
+      "message": "Do you want to add some comments here to explain that? We may support multi-test result in EVENT_NETWORK_TESTED. The sequence may change somehow. If someone else need to support that, they may not full aware of that as your initial idea to design this test. Then we will flaky test again.",
+      "range": {
+        "startLine": 2639,
+        "startChar": 8,
+        "endLine": 2648,
+        "endChar": 22
+      },
+      "revId": "9792883e141126f5f42231790f05ffe27e7c93e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
