@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99b1e88_420b53a7",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T06:44:58Z",
+      "side": 1,
+      "message": "Optional : ideally the loop would be factored out, like\n\nprivate void filter(Predicate\u003cEntry\u003e);\n\nThen you could say\n\npublic void filter(int limitUid, String limitIfaces, int limitTag) {\n  filter(e -\u003e limitUid \u003d\u003d UID_ALL || limitUid \u003d\u003d entry.uid)\n           \u0026\u0026 (limitTag \u003d\u003d TAG_ALL || limitTag \u003d\u003d entry.tag)\n           \u0026\u0026 (limitIfaces \u003d\u003d INTERFACES_ALL || ArrayUtils.contains(limitIfaces, entry.iface)));\n}\nand\npublic void filterDebugEntries() {\n  filter(e -\u003e e.set \u003c SET_DEBUG_START)\n}",
+      "range": {
+        "startLine": 1024,
+        "startChar": 8,
+        "endLine": 1024,
+        "endChar": 11
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a2f958_2154d981",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T06:44:58Z",
+      "side": 1,
+      "message": "nit : extraneous space",
+      "range": {
+        "startLine": 1027,
+        "startChar": 40,
+        "endLine": 1027,
+        "endChar": 41
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06770394_49e68f57",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T06:44:58Z",
+      "side": 1,
+      "message": "Don\u0027t you need to migrate this ? ISTM the data in here should be migrated. You could probably just say mTunAdjustedStats \u003d uidDetailStats.clone(); mTunAdjustedStats.migrateTun(); but I think it\u0027s simpler to just initialize mTunAdjustedStats and mLastUidDetailSnapshot to empty values at the start and remove this if() clause, which also lets you mark them non-null.",
+      "range": {
+        "startLine": 1342,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 29
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3963eac_3a69b68e",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T06:44:58Z",
+      "side": 1,
+      "message": "realtime",
+      "range": {
+        "startLine": 1279,
+        "startChar": 17,
+        "endLine": 1279,
+        "endChar": 24
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
