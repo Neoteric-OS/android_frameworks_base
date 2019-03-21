@@ -2636,8 +2636,6 @@ public class ConnectivityServiceTest {
         // TODO: If the user accepted partial connectivity, we shouldn't switch to wifi until
         // NetworkMonitor detects partial connectivity
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
-        mWiFiNetworkAgent.setNetworkValid();
-        waitForIdle();
         try {
             verify(mWiFiNetworkAgent.mNetworkMonitor,
                     timeout(TIMEOUT_MS).times(1)).setAcceptPartialConnectivity();
@@ -2646,6 +2644,8 @@ public class ConnectivityServiceTest {
         }
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
+        mWiFiNetworkAgent.setNetworkValid();
+        waitForIdle();
         // Wifi should be the default network.
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
     }
