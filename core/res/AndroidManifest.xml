@@ -1793,6 +1793,12 @@
     <permission android:name="android.permission.MODIFY_PHONE_STATE"
         android:protectionLevel="signature|privileged" />
 
+    <!-- Allows the app to request network scans from telephony.
+         <p>Not for use by third-party applications.
+         @SystemApi @hide-->
+    <permission android:name="android.permission.NETWORK_SCAN"
+        android:protectionLevel="signature|privileged" />
+
     <!-- Allows read only access to precise phone state.
          @hide Pending API council approval -->
     <permission android:name="android.permission.READ_PRECISE_PHONE_STATE"
