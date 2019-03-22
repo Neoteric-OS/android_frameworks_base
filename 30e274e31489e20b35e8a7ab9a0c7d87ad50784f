@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cd6484c_98955b5c",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T07:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99b1e88_420b53a7",
+      "range": {
+        "startLine": 1024,
+        "startChar": 8,
+        "endLine": 1024,
+        "endChar": 11
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a2f958_2154d981",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2e6454_3dd0d427",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T07:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a2f958_2154d981",
+      "range": {
+        "startLine": 1027,
+        "startChar": 40,
+        "endLine": 1027,
+        "endChar": 41
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "adc72217_b9d31eda",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T07:15:02Z",
+      "side": 1,
+      "message": "We don\u0027t want to always migrate traffic. Reason being that system server can restart. So if that happens and we end up migrating traffic for the very first snapshot after restart, then that could lead to misattribution. Thus we avoid any migration for the first snapshot. Consumers of this data (such as BatteryStats) typically are build to handle such situations (by persisting data, so that they can recover from these scenarios).\n\nNow we could migrate traffic for the very first snapshot right after device boots. But that really is not necessary, coz system server comes up before VPN can which would initialize these snapshots, so we don\u0027t have to worry about migration immediately after device boots.\n\nAdded a comment.",
+      "parentUuid": "06770394_49e68f57",
+      "range": {
+        "startLine": 1342,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 29
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3963eac_3a69b68e",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a473354_612e3f47",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T07:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3963eac_3a69b68e",
+      "range": {
+        "startLine": 1279,
+        "startChar": 17,
+        "endLine": 1279,
+        "endChar": 24
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
