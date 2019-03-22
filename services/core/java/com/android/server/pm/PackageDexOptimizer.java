@@ -44,6 +44,7 @@ import com.android.server.pm.dex.DexoptUtils;
 import com.android.server.pm.dex.PackageDexUsage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,6 +74,8 @@ import static com.android.server.pm.PackageManagerService.WATCHDOG_TIMEOUT;
 
 import static com.android.server.pm.PackageManagerServiceCompilerMapping.getReasonName;
 
+import static dalvik.system.DexFile.getDexFileOptimizationInfo;
+import static dalvik.system.DexFile.getNonProfileGuidedCompilerFilter;
 import static dalvik.system.DexFile.getSafeModeCompilerFilter;
 import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
 
@@ -164,6 +167,29 @@ public class PackageDexOptimizer {
             if (Math.abs(dexoptNeeded) == DexFile.NO_DEXOPT_NEEDED) {
                 continue;
             }
+
+            // We also accept the shared library if its compiler filter is the profile-guided
+            // variant of REASON_SHARED (and up-to-date), and the optimization was done during
+            // preopt.
+            try {
+                DexFile.OptimizationInfo state =
+                        getDexFileOptimizationInfo(info.getPath(), instructionSet);
+                if (state != null) {
+                    String nonProfileFilter = getNonProfileGuidedCompilerFilter(state.getStatus());
+                    String reason = state.getReason();
+                    if ("prebuilt".equals(reason) && compilerFilter.equals(nonProfileFilter)) {
+                        dexoptNeeded = getDexoptNeeded(
+                                info.getPath(), instructionSet, state.getStatus(),
+                                classLoaderContext, false /* newProfile */,
+                                false /* downgrade */);
+                        if (Math.abs(dexoptNeeded) == DexFile.NO_DEXOPT_NEEDED) {
+                            continue;
+                        }
+                    }
+                }
+            } catch (FileNotFoundException ignored) {
+            }
+
             // Special string recognized by installd.
             final String packageName = "*";
             final String outputPath = null;
