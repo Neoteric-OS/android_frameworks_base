@@ -1956,6 +1956,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
     }
 
+    private boolean checkNetworkSignalStrengthWakeupPermission(int pid, int uid) {
+        return PERMISSION_GRANTED == mContext.checkPermission(
+                android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP, pid, uid)
+                || PERMISSION_GRANTED == mContext.checkPermission(
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, pid, uid);
+    }
+
     private void enforceConnectivityRestrictedNetworksPermission() {
         try {
             mContext.enforceCallingOrSelfPermission(
@@ -4952,12 +4959,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    // This checks that the passed capabilities either do not request a specific SSID, or the
-    // calling app has permission to do so.
+    // This checks that the passed capabilities either do not request a specific SSID/SignalStrength
+    // , or the calling app has permission to do so.
     private void ensureSufficientPermissionsForRequest(NetworkCapabilities nc,
             int callerPid, int callerUid) {
         if (null != nc.getSSID() && !checkSettingsPermission(callerPid, callerUid)) {
             throw new SecurityException("Insufficient permissions to request a specific SSID");
+        }
+
+        if (nc.hasSignalStrength()
+                && !checkNetworkSignalStrengthWakeupPermission(callerPid, callerUid)) {
+            throw new SecurityException(
+                    "Insufficient permissions to request a specific signal strength");
         }
     }
 
