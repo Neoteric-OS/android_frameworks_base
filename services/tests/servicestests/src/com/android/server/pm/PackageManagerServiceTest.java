@@ -56,11 +56,11 @@ public class PackageManagerServiceTest {
             }
 
             @Override
-            public void notifyPackageAdded(String packageName, int uid) {
+            public void notifyPackageAdded(String packageName) {
             }
 
             @Override
-            public void notifyPackageRemoved(String packageName, int uid) {
+            public void notifyPackageRemoved(String packageName) {
             }
         }
 

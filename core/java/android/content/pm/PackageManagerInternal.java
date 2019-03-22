@@ -62,9 +62,9 @@ public abstract class PackageManagerInternal {
     /** Observer called whenever the list of packages changes */
     public interface PackageListObserver {
         /** A package was added to the system. */
-        void onPackageAdded(@NonNull String packageName, int uid);
+        void onPackageAdded(@NonNull String packageName);
         /** A package was removed from the system. */
-        void onPackageRemoved(@NonNull String packageName, int uid);
+        void onPackageRemoved(@NonNull String packageName);
     }
 
     /** Interface to override permission checks via composition */
