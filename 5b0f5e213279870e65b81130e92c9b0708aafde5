@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "42e75f86_2e04317b",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "I think I agree you. My main point however was the immutability aspect of the object (and not reference). Like for instance declaring tunIfaceTotal final does not prevent someone from mutating its fields. I\u0027m not saying that using final does not make sense at all in local scope. \n\nThat said, I understand that different teams have different coding semantics and practices, so if this is something you guys in general prefer, then I very well respect that and I can add \u0027final\u0027 to all places. Please let me know :)",
+      "parentUuid": "40479d9b_b62b99b1",
+      "range": {
+        "startLine": 1189,
+        "startChar": 8,
+        "endLine": 1189,
+        "endChar": 13
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4431ce_f5a69492",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "Sorry it don\u0027t convince me that this is more clear.\nWhere the summing can be moved into tunAdjustmentInit,\nand comments can move into addTraficToApplications.\nBut I don\u0027t have strong opinion about this.",
       "parentUuid": "2043d3d3_0840bf56",
+      "range": {
+        "startLine": 1197,
+        "startChar": 14,
+        "endLine": 1197,
+        "endChar": 33
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85c17e2b_de9caeb0",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "Moving to tunAdjInit",
+      "parentUuid": "8d128635_e1ac5ef4",
       "range": {
         "startLine": 1197,
         "startChar": 14,
@@ -344,6 +392,30 @@
     },
     {
       "key": {
+        "uuid": "0a208c27_e85c7c4a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "Converting this to proper javadoc lists, which will hopefully avoid people from trying to correct this manually next time they run auto-formatter.",
+      "parentUuid": "cede8707_66d34399",
+      "range": {
+        "startLine": 1219,
+        "startChar": 74,
+        "endLine": 1219,
+        "endChar": 77
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48763510_002227ac",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -427,6 +499,30 @@
       "side": 1,
       "message": "I agree with Junyu that some note explaining at least what is in and what is out would help. In fact, building on Junyu\u0027s comment that this is bizarrely doing part of the init while migrateTun is adding up the thing at the end, I think an alternative would be to move the summing up of the totals of the tun interface to migrateTun, in which case you only have one output argument and it can be returned instead of initialized externally and passed. Generally speaking I don\u0027t like too much methods that rely on their callers to modify a passed argument in a custom way, unless it can be argued that the specific adjustment is generally useful and could be used in other methods – and in this case it\u0027s kind of borderline.\n\nIf none of these should be nullable, then they should be @NonNull shouldn\u0027t they ?",
       "parentUuid": "1e201288_b870e374",
+      "range": {
+        "startLine": 1225,
+        "startChar": 12,
+        "endLine": 1225,
+        "endChar": 18
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f616ff_91d0b3c6",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "@Junyu - Yeah, I agree its not the most readable code. But I\u0027m trying my best to make it as readable as possible, so your feedback is welcome. I will add @param. I have also dropped some more comments in migrateTun (hopefully it makes it more readable).\n\n@Jean - I agree in general with your suggestion of returning output params instead of passing them. Doing so in this case would lead to going thru entries twice.\n\nSince both you and Junyu agree on moving the summing up part to here, I will do so.\n\n\u003e If none of these should be nullable, then they should be @NonNull shouldn\u0027t they ?\n\nSo, the pattern that I typically follow is to only mark something as @Nullable if they can be null (which is a pattern widely followed in g3, and I know Android has its own style guidelines), and lack of it means non-null by default. I recently learned that public Android APIs however require both annotations to be used since it is useful for Kotlin. In this case these are non-public APIs. Do you still want these to be annotated with @NonNull? Let me know if that\u0027s the pattern to be followed going forward. I\u0027ll keep it in mind.",
+      "parentUuid": "93040b71_2c51971a",
       "range": {
         "startLine": 1225,
         "startChar": 12,
@@ -605,6 +701,30 @@
     },
     {
       "key": {
+        "uuid": "9d50e75e_aed44e34",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "\u003e Most of the formula can\u0027t do the reverse, even for the well known E\u003dmc^2\n\nI don\u0027t think that applies here. Its not about the trust; I agree that tests are there to ensure things work correctly. My point was about making code more readable enough so that anyone looking at it does not have to look at the tests to understand what\u0027s going on. Now, I agree that what I have may not be there yet, but I\u0027m trying to do my best in adding comments, updating javadocs, renaming variables so that its better.\n\nAlso, I did think about doing what you suggested. It still would require adding safety checks for divide by zero errors. So, while it might make it slightly shorter, it definitely makes it harder to really understand the correctness of the logic without looking at the tests. I will keep what I have (if everyone\u0027s ok).\n\nI will add javadoc.",
+      "parentUuid": "3e938a57_9fa92c40",
+      "range": {
+        "startLine": 1260,
+        "startChar": 20,
+        "endLine": 1260,
+        "endChar": 44
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37814a23_22cfc0e7",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -723,6 +843,30 @@
     },
     {
       "key": {
+        "uuid": "a90641b9_9a384687",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "Adding a comment.",
+      "parentUuid": "8540a5f6_3c8391fd",
+      "range": {
+        "startLine": 1282,
+        "startChar": 28,
+        "endLine": 1282,
+        "endChar": 68
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6688e79_8535f6a2",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -815,6 +959,30 @@
       "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f99566_4215bd00",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T06:18:23Z",
+      "side": 1,
+      "message": "Keeping this as is.",
+      "parentUuid": "46f07868_c0d8125a",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 87
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
