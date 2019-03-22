@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9248113d_9528e9de",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T17:52:19Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s probably pointless. I think the text here should be clear enough.",
+      "parentUuid": "8c263c58_84f1b7bb",
+      "range": {
+        "startLine": 1326,
+        "startChar": 12,
+        "endLine": 1326,
+        "endChar": 92
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a31f28_97d026d6",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 23
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71db4365_16380a65",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T17:52:19Z",
+      "side": 1,
+      "message": "Yeah that certainly would be desirable. But given that this piece of code runs in the critical path (once every ~2MB of data transferred). We should avoid creating new objects. Which is why you will notice that most of the code in this class uses recycle \u0027Entry\u0027 instead of creating new ones.",
+      "parentUuid": "59a31f28_97d026d6",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02da3be7_a4c34666",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 23
@@ -62,6 +110,24 @@
       "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43440c43_ffb6d627",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-22T17:52:19Z",
+      "side": 1,
+      "message": "Yeah, these are hand crafted, so there is no right or wrong here :) I was basically trying to fit it in one line.",
+      "parentUuid": "02da3be7_a4c34666",
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
