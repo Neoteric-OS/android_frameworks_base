@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4233edc1_2ceda0fd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "If tether provisioning *used* to be required but not any more, you don\u0027t unregister the receiver.\n\nSee, another piece of evidence that it\u0027s confusing that this is reading from a member :p It\u0027s directly because of this, because you would have noticed if you had had to pass the config.",
+      "range": {
+        "startLine": 158,
+        "startChar": 13,
+        "endLine": 158,
+        "endChar": 41
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04e0b28_d149d39b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Heh, I know what we need. We need an in-progress icon in settings or quick settings.\n\nOf course that is not for this change, and presumably we don\u0027t have time to do this for Q, but now that you have callbacks for telling the clients about upstreams, SystemUi could listen to them and keep the user informed.",
+      "range": {
+        "startLine": 400,
+        "startChar": 37,
+        "endLine": 400,
+        "endChar": 42
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2863e6e_abeaa108",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Did you want to keep if (DBG) here (and in l.529) like you did in l.721 and 444 ?",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 14
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd399562_ca39517b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Suggest adding a comment that this receiver is registered with permission CONNECTIVITY_INTERNAL, so not just anyone can send this",
+      "range": {
+        "startLine": 544,
+        "startChar": 36,
+        "endLine": 544,
+        "endChar": 57
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3411adb_9fc7b44e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Can we still accept the answer even if we\u0027re not waiting for one (and the broadcast does specify the downstream type obviously) ? Suppose the entitlement app does the check on its own accord and broadcasts a result, don\u0027t we want to take it into account to avoid doing another check later ?",
+      "range": {
+        "startLine": 556,
+        "startChar": 12,
+        "endLine": 556,
+        "endChar": 60
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89942d50_230976bd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Please make a constant for this",
+      "range": {
+        "startLine": 609,
+        "startChar": 78,
+        "endLine": 609,
+        "endChar": 79
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366c45a7_1e3a173a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "The timeout design is fine. We should probably treat resignation as a provisioning failure, and update the last cache value to TETHER_ERROR_PROVISION_FAILED when we give up after three attempts without a reply.",
+      "range": {
+        "startLine": 614,
+        "startChar": 20,
+        "endLine": 614,
+        "endChar": 21
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

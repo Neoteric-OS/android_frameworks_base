@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5ed96d94_f8e81af3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fb7fac5_ec0c0cca",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01292c71_3d638dc8",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Good question. Our proprietary entitlement app don\u0027t do this. But we don\u0027t know if any of entitlement apps in OEM has set the component to handle the intent. Maybe we should notify them this change ??",
       "parentUuid": "56ddcd7a_35b29b2d",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 33
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d82ccd_f69e96f6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "So this is a crippling problem for this change. It\u0027s likely that entitlement will just stop working in some setups.\n\nWe could try to reach out, but I\u0027m not sure we have a list of all the users of this API.\n\nAnother (annoying) possibility is to add code in Settings to forward any such broadcast targetting it to this code.",
+      "parentUuid": "6331b47c_eabfce91",
       "range": {
         "startLine": 163,
         "startChar": 17,
@@ -331,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "0e2500e2_b5538dab",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "006eaf3a_82d74afe",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 380,
+        "endChar": 5
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc55f81_9a15fd92",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -425,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "4670d8cf_0363b85e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4190e8a1_e5128d66",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 400,
+        "endChar": 48
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb3ec841_ab34b303",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -472,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "42420008_3461ab14",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "This sounds horribly error-prone to me ; you are requiring callers to know the difference by the complex semantics of this internal member so that they can call the correct version, while nothing at all in the name (or the doc) indicates that ? Nobody can figure that or remember it, including probably your future self 6 months removed. Case in point : I\u0027ve been reviewing this code for months now and I couldn\u0027t figure it out. It\u0027s one of the most obscure semantics I\u0027ve seen in years.\n\nI take on board your point that you don\u0027t want the external callers to affect mCellularPermitted, but then let\u0027s either :\n\n1) require all the internal callers to put to the sparse array before calling runUiTetherProvisioning, instead of doing it here.\n2) make the name glaringly explicit : \"resetTypeEntitlementAndRunUiProvisioning\" or so.\n3) have boolean arguments to specify whether to reset the last value for this type.",
+      "parentUuid": "6a90d547_55feb727",
+      "range": {
+        "startLine": 411,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 26
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dd4a972_4e47dbed",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -507,6 +627,30 @@
       "side": 1,
       "message": "No, this is not a bug fix. Just a flow refine. I move the line.552 into updateEntitlementCacheValue function here. Logic is the same. Actually I should separate these things into a cleanup commit as your comment for other log refine in this commit earlier. But I hope you can allow me to keep them in this commit for this time.",
       "parentUuid": "0dd4a972_4e47dbed",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5eaf17_93541f69",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "But the value you put in here is different. Here you collapse \"value\" into either TETHER_ERROR_NO_ERROR or TETHER_ERROR_PROVISION_FAILED. In the old code, you\u0027d store in the map whatever the result code was.",
+      "parentUuid": "6295f870_f09f8a7d",
       "range": {
         "startLine": 689,
         "startChar": 35,
@@ -578,6 +722,30 @@
       "side": 1,
       "message": "+ Amith,\n  Could you give me some suggestion here ??\n  Any way to let system service force app to active ??",
       "parentUuid": "27babfb9_0025b51f",
+      "range": {
+        "startLine": 905,
+        "startChar": 25,
+        "endLine": 905,
+        "endChar": 55
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31b71b5_f52f80bb",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T19:35:15Z",
+      "side": 1,
+      "message": "Ah ok, thanks for explaining, I had misunderstood the link between enforceCalling{orSelf,}Permission. I think it\u0027s fine as is.",
+      "parentUuid": "c51f3e2e_e157980c",
       "range": {
         "startLine": 905,
         "startChar": 25,
