@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2d3e9ac_2f082ea5",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-22T23:20:28Z",
+      "side": 1,
+      "message": "Might want to name this something like CELLULAR_NETWORK_SCAN. There are other network types that can be scanned, and I don\u0027t *think* this covers them, does it? Does this permit privileged scans on WiFi (for instance)?",
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62525bfd_ec6d1a92",
+        "filename": "telephony/java/android/telephony/CellInfoNr.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-22T23:20:28Z",
+      "side": 1,
+      "message": "Why does NR follow a different pattern? Can we make it the same?",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4a85e8_e115bc58",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6876,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-22T23:20:28Z",
+      "side": 1,
+      "message": "nit delete dangling preposition.",
+      "range": {
+        "startLine": 6876,
+        "startChar": 69,
+        "endLine": 6876,
+        "endChar": 80
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa6c8da_5fe11278",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-22T23:20:28Z",
+      "side": 1,
+      "message": "? I don\u0027t see any conection to CarrierID here. Is this being used?",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
