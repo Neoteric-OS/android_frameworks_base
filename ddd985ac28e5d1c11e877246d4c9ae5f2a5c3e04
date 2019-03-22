@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c263c58_84f1b7bb",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-22T09:24:53Z",
+      "side": 1,
+      "message": "Given that user might feel abstract by looking at the plain text.\nIs it better if we have solid example that shows how it is comuputed here?\nMaybe like previous formula shown to you or some examples with real numbers?\n\nBut I don\u0027t have strong opinion with this. Feel free to leave it as is.",
+      "range": {
+        "startLine": 1326,
+        "startChar": 12,
+        "endLine": 1326,
+        "endChar": 92
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a31f28_97d026d6",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-22T09:24:53Z",
+      "side": 1,
+      "message": "Given that each of the sub-computation is similar to the corrsponding one in second pass.\nIs it possible that we refactor all of computations into a function by giving clear input and output?\n\nE.g.\nfor (i \u003c size) {\n  getValues(int i, Entry a)\n  Entry t \u003d generateFractionEntry(a, underlyingIfaceTotal, tunIfaceTotal);\n  totalList.add(t);\n}\n\nfor(t in totalList) {\n   for(iface in underlyingIface) {\n      tmpEntry \u003d generateFractionEntry(t, perInterfaceTotal[iface], underlyingIfaceTotal);\n      tmpEntry.iface \u003d iface;\n      ....\n   }\n}",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02da3be7_a4c34666",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-22T09:24:53Z",
+      "side": 1,
+      "message": "incorrect indentation level?",
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
