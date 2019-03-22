@@ -646,8 +646,14 @@ public class GnssLocationProvider implements LocationProviderInterface, InjectNt
         }
     }
 
+
     public static boolean isSupported() {
-        return native_is_supported();
+        if (SystemProperties.getBoolean("ro.radio.noril", false) || SystemProperties.getInt("ro.config.device.gps",0) == 0) {
+            Log.d("anish","issupported : "+SystemProperties.getBoolean("ro.radio.noril", false)+"gps value: "+SystemProperties.getInt("ro.config.device.gps",0));
+            return false;
+        } else {
+            return native_is_supported();
+        }
     }
 
     interface SetCarrierProperty {
