@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b3f72f_5155c920",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "I trust you also ran the VPN tests and the VPN CTS ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc346841_732074d8",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "largest",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bbbac5_38312393",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5467,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "Maybe you should do this test inside shouldApplyInterfaceFiltering ? After all, we shouldn\u0027t apply interface filtering to a null interface.",
+      "range": {
+        "startLine": 5467,
+        "startChar": 20,
+        "endLine": 5467,
+        "endChar": 33
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b580f5c_bfaf89c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5823,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "Ooh this needs comments. This logic relies on the fact that the update of NetworkCapabilities cannot have changed the return value of shouldApplyInterfaceFiltering between before and after, because it\u0027s only using getEstablishingVpnAppUid() which happens to never change in an NetworkCapabilities update across the life of a single network.\n\nIf it COULD change, then you\u0027d have the possible case where the filtering was previously needed and not any more, and then you would omit removing the ranges.\n\nSo here you have code using shouldApplyInterfaceFiltering that actively depends on the implementation details of that method, so I think you even need comments inside shouldApplyInterfaceFiltering to indicate that, otherwise someone looking to change its implementation will not notice they are breaking this code. Maybe it\u0027s actually safer to even write the code here as if this could change.",
+      "range": {
+        "startLine": 5823,
+        "startChar": 41,
+        "endLine": 5823,
+        "endChar": 70
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4517f5e2_f9665634",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "Sorry to impose but can you fix this comment while you\u0027re here as it\u0027s relevant to your change ? In reality mApps keys are uids, and this comment confused me",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d54968_c69af9be",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "High-level question : it seems when we program the UIDs for filtering into netd, we pass the interface, but when we remove them we don\u0027t have to. I think that\u0027s because an interface corresponds to one VPN which can only be running for a single user at a time, therefore the UID actually specifies the interface. But of course netd still has to know the interface when adding.\n\nBut here we can know the interface names whenever we want, so do we actually need to keep this map, or would a simple set of ranges do ?\nEven assuming it\u0027s possible, I\u0027m not clear on whether that would actually simplify the code – just wanted to submit this for consideration.",
+      "range": {
+        "startLine": 95,
+        "startChar": 45,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59136fec_2f47aec2",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "Forgot to remove ?",
+      "range": {
+        "startLine": 541,
+        "startChar": 20,
+        "endLine": 541,
+        "endChar": 23
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d970da_58bd2085",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6014,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "rules",
+      "range": {
+        "startLine": 6014,
+        "startChar": 50,
+        "endLine": 6014,
+        "endChar": 54
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e8cc21_a0d9b86f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6073,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "longer",
+      "range": {
+        "startLine": 6073,
+        "startChar": 48,
+        "endLine": 6073,
+        "endChar": 53
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5a4296_d38a906d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6081,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "There is something fishy here. You are not sending the link properties with vpnNetworkAgent.sendLinkProperties.\n\nAs I\u0027m sure you\u0027ve run the test and it\u0027s passing, I think here you\u0027re seeing the call that you already checked in l.6065 again. Probably you should call mMockNetId.reset() after you\u0027ve tested, or add times() quantifiers on your verify assertions.",
+      "range": {
+        "startLine": 6081,
+        "startChar": 26,
+        "endLine": 6081,
+        "endChar": 54
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cac2863_7fadbfa9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6088,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "Unfortunately you can\u0027t assume \"int...\" wasn\u0027t passed by reference.\n\nassertContainsExactly(actual, someArrayIReallyDontWantAssertToSortForMe);",
+      "range": {
+        "startLine": 6088,
+        "startChar": 15,
+        "endLine": 6088,
+        "endChar": 19
+      },
+      "revId": "f618071959fc410d7e7b02fa2e6574bac1c4e9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

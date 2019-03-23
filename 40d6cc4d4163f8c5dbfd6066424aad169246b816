@@ -432,6 +432,24 @@
     },
     {
       "key": {
+        "uuid": "340af401_2516dc83",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-23T07:24:03Z",
+      "side": 1,
+      "message": "I think I prefer this logic in PermissionMonitor than in VPN if only by the simple token that it \"feels\" more logic about permissions than logic about VPN. I concur with Junyu that the code here destructuring the VPN\u0027s internals for its own purposes is not great and it kind of feels like there are parts of this code that would meaningfully be moved to VPN, but I would have to spend another 4 hours or so on this in front of my IDE to figure that out and I doubt the result would be significantly easier to maintain.\n\nYes there are some duplicated assumptions from the VPN code, but at least the code here is straightforward without any traps or landmines that I can see, and the function names are really clear, so I believe any issue would be easy to fix.\n\nI am personally satisfied with the amount of testing this patch adds, but @junyulai if you are concerned about specific points in here, can these be addressed by improving coverage ?",
+      "parentUuid": "40c8186f_6f119850",
+      "revId": "40d6cc4d4163f8c5dbfd6066424aad169246b816",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790a8aa3_efc4521e",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
