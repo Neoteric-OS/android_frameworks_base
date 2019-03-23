@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fec32357_5bc67065",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-23T01:03:23Z",
+      "side": 1,
+      "message": "I would, but I think the API\u0027s been locked down as of today. This is just adding the permission to com.android.shell so that I can test location-off behavior from cts.",
+      "parentUuid": "f2d3e9ac_2f082ea5",
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62525bfd_ec6d1a92",
         "filename": "telephony/java/android/telephony/CellInfoNr.java",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9656f68d_70e94f64",
+        "filename": "telephony/java/android/telephony/CellInfoNr.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-23T01:03:23Z",
+      "side": 1,
+      "message": "Because mCellIdentity is final here unlike the other ones, so I can\u0027t follow the same pattern since I have to make a new constructor. I\u0027ll make it not go through the whole parcel/unparcel process though.",
+      "parentUuid": "62525bfd_ec6d1a92",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3c56fbf4_8164c6de",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6876,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-23T01:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4a85e8_e115bc58",
+      "range": {
+        "startLine": 6876,
+        "startChar": 69,
+        "endLine": 6876,
+        "endChar": 80
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaa6c8da_5fe11278",
         "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
         "patchSetId": 9
@@ -85,6 +151,30 @@
       "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5401c64_b1aa3975",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-03-23T01:03:23Z",
+      "side": 1,
+      "message": "Nope, it\u0027s old. removing.",
+      "parentUuid": "eaa6c8da_5fe11278",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
