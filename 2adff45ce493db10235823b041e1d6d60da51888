@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "441d66df_07a7b6ff",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-23T09:15:30Z",
+      "side": 1,
+      "message": "I really don\u0027t prefer adding the code to Settings for forwarding. It means we will still need to launch TetherService and its task is to register intent and forward to us. Then, we may suffer from duplicated result problem for most case(one for EntitlementManager direct, another one is forwarded by Setting).",
+      "parentUuid": "e5d82ccd_f69e96f6",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 33
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b9e84c8_9cc40991",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -521,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "833661b6_20ef23a7",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-23T09:15:30Z",
+      "side": 1,
+      "message": "Ohh, thanks the Ack. I miss this part....",
+      "parentUuid": "4670d8cf_0363b85e",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 400,
+        "endChar": 48
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb3ec841_ab34b303",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 5
@@ -580,6 +628,30 @@
       "side": 1,
       "message": "This sounds horribly error-prone to me ; you are requiring callers to know the difference by the complex semantics of this internal member so that they can call the correct version, while nothing at all in the name (or the doc) indicates that ? Nobody can figure that or remember it, including probably your future self 6 months removed. Case in point : I\u0027ve been reviewing this code for months now and I couldn\u0027t figure it out. It\u0027s one of the most obscure semantics I\u0027ve seen in years.\n\nI take on board your point that you don\u0027t want the external callers to affect mCellularPermitted, but then let\u0027s either :\n\n1) require all the internal callers to put to the sparse array before calling runUiTetherProvisioning, instead of doing it here.\n2) make the name glaringly explicit : \"resetTypeEntitlementAndRunUiProvisioning\" or so.\n3) have boolean arguments to specify whether to reset the last value for this type.",
       "parentUuid": "6a90d547_55feb727",
+      "range": {
+        "startLine": 411,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 26
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37492752_e117db54",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-23T09:15:30Z",
+      "side": 1,
+      "message": "Indeed, thanks your advice.",
+      "parentUuid": "42420008_3461ab14",
       "range": {
         "startLine": 411,
         "startChar": 8,
@@ -660,6 +732,30 @@
       "revId": "2adff45ce493db10235823b041e1d6d60da51888",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbd48ad_f4ce5aa0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-23T09:15:30Z",
+      "side": 1,
+      "message": "In old code, the result would also be guarded by updateEntitlementCacheValue.\n  int updatedCacheValue \u003d updateEntitlementCacheValue(type, resultCode);\n  addDownstreamMapping(type, updatedCacheValue);",
+      "parentUuid": "1b5eaf17_93541f69",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
