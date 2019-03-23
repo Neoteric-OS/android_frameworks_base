@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f3bb0d6c_54643aed",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-23T01:54:26Z",
+      "side": 1,
+      "message": "If so, then does it work if we make it takes recycled entry?\n\nE.g.\nfor (i \u003c size) {\n  getValues(int i, Entry r1)\n  generateFractionEntry(r2, underlyingIfaceTotal, tunIfaceTotal, r2);\n  for(iface in underlyingIface) {\n      generateFractionEntry(r2, perInterfaceTotal[iface], underlyingIfaceTotal, tmpEntry);\n      tmpEntry.iface \u003d iface;\n      ....\n   }\n}",
+      "parentUuid": "71db4365_16380a65",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02da3be7_a4c34666",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 23
