@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "035e9c4e_201fda6f",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-23T01:35:24Z",
+      "side": 1,
+      "message": "Yeah, I wonder if API council feedback should ask for this... if only I knew an API councilor. :-)",
+      "parentUuid": "fec32357_5bc67065",
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62525bfd_ec6d1a92",
         "filename": "telephony/java/android/telephony/CellInfoNr.java",
         "patchSetId": 9
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Because mCellIdentity is final here unlike the other ones, so I can\u0027t follow the same pattern since I have to make a new constructor. I\u0027ll make it not go through the whole parcel/unparcel process though.",
       "parentUuid": "62525bfd_ec6d1a92",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "20fe5982ce23ccf132fc36522d766e5922246ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4944398_e792b397",
+        "filename": "telephony/java/android/telephony/CellInfoNr.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-03-23T01:35:24Z",
+      "side": 1,
+      "message": "Ah, well my thinking is that we can just un-final these (or maybe we should make the others all final, but my suspicion is that they aren\u0027t final for testing reasons).\n\nThat\u0027s a mess that we can clean up another time. Can you file a bug on this?",
+      "parentUuid": "9656f68d_70e94f64",
       "range": {
         "startLine": 37,
         "startChar": 32,
