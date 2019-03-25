@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1f27ede8_23f0831b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T11:57:23Z",
+      "side": 1,
+      "message": "Yes, sounds good.",
+      "parentUuid": "b8f99b0f_188c5307",
+      "range": {
+        "startLine": 400,
+        "startChar": 37,
+        "endLine": 400,
+        "endChar": 42
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2863e6e_abeaa108",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 6
@@ -188,6 +212,30 @@
       "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a382784b_0ced48ec",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T11:57:23Z",
+      "side": 1,
+      "message": "I tend to agree with Mark here. This log is useful in many situations and is not verbose at all. Let\u0027s keep it.",
+      "parentUuid": "6e11c506_ce52fea8",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 14
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

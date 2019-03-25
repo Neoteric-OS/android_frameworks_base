@@ -807,6 +807,30 @@
     },
     {
       "key": {
+        "uuid": "b93119ea_5ef55403",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T11:57:23Z",
+      "side": 1,
+      "message": "Ah sorry I had missed the assignment. Let\u0027s keep this in here for now, just remember for future changes that doing cleanups in preparatory changes will save you a lot of back-and-forth.",
+      "parentUuid": "6e4b94ad_89086d8a",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58156928_8ec70602",
         "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
         "patchSetId": 5
