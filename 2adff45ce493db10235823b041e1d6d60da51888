@@ -783,6 +783,30 @@
     },
     {
       "key": {
+        "uuid": "6e4b94ad_89086d8a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-25T09:23:10Z",
+      "side": 1,
+      "message": "Indeed that separate the change is a good suggestion here. But I think it still have some value to keep this code in this commit.\nBefore this commit: only one place(line.551 for base patchSet) call updateEntitlementCacheValue(). In this commit, there are two place(line.546 and 649) want to call updateEntitlementCacheValue(). Put addDownstreamMapping() into updateEntitlementCacheValue() in this commit still have benefit that new added point(line.546) will be more simpler.",
+      "parentUuid": "8c06c798_b7718495",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58156928_8ec70602",
         "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
         "patchSetId": 5

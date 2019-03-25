@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "6e11c506_ce52fea8",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-25T09:23:10Z",
+      "side": 1,
+      "message": "Actually I think it is fine to always show it. Normally this log just happen once per tethering enabled. The multiple log will happen If user enabled tethering larger than 24 hours or switch SIM, data subscription change, or .. And I expect the bug usually come from this situation. In the future, if we find entitlement bug is really rare and those logs are so annoying. I think we can try to reduce them. But now I think they are worth to keep.",
+      "parentUuid": "1d3c7265_fe5d593a",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 14
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd399562_ca39517b",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 6
