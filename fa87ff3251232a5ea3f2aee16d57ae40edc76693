@@ -424,6 +424,30 @@
       "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d222fd2_3f4671b2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-25T12:42:00Z",
+      "side": 1,
+      "message": "Finally, I reset cache value in resetTypeEntitlementAndRunUiProvisioning and runSilentTetherProvisioning function. Refer line.398 and 444. If run provisioning timeout, the cache value will keep in unknown, I think this would be more easier to identify timeout case or actually fail.",
+      "parentUuid": "1e309e0e_7af75c02",
+      "range": {
+        "startLine": 614,
+        "startChar": 20,
+        "endLine": 614,
+        "endChar": 21
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
