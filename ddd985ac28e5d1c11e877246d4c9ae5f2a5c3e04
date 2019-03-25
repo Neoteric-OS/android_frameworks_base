@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "748eed41_b2a78ce3",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T16:28:35Z",
+      "side": 1,
+      "message": "Ack. Maybe we could. I want to first see what are benchmark results with current implementation.\nI will try to then refactor things around based on this or some of your earlier suggestions as needed.",
+      "parentUuid": "f3bb0d6c_54643aed",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02da3be7_a4c34666",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 23
