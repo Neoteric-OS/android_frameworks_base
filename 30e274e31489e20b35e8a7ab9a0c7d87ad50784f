@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ddbf03ac_1a734eae",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T12:36:53Z",
+      "side": 1,
+      "message": "Understood. Thanks for the precision.",
+      "parentUuid": "adc72217_b9d31eda",
+      "range": {
+        "startLine": 1342,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 29
+      },
+      "revId": "30e274e31489e20b35e8a7ab9a0c7d87ad50784f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3963eac_3a69b68e",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 18
