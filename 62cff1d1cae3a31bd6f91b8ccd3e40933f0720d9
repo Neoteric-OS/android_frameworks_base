@@ -545,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "7595d31a_b44517ee",
+        "filename": "core/tests/benchmarks/src/android/net/NetworkStatsBenchmark.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T21:39:46Z",
+      "side": 1,
+      "message": "Here\u0027s the summarized comparison of benchmark results with one underlying iface. I don\u0027t notice much difference:\n\nmSize              Before(ns)        After(ns)        Delta(ms)\n100                142128.41         144179.48        +0.002\n1000               9235789.53        9059061.92       -0.17\n\nDetailed logs for above can be found here: https://diff.googleplex.com/#key\u003dycavhkBNo3Qk",
+      "parentUuid": "3ebe6b16_dcd6be7f",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e460148_b73b0848",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
