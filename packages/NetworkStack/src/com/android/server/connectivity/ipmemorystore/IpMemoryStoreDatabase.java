@@ -136,6 +136,7 @@ public class IpMemoryStoreDatabase {
         // Update this whenever changing the schema.
         private static final int SCHEMA_VERSION = 2;
         private static final String DATABASE_FILENAME = "IpMemoryStore.db";
+        private static final String TRIGGER_NAME = "delete_cascade_to_private";
 
         public DbHelper(@NonNull final Context context) {
             super(context, DATABASE_FILENAME, null, SCHEMA_VERSION);
@@ -147,6 +148,15 @@ public class IpMemoryStoreDatabase {
         public void onCreate(@NonNull final SQLiteDatabase db) {
             db.execSQL(NetworkAttributesContract.CREATE_TABLE);
             db.execSQL(PrivateDataContract.CREATE_TABLE);
+
+            final String createTrigger = "CREATE TRIGGER " + TRIGGER_NAME
+                    + " DELETE ON " + NetworkAttributesContract.TABLENAME
+                    + " BEGIN"
+                    + " DELETE FROM " + PrivateDataContract.TABLENAME + " WHERE OLD."
+                    + NetworkAttributesContract.COLNAME_L2KEY
+                    + "=" + PrivateDataContract.COLNAME_L2KEY
+                    + "; END;";
+            db.execSQL(createTrigger);
         }
 
         /** Called when the database is upgraded */
@@ -156,6 +166,7 @@ public class IpMemoryStoreDatabase {
             // No upgrade supported yet.
             db.execSQL(NetworkAttributesContract.DROP_TABLE);
             db.execSQL(PrivateDataContract.DROP_TABLE);
+            db.execSQL("DROP TRIGGER " + TRIGGER_NAME);
             onCreate(db);
         }
 
@@ -166,6 +177,7 @@ public class IpMemoryStoreDatabase {
             // Downgrades always nuke all data and recreate an empty table.
             db.execSQL(NetworkAttributesContract.DROP_TABLE);
             db.execSQL(PrivateDataContract.DROP_TABLE);
+            db.execSQL("DROP TRIGGER " + TRIGGER_NAME);
             onCreate(db);
         }
     }
@@ -305,7 +317,7 @@ public class IpMemoryStoreDatabase {
     }
 
     // If the attributes are null, this will only write the expiry.
-    // Returns an int out of Status.{SUCCESS,ERROR_*}
+    // Returns an int out of Status.{SUCCESS, ERROR_*}
     static int storeNetworkAttributes(@NonNull final SQLiteDatabase db, @NonNull final String key,
             final long expiry, @Nullable final NetworkAttributes attributes) {
         final ContentValues cv = toContentValues(key, attributes, expiry);
@@ -330,7 +342,7 @@ public class IpMemoryStoreDatabase {
         return Status.ERROR_STORAGE;
     }
 
-    // Returns an int out of Status.{SUCCESS,ERROR_*}
+    // Returns an int out of Status.{SUCCESS, ERROR_*}
     static int storeBlob(@NonNull final SQLiteDatabase db, @NonNull final String key,
             @NonNull final String clientId, @NonNull final String name,
             @NonNull final byte[] data) {
@@ -491,6 +503,79 @@ public class IpMemoryStoreDatabase {
         }
         cursor.close();
         return bestKey;
+    }
+
+    // Drops all records which are expired. Relevance has decayed to zero of these records. Returns
+    // an int out of Status.{SUCCESS, ERROR_*}
+    static int dropAllExpiredRecords(@NonNull final SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            // Deletes NetworkAttributes that have expired.
+            db.delete(NetworkAttributesContract.TABLENAME,
+                    NetworkAttributesContract.COLNAME_EXPIRYDATE + " < ?",
+                    new String[]{Long.toString(System.currentTimeMillis())});
+            db.setTransactionSuccessful();
+            return Status.SUCCESS;
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delete data from memory store", e);
+            return Status.ERROR_STORAGE;
+        } finally {
+            db.endTransaction();
+            db.execSQL("VACUUM");
+        }
+    }
+
+    // Drops number of records which are started from the lowest expiryData. Returns an int out of
+    // Status.{SUCCESS, ERROR_*}
+    static int dropNumberOfRecords(@NonNull final SQLiteDatabase db, int number) {
+        if (number <= 0) {
+            return Status.ERROR_ILLEGAL_ARGUMENT;
+        }
+
+        // Query number of NetworkAttributes that
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                new String[] {NetworkAttributesContract.COLNAME_EXPIRYDATE}, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                NetworkAttributesContract.COLNAME_EXPIRYDATE, // orderBy
+                Integer.toString(number)); // limit
+        if (cursor == null || cursor.getCount() <= 0) return Status.ERROR_GENERIC;
+        cursor.moveToLast();
+
+        //Get the expiryDate from last record.
+        final long expiryDate = getLong(cursor, NetworkAttributesContract.COLNAME_EXPIRYDATE, 0);
+        cursor.close();
+
+        db.beginTransaction();
+        try {
+            // Deletes NetworkAttributes that expiryDate are lower than given value.
+            db.delete(NetworkAttributesContract.TABLENAME,
+                    NetworkAttributesContract.COLNAME_EXPIRYDATE + " < ?",
+                    new String[]{Long.toString(expiryDate)});
+            db.setTransactionSuccessful();
+            return Status.SUCCESS;
+        } catch (SQLiteException e) {
+            Log.e(TAG, "Could not delete data from memory store", e);
+            return Status.ERROR_STORAGE;
+        } finally {
+            db.endTransaction();
+            db.execSQL("VACUUM");
+        }
+    }
+
+    static int getTotalRecordNumber(@NonNull final SQLiteDatabase db) {
+        // Query the total number of NetworkAttributes
+        final Cursor cursor = db.query(NetworkAttributesContract.TABLENAME,
+                new String[] {"COUNT(*)"}, // columns
+                null, // selection
+                null, // selectionArgs
+                null, // groupBy
+                null, // having
+                null); // orderBy
+        cursor.moveToFirst();
+        return cursor == null ? 0 : getInt(cursor, "COUNT(*)", 0);
     }
 
     // Helper methods

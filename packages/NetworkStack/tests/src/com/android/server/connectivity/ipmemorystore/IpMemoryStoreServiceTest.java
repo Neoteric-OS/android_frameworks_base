@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
@@ -69,6 +70,7 @@ public class IpMemoryStoreServiceTest {
     private static final String TEST_CLIENT_ID = "testClientId";
     private static final String TEST_DATA_NAME = "testData";
 
+    private static final int TEST_DATABASE_SIZE_THRESHOLD = 100 * 1024; //100KB
     private static final int FAKE_KEY_COUNT = 20;
     private static final String[] FAKE_KEYS;
     static {
@@ -80,6 +82,8 @@ public class IpMemoryStoreServiceTest {
 
     @Mock
     private Context mMockContext;
+    @Mock
+    private JobScheduler mMockJobScheduler;
     private File mDbFile;
 
     private IpMemoryStoreService mService;
@@ -91,7 +95,20 @@ public class IpMemoryStoreServiceTest {
         final File dir = context.getFilesDir();
         mDbFile = new File(dir, "test.db");
         doReturn(mDbFile).when(mMockContext).getDatabasePath(anyString());
-        mService = new IpMemoryStoreService(mMockContext);
+        doReturn(mMockJobScheduler).when(mMockContext)
+                .getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        mService = new IpMemoryStoreService(mMockContext) {
+            @Override
+            protected int getDbSizeThreshold() {
+                return TEST_DATABASE_SIZE_THRESHOLD;
+            }
+
+            @Override
+            boolean isDbSizeOverThreshold() {
+                waitForMs(100);
+                return super.isDbSizeOverThreshold();
+            }
+        };
     }
 
     @After
@@ -224,6 +241,46 @@ public class IpMemoryStoreServiceTest {
                 })));
     }
 
+    /** Insert large data that db size will be over threshold for maintenance test usage. */
+    private void insertFakeDataAndOverThreshold() {
+        try {
+            final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+            na.setAssignedV4Address((Inet4Address) Inet4Address.getByName("1.2.3.4"));
+            na.setGroupHint("hint1");
+            na.setMtu(219);
+            na.setDnsAddresses(Arrays.asList(Inet6Address.getByName("0A1C:2E40:480A::1CA6")));
+            final byte[] data = new byte[]{-3, 6, 8, -9, 12, -128, 0, 89, 112, 91, -34};
+            final long time = System.currentTimeMillis() - 1;
+            for (int i = 0; i < 5000; i++) {
+                int errorCode = IpMemoryStoreDatabase.storeNetworkAttributes(
+                        mService.mDb,
+                        "fakeKey" + i,
+                        // Let first 500 records get expiry.
+                        i < 500 ? time : time + TimeUnit.HOURS.toMillis(i),
+                        na.build());
+                assertEquals(errorCode, Status.SUCCESS);
+
+                errorCode = IpMemoryStoreDatabase.storeBlob(
+                        mService.mDb, "fakeKey" + i, TEST_CLIENT_ID, TEST_DATA_NAME, data);
+                assertEquals(errorCode, Status.SUCCESS);
+            }
+
+            // After added 5000 records, db size is larger than fake threshold(100KB).
+            //doReturn(TEST_DATABASE_SIZE_THRESHOLD).when(mService).getDbSizeThreshold();
+            assertTrue(mService.isDbSizeOverThreshold());
+        } catch (UnknownHostException e) {
+            assertTrue(true);
+        }
+    }
+
+    /** Wait for assigned time. */
+    private void waitForMs(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+        }
+    }
+
     @Test
     public void testNetworkAttributes() throws UnknownHostException {
         final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
@@ -341,7 +398,7 @@ public class IpMemoryStoreServiceTest {
                                     status.isSuccess());
                             assertEquals(l2Key, key);
                             assertEquals(name, TEST_DATA_NAME);
-                            Arrays.equals(b.data, data);
+                            assertTrue(Arrays.equals(b.data, data));
                             latch.countDown();
                         })));
 
@@ -502,5 +559,59 @@ public class IpMemoryStoreServiceTest {
                     assertNull(answer);
                     latch.countDown();
                 })));
+    }
+
+
+    @Test
+    public void testFullMaintenance() {
+        insertFakeDataAndOverThreshold();
+
+        // Do full maintenance and then db size should go down and meet the threshold.
+        final RegularMaintenanceJobService.InterruptMaintenance im =
+                new RegularMaintenanceJobService.InterruptMaintenance(0/* Fake JobId*/);
+        doLatched("Did not complete full maintenance", latch ->
+                mService.fullMaintenance(onStatus((status) -> {
+                    assertTrue("Execute full maintenance failed: "
+                            + status.resultCode, status.isSuccess());
+                    latch.countDown();
+                }), im));
+
+        assertFalse(mService.isDbSizeOverThreshold());
+    }
+
+    @Test
+    public void testInterruptMaintenance() {
+        insertFakeDataAndOverThreshold();
+
+
+        final RegularMaintenanceJobService.InterruptMaintenance im =
+                new RegularMaintenanceJobService.InterruptMaintenance(0/* Fake JobId*/);
+        // Interrupt job immediately.
+        im.setInterrupted(true);
+        // Do full maintenance and the expectation is not completed.
+        doLatched("Did not complete full maintenance", latch ->
+                mService.fullMaintenance(onStatus((status) -> {
+                    assertFalse(status.isSuccess());
+                    latch.countDown();
+                }), im));
+        // No data are removed, db size shall be over the threshold.
+        assertTrue(mService.isDbSizeOverThreshold());
+
+        // Reset the flag.
+        im.setInterrupted(false);
+        // Wait 90ms then interrupt job.
+        new Thread(() -> {
+            waitForMs(90);
+            im.setInterrupted(true);
+        }).start();
+        // Do full maintenance and the expectation is not completed.
+        doLatched("Did not complete full maintenance", latch ->
+                mService.fullMaintenance(onStatus((status) -> {
+                    assertFalse(status.isSuccess());
+                    latch.countDown();
+                }), im));
+
+        // Only do dropAllExpiredRecords method, db size shall be over the threshold.
+        assertTrue(mService.isDbSizeOverThreshold());
     }
 }

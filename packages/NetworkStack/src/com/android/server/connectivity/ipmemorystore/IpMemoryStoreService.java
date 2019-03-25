@@ -43,6 +43,9 @@ import android.net.ipmemorystore.StatusParcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.android.internal.annotations.VisibleForTesting;
+
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -57,7 +60,12 @@ import java.util.concurrent.Executors;
 public class IpMemoryStoreService extends IIpMemoryStore.Stub {
     private static final String TAG = IpMemoryStoreService.class.getSimpleName();
     private static final int MAX_CONCURRENT_THREADS = 4;
+    private static final int DATABASE_SIZE_THRESHOLD = 10 * 1024 * 1024; //10MB
     private static final boolean DBG = true;
+
+    // Error codes below are internal.
+    static final int ERROR_INTERNAL_BASE = -1_000_000_000;
+    static final int ERROR_INTERNAL_INTERRUPTED = ERROR_INTERNAL_BASE - 1;
 
     @NonNull
     final Context mContext;
@@ -111,6 +119,7 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         // with judicious subclassing of ThreadPoolExecutor, but that's a lot of dangerous
         // complexity for little benefit in this case.
         mExecutor = Executors.newWorkStealingPool(MAX_CONCURRENT_THREADS);
+        RegularMaintenanceJobService.schedule(mContext, this);
     }
 
     /**
@@ -125,6 +134,7 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         // guarantee the threads can be terminated in any given amount of time.
         mExecutor.shutdownNow();
         if (mDb != null) mDb.close();
+        RegularMaintenanceJobService.unschedule(mContext);
     }
 
     /** Helper function to make a status object */
@@ -389,6 +399,100 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
                 } catch (final Exception e) {
                     listener.onBlobRetrieved(makeStatus(ERROR_GENERIC), l2Key, name, null);
                 }
+            } catch (final RemoteException e) {
+                // Client at the other end died
+            }
+        });
+    }
+
+    /** Get db size threshold. */
+    @VisibleForTesting
+    protected int getDbSizeThreshold() {
+        return DATABASE_SIZE_THRESHOLD;
+    }
+
+    private long getDbSize() {
+        final File dbFile = new File(mDb.getPath());
+        try {
+            return dbFile.length();
+        } catch (SecurityException e) {
+            if (DBG) Log.e(TAG, "Read db size access deny.", e);
+            // Return zero value if can't get disk usage exactly.
+            return 0;
+        }
+    }
+
+    /** Check if db size is over the threshold. */
+    @VisibleForTesting
+    boolean isDbSizeOverThreshold() {
+        return getDbSize() > getDbSizeThreshold();
+    }
+
+    /**
+     * Full maintenance.
+     *
+     * @param listener A listener to inform of the completion of this call.
+     */
+    void fullMaintenance(@NonNull final IOnStatusListener listener,
+            @NonNull final RegularMaintenanceJobService.InterruptMaintenance interrupt) {
+        mExecutor.execute(() -> {
+            try {
+                if (null == mDb) {
+                    listener.onComplete(makeStatus(ERROR_DATABASE_CANNOT_BE_OPENED));
+                    return;
+                }
+
+                // Interrupt maintenance due to scheduling job has been canceled.
+                if (interrupt.isInterrupted()) {
+                    listener.onComplete(makeStatus(ERROR_INTERNAL_INTERRUPTED));
+                    return;
+                }
+
+                int result = SUCCESS;
+                // Drop all records whose relevance has decayed to zero.
+                // This is the first step to decrease memory store size.
+                result = IpMemoryStoreDatabase.dropAllExpiredRecords(mDb);
+
+                // Interrupt maintenance due to scheduling job has been canceled.
+                if (interrupt.isInterrupted()) {
+                    listener.onComplete(makeStatus(ERROR_INTERNAL_INTERRUPTED));
+                    return;
+                }
+
+                // Aggregate historical data in passes
+                // TODO : Waiting for historical data implement.
+
+                // Check if db size is met the storage goal(10MB). If not, keep dropping records and
+                // aggregate historical data until the storage goal is met. Use for loop with 500
+                // times restriction to prevent infinitely loop (Deleting records are always failed
+                // and db size is still over the threshold)
+                //for (int i = 0; i < 500; i++) {
+                for (int i = 0; isDbSizeOverThreshold() && i < 500; i++) {
+                    // Interrupt maintenance due to scheduling job has been canceled.
+                    if (interrupt.isInterrupted()) {
+                        listener.onComplete(makeStatus(ERROR_INTERNAL_INTERRUPTED));
+                        return;
+                    }
+
+                    final int totalNumber = IpMemoryStoreDatabase.getTotalRecordNumber(mDb);
+                    final long dbSize = getDbSize();
+                    final float decreaseRate = (dbSize == 0)
+                            ? 0 : (float) (dbSize - getDbSizeThreshold()) / (float) dbSize;
+                    final int deleteNumber = (decreaseRate <= 0)
+                            ? 5 : (int) (totalNumber * decreaseRate);
+
+                    result = IpMemoryStoreDatabase.dropNumberOfRecords(mDb, deleteNumber);
+
+                    // Interrupt maintenance due to scheduling job has been canceled.
+                    if (interrupt.isInterrupted()) {
+                        listener.onComplete(makeStatus(ERROR_INTERNAL_INTERRUPTED));
+                        return;
+                    }
+
+                    // Aggregate historical data
+                    // TODO : Waiting for historical data implement.
+                }
+                listener.onComplete(makeStatus(result));
             } catch (final RemoteException e) {
                 // Client at the other end died
             }
