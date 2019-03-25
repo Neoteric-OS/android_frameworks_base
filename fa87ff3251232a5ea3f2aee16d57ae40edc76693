@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1d3c7265_fe5d593a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-25T05:05:13Z",
+      "side": 1,
+      "message": "It seems risky that someone needs to remember to add that after a period of time. Probably create a bug for tracking and have different log control mechanisms, e.g. DBG+VDBG.",
+      "parentUuid": "2b941716_503d4e09",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 14
+      },
+      "revId": "fa87ff3251232a5ea3f2aee16d57ae40edc76693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd399562_ca39517b",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 6

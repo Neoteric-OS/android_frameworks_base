@@ -759,6 +759,30 @@
     },
     {
       "key": {
+        "uuid": "8c06c798_b7718495",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-25T05:05:13Z",
+      "side": 1,
+      "message": "+1 for Jean\u0027s point to have separate change for this kind of clean up. Combining all these together will result in the increase of review efforts to understand what is the relationship between these codes and the intention of this commit.",
+      "parentUuid": "9cbd48ad_f4ce5aa0",
+      "range": {
+        "startLine": 689,
+        "startChar": 35,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "2adff45ce493db10235823b041e1d6d60da51888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58156928_8ec70602",
         "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
         "patchSetId": 5
