@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7277a6d8_20c38323",
+        "filename": "core/xsd/permission.xsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-25T16:34:05Z",
+      "side": 1,
+      "message": "What does this change?",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb0fded_0aee9f80",
+        "filename": "core/xsd/schema/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-25T16:34:05Z",
+      "side": 1,
+      "message": "Changing from required tag to minOccurs\u003d0 is an incompatible change, right? How does this get reflected in the API check?",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10072754_6c53ace8",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-25T16:34:05Z",
+      "side": 1,
+      "message": "Is adding maxOccurs\u003dunbounded an incompatible API change? How would the API checker caught this?",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
