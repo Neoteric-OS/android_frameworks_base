@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "57576649_cdcc1a1a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "Sure, I mean, it\u0027s fair to point out that final is only for the ref and does nothing for the object, but that\u0027s something every Java dev is painfully aware of :) It\u0027s kind of like pointing out that you can\u0027t resize an array. And we\u0027re like... yeah, we know, so ?\n\nAnyway yes generally we prefer everything final including locals. You don\u0027t have to go out of your way to add it all over the place especially in code you\u0027re not adding, and even not necessarily for every local you\u0027re adding, but as long as you\u0027re asking for preference, yes final is essentially always preferred.\n\nIn this case I think final especially helps because this is used as a temp repository. With it I can rest assured that there isn\u0027t a reassignment lurking in the middle changing completely what this var is holding.",
+      "parentUuid": "42e75f86_2e04317b",
+      "range": {
+        "startLine": 1189,
+        "startChar": 8,
+        "endLine": 1189,
+        "endChar": 13
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4431ce_f5a69492",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -523,6 +547,30 @@
       "side": 1,
       "message": "@Junyu - Yeah, I agree its not the most readable code. But I\u0027m trying my best to make it as readable as possible, so your feedback is welcome. I will add @param. I have also dropped some more comments in migrateTun (hopefully it makes it more readable).\n\n@Jean - I agree in general with your suggestion of returning output params instead of passing them. Doing so in this case would lead to going thru entries twice.\n\nSince both you and Junyu agree on moving the summing up part to here, I will do so.\n\n\u003e If none of these should be nullable, then they should be @NonNull shouldn\u0027t they ?\n\nSo, the pattern that I typically follow is to only mark something as @Nullable if they can be null (which is a pattern widely followed in g3, and I know Android has its own style guidelines), and lack of it means non-null by default. I recently learned that public Android APIs however require both annotations to be used since it is useful for Kotlin. In this case these are non-public APIs. Do you still want these to be annotated with @NonNull? Let me know if that\u0027s the pattern to be followed going forward. I\u0027ll keep it in mind.",
       "parentUuid": "93040b71_2c51971a",
+      "range": {
+        "startLine": 1225,
+        "startChar": 12,
+        "endLine": 1225,
+        "endChar": 18
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b803568c_f85615b1",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "\u003e Doing so in this case would lead to going thru entries twice.\n\nI saw that and I thought there was an obvious way around it, and now I can\u0027t see it. Either I was far too smart for my own good or far too dumb to realize why it didn\u0027t work, but probably the latter. One thing you *could* do is factor out the looping code, so that the code accessing the locals would stay in the caller (well captured in a lambda). But I\u0027m happy with your new code and I\u0027m not even convinced it\u0027d be better, so unless Junyu feels strongly, don\u0027t bother.\n\nYes we also tend to put @NonNull and @Nullable whenever we can. I personally would prefer a world where everything that\u0027s not @Nullable is @NonNull by default like you describe g3 is, unfortunately that\u0027s not how any of the standard Java tools work – in fact quite the opposite, unfortunately no annotation means nullable in Java since before annotations even existed. That\u0027s also why you get things like platform types in Kotlin.\nAs for Android specifically, well it works like the Java world at large, and without the @NonNull you don\u0027t get the checks and you don\u0027t get non-null Kotlin types.",
+      "parentUuid": "a7f616ff_91d0b3c6",
       "range": {
         "startLine": 1225,
         "startChar": 12,

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "296b390e_25396a00",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "Suggest splitting this test out into continue-early style.\n\n// TODO ...\nif (recycle.tag !\u003d TAG_NONE) continue;\n\nif (recycle.uid \u003d\u003d tunUid) {\n  ...\n} else if (tunIface.equals()) {\n  ...\n}",
+      "range": {
+        "startLine": 1262,
+        "startChar": 40,
+        "endLine": 1262,
+        "endChar": 64
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c263c58_84f1b7bb",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 23
@@ -144,6 +167,53 @@
     },
     {
       "key": {
+        "uuid": "b4ca6e0d_80588b26",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "I strongly support Junyu\u0027s idea and predict the costs will be completely insignificant.\n\n- This is iterating on the interfaces, which are not numerous.\n- The cost of a static method call of this kind is in the single-digits nanoseconds.\n- ...and the JIT will inline any method that is called often enough to make any difference anyway.\n\nNote that Kotlin has inline functions, and makes it a warning to try and use it for expected performance gains (as opposed to the change of semantics this modifier supports, and not using them is how the compiler knows).\n\nHonestly considering the first point I don\u0027t even think creating an object would make any appreciable difference. But if you pass the recycled entry this is not even a consideration.",
+      "parentUuid": "748eed41_b2a78ce3",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d59c33b_735811fa",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure who\u0027s \"we\" here. go/avoidwe",
+      "range": {
+        "startLine": 1366,
+        "startChar": 54,
+        "endLine": 1366,
+        "endChar": 56
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02da3be7_a4c34666",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 23
@@ -173,6 +243,24 @@
       "side": 1,
       "message": "Yeah, these are hand crafted, so there is no right or wrong here :) I was basically trying to fit it in one line.",
       "parentUuid": "02da3be7_a4c34666",
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d45bf697_7f6dbd00",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-25T21:28:55Z",
+      "side": 1,
+      "message": "Interesting assertion from someone using a code formatter :)\n\nI don\u0027t have an opinion on what you do here, anything is fine. I just chimed in to offer that if you want to reduce the number of chars here you can divide all values by 10 :)",
+      "parentUuid": "43440c43_ffb6d627",
       "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
