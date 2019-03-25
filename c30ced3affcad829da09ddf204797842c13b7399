@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7875a55_d7bb19af",
+        "filename": "core/java/android/net/ipmemorystore/Status.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Indeed, clients of the memory store doesn\u0027t need to know the interrupt except. They can do nothing for it. Let\u0027s define the internal error for interrupt except.",
+      "parentUuid": "2d161703_4c901a28",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c6933cf_8d45887c",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "I fear you\u0027ll have to move this to the network stack manifest",
+      "range": {
+        "startLine": 4417,
+        "startChar": 30,
+        "endLine": 4417,
+        "endChar": 97
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b865f68_c0658464",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "I think so. Since aosp/906907 was merged, I will update new commit with new architecture.",
+      "parentUuid": "8c6933cf_8d45887c",
       "range": {
         "startLine": 4417,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "958dd678_86ec6805",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61a40f31_ab969b3e",
+      "range": {
+        "startLine": 499,
+        "startChar": 12,
+        "endLine": 499,
+        "endChar": 18
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaf1da7f_e39e90e8",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "Little point of English : \"exist\" and \"happen\" can\u0027t be used with \"is\". You say \"does exist\" and \"does happen\".\n\nIn this case, \"doesDeleteTriggerExist\" or \"isDeleteTriggerCreated\" sound good.",
+      "range": {
+        "startLine": 507,
+        "startChar": 42,
+        "endLine": 507,
+        "endChar": 49
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63caf96c_5ac2b8a4",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Thanks for your correction.",
+      "parentUuid": "eaf1da7f_e39e90e8",
       "range": {
         "startLine": 507,
         "startChar": 42,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "27cf090f_4fd2375f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Make sense. We should create the trigger when the table is created then this doesn\u0027t need anymore.",
+      "parentUuid": "331f8931_7284079b",
+      "range": {
+        "startLine": 523,
+        "startChar": 13,
+        "endLine": 523,
+        "endChar": 35
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3da6e5b_92867b63",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "Thanks for thinking of this.\n\nI suggest you move it inside the try {} rather than the finally{}, because this is typically a *very* expensive operation. Maybe even we want to make it part of full maintenance only, rather than every time we want to drop all the expired records.",
+      "range": {
+        "startLine": 540,
+        "startChar": 24,
+        "endLine": 540,
+        "endChar": 30
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c7e155_48e46879",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "I have tried but vacuum command can be only executed after end transaction. That\u0027s why I put this command here.",
+      "parentUuid": "c3da6e5b_92867b63",
       "range": {
         "startLine": 540,
         "startChar": 24,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7a860bf2_c4249745",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "223fe511_59b992c9",
+      "range": {
+        "startLine": 551,
+        "startChar": 27,
+        "endLine": 551,
+        "endChar": 37
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ab266a_02428111",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "Add a limit argument to avoid querying all records.",
+      "range": {
+        "startLine": 563,
+        "startChar": 61,
+        "endLine": 563,
+        "endChar": 62
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05f33f9_9a6e2dd8",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Make sense, we don\u0027t have to get all records.",
+      "parentUuid": "84ab266a_02428111",
       "range": {
         "startLine": 563,
         "startChar": 61,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "52516491_fe775515",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "OK. Maybe we can just return generic error.",
+      "parentUuid": "417ecb1c_9c4841e9",
+      "range": {
+        "startLine": 564,
+        "startChar": 68,
+        "endLine": 564,
+        "endChar": 80
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dfbce46_d6bf991c",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 9
@@ -220,6 +436,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "This will throw if you don\u0027t have enough records. I think you should simply delete Math.min(number, cursor.getCount()). Better than moveToPosition(), if you have a LIMIT clause you can just say cursor.moveToLast().\n\nIf cursor.getCount() is smaller than number the regular path is not very efficient (you could truncate or something instead), but it\u0027s never supposed to happen anyway.",
+      "range": {
+        "startLine": 565,
+        "startChar": 30,
+        "endLine": 565,
+        "endChar": 36
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a030579_015839b1",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not good to call moveToPosition() directly if number is bigger than records. If I change the querying argument to only get number of records which we want to delete, we can change method to mvoeToLast() and it should be safe here.",
+      "parentUuid": "7dfbce46_d6bf991c",
       "range": {
         "startLine": 565,
         "startChar": 30,
@@ -278,6 +518,54 @@
     },
     {
       "key": {
+        "uuid": "ec1f5ff1_179ca1a4",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s the wrong description. Will fix it.",
+      "parentUuid": "fd92f00c_4753dccf",
+      "range": {
+        "startLine": 572,
+        "startChar": 51,
+        "endLine": 572,
+        "endChar": 58
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15ea5be_586916de",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9f569fb_ed085940",
+      "range": {
+        "startLine": 572,
+        "startChar": 41,
+        "endLine": 572,
+        "endChar": 51
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf0ca15_b31628a0",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 9
@@ -298,6 +586,30 @@
       "revId": "c30ced3affcad829da09ddf204797842c13b7399",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c535344_1fbdae9f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bdf0ca15_b31628a0",
+      "range": {
+        "startLine": 583,
+        "startChar": 12,
+        "endLine": 583,
+        "endChar": 33
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "f9357b4c_eac47533",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af161af7_42a2fb87",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "690a5c92_4d8512d7",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 9
@@ -335,6 +671,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "Oh I think you can afford to always initialize to false :) You can just remove this constructor.",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147f3e81_361d62a1",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "It\u0027s easier to do the initialization.",
+      "parentUuid": "690a5c92_4d8512d7",
       "range": {
         "startLine": 51,
         "startChar": 36,
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "0c8b5485_bd8295c1",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0abccd38_353328d1",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "847b8c46_931e311f",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 9
@@ -390,6 +774,30 @@
       "revId": "c30ced3affcad829da09ddf204797842c13b7399",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9876a6_c6711bac",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "847b8c46_931e311f",
+      "range": {
+        "startLine": 59,
+        "startChar": 23,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "87ef79cc_18a868a1",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd844a5e_93e3dfae",
+      "range": {
+        "startLine": 64,
+        "startChar": 74,
+        "endLine": 64,
+        "endChar": 81
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37aa33e4_a2131dab",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
         "patchSetId": 9
@@ -427,6 +859,30 @@
       "writtenOn": "2019-03-22T08:49:08Z",
       "side": 1,
       "message": "Don\u0027t forget to remove this :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7a7356_f473a03f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Oops, I forgot this.",
+      "parentUuid": "37aa33e4_a2131dab",
       "range": {
         "startLine": 96,
         "startChar": 19,
@@ -453,6 +909,24 @@
       "revId": "c30ced3affcad829da09ddf204797842c13b7399",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690672cb_865ae27c",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-25T17:53:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02357ca9_f0328c46",
+      "revId": "c30ced3affcad829da09ddf204797842c13b7399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
