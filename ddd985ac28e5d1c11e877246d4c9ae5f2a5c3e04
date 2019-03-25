@@ -360,6 +360,24 @@
       "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "989462b9_6465316c",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "You can see what I had in older patch sets and I was happy with it since I did not have to handcraft these :)",
+      "parentUuid": "d45bf697_7f6dbd00",
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6d9e99a1_af89d334",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "I use g-j-f with aosp flags (in lunch\u0027d environment):\ngoogle-java-format --aosp -i --skip-sorting-imports --skip-removing-unused-imports\n\nTo above I also add --lines flag to restrict formatting to only changed set of lines.",
+      "parentUuid": "5c3a07a8_43c56224",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Happy with the contents of the comments but I really think that having a summary at the top of the function brings value over only intermingling it with the code. I\u0027m not telling you to delete the comments inside the code of course. But if one already had a high-level idea of what it does before starting to read the function\u0027s code it would help understand I think.",
       "parentUuid": "87ae2b6f_55240428",
+      "range": {
+        "startLine": 1261,
+        "startChar": 20,
+        "endLine": 1261,
+        "endChar": 44
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51e741c8_69ce3c86",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "Yeah, I agree with that. But I think Junyu preferred javadoc along with commments, so I have both.",
+      "parentUuid": "89035397_5bf93323",
       "range": {
         "startLine": 1261,
         "startChar": 20,
@@ -557,6 +605,30 @@
       "side": 1,
       "message": "Here\u0027s the summarized comparison of benchmark results with one underlying iface. I don\u0027t notice much difference:\n\nmSize              Before(ns)        After(ns)        Delta(ms)\n100                142128.41         144179.48        +0.002\n1000               9235789.53        9059061.92       -0.17\n\nDetailed logs for above can be found here: https://diff.googleplex.com/#key\u003dycavhkBNo3Qk",
       "parentUuid": "3ebe6b16_dcd6be7f",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3e43af4_f1787dc2",
+        "filename": "core/tests/benchmarks/src/android/net/NetworkStatsBenchmark.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t see your earlier comment.\n\nIts not as bad (as I thought) when comparing it with one underlying interface (see previous comment).\n\n\u003e My general impression of this change though is that the multiplier in your code is mostly the number of interfaces\n\nYeah, you\u0027re right. With multiple ifaces it is expected to increase. http://gpaste/4618284525682688",
+      "parentUuid": "7595d31a_b44517ee",
       "range": {
         "startLine": 63,
         "startChar": 16,

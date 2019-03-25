@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "a785e4c6_ea7c78ec",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "added final in couple places.",
+      "parentUuid": "57576649_cdcc1a1a",
+      "range": {
+        "startLine": 1189,
+        "startChar": 8,
+        "endLine": 1189,
+        "endChar": 13
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4431ce_f5a69492",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 18
@@ -595,6 +619,30 @@
       "side": 1,
       "message": "Resolving",
       "parentUuid": "a7f616ff_91d0b3c6",
+      "range": {
+        "startLine": 1225,
+        "startChar": 12,
+        "endLine": 1225,
+        "endChar": 18
+      },
+      "revId": "5b0f5e213279870e65b81130e92c9b0708aafde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1f444ad_b031b4fc",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-25T23:07:05Z",
+      "side": 1,
+      "message": "Added couple NonNulls. Will keep it in mind going forward.",
+      "parentUuid": "a9f72859_a7915465",
       "range": {
         "startLine": 1225,
         "startChar": 12,
