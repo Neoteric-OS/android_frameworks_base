@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0bc89180_b5605033",
+        "filename": "core/xsd/permission.xsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-26T07:04:36Z",
+      "side": 1,
+      "message": "For complexType, the \"attribute\" must be after \"sequence\".\nSo attribute tags are moved to below the sequence tag.",
+      "parentUuid": "7277a6d8_20c38323",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb0fded_0aee9f80",
         "filename": "core/xsd/schema/current.txt",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a0cc4582_eab7500a",
+        "filename": "core/xsd/schema/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-26T07:04:36Z",
+      "side": 1,
+      "message": "It will be discussed in b/127425240",
+      "parentUuid": "2fb0fded_0aee9f80",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10072754_6c53ace8",
         "filename": "services/core/xsd/schema/current.txt",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ef0f5d_54ec326a",
+        "filename": "services/core/xsd/schema/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-26T07:04:36Z",
+      "side": 1,
+      "message": "It will be discussed in b/127425240",
+      "parentUuid": "10072754_6c53ace8",
+      "revId": "dbee2c7840ea2cea06e26eddb548ec0a51058c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
