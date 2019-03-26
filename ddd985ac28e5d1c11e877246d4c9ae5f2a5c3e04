@@ -311,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "e176e1aa_f710d3d3",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-26T20:51:49Z",
+      "side": 1,
+      "message": "Thanks for your understanding, I\u0027ll just leave it as is for now.",
+      "parentUuid": "9c7fbac9_7b01c846",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d59c33b_735811fa",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 23

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1c0cd56_ceb30900",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-26T20:51:49Z",
+      "side": 1,
+      "message": "Ack. This was already there, I don\u0027t really understand what this comment is talking about to reword it.",
+      "parentUuid": "5528064f_c50ea76c",
+      "range": {
+        "startLine": 1439,
+        "startChar": 15,
+        "endLine": 1439,
+        "endChar": 17
+      },
+      "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "322c5637_f10f0050",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 26
@@ -45,6 +69,30 @@
       "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1183c3_ac14f520",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-26T20:51:49Z",
+      "side": 1,
+      "message": "(Disclaimer: My response is purely based on looking at the code. And I don\u0027t really have the reasoning or context as to why it is this way)\n\nMy guess is that this is more of a safety check and also probably due to the fact that we don\u0027t know whether data sent by tunUid would be part of its foreground or background usage. That is why the tunSubtract method attempts to subtract it from both, but the catch is that it modifies the \u0027moved\u0027 traffic so that it does not gets subtracted twice.\n\nHave added a comment about it.\n\nHave also modified vpnWithOneUnderlyingNetwork to take SET_FOREGROUND into account as well. Thanks.",
+      "parentUuid": "322c5637_f10f0050",
+      "range": {
+        "startLine": 1458,
+        "startChar": 28,
+        "endLine": 1458,
+        "endChar": 42
+      },
+      "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
