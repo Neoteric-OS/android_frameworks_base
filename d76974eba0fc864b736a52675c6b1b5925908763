@@ -1,0 +1,504 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840741d6_0276cab6",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Because you\u0027re updating the metadata you\u0027ll need to upgrade the schema",
+      "range": {
+        "startLine": 137,
+        "startChar": 50,
+        "endLine": 137,
+        "endChar": 51
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17557f8d_dc9131c2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Can you please implement the upgrade for this ?\n\nCompletely delete this code, and replace with :\n\nif (oldVersion \u003c\u003d 2 \u0026\u0026 newVersion \u003e 2) {\n  createTrigger();\n}",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207a7476_6a708b91",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "attributes that what ?",
+      "range": {
+        "startLine": 535,
+        "startChar": 45,
+        "endLine": 535,
+        "endChar": 49
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f7b57b_41315cb0",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "So with \u003c you\u0027ll always remove less records than asked. The problem with this is that if you are in a place where you need to delete ONE additional record, you\u0027ll try and fail to delete this 500 times before bailing.\n\nReplace with \u003c\u003d. Sure you might overshoot a bit, but frankly these records would have expired 1ms later so it\u0027s not like it changes anything really.",
+      "range": {
+        "startLine": 555,
+        "startChar": 69,
+        "endLine": 555,
+        "endChar": 70
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5949d3_a95e8dae",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Meh. Just say cursor.getInt(0), it\u0027s simpler.",
+      "range": {
+        "startLine": 578,
+        "startChar": 36,
+        "endLine": 578,
+        "endChar": 65
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3491e47b_02d188e1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Can you please add a comment in Status.java explaining that codes below IpMemoryStoreService.ERROR_INTERNAL_BASE are internal and can\u0027t be used ? It\u0027s to guard against someone defining such a code without realizing the definition of the internal codes is here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f831f35_4b6c78e2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Suggest importing this class to shorten the line",
+      "range": {
+        "startLine": 437,
+        "startChar": 27,
+        "endLine": 437,
+        "endChar": 76
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289b690a_f6c2c5a7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Let\u0027s avoid copy-paste.\n\n  ...\n  if (checkForInterrupt(listener, interrupt)) return;\n  ..\n\n  private void checkForInterrupt(Listener, Interrupt) {\n    if (!interrupt.isInterrupted()) return false;\n    listener.onComplete(makeStatus(INTERRUPTED));\n    return true;\n  }\n\n(also no need to write the same comment multiple times)",
+      "range": {
+        "startLine": 456,
+        "startChar": 16,
+        "endLine": 460,
+        "endChar": 17
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b6701f_3844fc3b",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "always fail",
+      "range": {
+        "startLine": 467,
+        "startChar": 82,
+        "endLine": 467,
+        "endChar": 99
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eec8077_d5e82695",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "infinite",
+      "range": {
+        "startLine": 467,
+        "startChar": 48,
+        "endLine": 467,
+        "endChar": 58
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eef414f_228784f1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Remove dead code",
+      "range": {
+        "startLine": 469,
+        "startChar": 16,
+        "endLine": 469,
+        "endChar": 49
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6875704e_d418ba3e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Please make a constant",
+      "range": {
+        "startLine": 470,
+        "startChar": 63,
+        "endLine": 470,
+        "endChar": 66
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb8ae5b_768605e5",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "What\u0027s the logic here ?\n\nI think what you want is something along the lines of :\nfinal int deleteNumber \u003d Math.max((int) (totalNumber * decreaseRate), MIN_DELETE_NUM);",
+      "range": {
+        "startLine": 481,
+        "startChar": 45,
+        "endLine": 482,
+        "endChar": 69
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6120e0ff_cc1de7da",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "final, not volatile",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0490581_1a292a17",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "also final",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ccf6b9_e0a8e18c",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "The code is correct AFAICT, but unfortunately the framework team is opposed to using streams in the framework because of the high overhead. Could you just write :\n\nfinal int jobId \u003d params.getJobId();\nfor (InterruptMaintenance im : sInterruptList) {\n  if (im.getJobId() \u003d\u003d jobId) {\n    im.setInterrupted(true);\n  }\n}\nreturn true;\n\nIt\u0027s also a lot simpler.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d178a1_364dbf9b",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Please have a comment to explain what this is for.",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 25
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a31bc2f_6c5e7910",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Remove dead code",
+      "range": {
+        "startLine": 269,
+        "startChar": 13,
+        "endLine": 269,
+        "endChar": 89
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7ebd1f_a113a073",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Nit : spacing\n\n(0 /* Fake JobId */)",
+      "range": {
+        "startLine": 571,
+        "startChar": 70,
+        "endLine": 571,
+        "endChar": 86
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2003292_ecd1e93d",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Extra blank line",
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18835396_d1d93192",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "Did you mean :\n\n\"Maintenance unexpectedly completed successfully\"\n\n?",
+      "range": {
+        "startLine": 592,
+        "startChar": 19,
+        "endLine": 592,
+        "endChar": 52
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced6af02_a96a9fc8",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T14:35:58Z",
+      "side": 1,
+      "message": "This is asking for trouble. Not only do you implicitly rely on delays to happen in order, your leeway is only 10ms. There is no way stuff is that precise and your test is going to be extremely flaky.\n\nHere is what I suggest :\n・Increase the timer in isDbSizeOverThreshold to 2 seconds.\n・Call setInterrupted *after* you have started the maintenance.\n・Don\u0027t use doLatched, but make your own latch to wait for the answer (otherwise you just can\u0027t do it)\n\nSomething like :\n\n  final ConditionVariable latch \u003d new CV\n  mService.fullMaintenance(onStatus(status -\u003e {\n    assertFalse(\"Maintenance unexpectedly completed successfully\", status.isSuccess());\n    latch.open();\n  }\n  waitForMs(50); // Give a little bit of time for maintenance to start up for realism\n  im.setInterrupted(true);\n  latch.block();\n\nNow ideally we would like to have some proof that this has been running and doing stuff, THEN interrupted, THEN stopped within reasonable time. But this is very difficult to test without flakiness, and for now the above will do.",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 19
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
