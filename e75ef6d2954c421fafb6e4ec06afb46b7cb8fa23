@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d85179d_d05fc026",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-03-26T14:06:10Z",
+      "side": 1,
+      "message": "Please copy the extra docs into the getters below; the system API docs wouldn\u0027t include the private fields.  Its good clarifying info.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 6
+      },
+      "revId": "e75ef6d2954c421fafb6e4ec06afb46b7cb8fa23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
