@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "c7bf9266_9f99a652",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-26T00:52:41Z",
+      "side": 1,
+      "message": "I\u0027m not too much worried about performance at this point (Junyu is right, we can use a recycle entry) than the amount of time it would take me to refactor this out which is what I don\u0027t really have. I will try and see if I can get it done in under half hour without causing any tests to fail. If not, I will leave this for the next iteration in a separate CL (already have a TODO).",
+      "parentUuid": "79e5240d_da2405ea",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d59c33b_735811fa",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 23
