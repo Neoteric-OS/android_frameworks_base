@@ -1,0 +1,4 @@
+# androidx.annotation.Keep  is not recognized by ProGuard by default
+-keepclassmembers class * {
+    @androidx.annotation.Keep *;
+}

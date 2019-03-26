@@ -53,6 +53,8 @@ import android.util.LocalLog;
 import android.util.Log;
 import android.util.SparseArray;
 
+import androidx.annotation.Keep;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IState;
 import com.android.internal.util.IndentingPrintWriter;
@@ -282,28 +284,28 @@ public class IpClient extends StateMachine {
 
     public static final String DUMP_ARG_CONFIRM = "confirm";
 
-    private static final int CMD_TERMINATE_AFTER_STOP             = 1;
-    private static final int CMD_STOP                             = 2;
-    private static final int CMD_START                            = 3;
-    private static final int CMD_CONFIRM                          = 4;
-    private static final int EVENT_PRE_DHCP_ACTION_COMPLETE       = 5;
+    @Keep private static final int CMD_TERMINATE_AFTER_STOP             = 1;
+    @Keep private static final int CMD_STOP                             = 2;
+    @Keep private static final int CMD_START                            = 3;
+    @Keep private static final int CMD_CONFIRM                          = 4;
+    @Keep private static final int EVENT_PRE_DHCP_ACTION_COMPLETE       = 5;
     // Triggered by NetlinkTracker to communicate netlink events.
-    private static final int EVENT_NETLINK_LINKPROPERTIES_CHANGED = 6;
-    private static final int CMD_UPDATE_TCP_BUFFER_SIZES          = 7;
-    private static final int CMD_UPDATE_HTTP_PROXY                = 8;
-    private static final int CMD_SET_MULTICAST_FILTER             = 9;
-    private static final int EVENT_PROVISIONING_TIMEOUT           = 10;
-    private static final int EVENT_DHCPACTION_TIMEOUT             = 11;
-    private static final int EVENT_READ_PACKET_FILTER_COMPLETE    = 12;
-    private static final int CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF = 13;
-    private static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF = 14;
+    @Keep private static final int EVENT_NETLINK_LINKPROPERTIES_CHANGED = 6;
+    @Keep private static final int CMD_UPDATE_TCP_BUFFER_SIZES          = 7;
+    @Keep private static final int CMD_UPDATE_HTTP_PROXY                = 8;
+    @Keep private static final int CMD_SET_MULTICAST_FILTER             = 9;
+    @Keep private static final int EVENT_PROVISIONING_TIMEOUT           = 10;
+    @Keep private static final int EVENT_DHCPACTION_TIMEOUT             = 11;
+    @Keep private static final int EVENT_READ_PACKET_FILTER_COMPLETE    = 12;
+    @Keep private static final int CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF = 13;
+    @Keep private static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF = 14;
 
     // Internal commands to use instead of trying to call transitionTo() inside
     // a given State's enter() method. Calling transitionTo() from enter/exit
     // encounters a Log.wtf() that can cause trouble on eng builds.
-    private static final int CMD_JUMP_STARTED_TO_RUNNING          = 100;
-    private static final int CMD_JUMP_RUNNING_TO_STOPPING         = 101;
-    private static final int CMD_JUMP_STOPPING_TO_STOPPED         = 102;
+    @Keep private static final int CMD_JUMP_STARTED_TO_RUNNING          = 100;
+    @Keep private static final int CMD_JUMP_RUNNING_TO_STOPPING         = 101;
+    @Keep private static final int CMD_JUMP_STOPPING_TO_STOPPED         = 102;
 
     // IpClient shares a handler with DhcpClient: commands must not overlap
     public static final int DHCPCLIENT_CMD_BASE = 1000;

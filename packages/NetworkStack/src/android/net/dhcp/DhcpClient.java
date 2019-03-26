@@ -60,6 +60,8 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.SparseArray;
 
+import androidx.annotation.Keep;
+
 import com.android.internal.util.HexDump;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
@@ -127,27 +129,27 @@ public class DhcpClient extends StateMachine {
     private static final int PUBLIC_BASE = IpClient.DHCPCLIENT_CMD_BASE;
 
     /* Commands from controller to start/stop DHCP */
-    public static final int CMD_START_DHCP                  = PUBLIC_BASE + 1;
-    public static final int CMD_STOP_DHCP                   = PUBLIC_BASE + 2;
+    @Keep public static final int CMD_START_DHCP                  = PUBLIC_BASE + 1;
+    @Keep public static final int CMD_STOP_DHCP                   = PUBLIC_BASE + 2;
 
     /* Notification from DHCP state machine prior to DHCP discovery/renewal */
-    public static final int CMD_PRE_DHCP_ACTION             = PUBLIC_BASE + 3;
+    @Keep public static final int CMD_PRE_DHCP_ACTION             = PUBLIC_BASE + 3;
     /* Notification from DHCP state machine post DHCP discovery/renewal. Indicates
      * success/failure */
-    public static final int CMD_POST_DHCP_ACTION            = PUBLIC_BASE + 4;
+    @Keep public static final int CMD_POST_DHCP_ACTION            = PUBLIC_BASE + 4;
     /* Notification from DHCP state machine before quitting */
-    public static final int CMD_ON_QUIT                     = PUBLIC_BASE + 5;
+    @Keep public static final int CMD_ON_QUIT                     = PUBLIC_BASE + 5;
 
     /* Command from controller to indicate DHCP discovery/renewal can continue
      * after pre DHCP action is complete */
-    public static final int CMD_PRE_DHCP_ACTION_COMPLETE    = PUBLIC_BASE + 6;
+    @Keep public static final int CMD_PRE_DHCP_ACTION_COMPLETE    = PUBLIC_BASE + 6;
 
     /* Command and event notification to/from IpManager requesting the setting
      * (or clearing) of an IPv4 LinkAddress.
      */
-    public static final int CMD_CLEAR_LINKADDRESS           = PUBLIC_BASE + 7;
-    public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
-    public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
+    @Keep public static final int CMD_CLEAR_LINKADDRESS           = PUBLIC_BASE + 7;
+    @Keep public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
+    @Keep public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
 
     /* Message.arg1 arguments to CMD_POST_DHCP_ACTION notification */
     public static final int DHCP_SUCCESS = 1;
@@ -155,12 +157,12 @@ public class DhcpClient extends StateMachine {
 
     // Internal messages.
     private static final int PRIVATE_BASE         = IpClient.DHCPCLIENT_CMD_BASE + 100;
-    private static final int CMD_KICK             = PRIVATE_BASE + 1;
-    private static final int CMD_RECEIVED_PACKET  = PRIVATE_BASE + 2;
-    private static final int CMD_TIMEOUT          = PRIVATE_BASE + 3;
-    private static final int CMD_RENEW_DHCP       = PRIVATE_BASE + 4;
-    private static final int CMD_REBIND_DHCP      = PRIVATE_BASE + 5;
-    private static final int CMD_EXPIRE_DHCP      = PRIVATE_BASE + 6;
+    @Keep private static final int CMD_KICK             = PRIVATE_BASE + 1;
+    @Keep private static final int CMD_RECEIVED_PACKET  = PRIVATE_BASE + 2;
+    @Keep private static final int CMD_TIMEOUT          = PRIVATE_BASE + 3;
+    @Keep private static final int CMD_RENEW_DHCP       = PRIVATE_BASE + 4;
+    @Keep private static final int CMD_REBIND_DHCP      = PRIVATE_BASE + 5;
+    @Keep private static final int CMD_EXPIRE_DHCP      = PRIVATE_BASE + 6;
 
     // For message logging.
     private static final Class[] sMessageClasses = { DhcpClient.class };
