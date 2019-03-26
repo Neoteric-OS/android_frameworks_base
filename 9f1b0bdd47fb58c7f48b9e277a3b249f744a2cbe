@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c286320_c6530a0c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T06:37:43Z",
+      "side": 1,
+      "message": "Can you remove this timeout by adding a waitForIdle above it? Or does doing so make the test flaky?",
+      "range": {
+        "startLine": 2583,
+        "startChar": 12,
+        "endLine": 2584,
+        "endChar": 49
+      },
+      "revId": "9f1b0bdd47fb58c7f48b9e277a3b249f744a2cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8966ba20_9f38bdf1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T06:37:43Z",
+      "side": 1,
+      "message": "Can this go above the call to setAcceptPartialConnectivity in line 2578? Or does doing so make the test flaky?",
+      "range": {
+        "startLine": 2590,
+        "startChar": 8,
+        "endLine": 2590,
+        "endChar": 44
+      },
+      "revId": "9f1b0bdd47fb58c7f48b9e277a3b249f744a2cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75598543_824efc27",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T06:37:43Z",
+      "side": 1,
+      "message": "Do you need this timeout? Does waitForIdle work as well? If not, might want to put this below the expectAvailableCallbacksUnvalidated in line 2632.",
+      "revId": "9f1b0bdd47fb58c7f48b9e277a3b249f744a2cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1156db8a_ba933922",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T06:37:43Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s safe to do this before you receive the LOSING callback. It might work, or it might not, and if it doesn\u0027t the test will be flaky.",
+      "range": {
+        "startLine": 2663,
+        "startChar": 8,
+        "endLine": 2663,
+        "endChar": 77
+      },
+      "revId": "9f1b0bdd47fb58c7f48b9e277a3b249f744a2cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
