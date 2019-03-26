@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5528064f_c50ea76c",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-26T04:38:24Z",
+      "side": 1,
+      "message": "Nits: go/avoidwe",
+      "range": {
+        "startLine": 1439,
+        "startChar": 15,
+        "endLine": 1439,
+        "endChar": 17
+      },
+      "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322c5637_f10f0050",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-26T04:38:24Z",
+      "side": 1,
+      "message": "Sorry for lack of context,\n why do we need to subtract moved[i] twice from foreground and background items?\nBtw, do we have tests about SET_FOREGROUND?",
+      "range": {
+        "startLine": 1458,
+        "startChar": 28,
+        "endLine": 1458,
+        "endChar": 42
+      },
+      "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

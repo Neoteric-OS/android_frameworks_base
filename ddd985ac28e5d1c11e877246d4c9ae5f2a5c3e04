@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "9c7fbac9_7b01c846",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-26T04:38:24Z",
+      "side": 1,
+      "message": "Thanks for supporting the idea.\n\nHowever, if we are going to do that.\nThen the helper method will become a general purpose utility function, \nwhere the callers might not protected by the global alert assumption.\n\nThus, I think we\u0027ll need to reconsider the a*b/c overflow problem,\nwhich might be solved by using the multiplySafe function below.\nNetworkStatsCollection.multiplySafe(long value, long num, long den)\nhttps://cs.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/net/NetworkStatsCollection.java?q\u003dNetworkStatsCollection\u0026dr\u003dCSs\u0026l\u003d194\n\nBut feel free to leave it as is in this commit.\nI\u0027m happy with it since there is already a TODO.",
+      "parentUuid": "c7bf9266_9f99a652",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1342,
+        "endChar": 13
+      },
+      "revId": "ddd985ac28e5d1c11e877246d4c9ae5f2a5c3e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d59c33b_735811fa",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 23
