@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae10694_b31a1418",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T15:30:58Z",
+      "side": 1,
+      "message": "Might want to add that in real operation this won\u0027t be necessary, because a real NetworkMonitor will be probing continuously, and as soon as setAcceptPartialConnectivity() is called, it will validate.",
+      "range": {
+        "startLine": 2592,
+        "startChar": 20,
+        "endLine": 2592,
+        "endChar": 21
+      },
+      "revId": "f3b59b3ee0e33a8ff5938a23a38d372c4a486b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
