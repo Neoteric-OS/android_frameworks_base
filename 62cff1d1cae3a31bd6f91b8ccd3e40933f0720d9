@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "6fb8f706_8d1500b8",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T16:12:20Z",
+      "side": 1,
+      "message": "Well then I\u0027m sorry but I don\u0027t think AOSP support in your tool is sufficient. The help for --aosp says \"4 spaces indent\", and there are many other points of divergence. In particular, this style here is pretty jarring in AOSP, and I would much prefer you stick to the local style.",
+      "parentUuid": "6d9e99a1_af89d334",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21

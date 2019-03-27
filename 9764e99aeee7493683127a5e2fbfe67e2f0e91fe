@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95dce16d_066913af",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T16:12:20Z",
+      "side": 1,
+      "message": "tunIface being non-null, I think you can afford to say tunIface.equals(recycle.iface)",
+      "range": {
+        "startLine": 1278,
+        "startChar": 23,
+        "endLine": 1278,
+        "endChar": 62
+      },
+      "revId": "9764e99aeee7493683127a5e2fbfe67e2f0e91fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

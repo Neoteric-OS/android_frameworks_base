@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "863164f7_f74392dc",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T16:12:20Z",
+      "side": 1,
+      "message": "As I understand, this comment is justifying the presence of ROAMING_NO and METERED_NO. It\u0027s saying that those stats are coming from /proc (which AIUI is not even true any more) and therefore not tagged with either of these, and that these adjustments apply to the traffic altogether ; the ROAMING_NO and METERED_NO tags will be applied in a later pass by looking at what interfaces are roaming and what interfaces are metered, and therefore these adjustments must be made before the tags are applied so that the results are correct.",
+      "parentUuid": "b1c0cd56_ceb30900",
+      "range": {
+        "startLine": 1439,
+        "startChar": 15,
+        "endLine": 1439,
+        "endChar": 17
+      },
+      "revId": "79216c58d00fcfb0c38e597945d753dac153e548",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "322c5637_f10f0050",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 26
