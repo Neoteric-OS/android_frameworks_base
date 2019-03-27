@@ -16,6 +16,30 @@
 
 package com.android.server.pm;
 
+import static android.content.pm.ApplicationInfo.HIDDEN_API_ENFORCEMENT_DISABLED;
+
+import static com.android.server.pm.Installer.DEXOPT_BOOTCOMPLETE;
+import static com.android.server.pm.Installer.DEXOPT_DEBUGGABLE;
+import static com.android.server.pm.Installer.DEXOPT_ENABLE_HIDDEN_API_CHECKS;
+import static com.android.server.pm.Installer.DEXOPT_FORCE;
+import static com.android.server.pm.Installer.DEXOPT_GENERATE_APP_IMAGE;
+import static com.android.server.pm.Installer.DEXOPT_GENERATE_COMPACT_DEX;
+import static com.android.server.pm.Installer.DEXOPT_IDLE_BACKGROUND_JOB;
+import static com.android.server.pm.Installer.DEXOPT_PROFILE_GUIDED;
+import static com.android.server.pm.Installer.DEXOPT_PUBLIC;
+import static com.android.server.pm.Installer.DEXOPT_SECONDARY_DEX;
+import static com.android.server.pm.Installer.DEXOPT_STORAGE_CE;
+import static com.android.server.pm.Installer.DEXOPT_STORAGE_DE;
+import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
+import static com.android.server.pm.InstructionSets.getDexCodeInstructionSets;
+import static com.android.server.pm.PackageManagerService.WATCHDOG_TIMEOUT;
+import static com.android.server.pm.PackageManagerServiceCompilerMapping.getReasonName;
+
+import static dalvik.system.DexFile.getDexFileOptimizationInfo;
+import static dalvik.system.DexFile.getNonProfileGuidedCompilerFilter;
+import static dalvik.system.DexFile.getSafeModeCompilerFilter;
+import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
+
 import android.annotation.Nullable;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -43,6 +67,8 @@ import com.android.server.pm.dex.DexoptOptions;
 import com.android.server.pm.dex.DexoptUtils;
 import com.android.server.pm.dex.PackageDexUsage;
 
+import dalvik.system.DexFile;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,34 +76,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import dalvik.system.DexFile;
-
-import static android.content.pm.ApplicationInfo.HIDDEN_API_ENFORCEMENT_DISABLED;
-
-import static com.android.server.pm.Installer.DEXOPT_BOOTCOMPLETE;
-import static com.android.server.pm.Installer.DEXOPT_DEBUGGABLE;
-import static com.android.server.pm.Installer.DEXOPT_PROFILE_GUIDED;
-import static com.android.server.pm.Installer.DEXOPT_PUBLIC;
-import static com.android.server.pm.Installer.DEXOPT_SECONDARY_DEX;
-import static com.android.server.pm.Installer.DEXOPT_FORCE;
-import static com.android.server.pm.Installer.DEXOPT_STORAGE_CE;
-import static com.android.server.pm.Installer.DEXOPT_STORAGE_DE;
-import static com.android.server.pm.Installer.DEXOPT_IDLE_BACKGROUND_JOB;
-import static com.android.server.pm.Installer.DEXOPT_ENABLE_HIDDEN_API_CHECKS;
-import static com.android.server.pm.Installer.DEXOPT_GENERATE_COMPACT_DEX;
-import static com.android.server.pm.Installer.DEXOPT_GENERATE_APP_IMAGE;
-import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
-import static com.android.server.pm.InstructionSets.getDexCodeInstructionSets;
-
-import static com.android.server.pm.PackageManagerService.WATCHDOG_TIMEOUT;
-
-import static com.android.server.pm.PackageManagerServiceCompilerMapping.getReasonName;
-
-import static dalvik.system.DexFile.getDexFileOptimizationInfo;
-import static dalvik.system.DexFile.getNonProfileGuidedCompilerFilter;
-import static dalvik.system.DexFile.getSafeModeCompilerFilter;
-import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
 
 /**
  * Helper class for running dexopt command on packages.
