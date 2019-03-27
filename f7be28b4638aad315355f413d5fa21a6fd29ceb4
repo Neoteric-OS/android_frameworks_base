@@ -16,6 +16,24 @@
       "revId": "f7be28b4638aad315355f413d5fa21a6fd29ceb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f61022_91b1c40e",
+        "filename": "core/xsd/vts/ValidatePermission.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-27T06:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da3a147_a20dc82e",
+      "revId": "f7be28b4638aad315355f413d5fa21a6fd29ceb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
