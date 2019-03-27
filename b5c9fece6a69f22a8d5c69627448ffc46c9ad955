@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd034c13_2a37a471",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T22:15:54Z",
+      "side": 1,
+      "message": "that start",
+      "range": {
+        "startLine": 536,
+        "startChar": 47,
+        "endLine": 536,
+        "endChar": 59
+      },
+      "revId": "b5c9fece6a69f22a8d5c69627448ffc46c9ad955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00eb119_07d9a1f2",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T22:15:54Z",
+      "side": 1,
+      "message": "Sorry but your old code was good here. I wrote this on the function below because the function below needs more control – it requires doing something AFTER the service call but BEFORE the latch. But here using doLatched() was perfectly appropriate.",
+      "range": {
+        "startLine": 584,
+        "startChar": 12,
+        "endLine": 584,
+        "endChar": 32
+      },
+      "revId": "b5c9fece6a69f22a8d5c69627448ffc46c9ad955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7f5524_69b789dd",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T22:15:54Z",
+      "side": 1,
+      "message": "Likewise, because here you call setInterrupted before the service call you don\u0027t have to separate",
+      "range": {
+        "startLine": 607,
+        "startChar": 13,
+        "endLine": 607,
+        "endChar": 31
+      },
+      "revId": "b5c9fece6a69f22a8d5c69627448ffc46c9ad955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
