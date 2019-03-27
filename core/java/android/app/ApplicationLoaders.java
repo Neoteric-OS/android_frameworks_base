@@ -145,8 +145,7 @@ public class ApplicationLoaders {
      */
     public void createAndCacheNonBootclasspathSystemClassLoaders(SharedLibraryInfo[] libs) {
         if (mSystemLibsCacheMap != null) {
-            Log.wtf(TAG, "Already cached.");
-            return;
+            throw new IllegalStateException("Already cached.");
         }
 
         mSystemLibsCacheMap = new HashMap<String, CachedClassLoader>();
@@ -174,9 +173,8 @@ public class ApplicationLoaders {
                 CachedClassLoader cached = mSystemLibsCacheMap.get(dependencyPath);
 
                 if (cached == null) {
-                    Log.e(TAG, "Failed to find dependency " + dependencyPath
-                            + " of cached library " + path);
-                    return;
+                    throw new IllegalStateException("Failed to find dependency " + dependencyPath
+                            + " of cachedlibrary " + path);
                 }
 
                 sharedLibraries.add(cached.loader);
@@ -189,8 +187,7 @@ public class ApplicationLoaders {
                 null /*cacheKey*/, null /*classLoaderName*/, sharedLibraries /*sharedLibraries*/);
 
         if (classLoader == null) {
-            Log.e(TAG, "Failed to cache " + path);
-            return;
+            throw new IllegalStateException("Failed to cache " + path);
         }
 
         CachedClassLoader cached = new CachedClassLoader();
@@ -215,7 +212,7 @@ public class ApplicationLoaders {
      *
      * If there is an error or the cache is not available, this returns null.
      */
-    private ClassLoader getCachedNonBootclasspathSystemLib(String zip, ClassLoader parent,
+    public ClassLoader getCachedNonBootclasspathSystemLib(String zip, ClassLoader parent,
             String classLoaderName, List<ClassLoader> sharedLibraries) {
         if (mSystemLibsCacheMap == null) {
             return null;
@@ -233,9 +230,8 @@ public class ApplicationLoaders {
 
         // cached must be built and loaded in the same environment
         if (!sharedLibrariesEquals(sharedLibraries, cached.sharedLibraries)) {
-            Log.w(TAG, "Unexpected environment for cached library: (" + sharedLibraries + "|"
-                    + cached.sharedLibraries + ")");
-            return null;
+            throw new IllegalStateException("Unexpected environment for cached library: ("
+                    + sharedLibraries + "|" + cached.sharedLibraries + ")");
         }
 
         Log.d(TAG, "Returning zygote-cached class loader: " + zip);
