@@ -5470,7 +5470,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             notifyIfacesChangedForNetworkStats();
             if (networkAgent.everConnected) {
                 try {
-                    networkAgent.networkMonitor().notifyLinkPropertiesChanged();
+                    networkAgent.networkMonitor().notifyLinkPropertiesChanged(
+                            networkAgent.linkProperties);
                 } catch (RemoteException e) {
                     e.rethrowFromSystemServer();
                 }
@@ -5717,7 +5718,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
             rematchAllNetworksAndRequests(nai, oldScore);
             try {
-                nai.networkMonitor().notifyNetworkCapabilitiesChanged();
+                nai.networkMonitor().notifyNetworkCapabilitiesChanged(nai.networkCapabilities);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
@@ -5980,7 +5981,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (capabilitiesChanged) {
             try {
-                nai.networkMonitor().notifyNetworkCapabilitiesChanged();
+                nai.networkMonitor().notifyNetworkCapabilitiesChanged(nai.networkCapabilities);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
@@ -6392,7 +6393,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 if (networkAgent.networkMisc.acceptPartialConnectivity) {
                     networkAgent.networkMonitor().setAcceptPartialConnectivity();
                 }
-                networkAgent.networkMonitor().notifyNetworkConnected();
+                networkAgent.networkMonitor().notifyNetworkConnected(
+                        networkAgent.linkProperties, networkAgent.networkCapabilities);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }

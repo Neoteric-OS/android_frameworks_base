@@ -497,7 +497,7 @@ public class ConnectivityServiceTest {
             };
 
             try {
-                doAnswer(validateAnswer).when(mNetworkMonitor).notifyNetworkConnected();
+                doAnswer(validateAnswer).when(mNetworkMonitor).notifyNetworkConnected(any(), any());
                 doAnswer(validateAnswer).when(mNetworkMonitor).forceReevaluation(anyInt());
                 doAnswer(validateAnswer).when(mNetworkMonitor).setAcceptPartialConnectivity();
             } catch (RemoteException e) {

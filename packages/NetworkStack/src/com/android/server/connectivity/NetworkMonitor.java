@@ -78,6 +78,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBufferIndices;
@@ -379,10 +380,8 @@ public class NetworkMonitor extends StateMachine {
         mDataStallValidDnsTimeThreshold = getDataStallValidDnsTimeThreshold();
         mDataStallEvaluationType = getDataStallEvalutionType();
 
-        // mLinkProperties and mNetworkCapbilities must never be null or we will NPE.
-        // Provide empty objects in case we are started and the network disconnects before
-        // we can ever fetch them.
-        // TODO: Delete ASAP.
+        // Provide empty LinkProperties and NetworkCapabilities to make sure they are never null,
+        // even before notifyNetworkConnected.
         mLinkProperties = new LinkProperties();
         mNetworkCapabilities = new NetworkCapabilities(null);
     }
@@ -434,8 +433,15 @@ public class NetworkMonitor extends StateMachine {
     /**
      * Send a notification to NetworkMonitor indicating that the network is now connected.
      */
-    public void notifyNetworkConnected() {
-        sendMessage(CMD_NETWORK_CONNECTED);
+    public void notifyNetworkConnected(LinkProperties lp, NetworkCapabilities nc) {
+        sendMessage(CMD_NETWORK_CONNECTED, new Pair<>(lp, nc));
+    }
+
+    private void updateConnectedNetworkAttributes(Message connectedMsg) {
+        final Pair<LinkProperties, NetworkCapabilities> attrs =
+                (Pair<LinkProperties, NetworkCapabilities>) connectedMsg.obj;
+        mLinkProperties = attrs.first;
+        mNetworkCapabilities = attrs.second;
     }
 
     /**
@@ -448,37 +454,15 @@ public class NetworkMonitor extends StateMachine {
     /**
      * Send a notification to NetworkMonitor indicating that link properties have changed.
      */
-    public void notifyLinkPropertiesChanged() {
-        getHandler().post(() -> {
-            updateLinkProperties();
-        });
-    }
-
-    private void updateLinkProperties() {
-        final LinkProperties lp = mCm.getLinkProperties(mNetwork);
-        // If null, we should soon get a message that the network was disconnected, and will stop.
-        if (lp != null) {
-            // TODO: send LinkProperties parceled in notifyLinkPropertiesChanged() and start().
-            mLinkProperties = lp;
-        }
+    public void notifyLinkPropertiesChanged(final LinkProperties lp) {
+        getHandler().post(() -> mLinkProperties = lp);
     }
 
     /**
      * Send a notification to NetworkMonitor indicating that network capabilities have changed.
      */
-    public void notifyNetworkCapabilitiesChanged() {
-        getHandler().post(() -> {
-            updateNetworkCapabilities();
-        });
-    }
-
-    private void updateNetworkCapabilities() {
-        final NetworkCapabilities nc = mCm.getNetworkCapabilities(mNetwork);
-        // If null, we should soon get a message that the network was disconnected, and will stop.
-        if (nc != null) {
-            // TODO: send NetworkCapabilities parceled in notifyNetworkCapsChanged() and start().
-            mNetworkCapabilities = nc;
-        }
+    public void notifyNetworkCapabilitiesChanged(final NetworkCapabilities nc) {
+        getHandler().post(() -> mNetworkCapabilities = nc);
     }
 
     /**
@@ -547,16 +531,10 @@ public class NetworkMonitor extends StateMachine {
     // does not entail any real state (hence no enter() or exit() routines).
     private class DefaultState extends State {
         @Override
-        public void enter() {
-            // TODO: have those passed parceled in start() and remove this
-            updateLinkProperties();
-            updateNetworkCapabilities();
-        }
-
-        @Override
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_NETWORK_CONNECTED:
+                    updateConnectedNetworkAttributes(message);
                     logNetworkEvent(NetworkEvent.NETWORK_CONNECTED);
                     transitionTo(mEvaluatingState);
                     return HANDLED;
@@ -684,6 +662,7 @@ public class NetworkMonitor extends StateMachine {
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_NETWORK_CONNECTED:
+                    updateConnectedNetworkAttributes(message);
                     transitionTo(mValidatedState);
                     break;
                 case CMD_EVALUATE_PRIVATE_DNS:
