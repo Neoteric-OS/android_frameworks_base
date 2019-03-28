@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "e59156d9_eb712a1c",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-28T08:16:47Z",
+      "side": 1,
+      "message": "Sorry, that was unfair. Let me rephrase.\n\nI care about consistency, that\u0027s why I point things out. Getting to the point where we use some auto-formatter in our code is a significant amount of work (I estimate it to be many years worth of pointing out style), so we\u0027d need someone who cares enough to make it happen. I am supporting of the idea, but I do not care enough about auto-formatters to be that someone. I\u0027ll be happy to support the project if someone who cares decides to take it on.",
+      "parentUuid": "3eba2ef2_5d9c4b91",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21
