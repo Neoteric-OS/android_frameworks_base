@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "68f54156_6d745de3",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-28T02:56:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43d62dfc_42a53d31",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207a7476_6a708b91",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 13
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "d291127b_af044a25",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-28T02:56:59Z",
+      "side": 1,
+      "message": "OK, I will implement the test case. Furthermore, do we need another java file for IpMemoryStoreDatabase test case?",
+      "parentUuid": "d693a904_224d4026",
+      "range": {
+        "startLine": 555,
+        "startChar": 69,
+        "endLine": 555,
+        "endChar": 70
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5949d3_a95e8dae",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 13
@@ -344,6 +392,30 @@
       "side": 1,
       "message": "All right.",
       "parentUuid": "34142e17_c1d43476",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0a2f2b4_8a6be4f1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-28T02:56:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a48c66e7_be5f2718",
       "range": {
         "startLine": 66,
         "startChar": 7,
@@ -850,6 +922,30 @@
     },
     {
       "key": {
+        "uuid": "597f747c_edee5205",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-28T02:56:59Z",
+      "side": 1,
+      "message": "That\u0027s fine. I will keep in mind. :)",
+      "parentUuid": "1a16b3f3_78b41705",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1d178a1_364dbf9b",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 13
@@ -1132,6 +1228,30 @@
       "side": 1,
       "message": "I think your new code is fine here. 1 min is maybe a bit long, but it\u0027ll do.",
       "parentUuid": "5f489150_40d1700f",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 19
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "440c136a_04827ef1",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-28T02:56:59Z",
+      "side": 1,
+      "message": "Yes, 1 min is a bit long. Maybe I should reduce the fake data count to 1000 then we can change the time to 30s or less.",
+      "parentUuid": "c925f9ab_22cd3790",
       "range": {
         "startLine": 602,
         "startChar": 0,
