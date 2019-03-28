@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "630ef1d0_556245c0",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-28T07:48:19Z",
+      "side": 1,
+      "message": "Yes. You don\u0027t have to do it at all, hence \"if you have the courage\". Please don\u0027t prioritize writing this test.",
+      "parentUuid": "51bffae7_a983442e",
+      "range": {
+        "startLine": 555,
+        "startChar": 69,
+        "endLine": 555,
+        "endChar": 70
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5949d3_a95e8dae",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 13
@@ -1276,6 +1300,30 @@
       "side": 1,
       "message": "Yes, 1 min is a bit long. Maybe I should reduce the fake data count to 1000 then we can change the time to 30s or less.",
       "parentUuid": "c925f9ab_22cd3790",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 19
+      },
+      "revId": "d76974eba0fc864b736a52675c6b1b5925908763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f8c47ca_c164bc92",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-28T07:48:19Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "440c136a_04827ef1",
       "range": {
         "startLine": 602,
         "startChar": 0,
