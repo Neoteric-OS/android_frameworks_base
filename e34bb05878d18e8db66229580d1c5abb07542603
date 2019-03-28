@@ -94,6 +94,30 @@
       "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5675c81_198f424b",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2019-03-28T00:09:04Z",
+      "side": 1,
+      "message": "As far as GMSCore, we separately fixed to add our own checks to the OTA job scheduling. In generally, I think I\u0027d trade off the self inflicted (non-idle) case of a user who requested an OTA explicitly and is getting jank due to memory pressure of dex2oat and I/O interference of fstrim vs the other side of things were post boot takes minutes and makes it feel like the device bootlooped.",
+      "parentUuid": "978adcc5_30f2c602",
+      "range": {
+        "startLine": 475,
+        "startChar": 13,
+        "endLine": 475,
+        "endChar": 51
+      },
+      "revId": "e34bb05878d18e8db66229580d1c5abb07542603",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
