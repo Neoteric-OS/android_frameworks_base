@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe1c3150_8e54bc04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-28T14:43:11Z",
+      "side": 1,
+      "message": "This terminology seems misleading: We\u0027re not \"removing\" them from the light greylist, we\u0027re just representing the fact that they\u0027re on the light greylist in a different way, namely via stubs rather than the .txt file. Right?\n\nIf so, then how about:\n\nFinish moving libcore light greylist specification to stubs.\n\nMembership of libcore APIs in light greylist is now completely specified via @UnsupportedAppUsage annotations on stub .java files, so the duplicate definition in hiddenapi-light-greylist.txt is no longer used. This CL doesn\u0027t change behavior (the APIs on the light greylist are not changed), see the test step below.\n\nTest: Ran \"make droid\" and manually checked that the generated \n      out/target/common/obj/PACKAGING/hiddenapi-light-greylist.txt\n      was identical before vs. after this CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "900ab8accef15f3a7622f0edccd53e99c44c03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce30adb3_204db2c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-28T14:43:11Z",
+      "side": 1,
+      "message": "common practice is to put the test steps into the \"Test:\" stanza rather than elsewhere and then putting \"see above\". Please stick to the convention, else you\u0027re breaking any analysis that\u0027s based on extracting the Test: stanzas into a table or similar.",
+      "revId": "900ab8accef15f3a7622f0edccd53e99c44c03b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
