@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "3eba2ef2_5d9c4b91",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-28T06:57:47Z",
+      "side": 1,
+      "message": "I agree in principle, but I don\u0027t know of any auto-formatter that people use in Android (and the one you\u0027ve been using apparently can\u0027t be made to handle aosp style). We\u0027ll also have to figure out the scope and enforcement – we can\u0027t mandate that in other people\u0027s code so if we do it it has to be restricted to our code, then we have to figure out how to make it mandatory and for what and how we handle the grey zones.",
+      "parentUuid": "223035ce_217f6357",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21
