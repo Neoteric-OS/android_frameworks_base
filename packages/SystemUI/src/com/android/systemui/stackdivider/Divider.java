@@ -65,6 +65,11 @@ public class Divider extends SystemUI {
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         update(newConfig);
+        //when the animation of divider view is running,the configuration change may
+        //lead the configurtion exception,we can restore it by resizeStack in the end.
+        if (!mMinimized) {
+            mView.resizeStackWithSnapTargetBeforeMinimized();
+        }
     }
 
     public DividerView getView() {

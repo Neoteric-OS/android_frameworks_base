@@ -992,6 +992,10 @@ public class DividerView extends FrameLayout implements OnTouchListener,
         mSfChoreographer.scheduleAtSfVsync(mHandler, message);
     }
 
+    public void resizeStackWithSnapTargetBeforeMinimized() {
+        resizeStack(mSnapTargetBeforeMinimized);
+    }
+
     private void resizeStack(SnapTarget taskSnapTarget) {
         resizeStack(taskSnapTarget.position, taskSnapTarget.position, taskSnapTarget);
     }
