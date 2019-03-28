@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "f2000376_fa447023",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-03-28T04:33:45Z",
+      "side": 1,
+      "message": "Ok sticking with local style. Although, I\u0027d strongly recommend that we pick an auto-formatter so that people can spend less time on formatting code themselves and then pointing out mistakes in code reviews.",
+      "parentUuid": "6fb8f706_8d1500b8",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21
