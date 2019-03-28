@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "223035ce_217f6357",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-28T05:54:30Z",
+      "side": 1,
+      "message": "Agree with Varun that we need an AOSP JAVA auto-formatter like clang-format for c++.\nAnd maybe put a local style configuration file if needed.\nThat would be great.",
+      "parentUuid": "f2000376_fa447023",
+      "range": {
+        "startLine": 1224,
+        "startChar": 12,
+        "endLine": 1228,
+        "endChar": 40
+      },
+      "revId": "62cff1d1cae3a31bd6f91b8ccd3e40933f0720d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232fe182_50fe87ab",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 21
