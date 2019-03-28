@@ -59,6 +59,10 @@ int ASharedMemory_setProt(int fd, int prot) {
     return ashmem_set_prot_region(fd, prot);
 }
 
+int ASharedMemory_getProt(int fd) {
+    return ashmem_get_prot_region(fd);
+}
+
 int ASharedMemory_dupFromJava(JNIEnv* env, jobject javaSharedMemory) {
     if (env == nullptr || javaSharedMemory == nullptr) {
         return -1;

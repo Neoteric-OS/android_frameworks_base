@@ -195,6 +195,7 @@ LIBANDROID {
     ASensor_isDirectChannelTypeSupported; # introduced=26
     ASensor_isWakeUpSensor; # introduced=21
     ASharedMemory_create; # introduced=26
+    ASharedMemory_getProt; # introduced=29
     ASharedMemory_getSize; # introduced=26
     ASharedMemory_setProt; # introduced=26
     ASharedMemory_dupFromJava; # introduced=27
