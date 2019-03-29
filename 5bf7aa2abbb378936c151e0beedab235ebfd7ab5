@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15876cc_22015a4a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T12:08:14Z",
+      "side": 1,
+      "message": "Can you file a bug so we can track this for Q?",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 376,
+        "endChar": 59
+      },
+      "revId": "5bf7aa2abbb378936c151e0beedab235ebfd7ab5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
