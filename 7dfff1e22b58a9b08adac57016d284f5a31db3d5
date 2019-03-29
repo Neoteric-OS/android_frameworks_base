@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add8f30c_4f21015f",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-03-29T17:57:10Z",
+      "side": 1,
+      "message": "You mean invalid? Say that even in comment, since we have special values for DEFAULT (-2) etc.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 50,
+        "endLine": 1154,
+        "endChar": 52
+      },
+      "revId": "7dfff1e22b58a9b08adac57016d284f5a31db3d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
