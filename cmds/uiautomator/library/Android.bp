@@ -57,3 +57,10 @@ java_library_static {
         "junit",
     ]
 }
+
+java_library_static {
+    name: "uiautomator.library",
+    srcs: [
+        "core-src/**/*.java",
+    ],
+}
