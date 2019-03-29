@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "118f800b_03eb4e9c",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-29T17:15:11Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t know any way can avoid doing this inside finally{}. In my test, w/o this execution, db size will keep in same value and test case also fail. Maybe I should reconsider my algorithm to reduce or avoid using this.",
+      "parentUuid": "f6767503_a00496a6",
+      "range": {
+        "startLine": 525,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 33
+      },
+      "revId": "d64b6fc004e5b61078a81335cfcfbb4a6cca1b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c76f2a_5cc6b53a",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 15
