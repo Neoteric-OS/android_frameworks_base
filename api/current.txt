@@ -41044,6 +41044,11 @@ package android.system {
     field public static final int _SC_XOPEN_XCU_VERSION;
   }
 
+  public final class StructIcmpHdr {
+    method public static android.system.StructIcmpHdr IcmpEchoHdr(int, int);
+    method public byte[] getBytes();
+  }
+
   public final class StructPollfd {
     ctor public StructPollfd();
     field public short events;
