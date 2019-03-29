@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c764d1_1f403bc0",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "Nit: does it really return null instead of, say, [] or an empty array list?",
+      "range": {
+        "startLine": 117,
+        "startChar": 72,
+        "endLine": 117,
+        "endChar": 92
+      },
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6b820b_fdeebf53",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "It would be good to have a test where we the app requests a permission, but it is not granted, and we check that netd doesn\u0027t think it has the permission. Not in this CL though.",
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d7dade_7c230b11",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "SYSTEM",
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe8fa72_684312cf",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "Shared",
+      "range": {
+        "startLine": 475,
+        "startChar": 34,
+        "endLine": 475,
+        "endChar": 39
+      },
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f386d7ae_768ea14c",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "and no permissions should not cause the UID to lose permissions",
+      "range": {
+        "startLine": 483,
+        "startChar": 53,
+        "endLine": 483,
+        "endChar": 89
+      },
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d100c215_61f828d5",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T04:39:29Z",
+      "side": 1,
+      "message": "packageInfo2",
+      "range": {
+        "startLine": 532,
+        "startChar": 20,
+        "endLine": 532,
+        "endChar": 31
+      },
+      "revId": "d48eb62bf6b8418217996ea1c6b97b96c3c442ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
