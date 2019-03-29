@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51ee9bbf_312d3d84",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "R",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17718fe_1e679bb5",
+        "filename": "core/java/android/net/UidRange.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "R",
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3352e260_3828137c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5451,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Move this to a new updateVpnFiltering method?",
+      "range": {
+        "startLine": 5451,
+        "startChar": 8,
+        "endLine": 5451,
+        "endChar": 33
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9adec3_c6eb9ace",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5455,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "I think this name is confusing because it doesn\u0027t express whether old filtering needs to be removed, it expresses whether filtering was in place. Similarly, even if needToAddNewFiltering is true it doesn\u0027t mean that new filtering needs to be added, because the filtering could be already there. Also I think the names are too long and will cause line wrapping.\n\nHow about:\n\n    final boolean wasFiltering \u003d requiresVpnFiltering(..., oldLp);\n    final boolean shouldFilter \u003d requiresVpnFiltering(..., newLp);\n\nOr maybe requiresVpnIsolation? ...?",
+      "range": {
+        "startLine": 5452,
+        "startChar": 0,
+        "endLine": 5455,
+        "endChar": 71
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460c97d3_cafd5f70",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5456,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "When you move this to a function, unindent.\n\n    if (!wasFiltering \u0026\u0026 !needsFiltering) {\n        return;\n    }\n\nBut also, consider whether you need this code at all. If both of these are false, then the code won\u0027t really do much anyway except calculate a few booleans (and make a copy of the UID ranges in the networkcapabilities).",
+      "range": {
+        "startLine": 5456,
+        "startChar": 8,
+        "endLine": 5456,
+        "endChar": 64
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86461a55_e0c8554c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Nit: generally the code uses \"iface\" not if.",
+      "range": {
+        "startLine": 5457,
+        "startChar": 28,
+        "endLine": 5457,
+        "endChar": 30
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029e575f_d4ead130",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5461,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Here too:\n\n    if (Objects.equals(oldIface, newIface) \u0026\u0026 (wasFiltering \u003d\u003d shouldFilter)) {\n        // Nothing to do.\n        return;\n    }\n\nAlso, for readability, consider calculating all the booleans beforehand and then putting the logic later.\n\n    final String oldIf \u003d oldLp !\u003d null ? oldLp.getInterfaceName() : null;\n    final String newIf \u003d newLp !\u003d null ? newLp.getInterfaceName() : null;\n    final boolean wasFiltering \u003d requiresVpnFiltering(..., oldLp);\n    final boolean shouldFilter \u003d requiresVpnFiltering(..., newLp);\n\n    if (!wasFiltering \u0026\u0026 !needsFiltering) {\n        // Nothing to do.\n        return;\n    }\n\n    if (Objects.equals(oldLp, newLp) \u0026\u0026 (wasFiltering \u003d\u003d needsFiltering)) {\n        // Nothing changed.\n        return;\n    }\n\n    final Set\u003cUidRange\u003e ranges \u003d networkAgent.networkCapabilities.getUids();\n    final int vpnAppUid \u003d networkAgent.networkCapabilities.getEstablishingVpnAppUid();\n\n    if (wasFiltering) {\n        mPermissionMonitor.onVpnUidRangesRemoved(oldIf, ranges, vpnAppUid);\n    }\n\n    if (shouldFilter) {\n        mPermissionMonitor.onVpnUidRangesAdded(newIf, ranges, vpnAppUid);\n    }",
+      "range": {
+        "startLine": 5461,
+        "startChar": 12,
+        "endLine": 5461,
+        "endChar": 55
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db93f64_aa638eb2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5465,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Have you checked that when a network disconnects the ranges inside PermissionMonitor are removed? Is there a unit test for that?",
+      "range": {
+        "startLine": 5465,
+        "startChar": 39,
+        "endLine": 5465,
+        "endChar": 60
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fb7331_fad855db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5823,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "See comment above on variable names.",
+      "range": {
+        "startLine": 5823,
+        "startChar": 26,
+        "endLine": 5823,
+        "endChar": 82
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cba290_a6730ae2",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Generally streams are frowned upon in framework code because they are more expensive.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a494e157_823bf8ef",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "CSIt\u0027s unfortunate that PermissionMonitor will from now on need to know about interface names. Ideally it should only deal with UIDs.\n\nBefore we proceed with this approach, it\u0027s worth thinking if there\u0027s a way to remove the interface from this class? Perhaps store the UID ranges in NetworkAgentInfo instead of here? For example, could we structure the code such that, say, onVpnUidRangesAdded returned the current UID ranges to ConnectivityService, and ConnectivityService took care of keeping track of the ranges it got?",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82df8ad0_2e0d57b2",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "Remove extra \" .\"",
+      "range": {
+        "startLine": 106,
+        "startChar": 53,
+        "endLine": 106,
+        "endChar": 56
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6842137d_5512cd76",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T16:51:41Z",
+      "side": 1,
+      "message": "I think it does now.",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 107,
+        "endChar": 73
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
