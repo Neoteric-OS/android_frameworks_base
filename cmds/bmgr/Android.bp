@@ -1,0 +1,13 @@
+// Copyright 2007 The Android Open Source Project
+//
+
+java_binary {
+    name: "bmgr",
+    wrapper: "bmgr",
+    static_libs: ["bmgrlib"],
+}
+
+java_library {
+    name: "bmgrlib",
+    srcs: ["**/*.java"],
+}
