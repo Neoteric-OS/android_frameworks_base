@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "38cb02ab_9a9806c2",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-29T15:53:14Z",
+      "side": 1,
+      "message": "Usually functions that only exist for testing we suffix with \"forTesting\". Maybe that\u0027d help here.",
+      "parentUuid": "e72d9749_cbd87475",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 36
+      },
+      "revId": "db89006b76e1e04a0603e87825d1a69d7cce6b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b325ca_283a1933",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 26
