@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "962a0e75_da66ab17",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-31T23:52:19Z",
+      "side": 1,
+      "message": "What\u0027s wrong with just moving this one line below, outside of the brace ? If you got an exception here, vacuuming won\u0027t do anything anyway.",
+      "parentUuid": "118f800b_03eb4e9c",
+      "range": {
+        "startLine": 525,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 33
+      },
+      "revId": "d64b6fc004e5b61078a81335cfcfbb4a6cca1b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c76f2a_5cc6b53a",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 15
