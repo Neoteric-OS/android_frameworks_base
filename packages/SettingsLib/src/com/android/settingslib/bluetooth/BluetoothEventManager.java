@@ -54,6 +54,7 @@ public class BluetoothEventManager {
     private final CachedBluetoothDeviceManager mDeviceManager;
     private final IntentFilter mAdapterIntentFilter, mProfileIntentFilter;
     private final Map<String, Handler> mHandlerMap;
+    private final Map<String, Handler> mProfileHandlerMap;
     private final BroadcastReceiver mBroadcastReceiver = new BluetoothBroadcastReceiver();
     private final BroadcastReceiver mProfileBroadcastReceiver = new BluetoothBroadcastReceiver();
     private final Collection<BluetoothCallback> mCallbacks = new ArrayList<>();
@@ -82,6 +83,7 @@ public class BluetoothEventManager {
         mAdapterIntentFilter = new IntentFilter();
         mProfileIntentFilter = new IntentFilter();
         mHandlerMap = new HashMap<>();
+        mProfileHandlerMap = new HashMap<>();
         mContext = context;
         mUserHandle = userHandle;
         mReceiverHandler = handler;
@@ -166,7 +168,7 @@ public class BluetoothEventManager {
 
     @VisibleForTesting
     void addProfileHandler(String action, Handler handler) {
-        mHandlerMap.put(action, handler);
+        mProfileHandlerMap.put(action, handler);
         mProfileIntentFilter.addAction(action);
     }
 
@@ -265,6 +267,10 @@ public class BluetoothEventManager {
             Handler handler = mHandlerMap.get(action);
             if (handler != null) {
                 handler.onReceive(context, intent, device);
+            }
+            Handler profileHandler = mProfileHandlerMap.get(action);
+            if (profileHandler != null) {
+                profileHandler.onReceive(context, intent, device);
             }
         }
     }
