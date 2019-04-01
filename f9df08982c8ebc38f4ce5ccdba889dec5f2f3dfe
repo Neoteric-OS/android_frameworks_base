@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d25c17_555c31f9",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T08:07:15Z",
+      "side": 1,
+      "message": "This is now always true, and it looks to me like you may want to actually move the assignment inside this test",
+      "range": {
+        "startLine": 318,
+        "startChar": 16,
+        "endLine": 318,
+        "endChar": 44
+      },
+      "revId": "f9df08982c8ebc38f4ce5ccdba889dec5f2f3dfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
