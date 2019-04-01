@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa309c1e_e52aa666",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-04-01T23:01:01Z",
+      "side": 1,
+      "message": "You left out the line setting the default for this key:\nsDefaults.putString(KEY_SMART_FORWARDING_CONFIG_COMPONENT_NAME_STRING, \"\");",
+      "range": {
+        "startLine": 2505,
+        "startChar": 31,
+        "endLine": 2505,
+        "endChar": 80
+      },
+      "revId": "6b289b22f905f4bb84729b3627d0cc16168def35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
