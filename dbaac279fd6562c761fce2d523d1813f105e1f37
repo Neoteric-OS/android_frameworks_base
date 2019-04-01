@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b5d2526_2c2e2870",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T03:38:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this annotation works here",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b348fe_9f8a89f6",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T03:38:51Z",
+      "side": 1,
+      "message": "Maybe you want to add what the unit is for this constant",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1a5801_2313a5fd",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T03:38:51Z",
+      "side": 1,
+      "message": "So this overwrites the type that was here ? Doesn\u0027t this mean we may lose data ?\n\nHow about the following instead :\n- Remove mCollectDataStallMetrics completely\n- Have mDataStallMetricsEvaluationTypes a flags field, and |\u003d here\n- Reset to 0 in l.724\n- Have l.1086 check if mDataStallMetricsEvaluationTypes !\u003d 0",
+      "range": {
+        "startLine": 572,
+        "startChar": 24,
+        "endLine": 573,
+        "endChar": 75
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
