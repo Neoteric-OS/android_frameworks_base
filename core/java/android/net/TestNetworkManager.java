@@ -73,11 +73,12 @@ public class TestNetworkManager {
     }
 
     /**
-     * Create a tun interface for testing purposes
+     * Create a TUN or TAP interface for testing purposes.
      *
-     * @param linkAddrs an array of LinkAddresses to assign to the TUN interface
-     * @return A ParcelFileDescriptor of the underlying TUN interface. Close this to tear down the
-     *     TUN interface.
+     * @param linkAddrs an array of LinkAddresses to assign to the interface. If non-empty, create a
+     *     TUN interface and assign the addresses to it. If empty, create a TAP interface.
+     * @return A ParcelFileDescriptor of the underlying interface. Close this to tear down the
+     *     interface.
      * @hide
      */
     @TestApi
@@ -88,4 +89,5 @@ public class TestNetworkManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
 }
