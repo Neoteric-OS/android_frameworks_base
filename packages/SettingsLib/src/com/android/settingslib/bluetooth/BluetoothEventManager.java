@@ -52,6 +52,7 @@ public class BluetoothEventManager {
     private LocalBluetoothProfileManager mProfileManager;
     private final IntentFilter mAdapterIntentFilter, mProfileIntentFilter;
     private final Map<String, Handler> mHandlerMap;
+    private final Map<String, Handler> mProfileHandlerMap;
     private Context mContext;
 
     private final Collection<BluetoothCallback> mCallbacks =
@@ -69,7 +70,7 @@ public class BluetoothEventManager {
     }
 
     void addProfileHandler(String action, Handler handler) {
-        mHandlerMap.put(action, handler);
+        mProfileHandlerMap.put(action, handler);
         mProfileIntentFilter.addAction(action);
     }
 
@@ -85,6 +86,7 @@ public class BluetoothEventManager {
         mAdapterIntentFilter = new IntentFilter();
         mProfileIntentFilter = new IntentFilter();
         mHandlerMap = new HashMap<String, Handler>();
+        mProfileHandlerMap = new HashMap<String, Handler>();
         mContext = context;
 
         // Bluetooth on/off broadcasts
@@ -176,7 +178,7 @@ public class BluetoothEventManager {
             BluetoothDevice device = intent
                     .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-            Handler handler = mHandlerMap.get(action);
+            Handler handler = mProfileHandlerMap.get(action);
             if (handler != null) {
                 handler.onReceive(context, intent, device);
             }
