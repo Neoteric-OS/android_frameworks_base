@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "b2c5706c_e0452ffe",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T01:51:45Z",
+      "side": 1,
+      "message": "VisibleForTesting does not mean the function exists for testing, it means it has broader visibility than expected because it needs to be accessed from tests. So yes, I think your reference to otherwise\u003dNONE is exactly what we need.\n\n(I wasn\u0027t aware there was an arg to this annotation ; the more you know. Thanks for bringing this up)",
+      "parentUuid": "79a518e2_ea1f152f",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 36
+      },
+      "revId": "db89006b76e1e04a0603e87825d1a69d7cce6b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b325ca_283a1933",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 26
