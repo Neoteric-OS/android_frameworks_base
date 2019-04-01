@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dc9b3227_ea6059a7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-01T07:24:50Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood your meaning. I suppose that you don\u0027t want to use vacuuming here because it\u0027s a very long-running thing as you said. Yes, moving this outside the finally should be better. We don\u0027t have to consume any resource to do this if got an exception.",
+      "parentUuid": "962a0e75_da66ab17",
+      "range": {
+        "startLine": 525,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 33
+      },
+      "revId": "d64b6fc004e5b61078a81335cfcfbb4a6cca1b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c76f2a_5cc6b53a",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 15
