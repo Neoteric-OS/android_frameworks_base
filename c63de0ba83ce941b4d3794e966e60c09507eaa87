@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fead117_f461beba",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T22:39:06Z",
+      "side": 1,
+      "message": "s/of // ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 72,
+        "endLine": 162,
+        "endChar": 74
+      },
+      "revId": "c63de0ba83ce941b4d3794e966e60c09507eaa87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
