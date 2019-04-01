@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0376352_90917ecc",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-01T08:00:28Z",
+      "side": 1,
+      "message": "Will remove it",
+      "parentUuid": "6b5d2526_2c2e2870",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b348fe_9f8a89f6",
         "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2a654355_3ea40c42",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-01T08:00:28Z",
+      "side": 1,
+      "message": "Will add it",
+      "parentUuid": "40b348fe_9f8a89f6",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1a5801_2313a5fd",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2019-04-01T03:38:51Z",
       "side": 1,
       "message": "So this overwrites the type that was here ? Doesn\u0027t this mean we may lose data ?\n\nHow about the following instead :\n- Remove mCollectDataStallMetrics completely\n- Have mDataStallMetricsEvaluationTypes a flags field, and |\u003d here\n- Reset to 0 in l.724\n- Have l.1086 check if mDataStallMetricsEvaluationTypes !\u003d 0",
+      "range": {
+        "startLine": 572,
+        "startChar": 24,
+        "endLine": 573,
+        "endChar": 75
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad92575_80bbdbd7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-01T08:00:28Z",
+      "side": 1,
+      "message": "Thanks for reviewing. I could update design as advised. Actually, I\u0027ve thought of that. However, I think we should not lose data. Currently, no matter events come from dns signal or app report connectivity, the event will have the state transit to ProbingState. In ProbingState, most messages are deferred. There will only one event with one validation result. I.e. There is no combined case that the validation result is triggered by both dns and app.",
+      "parentUuid": "ec1a5801_2313a5fd",
       "range": {
         "startLine": 572,
         "startChar": 24,
