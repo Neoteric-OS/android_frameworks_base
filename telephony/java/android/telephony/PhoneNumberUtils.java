@@ -471,22 +471,43 @@ public class PhoneNumberUtils {
     }
 
     /**
-     * Compare phone numbers a and b, return true if they're identical
-     * enough for caller ID purposes.
+     * Compare phone numbers a and b.
+     *
+     * @param a phone number a
+     * @param b phone number b
+     * @param minMatch the character count for the minimum match
+     * @return true if they're identical enough for caller ID purposes
+     * @hide
+     */
+    public static boolean compare(String a, String b, int minMatch) {
+        return compareLoosely(a, b, minMatch);
+    }
+
+    /** @hide */
+    public static boolean compareLoosely(String a, String b) {
+        return compareLoosely(a, b, DEFAULT_MIN_MATCH);
+    }
+
+    /**
+     * Compare phone numbers a and b, return true if they're identical enough for caller ID
+     * purposes.
      *
      * - Compares from right to left
-     * - requires MIN_MATCH (7) characters to match
+     * - requires the character count for the minimum match
      * - handles common trunk prefixes and international prefixes
      *   (basically, everything except the Russian trunk prefix)
      *
-     * Note that this method does not return false even when the two phone numbers
-     * are not exactly same; rather; we can call this method "similar()", not "equals()".
+     * Note that this method does not return false even when the two phone numbers are not
+     * exactly same. Rather we can call this method "similar()", not "equals()".
      *
+     * @param a phone number a
+     * @param b phone number b
+     * @param minMatch the character count for the minimum match
+     * @return true if they're identical enough for caller ID purposes
      * @hide
      */
     @UnsupportedAppUsage
-    public static boolean
-    compareLoosely(String a, String b) {
+    public static boolean compareLoosely(String a, String b, int minMatch) {
         int ia, ib;
         int matched;
         int numNonDialableCharsInA = 0;
@@ -530,12 +551,12 @@ public class PhoneNumberUtils {
             }
         }
 
-        if (matched < MIN_MATCH) {
+        if (matched < minMatch) {
             int effectiveALen = a.length() - numNonDialableCharsInA;
             int effectiveBLen = b.length() - numNonDialableCharsInB;
 
 
-            // if the number of dialable chars in a and b match, but the matched chars < MIN_MATCH,
+            // if the number of dialable chars in a and b match, but the matched chars < minMatch,
             // treat them as equal (i.e. 404-04 and 40404)
             if (effectiveALen == effectiveBLen && effectiveALen == matched) {
                 return true;
@@ -545,7 +566,7 @@ public class PhoneNumberUtils {
         }
 
         // At least one string has matched completely;
-        if (matched >= MIN_MATCH && (ia < 0 || ib < 0)) {
+        if (matched >= minMatch && (ia < 0 || ib < 0)) {
             return true;
         }
 
@@ -736,18 +757,22 @@ public class PhoneNumberUtils {
     }
 
     /**
-     * Returns the rightmost MIN_MATCH (5) characters in the network portion
-     * in *reversed* order
+     * Returns the rightmost minimum matched characters in the network portion in *reversed* order.
+     * This can be used to do a database lookup against the column that stores
+     * getStrippedReversed().
      *
-     * This can be used to do a database lookup against the column
-     * that stores getStrippedReversed()
-     *
-     * Returns null if phoneNumber == null
+     * @param phoneNumber the phone number string
+     * @param minMatch the character count for the minimum match
+     * @return the minimum matched characters. null if phoneNumber is null
+     * @hide
      */
-    public static String
-    toCallerIDMinMatch(String phoneNumber) {
+    public static String toCallerIDMinMatch(String phoneNumber, int minMatch) {
         String np = extractNetworkPortionAlt(phoneNumber);
-        return internalGetStrippedReversed(np, MIN_MATCH);
+        return internalGetStrippedReversed(np, minMatch);
+    }
+
+    public static String toCallerIDMinMatch(String phoneNumber) {
+        return toCallerIDMinMatch(phoneNumber, DEFAULT_MIN_MATCH);
     }
 
     /**
@@ -1727,7 +1752,7 @@ public class PhoneNumberUtils {
     // However, in order to loose match 650-555-1212 and 555-1212, we need to set the min match
     // to 7.
     @UnsupportedAppUsage
-    static final int MIN_MATCH = 7;
+    static final int DEFAULT_MIN_MATCH = 7;
 
     /**
      * Checks a given number against the list of
