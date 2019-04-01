@@ -16,7 +16,7 @@
 
 android_test {
     name: "NetworkStackTests",
-    certificate: "platform",
+    certificate: "networkstack",
     srcs: ["src/**/*.java"],
     test_suites: ["device-tests"],
     resource_dirs: ["res"],
@@ -24,6 +24,7 @@ android_test {
         "androidx.test.rules",
         "mockito-target-extended-minus-junit4",
         "NetworkStackBase",
+        "services.net",
         "testables",
     ],
     libs: [
