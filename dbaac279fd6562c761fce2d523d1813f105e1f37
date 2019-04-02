@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a74f3256_12b6631b",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-02T01:53:34Z",
+      "side": 1,
+      "message": "Sorry that I may not fully address your comment. I update it in the new patch to link to the structure. The unit is the structure. Is that clear enough from your point of view?",
+      "parentUuid": "8d75d5dc_3378bc41",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec1a5801_2313a5fd",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
