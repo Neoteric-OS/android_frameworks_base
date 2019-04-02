@@ -21,7 +21,7 @@ import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
-import static android.provider.Settings.Global.DATA_STALL_EVALUATION_TYPE_DNS;
+import static android.net.util.DataStallUtils.DATA_STALL_EVALUATION_TYPE_DNS;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -114,7 +114,7 @@ public class NetworkMonitorTest {
     private @Captor ArgumentCaptor<String> mNetworkTestedRedirectUrlCaptor;
 
     private static final int TEST_NETID = 4242;
-
+    private static final int TEST_UID = 1234;
     private static final String TEST_HTTP_URL = "http://www.google.com/gen_204";
     private static final String TEST_HTTPS_URL = "https://www.google.com/gen_204";
     private static final String TEST_FALLBACK_URL = "http://fallback.google.com/gen_204";
@@ -515,6 +515,32 @@ public class NetworkMonitorTest {
     }
 
     @Test
+    public void testDataStall_NotSendMetricsForCaptivePortal() throws IOException {
+        setSslException(mHttpsConnection);
+        setPortal302(mHttpConnection);
+
+        final NetworkMonitor nm = makeMonitor();
+        nm.notifyNetworkConnected(TEST_LINK_PROPERTIES, METERED_CAPABILITIES);
+        // Check that startCaptivePortalApp sends the expected intent.
+        nm.launchCaptivePortalApp();
+        // Have the app report that the captive portal is dismissed, and check that we revalidate.
+        setStatus(mHttpsConnection, 204);
+        setStatus(mHttpConnection, 204);
+
+        nm.notifyCaptivePortalAppFinished(APP_RETURN_DISMISSED);
+        // Should not trigger metrics event for APP_RETURN_DISMISSED.
+        verify(mDataStallStatsUtils, never()).write(makeEmptyDataStallDetectionStats(), any());
+    }
+
+    @Test
+    public void testDataStall_reportConnectivityAndSendMetrics() throws IOException {
+        final NetworkMonitor nm = makeMonitor();
+        nm.notifyNetworkConnected(TEST_LINK_PROPERTIES, METERED_CAPABILITIES);
+        nm.forceReevaluation(TEST_UID);
+        verify(mDataStallStatsUtils, times(1)).write(makeEmptyDataStallDetectionStats(), any());
+    }
+
+    @Test
     public void testCollectDataStallMetrics() {
         WrappedNetworkMonitor wrappedMonitor = makeNotMeteredNetworkMonitor();
 
@@ -534,7 +560,8 @@ public class NetworkMonitorTest {
         generateTimeoutDnsEvent(stats, DEFAULT_DNS_TIMEOUT_THRESHOLD);
 
         assertEquals(wrappedMonitor.buildDataStallDetectionStats(
-                 NetworkCapabilities.TRANSPORT_CELLULAR), stats.build());
+                NetworkCapabilities.TRANSPORT_CELLULAR, DATA_STALL_EVALUATION_TYPE_DNS),
+                stats.build());
 
         when(mWifi.getConnectionInfo()).thenReturn(mWifiInfo);
 
@@ -544,8 +571,8 @@ public class NetworkMonitorTest {
                 .setWiFiData(mWifiInfo);
         generateTimeoutDnsEvent(stats, DEFAULT_DNS_TIMEOUT_THRESHOLD);
 
-        assertEquals(
-                wrappedMonitor.buildDataStallDetectionStats(NetworkCapabilities.TRANSPORT_WIFI),
+        assertEquals(wrappedMonitor.buildDataStallDetectionStats(
+                NetworkCapabilities.TRANSPORT_WIFI, DATA_STALL_EVALUATION_TYPE_DNS),
                 stats.build());
     }
 
