@@ -1275,6 +1275,11 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
       fds_to_ignore.push_back(gBlastulaPoolEventFD);
     }
 
+    // load task profiles before child is forked
+    if (set_sched_policy(0, SP_DEFAULT) != 0) {
+        ZygoteFailure(env, "zygote", nice_name, "Zygote set_sched_policy failed");
+    }
+
     pid_t pid = ForkCommon(env, false, fds_to_close, fds_to_ignore);
 
     if (pid == 0) {
