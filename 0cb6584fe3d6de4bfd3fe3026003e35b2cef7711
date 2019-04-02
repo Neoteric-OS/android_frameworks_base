@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc991f2_fd8731d0",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-02T11:56:31Z",
+      "side": 1,
+      "message": "The comment should say that this is equivalent to startTetheringLegacy(true, dhcpRanges).\n\nHow many callers are there? Could we update them all to pass the new argument?\nI kind of dislike these compatibility stubs that linger around forever...",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 7
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3444e6_31e8a803",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-02T11:56:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also be @UnsupportedAppUsage?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 83
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
