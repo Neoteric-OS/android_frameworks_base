@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "1ea5031b_2096dc03",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-02T05:14:44Z",
+      "side": 1,
+      "message": "I think what\u0027s needed is to clarify that the unit is the DnsResult object. How about the following :\n\nThe default number of DNS events kept of the log kept for dns signal evaluation. Each event is represented by a {@link ...DnsResult} object. It\u0027s also the size of array of {@link ...DnsEvent} kept in metrics.\nTODO : reevaluate this number as it may be too low.\n\nNote that I\u0027m not too sure what you mean by \"reevaluate as intending\", especially in the light of the next comment ; by best interpretation is that this may be too low and we want to consider increasing it, but you also don\u0027t want to make it too big as it may not fit into the statsd buffer log ? Is this what you mean ?",
+      "parentUuid": "a74f3256_12b6631b",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "dbaac279fd6562c761fce2d523d1813f105e1f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec1a5801_2313a5fd",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 3
