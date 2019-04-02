@@ -10513,21 +10513,13 @@ public final class Settings {
          *
          * Type: int
          * Valid values:
-         *   {@link #DATA_STALL_EVALUATION_TYPE_DNS} : Use dns as a signal.
+         *   {@link android.net.util.DataStallUtils#DATA_STALL_EVALUATION_TYPE_DNS} : Use dns as a
+         *   signal.
          * @hide
          */
         @SystemApi
         @TestApi
         public static final String DATA_STALL_EVALUATION_TYPE = "data_stall_evaluation_type";
-
-        /**
-         * Use dns timeout counts to detect data stall.
-         *
-         * @hide
-         */
-        @SystemApi
-        @TestApi
-        public static final int DATA_STALL_EVALUATION_TYPE_DNS = 1;
 
         /**
          * Whether to try cellular data recovery when a bad network is reported.
