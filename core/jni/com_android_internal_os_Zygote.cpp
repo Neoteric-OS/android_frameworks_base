@@ -1257,6 +1257,11 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
       ZygoteFailure(env, "zygote", nice_name, "Zygote received a null fds_to_close vector.");
     }
 
+    // load task profiles before child is forked
+    if (!SetTaskProfiles(0, {})) {
+        ZygoteFailure(env, "zygote", nice_name, "Zygote SetTaskProfiles failed");
+    }
+
     std::vector<int> fds_to_close =
         ExtractJIntArray(env, "zygote", nice_name, managed_fds_to_close).value();
     std::vector<int> fds_to_ignore =
