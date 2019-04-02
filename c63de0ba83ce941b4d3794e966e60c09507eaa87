@@ -22,6 +22,30 @@
       "revId": "c63de0ba83ce941b4d3794e966e60c09507eaa87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cf21fb_b2ad7acf",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-02T01:47:16Z",
+      "side": 1,
+      "message": "This is actually meant as \"this is a listing of domains in priority order\" rather than \"this lists the domains in priority order\" - changed to \"A String containing the comma separated domains in priority order\" to be easier to read.",
+      "parentUuid": "9fead117_f461beba",
+      "range": {
+        "startLine": 162,
+        "startChar": 72,
+        "endLine": 162,
+        "endChar": 74
+      },
+      "revId": "c63de0ba83ce941b4d3794e966e60c09507eaa87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
