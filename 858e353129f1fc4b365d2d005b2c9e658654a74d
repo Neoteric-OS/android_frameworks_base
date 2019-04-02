@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b46a6ac0_7f6a7351",
+        "filename": "packages/NetworkStack/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-02T05:51:01Z",
+      "side": 1,
+      "message": "android_library can\u0027t import jni_libs. So I think this can be in here only.",
+      "parentUuid": "efc86670_60a3f23f",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "858e353129f1fc4b365d2d005b2c9e658654a74d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "434591bf_22806a33",
         "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2019-04-01T04:18:34Z",
       "side": 1,
       "message": "Is this still necessary if you move the lib to NetworkStackBase ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "858e353129f1fc4b365d2d005b2c9e658654a74d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66d9c43_940a35bb",
+        "filename": "packages/NetworkStack/tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-02T05:51:01Z",
+      "side": 1,
+      "message": "Yes, it\u0027s necessary. NetworkStackBase can\u0027t import jni_libs.",
+      "parentUuid": "a7f93c58_7a0addab",
       "range": {
         "startLine": 57,
         "startChar": 8,
