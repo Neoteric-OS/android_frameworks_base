@@ -43,6 +43,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.DhcpInfo;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
@@ -62,6 +63,7 @@ import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.SharedLog;
 import android.net.util.Stopwatch;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -85,7 +87,11 @@ import com.android.internal.util.RingBufferIndices;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.networkstack.R;
+import com.android.server.util.NetworkCheckUtils;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -102,6 +108,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * {@hide}
@@ -333,6 +340,10 @@ public class NetworkMonitor extends StateMachine {
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics;
     private boolean mAcceptPartialConnectivity;
+    private boolean mConfirmedByFallBack = false;
+    private String mGatewayAddress = null;
+    // need WifiConfiguration to getAuthType or getHistory
+    private WifiConfiguration mCurrentWifiConfig = null;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
@@ -1281,10 +1292,14 @@ public class NetworkMonitor extends StateMachine {
             validationLog("Validation disabled.");
             return CaptivePortalProbeResult.SUCCESS;
         }
+        initNetworkInfo();
+        initCurrWifiConfig();
+        mConfirmedByFallBack = false;
 
         URL pacUrl = null;
         URL httpsUrl = mCaptivePortalHttpsUrl;
-        URL httpUrl = mCaptivePortalHttpUrl;
+        //some AP cache the response code, (Need HttpServer supported)
+        URL httpUrl = makeURL(mCaptivePortalHttpUrl.toString() + "_" + UUID.randomUUID().toString());
 
         // On networks with a PAC instead of fetching a URL that should result in a 204
         // response, we instead simply fetch the PAC script.  This is done for a few reasons:
@@ -1448,10 +1463,31 @@ public class NetworkMonitor extends StateMachine {
                     validationLog(probeType, url, "200 response with Content-length <= 4"
                             + " interpreted as failed response.");
                     httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+                } else if ("close".equalsIgnoreCase(urlConnection.getHeaderField("Connection"))) {
+                    // Hard Rock Hotel intercepts for the first time whether
+                    // http url is a proxy url check. If it is not a proxy url,
+                    // the second http request is released.
+                    validationLog("Connection close, 200 response interpreted as 204 response.");
+                    httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
                 }
+            }
+            int tmpResponseCode = httpResponseCode;
+            if ((probeType == ValidationProbeEvent.PROBE_HTTP) || (probeType == ValidationProbeEvent.PROBE_FALLBACK)) {
+                httpResponseCode = checkSuccessRespCode(httpResponseCode, urlConnection);
+                httpResponseCode = checkRedirectedRespCode(httpResponseCode, urlConnection);
+                httpResponseCode = checkClientErrorRespCode(httpResponseCode, urlConnection);
+            }
+            if ((tmpResponseCode == CaptivePortalProbeResult.FAILED_CODE)
+                    && (probeType == ValidationProbeEvent.PROBE_HTTP)) {
+                validationLog("http FAILED_CODE, need confirmed by fallback.");
+                mConfirmedByFallBack = true;
             }
         } catch (IOException e) {
             validationLog(probeType, url, "Probe failed with exception " + e);
+            if (probeType == ValidationProbeEvent.PROBE_HTTP) {
+                validationLog("http IOException, need confirmed by fallback.");
+                mConfirmedByFallBack = true;
+            }
             if (httpResponseCode == CaptivePortalProbeResult.FAILED_CODE) {
                 // TODO: Ping gateway and DNS server and log results.
             }
@@ -1537,7 +1573,7 @@ public class NetworkMonitor extends StateMachine {
         CaptivePortalProbeResult fallbackProbeResult = null;
         if (fallbackUrl != null) {
             fallbackProbeResult = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (fallbackProbeResult.isPortal()) {
+            if (fallbackProbeResult.isPortal() || (mConfirmedByFallBack && (fallbackProbeResult.isSuccessful()))) {
                 return fallbackProbeResult;
             }
         }
@@ -1548,6 +1584,9 @@ public class NetworkMonitor extends StateMachine {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            if ((mConfirmedByFallBack) && (fallbackProbeResult != null) && (!httpsProbe.result().isSuccessful())) {
+                return fallbackProbeResult;
+            }
             final boolean isHttpSuccessful =
                     (httpProbe.result().isSuccessful()
                     || (fallbackProbeResult != null && fallbackProbeResult.isSuccessful()));
@@ -1847,5 +1886,171 @@ public class NetworkMonitor extends StateMachine {
         }
 
         return result;
+    }
+    private void initNetworkInfo() {
+        if (!mNetworkCapabilities.hasTransport(TRANSPORT_WIFI)) {
+            mGatewayAddress = "";
+            return;
+        }
+        if (mWifiManager != null) {
+            DhcpInfo dhcpInfo = mWifiManager.getDhcpInfo();
+            if ((dhcpInfo != null) && (dhcpInfo.gateway != 0)) {
+                InetAddress inet = NetworkCheckUtils.intToInetAddress(dhcpInfo.gateway);
+                mGatewayAddress = inet.getHostAddress();
+                return;
+            }
+        }
+        mGatewayAddress = "";
+    }
+
+    private void initCurrWifiConfig() {
+        if (!mNetworkCapabilities.hasTransport(TRANSPORT_WIFI)) {
+            return;
+        }
+        if (mWifiManager != null) {
+            WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+            List<WifiConfiguration> configNetworks = mWifiManager.getConfiguredNetworks();
+            if ((configNetworks != null) && (wifiInfo != null)) {
+                for (WifiConfiguration config : configNetworks) {
+                    if (config.networkId == wifiInfo.getNetworkId()) {
+                        mCurrentWifiConfig = config;
+                        validationLog("WifiConfig initialized");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private String[] parseHostGetIPAddress(String host) {
+        String[] ipAddressArray = null;
+        try {
+            InetAddress[] inetAddressArray = InetAddress.getAllByName(host);
+            if ((inetAddressArray != null) && (inetAddressArray.length > 0)) {
+                ipAddressArray = new String[inetAddressArray.length];
+                for (int i = 0; i < inetAddressArray.length; i++) {
+                    ipAddressArray[i] = inetAddressArray[i].getHostAddress();
+                }
+            }
+        } catch (UnknownHostException e) {
+            validationLog("NetworkCheckerThread, UnknownHostException e");
+            return null;
+        }
+        return ipAddressArray;
+    }
+
+    // try to find if the ip is in the same network segment with gateway
+    private boolean isIpMatchGateway() {
+        if (mWifiManager != null) {
+            WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+            if (wifiInfo != null) {
+                String ipAddress = intIpToStringIp(wifiInfo.getIpAddress());
+                String ipAddressSubNetwork = null;
+                String gateWaySubNetwork = null;
+                if ((ipAddress.lastIndexOf(".") != -1)
+                        && (mGatewayAddress.lastIndexOf(".") != -1)) {
+                    ipAddressSubNetwork = ipAddress.substring(0, ipAddress.lastIndexOf("."));
+                    gateWaySubNetwork = mGatewayAddress.substring(0, mGatewayAddress.lastIndexOf("."));
+                }
+                if ((ipAddressSubNetwork != null)
+                        && (ipAddressSubNetwork.equals(gateWaySubNetwork))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private String intIpToStringIp(int ip) {
+        return String.format("%d.%d.%d.%d", ip & 0xFF, (ip >> 8) & 0xFF, (ip >> 16) & 0xFF, (ip >> 24) & 0xFF);
+    }
+
+    private int checkSuccessRespCode(int responseCode, HttpURLConnection urlConnection) {
+        int httpResponseCode = responseCode;
+        if (httpResponseCode != CaptivePortalProbeResult.SUCCESS_CODE) {
+            return httpResponseCode;
+        }
+        String requestId = urlConnection.getHeaderField("X-Hwcloud-ReqId");
+        if ((requestId == null) || (requestId.length() != NetworkCheckUtils.X_HWCLOUD_REQID_LEN)) {
+            validationLog("http return 204, but request id error and unreachable!");
+            httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+        }
+        return httpResponseCode;
+    }
+
+    private int checkRedirectedRespCode(int responseCode, HttpURLConnection urlConnection) {
+        int httpResponseCode = responseCode;
+        if (!NetworkCheckUtils.isRedirectedRespCode(httpResponseCode)) {
+            return httpResponseCode;
+        }
+        if (!mNetworkCapabilities.hasTransport(TRANSPORT_WIFI)) {
+            return httpResponseCode;
+        }
+        // Location:General users' home
+        // AP: ASUS AC51U and others
+        // AP behavior: In order to guide users to configure router, it will responds 302 to
+        // redirect to the configuration page when the internet is unreachable
+        String newLocation = urlConnection.getHeaderField("Location");
+        String host = NetworkCheckUtils.parseHostByUrlLocation(newLocation);
+        validationLog("recomfirmResponseCode, host = " + host + ", location = "
+                + newLocation + ", gateway = "
+                + mGatewayAddress + ",respCode ="
+                + httpResponseCode);
+        if ((host == null) || (newLocation == null) || (mCurrentWifiConfig == null)) {
+            return httpResponseCode;
+        }
+
+        if ((mGatewayAddress != null)
+                && (NetworkCheckUtils.isWpaOrWpa2(mCurrentWifiConfig))
+                && (isIpMatchGateway())) {
+            if (host.contains(mGatewayAddress)) {
+                validationLog("host contains Gateway, set fail!");
+                httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+                return httpResponseCode;
+            }
+            int start = 0;
+            if (host.startsWith(NetworkCheckUtils.HTML_TITLE_HTTP_EN)) {
+                start = NetworkCheckUtils.HTML_TITLE_HTTP_EN.length();
+            } else if (host.startsWith(NetworkCheckUtils.HTML_TITLE_HTTPS_EN)) {
+                start = NetworkCheckUtils.HTML_TITLE_HTTPS_EN.length();
+            }
+            String[] ipAddrs = parseHostGetIPAddress(host.substring(start));
+            if (ipAddrs != null) {
+                for (String ipAddr : ipAddrs) {
+                    if (mGatewayAddress.equals(ipAddr)) {
+                        validationLog("ipAddr equals Gateway, set fail!");
+                        httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+                        return httpResponseCode;
+                    }
+                }
+            } else {
+                validationLog("dns fail, reset the respCode to " + CaptivePortalProbeResult.FAILED_CODE);
+                httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
+                return httpResponseCode;
+            }
+        }
+        return httpResponseCode;
+    }
+
+    private int checkClientErrorRespCode(int responseCode, HttpURLConnection urlConnection) {
+        int httpResponseCode = responseCode;
+        if (!NetworkCheckUtils.isClientErrorRespCode(httpResponseCode)) {
+            return httpResponseCode;
+        }
+        // Some portal routers will response 400-499
+        InputStream inputStream = (InputStream)urlConnection.getErrorStream();
+        if (inputStream != null) {
+            String urlContent = new BufferedReader(new InputStreamReader(inputStream))
+                    .lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
+            if (((urlContent.contains(NetworkCheckUtils.HTML_TITLE_HTTP_EN))
+                    || (urlContent.contains(NetworkCheckUtils.HTML_TITLE_HTTPS_EN)))
+                    && (urlContent.contains(NetworkCheckUtils.KEY_WORDS_REDIRECTION))) {
+                validationLog("http return " + httpResponseCode
+                        + ", reset for the url in the content of response PORTAL_CODE");
+                httpResponseCode = CaptivePortalProbeResult.PORTAL_CODE;
+            }
+        }
+        return CaptivePortalProbeResult.FAILED_CODE;
     }
 }
