@@ -22,6 +22,30 @@
       "revId": "7806bc9d225af3761713123991b58ada4c83721e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b03943_fb0b2b6e",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-03T06:10:49Z",
+      "side": 1,
+      "message": "Done. I update the key definitions. For constant value, I think we may not need to add CONFIG_ prefix as we put that in NetworkMonitor previously. They\u0027re all inside NetworkStack.",
+      "parentUuid": "91601b2f_ab73aeb6",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 75
+      },
+      "revId": "7806bc9d225af3761713123991b58ada4c83721e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
