@@ -22,6 +22,30 @@
       "revId": "59a06a05bd9921e61b69dda245dc5c665b74f70f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33459b6f_db0aff34",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-03T06:51:27Z",
+      "side": 1,
+      "message": "Writing another change for that now",
+      "parentUuid": "4d835a6e_39c27b77",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 40
+      },
+      "revId": "59a06a05bd9921e61b69dda245dc5c665b74f70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
