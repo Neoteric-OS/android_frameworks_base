@@ -5438,6 +5438,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
+        nai.setNetworkCapabilities(nai.networkCapabilities);
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
         nai.networkInfo = null;
