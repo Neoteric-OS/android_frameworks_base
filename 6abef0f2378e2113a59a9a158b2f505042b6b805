@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "c18e6ed0_48c2575b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3572,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:35:58Z",
+      "side": 1,
+      "message": "Modifies VPN internal state",
+      "range": {
+        "startLine": 3572,
+        "startChar": 27,
+        "endLine": 3572,
+        "endChar": 34
+      },
+      "revId": "6abef0f2378e2113a59a9a158b2f505042b6b805",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14fac23b_c3b4ee37",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
