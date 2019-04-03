@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c732ad23_71ad4571",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-04-03T19:48:25Z",
+      "side": 1,
+      "message": "Sounds like the code that was controlled by this flag has already been removed (so the flag value was ignored ie. the flag logic is also dead), seems like it\u0027d be useful context for the commit message to say so.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "a0db5a7f4ef209d160646f2c276f8e8810285df9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
