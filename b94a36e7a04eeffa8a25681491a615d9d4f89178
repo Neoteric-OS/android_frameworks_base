@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "826fe859_8cf6c524",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5651,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "Oops must be a typo. Fixed.",
+      "parentUuid": "26a5815f_16796be6",
+      "range": {
+        "startLine": 5651,
+        "startChar": 27,
+        "endLine": 5651,
+        "endChar": 39
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67d5fe66_29b5f0a7",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4c6e0b_b5354114",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5660,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "Good point. In this case we are switching interfaces with the same uid range so I think in order to fix this properly, the bpf program needs to support uid -\u003e two interfaces. I\u0027ll add a TODO since that would require some major changes in netd..\n\nActually this applies equally to the logic in updateUids(),  although it turns out that the \"uid range diff\" function in updateUids() doesn\u0027t work in a way that\u0027s compatible with our needs here: that uid range diff only diffs the two UidRange Sets, not intersecting UidRanges and cutting them into smaller intervals. As a result my old patchset actually contains a bug since I add the new range first and then remove the old ranges. This is now fixed but it also leaves the same window of opportunity. This can be fixed with a proper \"UID range diff\" function which I left as a TODO.",
+      "parentUuid": "67d5fe66_29b5f0a7",
+      "range": {
+        "startLine": 5660,
+        "startChar": 8,
+        "endLine": 5660,
+        "endChar": 9
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed51a0d0_d4bc80f7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5833,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "I think RouteInfo.isDefaultRoute() ensures type \u003d\u003d RTN_UNICAST so we are fine here. Added a unit test just to be sure.",
+      "parentUuid": "79c51449_275fd35e",
+      "range": {
+        "startLine": 5833,
+        "startChar": 23,
+        "endLine": 5833,
+        "endChar": 42
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3db1379_75e91d22",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dabed2_1f6cdc7c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3db1379_75e91d22",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 687,
+        "endChar": 79
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "967c727e_8da898a3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93d479e7_fe335059",
+      "range": {
+        "startLine": 688,
+        "startChar": 24,
+        "endLine": 688,
+        "endChar": 28
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9374db4e_b8c4efc2",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8e2418_048c75c1",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-03T16:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9374db4e_b8c4efc2",
+      "range": {
+        "startLine": 689,
+        "startChar": 24,
+        "endLine": 689,
+        "endChar": 28
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
