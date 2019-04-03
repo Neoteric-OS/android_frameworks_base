@@ -594,6 +594,8 @@ public class PackageManagerService extends IPackageManager.Stub
 
     private static final String VENDOR_OVERLAY_DIR = "/vendor/overlay";
 
+    private static final String ODM_OVERLAY_DIR = "/odm/overlay";
+
     private static final String PRODUCT_OVERLAY_DIR = "/product/overlay";
 
     /** Canonical intent used to identify what counts as a "web browser" app */
@@ -2636,10 +2638,20 @@ public class PackageManagerService extends IPackageManager.Stub
                 scanFlags = scanFlags | SCAN_FIRST_BOOT_OR_UPGRADE;
             }
 
-            // Collect vendor/product overlay packages. (Do this before scanning any apps.)
+            // Collect vendor/odm/product overlay packages. (Do this before scanning any apps.)
             // For security and version matching reason, only consider
             // overlay packages if they reside in the right directory.
             scanDirTracedLI(new File(VENDOR_OVERLAY_DIR),
+                    mDefParseFlags
+                    | PackageParser.PARSE_IS_SYSTEM_DIR,
+                    scanFlags
+                    | SCAN_AS_SYSTEM
+                    | SCAN_AS_VENDOR,
+                    0);
+
+            // Collect odm overlay packages. /odm is another vendor partition
+            // other than /vendor.
+            scanDirTracedLI(new File(ODM_OVERLAY_DIR),
                     mDefParseFlags
                     | PackageParser.PARSE_IS_SYSTEM_DIR,
                     scanFlags
