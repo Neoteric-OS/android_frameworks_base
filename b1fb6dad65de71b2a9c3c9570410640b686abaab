@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0d93723_ef637903",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-03T08:36:12Z",
+      "side": 1,
+      "message": "nits: reorder header file and remove useless one",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65282461_3f689812",
         "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
         "patchSetId": 3
@@ -13,6 +36,47 @@
       "writtenOn": "2019-04-03T08:27:41Z",
       "side": 1,
       "message": "Style: all these curly braces should go on the same, just like in Java.",
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c985f917_091bb818",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-03T08:36:12Z",
+      "side": 1,
+      "message": "@Bernie, should we have clan-tidy here?",
+      "parentUuid": "65282461_3f689812",
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a48ad99_9fb4b541",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-03T08:36:12Z",
+      "side": 1,
+      "message": "nits:drop struct?",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 10
+      },
       "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -81,6 +145,52 @@
         "startChar": 4,
         "endLine": 184,
         "endChar": 34
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d249b113_2cd075c4",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-03T08:36:12Z",
+      "side": 1,
+      "message": "nits: align it with others",
+      "range": {
+        "startLine": 190,
+        "startChar": 10,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024d102d_8fe8d804",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-03T08:36:12Z",
+      "side": 1,
+      "message": "ditoo",
+      "range": {
+        "startLine": 215,
+        "startChar": 32,
+        "endLine": 215,
+        "endChar": 64
       },
       "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
