@@ -84,8 +84,8 @@ import android.util.Pair;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 
-import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBufferIndices;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
@@ -1173,7 +1173,8 @@ public class NetworkMonitor extends StateMachine {
         return mDependencies.getSetting(mContext, Settings.Global.CAPTIVE_PORTAL_USE_HTTPS, 1) == 1;
     }
 
-    private String getCaptivePortalServerHttpsUrl() {
+    @VisibleForTesting
+    String getCaptivePortalServerHttpsUrl() {
         return getSettingFromResource(mContext, R.string.config_captive_portal_https_url,
                 R.string.default_captive_portal_https_url,
                 Settings.Global.CAPTIVE_PORTAL_HTTPS_URL);
@@ -1186,7 +1187,8 @@ public class NetworkMonitor extends StateMachine {
      * it has its own updatable strategies to detect captive portals. The framework only advises
      * on one URL that can be used, while NetworkMonitor may implement more complex logic.
      */
-    public String getCaptivePortalServerHttpUrl() {
+    @VisibleForTesting
+    String getCaptivePortalServerHttpUrl() {
         return getSettingFromResource(mContext, R.string.config_captive_portal_http_url,
                 R.string.default_captive_portal_http_url,
                 Settings.Global.CAPTIVE_PORTAL_HTTP_URL);
@@ -1215,7 +1217,8 @@ public class NetworkMonitor extends StateMachine {
                 DEFAULT_DATA_STALL_EVALUATION_TYPES);
     }
 
-    private URL[] makeCaptivePortalFallbackUrls() {
+    @VisibleForTesting
+    URL[] makeCaptivePortalFallbackUrls() {
         try {
             final String firstUrl = mDependencies.getSetting(mContext,
                     Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, null);
@@ -1241,7 +1244,8 @@ public class NetworkMonitor extends StateMachine {
         }
     }
 
-    private CaptivePortalProbeSpec[] makeCaptivePortalFallbackProbeSpecs() {
+    @VisibleForTesting
+    CaptivePortalProbeSpec[] makeCaptivePortalFallbackProbeSpecs() {
         try {
             final String settingsValue = mDependencies.getSetting(
                     mContext, Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS, null);
