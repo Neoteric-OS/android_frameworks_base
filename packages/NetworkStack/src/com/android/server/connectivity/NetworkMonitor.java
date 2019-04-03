@@ -32,8 +32,17 @@ import static android.net.metrics.ValidationProbeEvent.DNS_FAILURE;
 import static android.net.metrics.ValidationProbeEvent.DNS_SUCCESS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_FALLBACK;
 import static android.net.metrics.ValidationProbeEvent.PROBE_PRIVDNS;
+import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD;
+import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_EVALUATION_TYPE;
+import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_MIN_EVALUATE_INTERVAL;
+import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_VALID_DNS_TIME_THRESHOLD;
+import static android.net.util.DataStallUtils.DATA_STALL_EVALUATION_TYPE_DNS;
+import static android.net.util.DataStallUtils.DEFAULT_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD;
+import static android.net.util.DataStallUtils.DEFAULT_DATA_STALL_EVALUATION_TYPES;
+import static android.net.util.DataStallUtils.DEFAULT_DATA_STALL_MIN_EVALUATE_TIME_MS;
+import static android.net.util.DataStallUtils.DEFAULT_DATA_STALL_VALID_DNS_TIME_THRESHOLD_MS;
+import static android.net.util.DataStallUtils.DEFAULT_DNS_LOG_SIZE;
 import static android.net.util.NetworkStackUtils.isEmpty;
-import static android.provider.Settings.Global.DATA_STALL_EVALUATION_TYPE_DNS;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -126,17 +135,6 @@ public class NetworkMonitor extends StateMachine {
 
     private static final int SOCKET_TIMEOUT_MS = 10000;
     private static final int PROBE_TIMEOUT_MS  = 3000;
-
-    // Default configuration values for data stall detection.
-    private static final int DEFAULT_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD = 5;
-    private static final int DEFAULT_DATA_STALL_MIN_EVALUATE_TIME_MS = 60 * 1000;
-    private static final int DEFAULT_DATA_STALL_VALID_DNS_TIME_THRESHOLD_MS = 30 * 60 * 1000;
-
-    private static final int DEFAULT_DATA_STALL_EVALUATION_TYPES =
-            DATA_STALL_EVALUATION_TYPE_DNS;
-    // Reevaluate it as intending to increase the number. Larger log size may cause statsd
-    // log buffer bust and have stats log lost.
-    private static final int DEFAULT_DNS_LOG_SIZE = 20;
 
     enum EvaluationResult {
         VALIDATED(true),
@@ -388,7 +386,7 @@ public class NetworkMonitor extends StateMachine {
         mDnsStallDetector = new DnsStallDetector(mConsecutiveDnsTimeoutThreshold);
         mDataStallMinEvaluateTime = getDataStallMinEvaluateTime();
         mDataStallValidDnsTimeThreshold = getDataStallValidDnsTimeThreshold();
-        mDataStallEvaluationType = getDataStallEvalutionType();
+        mDataStallEvaluationType = getDataStallEvaluationType();
 
         // Provide empty LinkProperties and NetworkCapabilities to make sure they are never null,
         // even before notifyNetworkConnected.
@@ -1184,24 +1182,24 @@ public class NetworkMonitor extends StateMachine {
 
     private int getConsecutiveDnsTimeoutThreshold() {
         return mDependencies.getSetting(mContext,
-                Settings.Global.DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD,
+                CONFIG_DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD,
                 DEFAULT_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD);
     }
 
     private int getDataStallMinEvaluateTime() {
         return mDependencies.getSetting(mContext,
-                Settings.Global.DATA_STALL_MIN_EVALUATE_INTERVAL,
+                CONFIG_DATA_STALL_MIN_EVALUATE_INTERVAL,
                 DEFAULT_DATA_STALL_MIN_EVALUATE_TIME_MS);
     }
 
     private int getDataStallValidDnsTimeThreshold() {
         return mDependencies.getSetting(mContext,
-                Settings.Global.DATA_STALL_VALID_DNS_TIME_THRESHOLD,
+                CONFIG_DATA_STALL_VALID_DNS_TIME_THRESHOLD,
                 DEFAULT_DATA_STALL_VALID_DNS_TIME_THRESHOLD_MS);
     }
 
-    private int getDataStallEvalutionType() {
-        return mDependencies.getSetting(mContext, Settings.Global.DATA_STALL_EVALUATION_TYPE,
+    private int getDataStallEvaluationType() {
+        return mDependencies.getSetting(mContext, CONFIG_DATA_STALL_EVALUATION_TYPE,
                 DEFAULT_DATA_STALL_EVALUATION_TYPES);
     }
 
