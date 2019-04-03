@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91601b2f_ab73aeb6",
+        "filename": "packages/NetworkStack/src/android/net/util/DataStallUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-03T05:45:20Z",
+      "side": 1,
+      "message": "Since this is in DataStallUtils and not in Settings anymore, maybe this should be CONFIG_DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD - or just CONFIG_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD since the parent class is DataStallUtils (shorter but unclear when using static imports). Same thing for similar constants in this file.",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 75
+      },
+      "revId": "7806bc9d225af3761713123991b58ada4c83721e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
