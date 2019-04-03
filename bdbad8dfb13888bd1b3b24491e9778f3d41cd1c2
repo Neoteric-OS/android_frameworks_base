@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b78a07_c3461340",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T03:35:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this it\u0027s correct to say that this is a data stall, because reportNetworkConnectivity can also be used to report to the system \"we now have networking, please check again\". This can be used, for example, by apps that know how to log in to captive portal apps in the background.\n\nIt\u0027s also observed that reportNetworkConnectivity is called often when a network disconnects.\n\nInstead of putting it in the data stall metrics, can we put it somewhere else, like define a separate event enum in the networkstack event proto?",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 552,
+        "endChar": 21
+      },
+      "revId": "bdbad8dfb13888bd1b3b24491e9778f3d41cd1c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

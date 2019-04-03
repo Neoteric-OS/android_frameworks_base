@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b86900f1_b8f41b76",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4654,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T03:35:27Z",
+      "side": 0,
+      "message": "Do we still need this? ISTM that the only value that is defined in the API for this setting was DATA_STALL_EVALUATION_TYPE_DNS, and since we\u0027re deleting that, there is no possible value any more. Should we delete it?",
+      "range": {
+        "startLine": 4654,
+        "startChar": 4,
+        "endLine": 4654,
+        "endChar": 95
+      },
+      "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
