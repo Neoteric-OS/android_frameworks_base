@@ -26,6 +26,7 @@ import static android.provider.Settings.Global.DATA_STALL_EVALUATION_TYPE_DNS;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -53,6 +54,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.captiveportal.CaptivePortalProbeResult;
+import android.net.captiveportal.CaptivePortalProbeSpec;
 import android.net.metrics.DataStallDetectionStats;
 import android.net.metrics.DataStallStatsUtils;
 import android.net.metrics.IpConnectivityLog;
@@ -72,6 +74,8 @@ import android.util.ArrayMap;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.networkstack.R;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,7 +88,9 @@ import org.mockito.Spy;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -117,7 +123,9 @@ public class NetworkMonitorTest {
     private static final int TEST_NETID = 4242;
 
     private static final String TEST_HTTP_URL = "http://www.google.com/gen_204";
+    private static final String TEST_OTHER_HTTP_URL = "http://www.google.com/gen_204/other";
     private static final String TEST_HTTPS_URL = "https://www.google.com/gen_204";
+    private static final String TEST_OTHER_HTTPS_URL = "https://www.google.com/gen_204/other";
     private static final String TEST_FALLBACK_URL = "http://fallback.google.com/gen_204";
     private static final String TEST_OTHER_FALLBACK_URL = "http://otherfallback.google.com/gen_204";
     private static final String TEST_MCCMNC = "123456";
@@ -579,6 +587,112 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setStatus(mFallbackConnection, 204);
         runPartialConnectivityNetworkTest();
+    }
+
+    @Test
+    public void testGetCaptivePortalServerHttpsUrl_ConfigResource() {
+        when(mResources.getString(R.string.config_captive_portal_https_url))
+                .thenReturn(TEST_OTHER_HTTPS_URL);
+        assertEquals(TEST_OTHER_HTTPS_URL, makeMonitor().getCaptivePortalServerHttpsUrl());
+    }
+
+    @Test
+    public void testGetCaptivePortalServerHttpUrl_ConfigResource() {
+        when(mResources.getString(R.string.config_captive_portal_http_url))
+                .thenReturn(TEST_OTHER_HTTP_URL);
+        assertEquals(TEST_OTHER_HTTP_URL, makeMonitor().getCaptivePortalServerHttpUrl());
+    }
+
+    @Test
+    public void testMakeCaptivePortalFallbackUrls_ConfigResource() {
+        final String[] fallbackUrls = new String[] {
+                TEST_HTTP_URL,
+                TEST_FALLBACK_URL,
+                TEST_OTHER_FALLBACK_URL
+        };
+        when(mResources.getStringArray(R.array.config_captive_portal_fallback_urls))
+                .thenReturn(fallbackUrls);
+
+        assertArrayEquals(
+                Arrays.stream(fallbackUrls).map(NetworkMonitorTest::parseUrl).toArray(URL[]::new),
+                makeMonitor().makeCaptivePortalFallbackUrls());
+    }
+
+    @Test
+    public void testMakeCaptivePortalFallbackProbeSpecs_ConfigResource() {
+        final String[] fallbackSpecs = new String[] {
+                "http://example.com@@/@@204@@/@@",
+                "http://example.com/2@@/@@204@@/@@"
+        };
+        when(mResources.getStringArray(R.array.config_captive_portal_fallback_probe_specs))
+                .thenReturn(fallbackSpecs);
+
+        assertArrayEquals(fallbackSpecs,
+                Arrays.stream(makeMonitor().makeCaptivePortalFallbackProbeSpecs())
+                        .map(CaptivePortalProbeSpec::getEncodedSpec).toArray(String[]::new));
+    }
+
+    // DEFAULT VALUE
+
+    @Test
+    public void testGetCaptivePortalServerHttpsUrl_DefaultResource() {
+        when(mDependencies.getSetting(any(), eq(Settings.Global.CAPTIVE_PORTAL_HTTPS_URL), any()))
+                .thenReturn(null);
+        when(mResources.getString(R.string.default_captive_portal_https_url))
+                .thenReturn(TEST_OTHER_HTTPS_URL);
+        assertEquals(TEST_OTHER_HTTPS_URL, makeMonitor().getCaptivePortalServerHttpsUrl());
+    }
+
+    @Test
+    public void testGetCaptivePortalServerHttpUrl_DefaultResource() {
+        when(mDependencies.getSetting(any(), eq(Settings.Global.CAPTIVE_PORTAL_HTTP_URL), any()))
+                .thenReturn(null);
+        when(mResources.getString(R.string.default_captive_portal_http_url))
+                .thenReturn(TEST_OTHER_HTTP_URL);
+        assertEquals(TEST_OTHER_HTTP_URL, makeMonitor().getCaptivePortalServerHttpUrl());
+    }
+
+    @Test
+    public void testMakeCaptivePortalFallbackUrls_DefaultResource() {
+        when(mDependencies.getSetting(
+                any(), eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL), any())).thenReturn(null);
+        final String[] fallbackUrls = new String[] {
+                TEST_HTTP_URL,
+                TEST_FALLBACK_URL,
+                TEST_OTHER_FALLBACK_URL
+        };
+        when(mResources.getStringArray(R.array.default_captive_portal_fallback_urls))
+                .thenReturn(fallbackUrls);
+
+        assertArrayEquals(
+                Arrays.stream(fallbackUrls).map(NetworkMonitorTest::parseUrl).toArray(URL[]::new),
+                makeMonitor().makeCaptivePortalFallbackUrls());
+    }
+
+    @Test
+    public void testMakeCaptivePortalFallbackProbeSpecs_DefaultResource() {
+        when(mDependencies.getSetting(
+                any(), eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS), any()))
+                .thenReturn(null);
+        final String[] fallbackSpecs = new String[] {
+                "http://example.com@@/@@204@@/@@",
+                "http://example.com/2@@/@@204@@/@@"
+        };
+        when(mResources.getStringArray(R.array.default_captive_portal_fallback_probe_specs))
+                .thenReturn(fallbackSpecs);
+
+        assertArrayEquals(fallbackSpecs,
+                Arrays.stream(makeMonitor().makeCaptivePortalFallbackProbeSpecs())
+                        .map(CaptivePortalProbeSpec::getEncodedSpec).toArray(String[]::new));
+    }
+
+    private static URL parseUrl(String url) {
+        try {
+            return new URL(url);
+        } catch (MalformedURLException e) {
+            fail(e.toString());
+            return null;
+        }
     }
 
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
