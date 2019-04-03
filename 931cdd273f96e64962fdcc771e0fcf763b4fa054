@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4734bd_c77a02e3",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T14:32:29Z",
+      "side": 1,
+      "message": "Nit: might want to add a comment that these offsets ignore the possible presence of extension headers in the packet? I think this is WAI, but it\u0027s good not to loose sight of it.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 94
+      },
+      "revId": "931cdd273f96e64962fdcc771e0fcf763b4fa054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb37617_f5e5ec1d",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T14:32:29Z",
+      "side": 1,
+      "message": "Remove this TODO, since it\u0027s out of date.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "931cdd273f96e64962fdcc771e0fcf763b4fa054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
