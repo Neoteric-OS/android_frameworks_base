@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bcbf16e_a1303a95",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T09:57:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in NetworkStackUtils.java?",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "497ba2bf960e93c9e8d27244700b8cdd5c940961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ac424e_5c111b7d",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T09:57:54Z",
+      "side": 1,
+      "message": "Pre-existing, and so not for this CL, but... if we (or the user) incorrectly pushes a string that is not a valid integer, what will happen? Will the network stack crash on startup? If so, then these methods that fetch settings must catch exceptions.",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 78
+      },
+      "revId": "497ba2bf960e93c9e8d27244700b8cdd5c940961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
