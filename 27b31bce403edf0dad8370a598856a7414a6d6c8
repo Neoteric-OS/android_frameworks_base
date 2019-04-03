@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a804b4f1_312b976e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T08:59:14Z",
+      "side": 1,
+      "message": "getSetting will never return any value for any of these variables, right? Because they are no longer settings.\n\nSeems like need a getDeviceConfigProperty method in Dependencies, which by default calls NetworkStackUtils.getDeviceConfigProperty()?",
+      "range": {
+        "startLine": 1184,
+        "startChar": 29,
+        "endLine": 1184,
+        "endChar": 39
+      },
+      "revId": "27b31bce403edf0dad8370a598856a7414a6d6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
