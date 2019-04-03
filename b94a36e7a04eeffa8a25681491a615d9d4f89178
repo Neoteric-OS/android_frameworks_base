@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a5815f_16796be6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5651,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "This is a behaviour change from the previous patchset. The previous patchset only checked whether the interface name changed. This checks if anything in LinkProperties changed. The previous patchset seemed correct in this respect. Was the change intentional?",
+      "range": {
+        "startLine": 5651,
+        "startChar": 27,
+        "endLine": 5651,
+        "endChar": 39
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d5fe66_29b5f0a7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5660,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "Nit: does this create a window of opportunity for apps to receive traffic between the time when the old ranges are removed and the time when new ranges are added? If so, might want to add a TODO to fix that. Or, if we already have an \"UID range diff\" function somwehere that will calculate the removed and added deltas for us, we could use that.",
+      "range": {
+        "startLine": 5660,
+        "startChar": 8,
+        "endLine": 5660,
+        "endChar": 9
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c51449_275fd35e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5833,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "Will this return true if there is a default route of type PROHIBIT? If so, looks like this will return true for, say a VPN that only routes 10.0.0.0/8 and no IPv6. But it shouldn\u0027t, right?",
+      "range": {
+        "startLine": 5833,
+        "startChar": 23,
+        "endLine": 5833,
+        "endChar": 42
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3db1379_75e91d22",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "Put a header before this? Something like:\n\n    pw.println(\"Interface filtering rules:\");\n    pw.increaseIndent();\n    for (...\n        ...\n    pw.decreaseIndent();",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 687,
+        "endChar": 79
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d479e7_fe335059",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "Interface:",
+      "range": {
+        "startLine": 688,
+        "startChar": 24,
+        "endLine": 688,
+        "endChar": 28
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9374db4e_b8c4efc2",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "UIDs",
+      "range": {
+        "startLine": 689,
+        "startChar": 24,
+        "endLine": 689,
+        "endChar": 28
+      },
+      "revId": "b94a36e7a04eeffa8a25681491a615d9d4f89178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

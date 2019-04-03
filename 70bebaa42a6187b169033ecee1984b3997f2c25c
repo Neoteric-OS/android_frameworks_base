@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "97f021c1_28c68066",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-03T13:52:27Z",
+      "side": 1,
+      "message": "Discussed offline. It\u0027s not clear that the alternatives are any better.",
+      "parentUuid": "a494e157_823bf8ef",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "70bebaa42a6187b169033ecee1984b3997f2c25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82df8ad0_2e0d57b2",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 10
