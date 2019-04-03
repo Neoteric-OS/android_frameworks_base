@@ -22,6 +22,30 @@
       "revId": "27b31bce403edf0dad8370a598856a7414a6d6c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c302e27_266bc06f",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-03T09:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a804b4f1_312b976e",
+      "range": {
+        "startLine": 1184,
+        "startChar": 29,
+        "endLine": 1184,
+        "endChar": 39
+      },
+      "revId": "27b31bce403edf0dad8370a598856a7414a6d6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
