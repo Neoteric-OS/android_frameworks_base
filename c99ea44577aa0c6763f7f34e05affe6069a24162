@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "59c9c9ec_ad4a495e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f862bbd2_02aa5c58",
+      "range": {
+        "startLine": 212,
+        "startChar": 16,
+        "endLine": 212,
+        "endChar": 38
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd153fa_33819704",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2019-03-11T14:26:23Z",
       "side": 1,
       "message": "So let me get this straight :\nThis is a reference counted resource that increments their refcount by being added to a parent, and decrements them when a parent is fully released. But it can also be released by the user, and *that\u0027s* when it frees its resources. Well some of them, the ones in invalidate().\n\nIs there any way to make this simpler and closer to what we usually call a \"reference counted\" object ? Or to rename it to better reflect what it is ?\n(not for this patch obviously)",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 31
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e505b2d_2bad92e6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Almost; both conditions must be triggered in order to free it\u0027s resources (and they have equal priority):\n1. User must have called close(), or binder must have died\n2. All dependent resources must release their reference on \"this\" resource.\n\nInvalidate() makes sure the resource is no longer accessible to the user once it has been closed. No resource cleanup actually occurs there.\n\nOn the other hand, the freeUnderlyingResources() (called from releaseReference()) will perform the actual cleanup.\n\nBut at a higher level, I\u0027m not sure how much we could simplify this. The primary motivation for doing this was to guarantee a specific cleanup ordering between resources, while also making sure that any references that a user has would be valid while they hold them. If you\u0027re curious, the design doc was go/ipsecservice-resource-management. \n\nRegarding naming, I think we settled on these names after changing it four times, so i\u0027m somewhat hesitant to change it again :)",
+      "parentUuid": "afd153fa_33819704",
       "range": {
         "startLine": 254,
         "startChar": 20,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "da609dbf_2ba16e70",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c416678_e30f3806",
+      "range": {
+        "startLine": 257,
+        "startChar": 60,
+        "endLine": 257,
+        "endChar": 62
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be9a414a_1c570879",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "56d53660_7453bc21",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done. Switched to using a sentinel value to merge the conditions.",
+      "parentUuid": "be9a414a_1c570879",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 34
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6e2eb7_e8f6f8e1",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -128,6 +224,30 @@
       "writtenOn": "2019-03-11T14:26:23Z",
       "side": 1,
       "message": "So hopefully connectivity service won\u0027t let you do that. But at the time of writing this, it will :/",
+      "range": {
+        "startLine": 1025,
+        "startChar": 68,
+        "endLine": 1025,
+        "endChar": 93
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e92fde5_a66c3e27",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Is this planned to change? It is possible to check this in IpSecService, but it feels more correct to check from the caller that will be allocating other resources as well.",
+      "parentUuid": "3a6e2eb7_e8f6f8e1",
       "range": {
         "startLine": 1025,
         "startChar": 68,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a39871f3_c52b0fdc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28d2ea3_4506b3ab",
+      "range": {
+        "startLine": 1032,
+        "startChar": 13,
+        "endLine": 1032,
+        "endChar": 47
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f862f050_3069707e",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -183,6 +327,30 @@
       "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b34841_b2dcb726",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added a tracker and initialized it to the same quota value as the encap sockets.\n\nI\u0027d be against initializing it to the rlimit of FDs, as I think that makes it less readable - Having a quota tracker implies a limited quantity of a resource, while setting it to the rlimit of FDs implies that it\u0027s basically infinite.",
+      "parentUuid": "f862f050_3069707e",
+      "range": {
+        "startLine": 1040,
+        "startChar": 19,
+        "endLine": 1040,
+        "endChar": 23
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "30f766e1_49ae5ff4",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "The only place where this is called from the UserRecord, which dumps with the following format:\n\n\"mNattKeepaliveRecords\u003d[{\u003c\u003ckeepalives\u003e\u003e}]\"\n\nIf you think this needs to be cleaned up, I\u0027d like to do that in a separate CL, so that I can address the other resource types as well to maintain consistency",
+      "parentUuid": "8327de23_cd8010e6",
+      "range": {
+        "startLine": 1051,
+        "startChar": 30,
+        "endLine": 1051,
+        "endChar": 35
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f019fc_a02be5bb",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -229,6 +421,30 @@
       "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf9300e_78439d90",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s possible to verify the FD in any trivial way. Java/Android provides no way to compare file descriptors, the inode version probably doesn\u0027t work because it\u0027s a socket instead of an actual file, and because this goes through a user process, the fd number itself will be twice-dup\u0027d, and therefore be different.\n\nAlso, this never throws a RemoteException, since it doesn\u0027t call anything over a binder. Similarly, IllegalArgumentException is a runtime exception, and my understanding of code convention is that only checked exceptions are listed in the throws.",
+      "parentUuid": "08f019fc_a02be5bb",
+      "range": {
+        "startLine": 1902,
+        "startChar": 28,
+        "endLine": 1902,
+        "endChar": 59
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "feef87f8_2499df19",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b81bd04_a8f83e73",
+      "range": {
+        "startLine": 1905,
+        "startChar": 44,
+        "endLine": 1905,
+        "endChar": 57
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35fe3ee1_b81a44e4",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 2
@@ -269,6 +509,24 @@
       "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9546ed_eb650809",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-03T14:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35fe3ee1_b81a44e4",
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
