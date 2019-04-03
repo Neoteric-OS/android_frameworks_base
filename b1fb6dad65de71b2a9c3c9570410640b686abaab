@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65282461_3f689812",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-03T08:27:41Z",
+      "side": 1,
+      "message": "Style: all these curly braces should go on the same, just like in Java.",
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0de68a_16a48d14",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-03T08:27:41Z",
+      "side": 1,
+      "message": "static const",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 36
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b32fc48_2b88d012",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-03T08:27:41Z",
+      "side": 1,
+      "message": "static const",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 28
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dc2eae_521dd6d3",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-03T08:27:41Z",
+      "side": 1,
+      "message": "static const",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf5ea28_14769dd2",
+        "filename": "packages/NetworkStack/jni/network_stack_utils_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-04-03T08:27:41Z",
+      "side": 1,
+      "message": "static const",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 28
+      },
+      "revId": "b1fb6dad65de71b2a9c3c9570410640b686abaab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
