@@ -189,6 +189,7 @@ public class InetDiagSocketTest {
         udp.close();
     }
 
+    @Ignore
     public void testGetConnectionOwnerUid() throws Exception {
         checkGetConnectionOwnerUid("::", null);
         checkGetConnectionOwnerUid("::", "::");
