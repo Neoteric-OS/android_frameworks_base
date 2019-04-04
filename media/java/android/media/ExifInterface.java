@@ -3808,6 +3808,9 @@ public class ExifInterface {
         @Override
         public int read() throws IOException {
             ++mPosition;
+            if (mPosition > mLength) {
+                throw new EOFException();
+            }
             return mDataInputStream.read();
         }
 
