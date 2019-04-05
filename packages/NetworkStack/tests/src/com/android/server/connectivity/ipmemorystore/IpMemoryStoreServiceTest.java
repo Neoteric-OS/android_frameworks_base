@@ -136,6 +136,11 @@ public class IpMemoryStoreServiceTest {
             public IBinder asBinder() {
                 return null;
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return IOnL2KeyResponseListener.VERSION;
+            }
         };
     }
 
@@ -155,6 +160,11 @@ public class IpMemoryStoreServiceTest {
             @Override
             public IBinder asBinder() {
                 return null;
+            }
+
+            @Override
+            public int getInterfaceVersion() {
+                return IOnL2KeyResponseListener.VERSION;
             }
         };
     }
@@ -178,6 +188,11 @@ public class IpMemoryStoreServiceTest {
             public IBinder asBinder() {
                 return null;
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return IOnL2KeyResponseListener.VERSION;
+            }
         };
     }
 
@@ -200,6 +215,11 @@ public class IpMemoryStoreServiceTest {
             public IBinder asBinder() {
                 return null;
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return IOnL2KeyResponseListener.VERSION;
+            }
         };
     }
 
@@ -218,6 +238,11 @@ public class IpMemoryStoreServiceTest {
             @Override
             public IBinder asBinder() {
                 return null;
+            }
+
+            @Override
+            public int getInterfaceVersion() {
+                return IOnL2KeyResponseListener.VERSION;
             }
         };
     }
