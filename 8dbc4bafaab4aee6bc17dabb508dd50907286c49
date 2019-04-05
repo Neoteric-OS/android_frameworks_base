@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89725b24_0f90b6db",
+        "filename": "packages/NetworkStack/res/values/config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-05T09:52:43Z",
+      "side": 1,
+      "message": "I think we need a top-level comment for this file explaining how the settings work. Something that mentions 1) that OEMs wishing to change the settings should do so via RRO and not by changing this file, and 2) explaining that modifications should occur to the values named \"config_xxx\" and not of the values called \"default_xxx\".\n\nPersonally I\u0027d find it clearer to swap the order so that for for each setting, the default value would be first and the config value would be second.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 11
+      },
+      "revId": "8dbc4bafaab4aee6bc17dabb508dd50907286c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcec31f7_8844be0b",
+        "filename": "packages/NetworkStack/res/values/config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-05T09:52:43Z",
+      "side": 1,
+      "message": "Per in-person, should we perhaps not expose these?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "8dbc4bafaab4aee6bc17dabb508dd50907286c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c1bad4_7dc6707b",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-05T09:52:43Z",
+      "side": 1,
+      "message": "This means that the output array will be of a shorter length than the input array. Is that what we want here? Or do we want to add a dummy value like null? I suppose adding null in the middle is likely always a bad idea...",
+      "range": {
+        "startLine": 1325,
+        "startChar": 16,
+        "endLine": 1325,
+        "endChar": 31
+      },
+      "revId": "8dbc4bafaab4aee6bc17dabb508dd50907286c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800c4469_74b6dfe4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6709,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-05T09:52:43Z",
+      "side": 1,
+      "message": "This is inconsistent with the other options: for the other options, the resource takes precedence over the setting, but for this one, the setting takes precedence over the resource.\n\nGiven that we are now allowing OEMs to override these options, should we do the same here? There shouldn\u0027t be backwards compatibility concerns because this has not been possible before.",
+      "range": {
+        "startLine": 6707,
+        "startChar": 0,
+        "endLine": 6709,
+        "endChar": 9
+      },
+      "revId": "8dbc4bafaab4aee6bc17dabb508dd50907286c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
