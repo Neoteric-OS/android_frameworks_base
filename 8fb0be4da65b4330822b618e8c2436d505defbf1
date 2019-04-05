@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e00c9a_e8c9ae1e",
+        "filename": "cmds/uiautomator/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-05T23:51:03Z",
+      "side": 1,
+      "message": "What\u0027s going on here? Whenever changing current.txt, I suggest uploading a separate CL for this, and adding the person that updated this API. If it\u0027s an oversight, they need to deal with owning that change.",
+      "range": {
+        "startLine": 174,
+        "startChar": 18,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "8fb0be4da65b4330822b618e8c2436d505defbf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
