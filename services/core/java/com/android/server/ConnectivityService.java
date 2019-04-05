@@ -2803,6 +2803,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     EVENT_PROVISIONING_NOTIFICATION, PROVISIONING_NOTIFICATION_HIDE,
                     mNai.network.netId));
         }
+
+        @Override
+        public int getInterfaceVersion() {
+            return INetworkMonitorCallbacks.VERSION;
+        }
     }
 
     private boolean networkRequiresValidation(NetworkAgentInfo nai) {

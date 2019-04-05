@@ -17,17 +17,16 @@ aidl_interface {
             enabled: false,
         },
     },
-    api_dir: "aidl/networkstack",
+    api_dir: "aidl/ipmemorystore",
+    versions: ["1"],
 }
 
 aidl_interface {
     name: "networkstack-aidl-interfaces",
     local_include_dir: "java",
-    include_dirs: ["frameworks/base/core/java"],  // For framework parcelables.
+    include_dirs: ["frameworks/base/core/java"], // For framework parcelables.
     srcs: [
         "java/android/net/DhcpResultsParcelable.aidl",
-        "java/android/net/IIpMemoryStore.aidl",
-        "java/android/net/IIpMemoryStoreCallbacks.aidl",
         "java/android/net/INetworkMonitor.aidl",
         "java/android/net/INetworkMonitorCallbacks.aidl",
         "java/android/net/INetworkStackConnector.aidl",
@@ -41,7 +40,6 @@ aidl_interface {
         "java/android/net/dhcp/IDhcpServerCallbacks.aidl",
         "java/android/net/ip/IIpClient.aidl",
         "java/android/net/ip/IIpClientCallbacks.aidl",
-        "java/android/net/ipmemorystore/**/*.aidl",
     ],
     backend: {
         ndk: {
@@ -52,6 +50,8 @@ aidl_interface {
         },
     },
     api_dir: "aidl/networkstack",
+    imports: ["ipmemorystore-aidl-interfaces"],
+    versions: ["1"],
 }
 
 java_library_static {
@@ -62,7 +62,7 @@ java_library_static {
         "ipmemorystore-client",
         "netd_aidl_interface-java",
         "networkstack-aidl-interfaces-java",
-    ]
+    ],
 }
 
 java_library_static {
@@ -75,7 +75,7 @@ java_library_static {
     ],
     static_libs: [
         "ipmemorystore-aidl-interfaces-java",
-    ]
+    ],
 }
 
 filegroup {
