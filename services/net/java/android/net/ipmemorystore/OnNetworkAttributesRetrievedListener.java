@@ -41,6 +41,11 @@ public interface OnNetworkAttributesRetrievedListener {
                         new Status(statusParcelable), l2Key,
                         new NetworkAttributes(networkAttributesParcelable));
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return this.VERSION;
+            }
         };
     }
 }

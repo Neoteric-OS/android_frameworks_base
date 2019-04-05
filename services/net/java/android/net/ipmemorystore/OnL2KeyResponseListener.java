@@ -37,6 +37,11 @@ public interface OnL2KeyResponseListener {
                     final String l2Key) {
                 listener.onL2KeyResponse(new Status(statusParcelable), l2Key);
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return this.VERSION;
+            }
         };
     }
 }

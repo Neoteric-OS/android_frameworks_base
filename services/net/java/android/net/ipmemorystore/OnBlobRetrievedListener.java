@@ -37,6 +37,11 @@ public interface OnBlobRetrievedListener {
                     final String name, final Blob blob) {
                 listener.onBlobRetrieved(new Status(statusParcelable), l2Key, name, blob);
             }
+
+            @Override
+            public int getInterfaceVersion() {
+                return this.VERSION;
+            }
         };
     }
 }
