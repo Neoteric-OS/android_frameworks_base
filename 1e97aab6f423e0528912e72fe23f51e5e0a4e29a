@@ -46,6 +46,30 @@
       "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cee5757_b37e7049",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-08T15:17:40Z",
+      "side": 0,
+      "message": "Good point about the permissions. This problem predates aosp/6579687 though, it was introduced in aosp/593073 which changed the signature of forceUpdateIfaces from taking no arguments to taking a Network[] and doing:\n\n        if (defaultNetworks !\u003d null) {\n            // Caller is ConnectivityService. Update the list of default networks.\n            mDefaultNetworks \u003d defaultNetworks;\n        }\n\nThis is technically not correct in the presence of system apps using reflection to talk to NetworkStatsService directly. That went into P, but did not cause any breakage that I\u0027m aware of aosp/6579687 (which went into the Q betas and I think might have gone into a P QPR or monthly update) added more parameters to forceUpdateIfaces, and would have broken such apps again, if there were any.\n\nSo over time, this method went from something any system app using reflection could call, to something that required more and more knowledge of ConnectivityService internals to call correctly. This change would make it impossible to call outside the system.\n\nThese are hidden methods that have never been part of the API surface, and there is precedent for changing the signature, which is a breaking change. I don\u0027t think regular apps (and even privileged apps, really) should have permission to do this. That said, if we think it\u0027s important not to change this again, we could add another overload of forceUpdateIfaces, which takes no parameters and requires READ_NETWORK_USAGE_HISTORY. That could just call the same underlying method as the one called by the current (privileged) method, but would pass all parameters as null. The underlying method would simply use the current values for those null parameters.",
+      "parentUuid": "79aef42a_83ff4543",
+      "range": {
+        "startLine": 903,
+        "startChar": 48,
+        "endLine": 903,
+        "endChar": 74
+      },
+      "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
