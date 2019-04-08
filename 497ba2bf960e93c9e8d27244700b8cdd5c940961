@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4f9d322_e74710d6",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T05:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bcbf16e_a1303a95",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "497ba2bf960e93c9e8d27244700b8cdd5c940961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ac424e_5c111b7d",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-03T09:57:54Z",
       "side": 1,
       "message": "Pre-existing, and so not for this CL, but... if we (or the user) incorrectly pushes a string that is not a valid integer, what will happen? Will the network stack crash on startup? If so, then these methods that fetch settings must catch exceptions.",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 78
+      },
+      "revId": "497ba2bf960e93c9e8d27244700b8cdd5c940961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c711c5fa_00a23b6c",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T05:32:42Z",
+      "side": 1,
+      "message": "Thanks for reviewing. Yes, it will crash network stack. I\u0027ve updated it to catch the exception. For previous design, it get from Setting and Setting will catch the exception. Thus, previous design is ok with this.",
+      "parentUuid": "78ac424e_5c111b7d",
       "range": {
         "startLine": 1186,
         "startChar": 0,
