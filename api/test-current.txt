@@ -674,6 +674,7 @@ package android.net {
   }
 
   public class NetworkStack {
+    method public static void checkNetworkStackPermission(@NonNull android.content.Context);
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
   }
 
