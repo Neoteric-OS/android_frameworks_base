@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f33e254_645a8e1b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-08T07:44:33Z",
+      "side": 1,
+      "message": "t",
+      "revId": "9efa1c7f403b6c514ee4e60b6a7d0c72c75f1e39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6499b860_76ad5698",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-08T07:44:33Z",
+      "side": 1,
+      "message": "Nit: I think the comment text should start on the second line:\n\n    /**\n     * Default URL...",
+      "revId": "9efa1c7f403b6c514ee4e60b6a7d0c72c75f1e39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
