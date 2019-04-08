@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e75714_cbd00767",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-04-08T15:35:09Z",
+      "side": 1,
+      "message": "nit: consider using curly braces around this. If you\u0027re wondering why: see \"Always use braces...\" - https://dwheeler.com/essays/apple-goto-fail.html",
+      "range": {
+        "startLine": 1152,
+        "startChar": 29,
+        "endLine": 1152,
+        "endChar": 62
+      },
+      "revId": "da4ec8f4b407519a354fc37a2bcc2551bbbca3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d79182_c03254d5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-04-08T15:35:09Z",
+      "side": 1,
+      "message": "note: this will cause capabilities to be sent via AsyncChannel and then to CS handler thread (something we got rid of recently in this CL: http://r.android.com/906754). \n\nAlso, this leads to updating mNetworkCapabilities without locking mVpns in ConnectivityService. Again, this is something that was fixed in the CL above.\n\nMaybe, we should have establish return updated NetworkCapabilities which should then post updateAllVpnsCaps to CS handler. Or, perhaps post establishVpn on CS handler (thus blocking the binder thread until CS handler processes establishVpn). Latter seems a bit risky.\n\nI\u0027d recommend also checking with Lorenzo/Jean before proceeding with either of the above suggestions.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 26,
+        "endLine": 1156,
+        "endChar": 49
+      },
+      "revId": "da4ec8f4b407519a354fc37a2bcc2551bbbca3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
