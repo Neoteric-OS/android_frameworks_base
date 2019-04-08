@@ -298,7 +298,7 @@ public class NetworkMonitorTest {
         when(mRandom.nextInt()).thenReturn(2);
 
         // First check always uses the first fallback URL: inconclusive
-        final NetworkMonitor monitor = runNetworkTest(NETWORK_TEST_RESULT_INVALID);
+        final NetworkMonitor monitor = runNetworkTest((1 << NETWORK_TEST_RESULT_INVALID));
         assertNull(mNetworkTestedRedirectUrlCaptor.getValue());
         verify(mFallbackConnection, times(1)).getResponseCode();
         verify(mOtherFallbackConnection, never()).getResponseCode();
@@ -457,7 +457,7 @@ public class NetworkMonitorTest {
 
     @Test
     public void testNoInternetCapabilityValidated() throws Exception {
-        runNetworkTest(NO_INTERNET_CAPABILITIES, NETWORK_TEST_RESULT_VALID);
+        runNetworkTest(NO_INTERNET_CAPABILITIES, (1 << NETWORK_TEST_RESULT_VALID));
         verify(mNetwork, never()).openConnection(any());
     }
 
@@ -493,7 +493,7 @@ public class NetworkMonitorTest {
 
         nm.notifyCaptivePortalAppFinished(APP_RETURN_DISMISSED);
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
-                .notifyNetworkTested(NETWORK_TEST_RESULT_VALID, null);
+                .notifyNetworkTested((1 << NETWORK_TEST_RESULT_VALID), null);
     }
 
     @Test
@@ -554,11 +554,11 @@ public class NetworkMonitorTest {
         setSslException(mHttpsConnection);
         setStatus(mHttpConnection, 204);
 
-        final NetworkMonitor nm = runNetworkTest(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY);
+        final NetworkMonitor nm = runNetworkTest((1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY));
 
         nm.setAcceptPartialConnectivity();
-        verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
-                .notifyNetworkTested(eq(NETWORK_TEST_RESULT_VALID), any());
+        runNetworkTest((1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY)
+                | (1 << NETWORK_TEST_RESULT_VALID));
     }
 
     @Test
@@ -634,22 +634,22 @@ public class NetworkMonitorTest {
     }
 
     private void runPortalNetworkTest() {
-        runNetworkTest(NETWORK_TEST_RESULT_INVALID);
+        runNetworkTest((1 << NETWORK_TEST_RESULT_INVALID));
         assertNotNull(mNetworkTestedRedirectUrlCaptor.getValue());
     }
 
     private void runNotPortalNetworkTest() {
-        runNetworkTest(NETWORK_TEST_RESULT_VALID);
+        runNetworkTest((1 << NETWORK_TEST_RESULT_VALID));
         assertNull(mNetworkTestedRedirectUrlCaptor.getValue());
     }
 
     private void runFailedNetworkTest() {
-        runNetworkTest(NETWORK_TEST_RESULT_INVALID);
+        runNetworkTest((1 << NETWORK_TEST_RESULT_INVALID));
         assertNull(mNetworkTestedRedirectUrlCaptor.getValue());
     }
 
     private void runPartialConnectivityNetworkTest() {
-        runNetworkTest(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY);
+        runNetworkTest((1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY));
         assertNull(mNetworkTestedRedirectUrlCaptor.getValue());
     }
 

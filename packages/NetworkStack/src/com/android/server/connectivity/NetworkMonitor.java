@@ -335,6 +335,7 @@ public class NetworkMonitor extends StateMachine {
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics;
     private boolean mAcceptPartialConnectivity;
+    private boolean mPartialConnectivityDetected;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
@@ -597,7 +598,7 @@ public class NetworkMonitor extends StateMachine {
                         case APP_RETURN_UNWANTED:
                             mDontDisplaySigninNotification = true;
                             mUserDoesNotWant = true;
-                            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+                            notifyNetworkTested((1 << NETWORK_TEST_RESULT_INVALID), null);
                             // TODO: Should teardown network.
                             mUidResponsibleForReeval = 0;
                             transitionTo(mEvaluatingState);
@@ -650,6 +651,7 @@ public class NetworkMonitor extends StateMachine {
                 // disable HTTPS probe and transition to EvaluatingPrivateDnsState.
                 case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
                     mAcceptPartialConnectivity = true;
+                    updatePartialConnectivity();
                     break;
                 case EVENT_LINK_PROPERTIES_CHANGED:
                     mLinkProperties = (LinkProperties) message.obj;
@@ -673,7 +675,14 @@ public class NetworkMonitor extends StateMachine {
         public void enter() {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
-            notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
+            int testResult;
+            if (mPartialConnectivityDetected) {
+                testResult = (1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY)
+                        | (1 << INetworkMonitor.NETWORK_TEST_RESULT_VALID);
+            } else {
+                testResult = (1 << INetworkMonitor.NETWORK_TEST_RESULT_VALID);
+            }
+            notifyNetworkTested(testResult, null);
             mValidations++;
         }
 
@@ -857,7 +866,7 @@ public class NetworkMonitor extends StateMachine {
                 // 2. NetworkMonitor detects network is partial connectivity and user accepts it.
                 case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
                     mAcceptPartialConnectivity = true;
-                    mUseHttps = false;
+                    updatePartialConnectivity();
                     transitionTo(mEvaluatingPrivateDnsState);
                     return HANDLED;
                 default:
@@ -1009,7 +1018,7 @@ public class NetworkMonitor extends StateMachine {
         }
 
         private void handlePrivateDnsEvaluationFailure() {
-            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+            notifyNetworkTested((1 << NETWORK_TEST_RESULT_INVALID), null);
 
             // Queue up a re-evaluation with backoff.
             //
@@ -1081,26 +1090,34 @@ public class NetworkMonitor extends StateMachine {
                     }
 
                     if (probeResult.isSuccessful()) {
+                        // If partial connectivity is detected but mUseHttps is true, it means
+                        // HTTPS probe is temporary failed for the last network validation.
+                        if (mUseHttps && mPartialConnectivityDetected) {
+                            mPartialConnectivityDetected = false;
+                        }
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
                     } else if (probeResult.isPortal()) {
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        notifyNetworkTested((1 << NETWORK_TEST_RESULT_INVALID),
+                                probeResult.redirectUrl);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else if (probeResult.isPartialConnectivity()) {
                         logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
-                        notifyNetworkTested(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY,
+                        notifyNetworkTested((1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY),
                                 probeResult.redirectUrl);
+                        mPartialConnectivityDetected = true;
+                        updatePartialConnectivity();
                         if (mAcceptPartialConnectivity) {
-                            mUseHttps = false;
                             transitionTo(mEvaluatingPrivateDnsState);
                         } else {
                             transitionTo(mWaitingForNextProbeState);
                         }
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        notifyNetworkTested((1 << NETWORK_TEST_RESULT_INVALID),
+                                probeResult.redirectUrl);
                         transitionTo(mWaitingForNextProbeState);
                     }
                     return HANDLED;
@@ -1862,5 +1879,11 @@ public class NetworkMonitor extends StateMachine {
         }
 
         return result;
+    }
+
+    private void updatePartialConnectivity() {
+        if (mPartialConnectivityDetected && mAcceptPartialConnectivity) {
+            mUseHttps = false;
+        }
     }
 }

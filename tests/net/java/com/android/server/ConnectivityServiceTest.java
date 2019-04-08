@@ -568,7 +568,7 @@ public class ConnectivityServiceTest {
                 }
 
                 mNmCallbacks.notifyNetworkTested(
-                        mNmValidationResult, mNmValidationRedirectUrl);
+                        (1 << mNmValidationResult), mNmValidationRedirectUrl);
 
                 if (mNmValidationRedirectUrl != null) {
                     mNmCallbacks.showProvisioningNotification(
@@ -2596,7 +2596,9 @@ public class ConnectivityServiceTest {
             fail(e.getMessage());
         }
         // Need a trigger point to let NetworkMonitor tell ConnectivityService that network is
-        // validated.
+        // validated. Might want to add that in real operation this won't be necessary, because a
+        // real NetworkMonitor will be probing continuously, and as soon as
+        // setAcceptPartialConnectivity() is called, it will validate.
         mCm.reportNetworkConnectivity(mWiFiNetworkAgent.getNetwork(), true);
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
         NetworkCapabilities nc = callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED,
