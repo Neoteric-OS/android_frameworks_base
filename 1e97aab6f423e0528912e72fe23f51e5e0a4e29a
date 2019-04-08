@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b88f24_b8d5a265",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-08T07:02:59Z",
+      "side": 0,
+      "message": "Could you add some explanations in the commit message on why we are removing access to this method for clients that hold READ_NETWORK_USAGE_HISTORY, and what the expected impact is for such clients ?",
+      "range": {
+        "startLine": 903,
+        "startChar": 48,
+        "endLine": 903,
+        "endChar": 74
+      },
+      "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
