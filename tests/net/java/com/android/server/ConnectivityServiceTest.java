@@ -27,9 +27,6 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
 import static android.net.ConnectivityManager.TYPE_MOBILE_MMS;
 import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CBS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
@@ -435,17 +432,17 @@ public class ConnectivityServiceTest {
         private String mRedirectUrl;
 
         private INetworkMonitorCallbacks mNmCallbacks;
-        private int mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
+        private int mNmValidationResult = NetworkMonitorUtils.INVALID_RESULT;
         private String mNmValidationRedirectUrl = null;
         private boolean mNmProvNotificationRequested = false;
 
         void setNetworkValid() {
-            mNmValidationResult = NETWORK_TEST_RESULT_VALID;
+            mNmValidationResult = NetworkMonitorUtils.VALID_RESULT;
             mNmValidationRedirectUrl = null;
         }
 
         void setNetworkInvalid() {
-            mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
+            mNmValidationResult = NetworkMonitorUtils.INVALID_RESULT;
             mNmValidationRedirectUrl = null;
         }
 
@@ -455,7 +452,7 @@ public class ConnectivityServiceTest {
         }
 
         void setNetworkPartial() {
-            mNmValidationResult = NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
+            mNmValidationResult = NetworkMonitorUtils.PARTIAL_RESULT;
             mNmValidationRedirectUrl = null;
         }
 
@@ -562,7 +559,7 @@ public class ConnectivityServiceTest {
         private void onValidationRequested() {
             try {
                 if (mNmProvNotificationRequested
-                        && mNmValidationResult == NETWORK_TEST_RESULT_VALID) {
+                        && mNmValidationResult == NetworkMonitorUtils.VALID_RESULT) {
                     mNmCallbacks.hideProvisioningNotification();
                     mNmProvNotificationRequested = false;
                 }
@@ -2596,7 +2593,9 @@ public class ConnectivityServiceTest {
             fail(e.getMessage());
         }
         // Need a trigger point to let NetworkMonitor tell ConnectivityService that network is
-        // validated.
+        // validated. Might want to add that in real operation this won't be necessary, because a
+        // real NetworkMonitor will be probing continuously, and as soon as
+        // setAcceptPartialConnectivity() is called, it will validate.
         mCm.reportNetworkConnectivity(mWiFiNetworkAgent.getNetwork(), true);
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
         NetworkCapabilities nc = callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED,

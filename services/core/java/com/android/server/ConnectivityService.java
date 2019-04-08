@@ -25,8 +25,6 @@ import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeValid;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
@@ -2569,21 +2567,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
                     if (nai == null) break;
 
-                    final boolean partialConnectivity =
-                            (msg.arg1 == NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY)
-                                    || (nai.networkMisc.acceptPartialConnectivity
-                                            && nai.partialConnectivity);
-                    // Once a network is determined to have partial connectivity, it cannot
-                    // go back to full connectivity without a disconnect. This is because
-                    // NetworkMonitor can only communicate either PARTIAL_CONNECTIVITY or VALID,
-                    // but not both.
-                    // TODO: Provide multi-testResult to improve the communication between
-                    // ConnectivityService and NetworkMonitor, so that ConnectivityService could
-                    // know the real status of network.
+                    final boolean wasPartial = nai.partialConnectivity;
+                    nai.partialConnectivity =
+                            ((msg.arg1 & NetworkMonitorUtils.PARTIAL_RESULT) != 0);
                     final boolean partialConnectivityChanged =
-                            (partialConnectivity && !nai.partialConnectivity);
+                            (wasPartial != nai.partialConnectivity);
 
-                    final boolean valid = (msg.arg1 == NETWORK_TEST_RESULT_VALID);
+                    final boolean valid = ((msg.arg1 & NetworkMonitorUtils.VALID_RESULT) != 0);
                     final boolean wasValidated = nai.lastValidated;
                     final boolean wasDefault = isDefaultNetwork(nai);
                     if (nai.everCaptivePortalDetected && !nai.captivePortalLoginNotified
@@ -2621,7 +2611,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                     NotificationType.LOST_INTERNET);
                         }
                     } else if (partialConnectivityChanged) {
-                        nai.partialConnectivity = partialConnectivity;
                         updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
                     }
                     updateInetCondition(nai);

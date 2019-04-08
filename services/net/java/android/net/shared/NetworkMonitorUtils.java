@@ -16,6 +16,9 @@
 
 package android.net.shared;
 
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
+import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
@@ -43,6 +46,9 @@ public class NetworkMonitorUtils {
     public static final String EXTRA_RESPONSE_TIMESTAMP_MS = "extra_response_timestamp_ms";
     public static final String PERMISSION_ACCESS_NETWORK_CONDITIONS =
             "android.permission.ACCESS_NETWORK_CONDITIONS";
+    public static final int VALID_RESULT = (1 << NETWORK_TEST_RESULT_VALID);
+    public static final int INVALID_RESULT = (1 << NETWORK_TEST_RESULT_INVALID);
+    public static final int PARTIAL_RESULT = (1 << NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY);
 
     /**
      * Get the captive portal server HTTP URL that is configured on the device.
