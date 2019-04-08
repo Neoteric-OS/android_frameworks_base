@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34bf0697_02cc6812",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T14:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b3f338_9f4a64af",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 12
+      },
+      "revId": "ea076926efdcd47c1561d46407d2f316d9232982",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d33b63_0e8a044c",
         "filename": "core/java/android/net/NetworkStack.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-08T07:02:59Z",
       "side": 1,
       "message": "I\u0027m wondering if it would be useful to have a:\ncheckNetworkStackPermissionOr(Context, String... otherPermissions)\n\nto cover current usages in ConnectivityService. Or maybe that\u0027s not a good-looking API ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "ea076926efdcd47c1561d46407d2f316d9232982",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c3a1f5b_6ad528ee",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T14:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d33b63_0e8a044c",
       "range": {
         "startLine": 55,
         "startChar": 23,

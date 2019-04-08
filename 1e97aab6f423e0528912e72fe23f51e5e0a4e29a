@@ -22,6 +22,30 @@
       "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79aef42a_83ff4543",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T14:10:19Z",
+      "side": 0,
+      "message": "I\u0027ve updated the message in commit message. Is the explanation enough?",
+      "parentUuid": "d3b88f24_b8d5a265",
+      "range": {
+        "startLine": 903,
+        "startChar": 48,
+        "endLine": 903,
+        "endChar": 74
+      },
+      "revId": "1e97aab6f423e0528912e72fe23f51e5e0a4e29a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
