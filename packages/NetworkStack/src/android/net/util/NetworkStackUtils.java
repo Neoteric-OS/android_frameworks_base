@@ -30,6 +30,8 @@ import java.util.function.Predicate;
  * Collection of utilities for the network stack.
  */
 public class NetworkStackUtils {
+    // TODO: Refer to DeviceConfig definition.
+    public static final String NAMESPACE_CONNECTIVITY = "connectivity";
 
     /**
      * @return True if the array is null or 0-length.
