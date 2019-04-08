@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce7caf9_4e5c67db",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-08T18:04:04Z",
+      "side": 1,
+      "message": "just for clarification, where are these constants from?",
+      "revId": "c2b359a1a790065c004c5e4c793a9c4058c37d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
