@@ -15,8 +15,13 @@
  */
 package android.net;
 
+import static android.Manifest.permission.NETWORK_STACK;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
+import android.content.Context;
 
 /**
  *
@@ -37,4 +42,36 @@ public class NetworkStack {
             "android.permission.MAINLINE_NETWORK_STACK";
 
     private NetworkStack() {}
+
+    /**
+     * If the NetworkStack or MAINLINE_NETWORK_STACK permission are not allowed for a particular
+     * process, throw a {@link SecurityException}.
+     *
+     * @param context {@link android.content.Context} for the process.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public static void checkNetworkStackPermission(final @NonNull Context context) {
+        enforceAnyPermissionOf(context, NETWORK_STACK, PERMISSION_MAINLINE_NETWORK_STACK);
+    }
+
+    private static void enforceAnyPermissionOf(final @NonNull Context context,
+            String... permissions) {
+        if (!checkAnyPermissionOf(context, permissions)) {
+            throw new SecurityException("Requires one of the following permissions: "
+                + String.join(", ", permissions) + ".");
+        }
+    }
+
+    private static boolean checkAnyPermissionOf(final @NonNull Context context,
+            String... permissions) {
+        for (String permission : permissions) {
+            if (context.checkCallingOrSelfPermission(permission) == PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
