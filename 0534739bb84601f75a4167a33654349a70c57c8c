@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7b289f6_7e191546",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T12:11:31Z",
+      "side": 1,
+      "message": "I will fix this in the follow-up commit.",
+      "parentUuid": "4540d60f_4bc83f13",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "0534739bb84601f75a4167a33654349a70c57c8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "437bc614_93849350",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-08T12:02:41Z",
       "side": 1,
       "message": "Nit: is there a need for this method? Can\u0027t the code call NetworkStackUtils.getDeviceConfigPropertyInt directly instead of getDeviceConfigPropertyInt? If it\u0027s just because \"NetworkStackUtils.getDeviceConfigPropertyInt\" is too long, then maybe use an \"import static\" statement for it like the code already has for other members of NetworkStackUtils?",
+      "range": {
+        "startLine": 1751,
+        "startChar": 19,
+        "endLine": 1751,
+        "endChar": 45
+      },
+      "revId": "0534739bb84601f75a4167a33654349a70c57c8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba43171_8b7118fd",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T12:11:31Z",
+      "side": 1,
+      "message": "It\u0027s for testing. I could not mock a static function.",
+      "parentUuid": "437bc614_93849350",
       "range": {
         "startLine": 1751,
         "startChar": 19,
