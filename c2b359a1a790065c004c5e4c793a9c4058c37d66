@@ -16,6 +16,24 @@
       "revId": "c2b359a1a790065c004c5e4c793a9c4058c37d66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17a2287_acca3bf2",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-08T19:31:54Z",
+      "side": 1,
+      "message": "There are carried over from the (now nonexistent) SignalStrength#getTdscdmaLevel() from the P codebase. Hence the comment.",
+      "parentUuid": "cce7caf9_4e5c67db",
+      "revId": "c2b359a1a790065c004c5e4c793a9c4058c37d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
