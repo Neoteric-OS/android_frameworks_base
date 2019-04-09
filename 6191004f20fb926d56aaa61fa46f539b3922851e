@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe56274a_89ca8f41",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-09T16:40:49Z",
+      "side": 1,
+      "message": "The summary / first sentence of the method would usually be a brief summary of what it does. e.g.\n\n\"Instantiates an application\u0027s classloader. Applications can override this method to....\"\n... but looking below the die is already cast.\n\nGenerally when there\u0027s default behavior that default behavior should be documented. e.g.\n\"The default implementation of this method returns the {@code cl} parameter unchanged.\"\n\n[The fact the default doesn\u0027t actually instantiate anything is a bit of a red flag for the method name but I assume it\u0027s too late to do anything about that too.]",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "6191004f20fb926d56aaa61fa46f539b3922851e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9e9bb5_9be7b245",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-09T16:40:49Z",
+      "side": 1,
+      "message": "their? \"the application\u0027s\" instead?",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "6191004f20fb926d56aaa61fa46f539b3922851e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca3702d_b4c0b063",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-09T16:40:49Z",
+      "side": 1,
+      "message": "was -\u003e is",
+      "range": {
+        "startLine": 45,
+        "startChar": 85,
+        "endLine": 45,
+        "endChar": 88
+      },
+      "revId": "6191004f20fb926d56aaa61fa46f539b3922851e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16aae467_8fcb5f74",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-09T16:40:49Z",
+      "side": 1,
+      "message": "Typically parameter information isn\u0027t this long. Better to break it out to the method level comment and just have a summary here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 49,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "6191004f20fb926d56aaa61fa46f539b3922851e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14adb149_d6299495",
         "filename": "core/java/android/app/AppComponentFactory.java",
         "patchSetId": 1
