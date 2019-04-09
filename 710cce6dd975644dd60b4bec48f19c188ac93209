@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2380c8_77f4ab1b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3734,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-04-09T16:28:52Z",
+      "side": 1,
+      "message": "At least not until now. :)",
+      "range": {
+        "startLine": 3734,
+        "startChar": 7,
+        "endLine": 3734,
+        "endChar": 33
+      },
+      "revId": "710cce6dd975644dd60b4bec48f19c188ac93209",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
