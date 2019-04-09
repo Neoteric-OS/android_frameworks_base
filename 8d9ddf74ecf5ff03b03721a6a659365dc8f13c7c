@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f92bc3e4_c50567a5",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T08:08:02Z",
+      "side": 1,
+      "message": "Why does ipmemorystore have its own AIDL version? Shouldn\u0027t it be in the same aidl_interface as the rest of the networkstack? Or is that too complex to implement at this point?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "8d9ddf74ecf5ff03b03721a6a659365dc8f13c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c44b0fb_30ec66d7",
+        "filename": "services/net/java/android/net/ipmemorystore/OnStatusListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T08:08:02Z",
+      "side": 1,
+      "message": "Out of curiosity, is there a risk of forgetting to add these methods? Are they required at compile time?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "8d9ddf74ecf5ff03b03721a6a659365dc8f13c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
