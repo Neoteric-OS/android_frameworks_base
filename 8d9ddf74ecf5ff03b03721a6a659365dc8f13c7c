@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2d49b76_43d273f1",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T09:22:23Z",
+      "side": 1,
+      "message": "As discussed offline, having the interfaces separate is preferred so we can have a self-contained ipmemorystore-client library.\nSome mechanism to version them together (always have the same version number) might be interesting though, but I think that\u0027s not supported.",
+      "parentUuid": "f92bc3e4_c50567a5",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "8d9ddf74ecf5ff03b03721a6a659365dc8f13c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c44b0fb_30ec66d7",
         "filename": "services/net/java/android/net/ipmemorystore/OnStatusListener.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8d9ddf74ecf5ff03b03721a6a659365dc8f13c7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d620c6_59acfea8",
+        "filename": "services/net/java/android/net/ipmemorystore/OnStatusListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T09:22:23Z",
+      "side": 1,
+      "message": "Yes they are abstract, so required at compile time. They only exist if the interface is versioned, which is why they were not needed before.",
+      "parentUuid": "5c44b0fb_30ec66d7",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "8d9ddf74ecf5ff03b03721a6a659365dc8f13c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
