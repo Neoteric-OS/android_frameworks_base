@@ -35,11 +35,20 @@ import android.content.pm.ApplicationInfo;
 public class AppComponentFactory {
 
     /**
-     * Allows application to override the creation of the default class loader.
-     * This can be used to perform things such as dependency injection or setting up
-     * a custom class loader hierarchy.
+     * Allows application to override the creation of the default class loader. This can be
+     * used to set up a custom class loader or a custom class loader hierarchy. The returned
+     * {@code ClassLoader} will be used by the platform to instantiate other application
+     * components.
+     * <p>
+     * This method is intended to provide a hook before any application components are
+     * instantiated to allow for their classes to be loaded from a different source than
+     * the base/split APK(s). It is therefore invoked before the application Context was
+     * initialized.
      *
-     * @param cl        The default classloader instantiated by platform.
+     * @param cl        The default class loader which the platform used to load the
+     * application's base or split APK(s). The class loader typically has no parent (unless
+     * running under instrumentation) but may extend shared library class loader(s). Its
+     * classname is configurable using {@link R.attr#classLoader} manifest attribute.
      * @param aInfo     Information about the application being loaded.
      */
     public @NonNull ClassLoader instantiateClassLoader(@NonNull ClassLoader cl,
