@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1d7b93_d74f7b0d",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 0,
+      "message": "Does this happen to be the last usage of NetworkManagementService#setPermission? If so, could you delete it (in another CL)?",
+      "revId": "7cd490c941115ca3e6e7fb4399b7524db89e7a6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

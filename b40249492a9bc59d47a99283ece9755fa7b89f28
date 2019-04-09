@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b016f9_3dadcd19",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5862,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Per your earlier comment on line 5660, should this also do the remove before the add? Or is this code is correct? If it\u0027s correct, then add a statement to that effect to the comment below (e.g., line 5875).",
+      "range": {
+        "startLine": 5858,
+        "startChar": 0,
+        "endLine": 5862,
+        "endChar": 13
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4989a8_916ba71e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6188,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Is this flaky? Suggest checking with:\n\n    atest --generate-new-metrics 100 ConnectivityServiceTest#testFullyRoutedVpnResultsInInterfaceFilteringRules",
+      "range": {
+        "startLine": 6188,
+        "startChar": 8,
+        "endLine": 6188,
+        "endChar": 22
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afa7808_c4b2eed1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Prefer the IpPrefixConstructor of RouteInfo. Also don\u0027t set bits that are masked out by the netmask. So this should be:\n\n    new IpPrefix(\"192.0.2.0/24\")\n\nalso elsewhere.",
+      "range": {
+        "startLine": 6254,
+        "startChar": 34,
+        "endLine": 6254,
+        "endChar": 67
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa2cdd0_768b0025",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "How is this different from SYSTEM_UID1? Can you use that instead?",
+      "range": {
+        "startLine": 93,
+        "startChar": 29,
+        "endLine": 93,
+        "endChar": 48
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeeca943_1d6feed7",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Put this just above VPN_PACKAGE?",
+      "range": {
+        "startLine": 95,
+        "startChar": 29,
+        "endLine": 95,
+        "endChar": 36
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e31b003_fd234e6b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Put this after SYSTEM_PACKAGE2 to maintain alphabetical order.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 55
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bf688c_db457385",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Why add this blank line?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990549e7_e4756150",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Thanks for making this change instead of modifying dead-end code that uses NetworkManagementService.",
+      "range": {
+        "startLine": 281,
+        "startChar": 18,
+        "endLine": 281,
+        "endChar": 29
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99374718_d20b05ff",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Nit: I think technically this should be PER_USER_RANGE -1. The user range for UID 0 ends at 99999, not 100000.",
+      "range": {
+        "startLine": 414,
+        "startChar": 55,
+        "endLine": 414,
+        "endChar": 69
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d3741e_9d0fb55d",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "In addition to comment below, suggest adding to this one:\n\n. ConnectivityService first adds the new UID rules then deletes the old ones.",
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bc6658_5c618bf6",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T10:52:12Z",
+      "side": 1,
+      "message": "Looks like from the VPN\u0027s perspective, this is a single \"replace the rules\" operation? If so, can you put these lines of code all together, removing the blank line and related comment?\n\nAlso would be great to uninstall and reinstall MOCK_UID1 here to verify that the rule gets added and removed. I know you do this in the test below as well, but I think that putting the changes to the UID rules and the install/uninstall test cases in the same test has the potential to reveal more failure modes and is thus a more interesting test.",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 91
+      },
+      "revId": "b40249492a9bc59d47a99283ece9755fa7b89f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
