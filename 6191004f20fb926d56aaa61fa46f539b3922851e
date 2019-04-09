@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14adb149_d6299495",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-04-09T16:34:42Z",
+      "side": 1,
+      "message": "I\u0027d drop this, apps don\u0027t need to know about that detail.",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 84
+      },
+      "revId": "6191004f20fb926d56aaa61fa46f539b3922851e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
