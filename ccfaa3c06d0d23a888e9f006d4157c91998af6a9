@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc2cd88_890c1e8a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T02:30:57Z",
+      "side": 1,
+      "message": "If you respin this patch, would be good to add a comment that all callers of this constructor are guaranteed to be on binder threads. Or even better, a WTF if Binder.getCallingPid() !\u003d Process.myPid() or something.",
+      "revId": "ccfaa3c06d0d23a888e9f006d4157c91998af6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0fe705_893b0280",
+        "filename": "tests/net/java/com/android/server/IpSecServiceRefcountedResourceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T02:30:57Z",
+      "side": 1,
+      "message": "propagate",
+      "range": {
+        "startLine": 140,
+        "startChar": 40,
+        "endLine": 140,
+        "endChar": 49
+      },
+      "revId": "ccfaa3c06d0d23a888e9f006d4157c91998af6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
