@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d67c523_33ce7432",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-04-10T15:04:45Z",
+      "side": 1,
+      "message": "the boot class loader as parent",
+      "range": {
+        "startLine": 49,
+        "startChar": 60,
+        "endLine": 49,
+        "endChar": 69
+      },
+      "revId": "c617ac307f5f14986dd60f6200dc235bc3cd77d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
