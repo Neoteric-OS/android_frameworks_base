@@ -123,7 +123,6 @@ public final class CarrierRestrictionRules implements Parcelable {
 
     /**
      * Creates a new builder for this class
-     * @hide
      */
     public static Builder newBuilder() {
         return new Builder();
@@ -336,7 +335,6 @@ public final class CarrierRestrictionRules implements Parcelable {
     public static final class Builder {
         private final CarrierRestrictionRules mRules;
 
-        /** {@hide} */
         public Builder() {
             mRules = new CarrierRestrictionRules();
         }

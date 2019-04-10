@@ -5521,6 +5521,7 @@ package android.telephony {
     method @NonNull public java.util.List<android.service.carrier.CarrierIdentifier> getExcludedCarriers();
     method public int getMultiSimPolicy();
     method public boolean isAllCarriersAllowed();
+    method public static android.telephony.CarrierRestrictionRules.Builder newBuilder();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final int CARRIER_RESTRICTION_DEFAULT_ALLOWED = 1; // 0x1
     field public static final int CARRIER_RESTRICTION_DEFAULT_NOT_ALLOWED = 0; // 0x0
@@ -5530,6 +5531,7 @@ package android.telephony {
   }
 
   public static final class CarrierRestrictionRules.Builder {
+    ctor public CarrierRestrictionRules.Builder();
     method @NonNull public android.telephony.CarrierRestrictionRules build();
     method @NonNull public android.telephony.CarrierRestrictionRules.Builder setAllCarriersAllowed();
     method @NonNull public android.telephony.CarrierRestrictionRules.Builder setAllowedCarriers(@NonNull java.util.List<android.service.carrier.CarrierIdentifier>);
