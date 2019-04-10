@@ -410,6 +410,14 @@ public class IpMemoryStoreService extends IIpMemoryStore.Stub {
         });
     }
 
+    /**
+     * Wipe the data in IpMemoryStore database upon network factory reset.
+     */
+    @Override
+    public void factoryReset() {
+        IpMemoryStoreDatabase.wipeDataUponNetworkReset(mDb);
+    }
+
     /** Get db size threshold. */
     @VisibleForTesting
     protected int getDbSizeThreshold() {

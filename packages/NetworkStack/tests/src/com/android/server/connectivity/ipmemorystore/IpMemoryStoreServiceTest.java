@@ -601,7 +601,6 @@ public class IpMemoryStoreServiceTest {
                 })));
     }
 
-
     @Test
     public void testFullMaintenance() {
         insertFakeDataAndOverThreshold();

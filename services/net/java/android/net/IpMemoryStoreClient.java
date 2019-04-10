@@ -204,4 +204,20 @@ public abstract class IpMemoryStoreClient {
             Log.e(TAG, "Error retrieving blob", e);
         }
     }
+
+    /**
+     * Wipe the data in the database upon network factory reset.
+     */
+    public void factoryReset() {
+        try {
+            try {
+                getService().factoryReset();
+            } catch (InterruptedException | ExecutionException m) {
+                // TODO: rebase aosp/932808 to avoid the dup Log.e
+                Log.e(TAG, "fail to wipe the database", m);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error executing factory reset", e);
+        }
+    }
 }

@@ -18,8 +18,11 @@ package android.net;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import android.content.Context;
+import android.os.RemoteException;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -77,4 +80,9 @@ public class IpMemoryStoreTest {
         // TODO : implement this
     }
 
+    @Test
+    public void testFactoryReset() throws RemoteException {
+        mStore.factoryReset();
+        verify(mMockService, times(1)).factoryReset();
+    }
 }

@@ -110,4 +110,9 @@ oneway interface IIpMemoryStore {
      */
     void retrieveBlob(String l2Key, String clientId, String name,
             IOnBlobRetrievedListener listener);
+
+    /**
+     * Wipe the data in the database upon network factory reset.
+     */
+    void factoryReset();
 }

@@ -410,6 +410,7 @@ public class IpMemoryStoreDatabase {
     private static final String[] DATA_COLUMN = new String[] {
             PrivateDataContract.COLNAME_DATA
     };
+
     @Nullable
     static byte[] retrieveBlob(@NonNull final SQLiteDatabase db, @NonNull final String key,
             @NonNull final String clientId, @NonNull final String name) {
@@ -429,6 +430,14 @@ public class IpMemoryStoreDatabase {
         final byte[] result = cursor.getBlob(0); // index in the DATA_COLUMN array
         cursor.close();
         return result;
+    }
+
+    /**
+     * Wipe all data in tables when network factory reset occurs.
+     */
+    static void wipeDataUponNetworkReset(@NonNull final SQLiteDatabase db) {
+        db.delete(NetworkAttributesContract.TABLENAME, null, null);
+        db.delete(PrivateDataContract.TABLENAME, null, null);
     }
 
     /**
