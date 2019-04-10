@@ -410,6 +410,7 @@ public class IpMemoryStoreDatabase {
     private static final String[] DATA_COLUMN = new String[] {
             PrivateDataContract.COLNAME_DATA
     };
+
     @Nullable
     static byte[] retrieveBlob(@NonNull final SQLiteDatabase db, @NonNull final String key,
             @NonNull final String clientId, @NonNull final String name) {
@@ -429,6 +430,43 @@ public class IpMemoryStoreDatabase {
         final byte[] result = cursor.getBlob(0); // index in the DATA_COLUMN array
         cursor.close();
         return result;
+    }
+
+    // Helper method to wipe all data in the specific table
+    private static void wipeDataInTable(@NonNull final SQLiteDatabase db, @NonNull String tableName,
+            @NonNull String[] columnName) {
+        for (int remainingRetries = 3; remainingRetries > 0; --remainingRetries) {
+            db.beginTransaction();
+            try {
+                db.delete(tableName, null, null);
+                final Cursor c = db.query(tableName,
+                        columnName,
+                        null, // selection
+                        null, // selectionArgs
+                        null, // groupBy
+                        null, // having
+                        null, // orderBy
+                        "1"); // limit
+                if (0 == c.getCount()) {
+                    db.setTransactionSuccessful();
+                    return;
+                }
+            } catch (SQLiteException e) {
+                Log.e(TAG, "Could not wipe the data in " + tableName, e);
+            } finally {
+                db.endTransaction();
+            }
+        }
+    }
+
+    /**
+     * Wipe all data in tables when network factory reset occurs.
+     */
+    static void wipeDataUponNetworkReset(@NonNull final SQLiteDatabase db) {
+        wipeDataInTable(db, NetworkAttributesContract.TABLENAME,
+                new String[] { NetworkAttributesContract.COLNAME_L2KEY });
+        wipeDataInTable(db, PrivateDataContract.TABLENAME,
+                new String[] { PrivateDataContract.COLNAME_L2KEY });
     }
 
     /**
