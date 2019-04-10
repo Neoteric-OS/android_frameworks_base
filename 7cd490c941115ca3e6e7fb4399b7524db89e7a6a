@@ -16,6 +16,24 @@
       "revId": "7cd490c941115ca3e6e7fb4399b7524db89e7a6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83718996_7771fd41",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-04-10T00:12:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "bf1d7b93_d74f7b0d",
+      "revId": "7cd490c941115ca3e6e7fb4399b7524db89e7a6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
