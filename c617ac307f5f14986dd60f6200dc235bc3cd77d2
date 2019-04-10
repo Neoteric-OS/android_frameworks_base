@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab6fd2aa_37ca3438",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-10T15:40:54Z",
+      "side": 1,
+      "message": "\u003ethe \u003c{@code cl}",
+      "range": {
+        "startLine": 40,
+        "startChar": 57,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "c617ac307f5f14986dd60f6200dc235bc3cd77d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2b3689_e30ae0d1",
+        "filename": "core/java/android/app/AppComponentFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-10T15:40:54Z",
+      "side": 1,
+      "message": "s/for // ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 67,
+        "endLine": 45,
+        "endChar": 70
+      },
+      "revId": "c617ac307f5f14986dd60f6200dc235bc3cd77d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d67c523_33ce7432",
         "filename": "core/java/android/app/AppComponentFactory.java",
         "patchSetId": 2
