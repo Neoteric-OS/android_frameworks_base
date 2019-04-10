@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556eaeac_cb4c603b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-10T15:18:37Z",
+      "side": 1,
+      "message": "Why use a separate lock object here? mPersistSnapshot is final and presumably non-null. Can\u0027t we just synchronize on that?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "9b4742738a41a328276dd98ad9592ff25830defc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36899779_4163bffd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-10T15:18:37Z",
+      "side": 1,
+      "message": "This must be called with the snapshot lock held, right? If so, either add a @GuardedBy annotation, or rename to requestSwapActiveStatsMapLocked.",
+      "range": {
+        "startLine": 289,
+        "startChar": 17,
+        "endLine": 289,
+        "endChar": 42
+      },
+      "revId": "9b4742738a41a328276dd98ad9592ff25830defc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ae22cb_14028aad",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-10T15:18:37Z",
+      "side": 1,
+      "message": "returns",
+      "range": {
+        "startLine": 290,
+        "startChar": 85,
+        "endLine": 290,
+        "endChar": 91
+      },
+      "revId": "9b4742738a41a328276dd98ad9592ff25830defc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27e998d_8627efaf",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-10T15:18:37Z",
+      "side": 1,
+      "message": "Might want to add a comment here that stats are always read from the inactive map, so they must be read after the swap.",
+      "range": {
+        "startLine": 319,
+        "startChar": 24,
+        "endLine": 319,
+        "endChar": 52
+      },
+      "revId": "9b4742738a41a328276dd98ad9592ff25830defc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
