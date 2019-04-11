@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8935a904_188abe3e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-11T09:22:55Z",
+      "side": 1,
+      "message": "Yes it is planned to fix by the time connectivity service calls this API.\nIt should be easily done by checking the given resource id does not exist in any keepalives in connectivity service, right?\nWhat would happen if caller register duplicate records?\n(assuming the caller will unregister it accordingly if successfully registered)",
+      "parentUuid": "3e92fde5_a66c3e27",
+      "range": {
+        "startLine": 1025,
+        "startChar": 68,
+        "endLine": 1025,
+        "endChar": 93
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d2ea3_4506b3ab",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
