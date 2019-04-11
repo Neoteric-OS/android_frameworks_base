@@ -735,14 +735,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
 
-            final DetailedState state = DetailedState.DISCONNECTED;
-
             if (wasFirstNetwork || wasDefault) {
+                final DetailedState state = DetailedState.DISCONNECTED;
                 maybeLogBroadcast(nai, state, type, wasDefault);
                 mService.sendLegacyNetworkBroadcast(nai, state, type);
             }
 
-            if (!list.isEmpty() && wasFirstNetwork) {
+            if (!list.isEmpty() && (wasFirstNetwork || wasDefault)) {
+                final DetailedState state = DetailedState.CONNECTED;
                 if (DBG) log("Other network available for type " + type +
                               ", sending connected broadcast");
                 final NetworkAgentInfo replacement = list.get(0);
