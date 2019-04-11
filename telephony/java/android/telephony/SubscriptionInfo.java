@@ -39,6 +39,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -121,6 +122,16 @@ public class SubscriptionInfo implements Parcelable {
      * Mobile Network Code
      */
     private String mMnc;
+
+    /**
+     * EHPLMNs associated with the subscription
+     */
+    private String[] mEhplmns;
+
+    /**
+     * HPLMNs associated with the subscription
+     */
+    private String[] mHplmns;
 
     /**
      * ISO Country code for the subscription's provider
@@ -316,6 +327,14 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     * @hide
+     */
+    public void setAssociatedPlmns(String[] ehplmns, String[] hplmns) {
+        mEhplmns = ehplmns;
+        mHplmns = hplmns;
+    }
+
+    /**
      * Creates and returns an icon {@code Bitmap} to represent this {@code SubscriptionInfo} in a user
      * interface.
      *
@@ -467,6 +486,20 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     * @hide
+     */
+    public List<String> getEhplmns() {
+        return mEhplmns == null ? Collections.emptyList() : Arrays.asList(mEhplmns);
+    }
+
+    /**
+     * @hide
+     */
+    public List<String> getHplmns() {
+        return mHplmns == null ? Collections.emptyList() : Arrays.asList(mHplmns);
+    }
+
+    /**
      * @return the profile class of this subscription.
      * @hide
      */
@@ -610,11 +643,15 @@ public class SubscriptionInfo implements Parcelable {
             int carrierid = source.readInt();
             int profileClass = source.readInt();
             int subType = source.readInt();
+            String[] ehplmns = source.readStringArray();
+            String[] hplmns = source.readStringArray();
 
-            return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
-                    nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
-                    isEmbedded, accessRules, cardString, cardId, isOpportunistic, groupUUID,
-                    isGroupDisabled, carrierid, profileClass, subType);
+            SubscriptionInfo info = new SubscriptionInfo(id, iccId, simSlotIndex, displayName,
+                    carrierName, nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc,
+                    countryIso, isEmbedded, accessRules, cardString, cardId, isOpportunistic,
+                    groupUUID, isGroupDisabled, carrierid, profileClass, subType);
+            info.setAssociatedPlmns(ehplmns, hplmns);
+            return info;
         }
 
         @Override
@@ -648,6 +685,8 @@ public class SubscriptionInfo implements Parcelable {
         dest.writeInt(mCarrierId);
         dest.writeInt(mProfileClass);
         dest.writeInt(mSubscriptionType);
+        dest.writeStringArray(mEhplmns);
+        dest.writeStringArray(mHplmns);
     }
 
     @Override
@@ -685,6 +724,8 @@ public class SubscriptionInfo implements Parcelable {
                 + " isOpportunistic " + mIsOpportunistic + " mGroupUUID=" + mGroupUUID
                 + " mIsGroupDisabled=" + mIsGroupDisabled
                 + " profileClass=" + mProfileClass
+                + " ehplmns = " + Arrays.toString(mEhplmns)
+                + " hplmns = " + Arrays.toString(mHplmns)
                 + " subscriptionType=" + mSubscriptionType + "}";
     }
 
