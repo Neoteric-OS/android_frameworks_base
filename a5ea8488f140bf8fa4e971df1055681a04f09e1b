@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3472bb2b_59a69dca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-11T14:17:16Z",
+      "side": 1,
+      "message": "No, it\u0027s used by calls of the tracker, but if it\u0027s private you\u0027ll get the wrong method.",
+      "parentUuid": "3484e277_7a50c207",
+      "range": {
+        "startLine": 6576,
+        "startChar": 5,
+        "endLine": 6576,
+        "endChar": 22
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b949aa9_c026085c",
         "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
         "patchSetId": 1
@@ -82,6 +106,30 @@
       "writtenOn": "2019-04-11T08:57:39Z",
       "side": 1,
       "message": "Is there no easy way to use MockitoAnnotations in Kotlin, or is it just easier in this case because there is only one member ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c380f53_3fcd1977",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-11T14:17:16Z",
+      "side": 1,
+      "message": "Of course you can use it. You can write :\n@Mock\nprivate lateinit var mMockService: ConnectivityService\n\n\nBut I think the above is much more readable. The fact that you have to call initMocks() and know that this will crawl your members searching for @Mock stuff is, I think, pretty obfuscated and a barrier to entry to using Mockito ; the fact that you must make the members mutable to use it is asking for trouble.\n\nIn Java, the only drawback of writing the above is the repetition of the class name. This drawback does not exist in Kotlin, making this by far the more readable approach IMO.\n\nThat buing said, l.47 should be consistent with this : done. I was under the false impression that the same instance of the test class was reused, but after checking that\u0027s not the case.\n\n\nThere is an argument to be made to move the initialization steps here too, like :\nprivate val mMockService \u003d mock(ConnectivityService::class.java).apply {\n  doReturn(false).`when`(mMockService).isDefaultNetwork(any())\n}\n...but I\u0027m not too sure what\u0027s best.",
+      "parentUuid": "f30fd93a_f30c6e82",
       "range": {
         "startLine": 45,
         "startChar": 31,
