@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e1739_f0120084",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-11T08:57:39Z",
+      "side": 1,
+      "message": "Not related to this change, but I think this should be final",
+      "range": {
+        "startLine": 807,
+        "startChar": 4,
+        "endLine": 807,
+        "endChar": 48
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3484e277_7a50c207",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6576,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-11T08:57:39Z",
+      "side": 1,
+      "message": "I don\u0027t see this one used in the test: is this obsolete ?",
+      "range": {
+        "startLine": 6576,
+        "startChar": 5,
+        "endLine": 6576,
+        "endChar": 22
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b949aa9_c026085c",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-11T08:57:39Z",
+      "side": 1,
+      "message": "Nit: not sure this comment is necessary",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30fd93a_f30c6e82",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-11T08:57:39Z",
+      "side": 1,
+      "message": "Is there no easy way to use MockitoAnnotations in Kotlin, or is it just easier in this case because there is only one member ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
