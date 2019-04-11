@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "e44c84ed_86e6e13f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-11T17:45:34Z",
+      "side": 1,
+      "message": "On the IpSecService side, it doesn\u0027t de-duplicate; if you want to register multiple NattKeepaliveRecords for the same UDP encap, it\u0027s very much possible.\n\nAs long as the caller (ConnectivityService) makes sure to call the releaseNattKeepalive() for each of the received resourceIds, we would be good.",
+      "parentUuid": "8935a904_188abe3e",
+      "range": {
+        "startLine": 1025,
+        "startChar": 68,
+        "endLine": 1025,
+        "endChar": 93
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d2ea3_4506b3ab",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
