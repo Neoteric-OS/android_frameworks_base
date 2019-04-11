@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe30fbc_545d36e8",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-04-11T17:50:08Z",
+      "side": 1,
+      "message": "This type annotation seems redundant now",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "2e3d1ed0439b40ace79b43fcbe63f4fb15dd0f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b449d0_fc014b77",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-04-11T17:50:08Z",
+      "side": 1,
+      "message": "Can this be made a val now?",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "2e3d1ed0439b40ace79b43fcbe63f4fb15dd0f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272b234b_13d387ea",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-04-11T17:50:08Z",
+      "side": 1,
+      "message": "nit: space after catch",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "2e3d1ed0439b40ace79b43fcbe63f4fb15dd0f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
