@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13b6c4e7_386cefb3",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-11T20:40:14Z",
+      "side": 1,
+      "message": "What does \"queue is one deep\" mean? I\u0027m trying to reconcile the warning with what I see here.\n\nIt also says \"will be sent with the next write\" and \"single ancillary message\" which makes it sound like it\u0027s a one-off but then the warning implies it\u0027s a permanent/sticky setting.",
+      "range": {
+        "startLine": 298,
+        "startChar": 10,
+        "endLine": 298,
+        "endChar": 13
+      },
+      "revId": "5f40e3c603f14ef7d67608ecdb12188cbc36db55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
