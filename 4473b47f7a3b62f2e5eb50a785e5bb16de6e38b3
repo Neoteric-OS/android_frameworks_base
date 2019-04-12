@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ff3aaa4_4a6605db",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-12T10:14:22Z",
+      "side": 1,
+      "message": "IOnStatusListener is generated from versioned AIDL, so it needs this method (it won\u0027t build without it). To avoid doing it every single time, the only solution I have is to provide a subclass that has an implementation of the interface. Not sure if this is possible by having an interface extend it with a default implementation, to keep the lambda syntax...",
+      "parentUuid": "18197cbe_c7896faa",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b599017_ec82de9b",
         "filename": "services/net/aidl/ipmemorystore/1/android/net/IIpMemoryStore.aidl",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-12T07:44:01Z",
       "side": 1,
       "message": "Curious : why is this not marked oneway interface ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 9
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3d09916_23a9a0c4",
+        "filename": "services/net/aidl/ipmemorystore/1/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-12T10:14:22Z",
+      "side": 1,
+      "message": "The original file is marked oneway, but apparently the AIDL freezer puts it on each method instead. I guess the two are equivalent, so if in v2 we add a method that\u0027s not oneway, and mark all the others as oneway, then it will still be a compatible change and is easier to check this way ? Pure speculation.",
+      "parentUuid": "0b599017_ec82de9b",
       "range": {
         "startLine": 2,
         "startChar": 0,
