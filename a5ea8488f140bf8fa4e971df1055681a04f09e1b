@@ -259,6 +259,30 @@
       "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "476a322e_71e9e098",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-04-12T16:53:53Z",
+      "side": 1,
+      "message": "Looks good to me!",
+      "parentUuid": "4ad8e65d_4de411fb",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "a5ea8488f140bf8fa4e971df1055681a04f09e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
