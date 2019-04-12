@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b48a1e95_0c28deef",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-12T02:27:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3bfa6b4_9ee22e43",
+      "range": {
+        "startLine": 327,
+        "startChar": 45,
+        "endLine": 327,
+        "endChar": 67
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc6e9095_b4d8e2dd",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-11T11:47:54Z",
       "side": 1,
       "message": "This function is called in many places. Before your change it always handle networkKeepalives.remove(slot). But now it don\u0027t do this. I don\u0027t see you add other code to handle networkKeepalives.remove(slot). Does this change safe ?? Take tcp keepalive as example, if remote data is coming, this function would be triggered  to stop keepalive. But seems slot would not be removed from networkKeepalives.",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae14d630_293bc8a6",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-12T02:27:21Z",
+      "side": 1,
+      "message": "It will be removed iff we ensure below things in the flow:\n 1. stop() will be called for any valid ki\n 2. an async result of stopping will be triggered and handled by handleEvent in STOPPING state\n 3. the handleStoppedKeepalive will be called upon receiving the event\n\nIt will become more clear once we refactoring this into StateMachine, where we only remove keepalive in STOPPED state, and every keepalive will eventually transit to it.\n\nBut I\u0027ll add more comments in stop() to describe this.",
+      "parentUuid": "cc6e9095_b4d8e2dd",
       "range": {
         "startLine": 428,
         "startChar": 16,
