@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18197cbe_c7896faa",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:44:01Z",
+      "side": 1,
+      "message": "Do we need this here ? This is a lambda. Isn\u0027t there any way at all we can avoid having to do this every single time we create one ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b599017_ec82de9b",
+        "filename": "services/net/aidl/ipmemorystore/1/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:44:01Z",
+      "side": 1,
+      "message": "Curious : why is this not marked oneway interface ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 9
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
