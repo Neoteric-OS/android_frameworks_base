@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be38a859_070238c6",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 0,
+      "message": "I think you are removing this because cleanup will be done through the normal channels as a reaction to calling ki#stop(). (also that at this point we still need to remember that state to actually fix the problem you\u0027re fixing).\n\nI suggest you replace these lines with a comment explaining this. Wording example :\n\n\"Cleaning up mKeepalives will be done as a result of calling ki.stop() after the slots are freed.\"\n\n...or something similar.",
+      "range": {
+        "startLine": 408,
+        "startChar": 12,
+        "endLine": 409,
+        "endChar": 36
+      },
+      "revId": "130b5bf146cfe7bc4684eef15661893dd57cf64f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f32a83a2_8ddb4933",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "Why is this happening ? It sounds to me from your comment that the control comes here when keepalive was started and encountered an error, in which case the state goes to NOT_STARTED but the slot is not free yet, so when the stop() command comes we go to STOPPING.\n\nIf my understanding is accurate, then this is not the right solution. The right solution would involve going to STOPPING when the error occurs. In particular, if an error causes the state to go to NOT_STARTED but not release the slot, then it\u0027s still possible for a START command to come in the mean time and the issue is not fixed.",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479e4d4c_5688d5ff",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "Whoa wait a second. Nobody is grabbing the NAI handler anywhere in keepalive at this point. This is actually the network tracker handler. I can\u0027t read the implications and I am very uneasy about this handler escaping to here.\n\nCan\u0027t you use mNai.asyncChannel to do this, like it\u0027s done everywhere else in this file ? Can\u0027t you use NetworkAgent#onSocketKeepaliveEvent ? This really, really looks like you\u0027re circumventing the entire responsibility chain.",
+      "range": {
+        "startLine": 324,
+        "startChar": 44,
+        "endLine": 324,
+        "endChar": 59
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3bfa6b4_9ee22e43",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 1
@@ -49,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "7fea4e4f_cc8292fa",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "At the very least this needs comments. Look :\n\n• The tracker is in state NOT_STARTED.\n• It receives a stop() command.\n→ Reaction : send EVENT_SOCKET_KEEPALIVE with argument SUCCESS.\n\nOf course ! Um... what ? Please explain why this is the correct course of action.",
+      "range": {
+        "startLine": 327,
+        "startChar": 76,
+        "endLine": 327,
+        "endChar": 83
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc6e9095_b4d8e2dd",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 1
@@ -89,6 +158,99 @@
         "startChar": 16,
         "endLine": 428,
         "endChar": 35
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4155224e_723079d5",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "Yes, please.\n\nDo you have any guarantee that the flow is correct ?",
+      "parentUuid": "ae14d630_293bc8a6",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215ecbd9_033bb345",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "I suggest renaming this \"handleKeepaliveWasStopped\", or if that\u0027s fine maybe something more different like \"handleCleanupAfterKeepaliveStopped\". I spent 10 minutes not understanding why you have a new identical method just without the \"reason\" argument",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 443,
+        "endChar": 72
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c1b954_ca6a2913",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "Please at least factorize this code instead of copy-pasting it.",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 19
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b137c6b_a7235be9",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:24:11Z",
+      "side": 1,
+      "message": "Please update this comment",
+      "range": {
+        "startLine": 527,
+        "startChar": 58,
+        "endLine": 527,
+        "endChar": 89
       },
       "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
