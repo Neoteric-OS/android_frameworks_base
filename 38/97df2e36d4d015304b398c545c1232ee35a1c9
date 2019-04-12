@@ -1,0 +1,7 @@
+Presubmit-Ready+1: Remi NGUYEN VAN <reminv@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Submitted-by: Remi NGUYEN VAN <reminv@google.com>
+Submitted-at: Fri, 12 Apr 2019 10:25:45 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/943340
+Project: platform/frameworks/base
+Branch: refs/heads/master
