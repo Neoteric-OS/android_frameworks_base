@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eb87862_a1ab7e2d",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-04-15T19:11:41Z",
+      "side": 1,
+      "message": "this is a bit ambiguous, since the current implementation doesn\u0027t look at the target API level. should we change the code to only behave differently for the new target API levels? or change the comment to make it clear that the caller\u0027s target API level isn\u0027t relevant (maybe by saying \"Android Q\" instead)?",
+      "range": {
+        "startLine": 315,
+        "startChar": 33,
+        "endLine": 315,
+        "endChar": 54
+      },
+      "revId": "5749ae31158ed0399bcf8a10c1880b5a0d56f481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
