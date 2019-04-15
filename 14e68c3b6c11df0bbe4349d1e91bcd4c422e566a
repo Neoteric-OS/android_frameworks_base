@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0793320a_36a4cb40",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "point taken, now it is synchronizely clean up the reference here,\nbut not directly calls in failed case of start().\nThis is because we need the notify callback and clean up fd codes in this function.\n\nThis should be safe since another start() won\u0027t be processed until this function returns.\nbut feel free to comment if this approach does not address your concern.",
+      "parentUuid": "f32a83a2_8ddb4933",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "479e4d4c_5688d5ff",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371ee2dd_aba7f5ef",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "479e4d4c_5688d5ff",
+      "range": {
+        "startLine": 324,
+        "startChar": 44,
+        "endLine": 324,
+        "endChar": 59
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +186,54 @@
       "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3b3956_48be09b5",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "7fea4e4f_cc8292fa",
+      "range": {
+        "startLine": 327,
+        "startChar": 76,
+        "endLine": 327,
+        "endChar": 83
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09f5d316_4118cde4",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "b48a1e95_0c28deef",
+      "range": {
+        "startLine": 327,
+        "startChar": 45,
+        "endLine": 327,
+        "endChar": 67
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "b0d32889_fcfcc75f",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "unfortunately no.\nbut what do we have is the unit test and cts test,\nwhich would failed if slot leaks.",
+      "parentUuid": "4155224e_723079d5",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "215ecbd9_033bb345",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 1
@@ -223,6 +343,30 @@
       "writtenOn": "2019-04-12T04:24:11Z",
       "side": 1,
       "message": "I suggest renaming this \"handleKeepaliveWasStopped\", or if that\u0027s fine maybe something more different like \"handleCleanupAfterKeepaliveStopped\". I spent 10 minutes not understanding why you have a new identical method just without the \"reason\" argument",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 443,
+        "endChar": 72
+      },
+      "revId": "14e68c3b6c11df0bbe4349d1e91bcd4c422e566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4543282a_200b4c17",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-15T09:52:02Z",
+      "side": 1,
+      "message": "ah, my bad~\nrenamed.\nplease see if this works for you.",
+      "parentUuid": "215ecbd9_033bb345",
       "range": {
         "startLine": 443,
         "startChar": 4,
