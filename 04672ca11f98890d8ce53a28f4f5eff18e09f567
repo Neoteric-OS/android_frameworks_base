@@ -22,6 +22,30 @@
       "revId": "04672ca11f98890d8ce53a28f4f5eff18e09f567",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8e8a25_11c39b3a",
+        "filename": "tools/preload-check/src/com/android/preload/check/PreloadCheck.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-04-15T16:15:49Z",
+      "side": 1,
+      "message": "Not easily. The problem is that it requires scanning for all classes to find out which classes are there...\n\nMaybe a follow-up CL, but no promises.",
+      "parentUuid": "fb924fe5_25a31f86",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 29
+      },
+      "revId": "04672ca11f98890d8ce53a28f4f5eff18e09f567",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
