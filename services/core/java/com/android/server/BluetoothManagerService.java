@@ -100,6 +100,10 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private static final int SERVICE_RESTART_TIME_MS = 200;
     //Maximum msec to wait for restart due to error
     private static final int ERROR_RESTART_TIME_MS = 3000;
+
+    // Wait for ON OFF Timeout
+    private static final int WAIT_FOR_ON_OFF_TIMEOUT_MS = 3000;
+
     //Maximum msec to delay MESSAGE_USER_SWITCHED
     private static final int USER_SWITCHED_TIME_MS = 200;
     // Delay for the addProxy function in msec
@@ -107,6 +111,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     private static final int MESSAGE_ENABLE = 1;
     private static final int MESSAGE_DISABLE = 2;
+    private static final int MESSAGE_ENABLE_TIMEOUT = 3;
+    private static final int MESSAGE_DISABLE_TIMEOUT = 4;
     private static final int MESSAGE_REGISTER_ADAPTER = 20;
     private static final int MESSAGE_UNREGISTER_ADAPTER = 21;
     private static final int MESSAGE_REGISTER_STATE_CHANGE_CALLBACK = 30;
@@ -1541,6 +1547,22 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         Slog.d(TAG, "MESSAGE_ENABLE(" + msg.arg1 + "): mBluetooth = " + mBluetooth);
                     }
                     mHandler.removeMessages(MESSAGE_RESTART_BLUETOOTH_SERVICE);
+                    try {
+                        mBluetoothLock.readLock().lock();
+                        if (!mEnable && mBluetooth != null
+                                && (mBluetooth.getState() != BluetoothAdapter.STATE_OFF
+                                || mBluetooth.getState() != BluetoothAdapter.STATE_BLE_ON)) {
+                            Slog.d(TAG, "postpone enable Bluetooth in unstable state");
+                            mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_ENABLE,
+                                    msg.arg1, 0), 50);
+                            break;
+                        }
+                    } catch (RemoteException e) {
+                        Slog.e(TAG, "Unable to call getState", e);
+                    } finally {
+                        mBluetoothLock.readLock().unlock();
+                    }
+                    mHandler.removeMessages(MESSAGE_ENABLE_TIMEOUT);
                     mEnable = true;
 
                     // Use service interface to get the exact state
@@ -1592,15 +1614,33 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         Slog.d(TAG, "MESSAGE_DISABLE: mBluetooth = " + mBluetooth);
                     }
                     mHandler.removeMessages(MESSAGE_RESTART_BLUETOOTH_SERVICE);
-                    if (mEnable && mBluetooth != null) {
-                        waitForOnOff(true, false);
-                        mEnable = false;
-                        handleDisable();
-                        waitForOnOff(false, false);
-                    } else {
-                        mEnable = false;
-                        handleDisable();
+                    try {
+                        mBluetoothLock.readLock().lock();
+                        if (mEnable && mBluetooth != null
+                                && mBluetooth.getState() != BluetoothAdapter.STATE_ON) {
+                            Slog.d(TAG, "postpone disable BT in unstable state");
+                            mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_DISABLE),
+                                    300);
+                            break;
+                        }
+                    } catch (RemoteException e) {
+                        Slog.e(TAG, "Unable to call getState", e);
+                    } finally {
+                        mBluetoothLock.readLock().unlock();
                     }
+                    mHandler.removeMessages(MESSAGE_DISABLE_TIMEOUT);
+                    mEnable = false;
+                    handleDisable();
+                    break;
+
+                case MESSAGE_DISABLE_TIMEOUT:
+                    Slog.w(TAG, "MESSAGE_DISABLE_TIMEOUT");
+                    mHandler.removeMessages(MESSAGE_DISABLE);
+                    break;
+
+                case MESSAGE_ENABLE_TIMEOUT:
+                    Slog.w(TAG, "MESSAGE_ENABLE_TIMEOUT");
+                    mHandler.removeMessages(MESSAGE_ENABLE);
                     break;
 
                 case MESSAGE_RESTORE_USER_SETTING:
@@ -2193,14 +2233,27 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     }
 
     private void sendDisableMsg(int reason, String packageName) {
+        removeEnableDisableMessages();
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_DISABLE_TIMEOUT),
+                WAIT_FOR_ON_OFF_TIMEOUT_MS);
         mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_DISABLE));
         addActiveLog(reason, packageName, false);
     }
 
     private void sendEnableMsg(boolean quietMode, int reason, String packageName) {
+        removeEnableDisableMessages();
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_ENABLE_TIMEOUT),
+                WAIT_FOR_ON_OFF_TIMEOUT_MS);
         mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_ENABLE, quietMode ? 1 : 0, 0));
         addActiveLog(reason, packageName, true);
         mLastEnabledTime = SystemClock.elapsedRealtime();
+    }
+
+    private void removeEnableDisableMessages() {
+        mHandler.removeMessages(MESSAGE_DISABLE);
+        mHandler.removeMessages(MESSAGE_ENABLE);
+        mHandler.removeMessages(MESSAGE_DISABLE_TIMEOUT);
+        mHandler.removeMessages(MESSAGE_ENABLE_TIMEOUT);
     }
 
     private void addActiveLog(int reason, String packageName, boolean enable) {
