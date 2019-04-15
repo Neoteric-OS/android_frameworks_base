@@ -104,6 +104,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private static final int USER_SWITCHED_TIME_MS = 200;
     // Delay for the addProxy function in msec
     private static final int ADD_PROXY_DELAY_MS = 100;
+    // Delay for Postpone Disable in Unstable State
+    private static final int POSTPONE_DISABLE_DELAY_MS = 1600;
 
     private static final int MESSAGE_ENABLE = 1;
     private static final int MESSAGE_DISABLE = 2;
@@ -198,6 +200,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     // synchronize with broadcast receiver.
     private boolean mQuietEnableExternal;
     private boolean mEnableExternal;
+    private boolean mBtOffInUnsteableState;
 
     // Map of apps registered to keep BLE scanning on.
     private Map<IBinder, ClientDeathRecipient> mBleApps =
@@ -381,6 +384,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         mBinding = false;
         mUnbinding = false;
         mEnable = false;
+        mBtOffInUnsteableState = false;
         mState = BluetoothAdapter.STATE_OFF;
         mQuietEnableExternal = false;
         mEnableExternal = false;
@@ -951,8 +955,28 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 persistBluetoothSetting(BLUETOOTH_OFF);
             }
             mEnableExternal = false;
-            sendDisableMsg(BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST,
-                    packageName);
+            int st = BluetoothAdapter.STATE_OFF;
+            try {
+                mBluetoothLock.readLock().lock();
+                if (mBluetooth != null) {
+                    st = mBluetooth.getState();
+                    if (st == BluetoothAdapter.STATE_OFF)
+                        return false;
+                    if (st == BluetoothAdapter.STATE_ON)
+                        mBtOffInUnsteableState = false;
+                    else
+                        mBtOffInUnsteableState = true;
+                    sendDisableMsg(BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST,
+                                  packageName);
+                }
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Unable to call getState", e);
+                return false;
+            } finally {
+                mBluetoothLock.readLock().unlock();
+            }
+
+
         }
         return true;
     }
@@ -2193,7 +2217,13 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     }
 
     private void sendDisableMsg(int reason, String packageName) {
-        mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_DISABLE));
+        if (mBtOffInUnsteableState && mEnable && (mBluetooth != null)) {
+            Slog.d(TAG,"sendDisableMsg: postpone disable BT in unstable stable");
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_DISABLE), POSTPONE_DISABLE_DELAY_MS);
+        } else {
+            mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_DISABLE));
+        }
+        mBtOffInUnsteableState = false;
         addActiveLog(reason, packageName, false);
     }
 
