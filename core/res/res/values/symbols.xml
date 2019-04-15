@@ -2937,6 +2937,10 @@
   <!-- Colon separated list of package names that should be granted DND access -->
   <java-symbol type="string" name="config_defaultDndAccessPackages" />
 
+  <!-- For Safe volume dialog-->
+  <java-symbol type="drawable" name="sound_level_alert" />
+  <java-symbol type="layout" name="sound_level_alert_dialog" />
+
   <!-- For NetworkPolicyManagerService -->
   <java-symbol type="string" name="config_networkOverLimitComponent" />
   <java-symbol type="string" name="config_dataUsageSummaryComponent" />

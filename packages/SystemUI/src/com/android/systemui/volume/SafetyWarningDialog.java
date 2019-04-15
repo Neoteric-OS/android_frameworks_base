@@ -25,6 +25,7 @@ import android.content.res.Resources.NotFoundException;
 import android.media.AudioManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 
@@ -56,6 +57,9 @@ abstract public class SafetyWarningDialog extends SystemUIDialog
         }
         getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
         setShowForAllUsers(true);
+        LayoutInflater inflater = getLayoutInflater();
+
+        setView(inflater.inflate(com.android.internal.R.layout.sound_level_alert_dialog, null));
         setMessage(mContext.getString(com.android.internal.R.string.safe_media_volume_warning));
         setButton(DialogInterface.BUTTON_POSITIVE,
                 mContext.getString(com.android.internal.R.string.yes), this);
