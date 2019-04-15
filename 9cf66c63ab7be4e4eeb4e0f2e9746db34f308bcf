@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "013703cb_7a9bb34b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4283,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-04-15T18:45:56Z",
+      "side": 1,
+      "message": "This shouldn\u0027t do any harm, it is still under mVpns lock, so it will propagate the correct capabilities.\n\nAlso updateAllVpnsCapabilities is posted to the handler from setUnderlyingNetworksForVpn and that can also be arbitrarily delayed.\n\nAlso, moved default network query out of the lock.",
+      "parentUuid": "dc6e18b9_22ed6d6d",
+      "range": {
+        "startLine": 4283,
+        "startChar": 32,
+        "endLine": 4283,
+        "endChar": 48
+      },
+      "revId": "9cf66c63ab7be4e4eeb4e0f2e9746db34f308bcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d658a41_3bf4c4fd",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "05b4dbad_e2771f88",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-04-15T18:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d658a41_3bf4c4fd",
+      "range": {
+        "startLine": 1032,
+        "startChar": 22,
+        "endLine": 1032,
+        "endChar": 36
+      },
+      "revId": "9cf66c63ab7be4e4eeb4e0f2e9746db34f308bcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f1c82e_a2f2cada",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2019-04-15T14:58:09Z",
       "side": 1,
       "message": "Can this be null?",
+      "range": {
+        "startLine": 1160,
+        "startChar": 13,
+        "endLine": 1160,
+        "endChar": 20
+      },
+      "revId": "9cf66c63ab7be4e4eeb4e0f2e9746db34f308bcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774ebdf7_8903f79e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-04-15T18:45:56Z",
+      "side": 1,
+      "message": "No, createUserAndRestrictedProfilesRanges never returns null.",
+      "parentUuid": "14f1c82e_a2f2cada",
       "range": {
         "startLine": 1160,
         "startChar": 13,

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "218f8f08_f8c33c6f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-04-15T18:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e75714_cbd00767",
+      "range": {
+        "startLine": 1152,
+        "startChar": 29,
+        "endLine": 1152,
+        "endChar": 62
+      },
+      "revId": "da4ec8f4b407519a354fc37a2bcc2551bbbca3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23d79182_c03254d5",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "da4ec8f4b407519a354fc37a2bcc2551bbbca3f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dddedf0_0c62aa6c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2019-04-15T18:45:56Z",
+      "side": 1,
+      "message": "Done, changed it to return a boolean that signifies whether we should update the capabilities. Returning capabilities themselves seems risky because they may become outdated by the time the runnable gets executed.",
+      "parentUuid": "23d79182_c03254d5",
+      "range": {
+        "startLine": 1156,
+        "startChar": 26,
+        "endLine": 1156,
+        "endChar": 49
+      },
+      "revId": "da4ec8f4b407519a354fc37a2bcc2551bbbca3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
