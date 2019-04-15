@@ -22,6 +22,29 @@
       "revId": "884ce3361ac6e5e896e55c42694227b74de08a4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a8cf65_84c9ac0c",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-15T10:35:41Z",
+      "side": 1,
+      "message": "If we\u0027re documenting what it does (and if my understand is correct) then I think we need to rewrite the first sentence:\n\n\"Sets the file descriptors to send to the peer. Any previously set via this method are replaced. The file descriptors will be sent with each following .....\"\n\nThe new warning you\u0027re adding makes it clear that the caller is responsible for then clearing them again when they no longer want them sent.",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 298,
+        "endChar": 18
+      },
+      "revId": "884ce3361ac6e5e896e55c42694227b74de08a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
