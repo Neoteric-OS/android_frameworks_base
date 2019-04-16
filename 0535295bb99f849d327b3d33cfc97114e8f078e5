@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f0e5a8_a92391b4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T02:50:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be doable by simply waiting until the handler is idle ?",
+      "range": {
+        "startLine": 4273,
+        "startChar": 11,
+        "endLine": 4273,
+        "endChar": 94
+      },
+      "revId": "0535295bb99f849d327b3d33cfc97114e8f078e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
