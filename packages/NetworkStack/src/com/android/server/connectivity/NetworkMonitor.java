@@ -23,6 +23,9 @@ import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_PROBE_SPEC;
 import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_URL;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
+import static android.net.DnsResolver.FLAG_NO_CACHE_LOOKUP;
+import static android.net.DnsResolver.TYPE_A;
+import static android.net.DnsResolver.TYPE_AAAA;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
@@ -55,6 +58,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.DnsResolver;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
@@ -116,6 +120,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -243,6 +249,19 @@ public class NetworkMonitor extends StateMachine {
      */
     private static final int EVENT_NETWORK_CAPABILITIES_CHANGED = 20;
 
+    /**
+     * Message to self indicating async dns query is resolved with a giving answer or error.
+     * obj = addresses for the resolved result of the given host. null if it's an error.
+     * arg1 = query dns type(A or AAAA).
+     * arg2 = the error code
+     */
+    private static final int CMD_UPDATE_RESOLVE_ANS = 21;
+
+    /**
+     * Message to self to resolve the private dns hostname is needed.
+     */
+    private static final int CMD_RESOLVED_PRIVATE_DNS_HOST_NAME = 22;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
     private static final int MAX_REEVALUATE_DELAY_MS = 10 * 60 * 1000;
@@ -301,7 +320,7 @@ public class NetworkMonitor extends StateMachine {
     private final State mEvaluatingPrivateDnsState = new EvaluatingPrivateDnsState();
     private final State mProbingState = new ProbingState();
     private final State mWaitingForNextProbeState = new WaitingForNextProbeState();
-
+    private final State mProbingPrivateDnsState = new ProbingPrivateDnsState();
     private CustomIntentReceiver mLaunchCaptivePortalAppBroadcastReceiver = null;
 
     private final SharedLog mValidationLogs;
@@ -328,6 +347,9 @@ public class NetworkMonitor extends StateMachine {
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics;
     private boolean mAcceptPartialConnectivity;
+    private final DnsResolver mDns;
+    private final Executor mExecutor;
+    private int mPrivateDnsReevalDelayMs;
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
@@ -366,6 +388,7 @@ public class NetworkMonitor extends StateMachine {
                 addState(mWaitingForNextProbeState, mEvaluatingState);
             addState(mCaptivePortalState, mMaybeNotifyState);
         addState(mEvaluatingPrivateDnsState, mDefaultState);
+            addState(mProbingPrivateDnsState, mEvaluatingPrivateDnsState);
         addState(mValidatedState, mDefaultState);
         setInitialState(mDefaultState);
         // CHECKSTYLE:ON IndentationCheck
@@ -389,6 +412,8 @@ public class NetworkMonitor extends StateMachine {
         // even before notifyNetworkConnected.
         mLinkProperties = new LinkProperties();
         mNetworkCapabilities = new NetworkCapabilities(null);
+        mExecutor = Executors.newFixedThreadPool(2);
+        mDns = DnsResolver.getInstance();
     }
 
     /**
@@ -619,7 +644,7 @@ public class NetworkMonitor extends StateMachine {
                     //         no resolved IP addresses, IPs unreachable,
                     //         port 853 unreachable, port 853 is not running a
                     //         DNS-over-TLS server, et cetera).
-                    sendMessage(CMD_EVALUATE_PRIVATE_DNS);
+                    sendMessage(CMD_RESOLVED_PRIVATE_DNS_HOST_NAME);
                     break;
                 }
                 case EVENT_DNS_NOTIFICATION:
@@ -664,7 +689,7 @@ public class NetworkMonitor extends StateMachine {
                     updateConnectedNetworkAttributes(message);
                     transitionTo(mValidatedState);
                     break;
-                case CMD_EVALUATE_PRIVATE_DNS:
+                case CMD_RESOLVED_PRIVATE_DNS_HOST_NAME:
                     transitionTo(mEvaluatingPrivateDnsState);
                     break;
                 case EVENT_DNS_NOTIFICATION:
@@ -914,44 +939,59 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private class EvaluatingPrivateDnsState extends State {
-        private int mPrivateDnsReevalDelayMs;
         private PrivateDnsConfig mPrivateDnsConfig;
+        private int mResolvedTypeCount = 0;
+        private final ArrayList<InetAddress> mIps = new ArrayList<InetAddress>();
 
         @Override
         public void enter() {
             mPrivateDnsReevalDelayMs = INITIAL_REEVALUATE_DELAY_MS;
             mPrivateDnsConfig = null;
-            sendMessage(CMD_EVALUATE_PRIVATE_DNS);
+            mResolvedTypeCount = 0;
+            // Resolve the host name for private dns provider if needed. Then evaluating private
+            // dns.
+            sendMessage(CMD_RESOLVED_PRIVATE_DNS_HOST_NAME);
         }
 
         @Override
         public boolean processMessage(Message msg) {
             switch (msg.what) {
+                case CMD_RESOLVED_PRIVATE_DNS_HOST_NAME:
+                    if (inStrictMode() && !isStrictModeHostnameResolved()) {
+                        getAllAddressesbyName(mNetwork, mPrivateDnsProviderHostname);
+                    } else {
+                        sendMessage(CMD_EVALUATE_PRIVATE_DNS);
+                    }
+
+                    break;
+                case CMD_UPDATE_RESOLVE_ANS:
+                    mResolvedTypeCount++;
+                    final List<InetAddress> addresses = (List<InetAddress>) msg.obj;
+                    if (addresses != null) {
+                        mIps.addAll(addresses);
+                    }
+
+                    if (mResolvedTypeCount > 1) {
+                        mPrivateDnsConfig = (mIps.size() == 0) ? null :
+                                new PrivateDnsConfig(mPrivateDnsProviderHostname,
+                                mIps.toArray(new InetAddress[0]));
+                        validationLog("Strict mode hostname resolved: " + mPrivateDnsConfig);
+
+                        sendMessage(CMD_EVALUATE_PRIVATE_DNS);
+                        mResolvedTypeCount = 0;
+                    }
+                    break;
                 case CMD_EVALUATE_PRIVATE_DNS:
                     if (inStrictMode()) {
-                        if (!isStrictModeHostnameResolved()) {
-                            resolveStrictModeHostname();
-
-                            if (isStrictModeHostnameResolved()) {
-                                notifyPrivateDnsConfigResolved();
-                            } else {
-                                handlePrivateDnsEvaluationFailure();
-                                break;
-                            }
-                        }
-
-                        // Look up a one-time hostname, to bypass caching.
-                        //
-                        // Note that this will race with ConnectivityService
-                        // code programming the DNS-over-TLS server IP addresses
-                        // into netd (if invoked, above). If netd doesn't know
-                        // the IP addresses yet, or if the connections to the IP
-                        // addresses haven't yet been validated, netd will block
-                        // for up to a few seconds before failing the lookup.
-                        if (!sendPrivateDnsProbe()) {
+                        if (isStrictModeHostnameResolved()) {
+                            notifyPrivateDnsConfigResolved();
+                        } else {
                             handlePrivateDnsEvaluationFailure();
                             break;
                         }
+
+                        transitionTo(mProbingPrivateDnsState);
+                        break;
                     }
 
                     // All good!
@@ -993,42 +1033,123 @@ public class NetworkMonitor extends StateMachine {
             }
         }
 
-        private void handlePrivateDnsEvaluationFailure() {
-            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+        @Override
+        public void exit() {
+            mIps.clear();
+            mResolvedTypeCount = 0;
+        }
+    }
 
-            // Queue up a re-evaluation with backoff.
-            //
-            // TODO: Consider abandoning this state after a few attempts and
-            // transitioning back to EvaluatingState, to perhaps give ourselves
-            // the opportunity to (re)detect a captive portal or something.
-            sendMessageDelayed(CMD_EVALUATE_PRIVATE_DNS, mPrivateDnsReevalDelayMs);
-            mPrivateDnsReevalDelayMs *= 2;
-            if (mPrivateDnsReevalDelayMs > MAX_REEVALUATE_DELAY_MS) {
-                mPrivateDnsReevalDelayMs = MAX_REEVALUATE_DELAY_MS;
-            }
+    class AsyncDnsResolverAnsCallback implements DnsResolver.Callback<List<InetAddress>> {
+        final int mType;
+
+        AsyncDnsResolverAnsCallback(int type) {
+            mType = type;
         }
 
-        private boolean sendPrivateDnsProbe() {
-            // q.v. system/netd/server/dns/DnsTlsTransport.cpp
-            final String oneTimeHostnameSuffix = "-dnsotls-ds.metric.gstatic.com";
-            final String host = UUID.randomUUID().toString().substring(0, 8)
-                    + oneTimeHostnameSuffix;
-            final Stopwatch watch = new Stopwatch().start();
-            try {
-                final InetAddress[] ips = mNonPrivateDnsBypassNetwork.getAllByName(host);
-                final long time = watch.stop();
-                final String strIps = Arrays.toString(ips);
-                final boolean success = (ips != null && ips.length > 0);
-                validationLog(PROBE_PRIVDNS, host, String.format("%dms: %s", time, strIps));
-                logValidationProbe(time, PROBE_PRIVDNS, success ? DNS_SUCCESS : DNS_FAILURE);
-                return success;
-            } catch (UnknownHostException uhe) {
-                final long time = watch.stop();
-                validationLog(PROBE_PRIVDNS, host,
-                        String.format("%dms - Error: %s", time, uhe.getMessage()));
-                logValidationProbe(time, PROBE_PRIVDNS, DNS_FAILURE);
+        @Override
+        public void onAnswer(@NonNull List<InetAddress> answerList, int rcode) {
+            sendMessage(CMD_UPDATE_RESOLVE_ANS, mType, 0, answerList);
+        }
+
+        @Override
+        public void onError(@NonNull DnsResolver.DnsException error) {
+            sendMessage(CMD_UPDATE_RESOLVE_ANS, mType, error.code, null);
+            validationLog("Type " + mType + " strict mode hostname resolution failed: "
+                    + error);
+        }
+
+    }
+
+    private void handlePrivateDnsEvaluationFailure() {
+        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+
+        // Queue up a re-evaluation with backoff.
+        //
+        // TODO: Consider abandoning this state after a few attempts and
+        // transitioning back to EvaluatingState, to perhaps give ourselves
+        // the opportunity to (re)detect a captive portal or something.
+        sendMessageDelayed(CMD_RESOLVED_PRIVATE_DNS_HOST_NAME, mPrivateDnsReevalDelayMs);
+        mPrivateDnsReevalDelayMs *= 2;
+        if (mPrivateDnsReevalDelayMs > MAX_REEVALUATE_DELAY_MS) {
+            mPrivateDnsReevalDelayMs = MAX_REEVALUATE_DELAY_MS;
+        }
+    }
+
+    private void getAllAddressesbyName(@NonNull final Network network, @NonNull String host) {
+        getAddressesbyName(network, TYPE_A, host);
+        getAddressesbyName(network, TYPE_AAAA, host);
+    }
+
+    private void getAddressesbyName(@NonNull final Network network, int type,
+            @NonNull final String host) {
+        mDns.query(mNetwork, mPrivateDnsProviderHostname, type,
+                FLAG_NO_CACHE_LOOKUP, mExecutor, null /* cancellationSignal */,
+                new AsyncDnsResolverAnsCallback(type));
+    }
+
+    private class ProbingPrivateDnsState extends State {
+        Stopwatch mWatch;
+        int mResolvedTypeCount = 0;
+        @NonNull
+        final ArrayList<InetAddress> mIps = new ArrayList<InetAddress>();
+        // q.v. system/netd/server/dns/DnsTlsTransport.cpp
+        static final String ONE_TIME_HOSTNAME_SUFFIX = "-dnsotls-ds.metric.gstatic.com";
+        final String mDnsProbeHost = UUID.randomUUID().toString().substring(0, 8)
+                + ONE_TIME_HOSTNAME_SUFFIX;
+
+        @Override
+        public void enter() {
+            mResolvedTypeCount = 0;
+            mWatch = new Stopwatch().start();
+            // Look up a one-time hostname, to bypass caching.
+            //
+            // Note that this will race with ConnectivityService
+            // code programming the DNS-over-TLS server IP addresses
+            // into netd (if invoked, above). If netd doesn't know
+            // the IP addresses yet, or if the connections to the IP
+            // addresses haven't yet been validated, netd will block
+            // for up to a few seconds before failing the lookup.
+            getAllAddressesbyName(mNonPrivateDnsBypassNetwork, mDnsProbeHost);
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                case CMD_UPDATE_RESOLVE_ANS:
+                    mResolvedTypeCount++;
+                    final List<InetAddress> addresses = (List<InetAddress>) message.obj;
+                    if (addresses != null) {
+                        mIps.addAll(addresses);
+                    }
+
+                    if (mResolvedTypeCount > 1) {
+                        final long time = mWatch.stop();
+                        boolean success = (mIps.size() > 0);
+
+                        logValidationProbe(time, PROBE_PRIVDNS, success
+                                ? DNS_SUCCESS : DNS_FAILURE);
+                        if (!success) {
+                            validationLog(PROBE_PRIVDNS, mDnsProbeHost,
+                                    String.format("%dms - Error: %d", time, message.arg2));
+                            handlePrivateDnsEvaluationFailure();
+                            break;
+                        }
+
+                        final String strIps = Arrays.toString(mIps.toArray());
+                        validationLog(PROBE_PRIVDNS, mDnsProbeHost,
+                                String.format("%dms: %s", time, strIps));
+                        mResolvedTypeCount = 0;
+
+                        // All good!
+                        transitionTo(mValidatedState);
+                    }
+                    break;
+                // Only handle CMD_UPDATE_RESOLVE_ANS.
+                default:
+                    return NOT_HANDLED;
             }
-            return false;
+            return HANDLED;
         }
     }
 
