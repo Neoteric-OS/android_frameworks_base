@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6778117_ac840cd5",
+        "filename": "tools/preload-check/device/src/com/android/preload/check/NotInitializedRegex.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-04-16T22:10:26Z",
+      "side": 1,
+      "message": "add a short doc on the expected arguments and that the output is printed on stdout.",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "bb621f2df4740f43c31c62916f33085f54036f0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2262f52c_d07b782a",
+        "filename": "tools/preload-check/device/src/com/android/preload/check/Util.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-04-16T22:10:26Z",
+      "side": 1,
+      "message": "personally I prefer \u0027while (true)\u0027 :P",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "bb621f2df4740f43c31c62916f33085f54036f0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
