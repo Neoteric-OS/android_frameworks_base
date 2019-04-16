@@ -22,6 +22,29 @@
       "revId": "5749ae31158ed0399bcf8a10c1880b5a0d56f481",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c3adfb_701c95f1",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-04-16T10:36:15Z",
+      "side": 1,
+      "message": "Given this is a Java API it might be worth explaining the nature of the leak. A Java developer might look at this and think you\u0027re talking about the FileDescriptor objects / some kind of memory / Java object leak.\n\nSorry if I\u0027m being dumb, I\u0027m also a bit puzzled how a caller is expected to use this API given there could be a mismatch between the quantity of bytes written on the write side and then read on the read side (e.g. the writer might write 20 bytes in one call to OutputStream.write(byte[]), but the reader might call InputStream.read() 20 times to read individual bytes). What is the \"read\" in that case - 1 byte or 20? Is it _any_ given read() call on the InputStream (which could be anything from 1 byte), or is it a read from the InputStream until hitting EOF? Is there buffering on either side, or will the reader/writer be in lock-step byte-by-byte?\n\nJust guessing but this _might_ be clearer, assuming I\u0027m guessing the behavior correctly:\n\nIf the writer calls {@link #setFileDescriptorsForSend(FileDescriptor[])} and then writes data, the reader \u003cem\u003emust\u003c/em\u003e call {@link #getAncilliaryFileDescriptors()} \u003cem\u003eonce and only once\u003c/em\u003e during or after reading that data. Calling {@link #getAncilliaryFileDescriptors()} multiple times for a given \"packet\" can consume file descriptors and lead to file descriptor starvation for the current process.\n\n----------\n\nIs the issue just that callers are expected to explicitly close the file descriptors they receive from this method, so they _could_ call it multiple times if they were prepared to close each set?) Or is it that calling getAncilliaryFileDescriptors() multiple times creates additional OS-level file descriptors that the caller has no way of closing?\n\nIs there any requirement on callers to explicitly close the file descriptors they receive? How are they expected to do that? It might be worth mentioning that in the docs.\n\nIs there any connection between the read-side and write-side file descriptors? Closing them presumably only closes the \"local\" FD since I assume they\u0027re dup\u0027d, but are they connected by other shared state like their current position? i.e. does seek() on the read side affect the write-side copy too?",
+      "range": {
+        "startLine": 317,
+        "startChar": 40,
+        "endLine": 317,
+        "endChar": 46
+      },
+      "revId": "5749ae31158ed0399bcf8a10c1880b5a0d56f481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
