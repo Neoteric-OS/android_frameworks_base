@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26fc109_ced868f5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3043,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-16T00:44:32Z",
+      "side": 1,
+      "message": "Do overrides stack? As in, can I send in multiple sets of overrides and expect them to be overlayed?\n\noverride(Foo\u003d1, Bar\u003d2, Baz\u003d3);\noverride(Baz\u003d4, Cov\u003d5, Fefe\u003d6);\n\nResult?",
+      "range": {
+        "startLine": 3041,
+        "startChar": 0,
+        "endLine": 3043,
+        "endChar": 55
+      },
+      "revId": "1b207867fe3077d3a207aa19a92db1742c5fd4cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
