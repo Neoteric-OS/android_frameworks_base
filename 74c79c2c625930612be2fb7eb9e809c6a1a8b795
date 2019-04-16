@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1084cff_6211238b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "@NonNull mBinder, did you ignore the compiler warning ?",
+      "range": {
+        "startLine": 270,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 27
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb8f51c_1bf7159d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "Sorry I fail to see the link between having an upper bound and not being resource counted.",
+      "range": {
+        "startLine": 1024,
+        "startChar": 10,
+        "endLine": 1025,
+        "endChar": 70
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fce729_4d4b13f9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "Probably the annotation is enough",
+      "range": {
+        "startLine": 1035,
+        "startChar": 7,
+        "endLine": 1035,
+        "endChar": 50
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4e84c6_c4f4b7ab",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "This reduces the reference count, but l.1024 says this resource is not resource counted ?",
+      "range": {
+        "startLine": 1041,
+        "startChar": 33,
+        "endLine": 1041,
+        "endChar": 37
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740afe7f_0fa5c8fa",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "This is not checking what happens with an invalid UID is it ?",
+      "range": {
+        "startLine": 690,
+        "startChar": 51,
+        "endLine": 690,
+        "endChar": 61
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ad27e9_d708d955",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T03:19:10Z",
+      "side": 1,
+      "message": "completed",
+      "range": {
+        "startLine": 753,
+        "startChar": 24,
+        "endLine": 753,
+        "endChar": 32
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
