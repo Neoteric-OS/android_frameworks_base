@@ -16,7 +16,6 @@
 
 package android.telephony;
 
-import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -3029,19 +3028,21 @@ public class CarrierConfigManager {
      * Overrides the carrier config of the provided subscription ID with the provided values.
      *
      * Any further queries to carrier config from any process will return
-     * the overriden values after this method returns. The overrides are effective for the lifetime
+     * the overridden values after this method returns. The overrides are effective for the lifetime
      * of the phone process.
      *
      * May throw an {@link IllegalArgumentException} if {@code overrideValues} contains invalid
      * values for the specified config keys.
      *
+     * NOTE: This API is meant for testing purposes only and may only be accessed from the shell UID
+     * during instrumentation testing.
+     *
      * @param subscriptionId The subscription ID for which the override should be done.
-     * @param overrideValues Key-value pairs of the values that are to be overriden. If null,
-     *                       all previous overrides will be disabled and the config reset back to
-     *                       its initial state.
+     * @param overrideValues Key-value pairs of the values that are to be overridden. If null,
+     *                       all previous overrides will be disabled and the config will be reset
+     *                       back to its initial state.
      * @hide
      */
-    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @SystemApi
     @TestApi
     public void overrideConfig(int subscriptionId, @Nullable PersistableBundle overrideValues) {
