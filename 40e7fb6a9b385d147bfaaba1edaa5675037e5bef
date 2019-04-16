@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6711a2ca_91d7241f",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-16T13:07:53Z",
+      "side": 0,
+      "message": "To keep this simple, and remove the need of introducing new state, is it better that we simulate synchronized getAllByName by using async API with CountDownLatch, or ConditionVariable?",
+      "revId": "40e7fb6a9b385d147bfaaba1edaa5675037e5bef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
