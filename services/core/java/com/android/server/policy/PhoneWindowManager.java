@@ -5998,11 +5998,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                 }
             }
-        } else if (ExtconUEventObserver.extconExists()) {
+        } else if (ExtconUEventObserver.extconExists()
+                && ExtconUEventObserver.namedExtconDirExists(HdmiVideoExtconUEventObserver.NAME)) {
             HdmiVideoExtconUEventObserver observer = new HdmiVideoExtconUEventObserver();
             plugged = observer.init();
             mHDMIObserver = observer;
+        } else if (localLOGV) {
+            Slog.v(TAG, "Not observing HDMI plug state because HDMI was not found.");
         }
+
         // This dance forces the code in setHdmiPlugged to run.
         // Always do this so the sticky intent is stuck (to false) if there is no hdmi.
         mHdmiPlugged = !plugged;
@@ -9000,7 +9004,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private class HdmiVideoExtconUEventObserver extends ExtconStateObserver<Boolean> {
         private static final String HDMI_EXIST = "HDMI=1";
-        private final ExtconInfo mHdmi = new ExtconInfo("hdmi");
+        private static final String NAME = "hdmi";
+        private final ExtconInfo mHdmi = new ExtconInfo(NAME);
 
         private boolean init() {
             boolean plugged = false;
