@@ -2269,7 +2269,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     public void setSensitive(boolean sensitive, boolean hideSensitive) {
-        mSensitive = sensitive;
+        mSensitive = getGroupSensitive(sensitive);
         mSensitiveHiddenInGeneral = hideSensitive;
     }
 
@@ -2987,5 +2987,19 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
                 mEntry.mIsSystemNotification = result;
             }
         }
+    }
+
+    private boolean getGroupSensitive(boolean sensitive) {
+        if (mIsSummaryWithChildren && mChildrenContainer != null && !sensitive) {
+            List<ExpandableNotificationRow> notificationChildren =
+                    mChildrenContainer.getNotificationChildren();
+            for (int i = 0; i < notificationChildren.size(); i++) {
+                ExpandableNotificationRow child = notificationChildren.get(i);
+                if (child.mSensitive) {
+                    return true;
+                }
+            }
+        }
+        return sensitive;
     }
 }
