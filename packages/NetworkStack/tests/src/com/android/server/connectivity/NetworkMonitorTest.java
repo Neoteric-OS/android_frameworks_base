@@ -26,6 +26,8 @@ import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_EVALUATION_TYPE;
 import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_MIN_EVALUATE_INTERVAL;
 import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_VALID_DNS_TIME_THRESHOLD;
 import static android.net.util.DataStallUtils.DATA_STALL_EVALUATION_TYPE_DNS;
+import static android.net.util.NetworkStackUtils.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS;
+import static android.net.util.NetworkStackUtils.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -682,13 +684,13 @@ public class NetworkMonitorTest {
     }
 
     private void setOtherFallbackUrls(String urls) {
-        when(mDependencies.getSetting(any(),
-                eq(Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS), any())).thenReturn(urls);
+        when(mDependencies.getDeviceConfigProperty(any(),
+                eq(CAPTIVE_PORTAL_OTHER_FALLBACK_URLS), any())).thenReturn(urls);
     }
 
     private void setFallbackSpecs(String specs) {
-        when(mDependencies.getSetting(any(),
-                eq(Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS), any())).thenReturn(specs);
+        when(mDependencies.getDeviceConfigProperty(any(),
+                eq(CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS), any())).thenReturn(specs);
     }
 
     private void setCaptivePortalMode(int mode) {
