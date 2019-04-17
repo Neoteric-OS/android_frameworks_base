@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773ae7ae_76c578ed",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-17T06:36:39Z",
+      "side": 1,
+      "message": "Because the member can be null, DUMMY_BINDER or some other valid binder, I think you need to document what each of these mean. Here is okay, or on the mBinder member.",
+      "range": {
+        "startLine": 182,
+        "startChar": 32,
+        "endLine": 182,
+        "endChar": 44
+      },
+      "revId": "30788322703b1884e3022e6bbf536c0da8dcab4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5759df20_5b4dcdcd",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-17T06:36:39Z",
+      "side": 1,
+      "message": "Curious : how does this blow up in practice if there is a bug in ConnectivityService leading to two of these being taken ?",
+      "range": {
+        "startLine": 416,
+        "startChar": 60,
+        "endLine": 416,
+        "endChar": 100
+      },
+      "revId": "30788322703b1884e3022e6bbf536c0da8dcab4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
