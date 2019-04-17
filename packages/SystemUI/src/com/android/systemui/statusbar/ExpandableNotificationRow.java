@@ -2124,7 +2124,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
             return mGuts.getIntrinsicHeight();
         } else if ((isChildInGroup() && !isGroupExpanded())) {
             return mPrivateLayout.getMinHeight();
-        } else if (mSensitive && mHideSensitiveForIntrinsicHeight) {
+        } else if (getGroupSensitive() && mHideSensitiveForIntrinsicHeight) {
             return getMinHeight();
         } else if (mIsSummaryWithChildren && (!mOnKeyguard || mShowAmbient)) {
             return mChildrenContainer.getIntrinsicHeight();
@@ -2295,7 +2295,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
             return;
         }
         boolean oldShowingPublic = mShowingPublic;
-        mShowingPublic = mSensitive && hideSensitive;
+        mShowingPublic = getGroupSensitive() && hideSensitive;
         if (mShowingPublicInitialized && mShowingPublic == oldShowingPublic) {
             return;
         }
@@ -2372,7 +2372,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     private boolean shouldShowPublic() {
-        return mSensitive && mHideSensitiveForIntrinsicHeight;
+        return getGroupSensitive() && mHideSensitiveForIntrinsicHeight;
     }
 
     public void makeActionsVisibile() {
@@ -2987,5 +2987,19 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
                 mEntry.mIsSystemNotification = result;
             }
         }
+    }
+
+    private boolean getGroupSensitive() {
+        if (mIsSummaryWithChildren && mChildrenContainer != null && !mSensitive) {
+            List<ExpandableNotificationRow> notificationChildren =
+                    mChildrenContainer.getNotificationChildren();
+            for (int i = 0; i < notificationChildren.size(); i++) {
+                ExpandableNotificationRow child = notificationChildren.get(i);
+                if (child.mSensitive) {
+                    return true;
+                }
+            }
+        }
+        return mSensitive;
     }
 }
