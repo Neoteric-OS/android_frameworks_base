@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "6fba5c1b_8bc056ef",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "I think I prefer the latter; the stub interface makes it a little less tempting for someone poking at the IpSecManager to try and find a way to use it.",
+      "parentUuid": "76eb1a1b_75f4322e",
+      "range": {
+        "startLine": 1025,
+        "startChar": 68,
+        "endLine": 1025,
+        "endChar": 93
+      },
+      "revId": "c99ea44577aa0c6763f7f34e05affe6069a24162",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d2ea3_4506b3ab",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2

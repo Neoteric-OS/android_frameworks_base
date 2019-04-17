@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8dd749c_3f97c8f1",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Ack; changed to @Nullable.\n\nI guess this is where not using intellij makes it hard. Our builds dump so much information it\u0027s hard to sift through unless something like intellij highlights it :(",
+      "parentUuid": "d1084cff_6211238b",
+      "range": {
+        "startLine": 270,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 27
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb8f51c_1bf7159d",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9b1e9c_82de9a4f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Stale comment. Removed this bit. We\u0027re now resource counting this too.",
+      "parentUuid": "acb8f51c_1bf7159d",
+      "range": {
+        "startLine": 1024,
+        "startChar": 10,
+        "endLine": 1025,
+        "endChar": 70
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d9b2800d_80e67afa",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3fce729_4d4b13f9",
+      "range": {
+        "startLine": 1035,
+        "startChar": 7,
+        "endLine": 1035,
+        "endChar": 50
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba4e84c6_c4f4b7ab",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a7a706_8ed4bfc9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Resolved. We\u0027re now resource counting this class for consistency.",
+      "parentUuid": "ba4e84c6_c4f4b7ab",
+      "range": {
+        "startLine": 1041,
+        "startChar": 33,
+        "endLine": 1041,
+        "endChar": 37
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0737f2e7_50c028ea",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740afe7f_0fa5c8fa",
+      "range": {
+        "startLine": 690,
+        "startChar": 51,
+        "endLine": 690,
+        "endChar": 61
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07ad27e9_d708d955",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5ec3f4_fd5c4392",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T02:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ad27e9_d708d955",
+      "range": {
+        "startLine": 753,
+        "startChar": 24,
+        "endLine": 753,
+        "endChar": 32
+      },
+      "revId": "74c79c2c625930612be2fb7eb9e809c6a1a8b795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
