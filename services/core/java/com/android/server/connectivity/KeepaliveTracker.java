@@ -41,6 +41,7 @@ import android.net.ISocketKeepaliveCallback;
 import android.net.KeepalivePacketData;
 import android.net.NattKeepalivePacketData;
 import android.net.NetworkAgent;
+import android.net.NetworkCapabilities;
 import android.net.NetworkUtils;
 import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.SocketKeepalive.InvalidSocketException;
@@ -57,6 +58,7 @@ import android.system.Os;
 import android.util.Log;
 import android.util.Pair;
 
+import com.android.internal.R;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.IndentingPrintWriter;
 
@@ -65,6 +67,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -81,6 +84,12 @@ public class KeepaliveTracker {
 
     public static final String PERMISSION = android.Manifest.permission.PACKET_KEEPALIVE_OFFLOAD;
 
+    // Minimum supported keepalive count per network if the network supports keepalive.
+    private static final int MIN_SUPPORTED_KEEPALIVE_COUNT = 3;
+    // Reserved privileged keepalive slots per network. Caller's permission will be enforced if
+    // the number of remaining keepalive slots is less than or equal to the threshold.
+    private static final int RESERVED_PRIVILEGED_SLOTS = 2;
+
     /** Keeps track of keepalive requests. */
     private final HashMap <NetworkAgentInfo, HashMap<Integer, KeepaliveInfo>> mKeepalives =
             new HashMap<> ();
@@ -90,10 +99,17 @@ public class KeepaliveTracker {
     @NonNull
     private final Context mContext;
 
+    // Supported keepalive count for each transport type, can be configured through
+    // config_networkSupportedKeepaliveCount. For better error handling, use
+    // getSupportedKeepalivesForNetwork instead of direct access.
+    @NonNull
+    private final int[] mSupportedKeepalives;
+
     public KeepaliveTracker(Context context, Handler handler) {
         mConnectivityServiceHandler = handler;
         mTcpController = new TcpKeepaliveController(handler);
         mContext = context;
+        mSupportedKeepalives = getSupportedKeepavlives();
     }
 
     /**
@@ -114,11 +130,6 @@ public class KeepaliveTracker {
 
         public static final int TYPE_NATT = 1;
         public static final int TYPE_TCP = 2;
-
-        // Max allowed unprivileged keepalive slots per network. Caller's permission will be
-        // enforced if number of existing keepalives reach this limit.
-        // TODO: consider making this limit configurable via resources.
-        private static final int MAX_UNPRIVILEGED_SLOTS = 3;
 
         // Keepalive slot. A small integer that identifies this keepalive among the ones handled
         // by this network.
@@ -247,17 +258,13 @@ public class KeepaliveTracker {
 
         private int checkPermission() {
             final HashMap<Integer, KeepaliveInfo> networkKeepalives = mKeepalives.get(mNai);
-            int unprivilegedCount = 0;
             if (networkKeepalives == null) {
                 return ERROR_INVALID_NETWORK;
             }
-            for (KeepaliveInfo ki : networkKeepalives.values()) {
-                if (!ki.mPrivileged) {
-                    unprivilegedCount++;
-                }
-                if (unprivilegedCount >= MAX_UNPRIVILEGED_SLOTS) {
-                    return mPrivileged ? SUCCESS : ERROR_INSUFFICIENT_RESOURCES;
-                }
+
+            if (getSupportedKeepalivesForNetwork(mNai) - networkKeepalives.size()
+                    < RESERVED_PRIVILEGED_SLOTS) {
+                return mPrivileged ? SUCCESS : ERROR_INSUFFICIENT_RESOURCES;
             }
             return SUCCESS;
         }
@@ -265,6 +272,9 @@ public class KeepaliveTracker {
         private int isValid() {
             synchronized (mNai) {
                 int error = checkInterval();
+                // TODO: Consider returning ERROR_INSUFFICIENT_RESOURCES if number of keepalives
+                //       reached supported limit, or ERROR_UNSUPPORTED if the customized limit is 0
+                //       for a given network.
                 if (error == SUCCESS) error = checkPermission();
                 if (error == SUCCESS) error = checkNetworkConnected();
                 if (error == SUCCESS) error = checkSourceAddress();
@@ -372,6 +382,50 @@ public class KeepaliveTracker {
         void onFileDescriptorInitiatedStop(final int socketKeepaliveReason) {
             handleStopKeepalive(mNai, mSlot, socketKeepaliveReason);
         }
+    }
+
+    private @NonNull int[] getSupportedKeepavlives() {
+        final int[] ret = new int[NetworkCapabilities.MAX_TRANSPORT + 1];
+        final String[] rows = mContext.getResources().getStringArray(
+                R.array.config_networkSupportedKeepaliveCount);
+        for (final String row : rows) {
+            try {
+                final String[] arr = row.split(",");
+                final int transport = Integer.parseInt(arr[0]);
+                final int supported = Integer.parseInt(arr[1]);
+
+                if (!NetworkCapabilities.isValidTransport(transport)) {
+                    throw new IllegalArgumentException("Invalid transport " + transport);
+                }
+
+                // Customized values should be either 0 to indicate the network doesn't support
+                // keepalive offload, or a positive value that is at least
+                // MIN_SUPPORTED_KEEPALIVE_COUNT if supported.
+                if (supported != 0 && supported < MIN_SUPPORTED_KEEPALIVE_COUNT) {
+                    throw new IllegalArgumentException("Invalid supported count " + supported);
+                }
+                ret[transport] = supported;
+            } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+                Log.e(TAG, "Ignore wrong customization " + row + ": " + e);
+            }
+        }
+        return ret;
+    }
+
+    private int getSupportedKeepalivesForNetwork(@NonNull NetworkAgentInfo nai) {
+        int supportedCount = 0;
+        final int[] transports = nai.networkCapabilities.getTransportTypes();
+        // Iterate through transports and return maximum supported value.
+        for (final int transport : transports) {
+            try {
+                if (supportedCount < mSupportedKeepalives[transport]) {
+                    supportedCount = mSupportedKeepalives[transport];
+                }
+            } catch (IndexOutOfBoundsException e) {
+                Log.wtf(TAG, "Cannot find supported count for network " + nai.name(), e);
+            }
+        }
+        return supportedCount;
     }
 
     void notifyErrorCallback(ISocketKeepaliveCallback cb, int error) {
@@ -669,6 +723,8 @@ public class KeepaliveTracker {
     }
 
     public void dump(IndentingPrintWriter pw) {
+        pw.println("Supported Socket keepalives: "
+                + Arrays.toString(mSupportedKeepalives));
         pw.println("Socket keepalives:");
         pw.increaseIndent();
         for (NetworkAgentInfo nai : mKeepalives.keySet()) {

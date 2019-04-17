@@ -43,6 +43,13 @@ import java.util.concurrent.Executor;
  * To stop an existing keepalive, call {@link SocketKeepalive#stop}. The system will call
  * {@link SocketKeepalive.Callback#onStopped} if the operation was successful or
  * {@link SocketKeepalive.Callback#onError} if an error occurred.
+ *
+ * Device SHOULD support at least 3 concurrent keepalive slots per network with any type combination
+ * of keepalives, and triggers {@link SocketKeepalive.Callback#onError} with
+ * {@code ERROR_INSUFFICIENT_RESOURCES} when requested to specify the maximum concurrent keepalive
+ * limit has been reached. Otherwise, {@link SocketKeepalive.Callback#onError} with
+ * {@code ERROR_UNSUPPORTED} should be returned at any request to specify the keepalive offload is
+ * not supported.
  */
 public abstract class SocketKeepalive implements AutoCloseable {
     static final String TAG = "SocketKeepalive";
