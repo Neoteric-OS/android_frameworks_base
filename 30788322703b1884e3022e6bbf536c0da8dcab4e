@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2e777d3_1548045f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T17:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773ae7ae_76c578ed",
+      "range": {
+        "startLine": 182,
+        "startChar": 32,
+        "endLine": 182,
+        "endChar": 44
+      },
+      "revId": "30788322703b1884e3022e6bbf536c0da8dcab4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5759df20_5b4dcdcd",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-17T06:36:39Z",
       "side": 1,
       "message": "Curious : how does this blow up in practice if there is a bug in ConnectivityService leading to two of these being taken ?",
+      "range": {
+        "startLine": 416,
+        "startChar": 60,
+        "endLine": 416,
+        "endChar": 100
+      },
+      "revId": "30788322703b1884e3022e6bbf536c0da8dcab4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df730f77_6c8ef6de",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-17T17:42:08Z",
+      "side": 1,
+      "message": "In practice, this would appear as a log.wtf after the (n/2+1)th keepalive opened. This quota is more advisory than enforcement at the moment. If you\u0027d prefer, I can make this enforcement, but that could cause failures in a harder-to-root-cause way (specifically, a (n/2+1)th keepalive might fail).\n\nThe scarier one would be if there was a bug in CS that doesn\u0027t call the releaseNattKeepalive. In those cases, the UDP encap socket would never be released, and they would never be able to use it anymore (until phone restart).",
+      "parentUuid": "5759df20_5b4dcdcd",
       "range": {
         "startLine": 416,
         "startChar": 60,
