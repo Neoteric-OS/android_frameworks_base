@@ -762,6 +762,7 @@ java_library_host {
     srcs: [
         "core/java/android/annotation/IntDef.java",
         "core/java/android/annotation/UnsupportedAppUsage.java",
+        ":unsupportedappusage_annotation_files",
     ],
 }
 
@@ -822,6 +823,7 @@ filegroup {
         "core/java/android/annotation/IntDef.java",
         "core/java/android/annotation/IntRange.java",
         "core/java/android/annotation/UnsupportedAppUsage.java",
+        ":unsupportedappusage_annotation_files",
         "core/java/com/android/internal/annotations/GuardedBy.java",
         "core/java/com/android/internal/annotations/VisibleForTesting.java",
     ]
@@ -1022,6 +1024,7 @@ java_library {
         "core/java/android/annotation/SystemApi.java",
         "core/java/android/annotation/TestApi.java",
         "core/java/android/annotation/UnsupportedAppUsage.java",
+        ":unsupportedappusage_annotation_files",
         "core/java/android/os/HwBinder.java",
         "core/java/android/os/HwBlob.java",
         "core/java/android/os/HwParcel.java",
