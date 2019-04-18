@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b51464_b33ea693",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "It would help if you clarified the difference between evaluating and probing. \"evaluating\" and \"probing\" don\u0027t mean the same thing, but it\u0027s unclear what evaluating means if there also is a probing state. Also it seems to me like EvaluatingState is probing the private DNS and ProbingState is resolving the same names but not bypassing private DNS.\n\nAt least some comments are necessary I think.",
+      "range": {
+        "startLine": 390,
+        "startChar": 17,
+        "endLine": 391,
+        "endChar": 26
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165e486a_2cab0ddf",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "You are spinning 2 new threads for this ? Isn\u0027t this prohibitively expensive to just receive the DNS results ? It looks to me like we can just have the DNS resolver callbacks execute on the handler thread. Something like :\n\n  mExecutor \u003d r -\u003e getHandler().post(r);\n\nBut even better, in fact all your callback is doing is sending messages right ? Why not just have some inline executor :\n\n  mExecutor \u003d r -\u003e r.run();",
+      "range": {
+        "startLine": 415,
+        "startChar": 30,
+        "endLine": 415,
+        "endChar": 48
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75f62e8_ad4efac0",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "This sounds like the resolution is already done, I don\u0027t think that\u0027s what you want",
+      "range": {
+        "startLine": 953,
+        "startChar": 28,
+        "endLine": 953,
+        "endChar": 58
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b5731b_e0528be2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "I find this extremely obfuscated. This is extremely tightly coupled with the fact that you send two queries, A and AAAA, in lines 1068 and 1069. This malfunctions if you remove one, it malfunctions if you add one, there is no comment at all, and it\u0027s just an int to store 0 or 1 or 2.\n\nThat\u0027s exactly the kind of reason why we always strongly avoid having members to store states in state machines. It took me more than 10 minutes figuring out what this is about.",
+      "range": {
+        "startLine": 974,
+        "startChar": 24,
+        "endLine": 974,
+        "endChar": 42
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d819996_9dd4989d",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "It\u0027s a bit strange layout-wise that this code is in between EvaluatingState and ProbingState and used by both.",
+      "range": {
+        "startLine": 1031,
+        "startChar": 10,
+        "endLine": 1031,
+        "endChar": 37
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fcc82f_99d07f8c",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "Why not use the version that does not take a type ? It will make the A and AAAA queries for you, wait appropriately, and you can remove all the business with mResolveTypeCount and multiple querying as all of this is done for you.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 13,
+        "endLine": 1074,
+        "endChar": 18
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8269f2e6_ca705eb4",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "Can all these members be private ?",
+      "range": {
+        "startLine": 1080,
+        "startChar": 8,
+        "endLine": 1080,
+        "endChar": 17
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6955b0_faaf45c7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "Okay so here you fail, this sends CMD_RESOLVED_PRIVATE_DNS_HOST_NAME, which is not handled in this state to it goes to the parent state which then calls getAllAddressesByName again but with the bypassing network, which will generate messages handled by this clause.\n\nIs this really intentional ? It looks to me like it\u0027s not, but if it is I find that a lot too convoluted to follow.",
+      "range": {
+        "startLine": 1123,
+        "startChar": 28,
+        "endLine": 1123,
+        "endChar": 61
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67448b9d_f69c32bb",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-18T06:55:23Z",
+      "side": 1,
+      "message": "There is a fair bit of copy-pasting here. Can we factorize the stuff that\u0027s the same ?",
+      "range": {
+        "startLine": 1108,
+        "startChar": 20,
+        "endLine": 1135,
+        "endChar": 26
+      },
+      "revId": "9660af88623276425585f0ff213b5e686bd2fa75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
