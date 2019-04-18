@@ -38,6 +38,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
@@ -52,6 +53,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.DnsResolver;
 import android.net.INetworkMonitorCallbacks;
 import android.net.InetAddresses;
 import android.net.LinkProperties;
@@ -68,6 +70,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -77,6 +80,8 @@ import android.util.ArrayMap;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.networkstack.R;
 
 import org.junit.After;
 import org.junit.Before;
@@ -92,8 +97,12 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
 
 import javax.net.ssl.SSLHandshakeException;
 
@@ -107,6 +116,7 @@ public class NetworkMonitorTest {
     private @Mock IpConnectivityLog mLogger;
     private @Mock SharedLog mValidationLogger;
     private @Mock NetworkInfo mNetworkInfo;
+    private @Mock DnsResolver mDnsResolver;
     private @Mock ConnectivityManager mCm;
     private @Mock TelephonyManager mTelephony;
     private @Mock WifiManager mWifi;
@@ -152,10 +162,36 @@ public class NetworkMonitorTest {
     private static final NetworkCapabilities NO_INTERNET_CAPABILITIES = new NetworkCapabilities()
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
 
+    private void setDnsAnswers(String[] answers) throws UnknownHostException {
+        if (answers == null) {
+            doThrow(new UnknownHostException()).when(mNetwork).getAllByName(any());
+            doNothing().when(mDnsResolver).query(any(), any(), anyInt(), any(), any(), any());
+            return;
+        }
+
+        List<InetAddress> answerList = new ArrayList<>();
+        for (String answer : answers) {
+            answerList.add(InetAddresses.parseNumericAddress(answer));
+        }
+        InetAddress[] answerArray = answerList.toArray(new InetAddress[0]);
+
+        doReturn(answerArray).when(mNetwork).getAllByName(any());
+
+        doAnswer((invocation) -> {
+            Executor executor = (Executor) invocation.getArgument(3);
+            DnsResolver.Callback<List<InetAddress>> callback = invocation.getArgument(5);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                executor.execute(() -> callback.onAnswer(answerList, 0));
+            });
+            return null;
+        }).when(mDnsResolver).query(eq(mNetwork), any(), anyInt(), any(), any(), any());
+    }
+
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
         when(mDependencies.getPrivateDnsBypassNetwork(any())).thenReturn(mNetwork);
+        when(mDependencies.getDnsResolver()).thenReturn(mDnsResolver);
         when(mDependencies.getRandom()).thenReturn(mRandom);
         when(mDependencies.getSetting(any(), eq(Settings.Global.CAPTIVE_PORTAL_MODE), anyInt()))
                 .thenReturn(Settings.Global.CAPTIVE_PORTAL_MODE_PROMPT);
@@ -200,9 +236,8 @@ public class NetworkMonitorTest {
         }).when(mNetwork).openConnection(any());
         when(mHttpConnection.getRequestProperties()).thenReturn(new ArrayMap<>());
         when(mHttpsConnection.getRequestProperties()).thenReturn(new ArrayMap<>());
-        doReturn(new InetAddress[] {
-                InetAddresses.parseNumericAddress("192.168.0.0")
-        }).when(mNetwork).getAllByName(any());
+
+        setDnsAnswers(new String[]{"2001:db8::1", "192.0.2.2"});
 
         when(mContext.registerReceiver(any(BroadcastReceiver.class), any())).then((invocation) -> {
             mRegisteredReceivers.add(invocation.getArgument(0));
@@ -306,6 +341,44 @@ public class NetworkMonitorTest {
         if (!cv.block(HANDLER_TIMEOUT_MS)) {
             fail("Timed out waiting for handler");
         }
+    }
+
+    @Test
+    public void testGetIntSetting() throws Exception {
+        WrappedNetworkMonitor wnm = makeNotMeteredNetworkMonitor();
+
+        // No config resource, no device config. Expect to get default resource.
+        doThrow(new Resources.NotFoundException())
+                .when(mResources).getInteger(eq(R.integer.config_captive_portal_dns_probe_timeout));
+        doAnswer(invocation -> {
+            int defaultValue = invocation.getArgument(2);
+            return defaultValue;
+        }).when(mDependencies).getDeviceConfigPropertyInt(any(),
+                eq(NetworkMonitor.CONFIG_CAPTIVE_PORTAL_DNS_PROBE_TIMEOUT),
+                anyInt());
+        when(mResources.getInteger(eq(R.integer.default_captive_portal_dns_probe_timeout)))
+                .thenReturn(42);
+        assertEquals(42, wnm.getIntSetting(mContext,
+                R.integer.config_captive_portal_dns_probe_timeout,
+                NetworkMonitor.CONFIG_CAPTIVE_PORTAL_DNS_PROBE_TIMEOUT,
+                R.integer.default_captive_portal_dns_probe_timeout));
+
+        // Set device config. Expect to get device config.
+        when(mDependencies.getDeviceConfigPropertyInt(any(),
+                eq(NetworkMonitor.CONFIG_CAPTIVE_PORTAL_DNS_PROBE_TIMEOUT), anyInt()))
+                        .thenReturn(1234);
+        assertEquals(1234, wnm.getIntSetting(mContext,
+                R.integer.config_captive_portal_dns_probe_timeout,
+                NetworkMonitor.CONFIG_CAPTIVE_PORTAL_DNS_PROBE_TIMEOUT,
+                R.integer.default_captive_portal_dns_probe_timeout));
+
+        // Set config resource. Expect to get config resource.
+        when(mResources.getInteger(eq(R.integer.config_captive_portal_dns_probe_timeout)))
+                .thenReturn(5678);
+        assertEquals(5678, wnm.getIntSetting(mContext,
+                R.integer.config_captive_portal_dns_probe_timeout,
+                NetworkMonitor.CONFIG_CAPTIVE_PORTAL_DNS_PROBE_TIMEOUT,
+                R.integer.default_captive_portal_dns_probe_timeout));
     }
 
     @Test
@@ -636,6 +709,47 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setStatus(mFallbackConnection, 204);
         runPartialConnectivityNetworkTest();
+    }
+
+    private void assertIpAddressArrayEquals(String[] expected, InetAddress[] actual) {
+        String[] actualStrings = new String[actual.length];
+        for (int i = 0; i < actual.length; i++) {
+            actualStrings[i] = actual[i].getHostAddress();
+        }
+        assertEquals("Array of IP addresses differs",
+                String.join(",", expected),
+                String.join(",", actualStrings));
+    }
+
+    @Test
+    public void testSendDnsProbeWithTimeout() throws Exception {
+        WrappedNetworkMonitor wnm = makeNotMeteredNetworkMonitor();
+        final int shortTimeoutMs = 200;
+
+        String[] expected = new String[]{"2001:db8::"};
+        setDnsAnswers(expected);
+        InetAddress[] actual = wnm.sendDnsProbeWithTimeout("www.google.com", shortTimeoutMs);
+        assertIpAddressArrayEquals(expected, actual);
+
+        expected = new String[]{"2001:db8::", "192.0.2.1"};
+        setDnsAnswers(expected);
+        actual = wnm.sendDnsProbeWithTimeout("www.google.com", shortTimeoutMs);
+        assertIpAddressArrayEquals(expected, actual);
+
+        expected = new String[0];
+        setDnsAnswers(expected);
+        try {
+            wnm.sendDnsProbeWithTimeout("www.google.com", shortTimeoutMs);
+            fail("No DNS results, expected UnknownHostException");
+        } catch (UnknownHostException e) {
+        }
+
+        setDnsAnswers(null);
+        try {
+            wnm.sendDnsProbeWithTimeout("www.google.com", shortTimeoutMs);
+            fail("DNS query timed out, expected UnknownHostException");
+        } catch (UnknownHostException e) {
+        }
     }
 
     private void makeDnsTimeoutEvent(WrappedNetworkMonitor wrappedMonitor, int count) {
