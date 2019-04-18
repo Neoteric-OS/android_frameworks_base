@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4394bbfb_49bb7c56",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f26a9170_4af498c5",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdc73a6e_08ca40f5",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 3
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "fdf72282_0f46abde",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29eb288f_64b3a2d9",
+      "range": {
+        "startLine": 350,
+        "startChar": 55,
+        "endLine": 350,
+        "endChar": 63
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c93dc38_fa09bcc1",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 3
@@ -114,6 +162,30 @@
       "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36add0ba_62fdefd7",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c93dc38_fa09bcc1",
+      "range": {
+        "startLine": 106,
+        "startChar": 24,
+        "endLine": 106,
+        "endChar": 48
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +235,54 @@
     },
     {
       "key": {
+        "uuid": "a8ad0ad3_1be78da8",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Make sense.\nHowever it will be needed to parse string array from resource.\nNot sure if it is worth of doing that.",
+      "parentUuid": "220608aa_efc504b2",
+      "range": {
+        "startLine": 391,
+        "startChar": 29,
+        "endLine": 391,
+        "endChar": 53
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "553dc8b0_502dfdcf",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "No, because it needs to be customized per network. However a network could have multiple capabilities.\nThe closest one would be transport type, maybe we should return maximum customized value of the transport types of a given network.",
+      "parentUuid": "d15d6875_ee7cf999",
+      "range": {
+        "startLine": 391,
+        "startChar": 58,
+        "endLine": 391,
+        "endChar": 69
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18e18642_8e55a014",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 3
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "3c9d1a8f_4868783d",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e18642_8e55a014",
+      "range": {
+        "startLine": 399,
+        "startChar": 30,
+        "endLine": 399,
+        "endChar": 41
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6501d6e7_b03cae3d",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 3
@@ -206,6 +350,30 @@
       "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5392a4d2_95d49ec7",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T10:51:22Z",
+      "side": 1,
+      "message": "Hmm, that sounds bad.\nShould return 0 for this.",
+      "parentUuid": "6501d6e7_b03cae3d",
+      "range": {
+        "startLine": 403,
+        "startChar": 16,
+        "endLine": 405,
+        "endChar": 61
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
