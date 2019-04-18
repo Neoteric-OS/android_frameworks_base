@@ -34,6 +34,24 @@
       "revId": "40e7fb6a9b385d147bfaaba1edaa5675037e5bef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b726eac2_e863297e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T08:24:22Z",
+      "side": 0,
+      "message": "I\u0027m supporting my idea based on the following reasons:\n1. this would be a simpler straightforward alternative, maybe ~20 lines although it sounds crazy\n2. in practice, it looks like we don\u0027t really need this to be async, do we?\n3. with 180 lines of the untested new state codes we introduce more complexity, which means more maintain efforts.\n\nBut I don\u0027t have strong opinion if others are fine with it.\n+jchalard@, any thoughts?",
+      "parentUuid": "f58de6ec_f2e66c50",
+      "revId": "40e7fb6a9b385d147bfaaba1edaa5675037e5bef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
