@@ -55,6 +55,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.DnsResolver;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
@@ -117,7 +118,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 /**
@@ -134,6 +137,8 @@ public class NetworkMonitor extends StateMachine {
 
     private static final int SOCKET_TIMEOUT_MS = 10000;
     private static final int PROBE_TIMEOUT_MS  = 3000;
+    // Enough for 3 DNS queries 5 seconds apart.
+    private static final int DNS_TIMEOUT_MS = 12500;
     enum EvaluationResult {
         VALIDATED(true),
         CAPTIVE_PORTAL(false);
@@ -1440,6 +1445,46 @@ public class NetworkMonitor extends StateMachine {
         return sendHttpProbe(url, probeType, null);
     }
 
+    /** Do a DNS resolution of the given server, or throw UnknownHostException after the timeout */
+    private InetAddress[] sendDnsProbeWithTimeout(String host, int timeoutMs)
+                throws UnknownHostException {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final AtomicReference<List<InetAddress>> resultRef = new AtomicReference<>();
+        final DnsResolver.Callback<List<InetAddress>> callback =
+                    new DnsResolver.Callback<List<InetAddress>>() {
+            public void onAnswer(List<InetAddress> answer, int rcode) {
+                if (rcode == 0) {
+                    resultRef.set(answer);
+                }
+            }
+            public void onError(@NonNull DnsResolver.DnsException error) {
+                // Do nothing.
+                validationLog("onError");  // TODO
+            }
+        };
+        Executor executor = new Executor() {
+            @Override public void execute(Runnable r) {
+                r.run();
+            }
+        };
+
+        final int oldTag = TrafficStats.getAndSetThreadStatsTag(
+                TrafficStatsConstants.TAG_SYSTEM_PROBE);
+        DnsResolver.getInstance().query(mNetwork, host, DnsResolver.FLAG_EMPTY, executor,
+                null /* cancellationSignal */, callback);
+        TrafficStats.setThreadStatsTag(oldTag);
+
+        try {
+            latch.await(timeoutMs, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+        }
+        List<InetAddress> result = resultRef.get();
+        if (result == null || result.size() == 0) {
+            throw new UnknownHostException(host);
+        }
+        return result.toArray(new InetAddress[0]);
+    }
+
     /** Do a DNS resolution of the given server. */
     private void sendDnsProbe(String host) {
         if (TextUtils.isEmpty(host)) {
@@ -1451,7 +1496,7 @@ public class NetworkMonitor extends StateMachine {
         int result;
         String connectInfo;
         try {
-            InetAddress[] addresses = mNetwork.getAllByName(host);
+            InetAddress[] addresses = sendDnsProbeWithTimeout(host, DNS_TIMEOUT_MS);
             StringBuffer buffer = new StringBuffer();
             for (InetAddress address : addresses) {
                 buffer.append(',').append(address.getHostAddress());
