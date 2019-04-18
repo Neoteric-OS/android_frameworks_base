@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26a9170_4af498c5",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "Should we use \"Device\", not OEMs?",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6861b45a_0e36bce9",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "Do we need to link or explain what the type mean here?",
+      "range": {
+        "startLine": 47,
+        "startChar": 82,
+        "endLine": 47,
+        "endChar": 86
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc73a6e_08ca40f5",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "request?",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29eb288f_64b3a2d9",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "Can this be a noun? offload count? offload slots?",
+      "range": {
+        "startLine": 350,
+        "startChar": 55,
+        "endLine": 350,
+        "endChar": 63
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c93dc38_fa09bcc1",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "Do we need to name it with customize? or comment it that it could be customized? I see it looks no such naming or comments in other targets that allow customization. Just name is mSupportedKeepalive or mSupportedKeepaliveCount?",
+      "range": {
+        "startLine": 106,
+        "startChar": 24,
+        "endLine": 106,
+        "endChar": 48
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220608aa_efc504b2",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "This design will not allow us to configure something like cell + other type(except) wifi. This design may work with current assumption(only cellular and wifi) but I think it would be better to add type information in the customization. What do you think?",
+      "range": {
+        "startLine": 391,
+        "startChar": 29,
+        "endLine": 391,
+        "endChar": 53
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15d6875_ee7cf999",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "Should we prevent to use this in new code if we would like to deprecate it? Maybe use CAPABILITY type instead?",
+      "range": {
+        "startLine": 391,
+        "startChar": 58,
+        "endLine": 391,
+        "endChar": 69
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e18642_8e55a014",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 399,
+        "startChar": 30,
+        "endLine": 399,
+        "endChar": 41
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6501d6e7_b03cae3d",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-18T03:02:17Z",
+      "side": 1,
+      "message": "This means is I take a ethernet NAI, then I will get the supported count 3?",
+      "range": {
+        "startLine": 403,
+        "startChar": 16,
+        "endLine": 405,
+        "endChar": 61
+      },
+      "revId": "7f415a92b9d1e5a416083f47920131eed1b5eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
