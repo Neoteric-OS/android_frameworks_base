@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20103b02_04b27b5e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:37:30Z",
+      "side": 1,
+      "message": "Who\u0027s us ? go/avoidwe\nAlso \u0027we\u0027 below",
+      "range": {
+        "startLine": 213,
+        "startChar": 87,
+        "endLine": 213,
+        "endChar": 88
+      },
+      "revId": "a88d1015c6dfdce36583455ca3e6b4d6886201e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
