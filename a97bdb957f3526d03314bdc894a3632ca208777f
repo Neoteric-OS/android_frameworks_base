@@ -70,6 +70,30 @@
       "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6c6683_67e0b362",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-04-19T09:20:20Z",
+      "side": 0,
+      "message": "Currently, There is no way to catch up the timing that OSD should be updated.\nBut I agreed your opinion and will check the way you suggested.\nThank you for your review.\nThis CL will be abandoned.",
+      "parentUuid": "d4865d55_5f2242d1",
+      "range": {
+        "startLine": 586,
+        "startChar": 7,
+        "endLine": 586,
+        "endChar": 33
+      },
+      "revId": "a97bdb957f3526d03314bdc894a3632ca208777f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
