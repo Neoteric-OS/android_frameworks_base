@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d78bc7_0e289a8e",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-19T03:09:45Z",
+      "side": 1,
+      "message": "These functions should be moved to somewhere can be shared between framework and CTS, otherwise we might need to copy-paste the parsing functions.",
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
