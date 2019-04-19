@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f239f19d_4351552c",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-19T10:50:35Z",
+      "side": 1,
+      "message": "OK, I\u0027m afriad both descriptions are incorrect. (and also the logic so far)\n\nFor telephony part, after check with tpe modem team, the slots are based on modems instead of connection, and it is unlikely shared with wifi. So maybe we need to change mKeepalives hashmap to be based on transport type instead of networkAgentInfo, otherwise \"ims slot 1\" might be conflict with \"default mobile slot 1\" since they are physically the same slot.\nHowever I\u0027m not sure if such issue will happen in practice.\n\nFor wifi part, rpius@ could you kindly help to comment that?",
+      "parentUuid": "3d96e537_cbc320ac",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 71
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06d31827_c59c1955",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 5
@@ -145,6 +169,30 @@
       "writtenOn": "2019-04-19T07:22:24Z",
       "side": 1,
       "message": "This method is called for every keepalive request. Can we somehow cache this data, or possibly even eagerly initialize it ?",
+      "range": {
+        "startLine": 396,
+        "startChar": 7,
+        "endLine": 396,
+        "endChar": 73
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d070e1a3_3b6a0c97",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-19T10:50:35Z",
+      "side": 1,
+      "message": "Yes, this is already done by this function only called once in the constructor.\nIt looks the name misguide you, maybe change the name to readSupportedKeepalivesFromRes or something?",
+      "parentUuid": "6c7671d1_6100c022",
       "range": {
         "startLine": 396,
         "startChar": 7,
