@@ -839,13 +839,17 @@ public class UrlQuerySanitizer {
      */
     public String unescape(String string) {
         // Early exit if no escaped characters.
-        int firstEscape = string.indexOf('%');
-        if ( firstEscape < 0) {
-            firstEscape = string.indexOf('+');
-            if (firstEscape < 0) {
-                return string;
-            }
+        final int firstPercent = string.indexOf('%');
+        final int firstPlus = string.indexOf('+');
+        final int firstEscape;
+        if (firstPercent < 0) {
+            firstEscape = firstPlus;
+        } else if (firstPlus < 0) {
+            firstEscape = firstPercent;
+        } else {
+            firstEscape = Math.min(firstPercent, firstPlus);
         }
+        if (firstEscape < 0) return string;
 
         int length = string.length();
 
