@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a98e7c0_f2689def",
+        "filename": "core/java/android/bluetooth/BluetoothServerSocket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-04-19T22:48:48Z",
+      "side": 1,
+      "message": "that the peer needs to use to connect to your socket.",
+      "range": {
+        "startLine": 50,
+        "startChar": 55,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "c23b4ffd7488a8398ef857ab8ef4d16e1791f451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
