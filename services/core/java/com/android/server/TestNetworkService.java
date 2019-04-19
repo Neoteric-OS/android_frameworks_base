@@ -19,6 +19,7 @@ package com.android.server;
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
@@ -226,6 +227,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @NonNull Looper looper,
             @NonNull Context context,
             @NonNull String iface,
+            @Nullable LinkProperties lp,
+            boolean isMetered,
             int callingUid,
             @NonNull IBinder binder)
             throws RemoteException, SocketException {
@@ -245,9 +248,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
         nc.setNetworkSpecifier(new StringNetworkSpecifier(iface));
+        if (!isMetered) {
+            nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+        }
 
         // Build LinkProperties
-        LinkProperties lp = new LinkProperties();
+        lp = (lp != null) ? lp : new LinkProperties();
         lp.setInterfaceName(iface);
 
         // Find the currently assigned addresses, and add them to LinkProperties
@@ -284,7 +290,11 @@ class TestNetworkService extends ITestNetworkManager.Stub {
      * <p>This method provides a Network that is useful only for testing.
      */
     @Override
-    public void setupTestNetwork(@NonNull String iface, @NonNull IBinder binder) {
+    public void setupTestNetwork(
+            @NonNull String iface,
+            @Nullable LinkProperties lp,
+            boolean isMetered,
+            @NonNull IBinder binder) {
         enforceTestNetworkPermissions(mContext);
 
         checkNotNull(iface, "missing Iface");
@@ -315,6 +325,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                                             mHandler.getLooper(),
                                             mContext,
                                             iface,
+                                            lp,
+                                            isMetered,
                                             callingUid,
                                             binder);
 
