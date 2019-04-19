@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d96e537_cbc320ac",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "Is this really what we agreed on ? I remember something closer to :\n\nThe device SHOULD support keepalive offload. If it does not, it MUST reply with {@link SocketKeepalive.Callback#onError} with {@code ERROR_UNSUPPORTED} to any keepalive offload request. If it does, it MUST support at least 3 concurrent keepalive slots.\n\nThe issue I have with your wording of 3 concurrent slots per network is that if you have 3 networks then you need 30 slots. Even if that\u0027s true then I still think we should make clear that if it\u0027s supported then it must support at least 3 per network.",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 71
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d31827_c59c1955",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "I think we should *also* make this configurable. Some devices may need more slots than others, e.g. some devices support WiFi calling and some don\u0027t, maybe some need 2 ports for it or something...",
+      "range": {
+        "startLine": 352,
+        "startChar": 23,
+        "endLine": 352,
+        "endChar": 69
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a35f0f_7e97043e",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "s/avl/al/",
+      "range": {
+        "startLine": 113,
+        "startChar": 47,
+        "endLine": 113,
+        "endChar": 50
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d78bc7_0e289a8e",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 5
@@ -13,6 +82,184 @@
       "writtenOn": "2019-04-19T03:09:45Z",
       "side": 1,
       "message": "These functions should be moved to somewhere can be shared between framework and CTS, otherwise we might need to copy-paste the parsing functions.",
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8effb6ae_d4aad299",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "Style :\n\n  @NonNull\n  private int[] ...",
+      "range": {
+        "startLine": 388,
+        "startChar": 13,
+        "endLine": 388,
+        "endChar": 20
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bad71ce_18e91244",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "Style :\n\n  @NonNull\n  static int[] ...",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 19
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7671d1_6100c022",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "This method is called for every keepalive request. Can we somehow cache this data, or possibly even eagerly initialize it ?",
+      "range": {
+        "startLine": 396,
+        "startChar": 7,
+        "endLine": 396,
+        "endChar": 73
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7caf1a1d_ee237a54",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "if (isEmpty(row)) throw",
+      "range": {
+        "startLine": 398,
+        "startChar": 16,
+        "endLine": 398,
+        "endChar": 17
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b29f5b_d8d98269",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "(especially true if you initialize this eagerly)\nThis is a configuration matter, we should totally down the system server with prejudice if this value is not formatted as we expect, and make it very clear with a burning exception.\n\nI suggest you make a new KeepaliveDeviceConfigurationException extends AndroidRuntimeException or something like that, and put the system server on fire when any of these happen.\n\nFor an example of how we handled something similar in Ethernet :\nhttps://android-review.googlesource.com/c/platform/frameworks/opt/net/ethernet/+/883234/7/java/com/android/server/ethernet/EthernetNetworkFactory.java",
+      "range": {
+        "startLine": 407,
+        "startChar": 30,
+        "endLine": 407,
+        "endChar": 54
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ad7a03_81bfce26",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "Accordingly, just let it burn to let them know they must fix their configuration",
+      "range": {
+        "startLine": 417,
+        "startChar": 12,
+        "endLine": 418,
+        "endChar": 75
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218b3d1f_cce1a4b4",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "Won\u0027t this fit on the same line ?",
+      "range": {
+        "startLine": 737,
+        "startChar": 16,
+        "endLine": 737,
+        "endChar": 18
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa210f7_e99651eb",
+        "filename": "tests/net/java/com/android/server/connectivity/KeepaliveTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T07:22:24Z",
+      "side": 1,
+      "message": "As per chat, will not look at this file yet",
       "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
