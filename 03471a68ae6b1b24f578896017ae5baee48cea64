@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30e17d4_7ad1bec5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2272,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2019-04-19T21:58:06Z",
+      "side": 1,
+      "message": "Instead of setting mSensitive here, please call getGroupSensitive anywhere we currently read mSensitive.",
+      "range": {
+        "startLine": 2272,
+        "startChar": 21,
+        "endLine": 2272,
+        "endChar": 38
+      },
+      "revId": "03471a68ae6b1b24f578896017ae5baee48cea64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7558c3be_e54ab329",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2992,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2019-04-19T21:58:06Z",
+      "side": 1,
+      "message": "Remove argument (just read mSensitive)",
+      "range": {
+        "startLine": 2992,
+        "startChar": 38,
+        "endLine": 2992,
+        "endChar": 55
+      },
+      "revId": "03471a68ae6b1b24f578896017ae5baee48cea64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
