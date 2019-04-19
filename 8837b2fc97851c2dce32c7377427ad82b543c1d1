@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26917faa_0c19dde8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-19T06:31:24Z",
+      "side": 1,
+      "message": "Nits: do we need to add @NonNull on the parameter or member variable?",
+      "range": {
+        "startLine": 666,
+        "startChar": 26,
+        "endLine": 666,
+        "endChar": 45
+      },
+      "revId": "8837b2fc97851c2dce32c7377427ad82b543c1d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
