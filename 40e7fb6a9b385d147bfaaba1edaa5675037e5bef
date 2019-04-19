@@ -52,6 +52,24 @@
       "revId": "40e7fb6a9b385d147bfaaba1edaa5675037e5bef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7473b9b_c2707b02",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-19T08:47:35Z",
+      "side": 0,
+      "message": "Clearly yes. Lorenzo and I had exactly the same idea, though I illustrated it with examples from Luke\u0027s code and Lorenzo from an outstanding patch of his.",
+      "parentUuid": "b726eac2_e863297e",
+      "revId": "40e7fb6a9b385d147bfaaba1edaa5675037e5bef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
