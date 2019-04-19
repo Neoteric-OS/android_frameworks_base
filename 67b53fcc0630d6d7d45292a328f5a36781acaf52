@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a82910d_b119569d",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-04-19T15:59:43Z",
+      "side": 1,
+      "message": "Wifi supports 6 keepalives on most devices. This only applies to the currently connected network and there is only 1 wifi network active currently.",
+      "parentUuid": "f239f19d_4351552c",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 71
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06d31827_c59c1955",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 5
