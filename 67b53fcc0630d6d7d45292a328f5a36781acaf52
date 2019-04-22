@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "bc834cba_cdb91803",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-04-22T20:22:10Z",
+      "side": 1,
+      "message": "Yes, That is true. We could have devices supporting more than 1 concurrent wifi connection. \n\nIf we really think that we want to enforce a minimum number, we should write a VTS test to ensure all wifi vendors comply.",
+      "parentUuid": "53e8b3bf_e393c18b",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 71
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06d31827_c59c1955",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 5
