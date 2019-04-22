@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "53e8b3bf_e393c18b",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-22T08:35:30Z",
+      "side": 1,
+      "message": "1 wifi network active might not be true on all devices – this applies to all devices in the ecosystem, not just Google ones.\nApparently there are common wifi chips with only 3 slots ?",
+      "parentUuid": "5a82910d_b119569d",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 71
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06d31827_c59c1955",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 5
@@ -217,6 +241,30 @@
       "side": 1,
       "message": "Yes, this is already done by this function only called once in the constructor.\nIt looks the name misguide you, maybe change the name to readSupportedKeepalivesFromRes or something?",
       "parentUuid": "6c7671d1_6100c022",
+      "range": {
+        "startLine": 396,
+        "startChar": 7,
+        "endLine": 396,
+        "endChar": 73
+      },
+      "revId": "67b53fcc0630d6d7d45292a328f5a36781acaf52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85cca5e_a9623c45",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-22T08:35:30Z",
+      "side": 1,
+      "message": "Ah yes sorry. No it\u0027s okay. Maybe just a comment on top of the method saying this is only called in the constructor.",
+      "parentUuid": "d070e1a3_3b6a0c97",
       "range": {
         "startLine": 396,
         "startChar": 7,
