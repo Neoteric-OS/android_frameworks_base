@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8856ded8_9d9a5d0e",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/RegularMaintenanceJobService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-22T06:29:47Z",
+      "side": 1,
+      "message": "Understood, so let\u0027s keep it in this patch.\n\nIt sounds like versioned AIDL should generate this code though, as that\u0027s the only code all implementations should ever have ?",
+      "parentUuid": "3ff3aaa4_4a6605db",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b599017_ec82de9b",
         "filename": "services/net/aidl/ipmemorystore/1/android/net/IIpMemoryStore.aidl",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The original file is marked oneway, but apparently the AIDL freezer puts it on each method instead. I guess the two are equivalent, so if in v2 we add a method that\u0027s not oneway, and mark all the others as oneway, then it will still be a compatible change and is easier to check this way ? Pure speculation.",
       "parentUuid": "0b599017_ec82de9b",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 9
+      },
+      "revId": "4473b47f7a3b62f2e5eb50a785e5bb16de6e38b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6953252_1f48bbeb",
+        "filename": "services/net/aidl/ipmemorystore/1/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-22T06:29:47Z",
+      "side": 1,
+      "message": "I see.\n\nThe value of the oneway modifier on an AIDL is that it forbids you from putting a two-way method in there. Since this code is generated, that can\u0027t happen, so it\u0027s probably okay. I\u0027d still vote to update the generator to add it, but it\u0027s low prio.",
+      "parentUuid": "b3d09916_23a9a0c4",
       "range": {
         "startLine": 2,
         "startChar": 0,
