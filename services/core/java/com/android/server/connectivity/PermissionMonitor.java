@@ -37,6 +37,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserInfo;
 import android.net.INetd;
+import android.net.NetworkStack;
 import android.net.UidRange;
 import android.os.Build;
 import android.os.RemoteException;
@@ -257,7 +258,8 @@ public class PermissionMonitor {
             }
         }
         return hasPermission(app, CONNECTIVITY_INTERNAL)
-                || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
+                || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS)
+                || hasPermission(app, NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
     }
 
     private boolean hasUseBackgroundNetworksPermission(PackageInfo app) {
