@@ -3222,6 +3222,9 @@
     <!-- Package name for the device provisioning package. -->
     <string name="config_deviceProvisioningPackage"></string>
 
+    <!-- Package name of the network stack APK, which needs to be protected from uninstall. -->
+    <string name="config_netStackPackage" translatable="false">com.android.networkstack</string>
+
     <!-- Colon separated list of package names that should be granted DND access -->
     <string name="config_defaultDndAccessPackages" translatable="false">com.android.camera2</string>
 

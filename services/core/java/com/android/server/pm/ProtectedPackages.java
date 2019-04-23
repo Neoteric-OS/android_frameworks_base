@@ -20,6 +20,8 @@ import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.content.Context;
 import android.os.UserHandle;
+import android.text.TextUtils;
+import android.util.ArraySet;
 import android.util.SparseArray;
 
 import com.android.internal.R;
@@ -47,14 +49,23 @@ public class ProtectedPackages {
 
     @Nullable
     @GuardedBy("this")
-    private final String mDeviceProvisioningPackage;
+    private final ArraySet<String> mDeviceProtectedPackages;
 
     private final Context mContext;
 
     public ProtectedPackages(Context context) {
         mContext = context;
-        mDeviceProvisioningPackage = mContext.getResources().getString(
+        mDeviceProtectedPackages = new ArraySet();
+        final String deviceProvisioningPackage = mContext.getResources().getString(
                 R.string.config_deviceProvisioningPackage);
+        if (!TextUtils.isEmpty(deviceProvisioningPackage)) {
+            mDeviceProtectedPackages.add(deviceProvisioningPackage);
+        }
+        final String netStackPackage = mContext.getResources().getString(
+                R.string.config_netStackPackage);
+        if (!TextUtils.isEmpty(netStackPackage)) {
+            mDeviceProtectedPackages.add(netStackPackage);
+        }
     }
 
     /**
@@ -102,7 +113,7 @@ public class ProtectedPackages {
      * can modify its data or package state.
      */
     private synchronized boolean isProtectedPackage(String packageName) {
-        return packageName != null && packageName.equals(mDeviceProvisioningPackage);
+        return mDeviceProtectedPackages.indexOf(packageName) >= 0;
     }
 
     /**

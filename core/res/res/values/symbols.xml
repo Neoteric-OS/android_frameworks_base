@@ -2934,6 +2934,9 @@
   <!-- Package name for the device provisioning package -->
   <java-symbol type="string" name="config_deviceProvisioningPackage" />
 
+  <!-- Package name of the network stack APK, which needs to be protected from uninstall. -->
+  <java-symbol type="string" name="config_netStackPackage" />
+
   <!-- Colon separated list of package names that should be granted DND access -->
   <java-symbol type="string" name="config_defaultDndAccessPackages" />
 
