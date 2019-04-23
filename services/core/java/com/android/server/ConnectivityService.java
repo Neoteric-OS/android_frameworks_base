@@ -2664,7 +2664,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             NetworkAgent.CMD_REPORT_NETWORK_STATUS,
                             (valid ? NetworkAgent.VALID_NETWORK : NetworkAgent.INVALID_NETWORK),
                             0, redirectUrlBundle);
-                    if (wasValidated && !nai.lastValidated) {
+                    if (partialConnectivityChanged || (wasValidated && !nai.lastValidated)) {
                         handleNetworkUnvalidated(nai);
                     }
                     break;
@@ -3643,6 +3643,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) log("handleNetworkUnvalidated " + nai.name() + " cap=" + nc);
 
         if (!nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            return;
+        }
+
+        if (nai.partialConnectivity && !nai.networkMisc.acceptPartialConnectivity) {
+            // Only popup a notification if user never accepted this partial internet connectivity
+            // network. Once user accepts this network, it does not have to popup this
+            // notification again.
+            showNetworkNotification(nai, NotificationType.PARTIAL_CONNECTIVITY);
             return;
         }
 
