@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5117fcb_44e125b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T06:41:33Z",
+      "side": 1,
+      "message": "Looks like you rebased on an old version. PS5 was on top of the current state of ToT, this is not.",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 11
+      },
+      "revId": "04257292ee5c57bad1865fc987c8c87e7768eefb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3b38e8_8d1c8bf0",
+        "filename": "services/net/java/android/net/ipmemorystore/OnStatusListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T06:41:33Z",
+      "side": 1,
+      "message": "Here too, not sure this is based on an old version but this would bring back the crash loop.",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "04257292ee5c57bad1865fc987c8c87e7768eefb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
