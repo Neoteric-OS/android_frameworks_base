@@ -55,6 +55,7 @@ public class CarrierIdentifier implements Parcelable {
     private @Nullable String mImsi;
     private @Nullable String mGid1;
     private @Nullable String mGid2;
+    private String mPnn;
     private int mCarrierId = TelephonyManager.UNKNOWN_CARRIER_ID;
     private int mSpecificCarrierId = TelephonyManager.UNKNOWN_CARRIER_ID;
 
@@ -113,6 +114,16 @@ public class CarrierIdentifier implements Parcelable {
         mGid2 = gid2;
         mSpn = null;
         mImsi = null;
+        mPnn = null;
+    }
+
+    /**
+     * @hide
+     */
+    public CarrierIdentifier(String mcc, String mnc, @Nullable String spn, @Nullable String imsi, @Nullable String gid1,
+                             @Nullable String gid2, String pnn, int carrierid, int specificCarrierId) {
+        this(mcc, mnc, spn, imsi, gid1, gid2, carrierid, specificCarrierId);
+        mPnn = pnn;
     }
 
     /** @hide */
@@ -154,6 +165,11 @@ public class CarrierIdentifier implements Parcelable {
         return mGid2;
     }
 
+    /** add pnn for MVNO */
+    public String getPnn() {
+        return mPnn;
+    }
+
     /**
      * Returns the carrier id.
      * @see TelephonyManager#getSimCarrierId()
@@ -192,13 +208,14 @@ public class CarrierIdentifier implements Parcelable {
                 && Objects.equals(mImsi, that.mImsi)
                 && Objects.equals(mGid1, that.mGid1)
                 && Objects.equals(mGid2, that.mGid2)
+                && Objects.equals(mPnn, that.mPnn)
                 && Objects.equals(mCarrierId, that.mCarrierId)
                 && Objects.equals(mSpecificCarrierId, that.mSpecificCarrierId);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(mMcc, mMnc, mSpn, mImsi, mGid1, mGid2, mCarrierId, mSpecificCarrierId);
+        return Objects.hash(mMcc, mMnc, mSpn, mImsi, mGid1, mGid2, mPnn, mCarrierId, mSpecificCarrierId);
     }
 
     @Override
@@ -214,6 +231,7 @@ public class CarrierIdentifier implements Parcelable {
         out.writeString(mImsi);
         out.writeString(mGid1);
         out.writeString(mGid2);
+        out.writeString(mPnn);
         out.writeInt(mCarrierId);
         out.writeInt(mSpecificCarrierId);
     }
@@ -227,6 +245,7 @@ public class CarrierIdentifier implements Parcelable {
               + ",imsi=" + Rlog.pii(false, mImsi)
               + ",gid1=" + mGid1
               + ",gid2=" + mGid2
+              + ",pnn=" + mPnn
               + ",carrierid=" + mCarrierId
               + ",specificCarrierId=" + mSpecificCarrierId
               + "}";
@@ -240,6 +259,7 @@ public class CarrierIdentifier implements Parcelable {
         mImsi = in.readString();
         mGid1 = in.readString();
         mGid2 = in.readString();
+        mPnn = in.readString();
         mCarrierId = in.readInt();
         mSpecificCarrierId = in.readInt();
     }
@@ -251,5 +271,6 @@ public class CarrierIdentifier implements Parcelable {
         int IMSI_PREFIX = 2;
         int GID1 = 3;
         int GID2 = 4;
+        int PNN = 5;
     }
 }
