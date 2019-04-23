@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea2064d2_a7abf530",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "Coding style says only one import block in unicode order.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba832f86_9f9a79ca",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "What you wrote is fine, but I question the usefulness of this apply. It doesn\u0027t save you any code, it only changes the \u0027mockRes\u0027 argument into \u0027this\u0027 inside the block. I\u0027m not sure this is actually more readable than the sequential code :\n\n  val mockRes \u003d mock(Resources::class.java)\n  doReturn(res).`when`(mockRes).getStringArray(ArgumentMatchers.eq(id))\n\nEspecially for the return below, you may consider using \"also\" :\n\n  return mock(Context::class.java).also { doReturn(mockRes).`when`(it).getResources() }\n\n...which I find marginally easier to read in this case.\n\nBut what you wrote is fine. What I like with your use of .apply() is that it makes very clear that it\u0027s conceptually part of the initialization of the object.\n\n\nOtherwise, you may also have elected something like the following style :\n\nprivate fun getMockedContextWithStringArrayRes(...) \u003d mock(Context::class.java).apply {\n  `when`(this.getResources()).thenReturn(mock(Resources::class.java).also { resources -\u003e\n    doReturn(res).`when`(resources).getStringArray(eq(id))\n  })\n}\n\nIt\u0027s as you wish, just suggestions. I\u0027m happy with what you wrote.",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ebb42b5_04143ecd",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "Will fit on the same line",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b38c98a_a1009d5d",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "What you wrote is fine, but you can also declare this as an inner function :\n\n  fun assertRunWithException(res: Array\u003cString\u003e) {\n    try {\n      ...\n    }\n  }\n\nThis has the same benefits that the scope is limited to the outer function, but a different syntax that might be easier to understand in this case.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28e98336_219c248d",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "Here again what you wrote is fine, but I tend to find the following clearer and more idiomatic :\n\n  this[TRANSPORT_CELLULAR] \u003d 3\n  this[TRANSPORT_WIFI] \u003d 6",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688a7451_d368724d",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "In this case I tend to think this \"with\" reduces readability compared to the basic procedural style.\n\n  val nc \u003d NetworkCapabilities()\n  nc.transportTypes \u003d intArrayOf(...)\n  assertEquals(3, KU.gskfnc(cust, nc)",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 12
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd4b49c_796fa44b",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T12:30:03Z",
+      "side": 1,
+      "message": "Overlong line. You may want to import TRANSPORT_WIFI and TRANSPORT_VPN",
+      "range": {
+        "startLine": 102,
+        "startChar": 96,
+        "endLine": 102,
+        "endChar": 109
+      },
+      "revId": "15aa3f8e5724b9370b95bd4eba20930e51b1d32d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
