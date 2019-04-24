@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cadeb74_44bc52e2",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-04-24T20:11:12Z",
+      "side": 1,
+      "message": "Instead of the comment below, maybe just mention that it is the most recent message in the conversation here.",
+      "range": {
+        "startLine": 771,
+        "startChar": 57,
+        "endLine": 771,
+        "endChar": 58
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a67b0f6_6e767138",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-04-24T20:11:12Z",
+      "side": 1,
+      "message": "We should ensure we test this as well.",
+      "range": {
+        "startLine": 771,
+        "startChar": 15,
+        "endLine": 771,
+        "endChar": 38
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9564ecf0_e27e242a",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-04-24T20:11:12Z",
+      "side": 1,
+      "message": "Sorry, this documentation wasn\u0027t needed. It seems well covered by the first line to me.",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 92
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
