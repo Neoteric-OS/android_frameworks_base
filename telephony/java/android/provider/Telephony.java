@@ -770,6 +770,7 @@ public final class Telephony {
             /**
              * The first 45 characters of the body of the message.
              * <P>Type: TEXT</P>
+             * It is the most recent message in the conversation.
              */
             public static final String SNIPPET = "snippet";
 
