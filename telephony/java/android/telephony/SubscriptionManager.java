@@ -538,7 +538,7 @@ public class SubscriptionManager {
      * <P>Type: TEXT (String)</P>
      * @hide
      */
-    public static final String CARD_ID = "card_id";
+    public static final String CARD_STRING = "card_id";
 
     /**
      * TelephonyProvider column name for the encoded {@link UiccAccessRule}s from
