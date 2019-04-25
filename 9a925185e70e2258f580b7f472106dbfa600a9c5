@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d7e9b3_c83c9c64",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "Do you want to have annotation here to say it will throw KeepaliveDeviceConfigurationException when ... ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0409f3_bf221e8e",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "Have a constant definition and a short comment about that?",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3eeb4b_6bb73652",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "You may want to catch NumberFormatException or rethrow as KeepaliveDeviceConfigurationException if the configuration is not a valid number.",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2ba51c_b2ae0e9b",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "Not a strong opinion. Do you need to have it log as \"Invalid support count 2 for type 1\"?\nYou could easily know which type incorrect. But, sure, you could just go to config.xml to see which one is mis-configured.",
+      "range": {
+        "startLine": 78,
+        "startChar": 24,
+        "endLine": 78,
+        "endChar": 62
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253ba220_6c8ebe91",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "It\u0027s put in default framework resource. It implies all devices(chips) are expected to support that? If not, do we need to put empty here and have a overlay?",
+      "range": {
+        "startLine": 356,
+        "startChar": 5,
+        "endLine": 357,
+        "endChar": 24
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe07fae_971dc18b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "For wifi part, as the comment mentioned in previous patch, if the keepalive slot is configured for 2 active wifi connections and it become 3*2\u003d6(may rpius@ help to answer that). How do the resource allocate? It could allocate per connection? 3 for wifi_1 and 3 for wifi_2? Or how do we configure for this kind of case?",
+      "range": {
+        "startLine": 357,
+        "startChar": 14,
+        "endLine": 357,
+        "endChar": 17
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee40fbb_b1c067f6",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-25T06:49:27Z",
+      "side": 1,
+      "message": "Could we write as (supported - networkKeepalives.size())?",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 52
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
