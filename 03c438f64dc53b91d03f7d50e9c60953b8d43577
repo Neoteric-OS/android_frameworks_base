@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abe5ead1_fe872a68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1311980
+      },
+      "writtenOn": "2019-04-25T08:57:24Z",
+      "side": 1,
+      "message": "build/make/tools/checkowners.py -c -v OWNERS",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "03c438f64dc53b91d03f7d50e9c60953b8d43577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
