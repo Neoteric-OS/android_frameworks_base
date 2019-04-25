@@ -40,6 +40,19 @@ oneway interface INetworkMonitor {
     // for https probe.
     const int NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY = 2;
 
+    // Probe flags indicate probe result and types. If no PROBE_FLAGS_RESULT_* are set, then it's
+    // equal to NETWORK_TEST_RESULT_INVALID. If PROBE_FLAGS_RESULT_VALID is set, then the network
+    // validates and equal to NETWORK_TEST_RESULT_VALID. If PROBE_FLAGS_RESULT_PARTIAL is set, then
+    // the network has partial connectivity which is equal to
+    // NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY. PROBE_FLAGS_PROBE_* is set when the specific probe
+    // result of the network is resolved.
+    const int PROBE_FLAGS_RESULT_VALID = 0x01;
+    const int PROBE_FLAGS_RESULT_PARTIAL = 0x02;
+    const int PROBE_FLAGS_PROBE_DNS = 0x04;
+    const int PROBE_FLAGS_PROBE_HTTP = 0x08;
+    const int PROBE_FLAGS_PROBE_HTTPS = 0x10;
+    const int PROBE_FLAGS_PROBE_PRIVDNS = 0x20;
+
     void start();
     void launchCaptivePortalApp();
     void notifyCaptivePortalAppFinished(int response);
