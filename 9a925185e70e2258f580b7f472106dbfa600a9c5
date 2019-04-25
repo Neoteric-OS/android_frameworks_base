@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9976fcf2_33269e30",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-25T09:33:20Z",
+      "side": 1,
+      "message": "final ??",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d7e9b3_c83c9c64",
         "filename": "core/java/android/net/util/KeepaliveUtils.java",
         "patchSetId": 7
@@ -134,6 +157,46 @@
         "endLine": 357,
         "endChar": 17
       },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d07a8c0_504d212b",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-25T09:33:20Z",
+      "side": 1,
+      "message": "Move this to KeepaliveUtils ??",
+      "range": {
+        "startLine": 117,
+        "startChar": 35,
+        "endLine": 118,
+        "endChar": 67
+      },
+      "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bf33bf_38382db1",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-25T09:33:20Z",
+      "side": 1,
+      "message": "We count slot per network agent. There is the problem if you use transport type to define MAX slots because it is possible multiple network agents use the same transport type.",
       "revId": "9a925185e70e2258f580b7f472106dbfa600a9c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
