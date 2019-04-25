@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "647a20dd_c637652f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1421551
+      },
+      "writtenOn": "2019-04-25T04:46:22Z",
+      "side": 1,
+      "message": "Yes, we are testing this through testQueryConversation_snippetEqualsMostRecentMessageBody() testcase.",
+      "parentUuid": "5a67b0f6_6e767138",
+      "range": {
+        "startLine": 771,
+        "startChar": 15,
+        "endLine": 771,
+        "endChar": 38
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2db2a0d6_b69ae6fc",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1421551
+      },
+      "writtenOn": "2019-04-25T04:46:22Z",
+      "side": 1,
+      "message": "Added this \" It is the most recent message in the conversation.\"",
+      "parentUuid": "9cadeb74_44bc52e2",
+      "range": {
+        "startLine": 771,
+        "startChar": 57,
+        "endLine": 771,
+        "endChar": 58
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9564ecf0_e27e242a",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83166c5_a5e106ee",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1421551
+      },
+      "writtenOn": "2019-04-25T04:46:22Z",
+      "side": 1,
+      "message": "Removed it",
+      "parentUuid": "9564ecf0_e27e242a",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 92
+      },
+      "revId": "8e634238c146a6c775f0df0bbaff5217cf5446e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
