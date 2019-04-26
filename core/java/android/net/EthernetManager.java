@@ -71,6 +71,12 @@ public class EthernetManager {
         void onAvailabilityChanged(String iface, boolean isAvailable);
     }
 
+    /** @hide */
+    public static final String ACTION_ETHERNET_TETHERING_STATE =
+            "com.android.ethernet.ETHERNET_TETHERING_STATE";
+    /** @hide */
+    public static final String EXTRA_ETH_TETHER_STATE = "eth_tether_state";
+
     /**
      * Create a new EthernetManager instance.
      * Applications will almost always want to use
@@ -178,6 +184,29 @@ public class EthernetManager {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
+        }
+    }
+
+    /**
+     * Indicates whether ethernet is for upstream interface.
+     */
+    public boolean isEthernetTethering() {
+        try {
+            return mService.isEthernetTethering();
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Turn on/off Ethernet tethering
+     * @param enable Whether ethernet interface is used for tethering
+     */
+    public void setEthernetTethering(boolean enable) {
+        try {
+            mService.setEthernetTethering(enable);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
         }
     }
 }

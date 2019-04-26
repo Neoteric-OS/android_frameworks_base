@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
+import static android.hardware.usb.UsbManager.USB_FUNCTION_NCM;
 import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
 import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
@@ -27,7 +28,9 @@ import static android.net.ConnectivityManager.EXTRA_AVAILABLE_TETHER;
 import static android.net.ConnectivityManager.EXTRA_ERRORED_TETHER;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
 import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
+import static android.net.ConnectivityManager.TETHERING_ETHERNET;
 import static android.net.ConnectivityManager.TETHERING_INVALID;
+import static android.net.ConnectivityManager.TETHERING_NCM;
 import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
@@ -61,6 +64,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
+import android.net.EthernetManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ITetheringEventCallback;
@@ -100,6 +104,7 @@ import android.util.SparseArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
+import com.android.internal.util.CollectionUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
@@ -176,6 +181,7 @@ public class Tethering extends BaseNetworkObserver {
     private final INetworkManagementService mNMService;
     private final INetworkStatsService mStatsService;
     private final INetworkPolicyManager mPolicyManager;
+    private final EthernetManager mEthernetManager;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
     private final OffloadController mOffloadController;
@@ -213,6 +219,8 @@ public class Tethering extends BaseNetworkObserver {
         mPolicyManager = policyManager;
         mLooper = looper;
         mDeps = deps;
+
+        mEthernetManager = context.getSystemService(EthernetManager.class);
 
         mPublicSync = new Object();
 
@@ -290,6 +298,7 @@ public class Tethering extends BaseNetworkObserver {
         filter.addAction(CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+        filter.addAction(EthernetManager.ACTION_ETHERNET_TETHERING_STATE);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
 
         filter = new IntentFilter();
@@ -358,6 +367,10 @@ public class Tethering extends BaseNetworkObserver {
             return TETHERING_USB;
         } else if (cfg.isBluetooth(iface)) {
             return TETHERING_BLUETOOTH;
+        } else if (cfg.isEthernet(iface)) {
+            return TETHERING_ETHERNET;
+        } else if (cfg.isNcm(iface)) {
+            return TETHERING_NCM;
         }
         return TETHERING_INVALID;
     }
@@ -367,6 +380,10 @@ public class Tethering extends BaseNetworkObserver {
         if (VDBG) Log.d(TAG, "interfaceAdded " + iface);
         synchronized (mPublicSync) {
             maybeTrackNewInterfaceLocked(iface);
+        }
+
+        if (mEthernetManager.isEthernetTethering()) {
+            setEthernetTethering(true);
         }
     }
 
@@ -405,6 +422,14 @@ public class Tethering extends BaseNetworkObserver {
                 break;
             case TETHERING_BLUETOOTH:
                 setBluetoothTethering(enable, receiver);
+                break;
+            case TETHERING_ETHERNET:
+                result = setEthernetTethering(enable);
+                sendTetherResult(receiver, result);
+                break;
+            case TETHERING_NCM:
+                result = setNcmTethering(enable);
+                sendTetherResult(receiver, result);
                 break;
             default:
                 Log.w(TAG, "Invalid tether type.");
@@ -716,6 +741,10 @@ public class Tethering extends BaseNetworkObserver {
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 mLog.log("OBSERVED configuration changed");
                 updateConfiguration();
+            } else if (action.equals(EthernetManager.ACTION_ETHERNET_TETHERING_STATE)) {
+                mEntitlementMgr.startProvisioningIfNeeded(TETHERING_ETHERNET, false);
+                setEthernetTethering(intent.getBooleanExtra(
+                        EthernetManager.EXTRA_ETH_TETHER_STATE, false));
             }
         }
 
@@ -735,6 +764,7 @@ public class Tethering extends BaseNetworkObserver {
             final boolean usbConnected = intent.getBooleanExtra(USB_CONNECTED, false);
             final boolean usbConfigured = intent.getBooleanExtra(USB_CONFIGURED, false);
             final boolean rndisEnabled = intent.getBooleanExtra(USB_FUNCTION_RNDIS, false);
+            final boolean ncmEnabled = intent.getBooleanExtra(USB_FUNCTION_NCM, false);
 
             mLog.log(String.format("USB bcast connected:%s configured:%s rndis:%s",
                     usbConnected, usbConfigured, rndisEnabled));
@@ -762,6 +792,9 @@ public class Tethering extends BaseNetworkObserver {
                 } else if (usbConfigured && rndisEnabled) {
                     // Tether if rndis is enabled and usb is configured.
                     tetherMatchingInterfaces(IpServer.STATE_TETHERED, TETHERING_USB);
+                } else if (usbConnected && ncmEnabled) {
+                    // Tether if ncm is enabled and usb is connected.
+                    tetherMatchingInterfaces(IpServer.STATE_LOCAL_ONLY, TETHERING_NCM);
                 }
                 mRndisEnabled = usbConfigured && rndisEnabled;
             }
@@ -980,6 +1013,32 @@ public class Tethering extends BaseNetworkObserver {
         return TETHER_ERROR_NO_ERROR;
     }
 
+    private int setEthernetTethering(boolean enable) {
+        if (VDBG) Log.d(TAG, "setEthernetTethering(" + enable + ")");
+        final ContentResolver cr = mContext.getContentResolver();
+        if (enable && mEthernetManager.isEthernetTethering()) {
+            Log.d(TAG, "Ethernet Tethering mode is on");
+            synchronized (mPublicSync) {
+                tetherMatchingInterfaces(IpServer.STATE_TETHERED, TETHERING_ETHERNET);
+            }
+        } else {
+            synchronized (mPublicSync) {
+                tetherMatchingInterfaces(IpServer.STATE_AVAILABLE, TETHERING_ETHERNET);
+            }
+        }
+        return TETHER_ERROR_NO_ERROR;
+    }
+
+    private int setNcmTethering(boolean enable) {
+        if (VDBG) Log.d(TAG, "setNcmTethering(" + enable + ")");
+        UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+        synchronized (mPublicSync) {
+            usbManager.setCurrentFunctions(enable ? UsbManager.FUNCTION_NCM
+                    : UsbManager.FUNCTION_NONE);
+        }
+        return TETHER_ERROR_NO_ERROR;
+    }
+
     // TODO review API - figure out how to delete these entirely.
     public String[] getTetheredIfaces() {
         ArrayList<String> list = new ArrayList<String>();
@@ -1005,6 +1064,18 @@ public class Tethering extends BaseNetworkObserver {
             }
         }
         return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * Getter for the array of local-only intrfaces
+     */
+    public String[] getLocalOnlyIfaces() {
+        final List<String> list;
+        synchronized (mPublicSync) {
+            list = CollectionUtils.filter(
+                    mTetherStates, state -> state.lastState == IpServer.STATE_LOCAL_ONLY);
+        }
+        return list.toArray(new String[0]);
     }
 
     public String[] getTetheredDhcpRanges() {
@@ -1470,6 +1541,7 @@ public class Tethering extends BaseNetworkObserver {
                                 Log.d(TAG, "  " + o);
                             }
                         }
+
                         // If there has been a change and an upstream is no
                         // longer desired, release any mobile requests.
                         final boolean previousUpstreamWanted = updateUpstreamWanted();

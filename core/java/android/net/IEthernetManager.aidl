@@ -32,4 +32,6 @@ interface IEthernetManager
     boolean isAvailable(String iface);
     void addListener(in IEthernetServiceListener listener);
     void removeListener(in IEthernetServiceListener listener);
+    boolean isEthernetTethering();
+    void setEthernetTethering(boolean enable);
 }
