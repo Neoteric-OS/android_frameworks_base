@@ -3897,6 +3897,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
+    public int setNcmTethering(boolean enable, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
+        return mTethering.setNcmTethering(enable);
+    }
+
+    @Override
     public int setUsbTethering(boolean enable, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         if (isTetheringSupported()) {

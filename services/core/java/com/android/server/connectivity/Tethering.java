@@ -135,6 +135,8 @@ public class Tethering extends BaseNetworkObserver {
     private final static boolean DBG = false;
     private final static boolean VDBG = false;
 
+    private static final String STRING_NCM = "ncm";
+
     private static final Class[] messageClasses = {
             Tethering.class, TetherMasterSM.class, IpServer.class
     };
@@ -560,7 +562,10 @@ public class Tethering extends BaseNetworkObserver {
                     localOnlyList.add(iface);
                 } else if (tetherState.lastState == IpServer.STATE_TETHERED) {
                     if (cfg.isUsb(iface)) {
-                        usbTethered = true;
+                        // No notification in case of tethering with ncm interface
+                        if (!"ncm0".equals(iface)) {
+                            usbTethered = true;
+                        }
                     } else if (cfg.isWifi(iface)) {
                         wifiTethered = true;
                     } else if (cfg.isBluetooth(iface)) {
@@ -725,6 +730,7 @@ public class Tethering extends BaseNetworkObserver {
             final boolean usbConnected = intent.getBooleanExtra(USB_CONNECTED, false);
             final boolean usbConfigured = intent.getBooleanExtra(USB_CONFIGURED, false);
             final boolean rndisEnabled = intent.getBooleanExtra(USB_FUNCTION_RNDIS, false);
+            final boolean ncmEnabled = intent.getBooleanExtra(STRING_NCM, false);
 
             mLog.log(String.format("USB bcast connected:%s configured:%s rndis:%s",
                     usbConnected, usbConfigured, rndisEnabled));
@@ -751,6 +757,9 @@ public class Tethering extends BaseNetworkObserver {
                     mEntitlementMgr.stopProvisioningIfNeeded(TETHERING_USB);
                 } else if (usbConfigured && rndisEnabled) {
                     // Tether if rndis is enabled and usb is configured.
+                    tetherMatchingInterfaces(IpServer.STATE_TETHERED, TETHERING_USB);
+                } else if (usbConnected && ncmEnabled) {
+                    // Tether if ncm is enabled and usb is connected.
                     tetherMatchingInterfaces(IpServer.STATE_TETHERED, TETHERING_USB);
                 }
                 mRndisEnabled = usbConfigured && rndisEnabled;
@@ -956,6 +965,24 @@ public class Tethering extends BaseNetworkObserver {
         return copy(mConfig.tetherableBluetoothRegexs);
     }
 
+    /**
+     * Tethering with ncm interface
+     */
+    public int setNcmTethering(boolean enable) {
+        Log.i(TAG, "setNcmTethering(" + enable + ")");
+        UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+        if (usbManager == null) {
+            mLog.e("setNcmTethering: failed to get UsbManager!");
+            return TETHER_ERROR_SERVICE_UNAVAIL;
+        }
+
+        synchronized (mPublicSync) {
+            // TODO: change setCurrentFunction to setCurrentFunctions when USB fw bring up finished.
+            usbManager.setCurrentFunction(enable ? STRING_NCM : null, false);
+        }
+        return TETHER_ERROR_NO_ERROR;
+    }
+
     public int setUsbTethering(boolean enable) {
         if (VDBG) Log.d(TAG, "setUsbTethering(" + enable + ")");
         UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
@@ -1145,7 +1172,14 @@ public class Tethering extends BaseNetworkObserver {
         protected boolean turnOnMasterTetherSettings() {
             final TetheringConfiguration cfg = mConfig;
             try {
-                mNMService.setIpForwardingEnabled(true);
+                // No need to enable forwarding in case of tethering with ncm interface.
+                //mNMService.setIpForwardingEnabled(true);
+
+                if ("ncm0".equals(mNotifyList.get(0).interfaceName())) {
+                    Log.d(TAG, "skip IP forwarding for ncm");
+                } else {
+                    mNMService.setIpForwardingEnabled(true);
+                }
             } catch (Exception e) {
                 mLog.e(e);
                 transitionTo(mSetIpForwardingEnabledErrorState);
@@ -1427,6 +1461,16 @@ public class Tethering extends BaseNetworkObserver {
                     case EVENT_IFACE_SERVING_STATE_ACTIVE: {
                         IpServer who = (IpServer) message.obj;
                         if (VDBG) Log.d(TAG, "Tether Mode requested by " + who);
+                        // when only ncm is configured, ip_forwarding is disabled.
+                        // need to enable it for other tetherings
+                        if (mNotifyList.size() == 1
+                                && "ncm0".equals(mNotifyList.get(0).interfaceName())) {
+                            try {
+                                mNMService.setIpForwardingEnabled(true);
+                            } catch (Exception e) {
+                                transitionTo(mSetIpForwardingDisabledErrorState);
+                            }
+                        }
                         handleInterfaceServingStateActive(message.arg1, who);
                         who.sendMessage(IpServer.CMD_TETHER_CONNECTION_CHANGED,
                                 mCurrentUpstreamIfaceSet);
@@ -1457,6 +1501,17 @@ public class Tethering extends BaseNetworkObserver {
                                 Log.d(TAG, "  " + o);
                             }
                         }
+
+                        // disable forwarding only ncm tethering is active
+                        if (mNotifyList.size() == 1
+                                && "ncm0".equals(mNotifyList.get(0).interfaceName())) {
+                            try {
+                                mNMService.setIpForwardingEnabled(false);
+                            } catch (Exception e) {
+                                transitionTo(mSetIpForwardingDisabledErrorState);
+                            }
+                        }
+
                         // If there has been a change and an upstream is no
                         // longer desired, release any mobile requests.
                         final boolean previousUpstreamWanted = updateUpstreamWanted();

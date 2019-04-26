@@ -2741,6 +2741,29 @@ public class ConnectivityManager {
     }
 
     /**
+     * Enable/disable tethering with ncm interface.
+     *
+     * <p>This method requires the caller to hold either the
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
+     * or the ability to modify system settings as determined by
+     * {@link android.provider.Settings.System#canWrite}.</p>
+     *
+     * @param enable a boolean - {@code true} to enable tethering with ncm
+     * @return error a {@code TETHER_ERROR} value indicating success or failure type
+     *
+     * {@hide}
+     */
+    public int setNcmTethering(boolean enable) {
+        try {
+            String pkgName = mContext.getOpPackageName();
+            Log.i(TAG, "setNcmTethering caller:" + pkgName);
+            return mService.setNcmTethering(enable, pkgName);
+        } catch (RemoteException e) {
+            return TETHER_ERROR_SERVICE_UNAVAIL;
+        }
+    }
+
+    /**
      * Attempt to both alter the mode of USB and Tethering of USB.  A
      * utility method to deal with some of the complexity of USB - will
      * attempt to switch to Rndis and subsequently tether the resulting
