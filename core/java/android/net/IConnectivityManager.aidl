@@ -110,6 +110,8 @@ interface IConnectivityManager
 
     String[] getTetherableBluetoothRegexs();
 
+    int setNcmTethering(boolean enable, String callerPkg);
+
     int setUsbTethering(boolean enable, String callerPkg);
 
     void reportInetCondition(int networkType, int percentage);
