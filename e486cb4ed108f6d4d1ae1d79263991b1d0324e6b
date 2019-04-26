@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1d52de_8befe10a",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-26T13:42:30Z",
+      "side": 1,
+      "message": "do we need to add @UnsupportedAppUsage annotation as well?",
+      "revId": "e486cb4ed108f6d4d1ae1d79263991b1d0324e6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
