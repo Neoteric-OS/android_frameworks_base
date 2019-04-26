@@ -3953,6 +3953,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
+    public String[] getLocalOnlyIfaces() {
+        enforceTetherAccessPermission();
+        return mTethering.getLocalOnlyIfaces();
+    }
+
+    @Override
     public String[] getTetheredDhcpRanges() {
         enforceConnectivityInternalPermission();
         return mTethering.getTetheredDhcpRanges();
@@ -3990,7 +3996,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi,
             String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        if (!isTetheringSupported()) {
+        if (!isTetheringSupported() && type != ConnectivityManager.TETHERING_NCM) {
             receiver.send(ConnectivityManager.TETHER_ERROR_UNSUPPORTED, null);
             return;
         }

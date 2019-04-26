@@ -9494,6 +9494,13 @@ public final class Settings {
         public static final String TETHER_OFFLOAD_DISABLED = "tether_offload_disabled";
 
         /**
+         * Used to indicate whether ethernet is for tethering
+         * which defaults to false
+         * @hide
+         */
+        public static final String ETHERNET_TETHERING = "ethernet_tethering";
+
+        /**
          * Use the old dnsmasq DHCP server for tethering instead of the framework implementation.
          *
          * Integer values are interpreted as boolean, and the absence of an explicit setting

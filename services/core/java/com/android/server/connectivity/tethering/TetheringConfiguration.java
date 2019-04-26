@@ -26,6 +26,8 @@ import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
 import static com.android.internal.R.array.config_tether_bluetooth_regexs;
 import static com.android.internal.R.array.config_tether_dhcp_range;
+import static com.android.internal.R.array.config_tether_ethernet_regexs;
+import static com.android.internal.R.array.config_tether_ncm_regexs;
 import static com.android.internal.R.array.config_tether_upstream_types;
 import static com.android.internal.R.array.config_tether_usb_regexs;
 import static com.android.internal.R.array.config_tether_wifi_regexs;
@@ -86,6 +88,8 @@ public class TetheringConfiguration {
     public final String[] tetherableUsbRegexs;
     public final String[] tetherableWifiRegexs;
     public final String[] tetherableBluetoothRegexs;
+    public final String[] tetherableEthernetRegexs;
+    public final String[] tetherableNcmRegexs;
     public final boolean isDunRequired;
     public final boolean chooseUpstreamAutomatically;
     public final Collection<Integer> preferredUpstreamIfaceTypes;
@@ -111,6 +115,8 @@ public class TetheringConfiguration {
         // implications for Settings and for provisioning checks.
         tetherableWifiRegexs = getResourceStringArray(res, config_tether_wifi_regexs);
         tetherableBluetoothRegexs = getResourceStringArray(res, config_tether_bluetooth_regexs);
+        tetherableEthernetRegexs = getResourceStringArray(res, config_tether_ethernet_regexs);
+        tetherableNcmRegexs = getResourceStringArray(res, config_tether_ncm_regexs);
 
         isDunRequired = checkDunRequired(ctx, subId);
 
@@ -142,6 +148,20 @@ public class TetheringConfiguration {
         return matchesDownstreamRegexs(iface, tetherableBluetoothRegexs);
     }
 
+    /**
+     * check ethernet interface type
+     */
+    public boolean isEthernet(String iface) {
+        return matchesDownstreamRegexs(iface, tetherableEthernetRegexs);
+    }
+
+    /**
+     * check ncm interface type
+     */
+    public boolean isNcm(String iface) {
+        return matchesDownstreamRegexs(iface, tetherableNcmRegexs);
+    }
+
     public boolean hasMobileHotspotProvisionApp() {
         return !TextUtils.isEmpty(provisioningAppNoUi);
     }
@@ -153,6 +173,8 @@ public class TetheringConfiguration {
         dumpStringArray(pw, "tetherableUsbRegexs", tetherableUsbRegexs);
         dumpStringArray(pw, "tetherableWifiRegexs", tetherableWifiRegexs);
         dumpStringArray(pw, "tetherableBluetoothRegexs", tetherableBluetoothRegexs);
+        dumpStringArray(pw, "tetherableEthernetRegexs", tetherableEthernetRegexs);
+        dumpStringArray(pw, "tetherableNcmRegexs", tetherableNcmRegexs);
 
         pw.print("isDunRequired: ");
         pw.println(isDunRequired);

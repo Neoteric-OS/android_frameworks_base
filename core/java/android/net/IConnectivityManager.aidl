@@ -100,6 +100,9 @@ interface IConnectivityManager
     @UnsupportedAppUsage
     String[] getTetheringErroredIfaces();
 
+    @UnsupportedAppUsage
+    String[] getLocalOnlyIfaces();
+
     String[] getTetheredDhcpRanges();
 
     @UnsupportedAppUsage

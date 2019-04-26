@@ -180,4 +180,15 @@ public class EthernetManager {
             }
         }
     }
+
+    /**
+     * Indicates whether ethernet is for upstream interface.
+     */
+    public boolean isEthernetTethering() {
+        try {
+            return mService.isEthernetTethering();
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
 }

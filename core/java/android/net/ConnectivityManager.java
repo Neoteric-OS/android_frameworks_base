@@ -2383,6 +2383,23 @@ public class ConnectivityManager {
     }
 
     /**
+     * Get the set of local_only interfaces.
+     *
+     * @return an array of 0 or more String of currently local_only interface names.
+     *
+     * {@hide}
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @UnsupportedAppUsage
+    public String[] getLocalOnlyIfaces() {
+        try {
+            return mService.getLocalOnlyIfaces();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Get the set of tethered dhcp ranges.
      *
      * @return an array of 0 or more {@code String} of tethered dhcp ranges.
