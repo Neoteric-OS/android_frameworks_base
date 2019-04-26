@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e3f81f_171ff4ea",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove",
+      "range": {
+        "startLine": 1104,
+        "startChar": 12,
+        "endLine": 1104,
+        "endChar": 16
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39393178_1f906b5d",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove, or lower the level",
+      "range": {
+        "startLine": 1108,
+        "startChar": 14,
+        "endLine": 1109,
+        "endChar": 43
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0d1199_126051ae",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove",
+      "range": {
+        "startLine": 1259,
+        "startChar": 16,
+        "endLine": 1260,
+        "endChar": 72
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7db955_d4fe8207",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove or lower the level",
+      "range": {
+        "startLine": 1262,
+        "startChar": 17,
+        "endLine": 1263,
+        "endChar": 48
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9745fc_ec99c866",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove",
+      "range": {
+        "startLine": 1285,
+        "startChar": 11,
+        "endLine": 1285,
+        "endChar": 71
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e060ab9a_5c71dc72",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove",
+      "range": {
+        "startLine": 1693,
+        "startChar": 17,
+        "endLine": 1693,
+        "endChar": 64
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b0e7c4_874fd7fb",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-04-26T13:23:08Z",
+      "side": 1,
+      "message": "Log spam, please remove",
+      "range": {
+        "startLine": 1700,
+        "startChar": 18,
+        "endLine": 1700,
+        "endChar": 60
+      },
+      "revId": "3cbfce77724ae929c3946395b19ce5205f58f899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
