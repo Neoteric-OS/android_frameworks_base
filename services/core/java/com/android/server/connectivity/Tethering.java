@@ -55,6 +55,7 @@ import android.bluetooth.BluetoothPan;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -89,6 +90,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.UserManagerInternal;
 import android.os.UserManagerInternal.UserRestrictionsListener;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -370,6 +372,18 @@ public class Tethering extends BaseNetworkObserver {
         if (VDBG) Log.d(TAG, "interfaceAdded " + iface);
         synchronized (mPublicSync) {
             maybeTrackNewInterfaceLocked(iface);
+        }
+
+        final ContentResolver cr = mContext.getContentResolver();
+        //TODO: Create Settings variables in Settings.java
+        if ("eth0".equals(iface)
+                && "on".equals(Settings.System.getString(cr, "ETHERNET_TETHERING_MODE"))) {
+            Log.i(TAG, "Ethernet Tethering");
+            synchronized (mPublicSync) {
+                tetherMatchingInterfaces(
+                        IControlsTethering.STATE_TETHERED,
+                        ConnectivityManager.TETHERING_USB);
+            }
         }
     }
 

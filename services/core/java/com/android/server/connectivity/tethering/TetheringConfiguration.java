@@ -101,11 +101,18 @@ public class TetheringConfiguration {
 
     public TetheringConfiguration(Context ctx, SharedLog log, int id) {
         final SharedLog configLog = log.forSubComponent("config");
+        final ContentResolver cr = ctx.getContentResolver();
 
         subId = id;
         Resources res = getResources(ctx, subId);
 
-        tetherableUsbRegexs = getResourceStringArray(res, config_tether_usb_regexs);
+        // TODO: Create Settings variable in Settings.java
+        if ("on".equals(Settings.System.getString(cr, "ETHERNET_TETHERING_MODE"))) {
+            // consider config
+            tetherableUsbRegexs = new String[]{"usb\\d", "rndis\\d", "ncm\\d", "eth\\d"};
+        } else {
+            tetherableUsbRegexs = getResourceStringArray(res, config_tether_usb_regexs);
+        }
         // TODO: Evaluate deleting this altogether now that Wi-Fi always passes
         // us an interface name. Careful consideration needs to be given to
         // implications for Settings and for provisioning checks.
