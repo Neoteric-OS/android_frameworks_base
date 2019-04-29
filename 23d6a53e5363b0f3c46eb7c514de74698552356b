@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03994bfb_22f7d5bf",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3225,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-04-29T18:50:53Z",
+      "side": 1,
+      "message": "Let\u0027s not use an array. If you use an Array, when someone adds a device overlay, they\u0027d have to repeat this item there too, which they\u0027ll probably forget.\n\nLet\u0027s add it as \"config_netStackPackage\" and comment what it is. (\"Package name of the network stack APK, which needs to be protected from uninstall.\")",
+      "revId": "23d6a53e5363b0f3c46eb7c514de74698552356b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71969c42_a58afd27",
+        "filename": "services/core/java/com/android/server/pm/ProtectedPackages.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-04-29T18:50:53Z",
+      "side": 1,
+      "message": "com.android.internal.util.ArrayUtils.isEmpty()",
+      "revId": "23d6a53e5363b0f3c46eb7c514de74698552356b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedc3026_136ed484",
+        "filename": "services/core/java/com/android/server/pm/ProtectedPackages.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-04-29T18:50:53Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty()",
+      "revId": "23d6a53e5363b0f3c46eb7c514de74698552356b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
