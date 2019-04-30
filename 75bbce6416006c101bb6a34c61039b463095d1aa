@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef343d0d_f3c9d61d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-30T11:10:38Z",
+      "side": 1,
+      "message": "Nit: generally the package is called NetworkStack. So maybe make this config_networkStackPackage?",
+      "range": {
+        "startLine": 3226,
+        "startChar": 18,
+        "endLine": 3226,
+        "endChar": 40
+      },
+      "revId": "75bbce6416006c101bb6a34c61039b463095d1aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
