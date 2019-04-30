@@ -3933,6 +3933,20 @@ public class CarrierConfigManager {
     public static final String KEY_USE_LOWER_MTU_VALUE_IF_BOTH_RECEIVED =
             "use_lower_mtu_value_if_both_received";
 
+    /**
+     * A list of enabled RAN types for the current carrier.
+     *
+     * A string array of RAN types allowed for the current carrier. Supported types are "cdma2000",
+     * "geran", "utran", "eutran", "ngran", "iwlan".
+     * <p>The RAN types that are ultimately used will be the AND operation of ENABLED_RANS and
+     * user preference. If this key is null (default) or empty, all RANs shall be considered as
+     * enabled. Any unknown types shall be ignored.
+     *
+     * @hide
+     */
+    public static final String KEY_ENABLED_RANS =
+            "enabled_rans_string_array";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
