@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72b0c44_e8709306",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-05-01T23:40:48Z",
+      "side": 1,
+      "message": "Please include the actual behavior of this table (including deleting rows older than an hour, etc.)",
+      "range": {
+        "startLine": 3062,
+        "startChar": 0,
+        "endLine": 3062,
+        "endChar": 64
+      },
+      "revId": "d7870390b2639748b5fddfe71c067db2be4243dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
