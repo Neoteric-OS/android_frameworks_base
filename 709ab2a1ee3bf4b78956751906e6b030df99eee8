@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf1322d9_07b51bc1",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-05-01T21:32:15Z",
+      "side": 1,
+      "message": "I would consider getting rid of this line and doing the whole comment as:\n\n/**\n * The first 45 characters of the body of the most recent message.\n * \u003cP\u003eType: TEXT\u003c/P\u003e\n */",
+      "range": {
+        "startLine": 773,
+        "startChar": 15,
+        "endLine": 773,
+        "endChar": 65
+      },
+      "revId": "709ab2a1ee3bf4b78956751906e6b030df99eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
