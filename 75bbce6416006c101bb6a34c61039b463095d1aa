@@ -22,6 +22,30 @@
       "revId": "75bbce6416006c101bb6a34c61039b463095d1aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d70ce10_f2f254d0",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3226,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-05-03T07:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef343d0d_f3c9d61d",
+      "range": {
+        "startLine": 3226,
+        "startChar": 18,
+        "endLine": 3226,
+        "endChar": 40
+      },
+      "revId": "75bbce6416006c101bb6a34c61039b463095d1aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
