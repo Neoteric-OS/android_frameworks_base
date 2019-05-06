@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "e4917ba5_35be8413",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-06T08:58:57Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "1bc991f2_fd8731d0",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 7
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b8ab4e_f2949cfd",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-06T08:58:57Z",
+      "side": 1,
+      "message": "To match with the order of parameters, should we put String[] in the second and boolean at first?",
+      "range": {
+        "startLine": 155,
+        "startChar": 14,
+        "endLine": 155,
+        "endChar": 20
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f3444e6_31e8a803",
         "filename": "core/java/android/os/INetworkManagementService.aidl",
         "patchSetId": 2
@@ -41,6 +88,29 @@
         "startChar": 4,
         "endLine": 158,
         "endChar": 83
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbc80ec_92c2c68f",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-06T08:58:57Z",
+      "side": 1,
+      "message": "The naming confuses me that it is some kind of legacy tethering,\nwhere the original API looks more \"legacy\" to me.\nIs it better if we name it more specifically? e.g. startTetheringWithDnsProxy?",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 29
       },
       "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
