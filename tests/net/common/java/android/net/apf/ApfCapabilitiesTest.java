@@ -17,23 +17,34 @@
 package android.net.apf;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.content.res.Resources;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.internal.R;
 import com.android.internal.util.ParcelableTestUtil;
 import com.android.internal.util.TestUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class ApfCapabilitiesTest {
     @Test
-    public void testParcelUnparcel() {
+    public void testConstructorAndParcel() {
         final ApfCapabilities caps = new ApfCapabilities(123, 456, 789);
+        assertEquals(123, caps.apfVersionSupported);
+        assertEquals(456, caps.maximumApfProgramSize);
+        assertEquals(789, caps.apfPacketFormat);
+
         ParcelableTestUtil.assertFieldCountEquals(3, ApfCapabilities.class);
 
         TestUtils.assertParcelingIsLossless(caps);
@@ -45,5 +56,28 @@ public class ApfCapabilitiesTest {
         assertNotEquals(new ApfCapabilities(2, 2, 3), new ApfCapabilities(1, 2, 3));
         assertNotEquals(new ApfCapabilities(1, 3, 3), new ApfCapabilities(1, 2, 3));
         assertNotEquals(new ApfCapabilities(1, 2, 4), new ApfCapabilities(1, 2, 3));
+    }
+
+    @Test
+    public void testHasDataAccess() {
+        ApfCapabilities caps = new ApfCapabilities(1, 2, 3);
+        assertFalse(caps.hasDataAccess());
+
+        caps = new ApfCapabilities(4, 5, 6);
+        assertTrue(caps.hasDataAccess());
+    }
+
+    @Test
+    public void testGetApfDrop8023Frames() {
+        final boolean apfDrop802_3Frames =
+                Resources.getSystem().getBoolean(R.bool.config_apfDrop802_3Frames);
+        assertEquals(apfDrop802_3Frames, ApfCapabilities.getApfDrop8023Frames());
+    }
+
+    @Test
+    public void testGetApfEtherTypeBlackList() {
+        final int[] apfEthTypeBlackList =
+                Resources.getSystem().getIntArray(R.array.config_apfEthTypeBlackList);
+        assertTrue(Arrays.equals(apfEthTypeBlackList, ApfCapabilities.getApfEtherTypeBlackList()));
     }
 }
