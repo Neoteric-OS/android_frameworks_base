@@ -68,8 +68,8 @@ public class Ringtone {
      * {@link #mRemotePlayer}. Typically this is false when we're the remote
      * player and there is nobody else to delegate to.
      */
-    private final boolean mAllowRemote;
-    private final IRingtonePlayer mRemotePlayer;
+    private boolean mAllowRemote;
+    private IRingtonePlayer mRemotePlayer;
     private final Binder mRemoteToken;
 
     @UnsupportedAppUsage
@@ -328,6 +328,8 @@ public class Ringtone {
             if (!mAllowRemote) {
                 Log.w(TAG, "Remote playback not allowed: " + e);
             }
+            mRemotePlayer = null;
+            mAllowRemote = false;
         }
 
         if (LOGD) {
