@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d8b1247_092ba97f",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T11:50:43Z",
+      "side": 1,
+      "message": "The super nitty nit of the day : throw KeepaliveDeviceConfigurationException instead of NPE when res is null.\n\n(please don\u0027t bother respinning the change for this, only if you have other things to update).",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c678683_d5fcfaf7",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T11:50:43Z",
+      "side": 1,
+      "message": "Optional : if the control reaches here, then for sure mPrivileged ⇒ return success, so you might as well just say\n\n  if (mPrivileged) return SUCCESS;",
+      "range": {
+        "startLine": 282,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 17
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7b34af_d845d376",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T11:50:43Z",
+      "side": 1,
+      "message": "This is a constant right ? You could store it in a local.\n\nI think it may be simpler to just say something like :\n\n  final int remainingUnprivilegedSlots \u003d supported - mReservedPrivilegedSlots);\n  for (KeepaliveInfo ki \u003d networkKeepalives.values()) {\n    if (!ki.mPrivileged) --remainingUnprivilegedSlots;\n    if (remaningUnprivilegedSlots \u003c\u003d 0) return ERROR_INSUFFICIENT_RESOURCES;\n  }\n\n...or even move the test out of the loop because it will never matter :\n\n  int takenUnprivilegedSlots \u003d 0;\n  for (KeepaliveInfo ki \u003d networkKeepalives.values()) {\n    if (!ki.mPrivileged) ++takenUnprivilegedSlots;\n  }\n  if (takenUnprivilegedSlots \u003e supported - mReservedPrivilegedSlots) {\n    return ERROR_INSUFFICIENT_RESOURCES;\n  }\n\n...if you find this easier to read.\n\n\nThat being said, the advantage of your current version is that it\u0027s less changes from the existing code, so all of this is optional.",
+      "range": {
+        "startLine": 290,
+        "startChar": 40,
+        "endLine": 290,
+        "endChar": 76
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc1aca1_c088e82b",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T11:50:43Z",
+      "side": 1,
+      "message": "Hopefully both of these are already true (through a much deeper code path), but you might want to do it now.",
+      "range": {
+        "startLine": 345,
+        "startChar": 25,
+        "endLine": 347,
+        "endChar": 45
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8ffe29_e3e84ee7",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T11:50:43Z",
+      "side": 1,
+      "message": "assertRunWithException(null)\nassertRunWithException(arrayOf\u003cString?\u003e(null))\n\nmaybe even :\nassertRunWithException(arrayOfNulls\u003cString?\u003e(10))\n\n(will require you to make the res argument an Array\u003cString?\u003e?)",
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
