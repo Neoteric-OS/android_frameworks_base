@@ -22,6 +22,29 @@
       "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17f35dc_cc0d0a32",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-05-07T07:31:01Z",
+      "side": 1,
+      "message": "Could we use ConditionVariable instead and throw exception after querying timeout?\nif (!latch.block(timeoutMs)) {\n    throw new UnknownHostException(host);\n}",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
