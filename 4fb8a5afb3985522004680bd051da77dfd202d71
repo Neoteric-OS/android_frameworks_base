@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "af3551ed_dc34750f",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-07T07:32:47Z",
+      "side": 1,
+      "message": "This looks almost identical to sendDnsProbeWithTimeout. Refactor?",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 56
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17f35dc_cc0d0a32",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 6
