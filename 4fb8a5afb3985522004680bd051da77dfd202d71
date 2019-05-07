@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffda455_bd6a3aaf",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-05-07T04:20:51Z",
+      "side": 1,
+      "message": "import static, like TYPE_AAAA ??",
+      "range": {
+        "startLine": 61,
+        "startChar": 67,
+        "endLine": 61,
+        "endChar": 99
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
