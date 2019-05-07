@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "48068490_021356d6",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T03:26:33Z",
+      "side": 1,
+      "message": "I think always putting Ipv6 at first is actually breaking rfc6724.\nRfc6724 is designed to deal with ordering of addresses in dual stack,\nwhere IPv6 at first is not always best choice.\nRefer to: https://tools.ietf.org/html/rfc6724#section-1",
+      "parentUuid": "7afa717f_f4363496",
+      "range": {
+        "startLine": 64,
+        "startChar": 56,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e60f99_fe42554d",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b250d00_b438f95d",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T03:26:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "daa19d99_2732e5fa",
+      "range": {
+        "startLine": 1512,
+        "startChar": 28,
+        "endLine": 1512,
+        "endChar": 51
+      },
+      "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
