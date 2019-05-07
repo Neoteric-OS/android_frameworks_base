@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4b8701_e5f1a6e1",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T13:15:11Z",
+      "side": 1,
+      "message": "is it better if we just do these setup in constuctor?",
+      "range": {
+        "startLine": 228,
+        "startChar": 21,
+        "endLine": 228,
+        "endChar": 33
+      },
+      "revId": "619b80f689ea48ee70c62a5bfe0a58389879a563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1e7b5f_a46e6168",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T13:15:11Z",
+      "side": 1,
+      "message": "Not for this CL, but is it feasible if we use positive naming to improve readability?\ne.g.\ndoReturn(mPrivateDnsBypassingNetwork).when(mNetwork).getPrivateDnsBypassingCopy();\n(May also need to change them in NetworkMonitor for consistency)",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 89
+      },
+      "revId": "619b80f689ea48ee70c62a5bfe0a58389879a563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
