@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e8bd755_622f831b",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T02:38:00Z",
+      "side": 1,
+      "message": "do we need to consider the ordering?\ne.g. \n 1. ipv6 first. or\n 2. rebase on top of aosp/947417 and apply rfc6724Sort before return",
+      "range": {
+        "startLine": 64,
+        "startChar": 56,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e60f99_fe42554d",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T02:38:00Z",
+      "side": 1,
+      "message": "Ca we delete this one and use getAllTypesAddressesByName in DnsUtils?",
+      "range": {
+        "startLine": 1512,
+        "startChar": 28,
+        "endLine": 1512,
+        "endChar": 51
+      },
+      "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
