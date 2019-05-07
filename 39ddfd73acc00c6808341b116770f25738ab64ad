@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ca215092_2e3d520e",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-07T05:37:08Z",
+      "side": 1,
+      "message": "The usage here is actually the API user, not the API provider for me. Do we need to do that here? I think the main problem here is that the DnsUtils class which implements the rfc6724Sort is @hide. NetworkStack could not access that.",
+      "parentUuid": "48068490_021356d6",
+      "range": {
+        "startLine": 64,
+        "startChar": 56,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "39ddfd73acc00c6808341b116770f25738ab64ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e60f99_fe42554d",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 4
