@@ -3059,6 +3059,10 @@ public final class Telephony {
 
         /**
          * Message send rate table.
+         * <p>
+         * Used to evaluate MMS send Rate limit exceeded or not. When value is inserted, all values
+         * where {@link #SENT_TIME} is older than one hour before the newly inserted row's
+         * {@link #SENT_TIME} will be removed.</p>
          */
         public static final class Rate {
 
