@@ -23,8 +23,11 @@ import android.os.Message;
  * {@hide}
  *
  * The class for implementing states in a StateMachine
+ *
+ * @param <T> The type of the entry data this state accepts.
  */
-public class State implements IState {
+public class State<T> implements IState<T> {
+    private T mEntryData;
 
     /**
      * Constructor
@@ -42,6 +45,16 @@ public class State implements IState {
     }
 
     /* (non-Javadoc)
+     * @see com.android.internal.util.IState#enter(T)
+     */
+    @UnsupportedAppUsage
+    @Override
+    public final void enter(T entryData) {
+        mEntryData = entryData;
+        enter();
+    }
+
+    /* (non-Javadoc)
      * @see com.android.internal.util.IState#exit()
      */
     @UnsupportedAppUsage
@@ -56,6 +69,24 @@ public class State implements IState {
     @Override
     public boolean processMessage(Message msg) {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.android.internal.util.IState#getEntryData()
+     */
+    @UnsupportedAppUsage
+    @Override
+    public T getEntryData() {
+        return mEntryData;
+    }
+
+    /* (non-Javadoc)
+     * @see com.android.internal.util.IState#castEntryData(Object)
+     */
+    @UnsupportedAppUsage
+    @Override
+    public T castEntryData(Object entryData) {
+        return (T) entryData;
     }
 
     /**

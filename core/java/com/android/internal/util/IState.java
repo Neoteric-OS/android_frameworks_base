@@ -23,8 +23,10 @@ import android.os.Message;
  * {@hide}
  *
  * The interface for implementing states in a {@link StateMachine}
+ *
+ * @param <T> The type of the entry data this state accepts.
  */
-public interface IState {
+public interface IState<T> {
 
     /**
      * Returned by processMessage to indicate the the message was processed.
@@ -37,9 +39,16 @@ public interface IState {
     static final boolean NOT_HANDLED = false;
 
     /**
-     * Called when a state is entered.
+     * Called by {@link #enter(T)} when a state is entered.
      */
     void enter();
+
+    /**
+     * Called directly by the {@link StateMachine} when a state is entered.
+     *
+     * @param entryData the data passed to a state when it is entered.
+     */
+    void enter(T entryData);
 
     /**
      * Called when a state is exited.
@@ -62,6 +71,25 @@ public interface IState {
      *         if the message wasn't processed.
      */
     boolean processMessage(Message msg);
+
+    /**
+     * Called to validate and cast the data type.
+     *
+     * <p>This method will be called in two places. When this state is set to the destination state,
+     * this method is called to validate that the entry data type is T. When this state is entered,
+     * this method is called to cast the entry data from Object to T.
+     *
+     * @param entryData the entry data in Object type.
+     * @return the entry data that has been casted to T.
+     */
+    T castEntryData(Object entryData);
+
+    /**
+     * The stored entry data since last time this state was entered.
+     *
+     * @return the entry data stored in this state.
+     */
+    T getEntryData();
 
     /**
      * Name of State for debugging purposes.

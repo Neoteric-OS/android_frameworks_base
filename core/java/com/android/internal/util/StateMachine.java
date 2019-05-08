@@ -754,6 +754,12 @@ public class StateMachine {
         private State mDestState;
 
         /**
+         * The entry data that will be passed to the destination state as well as other states in
+         * the entering chain.
+         */
+        private Object mEntryData;
+
+        /**
          * Indicates if a transition is in progress
          *
          * This will be true for all calls of State.exit and all calls of State.enter except for the
@@ -812,7 +818,7 @@ public class StateMachine {
                         && (mMsg.obj == mSmHandlerObj)) {
                     /** Initial one time path. */
                     mIsConstructionCompleted = true;
-                    invokeEnterMethods(0);
+                    invokeEnterMethods(0, null);
                 } else {
                     throw new RuntimeException("StateMachine.handleMessage: "
                             + "The start method not called, received msg: " + msg);
@@ -860,6 +866,7 @@ public class StateMachine {
             }
 
             State destState = mDestState;
+            Object entryData = mEntryData;
             if (destState != null) {
                 /**
                  * Process the transitions including transitions in the enter/exit methods
@@ -877,7 +884,7 @@ public class StateMachine {
                     mTransitionInProgress = true;
                     invokeExitMethods(commonStateInfo);
                     int stateStackEnteringIndex = moveTempStateStackToStateStack();
-                    invokeEnterMethods(stateStackEnteringIndex);
+                    invokeEnterMethods(stateStackEnteringIndex, entryData);
 
                     /**
                      * Since we have transitioned to a new state we need to have
@@ -890,12 +897,14 @@ public class StateMachine {
                     if (destState != mDestState) {
                         // A new mDestState so continue looping
                         destState = mDestState;
+                        entryData = mEntryData;
                     } else {
                         // No change in mDestState so we're done
                         break;
                     }
                 }
                 mDestState = null;
+                mEntryData = null;
             }
 
             /**
@@ -939,12 +948,16 @@ public class StateMachine {
             mStateInfo.clear();
             mInitialState = null;
             mDestState = null;
+            mEntryData = null;
             mDeferredMessages.clear();
             mHasQuit = true;
         }
 
         /**
          * Complete the construction of the state machine.
+         *
+         * This method also validates the entry data type against the initial state
+         * and stores it in the state machine handler.
          */
         private final void completeConstruction() {
             if (mDbg) mSm.log("completeConstruction: E");
@@ -1028,14 +1041,14 @@ public class StateMachine {
         /**
          * Invoke the enter method starting at the entering index to top of state stack
          */
-        private final void invokeEnterMethods(int stateStackEnteringIndex) {
+        private final void invokeEnterMethods(int stateStackEnteringIndex, Object entryData) {
             for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
                 if (stateStackEnteringIndex == mStateStackTopIndex) {
                     // Last enter state for transition
                     mTransitionInProgress = false;
                 }
                 if (mDbg) mSm.log("invokeEnterMethods: " + mStateStack[i].state.getName());
-                mStateStack[i].state.enter();
+                mStateStack[i].state.enter(mStateStack[i].state.castEntryData(entryData));
                 mStateStack[i].active = true;
             }
             mTransitionInProgress = false; // ensure flag set to false if no methods called
@@ -1153,15 +1166,14 @@ public class StateMachine {
         }
 
         /**
-         * Add a new state to the state machine. Bottom up addition
-         * of states is allowed but the same state may only exist
-         * in one hierarchy.
+         * Add a new state to the state machine. Bottom up addition of states is allowed but the
+         * same state may only exist in one hierarchy.
          *
          * @param state the state to add
          * @param parent the parent of state
          * @return stateInfo for this state
          */
-        private final StateInfo addState(State state, State parent) {
+        private final <T1 extends T2, T2> StateInfo addState(State<T1> state, State<T2> parent) {
             if (mDbg) {
                 mSm.log("addStateInternal: E state=" + state.getName() + ",parent="
                         + ((parent == null) ? "" : parent.getName()));
@@ -1240,6 +1252,13 @@ public class StateMachine {
             }
             mDestState = (State) destState;
             if (mDbg) mSm.log("transitionTo: destState=" + mDestState.getName());
+        }
+
+        /** @see StateMachine#transitionTo(IState, Object) */
+        private final void transitionTo(IState destState, Object entryData) {
+            destState.castEntryData(entryData);
+            mEntryData = entryData;
+            transitionTo(destState);
         }
 
         /** @see StateMachine#deferMessage(Message) */
@@ -1350,7 +1369,7 @@ public class StateMachine {
      * @param state the state to add
      * @param parent the parent of state
      */
-    public final void addState(State state, State parent) {
+    public final <T1 extends T2, T2> void addState(State<T1> state, State<T2> parent) {
         mSmHandler.addState(state, parent);
     }
 
@@ -1419,6 +1438,28 @@ public class StateMachine {
     @UnsupportedAppUsage
     public final void transitionTo(IState destState) {
         mSmHandler.transitionTo(destState);
+    }
+
+    /**
+     * transition to destination state with entry data that will be passed to
+     * the destination state as well as all other states in the entering chain.
+     * This method will validate the entry data type against the destination
+     * state and throw {@link ClassCastException} if validation failed. Upon
+     * returning from processMessage the current state's exit will be executed
+     * and upon the next message arriving destState.enter will be invoked.
+     *
+     * this function can also be called inside the enter function of the
+     * previous transition target, but the behavior is undefined when it is
+     * called mid-way through a previous transition (for example, calling this
+     * in the enter() routine of a intermediate node when the current transition
+     * target is one of the nodes descendants).
+     *
+     * @param destState will be the state that receives the next message.
+     * @param entryData the data that will be passed to the destination state.
+     */
+    @UnsupportedAppUsage
+    public final void transitionTo(IState destState, Object entryData) {
+        mSmHandler.transitionTo(destState, entryData);
     }
 
     /**
