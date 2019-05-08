@@ -781,6 +781,39 @@ public final class Telephony {
         }
 
         /**
+         * Contains all Raw messages
+         */
+        public static final class Raw {
+
+            /**
+             * Not instantiable.
+             *
+             * @hide
+             */
+            private Raw() {
+            }
+
+            /**
+             * The {@code content://} style URL for this table.
+             */
+            public static final Uri CONTENT_URI = Uri.parse("content://sms/raw");
+
+            /**
+             * The {@code content://} style URL for this table, for permanent deleting of the raw
+             * messages
+             */
+            public static final Uri PERMANENTDELETE_RAW_URI = Uri.withAppendedPath(
+                    Telephony.Sms.CONTENT_URI, "raw/permanentDelete");
+
+            /**
+             * The default sort order for this table.
+             */
+            public static final String DEFAULT_SORT_ORDER = "date DESC";
+
+        }
+
+
+        /**
          * Contains constants for SMS related Intents that are broadcast.
          */
         public static final class Intents {
