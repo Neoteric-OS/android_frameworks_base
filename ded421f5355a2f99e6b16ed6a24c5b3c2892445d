@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2f74f4_b188e016",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-05-08T19:58:16Z",
+      "side": 1,
+      "message": "this does an in-process transaction from C++ to Java (which works now)\n\nIf you\u0027re curious, this CL prevents other users from accidentally using C++\u003c-\u003eJava in-process (because it is untested for some usecases and very inefficient):\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/941422",
+      "range": {
+        "startLine": 274,
+        "startChar": 33,
+        "endLine": 274,
+        "endChar": 58
+      },
+      "revId": "ded421f5355a2f99e6b16ed6a24c5b3c2892445d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
