@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "0c16da60_7d983bff",
+        "filename": "core/java/android/net/util/KeepaliveUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Done, the SDK says it will never give null.\nHowever it might give Resources.NotFoundException instead.\nhttps://developer.android.com/reference/android/content/res/Resources.html#getStringArray(int)",
+      "parentUuid": "5d8b1247_092ba97f",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a93be936_7b864d55",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Remove this since test for this is planned to be addressed in CTS.",
+      "range": {
+        "startLine": 275,
+        "startChar": 8,
+        "endLine": 275,
+        "endChar": 40
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c678683_d5fcfaf7",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 10
@@ -48,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8737b296_9f7f964e",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c678683_d5fcfaf7",
+      "range": {
+        "startLine": 282,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 17
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7b34af_d845d376",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 10
@@ -59,6 +130,30 @@
       "writtenOn": "2019-05-07T11:50:43Z",
       "side": 1,
       "message": "This is a constant right ? You could store it in a local.\n\nI think it may be simpler to just say something like :\n\n  final int remainingUnprivilegedSlots \u003d supported - mReservedPrivilegedSlots);\n  for (KeepaliveInfo ki \u003d networkKeepalives.values()) {\n    if (!ki.mPrivileged) --remainingUnprivilegedSlots;\n    if (remaningUnprivilegedSlots \u003c\u003d 0) return ERROR_INSUFFICIENT_RESOURCES;\n  }\n\n...or even move the test out of the loop because it will never matter :\n\n  int takenUnprivilegedSlots \u003d 0;\n  for (KeepaliveInfo ki \u003d networkKeepalives.values()) {\n    if (!ki.mPrivileged) ++takenUnprivilegedSlots;\n  }\n  if (takenUnprivilegedSlots \u003e supported - mReservedPrivilegedSlots) {\n    return ERROR_INSUFFICIENT_RESOURCES;\n  }\n\n...if you find this easier to read.\n\n\nThat being said, the advantage of your current version is that it\u0027s less changes from the existing code, so all of this is optional.",
+      "range": {
+        "startLine": 290,
+        "startChar": 40,
+        "endLine": 290,
+        "endChar": 76
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54c12763_9118d25c",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Done, thanks.\nI\u0027ll take the second one since it looks more readable to me.",
+      "parentUuid": "ad7b34af_d845d376",
       "range": {
         "startLine": 290,
         "startChar": 40,
@@ -94,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "76e1b912_46b1611c",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Done, let\u0027s do it now since you mentioned.\nIt looks like an improvement since\nwe can get rid of the need of dependency of OEM returned error code.\nDrawback is that we cannot verify the OEM returned error code while reaching the limit.",
+      "parentUuid": "1cc1aca1_c088e82b",
+      "range": {
+        "startLine": 345,
+        "startChar": 25,
+        "endLine": 347,
+        "endChar": 45
+      },
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8ffe29_e3e84ee7",
         "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
         "patchSetId": 10
@@ -108,6 +227,24 @@
       "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e942ea_1a58b45c",
+        "filename": "tests/net/java/android/net/util/KeepaliveUtilsTest.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-08T06:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8ffe29_e3e84ee7",
+      "revId": "9a44d0a79fcaf59e06539ce7999ebe3b3f64a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
