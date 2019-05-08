@@ -16,6 +16,7 @@
 
 package com.android.internal.util;
 
+import android.annotation.Nullable;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Message;
 
@@ -23,8 +24,11 @@ import android.os.Message;
  * {@hide}
  *
  * The class for implementing states in a StateMachine
+ *
+ * @param <T> The type of the entry data this state accepts.
  */
-public class State implements IState {
+public class State<T> implements IState<T> {
+    private T mEntryData;
 
     /**
      * Constructor
@@ -42,6 +46,16 @@ public class State implements IState {
     }
 
     /* (non-Javadoc)
+     * @see com.android.internal.util.IState#enter(Object)
+     */
+    @UnsupportedAppUsage
+    @Override
+    public final void enter(@Nullable T entryData) {
+        mEntryData = entryData;
+        enter();
+    }
+
+    /* (non-Javadoc)
      * @see com.android.internal.util.IState#exit()
      */
     @UnsupportedAppUsage
@@ -56,6 +70,16 @@ public class State implements IState {
     @Override
     public boolean processMessage(Message msg) {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.android.internal.util.IState#getEntryData()
+     */
+    @Nullable
+    @UnsupportedAppUsage
+    @Override
+    public T getEntryData() {
+        return mEntryData;
     }
 
     /**

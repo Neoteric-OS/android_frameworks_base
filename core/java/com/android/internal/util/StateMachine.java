@@ -16,6 +16,8 @@
 
 package com.android.internal.util;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -750,8 +752,39 @@ public class StateMachine {
         /** The initial state that will process the first message */
         private State mInitialState;
 
-        /** The destination state when transitionTo has been invoked */
-        private State mDestState;
+        /**
+         * This class contains the destination state and the entry data.
+         */
+        private static class Destination<T> {
+            /** The destination state when transitionTo has been invoked */
+            @NonNull
+            public final State<T> state;
+
+            /**
+             * The entry data that will be passed to the destination state as well as other
+             * states in the entry data
+             */
+            @Nullable
+            public final T entryData;
+
+            /**
+             * Construct an instance of Destination
+             */
+            Destination(@NonNull State<T> state, @Nullable T entryData) {
+                this.state = state;
+                this.entryData = entryData;
+            }
+
+            /**
+             * Convert Destination to string
+             */
+            @Override
+            public String toString() {
+                return "state=" + state.getName() + ",entry data=" + entryData;
+            }
+        }
+
+        private Destination mDestination;
 
         /**
          * Indicates if a transition is in progress
@@ -812,7 +845,7 @@ public class StateMachine {
                         && (mMsg.obj == mSmHandlerObj)) {
                     /** Initial one time path. */
                     mIsConstructionCompleted = true;
-                    invokeEnterMethods(0);
+                    invokeEnterMethods(0, null);
                 } else {
                     throw new RuntimeException("StateMachine.handleMessage: "
                             + "The start method not called, received msg: " + msg);
@@ -849,18 +882,18 @@ public class StateMachine {
 
             if (mLogRecords.logOnlyTransitions()) {
                 /** Record only if there is a transition */
-                if (mDestState != null) {
+                if (mDestination != null) {
                     mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState,
-                            orgState, mDestState);
+                            orgState, mDestination.state);
                 }
             } else if (recordLogMsg) {
                 /** Record message */
                 mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState, orgState,
-                        mDestState);
+                        ((mDestination == null) ? null : mDestination.state));
             }
 
-            State destState = mDestState;
-            if (destState != null) {
+            Destination destination = mDestination;
+            if (destination != null) {
                 /**
                  * Process the transitions including transitions in the enter/exit methods
                  */
@@ -872,12 +905,13 @@ public class StateMachine {
                      * common ancestor state of the enter/exit states. Then
                      * invoke the exit methods then the enter methods.
                      */
-                    StateInfo commonStateInfo = setupTempStateStackWithStatesToEnter(destState);
+                    StateInfo commonStateInfo =
+                            setupTempStateStackWithStatesToEnter(destination.state);
                     // flag is cleared in invokeEnterMethods before entering the target state
                     mTransitionInProgress = true;
                     invokeExitMethods(commonStateInfo);
                     int stateStackEnteringIndex = moveTempStateStackToStateStack();
-                    invokeEnterMethods(stateStackEnteringIndex);
+                    invokeEnterMethods(stateStackEnteringIndex, destination.entryData);
 
                     /**
                      * Since we have transitioned to a new state we need to have
@@ -887,29 +921,29 @@ public class StateMachine {
                      */
                     moveDeferredMessageAtFrontOfQueue();
 
-                    if (destState != mDestState) {
-                        // A new mDestState so continue looping
-                        destState = mDestState;
+                    if (destination.state != mDestination.state) {
+                        // A new mDestination.state so continue looping
+                        destination = mDestination;
                     } else {
-                        // No change in mDestState so we're done
+                        // No change in mDestination.state so we're done
                         break;
                     }
                 }
-                mDestState = null;
+                mDestination = null;
             }
 
             /**
              * After processing all transitions check and
              * see if the last transition was to quit or halt.
              */
-            if (destState != null) {
-                if (destState == mQuittingState) {
+            if (destination != null) {
+                if (destination.state == mQuittingState) {
                     /**
                      * Call onQuitting to let subclasses cleanup.
                      */
                     mSm.onQuitting();
                     cleanupAfterQuitting();
-                } else if (destState == mHaltingState) {
+                } else if (destination.state == mHaltingState) {
                     /**
                      * Call onHalting() if we've transitioned to the halting
                      * state. All subsequent messages will be processed in
@@ -938,7 +972,7 @@ public class StateMachine {
             mTempStateStack = null;
             mStateInfo.clear();
             mInitialState = null;
-            mDestState = null;
+            mDestination = null;
             mDeferredMessages.clear();
             mHasQuit = true;
         }
@@ -1028,14 +1062,14 @@ public class StateMachine {
         /**
          * Invoke the enter method starting at the entering index to top of state stack
          */
-        private final void invokeEnterMethods(int stateStackEnteringIndex) {
+        private final <T> void invokeEnterMethods(int stateStackEnteringIndex, T entryData) {
             for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
                 if (stateStackEnteringIndex == mStateStackTopIndex) {
                     // Last enter state for transition
                     mTransitionInProgress = false;
                 }
                 if (mDbg) mSm.log("invokeEnterMethods: " + mStateStack[i].state.getName());
-                mStateStack[i].state.enter();
+                ((State<T>) (mStateStack[i].state)).enter(entryData);
                 mStateStack[i].active = true;
             }
             mTransitionInProgress = false; // ensure flag set to false if no methods called
@@ -1161,7 +1195,7 @@ public class StateMachine {
          * @param parent the parent of state
          * @return stateInfo for this state
          */
-        private final StateInfo addState(State state, State parent) {
+        private final <T1 extends T2, T2> StateInfo addState(State<T1> state, State<T2> parent) {
             if (mDbg) {
                 mSm.log("addStateInternal: E state=" + state.getName() + ",parent="
                         + ((parent == null) ? "" : parent.getName()));
@@ -1234,12 +1268,21 @@ public class StateMachine {
 
         /** @see StateMachine#transitionTo(IState) */
         private final void transitionTo(IState destState) {
+            transitionTo(destState, null);
+        }
+
+        /** @see StateMachine#transitionTo(IState, T) */
+        private final <T> void transitionTo(IState<T> destState, T entryData) {
+            Destination destination =
+                    (destState == null) ? null : new Destination((State<T>) destState, entryData);
+
             if (mTransitionInProgress) {
                 Log.wtf(mSm.mName, "transitionTo called while transition already in progress to " +
-                        mDestState + ", new target state=" + destState);
+                        mDestination + ", new target destination=" + destination);
             }
-            mDestState = (State) destState;
-            if (mDbg) mSm.log("transitionTo: destState=" + mDestState.getName());
+
+            mDestination = destination;
+            if (mDbg) mSm.log("transitionTo: destination=" + mDestination);
         }
 
         /** @see StateMachine#deferMessage(Message) */
@@ -1350,7 +1393,7 @@ public class StateMachine {
      * @param state the state to add
      * @param parent the parent of state
      */
-    public final void addState(State state, State parent) {
+    public final <T1 extends T2, T2> void addState(State<T1> state, State<T2> parent) {
         mSmHandler.addState(state, parent);
     }
 
@@ -1403,12 +1446,11 @@ public class StateMachine {
     }
 
     /**
-     * transition to destination state. Upon returning
+     * Transition to destination state. Upon returning
      * from processMessage the current state's exit will
-     * be executed and upon the next message arriving
-     * destState.enter will be invoked.
+     * be executed and destState.enter will be invoked.
      *
-     * this function can also be called inside the enter function of the
+     * This function can also be called inside the enter function of the
      * previous transition target, but the behavior is undefined when it is
      * called mid-way through a previous transition (for example, calling this
      * in the enter() routine of a intermediate node when the current transition
@@ -1418,18 +1460,38 @@ public class StateMachine {
      */
     @UnsupportedAppUsage
     public final void transitionTo(IState destState) {
-        mSmHandler.transitionTo(destState);
+        mSmHandler.transitionTo(destState, null);
     }
 
     /**
-     * transition to halt state. Upon returning
+     * Transition to destination state with entry data that will be passed to
+     * the destination state as well as all other states in the entry chain.
+     * Upon returning from processMessage the current state's exit will be executed
+     * and destState.enter will be invoked.
+     *
+     * This function can also be called inside the enter function of the
+     * previous transition target, but the behavior is undefined when it is
+     * called mid-way through a previous transition (for example, calling this
+     * in the enter() routine of a intermediate node when the current transition
+     * target is one of the nodes descendants).
+     *
+     * @param destState will be the state that receives the next message.
+     * @param entryData the data that will be passed to the destination state.
+     */
+    @UnsupportedAppUsage
+    public final <T> void transitionTo(IState<T> destState, T entryData) {
+        mSmHandler.transitionTo(destState, entryData);
+    }
+
+    /**
+     * Transition to halt state. Upon returning
      * from processMessage we will exit all current
      * states, execute the onHalting() method and then
      * for all subsequent messages haltedProcessMessage
      * will be called.
      */
     public final void transitionToHaltingState() {
-        mSmHandler.transitionTo(mSmHandler.mHaltingState);
+        mSmHandler.transitionTo(mSmHandler.mHaltingState, null);
     }
 
     /**
@@ -1568,7 +1630,8 @@ public class StateMachine {
         SmHandler smh = mSmHandler;
         if (smh == null) return;
         smh.mLogRecords.add(this, smh.getCurrentMessage(), string, smh.getCurrentState(),
-                smh.mStateStack[smh.mStateStackTopIndex].state, smh.mDestState);
+                smh.mStateStack[smh.mStateStackTopIndex].state,
+                smh.mDestination == null ? null : smh.mDestination.state);
     }
 
     /**
