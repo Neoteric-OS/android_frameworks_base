@@ -626,6 +626,124 @@ public class StateMachineTest extends TestCase {
     }
 
     /**
+     * Test passing data during state transition.
+     */
+    class StateMachinePassEntryDataTest extends StateMachine {
+        StateMachinePassEntryDataTest(String name, Looper looper) {
+            super(name, looper);
+            mThisSm = this;
+            setDbg(DBG);
+
+            // Setup the hierarchy
+            addState(mParentState1);
+            addState(mParentState2);
+            addState(mChildState1, mParentState1);
+            addState(mChildState2, mParentState1);
+
+            setInitialState(mParentState2);
+        }
+
+        class ParentState1 extends State {
+            @Override
+            public void enter() {
+                assertNotNull(getEntryData());
+            }
+        }
+
+        class ParentState2 extends State {
+            @Override
+            public void enter() {
+                assertEquals(PARENT_2_ENTRY_DATA, (int) getEntryData());
+            }
+
+            @Override
+            public boolean processMessage(Message message) {
+                if (message.what == TEST_CMD_1) {
+                    transitionTo(mChildState1, CHILD_1_ENTRY_DATA);
+                    return HANDLED;
+                }
+                return NOT_HANDLED;
+            }
+        }
+
+        class ChildState1 extends State<String> {
+            @Override
+            public void enter() {
+                assertEquals(CHILD_1_ENTRY_DATA, getEntryData());
+            }
+
+            @Override
+            public boolean processMessage(Message message) {
+                if (message.what == TEST_CMD_2) {
+                    transitionTo(mChildState2, CHILD_2_ENTRY_DATA);
+                    return HANDLED;
+                }
+                return NOT_HANDLED;
+            }
+        }
+
+        class ChildState2 extends State<Child2EntryData> {
+            @Override
+            public void enter() {
+                assertEquals(CHILD_2_ENTRY_DATA, getEntryData());
+            }
+
+            @Override
+            public boolean processMessage(Message message) {
+                if (message.what == TEST_CMD_1) {
+                    transitionTo(mChildState1, CHILD_1_ENTRY_DATA);
+                    return HANDLED;
+                }
+                return NOT_HANDLED;
+            }
+        }
+
+        private StateMachinePassEntryDataTest mThisSm;
+        private ParentState1 mParentState1 = new ParentState1();
+        private ParentState2 mParentState2 = new ParentState2();
+        private ChildState1 mChildState1 = new ChildState1();
+        private ChildState2 mChildState2 = new ChildState2();
+    }
+
+    private static class Child2EntryData {}
+
+    private static final int PARENT_2_ENTRY_DATA = 1;
+    private static final String CHILD_1_ENTRY_DATA = "Child1EntryData";
+    private static final Child2EntryData CHILD_2_ENTRY_DATA = new Child2EntryData();
+
+    @SmallTest
+    public void testStateMachinePassEntryData() throws Exception {
+        if (WAIT_FOR_DEBUGGER) Debug.waitForDebugger();
+        TestLooper testLooper = new TestLooper();
+        StateMachinePassEntryDataTest smPassEntryDataTest =
+                new StateMachinePassEntryDataTest("smPassEntryDataTest", testLooper.getLooper());
+
+        smPassEntryDataTest.start(PARENT_2_ENTRY_DATA);
+        smPassEntryDataTest.sendMessage(TEST_CMD_1);
+        smPassEntryDataTest.sendMessage(TEST_CMD_2);
+        smPassEntryDataTest.sendMessage(TEST_CMD_1);
+
+        if (smPassEntryDataTest.isDbg()) tlog("testStateMachinePassEntryData E");
+        testLooper.dispatchAll();
+
+        assertEquals(3, smPassEntryDataTest.getLogRecSize());
+
+        LogRec lr;
+        lr = smPassEntryDataTest.getLogRec(0);
+        assertEquals(TEST_CMD_1, lr.getWhat());
+        assertEquals(smPassEntryDataTest.mParentState2, lr.getState());
+
+        lr = smPassEntryDataTest.getLogRec(1);
+        assertEquals(TEST_CMD_2, lr.getWhat());
+        assertEquals(smPassEntryDataTest.mChildState1, lr.getState());
+
+        lr = smPassEntryDataTest.getLogRec(2);
+        assertEquals(TEST_CMD_1, lr.getWhat());
+        assertEquals(smPassEntryDataTest.mChildState2, lr.getState());
+        // TODO: Record entry data in StateMachine.LogRec and add test here.
+    }
+
+    /**
      * Tests that ProcessedMessage works as a circular buffer.
      */
     class StateMachine0 extends StateMachine {
