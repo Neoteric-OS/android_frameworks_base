@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c35d26_b99776fd",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-05-08T22:04:31Z",
+      "side": 1,
+      "message": "vmSafeModeOrDebuggable ?",
+      "range": {
+        "startLine": 516,
+        "startChar": 16,
+        "endLine": 516,
+        "endChar": 26
+      },
+      "revId": "211ab15c4644d963d1064383370e425f02e337dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
