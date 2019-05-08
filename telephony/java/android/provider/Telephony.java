@@ -781,6 +781,54 @@ public final class Telephony {
         }
 
         /**
+         * Contains all raw SMS messages
+         */
+        public static final class Raw {
+            /**
+             * Not instantiable.
+             * @hide
+             */
+            private Raw() {
+            }
+            /**
+             * The {@code content://} style URL for this table.
+             */
+            public static final Uri CONTENT_URI = Uri.parse("content://sms/raw");
+
+            /**
+             * The {@code content://} style URL for this table, for permanent deleting of the raw
+             * messages
+             */
+            public static final Uri PERMANENT_DELETE_URI = Uri.withAppendedPath(
+                    Telephony.Sms.CONTENT_URI, "raw/permanentDelete");
+
+            /**
+             * The message body
+             * <P>Type: TEXT</P>
+             */
+            public static final String MESSAGE_BODY = "message_body";
+
+            /**
+             * The address text.
+             * <P>Type: TEXT</P>
+             */
+            public static final String ADDRESS = "address";
+
+            /**
+             * This is the address which is displayed.
+             * <P>Type: TEXT</P>
+             */
+            public static final String DISPLAY_ORIGINATING_ADDRESS = "display_originating_addr";
+
+            /**
+             * Count is the number of parts of the message
+             * <P>Type: INTEGER</P>
+             */
+            public static final String COUNT = "count";
+        }
+
+
+        /**
          * Contains constants for SMS related Intents that are broadcast.
          */
         public static final class Intents {
