@@ -23,15 +23,23 @@ import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_PROBE_SPEC;
 import static android.net.ConnectivityManager.EXTRA_CAPTIVE_PORTAL_URL;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_FALLBACK;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTP;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTPS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.captiveportal.CaptivePortalProbeSpec.parseCaptivePortalProbeSpecs;
 import static android.net.metrics.ValidationProbeEvent.DNS_FAILURE;
 import static android.net.metrics.ValidationProbeEvent.DNS_SUCCESS;
+import static android.net.metrics.ValidationProbeEvent.PROBE_DNS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_FALLBACK;
+import static android.net.metrics.ValidationProbeEvent.PROBE_HTTP;
+import static android.net.metrics.ValidationProbeEvent.PROBE_HTTPS;
 import static android.net.metrics.ValidationProbeEvent.PROBE_PRIVDNS;
 import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD;
 import static android.net.util.DataStallUtils.CONFIG_DATA_STALL_EVALUATION_TYPE;
@@ -66,7 +74,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.DnsResolver;
-import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -101,10 +108,12 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SparseIntArray;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBufferIndices;
 import com.android.internal.util.State;
@@ -346,6 +355,24 @@ public class NetworkMonitor extends StateMachine {
     // Set to true if data stall is suspected and reset to false after metrics are sent to statsd.
     private boolean mCollectDataStallMetrics;
     private boolean mAcceptPartialConnectivity;
+    // The validation result for this network. This is a bitmask of
+    // INetworkMonitor.NETWORK_VALIDATION_RESULT_* constants.
+    private int mEvaluationResult = 0;
+    // Used to guard the probe result update.
+    private final Object mProbeResultLock = new Object();
+    // Variable that indicate which probes are completed. This is a bitmask of
+    // INetworkMonitor.NETWORK_VALIDATION_PROBE_* constants.
+    @GuardedBy("mProbeResultLock")
+    private int mProbeResults = 0;
+
+    private static final SparseIntArray sProbeTypeToNetworkValidationProbe = new SparseIntArray();
+    static  {
+        sProbeTypeToNetworkValidationProbe.put(PROBE_DNS, NETWORK_VALIDATION_PROBE_DNS);
+        sProbeTypeToNetworkValidationProbe.put(PROBE_HTTP, NETWORK_VALIDATION_PROBE_HTTP);
+        sProbeTypeToNetworkValidationProbe.put(PROBE_HTTPS, NETWORK_VALIDATION_PROBE_HTTPS);
+        sProbeTypeToNetworkValidationProbe.put(PROBE_FALLBACK, NETWORK_VALIDATION_PROBE_FALLBACK);
+        sProbeTypeToNetworkValidationProbe.put(PROBE_PRIVDNS, NETWORK_VALIDATION_PROBE_PRIVDNS);
+    }
 
     public NetworkMonitor(Context context, INetworkMonitorCallbacks cb, Network network,
             SharedLog validationLog) {
@@ -595,7 +622,7 @@ public class NetworkMonitor extends StateMachine {
                         case APP_RETURN_UNWANTED:
                             mDontDisplaySigninNotification = true;
                             mUserDoesNotWant = true;
-                            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+                            notifyNetworkTested(getNetworkTestResult(), null);
                             // TODO: Should teardown network.
                             mUidResponsibleForReeval = 0;
                             transitionTo(mEvaluatingState);
@@ -648,6 +675,7 @@ public class NetworkMonitor extends StateMachine {
                 // disable HTTPS probe and transition to EvaluatingPrivateDnsState.
                 case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
                     mAcceptPartialConnectivity = true;
+                    updatePartialConnectivity();
                     break;
                 case EVENT_LINK_PROPERTIES_CHANGED:
                     mLinkProperties = (LinkProperties) message.obj;
@@ -671,7 +699,8 @@ public class NetworkMonitor extends StateMachine {
         public void enter() {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
-            notifyNetworkTested(INetworkMonitor.NETWORK_TEST_RESULT_VALID, null);
+            mEvaluationResult |=  NETWORK_VALIDATION_RESULT_VALID;
+            notifyNetworkTested(getNetworkTestResult(), null);
             mValidations++;
         }
 
@@ -814,6 +843,11 @@ public class NetworkMonitor extends StateMachine {
             }
             mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
             mEvaluateAttempts = 0;
+            // Reset all current probe results to zero, but retain current validation state until
+            // validation succeeds or fails.
+            synchronized (mProbeResultLock) {
+                mProbeResults = 0;
+            }
         }
 
         @Override
@@ -859,7 +893,7 @@ public class NetworkMonitor extends StateMachine {
                 // 2. NetworkMonitor detects network is partial connectivity and user accepts it.
                 case EVENT_ACCEPT_PARTIAL_CONNECTIVITY:
                     mAcceptPartialConnectivity = true;
-                    mUseHttps = false;
+                    updatePartialConnectivity();
                     transitionTo(mEvaluatingPrivateDnsState);
                     return HANDLED;
                 default:
@@ -1012,7 +1046,7 @@ public class NetworkMonitor extends StateMachine {
         }
 
         private void handlePrivateDnsEvaluationFailure() {
-            notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, null);
+            notifyNetworkTested(getNetworkTestResult(), null);
 
             // Queue up a re-evaluation with backoff.
             //
@@ -1082,28 +1116,28 @@ public class NetworkMonitor extends StateMachine {
                     if (mCollectDataStallMetrics) {
                         writeDataStallStats(probeResult);
                     }
-
+                    mEvaluationResult = 0;
                     if (probeResult.isSuccessful()) {
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
                     } else if (probeResult.isPortal()) {
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        notifyNetworkTested(getNetworkTestResult(), probeResult.redirectUrl);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else if (probeResult.isPartialConnectivity()) {
                         logNetworkEvent(NetworkEvent.NETWORK_PARTIAL_CONNECTIVITY);
-                        notifyNetworkTested(NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY,
-                                probeResult.redirectUrl);
+                        mEvaluationResult |= NETWORK_VALIDATION_RESULT_PARTIAL;
+                        updatePartialConnectivity();
+                        notifyNetworkTested(getNetworkTestResult(), probeResult.redirectUrl);
                         if (mAcceptPartialConnectivity) {
-                            mUseHttps = false;
                             transitionTo(mEvaluatingPrivateDnsState);
                         } else {
                             transitionTo(mWaitingForNextProbeState);
                         }
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
-                        notifyNetworkTested(NETWORK_TEST_RESULT_INVALID, probeResult.redirectUrl);
+                        notifyNetworkTested(getNetworkTestResult(), probeResult.redirectUrl);
                         transitionTo(mWaitingForNextProbeState);
                     }
                     return HANDLED;
@@ -1466,6 +1500,7 @@ public class NetworkMonitor extends StateMachine {
         log("isCaptivePortal: isSuccessful()=" + result.isSuccessful()
                 + " isPortal()=" + result.isPortal()
                 + " RedirectUrl=" + result.redirectUrl
+                + " isPartialConnectivity()=" + result.isPartialConnectivity()
                 + " Time=" + (endTime - startTime) + "ms");
 
         return result;
@@ -1546,6 +1581,10 @@ public class NetworkMonitor extends StateMachine {
             connectInfo = "FAIL";
         }
         final long latency = watch.stop();
+        synchronized (mProbeResultLock) {
+            mProbeResults |= sProbeTypeToNetworkValidationProbe.get(PROBE_DNS,
+              0 /* valueIfKeyNotFound */);
+        }
         validationLog(ValidationProbeEvent.PROBE_DNS, host,
                 String.format("%dms %s", latency, connectInfo));
         logValidationProbe(latency, ValidationProbeEvent.PROBE_DNS, result);
@@ -1632,6 +1671,12 @@ public class NetworkMonitor extends StateMachine {
             }
             TrafficStats.setThreadStatsTag(oldTag);
         }
+
+        synchronized (mProbeResultLock) {
+            mProbeResults |= sProbeTypeToNetworkValidationProbe.get(probeType,
+                    0 /* valueIfKeyNotFound */);
+        }
+        notifyNetworkTested(getNetworkTestResult(), null);
         logValidationProbe(probeTimer.stop(), probeType, httpResponseCode);
 
         if (probeSpec == null) {
@@ -2036,5 +2081,18 @@ public class NetworkMonitor extends StateMachine {
         }
 
         return result;
+    }
+
+    private void updatePartialConnectivity() {
+        if (mAcceptPartialConnectivity
+                && ((getNetworkTestResult() & NETWORK_VALIDATION_RESULT_PARTIAL) != 0)) {
+            mUseHttps = false;
+        }
+    }
+
+    private int getNetworkTestResult() {
+        synchronized (mProbeResultLock) {
+            return mEvaluationResult | mProbeResults;
+        }
     }
 }
