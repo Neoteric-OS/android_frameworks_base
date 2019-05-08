@@ -20,8 +20,6 @@ import static javax.lang.model.element.ElementKind.PACKAGE;
 import static javax.tools.Diagnostic.Kind.ERROR;
 import static javax.tools.Diagnostic.Kind.WARNING;
 
-import android.annotation.UnsupportedAppUsage;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.sun.tools.javac.code.Type;
@@ -192,7 +190,6 @@ public class SignatureBuilder {
     }
 
     public String buildSignature(Element element) {
-        UnsupportedAppUsage uba = element.getAnnotation(UnsupportedAppUsage.class);
         try {
             String signature;
             switch (element.getKind()) {
@@ -208,14 +205,25 @@ public class SignatureBuilder {
                 default:
                     return null;
             }
+            // Obtain annotation objects
+            android.annotation.UnsupportedAppUsage uauFramework = element.getAnnotation(
+                    android.annotation.UnsupportedAppUsage.class);
+            dalvik.annotation.compat.UnsupportedAppUsage uauLibcore = element.getAnnotation(
+                    dalvik.annotation.compat.UnsupportedAppUsage.class);
+            if (uauFramework == null && uauLibcore == null) {
+                throw new RuntimeException(
+                        "Element doesn't have any UnsupportedAppUsage annotation");
+            }
             // if we have an expected signature on the annotation, warn if it doesn't match.
-            if (!Strings.isNullOrEmpty(uba.expectedSignature())) {
-                if (!signature.equals(uba.expectedSignature())) {
+            String expectedSignature = uauFramework != null ? uauFramework.expectedSignature()
+                    : uauLibcore.expectedSignature();
+            if (!Strings.isNullOrEmpty(expectedSignature)) {
+                if (!signature.equals(expectedSignature)) {
                     mMessager.printMessage(
                             WARNING,
                             String.format("Expected signature doesn't match generated signature.\n"
                                             + " Expected:  %s\n Generated: %s",
-                                    uba.expectedSignature(), signature),
+                                    expectedSignature, signature),
                             element);
                 }
             }
