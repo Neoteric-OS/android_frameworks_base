@@ -155,7 +155,8 @@ public class NetworkStackService extends Service {
                 server = new DhcpServer(
                         ifName,
                         DhcpServingParams.fromParcelableObject(params),
-                        mLog.forSubComponent(ifName + ".DHCP"));
+                        mLog.forSubComponent(ifName + ".DHCP"),
+                        cb);
             } catch (DhcpServingParams.InvalidParameterException e) {
                 mLog.e("Invalid DhcpServingParams", e);
                 cb.onDhcpServerCreated(STATUS_INVALID_ARGUMENT, null);

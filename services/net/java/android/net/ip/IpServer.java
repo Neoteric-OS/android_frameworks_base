@@ -325,6 +325,10 @@ public class IpServer extends StateMachine {
             });
         }
 
+        @Override
+        public void onDhcpSuceess(String ip, String hostname, String mac) {
+        }
+
         private void handleError() {
             mLastError = ConnectivityManager.TETHER_ERROR_DHCPSERVER_ERROR;
             transitionTo(mInitialState);

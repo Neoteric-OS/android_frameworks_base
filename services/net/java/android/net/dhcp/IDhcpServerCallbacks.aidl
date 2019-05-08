@@ -21,4 +21,5 @@ import android.net.dhcp.IDhcpServer;
 /** @hide */
 oneway interface IDhcpServerCallbacks {
     void onDhcpServerCreated(int statusCode, in IDhcpServer server);
+    void onDhcpSuceess(String ip, String hostname, String mac);
 }

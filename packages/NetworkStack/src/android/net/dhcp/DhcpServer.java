@@ -115,6 +115,8 @@ public class DhcpServer extends IDhcpServer.Stub {
     private FileDescriptor mSocket;
     @NonNull
     private DhcpServingParams mServingParams;
+    @Nullable
+    private IDhcpServerCallbacks mDhcpCallBacks;
 
     /**
      * Clock to be used by DhcpServer to track time for lease expiration.
@@ -227,6 +229,13 @@ public class DhcpServer extends IDhcpServer.Stub {
             @NonNull DhcpServingParams params, @NonNull SharedLog log) {
         this(new HandlerThread(DhcpServer.class.getSimpleName() + "." + ifName),
                 ifName, params, log, null);
+    }
+
+    public DhcpServer(@NonNull String ifName,
+                      @NonNull DhcpServingParams params, @NonNull SharedLog log, IDhcpServerCallbacks cb) {
+        this(new HandlerThread(DhcpServer.class.getSimpleName() + "." + ifName),
+                ifName, params, log, null);
+        mDhcpCallBacks = cb;
     }
 
     @VisibleForTesting
@@ -508,7 +517,14 @@ public class DhcpServer extends IDhcpServer.Stub {
                 new ArrayList<>(mServingParams.dnsServers),
                 mServingParams.getServerInet4Addr(), null /* domainName */, hostname,
                 mServingParams.metered, (short) mServingParams.linkMtu);
-
+        // send dhcp suceess to IP server
+        if (mDhcpCallBacks != null) {
+            try {
+                mDhcpCallBacks.onDhcpSuceess(lease.getNetAddr().getHostAddress(), lease.getHostname(), clientMac.toString());
+            } catch (Exception e) {
+                mLog.w("error when send dhcp suceess to IP server");
+            }
+        }
         return transmitOfferOrAckPacket(ackPacket, request, lease, clientMac, broadcastFlag);
     }
 
