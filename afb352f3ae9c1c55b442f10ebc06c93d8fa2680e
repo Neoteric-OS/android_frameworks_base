@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9740603d_6552dc31",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T02:18:27Z",
+      "side": 1,
+      "message": "Use existing makeNotMeteredNetworkMonitor() directly?",
+      "range": {
+        "startLine": 717,
+        "startChar": 8,
+        "endLine": 718,
+        "endChar": 71
+      },
+      "revId": "afb352f3ae9c1c55b442f10ebc06c93d8fa2680e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ef58bb_1b7ba5dc",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T02:18:27Z",
+      "side": 1,
+      "message": "Use existing makeNotMeteredNetworkMonitor() directly?",
+      "range": {
+        "startLine": 732,
+        "startChar": 8,
+        "endLine": 733,
+        "endChar": 71
+      },
+      "revId": "afb352f3ae9c1c55b442f10ebc06c93d8fa2680e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63fb04ab_cae80158",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T02:18:27Z",
+      "side": 1,
+      "message": "We do similar in makeMeteredNetworkMonitor() and makeNotMeteredNetworkMonitor(). There are also other place used makeMonitor() without doing so. Should we do that in one place? \nProbably update makeMonitor() to makeMonitor(nc) and do the network capabilities notification in it. Then update makeMeteredNetworkMonitor() and makeNotMeteredNetworkMonitor() to \n    private WrappedNetworkMonitor makeMeteredNetworkMonitor() {\n        final WrappedNetworkMonitor nm \u003d makeMonitor(METERED_CAPABILITIES);\n        return nm;\n    }\n\n    private WrappedNetworkMonitor makeNotMeteredNetworkMonitor() {\n        final WrappedNetworkMonitor nm \u003d makeMonitor(NOT_METERED_CAPABILITIES);\n        return nm;\n    }",
+      "range": {
+        "startLine": 978,
+        "startChar": 8,
+        "endLine": 978,
+        "endChar": 53
+      },
+      "revId": "afb352f3ae9c1c55b442f10ebc06c93d8fa2680e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
