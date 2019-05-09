@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322cb27a_551dec71",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T06:05:35Z",
+      "side": 1,
+      "message": "Nit: redundant one. It\u0027s notified inside  makeNotMeteredNetworkMonitor()",
+      "range": {
+        "startLine": 717,
+        "startChar": 8,
+        "endLine": 717,
+        "endChar": 71
+      },
+      "revId": "2aa60ae344879d7aa7d051f9effe2e03294aab83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
