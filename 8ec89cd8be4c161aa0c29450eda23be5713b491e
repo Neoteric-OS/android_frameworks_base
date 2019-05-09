@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647deedf_63dcc047",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-09T06:44:28Z",
+      "side": 1,
+      "message": "Nits:\n1. \"Types\" looks redundant to me since this gets all addresses.\nIs getAllAddressByName better?\n2. furthermore, is it better if we just name it getAllByName?\nIf we agree that this function is well known that returning addresses.",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 58
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bf4a9f_a1a96bdf",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-09T06:44:28Z",
+      "side": 1,
+      "message": "get\"Addresses\"ByNameWithType?\nor even getByNameWithType ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
