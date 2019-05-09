@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "82ee9ee0_09ce1d93",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T08:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0edd3ef_8defb912",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "647deedf_63dcc047",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -191,6 +215,54 @@
     },
     {
       "key": {
+        "uuid": "b3b96684_f3859d75",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T08:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23033415_0cc07b5f",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5141addd_c0075fdc",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T08:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9deab3cd_26dc041e",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 58
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bf4a9f_a1a96bdf",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -262,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "6d87b64d_c3fdee95",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T08:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb54f64_b07a7c81",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba59ccb2_708f2ddf",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -306,6 +402,30 @@
       "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a236bf_218d80a1",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T08:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb2f081_f34e422a",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 5
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
