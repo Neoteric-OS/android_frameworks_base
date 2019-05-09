@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3989eef_9f4a2e37",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/ConfigUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T04:12:08Z",
+      "side": 1,
+      "message": "This function already exists in NetworkMonitor and was unit tested. This function is the same but is not tested. We should not have two copies of the same code and we should not switch from a unit tested function to an identical non-unit tested function.\n\nIf you want to add this new file (which I agree is a good idea), then you should delete the getIntSetting method in NetworkMonitor. For the unit test, you can move it test to a new ConfigUtilsTest file, but if that\u0027s too much work you can just leave the existing testGetIntSetting in NetworkMonitorTest for now. As long as the code is covered by tests it doesn\u0027t matter too much where those tests live.",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "5518b837fce813fc9a7ce0b9b7dc01b4b33e756d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
