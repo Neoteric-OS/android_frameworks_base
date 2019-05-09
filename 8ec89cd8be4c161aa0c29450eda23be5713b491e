@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0edd3ef_8defb912",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:50:13Z",
+      "side": 1,
+      "message": "Will update it",
+      "parentUuid": "a6022254_3923cb3b",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "647deedf_63dcc047",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -119,6 +143,54 @@
     },
     {
       "key": {
+        "uuid": "9deab3cd_26dc041e",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:50:13Z",
+      "side": 1,
+      "message": "Got it. Will update it.",
+      "parentUuid": "efd27687_52091652",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 58
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23033415_0cc07b5f",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:50:13Z",
+      "side": 1,
+      "message": "Will update it. Idea is explained in getDnsResolver().",
+      "parentUuid": "89145c18_c368484e",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80bf4a9f_a1a96bdf",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -201,6 +273,30 @@
       "writtenOn": "2019-05-09T07:38:03Z",
       "side": 1,
       "message": "What is the advantage of allowing callers to pass in a null DnsResolver? Any caller that wants to have a unit test (and ideally, all callers *should* have unit tests) will need to pass in non-null DnsResolver themselves anyway, right?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 5
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb2f081_f34e422a",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:50:13Z",
+      "side": 1,
+      "message": "Idea is to allow caller to not to touch any DnsResolver if they do not care where the result come from. But for unit test purpose, yes, caller will need that like NM does. Will update it.",
+      "parentUuid": "ba59ccb2_708f2ddf",
       "range": {
         "startLine": 123,
         "startChar": 0,
