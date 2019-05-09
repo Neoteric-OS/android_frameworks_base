@@ -22,6 +22,30 @@
       "revId": "5518b837fce813fc9a7ce0b9b7dc01b4b33e756d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd88d938_ca4cb0ac",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/ConfigUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T05:52:36Z",
+      "side": 1,
+      "message": "My mistake that I do not remove that in NetworkMonitor. After reviewing, I think it\u0027s better to do that in separate commit to keep this commit clean and simpler since that is not necessary in this commit.",
+      "parentUuid": "b3989eef_9f4a2e37",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "5518b837fce813fc9a7ce0b9b7dc01b4b33e756d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
