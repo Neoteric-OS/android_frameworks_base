@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f1effc4_57ca1962",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T03:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ffda455_bd6a3aaf",
+      "range": {
+        "startLine": 61,
+        "startChar": 67,
+        "endLine": 61,
+        "endChar": 99
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af3551ed_dc34750f",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "708b56fc_c8690ab3",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T03:57:26Z",
+      "side": 1,
+      "message": "updated",
+      "parentUuid": "af3551ed_dc34750f",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 56
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17f35dc_cc0d0a32",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2019-05-07T07:31:01Z",
       "side": 1,
       "message": "Could we use ConditionVariable instead and throw exception after querying timeout?\nif (!latch.block(timeoutMs)) {\n    throw new UnknownHostException(host);\n}",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee79f10e_4fc20652",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T03:57:26Z",
+      "side": 1,
+      "message": "Do we get any benefit from this?",
+      "parentUuid": "d17f35dc_cc0d0a32",
       "range": {
         "startLine": 101,
         "startChar": 8,
