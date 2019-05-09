@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1fcf7c9_ff220c7d",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T03:27:32Z",
+      "side": 1,
+      "message": "Not sure. This code affects the enclosing class\u0027s mocks, and it\u0027s a bit strange for a constructor to do a lot of work that affects the enclosing class. I think it\u0027s good that just doing \"new FakeDns()\" doesn\u0027t cause any mocking to happen. Left as is for now.",
+      "parentUuid": "4b4b8701_e5f1a6e1",
+      "range": {
+        "startLine": 228,
+        "startChar": 21,
+        "endLine": 228,
+        "endChar": 33
+      },
+      "revId": "619b80f689ea48ee70c62a5bfe0a58389879a563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1e7b5f_a46e6168",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-07T13:15:11Z",
       "side": 1,
       "message": "Not for this CL, but is it feasible if we use positive naming to improve readability?\ne.g.\ndoReturn(mPrivateDnsBypassingNetwork).when(mNetwork).getPrivateDnsBypassingCopy();\n(May also need to change them in NetworkMonitor for consistency)",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 89
+      },
+      "revId": "619b80f689ea48ee70c62a5bfe0a58389879a563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c63dce_bfcd80f3",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T03:27:32Z",
+      "side": 1,
+      "message": "Uploaded aosp/958658.",
+      "parentUuid": "2c1e7b5f_a46e6168",
       "range": {
         "startLine": 274,
         "startChar": 8,
