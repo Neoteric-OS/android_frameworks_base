@@ -140,6 +140,30 @@
       "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22d5072_4d8dd5f3",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-05-09T08:48:47Z",
+      "side": 1,
+      "message": "We don\u0027t need to get the querying result again below. Because We already know the result was empty due to querying was timeout.",
+      "parentUuid": "ee79f10e_4fc20652",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
