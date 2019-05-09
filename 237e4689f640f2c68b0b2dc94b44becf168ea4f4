@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c2a4d6_aa1391de",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-09T22:02:42Z",
+      "side": 1,
+      "message": "Hmm, do we need this here? If this shares the same lifecycle as mDestState, perhaps the setting to null in performTransitions() is sufficient?",
+      "range": {
+        "startLine": 822,
+        "startChar": 0,
+        "endLine": 822,
+        "endChar": 38
+      },
+      "revId": "237e4689f640f2c68b0b2dc94b44becf168ea4f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdd00f5_f6106395",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-09T22:02:42Z",
+      "side": 1,
+      "message": "Do we need to clear entry data here too?",
+      "range": {
+        "startLine": 951,
+        "startChar": 0,
+        "endLine": 951,
+        "endChar": 30
+      },
+      "revId": "237e4689f640f2c68b0b2dc94b44becf168ea4f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c149eba0_45426aa7",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-09T22:02:42Z",
+      "side": 1,
+      "message": "Are we sure this isn\u0027t going to throw an IndexOutOfBoundsException?\n\nAlso, is this the top-most state? or the bottom-most? (Root, or leaf-child state?)",
+      "range": {
+        "startLine": 986,
+        "startChar": 23,
+        "endLine": 986,
+        "endChar": 26
+      },
+      "revId": "237e4689f640f2c68b0b2dc94b44becf168ea4f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f314263_131d084c",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-09T22:02:42Z",
+      "side": 1,
+      "message": "Hmm. Is it ever possible that the parent state does not accept the entry data, but the child does?",
+      "range": {
+        "startLine": 1264,
+        "startChar": 0,
+        "endLine": 1264,
+        "endChar": 47
+      },
+      "revId": "237e4689f640f2c68b0b2dc94b44becf168ea4f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
