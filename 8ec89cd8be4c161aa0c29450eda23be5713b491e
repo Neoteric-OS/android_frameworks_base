@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22a49464_65bd55d4",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:30:15Z",
+      "side": 1,
+      "message": "getAllByName in public API will return only result that the ip types had by the network. I would like to prevent that kind of confusing. User may think they\u0027re similar but why there is one here. How about getAllTypesByName?",
+      "parentUuid": "647deedf_63dcc047",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 58
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80bf4a9f_a1a96bdf",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-09T06:44:28Z",
       "side": 1,
       "message": "get\"Addresses\"ByNameWithType?\nor even getByNameWithType ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a303e138_501bc4b4",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T07:30:15Z",
+      "side": 1,
+      "message": "will update",
+      "parentUuid": "80bf4a9f_a1a96bdf",
       "range": {
         "startLine": 72,
         "startChar": 32,
