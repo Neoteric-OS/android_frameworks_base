@@ -164,6 +164,30 @@
       "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90f21db_d30e879c",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-09T11:39:58Z",
+      "side": 1,
+      "message": "As discussed offline with you and Junyu, If we take your approach, we may miss case like:\nThe result come back and in the meantime, it\u0027s timeout. Then it will send an exception without checking again.",
+      "parentUuid": "e22d5072_4d8dd5f3",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "4fb8a5afb3985522004680bd051da77dfd202d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
