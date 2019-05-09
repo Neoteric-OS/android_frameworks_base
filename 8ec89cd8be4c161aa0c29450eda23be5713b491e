@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6022254_3923cb3b",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T07:38:03Z",
+      "side": 1,
+      "message": "This means \"decide what queries to make depending on what IP addresses are on the system\", right? If so, then suggest being a bit more explicit and making this be TYPE_ADDRCONFIG (for consistency with AI_ADDRCONFIG).",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "647deedf_63dcc047",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -49,6 +72,53 @@
     },
     {
       "key": {
+        "uuid": "efd27687_52091652",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T07:38:03Z",
+      "side": 1,
+      "message": "+1 for getAllByName",
+      "parentUuid": "647deedf_63dcc047",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 58
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89145c18_c368484e",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T07:38:03Z",
+      "side": 1,
+      "message": "Why not allow callers to pass in their own DnsResolver instance here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80bf4a9f_a1a96bdf",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 9
@@ -89,6 +159,53 @@
         "startChar": 32,
         "endLine": 72,
         "endChar": 56
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb54f64_b07a7c81",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T07:38:03Z",
+      "side": 1,
+      "message": "You don\u0027t need \"withType\" either. You can just call this getAllByName as well if you like, since the signature is different.",
+      "parentUuid": "80bf4a9f_a1a96bdf",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba59ccb2_708f2ddf",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-09T07:38:03Z",
+      "side": 1,
+      "message": "What is the advantage of allowing callers to pass in a null DnsResolver? Any caller that wants to have a unit test (and ideally, all callers *should* have unit tests) will need to pass in non-null DnsResolver themselves anyway, right?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 5
       },
       "revId": "8ec89cd8be4c161aa0c29450eda23be5713b491e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
