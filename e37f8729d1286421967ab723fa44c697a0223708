@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f448a5b3_120cbdbc",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-10T06:52:59Z",
+      "side": 1,
+      "message": "We may able to take the error as part of the message in unknownHostException(host). Then we could have similar design in NetworkMonitor.",
+      "parentUuid": "23fd333b_48d1dda4",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "e37f8729d1286421967ab723fa44c697a0223708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83a7e187_9cbd0dda",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 15
