@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23fd333b_48d1dda4",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-10T06:03:28Z",
+      "side": 1,
+      "message": "Not for this CL, but this means that we\u0027ll no longer get error logs in the ValidationLogs portion of dumpsys network_stack. Any thoughts on how to do this? Maybe a logging lambda?",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "e37f8729d1286421967ab723fa44c697a0223708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a7e187_9cbd0dda",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-10T06:03:28Z",
+      "side": 1,
+      "message": "Not for this CL, but it occurs to me that this doesn\u0027t actually do anything. The packets that actually do the DNS queries are sent by netd, and netd doesn\u0027t look at the tag at all. Maybe add a TODO to investigate whether this is still useful?\n\nThe TODO should probably also mention that given that this is a library, the tag should be passed in by the caller.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 56
+      },
+      "revId": "e37f8729d1286421967ab723fa44c697a0223708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c780f0_a41d812f",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-10T06:03:28Z",
+      "side": 1,
+      "message": "using",
+      "range": {
+        "startLine": 250,
+        "startChar": 47,
+        "endLine": 250,
+        "endChar": 58
+      },
+      "revId": "e37f8729d1286421967ab723fa44c697a0223708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07875397_409221f2",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-10T06:03:28Z",
+      "side": 1,
+      "message": "This code is identical to the code above except for the numbers of the arguments. Can you factor it out to a private function?",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 28
+      },
+      "revId": "e37f8729d1286421967ab723fa44c697a0223708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
