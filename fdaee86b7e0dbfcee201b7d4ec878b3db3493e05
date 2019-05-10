@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1367cf82_39690b8c",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2019-05-10T18:43:51Z",
+      "side": 1,
+      "message": "Should we change it to card_string?",
+      "range": {
+        "startLine": 541,
+        "startChar": 46,
+        "endLine": 541,
+        "endChar": 53
+      },
+      "revId": "fdaee86b7e0dbfcee201b7d4ec878b3db3493e05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
