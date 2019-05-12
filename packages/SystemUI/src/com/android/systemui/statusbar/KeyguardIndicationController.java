@@ -360,7 +360,7 @@ public class KeyguardIndicationController {
         int animateDownDuration = mContext.getResources().getInteger(
                 R.integer.wired_charging_keyguard_text_animation_duration_down);
         textView.animate()
-                .translationYBy(yTranslation)
+                .translationY(yTranslation)
                 .setInterpolator(Interpolators.LINEAR)
                 .setDuration(animateUpDuration)
                 .setListener(new AnimatorListenerAdapter() {
@@ -373,7 +373,7 @@ public class KeyguardIndicationController {
                         textView.animate()
                                 .setDuration(animateDownDuration)
                                 .setInterpolator(Interpolators.BOUNCE)
-                                .translationYBy(-1 * yTranslation)
+                                .translationY(0)
                                 .setListener(null);
                     }
                 });
