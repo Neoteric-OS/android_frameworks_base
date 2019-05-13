@@ -22,6 +22,30 @@
       "revId": "08ec82faf6086c9ee4f5d331c914b4cd868568ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36a542a_312bf4e7",
+        "filename": "services/core/java/com/android/server/pm/ProtectedPackages.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-05-13T11:46:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a37f590_60421403",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "08ec82faf6086c9ee4f5d331c914b4cd868568ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
