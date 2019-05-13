@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a37f590_60421403",
+        "filename": "services/core/java/com/android/server/pm/ProtectedPackages.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-13T11:15:08Z",
+      "side": 1,
+      "message": "I would have preferred filtering based on the app UID (since networkstack is a fixed system UID) rather than the package, but it may not be easy considering that methods here don\u0027t have the app UID.\nConsidering the latest discussions in b/130780193, this may not be necessary anymore since the app is now marked persistent.",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "08ec82faf6086c9ee4f5d331c914b4cd868568ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
