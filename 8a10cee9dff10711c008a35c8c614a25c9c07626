@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42070665_2f9e047b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-13T14:04:25Z",
+      "side": 1,
+      "message": "This is @hide so I\u0027m not sure it\u0027s appropriate to cite in public API docs.",
+      "range": {
+        "startLine": 3654,
+        "startChar": 15,
+        "endLine": 3654,
+        "endChar": 39
+      },
+      "revId": "8a10cee9dff10711c008a35c8c614a25c9c07626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
