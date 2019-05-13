@@ -42,7 +42,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -344,41 +343,40 @@ public class PermissionMonitorTest {
         // MOCK_UID1: MOCK_PACKAGE1 only has network permission.
         // SYSTEM_UID: SYSTEM_PACKAGE1 has system permission.
         // SYSTEM_UID: SYSTEM_PACKAGE2 only has network permission.
-        doReturn(SYSTEM).when(mPermissionMonitor).highestPermissionForUid(eq(SYSTEM), anyString());
-        doReturn(SYSTEM).when(mPermissionMonitor).highestPermissionForUid(any(),
-                eq(SYSTEM_PACKAGE1));
-        doReturn(NETWORK).when(mPermissionMonitor).highestPermissionForUid(any(),
-                eq(SYSTEM_PACKAGE2));
-        doReturn(NETWORK).when(mPermissionMonitor).highestPermissionForUid(any(),
-                eq(MOCK_PACKAGE1));
+        doReturn(INetd.PERMISSION_SYSTEM).when(mPermissionMonitor)
+                .getPermissionsForPackage(eq(SYSTEM_PACKAGE1));
+        doReturn(INetd.PERMISSION_NETWORK).when(mPermissionMonitor)
+                .getPermissionsForPackage(eq(SYSTEM_PACKAGE2));
+        doReturn(INetd.PERMISSION_NETWORK).when(mPermissionMonitor)
+                .getPermissionsForPackage(eq(MOCK_PACKAGE1));
 
         // Add SYSTEM_PACKAGE2, expect only have network permission.
         mPermissionMonitor.onUserAdded(MOCK_USER1);
-        addPackageForUsers(new int[]{MOCK_USER1}, SYSTEM_PACKAGE2, SYSTEM_UID);
+        mObserver.onPackageAdded(SYSTEM_PACKAGE2, SYSTEM_UID);
         mNetdMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1}, new int[]{SYSTEM_UID});
 
         // Add SYSTEM_PACKAGE1, expect permission escalate.
-        addPackageForUsers(new int[]{MOCK_USER1}, SYSTEM_PACKAGE1, SYSTEM_UID);
+        mObserver.onPackageAdded(SYSTEM_PACKAGE1, SYSTEM_UID);
         mNetdMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1}, new int[]{SYSTEM_UID});
 
         mPermissionMonitor.onUserAdded(MOCK_USER2);
         mNetdMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1, MOCK_USER2},
                 new int[]{SYSTEM_UID});
 
-        addPackageForUsers(new int[]{MOCK_USER1, MOCK_USER2}, MOCK_PACKAGE1, MOCK_UID1);
+        mObserver.onPackageAdded(MOCK_PACKAGE1, MOCK_UID1);
         mNetdMonitor.expectPermission(SYSTEM, new int[]{MOCK_USER1, MOCK_USER2},
                 new int[]{SYSTEM_UID});
         mNetdMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1, MOCK_USER2},
                 new int[]{MOCK_UID1});
 
         // Remove MOCK_UID1, expect no permission left for all user.
-        mPermissionMonitor.onPackageRemoved(MOCK_UID1);
-        removePackageForUsers(new int[]{MOCK_USER1, MOCK_USER2}, MOCK_UID1);
+        when(mPackageManager.getPackagesForUid(MOCK_UID1)).thenReturn(null);
+        mObserver.onPackageRemoved(MOCK_PACKAGE1, MOCK_UID1);
         mNetdMonitor.expectNoPermission(new int[]{MOCK_USER1, MOCK_USER2}, new int[]{MOCK_UID1});
 
         // Remove SYSTEM_PACKAGE1, expect permission downgrade.
         when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[]{SYSTEM_PACKAGE2});
-        removePackageForUsers(new int[]{MOCK_USER1, MOCK_USER2}, SYSTEM_UID);
+        mObserver.onPackageRemoved(MOCK_PACKAGE1, SYSTEM_UID);
         mNetdMonitor.expectPermission(NETWORK, new int[]{MOCK_USER1, MOCK_USER2},
                 new int[]{SYSTEM_UID});
 
@@ -387,7 +385,7 @@ public class PermissionMonitorTest {
 
         // Remove all packages, expect no permission left.
         when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[]{});
-        removePackageForUsers(new int[]{MOCK_USER2}, SYSTEM_UID);
+        mObserver.onPackageRemoved(MOCK_PACKAGE1, SYSTEM_UID);
         mNetdMonitor.expectNoPermission(new int[]{MOCK_USER1, MOCK_USER2},
                 new int[]{SYSTEM_UID, MOCK_UID1});
 
@@ -406,8 +404,9 @@ public class PermissionMonitorTest {
                         buildPackageInfo(/* SYSTEM */ false, MOCK_UID2, MOCK_USER1),
                         buildPackageInfo(/* SYSTEM */ false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1),
+                eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
         mPermissionMonitor.startMonitoring();
         // Every app on user 0 except MOCK_UID2 are under VPN.
         final Set<UidRange> vpnRange1 = new HashSet<>(Arrays.asList(new UidRange[] {
@@ -423,9 +422,9 @@ public class PermissionMonitorTest {
         reset(mNetdService);
 
         // When MOCK_UID1 package is uninstalled and reinstalled, expect Netd to be updated
-        mPermissionMonitor.onPackageRemoved(UserHandle.getUid(MOCK_USER1, MOCK_UID1));
+        mObserver.onPackageRemoved(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
         verify(mNetdService).firewallRemoveUidInterfaceRules(aryEq(new int[] {MOCK_UID1}));
-        mPermissionMonitor.onPackageAdded(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
+        mObserver.onPackageAdded(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
         verify(mNetdService).firewallAddUidInterfaceRules(eq("tun0"),
                 aryEq(new int[] {MOCK_UID1}));
 
@@ -454,37 +453,22 @@ public class PermissionMonitorTest {
                         buildPackageInfo(true, SYSTEM_UID1, MOCK_USER1),
                         buildPackageInfo(false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                        buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1),
+                eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
 
         mPermissionMonitor.startMonitoring();
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(MOCK_USER1));
         mPermissionMonitor.onVpnUidRangesAdded("tun0", vpnRange, VPN_UID);
 
         // Newly-installed package should have uid rules added
-        mPermissionMonitor.onPackageAdded(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
+        mObserver.onPackageAdded(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
         verify(mNetdService).firewallAddUidInterfaceRules(eq("tun0"),
                 aryEq(new int[] {MOCK_UID1}));
 
         // Removed package should have its uid rules removed
-        mPermissionMonitor.onPackageRemoved(UserHandle.getUid(MOCK_USER1, MOCK_UID1));
+        mObserver.onPackageRemoved(MOCK_PACKAGE1, UserHandle.getUid(MOCK_USER1, MOCK_UID1));
         verify(mNetdService).firewallRemoveUidInterfaceRules(aryEq(new int[] {MOCK_UID1}));
-    }
-
-
-    // Normal package add/remove operations will trigger multiple intent for uids corresponding to
-    // each user. To simulate generic package operations, the onPackageAdded/Removed will need to be
-    // called multiple times with the uid corresponding to each user.
-    private void addPackageForUsers(int[] users, String packageName, int uid) {
-        for (final int user : users) {
-            mPermissionMonitor.onPackageAdded(packageName, UserHandle.getUid(user, uid));
-        }
-    }
-
-    private void removePackageForUsers(int[] users, int uid) {
-        for (final int user : users) {
-            mPermissionMonitor.onPackageRemoved(UserHandle.getUid(user, uid));
-        }
     }
 
     private class NetdServiceMonitor {
@@ -561,7 +545,6 @@ public class PermissionMonitorTest {
             throws Exception {
         PackageInfo packageInfo = packageInfoWithPermissions(permissions, PARTITION_SYSTEM);
         when(mPackageManager.getPackageInfo(eq(packageName), anyInt())).thenReturn(packageInfo);
-        when(mPackageManager.getPackagesForUid(eq(uid))).thenReturn(new String[]{packageName});
         mObserver.onPackageAdded(packageName, uid);
         return packageInfo;
     }
