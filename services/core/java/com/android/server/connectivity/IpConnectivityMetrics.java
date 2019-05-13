@@ -20,6 +20,7 @@ import android.content.Context;
 import android.net.ConnectivityMetricsEvent;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetdEventCallback;
+import android.net.NetworkStack;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.os.Binder;
@@ -276,7 +277,7 @@ final public class IpConnectivityMetrics extends SystemService {
 
         @Override
         public int logEvent(ConnectivityMetricsEvent event) {
-            enforceConnectivityInternalPermission();
+            enforceLogPermission();
             return append(event);
         }
 
@@ -299,8 +300,9 @@ final public class IpConnectivityMetrics extends SystemService {
             }
         }
 
-        private void enforceConnectivityInternalPermission() {
-            enforcePermission(android.Manifest.permission.CONNECTIVITY_INTERNAL);
+        private void enforceLogPermission() {
+            NetworkStack.checkNetworkStackPermissionOr(getContext(),
+                    android.Manifest.permission.CONNECTIVITY_INTERNAL);
         }
 
         private void enforceDumpPermission() {
