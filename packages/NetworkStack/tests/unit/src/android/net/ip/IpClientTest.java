@@ -43,11 +43,16 @@ import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.NetworkStackIpMemoryStore;
 import android.net.RouteInfo;
+import android.net.TestNetworkInterface;
+import android.net.TestNetworkManager;
 import android.net.ipmemorystore.NetworkAttributes;
 import android.net.shared.InitialConfiguration;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.util.InterfaceParams;
+import android.os.ConditionVariable;
+import android.os.IBinder;
 
+import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -62,6 +67,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.net.InetAddress;
 import java.util.Arrays;
@@ -101,6 +107,8 @@ public class IpClientTest {
 
     private NetworkObserver mObserver;
     private InterfaceParams mIfParams;
+    private TestNetworkInterface mIface;
+    private String mIfaceName;
 
     @Before
     public void setUp() throws Exception {
@@ -467,6 +475,53 @@ public class IpClientTest {
         conf.directlyConnectedRoutes.addAll(prefixes);
         conf.dnsServers.addAll(dns);
         return conf;
+    }
+
+    @Test
+    public void testIpClientCallbacks() throws Exception {
+        class TestIpClientCallback extends IpClientCallbacks {
+            IIpClient mIIpClient;
+            ConditionVariable mCreatedCv;
+
+            @Override
+            public void onIpClientCreated(IIpClient iIpClient) {
+                mIIpClient = iIpClient;
+                mCreatedCv.open();
+            }
+
+            public IIpClient getIIpClient() {
+                mCreatedCv.block();
+                return mIIpClient;
+            }
+        }
+
+
+        InstrumentationRegistry.getInstrumentation().getUiAutomation()
+                .adoptShellPermissionIdentity();
+
+        TestNetworkManager tnm = (TestNetworkManager) InstrumentationRegistry.getInstrumentation()
+                .getContext().getSystemService(Context.TEST_NETWORK_SERVICE);
+        mIface = tnm.createTapInterface();
+        mIfaceName = mIface.getInterfaceName();
+
+        // HAR HAR SUPER SNEAKY
+        InstrumentationRegistry.getInstrumentation().getUiAutomation()
+                .dropShellPermissionIdentity();
+
+        IBinder netdIBinder = (IBinder) InstrumentationRegistry.getInstrumentation()
+                .getContext().getSystemService(Context.NETD_SERVICE);
+        INetd netd = INetd.Stub.asInterface(netdIBinder);
+        assertTrue(netd != null);
+
+        when(mContext.getSystemService(eq(Context.NETD_SERVICE))).thenReturn(netdIBinder);
+
+        TestIpClientCallback cb = new TestIpClientCallback();
+        NetworkObserverRegistry reg = new NetworkObserverRegistry();
+        reg.register(netd);
+        IpClient ipc = new IpClient(mContext, mIfaceName, mCb, reg, mNetworkStackServiceManager);
+
+        ProvisioningConfiguration config = new ProvisioningConfiguration.Builder().build();
+        ipc.startProvisioning(config);
     }
 
     static Set<RouteInfo> routes(String... routes) {

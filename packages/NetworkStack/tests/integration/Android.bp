@@ -15,16 +15,14 @@
 //
 
 android_test {
-    name: "NetworkStackTests",
+    name: "NetworkStackIntegrationTests",
     certificate: "networkstack",
     srcs: ["src/**/*.java"],
     test_suites: ["device-tests"],
-    resource_dirs: ["res"],
     static_libs: [
         "androidx.test.rules",
         "mockito-target-extended-minus-junit4",
         "NetworkStackBase",
-        "services.net",
         "testables",
     ],
     libs: [
@@ -32,6 +30,8 @@ android_test {
         "android.test.base",
         "android.test.mock",
     ],
+    // TODO: move this (and the corresponding JNI library for the unit tests), to a defaults rule
+    // like FrameworksNetTests-jni-defaults, add a smoke test, and put it in presubmit.
     jni_libs: [
         // For mockito extended
         "libdexmakerjvmtiagent",
@@ -77,8 +77,9 @@ android_test {
     ],
 }
 
+// TODO: unify with the unit test JNI library.
 cc_library_shared {
-    name: "libnetworkstacktestsjni",
+    name: "libnetworkstackintegrationtestsjni",
     srcs: [
         "jni/**/*.cpp"
     ],
