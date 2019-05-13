@@ -30,9 +30,12 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_MMS;
 import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
-import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_FALLBACK;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTP;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTPS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CBS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
@@ -443,6 +446,17 @@ public class ConnectivityServiceTest {
     }
 
     private class MockNetworkAgent {
+        private static final int BASIC_VALIDATION_RESULT = NETWORK_VALIDATION_PROBE_DNS
+                | NETWORK_VALIDATION_PROBE_HTTP
+                | NETWORK_VALIDATION_PROBE_HTTPS;
+        private static final int VALIDATION_RESULT_INVALID = BASIC_VALIDATION_RESULT
+                | NETWORK_VALIDATION_PROBE_FALLBACK;
+        private static final int VALIDATION_RESULT_VALID = BASIC_VALIDATION_RESULT
+                | NETWORK_VALIDATION_RESULT_VALID;
+        private static final int VALIDATION_RESULT_PARTIAL = BASIC_VALIDATION_RESULT
+                | NETWORK_VALIDATION_PROBE_FALLBACK
+                | NETWORK_VALIDATION_RESULT_PARTIAL;
+
         private final INetworkMonitor mNetworkMonitor;
         private final NetworkInfo mNetworkInfo;
         private final NetworkCapabilities mNetworkCapabilities;
@@ -460,17 +474,17 @@ public class ConnectivityServiceTest {
         private String mRedirectUrl;
 
         private INetworkMonitorCallbacks mNmCallbacks;
-        private int mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
+        private int mNmValidationResult = BASIC_VALIDATION_RESULT;
         private String mNmValidationRedirectUrl = null;
         private boolean mNmProvNotificationRequested = false;
 
         void setNetworkValid() {
-            mNmValidationResult = NETWORK_TEST_RESULT_VALID;
+            mNmValidationResult = VALIDATION_RESULT_VALID;
             mNmValidationRedirectUrl = null;
         }
 
         void setNetworkInvalid() {
-            mNmValidationResult = NETWORK_TEST_RESULT_INVALID;
+            mNmValidationResult = VALIDATION_RESULT_INVALID;
             mNmValidationRedirectUrl = null;
         }
 
@@ -480,7 +494,7 @@ public class ConnectivityServiceTest {
         }
 
         void setNetworkPartial() {
-            mNmValidationResult = NETWORK_TEST_RESULT_PARTIAL_CONNECTIVITY;
+            mNmValidationResult = VALIDATION_RESULT_PARTIAL;
             mNmValidationRedirectUrl = null;
         }
 
@@ -2670,7 +2684,7 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
         NetworkCapabilities nc = callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED,
                 mWiFiNetworkAgent);
-        assertTrue(nc.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY));
+        assertFalse(nc.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY));
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
         // Disconnect and reconnect wifi with partial connectivity again.
