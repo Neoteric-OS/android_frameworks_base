@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa40910_d9dc38a4",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-13T20:23:55Z",
+      "side": 1,
+      "message": "Transition (capitalization)",
+      "range": {
+        "startLine": 1442,
+        "startChar": 7,
+        "endLine": 1442,
+        "endChar": 8
+      },
+      "revId": "8a249eaa707b7bc5e7c5fd1ecfd963cd5eb417dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451a3297_d6bbfd68",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-13T20:23:55Z",
+      "side": 1,
+      "message": "fails (Reasoning: \"will validate\" is future tense)",
+      "range": {
+        "startLine": 1445,
+        "startChar": 68,
+        "endLine": 1445,
+        "endChar": 70
+      },
+      "revId": "8a249eaa707b7bc5e7c5fd1ecfd963cd5eb417dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51093fa6_93495a99",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-13T20:23:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right anymore. Can we confirm, and change/update if needed?",
+      "range": {
+        "startLine": 1445,
+        "startChar": 72,
+        "endLine": 1447,
+        "endChar": 74
+      },
+      "revId": "8a249eaa707b7bc5e7c5fd1ecfd963cd5eb417dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d12810_0e01b279",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-13T20:23:55Z",
+      "side": 1,
+      "message": "This (caps)",
+      "range": {
+        "startLine": 1449,
+        "startChar": 7,
+        "endLine": 1449,
+        "endChar": 8
+      },
+      "revId": "8a249eaa707b7bc5e7c5fd1ecfd963cd5eb417dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911366c4_bd7bceb4",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-13T20:23:55Z",
+      "side": 1,
+      "message": "Suggest a test for invalid input type?",
+      "range": {
+        "startLine": 709,
+        "startChar": 16,
+        "endLine": 709,
+        "endChar": 45
+      },
+      "revId": "8a249eaa707b7bc5e7c5fd1ecfd963cd5eb417dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
