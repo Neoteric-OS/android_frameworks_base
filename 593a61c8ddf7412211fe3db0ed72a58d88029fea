@@ -46,6 +46,30 @@
       "revId": "593a61c8ddf7412211fe3db0ed72a58d88029fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9364f28f_1e1ff61e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3499,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-05-14T07:18:26Z",
+      "side": 1,
+      "message": "NetworkStack.checkNetworkStackPermission() check either MAINLINE_NETWORK_STACK or NETWORK_STACK permisson. If we use NetworkStack.checkNetworkStackPermission here, do we need to modify RequiresPermission annotation on ConnectivityManager#startCaptivePortalApp() too?\n\n@RequiresPermission(anyOf \u003d {\n            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,\n            android.Manifest.permission.NETWORK_STACK})",
+      "parentUuid": "1504ba8c_6bc8d01b",
+      "range": {
+        "startLine": 3498,
+        "startChar": 7,
+        "endLine": 3499,
+        "endChar": 39
+      },
+      "revId": "593a61c8ddf7412211fe3db0ed72a58d88029fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
