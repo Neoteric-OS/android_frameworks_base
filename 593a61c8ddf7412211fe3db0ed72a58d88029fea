@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb13b63_d3056558",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3499,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-14T06:55:12Z",
+      "side": 1,
+      "message": "Actually this should probably be NetworkStack.checkNetworkStackPermission",
+      "range": {
+        "startLine": 3498,
+        "startChar": 7,
+        "endLine": 3499,
+        "endChar": 39
+      },
+      "revId": "593a61c8ddf7412211fe3db0ed72a58d88029fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
