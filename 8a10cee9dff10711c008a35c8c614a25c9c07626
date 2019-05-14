@@ -22,6 +22,30 @@
       "revId": "8a10cee9dff10711c008a35c8c614a25c9c07626",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89dc318_4da1c187",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-14T13:16:36Z",
+      "side": 1,
+      "message": "I\u0027m afraid this is true. Unfortunately the only class we can use here is therefore RuntimeException :(\n\nI think TooManyRequestsException should be public in R. Filed b/132680521 to do it.",
+      "parentUuid": "42070665_2f9e047b",
+      "range": {
+        "startLine": 3654,
+        "startChar": 15,
+        "endLine": 3654,
+        "endChar": 39
+      },
+      "revId": "8a10cee9dff10711c008a35c8c614a25c9c07626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
