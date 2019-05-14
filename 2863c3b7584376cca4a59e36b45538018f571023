@@ -46,6 +46,30 @@
       "revId": "2863c3b7584376cca4a59e36b45538018f571023",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a48285_c4977580",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-14T12:50:48Z",
+      "side": 1,
+      "message": "I am not sure this is really reasonable. MAINLINE_NETWORK_STACK lets you impersonate the system in a number of important ways and is a really critical permission. The shell may have bugs (including permission escalation bugs, where an arbitrary app may become shell). Is there any other ways we could test this at all ?",
+      "parentUuid": "7e01428a_c75c3634",
+      "range": {
+        "startLine": 169,
+        "startChar": 35,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "2863c3b7584376cca4a59e36b45538018f571023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
