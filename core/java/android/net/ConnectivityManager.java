@@ -1360,7 +1360,7 @@ public class ConnectivityManager {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(android.Manifest.permission.LOCAL_MAC_ADDRESS)
+    @RequiresPermission(android.Manifest.permission.CONNECTIVITY_INTERNAL)
     public String getCaptivePortalServerUrl() {
         try {
             return mService.getCaptivePortalServerUrl();
@@ -4128,7 +4128,9 @@ public class ConnectivityManager {
      */
     @SystemApi
     @TestApi
-    @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK})
     public void startCaptivePortalApp(@NonNull Network network, @NonNull Bundle appExtras) {
         try {
             mService.startCaptivePortalAppInternal(network, appExtras);
