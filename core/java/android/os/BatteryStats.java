@@ -7737,6 +7737,7 @@ public abstract class BatteryStats implements Parcelable {
         final long rawRealtimeMs = SystemClock.elapsedRealtime();
         final long rawRealtimeUs = rawRealtimeMs * 1000;
         final int which = STATS_SINCE_CHARGED;
+        final int estimatedBatteryCapacity = (int)helper.getPowerProfile().getBatteryCapacity();
 
         // Battery data (BATTERY_DATA)
         final long bToken = proto.start(SystemProto.BATTERY);
@@ -7757,7 +7758,7 @@ public abstract class BatteryStats implements Parcelable {
         proto.write(SystemProto.Battery.SCREEN_DOZE_DURATION_MS,
                 getScreenDozeTime(rawRealtimeUs, which) / 1000);
         proto.write(SystemProto.Battery.ESTIMATED_BATTERY_CAPACITY_MAH,
-                getEstimatedBatteryCapacity());
+                estimatedBatteryCapacity);
         proto.write(SystemProto.Battery.MIN_LEARNED_BATTERY_CAPACITY_UAH,
                 getMinLearnedBatteryCapacity());
         proto.write(SystemProto.Battery.MAX_LEARNED_BATTERY_CAPACITY_UAH,
