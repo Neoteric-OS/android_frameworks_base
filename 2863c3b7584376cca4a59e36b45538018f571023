@@ -94,6 +94,30 @@
       "revId": "2863c3b7584376cca4a59e36b45538018f571023",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd53d93f_dc3439fd",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-05-14T16:50:40Z",
+      "side": 1,
+      "message": "Because I want to test ConnectivityManager#startCaptivePortalApp(Network, Bundle) to ensure this API which used by NetworkStack can work properly not ConnectivityManager#startCaptivePortalApp(Network) API. That\u0027s what b/129200314 request us to do.\nIf we are testing ConnectivityManager#startCaptivePortalApp(Network), CONNECTIVITY_INTERNAL permission is enough and no need to add permisson basically. The question is which captive portal API should be testing.",
+      "parentUuid": "c9223c3c_7ef3e777",
+      "range": {
+        "startLine": 169,
+        "startChar": 35,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "2863c3b7584376cca4a59e36b45538018f571023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
