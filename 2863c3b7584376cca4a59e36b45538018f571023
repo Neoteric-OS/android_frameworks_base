@@ -70,6 +70,30 @@
       "revId": "2863c3b7584376cca4a59e36b45538018f571023",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9223c3c_7ef3e777",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-14T12:55:27Z",
+      "side": 1,
+      "message": "Apparently CONNECTIVITY_INTERNAL is enough to run the captive portal app. It\u0027s still slightly concerning but it\u0027s vastly less dangerous than MAINLINE_NETWORK_STACK, and more importantly the shell has it already (l.132).\n\nWhy do you need to add this at all for aosp/959832 ? The shell should be able to use ConnectivityManager#startCaptivePortalApp already thanks to its holding CONNECTIVITY_INTERNAL.",
+      "parentUuid": "48a48285_c4977580",
+      "range": {
+        "startLine": 169,
+        "startChar": 35,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "2863c3b7584376cca4a59e36b45538018f571023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
