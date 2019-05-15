@@ -530,7 +530,9 @@ public final class HdmiControlService extends SystemService {
                 Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
                 Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED,
                 Global.MHL_INPUT_SWITCHING_ENABLED,
-                Global.MHL_POWER_CHARGE_ENABLED
+                Global.MHL_POWER_CHARGE_ENABLED,
+                Global.HDMI_CEC_SWITCH_ENABLED,
+                Global.HDMI_ARC_CONTROL_ENABLED
         };
         for (String s : settings) {
             resolver.registerContentObserver(Global.getUriFor(s), false, mSettingsObserver,
@@ -577,6 +579,11 @@ public final class HdmiControlService extends SystemService {
                     break;
                 case Global.MHL_POWER_CHARGE_ENABLED:
                     mMhlController.setOption(OPTION_MHL_POWER_CHARGE, toInt(enabled));
+                    break;
+                case Global.HDMI_ARC_CONTROL_ENABLED:
+                    if (isTvDeviceEnabled()) {
+                        tv().setArcControlFeatureEnabled(enabled);
+                    }
                     break;
             }
         }
