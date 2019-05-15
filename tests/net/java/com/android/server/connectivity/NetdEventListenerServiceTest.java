@@ -60,6 +60,8 @@ public class NetdEventListenerServiceTest {
             {(byte)0x84, (byte)0xc9, (byte)0xb2, (byte)0x6a, (byte)0xed, (byte)0x4b};
 
     NetdEventListenerService mService;
+
+    Context mContext;
     ConnectivityManager mCm;
 
     @Before
@@ -69,11 +71,13 @@ public class NetdEventListenerServiceTest {
         ncWifi.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
         ncCell.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
 
+        mContext = mock(Context.class);
         mCm = mock(ConnectivityManager.class);
+        when(mContext.getSystemService(ConnectivityManager.class)).thenReturn(mCm);
         when(mCm.getNetworkCapabilities(new Network(100))).thenReturn(ncWifi);
         when(mCm.getNetworkCapabilities(new Network(101))).thenReturn(ncCell);
 
-        mService = new NetdEventListenerService(mCm);
+        mService = new NetdEventListenerService(mContext);
     }
 
     @Test
@@ -502,8 +506,7 @@ public class NetdEventListenerServiceTest {
 
     // TODO: instead of comparing textpb to textpb, parse textpb and compare proto to proto.
     String flushStatistics() throws Exception {
-        IpConnectivityMetrics metricsService =
-                new IpConnectivityMetrics(mock(Context.class), (ctx) -> 2000);
+        IpConnectivityMetrics metricsService = new IpConnectivityMetrics(mContext, (ctx) -> 2000);
         metricsService.mNetdListener = mService;
 
         StringWriter buffer = new StringWriter();

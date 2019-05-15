@@ -92,7 +92,8 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     private final RingBuffer<WakeupEvent> mWakeupEvents =
             new RingBuffer<>(WakeupEvent.class, WAKEUP_EVENT_BUFFER_LENGTH);
 
-    private final ConnectivityManager mCm;
+    private final Context mContext;
+    private ConnectivityManager mCm;
 
     @GuardedBy("this")
     private final TokenBucket mConnectTb =
@@ -151,13 +152,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     public NetdEventListenerService(Context context) {
-        this(context.getSystemService(ConnectivityManager.class));
-    }
-
-    @VisibleForTesting
-    public NetdEventListenerService(ConnectivityManager cm) {
-        // We are started when boot is complete, so ConnectivityService should already be running.
-        mCm = cm;
+        mContext = context;
     }
 
     private static long projectSnapshotTime(long timeMs) {
@@ -378,9 +373,21 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         }
     }
 
+    private synchronized ConnectivityManager getConnectivityManager() {
+        if (mCm == null) {
+            mCm = mContext.getSystemService(ConnectivityManager.class);
+        }
+        return mCm;
+    }
+
     private long getTransports(int netId) {
+        ConnectivityManager cm = getConnectivityManager();
+        if (cm == null) {
+            throw new IllegalStateException(
+                    "Received Netd event for netId=" + netId + " but ConnectivityManager was null");
+        }
         // TODO: directly query ConnectivityService instead of going through Binder interface.
-        NetworkCapabilities nc = mCm.getNetworkCapabilities(new Network(netId));
+        NetworkCapabilities nc = cm.getNetworkCapabilities(new Network(netId));
         if (nc == null) {
             return 0;
         }

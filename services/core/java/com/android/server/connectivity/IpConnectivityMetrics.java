@@ -130,19 +130,12 @@ final public class IpConnectivityMetrics extends SystemService {
     @Override
     public void onStart() {
         if (DBG) Log.d(TAG, "onStart");
-    }
+        mNetdListener = new NetdEventListenerService(getContext());
 
-    @Override
-    public void onBootPhase(int phase) {
-        if (phase == SystemService.PHASE_SYSTEM_SERVICES_READY) {
-            if (DBG) Log.d(TAG, "onBootPhase");
-            mNetdListener = new NetdEventListenerService(getContext());
+        publishBinderService(SERVICE_NAME, impl);
+        publishBinderService(mNetdListener.SERVICE_NAME, mNetdListener);
 
-            publishBinderService(SERVICE_NAME, impl);
-            publishBinderService(mNetdListener.SERVICE_NAME, mNetdListener);
-
-            LocalServices.addService(Logger.class, new LoggerImpl());
-        }
+        LocalServices.addService(Logger.class, new LoggerImpl());
     }
 
     @VisibleForTesting
