@@ -584,7 +584,8 @@ public class HdmiControlService extends SystemService {
                 Global.MHL_INPUT_SWITCHING_ENABLED,
                 Global.MHL_POWER_CHARGE_ENABLED,
                 Global.HDMI_CEC_SWITCH_ENABLED,
-                Global.DEVICE_NAME
+                Global.DEVICE_NAME,
+                Global.HDMI_ARC_CONTROL_ENABLED
         };
         for (String s : settings) {
             resolver.registerContentObserver(Global.getUriFor(s), false, mSettingsObserver,
@@ -653,6 +654,11 @@ public class HdmiControlService extends SystemService {
                 case Global.DEVICE_NAME:
                     String deviceName = readStringSetting(option, Build.MODEL);
                     setDisplayName(deviceName);
+                    break;
+                case Global.HDMI_ARC_CONTROL_ENABLED:
+                    if (isTvDeviceEnabled()) {
+                        tv().setArcControlFeatureEnabled(enabled);
+                    }
                     break;
             }
         }
