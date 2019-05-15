@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9ce87f5_6c105fbf",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "Is this standard? At a quick glance, i\u0027m not seeing this on SparseArray",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bab5e3_3a6fbf79",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "from the",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ef5923_e4e62284",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "entry chain",
+      "range": {
+        "startLine": 758,
+        "startChar": 15,
+        "endLine": 758,
+        "endChar": 29
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3775dd1d_8da041dd",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "entry chain",
+      "range": {
+        "startLine": 1441,
+        "startChar": 64,
+        "endLine": 1441,
+        "endChar": 72
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e53edb_91aff01a",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "Is this still valid? I think it\u0027s statically checked now, no?",
+      "range": {
+        "startLine": 1443,
+        "startChar": 17,
+        "endLine": 1443,
+        "endChar": 69
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53d85db_d15fa40a",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-05-15T21:04:42Z",
+      "side": 1,
+      "message": "I expect Jean might want a link to the CL that fixes this todo?",
+      "range": {
+        "startLine": 737,
+        "startChar": 0,
+        "endLine": 737,
+        "endChar": 76
+      },
+      "revId": "a6e58680a0fe7bced9144c46da4d35f846817778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
