@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02e8cc8d_4d7a9359",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "Style: Capital?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cab269_cd8c8b3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "Style: period at the end?",
+      "range": {
+        "startLine": 11,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68da31bf_ff0dba4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "atest FrameworksNetTests might be needed since ConnectivityService are touched.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac7c49d_04d9050a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it is good to introduce PackageListObserver.\nPreviously, it is intended to centralize the add/remove event listener function in ConnectivityService to prevent possible races between VPN and permissionMonitor.\nIs it possible to happen in your code?\n\nalso +jchalard@ to review.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 78
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cb7d1a_99efa246",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "Not your problem, but I think this function might need further refactor:\n\n1. Where it takes a currentPermission instead of UID.\nI think it make things harder to understand.\nIs it better to make it clear like int highestPermissionForUid(int uid)?\n\n2. Given that returned permission becomes a bit map.\nLooks like the function don\u0027t serve the purpose of getting highest permission anymore.\nmaybe getNetdPermissionsForUid or something?",
+      "range": {
+        "startLine": 411,
+        "startChar": 22,
+        "endLine": 411,
+        "endChar": 45
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d384b906_13c6d289",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "is it better if we merge this function with the above one?\nor rename it to getPermissionsForApp or something?",
+      "range": {
+        "startLine": 422,
+        "startChar": 16,
+        "endLine": 422,
+        "endChar": 35
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01323053_8c03e79d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "IIUC you are trying to group uids with the same permission bits.\nAnd send them to netd by groups.\nHowever it is all hardcoded.\nThat might make things harder to maintain over time.\n\nIs it better if we just group them by hash map or sparce array?\ne.g.\nHashMap\u003cInteger, ArrayList\u003cInteger\u003e\u003e buckets\nfor(item in netdPermissionsAppIds)\n  permission \u003d item.value\n  uid \u003d item.key\n  buckets.get(permission).add(uid);\nfor(item in buckets)\n  mNetd.trafficSetNetPermForUids(item.key, convertToIntArray(item.value))",
+      "range": {
+        "startLine": 595,
+        "startChar": 9,
+        "endLine": 595,
+        "endChar": 37
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724d36ef_599fac4e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-15T08:26:36Z",
+      "side": 1,
+      "message": "IIUC, if PERMISSION_UNINSTALLED is one of the TRAFFIC_CONTROL_PERMISSION_MASK bits, we don\u0027t need special code to handle this.\nAnd by definition, it should be, right?",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 609,
+        "endChar": 13
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
