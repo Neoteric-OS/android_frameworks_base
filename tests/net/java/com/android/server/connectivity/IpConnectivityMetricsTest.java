@@ -84,8 +84,9 @@ public class IpConnectivityMetricsTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(mCtx.getSystemService(ConnectivityManager.class)).thenReturn(mCm);
         mService = new IpConnectivityMetrics(mCtx, (ctx) -> 2000);
-        mNetdListener = new NetdEventListenerService(mCm);
+        mNetdListener = new NetdEventListenerService(mCtx);
         mService.mNetdListener = mNetdListener;
     }
 
