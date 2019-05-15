@@ -175,6 +175,25 @@ final class Constants {
     static final int SYSTEM_AUDIO_STATUS_OFF = 0;
     static final int SYSTEM_AUDIO_STATUS_ON = 1;
 
+    // [Audio Format ID and Code] = 2bAudioFormatId + 6bAudioFormatCode
+    // 2bAudioFormatId = 0; 6bAudioFormatCode=N, 0x01 <= N <= 0x0F (defined in CEA-861-D)
+    static final int AUD_FMT_CODE_RESERVED      = 0;
+    static final int AUD_FMT_CODE_PCM           = 1;
+    static final int AUD_FMT_CODE_AC3           = 2;
+    static final int AUD_FMT_CODE_MPEG1         = 3;
+    static final int AUD_FMT_CODE_MP3           = 4;
+    static final int AUD_FMT_CODE_MPEG2         = 5;
+    static final int AUD_FMT_CODE_AAC           = 6;
+    static final int AUD_FMT_CODE_DTS           = 7;
+    static final int AUD_FMT_CODE_ATRAC         = 8;
+    static final int AUD_FMT_CODE_ONE_BIT_AUD   = 9;
+    static final int AUD_FMT_CODE_DOLBY_DIGITAL = 10;
+    static final int AUD_FMT_CODE_DTS_HD        = 11;
+    static final int AUD_FMT_CODE_MAP           = 12;
+    static final int AUD_FMT_CODE_DST           = 13;
+    static final int AUD_FMT_CODE_WMA_PRO       = 14;
+    static final int AUD_FMT_CODE_RESERVED_EX   = 15;
+
     // [Menu State]
     static final int MENU_STATE_ACTIVATED = 0;
     static final int MENU_STATE_DEACTIVATED = 1;
@@ -218,6 +237,8 @@ final class Constants {
     // Set to false to allow playback device to go to suspend mode even
     // when it's an active source. True by default.
     static final String PROPERTY_KEEP_AWAKE = "persist.sys.hdmi.keep_awake";
+
+    static final String AVR_CAPABILITY_DDP_ATMOS = "avr_capability_ddp_atmos";
 
     static final int RECORDING_TYPE_DIGITAL_RF = 1;
     static final int RECORDING_TYPE_ANALOGUE_RF = 2;

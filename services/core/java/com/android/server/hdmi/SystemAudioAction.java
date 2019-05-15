@@ -23,6 +23,7 @@ import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.RemoteException;
 import android.util.Slog;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,12 +32,21 @@ import java.util.List;
 abstract class SystemAudioAction extends HdmiCecFeatureAction {
     private static final String TAG = "SystemAudioAction";
 
+    public static final int AUDIO_FORMAT_MASK = 0xF8;
+    public static final int AUDIO_FORMAT_DDP = 0x50;
+
     // Transient state to differentiate with STATE_NONE where the on-finished callback
     // will not be called.
     private static final int STATE_CHECK_ROUTING_IN_PRGRESS = 1;
 
     // State in which waits for <SetSystemAudioMode>.
     private static final int STATE_WAIT_FOR_SET_SYSTEM_AUDIO_MODE = 2;
+
+    // State that waits for <ReportAudioStatus>.
+    private static final int STATE_WAIT_FOR_REPORT_SHORT_AUDIO_DESCRIPTOR = 3;
+
+    // State that start AudioStatusAction.
+    private static final int STATE_START_AUDIOSTATUSACTION = 4;
 
     private static final int MAX_SEND_RETRY_COUNT = 2;
 
@@ -48,6 +58,9 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
 
     // The target audio status of the action, whether to enable the system audio mode or not.
     protected boolean mTargetAudioStatus;
+
+    // The audio format to be confirmed with AVR.
+    protected int[] mSad = new int[] { (int)Constants.AUD_FMT_CODE_DOLBY_DIGITAL }; // EAC3
 
     @Nullable private final IHdmiControlCallback mCallback;
 
@@ -107,6 +120,39 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
         addTimer(mState, mTargetAudioStatus ? ON_TIMEOUT_MS : OFF_TIMEOUT_MS);
     }
 
+    protected void sendRequestShortAudioDescriptor() {
+        sendCommand(HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(
+                        getSourceAddress(), mAvrLogicalAddress, mSad),
+                        new HdmiControlService.SendMessageCallback() {
+                            @Override
+                            public void onSendCompleted(int error) {
+                                if (error != SendMessageResult.SUCCESS) {
+                                    HdmiLogger.debug(
+                                        "Failed to send <Request Short Audio Descriptor>:"
+                                        + error);
+                                    handleSendRequestShortAudioDescriptorFailure();
+                                }
+                            }
+                        });
+        mState = STATE_WAIT_FOR_REPORT_SHORT_AUDIO_DESCRIPTOR;
+        addTimer(mState, mTargetAudioStatus ? ON_TIMEOUT_MS : OFF_TIMEOUT_MS);
+    }
+
+    private void handleSendRequestShortAudioDescriptorFailure() {
+        // Still return SUCCESS to callback.
+        finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+    }
+
+    private void handleSendRequestShortAudioDescriptorTimeout() {
+        if (!mTargetAudioStatus  // Don't retry for Off case.
+                || mSendRetryCount++ >= MAX_SEND_RETRY_COUNT) {
+            HdmiLogger.debug("Wait for <Report Short Audio Descriptor> timeout");
+            mState = STATE_START_AUDIOSTATUSACTION;
+            return;
+        }
+        sendRequestShortAudioDescriptor();
+    }
+
     private int getSystemAudioModeRequestParam() {
         // <System Audio Mode Request> takes the physical address of the source device
         // as a parameter. Get it from following candidates, in the order listed below:
@@ -158,7 +204,15 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
                 boolean receivedStatus = HdmiUtils.parseCommandParamSystemAudioStatus(cmd);
                 if (receivedStatus == mTargetAudioStatus) {
                     setSystemAudioMode(receivedStatus);
-                    startAudioStatusAction();
+                    if (receivedStatus) {
+                        Slog.i(TAG, "Send RequestShortAudioDescriptor");
+                        HdmiCecLocalDeviceTv tv = tv();
+                        HdmiDeviceInfo avr = tv.getAvrDeviceInfo();
+                        if (tv.isConnectedToArcPort(avr.getPhysicalAddress())
+                                && tv.isDirectConnectAddress(avr.getPhysicalAddress())) {
+                            sendRequestShortAudioDescriptor();
+                        }
+                     }
                     return true;
                 } else {
                     HdmiLogger.debug("Unexpected system audio mode request:" + receivedStatus);
@@ -168,8 +222,50 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
                     finishWithCallback(HdmiControlManager.RESULT_EXCEPTION);
                     return false;
                 }
+            case STATE_WAIT_FOR_REPORT_SHORT_AUDIO_DESCRIPTOR:
+                // <Feature Abort>[]
+                if (cmd.getOpcode() == Constants.MESSAGE_FEATURE_ABORT
+                    && (cmd.getParams()[0] & 0xFF)
+                            == Constants.MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR) {
+                    HdmiLogger.debug("AVR not support SAD- feature abort");
+                    mState = STATE_START_AUDIOSTATUSACTION;
+                    startAudioStatusAction();
+                    return true;
+                 }
+                // msg not belong to this action
+                if (cmd.getOpcode() != Constants.MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR
+                              || !HdmiUtils.checkCommandSource(cmd, mAvrLogicalAddress, TAG)) {
+                    return false;
+                }
+                setShortAudioDescriptor(cmd.getParams());
+                mState = STATE_START_AUDIOSTATUSACTION;
+                startAudioStatusAction();
+                return true;
             default:
                 return false;
+        }
+    }
+
+    protected void setShortAudioDescriptor(byte[] params) {
+        Slog.w(TAG, "setShortAudioDescriptor");
+        int size = params.length;
+        int num = size/3;
+        if (num < 1 || (params.length%3)!=0) {
+            return;
+        }
+        for (int i=0; i<size; i++) {
+            Slog.i(TAG, "SAD[" + i + "]:" + params[i]);
+            tv().mAvrSupporedFormats.add(params[i]);
+            if(i%3==0) {
+                switch (params[i]&AUDIO_FORMAT_MASK) {
+                    case AUDIO_FORMAT_DDP:
+                        Slog.i(TAG, "AVR support DDP");
+                        tv().setAtmosSuppotedEnabled(params[2]%2);
+                        break;
+                    default:
+                        break;
+                 }
+             }
         }
     }
 
@@ -191,6 +287,9 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
         switch (mState) {
             case STATE_WAIT_FOR_SET_SYSTEM_AUDIO_MODE:
                 handleSendSystemAudioModeRequestTimeout();
+                return;
+            case STATE_WAIT_FOR_REPORT_SHORT_AUDIO_DESCRIPTOR:
+                handleSendRequestShortAudioDescriptorTimeout();
                 return;
         }
     }

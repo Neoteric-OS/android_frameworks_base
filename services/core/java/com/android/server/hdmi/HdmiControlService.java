@@ -86,6 +86,9 @@ import java.util.Locale;
 import java.util.Map;
 import libcore.util.EmptyArray;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Provides a service for sending and processing HDMI control messages,
  * HDMI-CEC and MHL control command, and providing the information on both standard.
@@ -1458,6 +1461,24 @@ public final class HdmiControlService extends SystemService {
         }
 
         @Override
+        public byte[] getAvrSupportedAudioFormat() {
+               enforceAccessPermission();
+               HdmiCecLocalDeviceTv tv = tv();
+               if (tv == null) {
+                   return null;
+               }
+               if (!tv.isSystemAudioActivated()) {
+                   return null;
+               }
+               int size = tv.mAvrSupporedFormats.size();
+               byte[] array = new byte[size];
+               for (int i = 0; i < size; i++) {
+                    array[i] = tv.mAvrSupporedFormats.get(i);
+               }
+               return array;
+        }
+
+        @Override
         public void addSystemAudioModeChangeListener(
                 final IHdmiSystemAudioModeChangeListener listener) {
             enforceAccessPermission();
@@ -2304,6 +2325,11 @@ public final class HdmiControlService extends SystemService {
     void setCecOption(int key, boolean value) {
         assertRunOnServiceThread();
         mCecController.setOption(key, value);
+    }
+
+    @ServiceThreadOnly
+    void notifyAtmosSupported(boolean supported) {
+        HdmiControlService.this.writeBooleanSetting(Constants.AVR_CAPABILITY_DDP_ATMOS, supported);        
     }
 
     @ServiceThreadOnly
