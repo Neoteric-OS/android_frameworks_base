@@ -16,6 +16,14 @@
 
 package com.android.server.hdmi;
 
+<<<<<<< HEAD
+=======
+import android.annotation.Nullable;
+import android.media.AudioFormat;
+
+import com.android.server.hdmi.Constants.AudioCodec;
+
+>>>>>>> dc6b7ab0ee4... [DTV01671738][]Summary: Add support for Dolby TB24.
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
