@@ -1096,7 +1096,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     }
 
     void setAudioStatus(boolean mute, int volume) {
-        if (!isSystemAudioActivated()) {
+        if (!isSystemAudioActivated() || !isArcEstablished()) {
             return;
         }
         synchronized (mLock) {
