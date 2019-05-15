@@ -87,7 +87,13 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
         } else {
             // If AVR already has correct system audio mode, update target system audio mode
             // immediately rather than starting feature action.
-            tv().setSystemAudioMode(targetSystemAudioMode);
+            if (targetSystemAudioMode
+                    && tv().isSystemAudioActivated() == false && currentSystemAudioMode) {
+                addAndStartAction(new SystemAudioActionFromTv(
+                                        tv(), mAvrAddress, targetSystemAudioMode, null));
+            } else {
+                tv().setSystemAudioMode(targetSystemAudioMode);
+            }
         }
         finish();
     }

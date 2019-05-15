@@ -16,6 +16,13 @@
 
 package com.android.server.hdmi;
 
+
+import android.annotation.Nullable;
+import android.media.AudioFormat;
+
+import com.android.server.hdmi.Constants.AudioCodec;
+
+
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
