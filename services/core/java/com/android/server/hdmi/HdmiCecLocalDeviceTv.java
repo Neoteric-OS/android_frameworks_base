@@ -81,6 +81,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @GuardedBy("mLock")
     private boolean mSystemAudioControlFeatureEnabled;
 
+    // Whether the Audio Return Channel feature is enabled or not. True by default.
+    @GuardedBy("mLock")
+    private boolean mArcControlFeatureEnabled;
+
     // The previous port id (input) before switching to the new one. This is remembered in order to
     // be able to switch to it upon receiving <Inactive Source> from currently active source.
     // This remains valid only when the active source was switched via one touch play operation
@@ -187,8 +191,15 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         mAutoDeviceOff = mService.readBooleanSetting(Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
                 true);
         mAutoWakeup = mService.readBooleanSetting(Global.HDMI_CONTROL_AUTO_WAKEUP_ENABLED, true);
-        mSystemAudioControlFeatureEnabled =
-                mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED, true);
+        mArcControlFeatureEnabled =
+                mService.readBooleanSetting(Global.HDMI_ARC_CONTROL_ENABLED, true);
+        if (mArcControlFeatureEnabled) {
+            mSystemAudioControlFeatureEnabled =
+                    mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED, true);
+        } else {
+            mSystemAudioControlFeatureEnabled =
+                    mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED, false);
+        }
         mStandbyHandler = new HdmiCecStandbyModeHandler(service, this);
     }
 
@@ -779,10 +790,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void onNewAvrAdded(HdmiDeviceInfo avr) {
         assertRunOnServiceThread();
-        addAndStartAction(new SystemAudioAutoInitiationAction(this, avr.getLogicalAddress()));
-        if (isConnected(avr.getPortId()) && isArcFeatureEnabled(avr.getPortId())
+        if (isArcControlFeatureEnabled()) {
+            addAndStartAction(new SystemAudioAutoInitiationAction(this, avr.getLogicalAddress()));
+            if (isArcControlFeatureEnabled()
+                && isConnected(avr.getPortId())
+                && isArcFeatureEnabled(avr.getPortId())
                 && !hasAction(SetArcTransmissionStateAction.class)) {
-            startArcAction(true);
+                startArcAction(true);
+            }
         }
     }
 
@@ -866,6 +881,22 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     boolean isSystemAudioControlFeatureEnabled() {
         synchronized (mLock) {
             return mSystemAudioControlFeatureEnabled;
+        }
+    }
+
+    void setArcControlFeatureEnabled(boolean enabled) {
+        assertRunOnServiceThread();
+        synchronized (mLock) {
+            mArcControlFeatureEnabled=enabled;
+        }
+        setSystemAudioControlFeatureEnabled(enabled);
+        startArcAction(enabled);
+        return;
+    }
+
+    boolean isArcControlFeatureEnabled() {
+        synchronized (mLock) {
+            return mArcControlFeatureEnabled;
         }
     }
 
@@ -1064,6 +1095,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     protected boolean handleInitiateArc(HdmiCecMessage message) {
         assertRunOnServiceThread();
+        int src = message.getDestination();
+        int dest = message.getSource();
 
         if (!canStartArcUpdateAction(message.getSource(), true)) {
             HdmiDeviceInfo avrDeviceInfo = getAvrDeviceInfo();
@@ -1081,10 +1114,16 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
         // In case where <Initiate Arc> is started by <Request ARC Initiation>
         // need to clean up RequestArcInitiationAction.
-        removeAction(RequestArcInitiationAction.class);
-        SetArcTransmissionStateAction action = new SetArcTransmissionStateAction(this,
-                message.getSource(), true);
-        addAndStartAction(action);
+        if (isArcControlFeatureEnabled()) {
+            removeAction(RequestArcInitiationAction.class);
+            SetArcTransmissionStateAction action = new SetArcTransmissionStateAction(this,
+                    message.getSource(), true);
+            addAndStartAction(action);
+            return true;
+        }
+        mService.sendCecCommand(HdmiCecMessageBuilder.buildFeatureAbortCommand(
+                src, dest, Constants.MESSAGE_FEATURE_ABORT,
+                Constants.ABORT_REFUSED));
         return true;
     }
 

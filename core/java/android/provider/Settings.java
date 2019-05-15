@@ -9944,6 +9944,13 @@ public final class Settings {
                 "hdmi_cec_switch_enabled";
 
         /**
+        * Whether HDMI Audio Return Channle feature is enabled. It's a big switch controls the
+        * functionality of ARC.
+        * @hide
+        */
+        public static final String HDMI_ARC_CONTROL_ENABLED = "hdmi_arc_control_enabled";
+
+        /**
          * Whether TV will automatically turn on upon reception of the CEC command
          * &lt;Text View On&gt; or &lt;Image View On&gt;. (0 = false, 1 = true)
          *
