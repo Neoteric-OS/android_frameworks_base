@@ -2586,6 +2586,8 @@ public class LocationManagerService extends ILocationManager.Stub {
                         mContext.getContentResolver(),
                         Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
                         userId);
+                Log.d("NSAT LocationManagerService",
+                        "allowed providers=" + allowedProviders);
                 if (allowedProviders == null) {
                     return false;
                 }
@@ -2767,6 +2769,8 @@ public class LocationManagerService extends ILocationManager.Stub {
             if (ActivityManager.checkComponentPermission(
                     android.Manifest.permission.INTERACT_ACROSS_USERS, uid, -1, true)
                     != PERMISSION_GRANTED) {
+                Log.d("NSAT LocationManagerService",
+                        "throwing SecurityException for not having INTERACT_ACROSS_USERS");
                 throw new SecurityException("Requires INTERACT_ACROSS_USERS permission");
             }
         }

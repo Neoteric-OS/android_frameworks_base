@@ -41,7 +41,7 @@ import java.util.List;
  */
 public final class LocationAccessPolicy {
     private static final String TAG = "LocationAccessPolicy";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     public static final int MAX_SDK_FOR_ANY_ENFORCEMENT = Build.VERSION_CODES.CUR_DEVELOPMENT;
 
     public enum LocationPermissionResult {
@@ -247,6 +247,7 @@ public final class LocationAccessPolicy {
         // Check the system-wide requirements. If the location master switch is off or
         // the app's profile isn't in foreground, return a soft denial.
         if (!checkSystemLocationAccess(context, query.callingUid, query.callingPid)) {
+            Log.d("NSAT LocationAccessPolicy", query.method + ": soft deny");
             return LocationPermissionResult.DENIED_SOFT;
         }
 
@@ -281,6 +282,7 @@ public final class LocationAccessPolicy {
 
     private static boolean checkSystemLocationAccess(@NonNull Context context, int uid, int pid) {
         if (!isLocationModeEnabled(context, UserHandle.getUserId(uid))) {
+            Log.d("NSAT LocationAccessPolicy", "location disabled for uid=" + uid);
             if (DBG) Log.w(TAG, "Location disabled, failed, (" + uid + ")");
             return false;
         }
@@ -292,6 +294,7 @@ public final class LocationAccessPolicy {
     private static boolean isLocationModeEnabled(@NonNull Context context, @UserIdInt int userId) {
         LocationManager locationManager = context.getSystemService(LocationManager.class);
         if (locationManager == null) {
+            Log.d("NSAT LocationAccessPolicy", "got null LocationManager");
             Log.w(TAG, "Couldn't get location manager, denying location access");
             return false;
         }

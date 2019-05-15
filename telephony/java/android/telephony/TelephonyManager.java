@@ -98,6 +98,7 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -5151,11 +5152,14 @@ public class TelephonyManager {
                     getSubId(),
                     new ICellInfoCallback.Stub() {
                         public void onCellInfo(List<CellInfo> cellInfo) {
+                            Log.d("NSAT TelMan", "CellInfo=" + cellInfo);
                             Binder.withCleanCallingIdentity(() ->
                                     executor.execute(() -> callback.onCellInfo(cellInfo)));
                         }
 
                         public void onError(int errorCode, android.os.ParcelableException detail) {
+                            Log.d("NSAT TelMan", "error getting callback in ICellInfoCallback: " + detail + Arrays
+                                    .toString(detail.getStackTrace()));
                             Binder.withCleanCallingIdentity(() ->
                                     executor.execute(() -> callback.onError(
                                             errorCode, detail.getCause())));
