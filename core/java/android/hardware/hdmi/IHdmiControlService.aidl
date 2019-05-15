@@ -51,6 +51,7 @@ interface IHdmiControlService {
     boolean canChangeSystemAudioMode();
     boolean getSystemAudioMode();
     void setSystemAudioMode(boolean enabled, IHdmiControlCallback callback);
+    byte[] getAvrSupportedAudioFormat();
     void addSystemAudioModeChangeListener(IHdmiSystemAudioModeChangeListener listener);
     void removeSystemAudioModeChangeListener(IHdmiSystemAudioModeChangeListener listener);
     void setArcMode(boolean enabled);
