@@ -118,6 +118,30 @@
       "revId": "2863c3b7584376cca4a59e36b45538018f571023",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796789e2_950a9e6d",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-15T10:50:36Z",
+      "side": 1,
+      "message": "Sorry for my misunderstanding, I missed that we have two versions of startCaptivePortalApp with different permission requirements.\n\nStill, the shell should not hold this permission (and it should not even be able to get it).\n\nAs we spoke in chat, the test for startCaptivePortalApp should therefore be moved to GTS, which already hold this permission.",
+      "parentUuid": "cd53d93f_dc3439fd",
+      "range": {
+        "startLine": 169,
+        "startChar": 35,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "2863c3b7584376cca4a59e36b45538018f571023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
