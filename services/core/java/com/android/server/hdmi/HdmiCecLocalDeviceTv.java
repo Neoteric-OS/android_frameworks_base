@@ -923,7 +923,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                     mAvrSupporedFormats.clear();
                 }
             }
-            startArcAction(on);
+            if (on && !mArcEstablished) {
+                startArcAction(true);
+            } else if (!on) {
+                startArcAction(false);
+            }
         }
     }
 
