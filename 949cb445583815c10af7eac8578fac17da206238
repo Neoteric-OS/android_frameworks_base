@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9f86a4_5186f321",
+        "filename": "packages/ExtShared/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-05-16T14:00:50Z",
+      "side": 1,
+      "message": "N.B. this has an internal $(call inherit-package) which needs to be converted to override_android_app in the same go",
+      "revId": "949cb445583815c10af7eac8578fac17da206238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
