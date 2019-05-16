@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "8866d0a3_907974fe",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-05-16T22:28:22Z",
+      "side": 1,
+      "message": "PackageListObserver get called directly by packageManager when a new package is installed/uninstalled to device. It happens before the package installation complete so it runs earlier then the install broadcast listener so I think this is generally fine but I don\u0027t have much context about the race between VPN and permissionMonitor though",
+      "parentUuid": "5ac7c49d_04d9050a",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 78
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6cb7d1a_99efa246",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
@@ -114,6 +138,30 @@
       "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c683e3ee_beea7c0e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-05-16T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6cb7d1a_99efa246",
+      "range": {
+        "startLine": 411,
+        "startChar": 22,
+        "endLine": 411,
+        "endChar": 45
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "d802a41c_b5b28e91",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-05-16T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d384b906_13c6d289",
+      "range": {
+        "startLine": 422,
+        "startChar": 16,
+        "endLine": 422,
+        "endChar": 35
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01323053_8c03e79d",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
@@ -163,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "50b3b22a_68893970",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-05-16T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01323053_8c03e79d",
+      "range": {
+        "startLine": 595,
+        "startChar": 9,
+        "endLine": 595,
+        "endChar": 37
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "724d36ef_599fac4e",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
@@ -183,6 +279,30 @@
       "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deec6ddb_53160abc",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-05-16T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "724d36ef_599fac4e",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 609,
+        "endChar": 13
+      },
+      "revId": "88e9430bb6b7469c3fa3904f844d8cf01e7dc755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
