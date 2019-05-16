@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab3a119_ecc93f3e",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "Can you guarantee that in any way, shape or form ? You have no code here. This comment should probably go on State\u003cT\u003e#enter(), though.\n\nYou could however have a default impl for enter(Object) to call this, and say here \"Called by the default implementation of {@link #enter(Object)} when a state is entered\", and keep this comment here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aa47d7_33eaac3a",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "Annotate everything new in this patch with nullability please, it\u0027s super important in this case. This here is @Nullable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24cd89b_53d0a18e",
+        "filename": "core/java/com/android/internal/util/State.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "T (if you follow my comment on the next file, that should let you do that)",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8765840b_49829385",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "You can get this statically checked.\n\n  private static class Destination\u003cT\u003e {\n    public final State\u003cT\u003e mState; // Or maybe StateInfo\u003cT\u003e ?\n    public final T mEntryData;\n    public Destination(...) {...}\n  }\n\n  private Destination mDestState;\n\n...then in transitionTo(IState\u003cT\u003e state, T entryData) :\n\n  mDestState \u003d new Destination((State\u003cT\u003e) state, entryData);\n\nBecause you can\u0027t instantiate a Destination with disparate types (I mean, without wilful casts at least) you guarantee the compiler checks all accesses, except for this (State\u003cT\u003e) cast that was already there anyway (and is correct).\nIt\u0027s also very useful for you because it will actually let you check the bounds of your generic parameters. I looked at them and I think they are correct, but if we both missed something, this modification here will make the compiler tell you.\n\n\nThis is more changes than it looks because you will have to also update mStateStack, therefore also mTempStateStack – but frankly these should probably be reworked, they are far too complex for what they do (mTempStateStack is utterly useless, it could just be removed in favor of simply following the parentStateInfo link). Chances are you want to do a preliminary refactoring to make this as clean as you need it.",
+      "range": {
+        "startLine": 760,
+        "startChar": 16,
+        "endLine": 760,
+        "endChar": 22
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dddb04_22cc72dd",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "(if you follow the Destination object recommendation you can remove this argument, as it will be found in the state stack)",
+      "range": {
+        "startLine": 1041,
+        "startChar": 73,
+        "endLine": 1041,
+        "endChar": 90
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74648ee5_44840e5c",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "By the way, is there anything wrong with just saying here destState.mEntryData \u003d entryData and do away with this top level member ? It\u0027s an alternative to the architecture change I suggest above, but I\u0027m not too convinced it\u0027s fine.",
+      "range": {
+        "startLine": 1257,
+        "startChar": 12,
+        "endLine": 1257,
+        "endChar": 35
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a976ba9_af145d74",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "You don\u0027t need this cast, it\u0027s a T already",
+      "range": {
+        "startLine": 1456,
+        "startChar": 43,
+        "endLine": 1456,
+        "endChar": 46
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e40181_32453959",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "static ?\n\n(then you can move the constants relevant to this class inside here)",
+      "range": {
+        "startLine": 631,
+        "startChar": 4,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ec8125_22848567",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "I think you could clarify this test code by having symbolic names for what the messages do : you\u0027d have CMD_NEXT_STATE or even CMD_PARENTSTATE1_TO_CHILDSTATE1 or something. Here it\u0027s confusing that CMD_1 goes to the next state in ParentState2, then CMD_2 goes to the next state in ChildState1, then CMD_1 goes to the next state in ChildState2. It will also help you clarify what is handled by parents and what is not.",
+      "range": {
+        "startLine": 656,
+        "startChar": 36,
+        "endLine": 656,
+        "endChar": 46
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9e07ce_ca8f5c6e",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "It is good that you are testing enter(), but you should *also* test enter(T data) somewhere",
+      "range": {
+        "startLine": 666,
+        "startChar": 24,
+        "endLine": 666,
+        "endChar": 29
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152cd68b_b28e38e4",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "This member is write-only. Why do you need a member to store the value of \u0027this\u0027 by the way ?",
+      "range": {
+        "startLine": 696,
+        "startChar": 46,
+        "endLine": 696,
+        "endChar": 53
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91781575_db3d3bbc",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "final on all of these please.",
+      "range": {
+        "startLine": 697,
+        "startChar": 8,
+        "endLine": 697,
+        "endChar": 15
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3322c0e_866d93b9",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T07:50:30Z",
+      "side": 1,
+      "message": "To clarify, suggest wording it the other way around :\n\n  // TODO: Record entry data in StateMachine.LogRec and add test\n  // here. Implemented in followup change aosp/958303",
+      "range": {
+        "startLine": 737,
+        "startChar": 17,
+        "endLine": 738,
+        "endChar": 29
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
