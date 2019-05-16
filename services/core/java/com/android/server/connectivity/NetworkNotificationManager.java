@@ -19,7 +19,6 @@ package com.android.server.connectivity;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
-import static android.telephony.SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -107,10 +106,14 @@ public class NetworkNotificationManager {
         }
     }
 
-    private static int getIcon(int transportType) {
-        return (transportType == TRANSPORT_WIFI) ?
-                R.drawable.stat_notify_wifi_in_range :  // TODO: Distinguish ! from ?.
-                R.drawable.stat_notify_rssi_in_range;
+    private static int getIcon(int transportType, NotificationType notifyType) {
+        if (transportType != TRANSPORT_WIFI) {
+            return R.drawable.stat_notify_rssi_in_range;
+        }
+
+        return notifyType == NotificationType.LOGGED_IN
+            ? R.drawable.ic_wifi_signal_4
+            : R.drawable.stat_notify_wifi_in_range;  // TODO: Distinguish ! from ?.
     }
 
     /**
@@ -173,7 +176,7 @@ public class NetworkNotificationManager {
         Resources r = Resources.getSystem();
         CharSequence title;
         CharSequence details;
-        int icon = getIcon(transportType);
+        int icon = getIcon(transportType, notifyType);
         if (notifyType == NotificationType.NO_INTERNET && transportType == TRANSPORT_WIFI) {
             title = r.getString(R.string.wifi_no_internet,
                     WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
