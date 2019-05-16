@@ -130,6 +130,7 @@ public class NetworkNotificationManager {
      * @param id an identifier that uniquely identifies this notification.  This must match
      *         between show and hide calls.  We use the NetID value but for legacy callers
      *         we concatenate the range of types with the range of NetIDs.
+     * @param notifyType the type of the notification.
      * @param nai the network with which the notification is associated. For a SIGN_IN, NO_INTERNET,
      *         or LOST_INTERNET notification, this is the network we're connecting to. For a
      *         NETWORK_SWITCH notification it's the network that we switched from. When this network
