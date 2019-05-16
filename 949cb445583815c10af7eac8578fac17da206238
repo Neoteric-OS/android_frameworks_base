@@ -16,6 +16,24 @@
       "revId": "949cb445583815c10af7eac8578fac17da206238",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a12d6aa_76976f46",
+        "filename": "packages/ExtShared/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-05-16T15:52:30Z",
+      "side": 1,
+      "message": "Thnaks. jungjw@ is taking care of this.",
+      "parentUuid": "4f9f86a4_5186f321",
+      "revId": "949cb445583815c10af7eac8578fac17da206238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
