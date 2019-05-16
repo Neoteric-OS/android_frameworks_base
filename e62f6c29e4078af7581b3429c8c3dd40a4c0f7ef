@@ -22,6 +22,30 @@
       "revId": "e62f6c29e4078af7581b3429c8c3dd40a4c0f7ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0b62a8_f4d772e1",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-16T06:04:40Z",
+      "side": 0,
+      "message": "\u003e a troublesome and dangerous thing to do \n\nYou mean, register a service in PHASE_SYSTEM_SERVICES_READY by opposition to onStart ? Or have CS hard fails if IpConnectivityMetrics.Logger is not registered ?\n\nFor the former, that was more than two years ago so I don\u0027t exactly remember, but I actually moved that code from a shared service with telephony that was written before I joined Android, so it is likely that it had been like that even before. This was one of my early tasks in Android so at that time I was not too clear on the service boot sequence and did not spot the issue.\n\nI remember I did some simplification when unsharing the service and it is possible I removed some dependencies that the initial service had on the telephony side. Let me double check that.",
+      "parentUuid": "83d918fa_f46d2461",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 62
+      },
+      "revId": "e62f6c29e4078af7581b3429c8c3dd40a4c0f7ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
