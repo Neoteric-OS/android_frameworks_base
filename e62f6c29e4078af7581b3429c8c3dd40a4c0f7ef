@@ -46,6 +46,30 @@
       "revId": "e62f6c29e4078af7581b3429c8c3dd40a4c0f7ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788e5754_81bb7047",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-16T06:14:49Z",
+      "side": 0,
+      "message": "This dates back to nyc-dev and Q1 2016 actually, and the service registration has always been done in onBootPhase apparently: https://github.com/aosp-mirror/platform_frameworks_base/commit/02b3e6bfc5bbd5f1a8ce1ce68976e59142073b6f\n\nI moved that code in its own service at end of Q3 2016 as part of these two commits:\n  https://github.com/aosp-mirror/platform_frameworks_base/commit/eab511b582cc00364dee7835534bb511719f9231\n  https://github.com/aosp-mirror/platform_frameworks_base/commit/00a42d4c885bf7440c2677750ad8b10974b16d7f\n\nAnd agreed I should have definitely double checked the onBootPhase assumptions.",
+      "parentUuid": "3c0b62a8_f4d772e1",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 62
+      },
+      "revId": "e62f6c29e4078af7581b3429c8c3dd40a4c0f7ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
