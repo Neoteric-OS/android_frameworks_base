@@ -53,6 +53,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
+import android.view.View.OnAttachStateChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -446,6 +447,17 @@ public final class FloatingToolbar {
                     }
                 };
 
+        private final OnAttachStateChangeListener mOnAnchorRootDetachedListener =
+                    new OnAttachStateChangeListener() {
+                        @Override
+                        public void onViewAttachedToWindow(View v) {}
+
+                        @Override
+                        public void onViewDetachedFromWindow(View v) {
+                            cancelDismissAndHideAnimations();
+                        }
+                    };
+
         private boolean mOpenOverflowUpwards;  // Whether the overflow opens upwards or downwards.
         private boolean mIsOverflowOpen;
 
@@ -527,6 +539,10 @@ public final class FloatingToolbar {
                             mPopupWindow.dismiss();
                         }
                     });
+
+            // The parent view's window may go away while doing animation,
+            // in which case We need end the animation immediately
+            mParent.addOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
         }
 
         /**
