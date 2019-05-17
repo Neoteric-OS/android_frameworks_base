@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eeb2761_efa22709",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-17T07:19:01Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 80,
+        "startChar": 29,
+        "endLine": 80,
+        "endChar": 60
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8b0c1e_14b5b4cd",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-17T07:19:01Z",
+      "side": 1,
+      "message": "permissions?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105e3f9d_26df48ce",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-17T07:19:01Z",
+      "side": 1,
+      "message": "do we want to use permission or permissions?\n\ngetPermissionForPackage\ngetPermissionsFromPackageInfo",
+      "range": {
+        "startLine": 401,
+        "startChar": 22,
+        "endLine": 401,
+        "endChar": 45
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ef2939_62266d30",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-17T07:19:01Z",
+      "side": 1,
+      "message": "need to update this?",
+      "range": {
+        "startLine": 475,
+        "startChar": 4,
+        "endLine": 477,
+        "endChar": 69
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9472990b_a554e003",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-17T07:19:01Z",
+      "side": 1,
+      "message": "1. users parameter is unused.\nmaybe just remove this function?\n\n2. What will happen to observer when package added for multiple users.\nLooks like it only be called once for multiple users.\nIs the behavior different?",
+      "range": {
+        "startLine": 478,
+        "startChar": 36,
+        "endLine": 478,
+        "endChar": 47
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
