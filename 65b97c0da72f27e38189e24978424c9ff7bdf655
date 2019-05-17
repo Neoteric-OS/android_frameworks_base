@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8674b35_930ff724",
+        "filename": "core/java/com/android/internal/widget/FloatingToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1138403
+      },
+      "writtenOn": "2019-05-17T15:06:01Z",
+      "side": 1,
+      "message": "mParent.removeOnAttachStateChangeListener(mOnAnchorRootDetachedListener)?",
+      "revId": "65b97c0da72f27e38189e24978424c9ff7bdf655",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
