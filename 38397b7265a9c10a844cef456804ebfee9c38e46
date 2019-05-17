@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f28c40_189ecec4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-17T08:18:12Z",
+      "side": 1,
+      "message": "Are the Merged-In correct here ? I can\u0027t find the corresponding commits. I used If9c8aa41c4e96a79b71c88f199a4f3b0483e31cd in aosp/964273 (which I was preparing at the same time apparently), maybe it would work better ? I think the lib is already there in qt-dev-plus-aosp.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "38397b7265a9c10a844cef456804ebfee9c38e46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
