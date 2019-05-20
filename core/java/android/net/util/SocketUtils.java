@@ -81,6 +81,15 @@ public final class SocketUtils {
     }
 
     /**
+     * Make a socket address that packet socket can send packets to.
+     */
+    @NonNull
+    public static SocketAddress makePacketSocketAddress(int protocol, int ifIndex,
+            @NonNull byte[] hwAddr) {
+        return new PacketSocketAddress((short) protocol, ifIndex, (short) 0, (byte) 0, hwAddr);
+    }
+
+    /**
      * @see IoBridge#closeAndSignalBlockedThreads(FileDescriptor)
      */
     public static void closeSocket(@Nullable FileDescriptor fd) throws IOException {
