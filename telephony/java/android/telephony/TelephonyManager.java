@@ -2409,8 +2409,13 @@ public class TelephonyManager {
     public @interface NetworkType{}
 
     /**
+     * Returns the current network type.
+     *
+     * This API is equivalent to {@link #getDataNetworkType()}.
+     *
      * @return the NETWORK_TYPE_xxxx for current data connection.
      */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public @NetworkType int getNetworkType() {
         return getDataNetworkType();
     }
