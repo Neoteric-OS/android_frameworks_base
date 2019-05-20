@@ -16,6 +16,24 @@
       "revId": "65b97c0da72f27e38189e24978424c9ff7bdf655",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2b04f9_4e23d371",
+        "filename": "core/java/com/android/internal/widget/FloatingToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1084043
+      },
+      "writtenOn": "2019-05-20T02:50:49Z",
+      "side": 1,
+      "message": "Thanks for the replay, I forgot to remove the listener.\n\nHowever, I don\u0027t think we can removeOnAttachStateChangeListener here. As runDismissAnimation just called. The dismiss animation not really started/finished here.   We need keep the listener works during the animation life.\n\nI will try to find another place to remove this listener.",
+      "parentUuid": "c8674b35_930ff724",
+      "revId": "65b97c0da72f27e38189e24978424c9ff7bdf655",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
