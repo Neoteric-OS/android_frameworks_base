@@ -127,6 +127,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Vpn {
     private static final String NETWORKTYPE = "VPN";
+    private static final String LOCKDOWN_NETWORKTYPE = "LOCKDOWN";
     private static final String TAG = "Vpn";
     private static final boolean LOGD = true;
 
@@ -174,9 +175,16 @@ public class Vpn {
     private volatile boolean mEnableTeardown = true;
     private final INetworkManagementService mNetd;
     @VisibleForTesting
-    protected VpnConfig mConfig;
+    @Nullable protected VpnConfig mConfig;
+
+    // This is non-null iff this VPN is the current prepared VPN for this user and VPN
+    // lockdown is enabled.
+    @Nullable NetworkAgent mLockdownAgent;
+
+    // This is non-null iff this VPN is established.
     @VisibleForTesting
     protected NetworkAgent mNetworkAgent;
+
     private final Looper mLooper;
     @VisibleForTesting
     protected final NetworkCapabilities mNetworkCapabilities;
@@ -236,8 +244,7 @@ public class Vpn {
             Log.wtf(TAG, "Problem registering observer", e);
         }
 
-        mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_VPN, 0 /* subtype */, NETWORKTYPE,
-                "" /* subtypeName */);
+        mNetworkInfo = makeVpnNetworkInfo(NETWORKTYPE);
         mNetworkCapabilities = new NetworkCapabilities();
         mNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
         mNetworkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
@@ -901,6 +908,11 @@ public class Vpn {
         return lp;
     }
 
+    private static @NonNull NetworkInfo makeVpnNetworkInfo(@NonNull String logTag) {
+        return new NetworkInfo(ConnectivityManager.TYPE_VPN, 0 /* subtype */, logTag,
+                "" /* subtypeName */);
+    }
+
     /**
      * Analyzes the passed LinkedProperties to figure out whether it routes to most of the IP space.
      *
@@ -957,6 +969,51 @@ public class Vpn {
         return true;
     }
 
+    /**
+     * Bring up a fake {@link NetworkAgent} that is only used when lockdown VPN is enabled. This
+     * agent provide the list of blocked uids and necessary initializations, and the lifecycle of
+     * the agent is entirely independent from the lifecycle of any VPN on the system. If the agent
+     * already exists, update the given blockedUsers in the {@link NetworkCapabilities}.
+     */
+    @VisibleForTesting
+    protected synchronized void bringUpOrUpdateLockdownAgent(@Nullable Set<UidRange> blockedUsers) {
+        // Update NetworkCapabilities
+        // TODO: consider refactoring with agentConnect below.
+        final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
+        networkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
+        networkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
+        networkCapabilities.setEstablishingVpnAppUid(mOwnerUID);
+        networkCapabilities.setUids(blockedUsers);
+
+        // NetworkAgent exists, just update its NetworkCapabilities.
+        if (mLockdownAgent != null) {
+            mLockdownAgent.sendNetworkCapabilities(networkCapabilities);
+            return;
+        }
+
+        // If not, register a new NetworkAgent.
+        final LinkProperties lp = new LinkProperties();
+
+        // Update NetworkInfo
+        NetworkInfo networkInfo = makeVpnNetworkInfo(LOCKDOWN_NETWORKTYPE);
+        networkInfo.setDetailedState(DetailedState.CONNECTING, null, null);
+
+        final NetworkMisc networkMisc = new NetworkMisc();
+        networkMisc.forLockdown = true;
+
+        Binder.withCleanCallingIdentity(() -> {
+            mLockdownAgent = new NetworkAgent(mLooper, mContext, LOCKDOWN_NETWORKTYPE /* logtag */,
+                    networkInfo, networkCapabilities, lp,
+                    ConnectivityConstants.VPN_DEFAULT_SCORE, networkMisc,
+                    NetworkFactory.SerialNumber.VPN) {
+                @Override
+                public void unwanted() {
+                    // This agent is user controlled, not driven by NetworkRequest.
+                }
+            };
+        });
+    }
+
     private void agentConnect() {
         LinkProperties lp = makeLinkProperties();
 
@@ -986,7 +1043,7 @@ public class Vpn {
                     NetworkFactory.SerialNumber.VPN) {
                             @Override
                             public void unwanted() {
-                                // We are user controlled, not driven by NetworkRequest.
+                                // This agent is user controlled, not driven by NetworkRequest.
                             }
                         };
         } finally {
@@ -1005,9 +1062,10 @@ public class Vpn {
         }
     }
 
-    private void agentDisconnect(NetworkAgent networkAgent) {
+    @VisibleForTesting
+    void agentDisconnect(@Nullable NetworkAgent networkAgent, @NonNull String logTag) {
         if (networkAgent != null) {
-            NetworkInfo networkInfo = new NetworkInfo(mNetworkInfo);
+            NetworkInfo networkInfo = makeVpnNetworkInfo(logTag);
             networkInfo.setIsAvailable(false);
             networkInfo.setDetailedState(DetailedState.DISCONNECTED, null, null);
             networkAgent.sendNetworkInfo(networkInfo);
@@ -1114,7 +1172,7 @@ public class Vpn {
                 // Remove the old tun's user forwarding rules
                 // The new tun's user rules have already been added above so they will take over
                 // as rules are deleted. This prevents data leakage as the rules are moved over.
-                agentDisconnect(oldNetworkAgent);
+                agentDisconnect(oldNetworkAgent, NETWORKTYPE);
             }
 
             if (oldConnection != null) {
@@ -1393,8 +1451,22 @@ public class Vpn {
             addedRanges.removeAll(mBlockedUsers);
         }
 
+        // TODO: consider rely on lockdown agent to setup lockdown rules.
         setAllowOnlyVpnForUids(false, removedRanges);
         setAllowOnlyVpnForUids(true, addedRanges);
+
+        Log.v(TAG, "setVpnForcedLocked(" + enforce + ") removed:" + removedRanges
+                + " added:" + addedRanges + " blocked:" + mBlockedUsers);
+
+        // Calling multiple times with enforce = true is possible, in that case mBlockedUsers might
+        // contains ranges that previously blocked. Thus, it must be up-to-date before this is
+        // called.
+        if (enforce) {
+            bringUpOrUpdateLockdownAgent(mBlockedUsers);
+        } else {
+            agentDisconnect(mLockdownAgent, LOCKDOWN_NETWORKTYPE);
+            mLockdownAgent = null;
+        }
     }
 
     /**
