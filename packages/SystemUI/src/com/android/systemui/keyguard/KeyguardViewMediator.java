@@ -713,6 +713,11 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                 }
             }
         }
+
+        @Override
+        public void onUserUnlocked() {
+            resetStateLocked();
+        }
     };
 
     ViewMediatorCallback mViewMediatorCallback = new ViewMediatorCallback() {
