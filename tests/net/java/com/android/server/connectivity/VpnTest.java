@@ -43,6 +43,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -475,6 +476,23 @@ public class VpnTest {
     }
 
     @Test
+    public void testLockDownAgent() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+
+        // Default state.
+        assertFalse(vpn.getAlwaysOn());
+        assertFalse(vpn.getLockdown());
+
+        // Set always-on with lockdown.
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, Collections.emptyList()));
+        verify(vpn, times(1)).bringupLockdownAgent();
+
+        // Remove always-on configuration.
+        assertTrue(vpn.setAlwaysOnPackage(null, false, Collections.emptyList()));
+        verify(vpn, times(1)).agentDisconnect(any());
+    }
+
+    @Test
     public void testIsAlwaysOnPackageSupported() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
 
@@ -635,7 +653,10 @@ public class VpnTest {
      * Mock some methods of vpn object.
      */
     private Vpn createVpn(@UserIdInt int userId) {
-        return new Vpn(Looper.myLooper(), mContext, mNetService, userId, mSystemServices);
+        final Vpn wrappedVpn =
+                spy(new Vpn(Looper.myLooper(), mContext, mNetService, userId, mSystemServices));
+        doNothing().when(wrappedVpn).bringupLockdownAgent();
+        return wrappedVpn;
     }
 
     private static void assertBlocked(Vpn vpn, int... uids) {

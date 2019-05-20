@@ -5881,6 +5881,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
+        // If the agent is used for tracking not connected lockdown VPN only, then there is no netId
+        // to update rules in native, and it is unnecessary, too.
+        if (nai.networkMisc.forLockdown) return;
+
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
         Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
         if (null == prevRanges) prevRanges = new ArraySet<>();
@@ -6502,7 +6506,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!networkAgent.created
                 && (state == NetworkInfo.State.CONNECTED
-                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
+                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()
+                && !networkAgent.networkMisc.forLockdown))) {
 
             // A network that has just connected has zero requests and is thus a foreground network.
             networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
