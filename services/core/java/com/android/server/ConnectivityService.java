@@ -2659,6 +2659,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             NetworkAgent.CMD_REPORT_NETWORK_STATUS,
                             (valid ? NetworkAgent.VALID_NETWORK : NetworkAgent.INVALID_NETWORK),
                             0, redirectUrlBundle);
+
+                    if (wasPartial && !nai.partialConnectivity) {
+                        handlePromptUnvalidated(nai.network);
+                    }
+
                     if (wasValidated && !nai.lastValidated) {
                         handleNetworkUnvalidated(nai);
                     }
@@ -3654,9 +3659,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 || nai.networkMisc.acceptPartialConnectivity) {
             return;
         }
-        // TODO: Evaluate if it's needed to wait 8 seconds for triggering notification when
-        // NetworkMonitor detects the network is partial connectivity. Need to change the design to
-        // popup the notification immediately when the network is partial connectivity.
+
         if (nai.partialConnectivity) {
             showNetworkNotification(nai, NotificationType.PARTIAL_CONNECTIVITY);
         } else {
