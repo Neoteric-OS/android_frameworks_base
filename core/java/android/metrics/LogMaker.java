@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
@@ -45,7 +46,8 @@ public class LogMaker {
     @VisibleForTesting
     public static final int MAX_SERIALIZED_SIZE = 4000;
 
-    private SparseArray<Object> entries = new SparseArray();
+    @GuardedBy("this")
+    private final SparseArray<Object> entries = new SparseArray();
 
     /** @param category for the new LogMaker. */
     public LogMaker(int category) {
@@ -62,37 +64,37 @@ public class LogMaker {
     }
 
     /** @param category to replace the existing setting. */
-    public LogMaker setCategory(int category) {
+    public synchronized LogMaker setCategory(int category) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_CATEGORY, category);
         return this;
     }
 
     /** Set the category to unknown. */
-    public LogMaker clearCategory() {
+    public synchronized LogMaker clearCategory() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_CATEGORY);
         return this;
     }
 
     /** @param type to replace the existing setting. */
-    public LogMaker setType(int type) {
+    public synchronized LogMaker setType(int type) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_TYPE, type);
         return this;
     }
 
     /** Set the type to unknown. */
-    public LogMaker clearType() {
+    public synchronized LogMaker clearType() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_TYPE);
         return this;
     }
 
     /** @param subtype to replace the existing setting. */
-    public LogMaker setSubtype(int subtype) {
+    public synchronized LogMaker setSubtype(int subtype) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_SUBTYPE, subtype);
         return this;
     }
 
     /** Set the subtype to 0. */
-    public LogMaker clearSubtype() {
+    public synchronized LogMaker clearSubtype() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_SUBTYPE);
         return this;
     }
@@ -102,7 +104,7 @@ public class LogMaker {
      *
      * @hide // TODO Expose in the future?  Too late for O.
      */
-    public LogMaker setLatency(long milliseconds) {
+    public synchronized LogMaker setLatency(long milliseconds) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_LATENCY_MILLIS, milliseconds);
         return this;
     }
@@ -114,7 +116,7 @@ public class LogMaker {
      * @param timestamp to replace the existing settings.
      * @hide
      */
-    public LogMaker setTimestamp(long timestamp) {
+    public synchronized LogMaker setTimestamp(long timestamp) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_TIMESTAMP, timestamp);
         return this;
     }
@@ -122,13 +124,13 @@ public class LogMaker {
     /** Remove the timestamp property.
      * @hide
      */
-    public LogMaker clearTimestamp() {
+    public synchronized LogMaker clearTimestamp() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_TIMESTAMP);
         return this;
     }
 
     /** @param packageName to replace the existing setting. */
-    public LogMaker setPackageName(String packageName) {
+    public synchronized LogMaker setPackageName(String packageName) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_PACKAGENAME, packageName);
         return this;
     }
@@ -137,14 +139,14 @@ public class LogMaker {
      * @param component to replace the existing setting.
      * @hide
      */
-    public LogMaker setComponentName(ComponentName component) {
+    public synchronized LogMaker setComponentName(ComponentName component) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_PACKAGENAME, component.getPackageName());
         entries.put(MetricsEvent.FIELD_CLASS_NAME, component.getClassName());
         return this;
     }
 
     /** Remove the package name property. */
-    public LogMaker clearPackageName() {
+    public synchronized LogMaker clearPackageName() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_PACKAGENAME);
         return this;
     }
@@ -156,7 +158,7 @@ public class LogMaker {
      * @param pid to replace the existing setting.
      * @hide
      */
-    public LogMaker setProcessId(int pid) {
+    public synchronized LogMaker setProcessId(int pid) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_PID, pid);
         return this;
     }
@@ -164,7 +166,7 @@ public class LogMaker {
     /** Remove the process ID property.
      * @hide
      */
-    public LogMaker clearProcessId() {
+    public synchronized LogMaker clearProcessId() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_PID);
         return this;
     }
@@ -176,7 +178,7 @@ public class LogMaker {
      * @param uid to replace the existing setting.
      * @hide
      */
-    public LogMaker setUid(int uid) {
+    public synchronized LogMaker setUid(int uid) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_UID, uid);
         return this;
     }
@@ -185,7 +187,7 @@ public class LogMaker {
      * Remove the UID property.
      * @hide
      */
-    public LogMaker clearUid() {
+    public synchronized LogMaker clearUid() {
         entries.remove(MetricsEvent.RESERVED_FOR_LOGBUILDER_UID);
         return this;
     }
@@ -196,7 +198,7 @@ public class LogMaker {
      * @param name to replace the existing setting.
      * @hide
      */
-    public LogMaker setCounterName(String name) {
+    public synchronized LogMaker setCounterName(String name) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_NAME, name);
         return this;
     }
@@ -207,7 +209,7 @@ public class LogMaker {
      * @param bucket to replace the existing setting.
      * @hide
      */
-    public LogMaker setCounterBucket(int bucket) {
+    public synchronized LogMaker setCounterBucket(int bucket) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_BUCKET, bucket);
         return this;
     }
@@ -218,7 +220,7 @@ public class LogMaker {
      * @param bucket to replace the existing setting.
      * @hide
      */
-    public LogMaker setCounterBucket(long bucket) {
+    public synchronized LogMaker setCounterBucket(long bucket) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_BUCKET, bucket);
         return this;
     }
@@ -229,7 +231,7 @@ public class LogMaker {
      * @param value to replace the existing setting.
      * @hide
      */
-    public LogMaker setCounterValue(int value) {
+    public synchronized LogMaker setCounterValue(int value) {
         entries.put(MetricsEvent.RESERVED_FOR_LOGBUILDER_VALUE, value);
         return this;
     }
@@ -239,7 +241,7 @@ public class LogMaker {
      * @param value One of Integer, Long, Float, or String; or null to clear the tag.
      * @return modified LogMaker
      */
-    public LogMaker addTaggedData(int tag, Object value) {
+    public synchronized LogMaker addTaggedData(int tag, Object value) {
         if (value == null) {
             return clearTaggedData(tag);
         }
@@ -261,7 +263,7 @@ public class LogMaker {
      * @param tag From your MetricsEvent enum.
      * @return modified LogMaker
      */
-    public LogMaker clearTaggedData(int tag) {
+    public synchronized LogMaker clearTaggedData(int tag) {
         entries.delete(tag);
         return this;
     }
@@ -269,19 +271,19 @@ public class LogMaker {
     /**
      * @return true if this object may be added to a LogMaker as a value.
      */
-    public boolean isValidValue(Object value) {
+    public synchronized boolean isValidValue(Object value) {
         return value instanceof Integer ||
             value instanceof String ||
             value instanceof Long ||
             value instanceof Float;
     }
 
-    public Object getTaggedData(int tag) {
+    public synchronized Object getTaggedData(int tag) {
         return entries.get(tag);
     }
 
     /** @return the category of the log, or unknown. */
-    public int getCategory() {
+    public synchronized int getCategory() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_CATEGORY);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -291,7 +293,7 @@ public class LogMaker {
     }
 
     /** @return the type of the log, or unknwon. */
-    public int getType() {
+    public synchronized int getType() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_TYPE);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -301,7 +303,7 @@ public class LogMaker {
     }
 
     /** @return the subtype of the log, or 0. */
-    public int getSubtype() {
+    public synchronized int getSubtype() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_SUBTYPE);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -311,7 +313,7 @@ public class LogMaker {
     }
 
     /** @return the timestamp of the log.or 0 */
-    public long getTimestamp() {
+    public synchronized long getTimestamp() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_TIMESTAMP);
         if (obj instanceof Long) {
             return (Long) obj;
@@ -321,7 +323,7 @@ public class LogMaker {
     }
 
     /** @return the package name of the log, or null. */
-    public String getPackageName() {
+    public synchronized String getPackageName() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_PACKAGENAME);
         if (obj instanceof String) {
             return (String) obj;
@@ -331,7 +333,7 @@ public class LogMaker {
     }
 
     /** @return the process ID of the log, or -1. */
-    public int getProcessId() {
+    public synchronized int getProcessId() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_PID);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -341,7 +343,7 @@ public class LogMaker {
     }
 
     /** @return the UID of the log, or -1. */
-    public int getUid() {
+    public synchronized int getUid() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_UID);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -351,7 +353,7 @@ public class LogMaker {
     }
 
     /** @return the name of the counter, or null. */
-    public String getCounterName() {
+    public synchronized String getCounterName() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_NAME);
         if (obj instanceof String) {
             return (String) obj;
@@ -361,7 +363,7 @@ public class LogMaker {
     }
 
     /** @return the bucket label of the histogram\, or 0. */
-    public long getCounterBucket() {
+    public synchronized long getCounterBucket() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_BUCKET);
         if (obj instanceof Number) {
             return ((Number) obj).longValue();
@@ -371,13 +373,13 @@ public class LogMaker {
     }
 
     /** @return true if the bucket label was specified as a long integer. */
-    public boolean isLongCounterBucket() {
+    public synchronized boolean isLongCounterBucket() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_BUCKET);
         return obj instanceof Long;
     }
 
     /** @return the increment value of the counter, or 0. */
-    public int getCounterValue() {
+    public synchronized int getCounterValue() {
         Object obj = entries.get(MetricsEvent.RESERVED_FOR_LOGBUILDER_VALUE);
         if (obj instanceof Integer) {
             return (Integer) obj;
@@ -389,7 +391,7 @@ public class LogMaker {
     /**
      * @return a representation of the log suitable for EventLog.
      */
-    public Object[] serialize() {
+    public synchronized Object[] serialize() {
         Object[] out = new Object[entries.size() * 2];
         for (int i = 0; i < entries.size(); i++) {
             out[i * 2] = entries.keyAt(i);
@@ -406,7 +408,7 @@ public class LogMaker {
     /**
      * Reconstitute an object from the output of {@link #serialize()}.
      */
-    public void deserialize(Object[] items) {
+    public synchronized void deserialize(Object[] items) {
         int i = 0;
         while (items != null && i < items.length) {
             Object key = items[i++];
@@ -423,7 +425,7 @@ public class LogMaker {
      * @param that the object to compare to.
      * @return true if values in that equal values in this, for tags that exist in this.
      */
-    public boolean isSubsetOf(LogMaker that) {
+    public synchronized boolean isSubsetOf(LogMaker that) {
         if (that == null) {
             return false;
         }
