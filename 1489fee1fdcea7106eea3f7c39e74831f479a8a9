@@ -22,6 +22,30 @@
       "revId": "1489fee1fdcea7106eea3f7c39e74831f479a8a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fec2d83_82091d4f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3884,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-05-22T04:47:56Z",
+      "side": 1,
+      "message": "Done. Much cleaner!",
+      "parentUuid": "53a7a9f1_6ff1cee8",
+      "range": {
+        "startLine": 3867,
+        "startChar": 0,
+        "endLine": 3884,
+        "endChar": 9
+      },
+      "revId": "1489fee1fdcea7106eea3f7c39e74831f479a8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
