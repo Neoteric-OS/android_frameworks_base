@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a7a9f1_6ff1cee8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3884,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T03:06:43Z",
+      "side": 1,
+      "message": "I find this hard to follow and would prefer reordering the so it\u0027s clear what the two cases are doing. Something like:\n\n        if (preUnregister) {\n            mCm.unregisterNetworkCallback(networkCallback);\n            testFactory.triggerUnfulfillable(requests.get(newRequestId));\n            // No exceptions? Good.\n        } else {\n            testFactory.expectRemoveRequests(1);\n            testFactory.triggerUnfulfillable(requests.get(newRequestId));\n\n            networkCallback.expectCallback(CallbackState.UNAVAILABLE, null);\n            testFactory.waitForRequests();\n\n            // unregister network callback - a no-op, but should not fail\n            mCm.unregisterNetworkCallback(networkCallback);\n        }",
+      "range": {
+        "startLine": 3867,
+        "startChar": 0,
+        "endLine": 3884,
+        "endChar": 9
+      },
+      "revId": "1489fee1fdcea7106eea3f7c39e74831f479a8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
