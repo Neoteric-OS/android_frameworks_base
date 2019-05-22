@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae4d85f_474bc211",
+        "filename": "data/etc/platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2019-05-22T22:38:38Z",
+      "side": 1,
+      "message": "The audioserver process is specifically prohibited from accessing the network. See https://android.googlesource.com/platform/system/sepolicy/+/7ca6fc8629d34b6be6ca99806814a78a5f6e2b31/private/audioserver.te#91 line 91\n\n  # Media processing code is inherently risky and thus should have limited\n  # permissions and be isolated from the rest of the system and network.\n  # Lengthier explanation here:\n  # https://android-developers.googleblog.com/2016/05/hardening-media-stack.html\n  neverallow audioserver domain:{ tcp_socket udp_socket rawip_socket } *;\n\nthis shouldn\u0027t be necessary.",
+      "revId": "c61c685912bed5e6b45a275efd921b05581d2779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
