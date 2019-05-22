@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77fb03e7_2e374b49",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-05-22T23:32:28Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 202,
+        "startChar": 57,
+        "endLine": 202,
+        "endChar": 76
+      },
+      "revId": "5e68e485aa027b153a2642df1d7e40fa3ff8f047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
