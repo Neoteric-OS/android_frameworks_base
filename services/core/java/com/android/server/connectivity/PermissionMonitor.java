@@ -203,11 +203,9 @@ public class PermissionMonitor {
             if (perms != null) {
                 netdPermission |= perms.contains(UPDATE_DEVICE_STATS)
                         ? INetd.PERMISSION_UPDATE_DEVICE_STATS : 0;
+                netdPermission |= perms.contains(INTERNET)
+                        ? INetd.PERMISSION_INTERNET : 0;
             }
-            // For internet permission, the native services have their own selinux domains and
-            // sepolicy will control the socket creation during run time. netd cannot block the
-            // socket creation based on the permission information here.
-            netdPermission |= INetd.PERMISSION_INTERNET;
             netdPermsUids.put(uid, netdPermsUids.get(uid) | netdPermission);
         }
         log("Users: " + mUsers.size() + ", Apps: " + mApps.size());
