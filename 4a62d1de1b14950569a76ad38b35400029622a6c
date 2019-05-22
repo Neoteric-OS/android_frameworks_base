@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5d366b_b7dbf200",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3885,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:10:49Z",
+      "side": 1,
+      "message": "Suggest checking here that waitForIdle(); networkCallback.assertNoCallback().",
+      "range": {
+        "startLine": 3885,
+        "startChar": 8,
+        "endLine": 3885,
+        "endChar": 9
+      },
+      "revId": "4a62d1de1b14950569a76ad38b35400029622a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
