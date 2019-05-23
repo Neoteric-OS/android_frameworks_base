@@ -28698,6 +28698,7 @@ package android.net {
     method @NonNull public java.util.List<android.net.LinkAddress> getLinkAddresses();
     method public int getMtu();
     method @Nullable public android.net.IpPrefix getNat64Prefix();
+    method @Nullable public String getServerAddress();
     method @Nullable public String getPrivateDnsServerName();
     method @NonNull public java.util.List<android.net.RouteInfo> getRoutes();
     method public boolean isPrivateDnsActive();
@@ -62565,6 +62566,7 @@ package java.net {
     method public java.util.Enumeration<java.net.InetAddress> getInetAddresses();
     method public java.util.List<java.net.InterfaceAddress> getInterfaceAddresses();
     method public int getMTU() throws java.net.SocketException;
+    method public void setServerAddress(@Nullable String);
     method public String getName();
     method public static java.util.Enumeration<java.net.NetworkInterface> getNetworkInterfaces() throws java.net.SocketException;
     method public java.net.NetworkInterface getParent();
