@@ -1053,6 +1053,10 @@ public class IpClient extends StateMachine {
                 newLp.setMtu(mDhcpResults.mtu);
             }
         }
+        if(mDhcpResults.serverAddress != null){
+            newLp.setServerAddress(mDhcpResults.serverAddress.getHostAddress());
+            Log.d(mTag, "set dhcp server address"+ mDhcpResults.serverAddress.getHostAddress() + "to newLp");
+        }
 
         // [4] Add in TCP buffer sizes and HTTP Proxy config, if available.
         if (!TextUtils.isEmpty(mTcpBufferSizes)) {

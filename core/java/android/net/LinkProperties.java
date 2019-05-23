@@ -63,6 +63,7 @@ public final class LinkProperties implements Parcelable {
     private String mPrivateDnsServerName;
     private String mDomains;
     private ArrayList<RouteInfo> mRoutes = new ArrayList<>();
+    private String mServerAddress;
     private ProxyInfo mHttpProxy;
     private int mMtu;
     // in the format "rmem_min,rmem_def,rmem_max,wmem_min,wmem_def,wmem_max"
@@ -191,6 +192,7 @@ public final class LinkProperties implements Parcelable {
                 addStackedLink(l);
             }
             setMtu(source.mMtu);
+            setServerAddress(source.getServerAddress());
             mTcpBufferSizes = source.mTcpBufferSizes;
             mNat64Prefix = source.mNat64Prefix;
         }
@@ -451,6 +453,26 @@ public final class LinkProperties implements Parcelable {
     @SystemApi
     public void setPrivateDnsServerName(@Nullable String privateDnsServerName) {
         mPrivateDnsServerName = privateDnsServerName;
+    }
+
+    /**
+     * set DHCP server address.
+     *
+     * @param serverAddress.
+     * @hide
+     */
+    public void setServerAddress(String serverAddress) {
+        mServerAddress = serverAddress;
+    }
+
+     /**
+     *get DHCP server address
+     *
+     * @param mtu The MTU to use for this link.
+     * @hide
+     */
+    public String getServerAddress() {
+        return mServerAddress;
     }
 
     /**
@@ -850,6 +872,7 @@ public final class LinkProperties implements Parcelable {
         mHttpProxy = null;
         mStackedLinks.clear();
         mMtu = 0;
+        mServerAddress = null;
         mTcpBufferSizes = null;
         mNat64Prefix = null;
     }
@@ -912,6 +935,11 @@ public final class LinkProperties implements Parcelable {
 
         resultJoiner.add("MTU:");
         resultJoiner.add(Integer.toString(mMtu));
+
+        if (mServerAddress != null) {
+            resultJoiner.add("ServerAddress:");
+            resultJoiner.add(mServerAddress);
+        }
 
         if (mTcpBufferSizes != null) {
             resultJoiner.add("TcpBufferSizes:");
@@ -1575,6 +1603,7 @@ public final class LinkProperties implements Parcelable {
                 + mMtu * 51
                 + ((null == mTcpBufferSizes) ? 0 : mTcpBufferSizes.hashCode())
                 + (mUsePrivateDns ? 57 : 0)
+                + ((null == mServerAddress) ? 0 : mServerAddress.hashCode())
                 + mPcscfs.size() * 67
                 + ((null == mPrivateDnsServerName) ? 0 : mPrivateDnsServerName.hashCode())
                 + Objects.hash(mNat64Prefix);
@@ -1605,6 +1634,7 @@ public final class LinkProperties implements Parcelable {
             dest.writeByteArray(d.getAddress());
         }
         dest.writeString(mDomains);
+        dest.writeString(mServerAddress);
         dest.writeInt(mMtu);
         dest.writeString(mTcpBufferSizes);
         dest.writeInt(mRoutes.size());
@@ -1662,6 +1692,7 @@ public final class LinkProperties implements Parcelable {
                     } catch (UnknownHostException e) { }
                 }
                 netProp.setDomains(in.readString());
+                netProp.setServerAddress(in.readString());
                 netProp.setMtu(in.readInt());
                 netProp.setTcpBufferSizes(in.readString());
                 addressCount = in.readInt();
