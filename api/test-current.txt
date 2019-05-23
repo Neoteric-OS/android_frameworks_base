@@ -1096,6 +1096,10 @@ package android.os {
     method public boolean hasSingleFileDescriptor();
   }
 
+  public final class Parcel {
+    method public int readExceptionCode();
+  }
+
   public final class PowerManager {
     method public void nap(long);
   }
@@ -1163,6 +1167,7 @@ package android.os {
 
   public class SystemProperties {
     method @NonNull public static String get(@NonNull String, @Nullable String);
+    method public static boolean getBoolean(@NonNull String, boolean);
   }
 
   public final class UserHandle implements android.os.Parcelable {
@@ -1651,6 +1656,22 @@ package android.transition {
 
   public class TransitionManager {
     method public android.transition.Transition getTransition(android.transition.Scene);
+  }
+
+}
+
+package android.util {
+
+  public class FeatureFlagUtils {
+    ctor public FeatureFlagUtils();
+    method public static java.util.Map<java.lang.String,java.lang.String> getAllFeatureFlags();
+    method public static boolean isEnabled(android.content.Context, String);
+    method public static void setEnabled(android.content.Context, String, boolean);
+    field public static final String FFLAG_OVERRIDE_PREFIX = "sys.fflag.override.";
+    field public static final String FFLAG_PREFIX = "sys.fflag.";
+    field public static final String HEARING_AID_SETTINGS = "settings_bluetooth_hearing_aid";
+    field public static final String PERSIST_PREFIX = "persist.sys.fflag.override.";
+    field public static final String SAFETY_HUB = "settings_safety_hub";
   }
 
 }
