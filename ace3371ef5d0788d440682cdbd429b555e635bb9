@@ -22,6 +22,30 @@
       "revId": "ace3371ef5d0788d440682cdbd429b555e635bb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "730b3530_6dbc0509",
+        "filename": "core/jni/android_util_jar_StrictJarFile.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-05-24T15:22:31Z",
+      "side": 1,
+      "message": "no, that\u0027s the stupid multi-day automerger blockage. it\u0027s through to internal master now.",
+      "parentUuid": "1fc1266d_3a8c0df8",
+      "range": {
+        "startLine": 115,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "ace3371ef5d0788d440682cdbd429b555e635bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
