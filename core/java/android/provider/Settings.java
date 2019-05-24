@@ -9127,6 +9127,280 @@ public final class Settings {
        public static final String MHL_POWER_CHARGE_ENABLED = "mhl_power_charge_enabled";
 
        /**
+        * TV picture mode, such as Vivid, Sports, Cinema.
+        * This setting takes an integer value that correspond to the list of modes in TvSettings.
+        * @hide
+        */
+       public static final String TV_PICTURE_MODE = "tv_picture_mode";
+
+       /**
+        * TV picture dovi_notification adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_DOVI_NOTIFICATION = "tv_picture_dovi_notification";
+
+       /**
+        * TV picture backlight adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_BACKLIGHT = "tv_picture_backlight";
+
+       /**
+        * TV picture brightness adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_BRIGHTNESS = "tv_picture_brightness";
+
+       /**
+        * TV picture contrast adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_CONTRAST = "tv_picture_contrast";
+
+       /**
+        * TV picture saturation adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_SATURATION = "tv_picture_saturation";
+
+       /**
+        * TV picture hue adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_HUE = "tv_picture_hue";
+
+       /**
+        * TV picture sharpness adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_SHARPNESS = "tv_picture_sharpness";
+
+       /**
+        * TV picture gamma adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_GAMMA = "tv_picture_gamma";
+
+       /**
+        * TV picture bluelight adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_BLUELIGHT = "tv_picture_bluelight";
+
+       /**
+        * TV picture hdr setting.
+        * (0 = false, 1 = true)
+        * @hide
+        */
+       public static final String TV_PICTURE_HDR = "tv_picture_hdr";
+
+       /**
+        * TV picture color temperature setting such as cool, warm etc.
+        * This setting takes an integer value that corresponds to the list of temperature
+        * in TvSettings.
+        * @hide
+        */
+       public static final String TV_PICTURE_COLOR_TEMPERATURE = "tv_picture_color_temperature";
+
+       /**
+        * TV picture color temperature red gain.
+        * @hide
+        */
+       public static final String TV_PICTURE_RED_GAIN = "tv_picture_red_gain";
+
+       /**
+        * TV picture color temperature green gain.
+        * @hide
+        */
+       public static final String TV_PICTURE_GREEN_GAIN = "tv_picture_green_gain";
+
+       /**
+        * TV picture color temperature blue gain.
+        * @hide
+        */
+       public static final String TV_PICTURE_BLUE_GAIN = "tv_picture_blue_gain";
+
+       /**
+        * TV picture 3d options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D = "tv_picture_3d";
+
+       /**
+        * TV picture 3d mode options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_MODE = "tv_picture_3d_mode";
+
+       /**
+        * TV picture 3d navigation options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_NAVIGATION = "tv_picture_3d_navigation";
+
+       /**
+        * TV picture advance video DNR options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_DNR = "tv_picture_advance_video_dnr";
+       /**
+        * TV picture advance video MPEG NR options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_MPEG_NR = "tv_picture_advance_video_mpeg_nr";
+       /**
+        * TV picture advance video adaptive luma control options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_ADAPTIVE_LUMA_CONTROL = "tv_picture_video_adaptive_luma_control";
+	   /**
+        * TV picture advance video local contrast control options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_LOCAL_CONTRAST_CONTROL = "tv_picture_video_local_contrast_control";
+       /**
+        * TV picture advance video flesh tone options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_FLESH_TONE = "tv_picture_video_flesh_tone";
+       /**
+        * TV picture advance video adaptive video di film mode options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_DI_FILM_MODE = "tv_picture_video_di_film_mode";
+       /**
+        * TV picture advance video blue stretch options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_BLUE_STRETCH = "tv_picture_video_blue_stretch";
+       /**
+        * TV picture advance video game mode options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_GAME_MODE = "tv_picture_video_game_mode";
+       /**
+        * TV picture advance video black bar options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_BLACK_BAR_DETECTION = "tv_picture_video_black_bar_detection";
+	   /**
+        * TV picture advance video super resolution options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_PICTURE_ADVANCE_VIDEO_GAME_SUPER_RESOLUTION = "tv_picture_video_super_resolution";
+       /**
+        * TV picture advance video mjc effect options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_ADVANCE_VIDEO_MJC_EFFECT = "tv_picture_advance_video_mjc_effect";
+       /**
+        * TV picture advance video mjc demo partition options settings
+        * @hide
+        */
+       public static final String TV_PICTURE_ADVANCE_VIDEO_MJC_DEMO_PARTITION = "tv_picture_video_mjc_demo_partition";
+       /**
+        * TV picture advance video mjc demo partition demo mode
+        * @hide
+        */
+       public static final String TV_PICTURE_ADVANCE_VIDEO_MJC_DEMO_MODE = "tv_picture_video_mjc_demo_mode";
+
+       /**
+        * TV picture 3d-to-2d options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_TO_2D = "tv_picture_3d_to_2d";
+
+       /**
+        * TV picture depth of field adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_DEPTH_OF_FIELD = "tv_picture_depth_of_field";
+
+       /**
+        * TV picture protrude adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_PROTRUDE = "tv_picture_protrude";
+
+       /**
+        * TV picture distance to TV adjustment.
+        * @hide
+        */
+       public static final String TV_PICTURE_DISTANCE_TO_TV = "tv_picture_distance_to_tv";
+
+       /**
+        * TV picture image safety options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_IMAGE_SAFETY = "tv_picture_image_safety";
+
+       /**
+        * TV picture L_R Switch options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_L_R_SWITCH = "tv_picture_l_r_switch";
+
+       /**
+        * TV picture OSD depth options settings.
+        * @hide
+        */
+       public static final String TV_PICTURE_OSD_DEPTH = "tv_picture_osd_depth";
+
+       /**
+        * TV picture 3D mode entries options for a array.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_MODE_ENTRIES = "tv_picture_3d_mode_entries";
+
+       /**
+        * TV picture 3D mode entry values options for a array.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_MODE_ENTRY_VALUES = "tv_picture_3d_mode_entry_values";
+
+       /**
+        * TV picture 3D options enable state for a array.
+        * @hide
+        */
+       public static final String TV_PICTURE_3D_OPTIONS_ENABLE_STATE = "tv_picture_3d_options_enable_state";
+
+       /**
+        * TV timer power on time type enable state for a array.
+        * @hide
+        */
+       public static final String TV_TIMER_POWER_ON_TIME_TYPE_ENTRY_VALUES = "tv_timer_power_on_time_type_entry_values";
+
+       /**
+        * TV timer power on timer for string value.
+        * @hide
+        */
+       public static final String TV_TIMER_POWER_ON_TIMER_VALUES = "tv_timer_power_on_timer_values";
+
+       /**
+        * TV timer power on channel select mode for a array.
+        * @hide
+        */
+       public static final String TV_TIMER_POWER_ON_CHANNEL_SELECT_MODE_ENTRY_VALUES = "tv_timer_power_on_channel_select_mode_entry_values";
+
+       /**
+        * TV timer power off time type enable state for a array.
+        * @hide
+        */
+       public static final String TV_TIMER_POWER_OFF_TIME_TYPE_ENTRY_VALUES = "tv_timer_power_off_time_type_entry_values";
+
+       /**
+        * TV timer power off timer for string value.
+        * @hide
+        */
+       public static final String TV_TIMER_POWER_OFF_TIMER_VALUES = "tv_timer_power_off_timer_values";
+
+       /**
+        * TV timer sleep timer  type enable state for a array.
+        * @hide
+        */
+       public static final String TV_TIMER_SLEEP_TIMER_ENTRY_VALUES = "tv_timer_sleep_timer_entry_values";
+
+       /**
         * Whether mobile data connections are allowed by the user.  See
         * ConnectivityManager for more info.
         * @hide
@@ -9776,6 +10050,23 @@ public final class Settings {
         public static final String SOFT_AP_TIMEOUT_ENABLED = "soft_ap_timeout_enabled";
 
         private static final Validator SOFT_AP_TIMEOUT_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+        /**
+        * Setting to Wakeup TV by WLAN.
+        * @hide
+        */
+       public static final String NETWORK_WOW_AVAILABLE = "network_wow";
+
+       /**
+        * Setting to Wakeup TV by LAN.
+        * @hide
+        */
+       public static final String NETWORK_WOL_AVAILABLE = "network_wol";
+
+       /**
+        * Setting to change HDMI Signal format.
+        * @hide
+        */
+       public static final String HDMI_SIGNAL_FORMAT = "hdmi_signal_format";
 
         /**
          * Value to specify if Wi-Fi Wakeup feature is enabled.
@@ -11655,6 +11946,264 @@ public final class Settings {
                 }
             }
         };
+
+        /**
+         * Sound balance used to set volume balance between two side .
+         * Value Range from -20 to 20 .
+         * @hide
+         */
+        public static final String SOUND_BALANCE = "sound_balance";
+
+        /**
+         * Sound bass used to control sound bass standard .
+         * Value Range from 0 to 100 .
+         * @hide
+         */
+        public static final String SOUND_BASS = "sound_bass";
+
+        /**
+         * sound trble used to control sound treble standard .
+         * Value Range from 0 to 100 .
+         * @hide
+         */
+        public static final String SOUND_TREBLE = "sound_treble";
+
+        /**
+         * sound surround used to control sound surround effect .
+         * Two State : On / Off
+         * @hide
+         */
+        public static final String SOUND_SOUND_SURROUND = "sound_sound_surround";
+
+        /**
+         * sound equalizer used to control sound equalizer .
+         * List :<item>Off</item>
+                 <item>Rock</item>
+                 <item>Pop</item>
+                 <item>Live</item>
+                 <item>Dance</item>
+                 <item>Techno</item>
+                 <item>Classic</item>
+                 <item>Soft</item>
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER = "sound_equalizer";
+
+        /**
+         * Off
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_OFF = "Off";
+
+        /**
+         * Rock
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_ROCK = "Rock";
+
+        /**
+         * Pop
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_POP = "Pop";
+
+        /**
+         * Live
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_LIVE = "Live";
+
+        /**
+         * Dance
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_DANCE = "Dance";
+
+        /**
+         * Techno
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_TECHNO = "Techno";
+
+        /**
+         * Classic
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_CLASSIC = "Classic";
+
+        /**
+         * Soft
+         * @hide
+         */
+        public static final String SOUND_EQUALIZER_SOFT = "Soft";
+
+        /**
+         * sound speaker used to control sound speaker function
+         * Two State : On / Off
+         * @hide
+         */
+        public static final String SOUND_SPEAKER = "sound_speaker";
+
+        /**
+         * sound SPDIF type used to control sound SPDIF type .
+         * List : <item>Off</item>
+                  <item>Dolby Digital</item>
+                  <item>PCM</item>
+                  <item>Dolby Digital Plus</item>
+          @hide
+         */
+        public static final String SOUND_SPDIF_TYPE = "sound_spdif_type";
+
+        /**
+         * Off
+         * @hide
+         */
+        private static final String SOUND_SPDIF_TYPE_OFF = "Off";
+
+        /**
+         * Dolby Digital
+         * @hide
+         */
+        private static final String SOUND_SPDIF_TYPE_DOLBY_DIGITAL = "Dolby Digital";
+
+        /**
+         * PCM
+         * @hide
+         */
+        private static final String SOUND_SPDIF_TYPE_PCM = "PCM";
+
+        /**
+         * Dolby Digital Plus
+         * @hide
+         */
+        private static final String SOUND_SPDIF_TYPE_DOLBY_DIGITAL_PLUS = "Dolby Digital Plus";
+
+        /**
+         * sound SPDIF delay used to control SPDIF delay time .
+         * Value Range from 0 to 250 .
+         * @hide
+         */
+        public static final String SOUND_SPDIF_DELAY = "sound_spdif_delay";
+
+        /**sound auto volume control used to  control auto sound volume .
+         * Two State : On / Off
+         * @hide
+         */
+        public static final String SOUND_AUTO_VOLUME_CONTROL = "sound_auto_volume_control";
+
+        /**
+         * sound type used to control sound type .
+         * List : <item>normal</item>
+                  <item>Hearing Imparired</item>
+                  <item>Visually Impaired</item>
+          @hide
+         */
+        public static final String SOUND_TYPE = "sound_type";
+
+        /**
+         * Normal
+         * @hide
+         */
+        public static final String SOUND_TYPE_NORMAL = "Normal";
+
+        /**
+         * Hearing Imparired
+         * @hide
+         */
+        public static final String SOUND_TYPE_HEARING_IMPARIRED = "Hearing Imparired";
+
+        /**
+         * Visually Impaired
+         * @hide
+         */
+        public static final String SOUND_TYPE_VISUALLY_IMPARIRED = "Visually Impaired";
+
+        /**
+         * sound downmix mode used to control downmix mode .
+         * List : <item>normal</item>
+                  <item>Hearing Imparired</item>
+                  <item>Visually Impaired</item>
+         * @hide
+         */
+        public static final String SOUND_DOWNMIX_MODE = "sound_downmixmode";
+
+       /**
+         * sound_virtual_x used to control virtual_x.
+         * List : <item>On</item>
+                  <item>Off</item>
+         * @hide
+         */
+        public static final String SOUND_VIRTUAL_X = "sound_virtual_x";
+
+        /**
+         * On
+         * @hide
+         */
+        public static final String SOUND_VIRTUAL_X_ON = "On";
+
+        /**
+         * Off
+         * @hide
+         */
+        public static final String SOUND_VIRTUAL_X_OFF = "Off";
+
+        /**
+         * sound_tbhdx used to control tbhdx.
+         * List : <item>On</item>
+                  <item>Off</item>
+         * @hide
+         */
+        public static final String SOUND_TBHDX = "sound_tbhdx";
+
+        /**
+         * On
+         * @hide
+         */
+        public static final String SOUND_TBHDX_ON = "On";
+
+        /**
+         * Off
+         * @hide
+         */
+        public static final String SOUND_TBHDX_OFF = "Off";
+
+        /**
+         * sound_limiter used to control limiter.
+         * List : <item>On</item>
+                  <item>Off</item>
+         * @hide
+         */
+		public static final String SOUND_LIMITER = "sound_limiter";
+
+        /**
+         * On
+         * @hide
+         */
+        public static final String SOUND_LIMITER_ON = "On";
+
+        /**
+         * Off
+         * @hide
+         */
+        public static final String SOUND_LIMITER_OFF = "Off";
+
+        /**
+         * Stereo
+         * @hide
+         */
+        public static final String SOUND_DOWNMIX_MODE_STEREO = "Stereo";
+
+        /**
+         * Auto Stereo
+         * @hide
+         */
+        public static final String SOUND_DOWNMIX_MODE_AUTO_STEREO = "Auto Stereo";
+
+        /**
+         * Surround
+         * @hide
+         */
+        public static final String SOUND_DOWNMIX_MODE_SURROUND = "Surround";
 
         /**
          * Persisted safe headphone volume management state by AudioService
