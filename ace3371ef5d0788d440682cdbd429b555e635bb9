@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc1266d_3a8c0df8",
+        "filename": "core/jni/android_util_jar_StrictJarFile.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-05-24T09:41:52Z",
+      "side": 1,
+      "message": "I\u0027d failed to spot there was no string variant of Next() when reviewing.",
+      "range": {
+        "startLine": 115,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "ace3371ef5d0788d440682cdbd429b555e635bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

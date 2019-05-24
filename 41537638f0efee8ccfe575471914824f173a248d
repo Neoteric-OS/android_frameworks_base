@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d38d978_5f6a5907",
+        "filename": "core/jni/android_util_jar_StrictJarFile.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-05-24T09:41:52Z",
+      "side": 0,
+      "message": "std::string name(entryName.name, entryName.name_length);",
+      "range": {
+        "startLine": 124,
+        "startChar": 1,
+        "endLine": 126,
+        "endChar": 49
+      },
+      "revId": "41537638f0efee8ccfe575471914824f173a248d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
