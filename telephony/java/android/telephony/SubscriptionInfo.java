@@ -735,15 +735,15 @@ public class SubscriptionInfo implements Parcelable {
                 + " carrierId=" + mCarrierId + " displayName=" + mDisplayName
                 + " carrierName=" + mCarrierName + " nameSource=" + mNameSource
                 + " iconTint=" + mIconTint + " mNumber=" + mNumber
-                + " dataRoaming=" + mDataRoaming + " iconBitmap=" + mIconBitmap + " mcc " + mMcc
-                + " mnc " + mMnc + "mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
-                + " accessRules " + Arrays.toString(mAccessRules)
+                + " dataRoaming=" + mDataRoaming + " iconBitmap=" + mIconBitmap + " mcc=" + mMcc
+                + " mnc=" + mMnc + " mCountryIso=" + mCountryIso + " isEmbedded=" + mIsEmbedded
+                + " accessRules=" + Arrays.toString(mAccessRules)
                 + " cardString=" + cardStringToPrint + " cardId=" + mCardId
-                + " isOpportunistic " + mIsOpportunistic + " mGroupUUID=" + mGroupUUID
+                + " isOpportunistic=" + mIsOpportunistic + " mGroupUUID=" + mGroupUUID
                 + " mIsGroupDisabled=" + mIsGroupDisabled
                 + " profileClass=" + mProfileClass
-                + " ehplmns = " + Arrays.toString(mEhplmns)
-                + " hplmns = " + Arrays.toString(mHplmns)
+                + " ehplmns=" + Arrays.toString(mEhplmns)
+                + " hplmns=" + Arrays.toString(mHplmns)
                 + " subscriptionType=" + mSubscriptionType
                 + " mGroupOwner=" + mGroupOwner + "}";
     }
