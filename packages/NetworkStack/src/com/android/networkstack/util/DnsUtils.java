@@ -44,6 +44,7 @@ public class DnsUtils {
     // Decide what queries to make depending on what IP addresses are on the system.
     public static final int TYPE_ADDRCONFIG = -1;
     private static final String TAG = DnsUtils.class.getSimpleName();
+    private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
     /**
      * Return both A and AAAA query results regardless the ip address type of the giving network.
@@ -54,6 +55,7 @@ public class DnsUtils {
             @NonNull final Network network, @NonNull String host, int timeout)
             throws UnknownHostException {
         final List<InetAddress> result = new ArrayList<InetAddress>();
+        final StringBuilder errorMsg = new StringBuilder();
 
         try {
             result.addAll(Arrays.asList(
@@ -61,6 +63,7 @@ public class DnsUtils {
                     timeout)));
         } catch (UnknownHostException e) {
             // Might happen if the host is v4-only, still need to query TYPE_A
+            errorMsg.append(e.getMessage() + " in AAAA. ");
         }
         try {
             result.addAll(Arrays.asList(
@@ -68,9 +71,10 @@ public class DnsUtils {
                     timeout)));
         } catch (UnknownHostException e) {
             // Might happen if the host is v6-only, still need to return AAAA answers
+            errorMsg.append(e.getMessage() + " in A.");
         }
         if (result.size() == 0) {
-            throw new UnknownHostException(host);
+            throw new UnknownHostException(errorMsg.toString());
         }
         return result.toArray(new InetAddress[0]);
     }
@@ -85,6 +89,7 @@ public class DnsUtils {
             int timeoutMs) throws UnknownHostException {
         final CountDownLatch latch = new CountDownLatch(1);
         final AtomicReference<List<InetAddress>> resultRef = new AtomicReference<>();
+        final StringBuilder errorMsg = new StringBuilder(host);
 
         final DnsResolver.Callback<List<InetAddress>> callback =
                 new DnsResolver.Callback<List<InetAddress>>() {
@@ -98,10 +103,17 @@ public class DnsUtils {
 
             @Override
             public void onError(@NonNull DnsResolver.DnsException e) {
-                Log.d(TAG, "DNS error resolving " + host + ": " + e.getMessage());
+                errorMsg.append(": " + e.getMessage());
+                if (DBG) {
+                    Log.d(TAG, "DNS error resolving " + errorMsg);
+                }
                 latch.countDown();
             }
         };
+        // TODO: Investigate whether this is still useful.
+        // The packets that actually do the DNS queries are sent by netd, but netd doesn't
+        // look at the tag at all. Given that this is a library, the tag should be passed in by the
+        // caller.
         final int oldTag = TrafficStats.getAndSetThreadStatsTag(
                 TrafficStatsConstants.TAG_SYSTEM_PROBE);
 
@@ -122,7 +134,7 @@ public class DnsUtils {
 
         final List<InetAddress> result = resultRef.get();
         if (result == null || result.size() == 0) {
-            throw new UnknownHostException(host);
+            throw new UnknownHostException(errorMsg.toString() + " error");
         }
 
         return result.toArray(new InetAddress[0]);
