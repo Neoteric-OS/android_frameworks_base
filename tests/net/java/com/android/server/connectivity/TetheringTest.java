@@ -554,6 +554,8 @@ public class TetheringTest {
                 .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
         verify(mNMService, times(1)).stopTethering();
         verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mWifiManager).updateInterfaceIpState(
+                TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verifyNoMoreInteractions(mNMService);
         verifyNoMoreInteractions(mWifiManager);
         // Asking for the last error after the per-interface state machine
@@ -805,6 +807,8 @@ public class TetheringTest {
                 .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
         verify(mNMService, times(1)).stopTethering();
         verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mWifiManager).updateInterfaceIpState(
+                TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verifyNoMoreInteractions(mNMService);
         verifyNoMoreInteractions(mWifiManager);
         // Asking for the last error after the per-interface state machine

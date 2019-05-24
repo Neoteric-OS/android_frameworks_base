@@ -1126,7 +1126,7 @@ public class Tethering extends BaseNetworkObserver {
                     case EVENT_IFACE_SERVING_STATE_INACTIVE: {
                         final IpServer who = (IpServer) message.obj;
                         if (VDBG) Log.d(TAG, "Tether Mode unrequested by " + who);
-                        handleInterfaceServingStateInactive(who);
+                        clearTetheringDownstream(who);
                         break;
                     }
                     case EVENT_IFACE_UPDATE_LINKPROPERTIES:
@@ -1309,7 +1309,7 @@ public class Tethering extends BaseNetworkObserver {
             }
         }
 
-        private void handleInterfaceServingStateInactive(IpServer who) {
+        private void clearTetheringDownstream(IpServer who) {
             mNotifyList.remove(who);
             mIPv6TetheringCoordinator.removeActiveDownstream(who);
             mOffload.excludeDownstreamInterface(who.interfaceName());
@@ -1321,6 +1321,17 @@ public class Tethering extends BaseNetworkObserver {
                     getWifiManager().updateInterfaceIpState(
                             who.interfaceName(), IFACE_IP_MODE_CONFIGURATION_ERROR);
                 }
+            }
+        }
+
+        private void handleInterfaceServingStateInactive(IpServer who) {
+            clearTetheringDownstream(who);
+
+            // If this is a Wi-Fi interface, notify WifiManager of the inactive serving state.
+            if (who.interfaceType() == TETHERING_WIFI
+                    && who.lastError() == TETHER_ERROR_NO_ERROR) {
+                getWifiManager().updateInterfaceIpState(
+                        who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED);
             }
         }
 
