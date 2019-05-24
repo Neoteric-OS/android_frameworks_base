@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "527ea301_d7e9fbfa",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-24T10:19:58Z",
+      "side": 0,
+      "message": "IIRC here we used to have validationLog(...). We lost that ability when we moved this code out of NetworkMonitor and into DnsUtils.\n\nInstead of doing the logging here, can we find a way to continue to write to the NetworkMonitor validation log? Maybe do something like:\n\n    interface LogFunc() {\n        void log(String s);\n    }\n\nand then, when NetworkMonitor calls one of these functions, it can pass in a lambda? Something like:\n\n    DnsUtils.getAllByName(..., () -\u003e validationLog(PROBE_DNS, url, msg));",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "1a70c6c7b83c6b11fab66e9ac322cba615083402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bb0815_f771af43",
+        "filename": "packages/NetworkStack/tests/unit/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-24T10:19:58Z",
+      "side": 0,
+      "message": "Would be good to keep this comment.",
+      "range": {
+        "startLine": 280,
+        "startChar": 16,
+        "endLine": 280,
+        "endChar": 98
+      },
+      "revId": "1a70c6c7b83c6b11fab66e9ac322cba615083402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
