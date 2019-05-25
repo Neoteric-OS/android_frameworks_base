@@ -1456,6 +1456,45 @@ class AlarmManagerService extends SystemService {
             return;
         }
 
+        String sPackageName = null;
+        Boolean bDisableWakeupType = false;
+        if (operation != null) {
+            sPackageName = operation.getCreatorPackage();
+        }
+        //when packageName is not null, use blacklist to control wakeup type.
+        //when packageName is null, don't change anything.
+        if (sPackageName != null) {
+            if ((sPackageName.contains("com.google.android.tv")) ||
+                (sPackageName.contains("com.google.android.tungsten.setupwraith")) ||
+                (sPackageName.contains("com.google.android.tvrecommendations")) ||
+                (sPackageName.contains("com.google.android.gms"))) {
+                    bDisableWakeupType = true;
+            }
+        }
+
+        if(bDisableWakeupType){
+            Slog.i(TAG, "Change Wakeup Alarm type to non Wakeup type, current type=["
+                    + type + "] packageName = " + sPackageName + " ,listenerTag = "
+                    + listenerTag + " ,@"
+                    + triggerAtTime + " and next wakeup alarm is @"
+                    + (new Date(mNextWakeup
+                    + ((System.currentTimeMillis()) -(SystemClock.elapsedRealtime())))));
+            if (type == AlarmManager.RTC_WAKEUP) {
+                type = AlarmManager.RTC;
+            } else if (type == AlarmManager.ELAPSED_REALTIME_WAKEUP) {
+                type = AlarmManager.ELAPSED_REALTIME;
+            }
+        }else{
+            Slog.i(TAG, "Do nothing, keep ALARM type, current type=["
+                    + type + "] packageName = " + sPackageName + " ,listenerTag = "
+                    + listenerTag + " ,@"
+                    + triggerAtTime + " and next wakeup alarm is @"
+                    + (new Date(mNextWakeup
+                    + ((System.currentTimeMillis()) -(SystemClock.elapsedRealtime())))));
+        }
+
+        type = fixTypeIfAuto(type);
+
         // Sanity check the window length.  This will catch people mistakenly
         // trying to pass an end-of-window timestamp rather than a duration.
         if (windowLength > AlarmManager.INTERVAL_HALF_DAY) {
