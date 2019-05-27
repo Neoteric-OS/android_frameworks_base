@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e88a18_6634e165",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "Style: redundant spaces?",
+      "range": {
+        "startLine": 116,
+        "startChar": 30,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "68bb2bb4d5bfa5930174f593f4fc89fca7fb3d08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff2dafc_a0a4187b",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "given that the function has only 1 caller, and\nthe function name is longer than it\u0027s content.\nis it better we just directly inline it instead of creating new function?",
+      "range": {
+        "startLine": 316,
+        "startChar": 20,
+        "endLine": 316,
+        "endChar": 41
+      },
+      "revId": "68bb2bb4d5bfa5930174f593f4fc89fca7fb3d08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e94e921_85796837",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "maybe give nullability notations to those touched functions?",
+      "range": {
+        "startLine": 320,
+        "startChar": 51,
+        "endLine": 320,
+        "endChar": 62
+      },
+      "revId": "68bb2bb4d5bfa5930174f593f4fc89fca7fb3d08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a069c6be_19258d4c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "Given the update function is only for network permissions.\nis it better if we name it more specific?",
+      "range": {
+        "startLine": 333,
+        "startChar": 17,
+        "endLine": 333,
+        "endChar": 23
+      },
+      "revId": "68bb2bb4d5bfa5930174f593f4fc89fca7fb3d08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b33a7_cfd67e54",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "maybe we need to add more comments for people to understand what are the 2 stages we are doing here?",
+      "range": {
+        "startLine": 579,
+        "startChar": 40,
+        "endLine": 579,
+        "endChar": 53
+      },
+      "revId": "68bb2bb4d5bfa5930174f593f4fc89fca7fb3d08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

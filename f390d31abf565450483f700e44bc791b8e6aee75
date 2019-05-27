@@ -234,6 +234,30 @@
       "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaa8f55_56f5fd4e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-27T07:00:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10f5bde8_b48fdb20",
+      "range": {
+        "startLine": 478,
+        "startChar": 36,
+        "endLine": 478,
+        "endChar": 47
+      },
+      "revId": "f390d31abf565450483f700e44bc791b8e6aee75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
