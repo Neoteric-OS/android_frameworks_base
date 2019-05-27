@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fef575f1_5867b9bb",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-27T13:11:53Z",
+      "side": 0,
+      "message": "updated",
+      "parentUuid": "527ea301_d7e9fbfa",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "1a70c6c7b83c6b11fab66e9ac322cba615083402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11bb0815_f771af43",
         "filename": "packages/NetworkStack/tests/unit/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1a70c6c7b83c6b11fab66e9ac322cba615083402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c2860a_0d184be0",
+        "filename": "packages/NetworkStack/tests/unit/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-27T13:11:53Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "11bb0815_f771af43",
+      "range": {
+        "startLine": 280,
+        "startChar": 16,
+        "endLine": 280,
+        "endChar": 98
+      },
+      "revId": "1a70c6c7b83c6b11fab66e9ac322cba615083402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

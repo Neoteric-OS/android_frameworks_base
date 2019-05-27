@@ -22,6 +22,30 @@
       "revId": "f3fd11ab72cc8800e9898e91f909302b6ead2b8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75719f61_cd5f3e21",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-27T13:11:53Z",
+      "side": 1,
+      "message": "I updated the design and replace StringBuilder with StringBuffer which is thread-safe.",
+      "parentUuid": "3964c1f1_9cc1d7e8",
+      "range": {
+        "startLine": 106,
+        "startChar": 32,
+        "endLine": 106,
+        "endChar": 53
+      },
+      "revId": "f3fd11ab72cc8800e9898e91f909302b6ead2b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
