@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39b5bfd_c3d5a050",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6651,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 0,
+      "message": "👍",
+      "range": {
+        "startLine": 6651,
+        "startChar": 12,
+        "endLine": 6651,
+        "endChar": 24
+      },
+      "revId": "055e44785f759f2f7edd05302b605955dff853c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

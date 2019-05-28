@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da8355c_98e6bc7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "was ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979c7312_0c27cb1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1409bf32_05040f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Accessing",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ff324e_c192695c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "synchronously",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdab9b2_f6bc47c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "a synchronous",
+      "range": {
+        "startLine": 21,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7ed0f1_f805c3ce",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "consuming",
+      "range": {
+        "startLine": 1879,
+        "startChar": 60,
+        "endLine": 1879,
+        "endChar": 68
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f253a79b_872d0392",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Let\u0027s avoid doing some of this unnecessary work.\n\n  final NAI lockdownAgent \u003d getVpnAgentForUid(uid, true);\n  if (null \u003d\u003d lockdownAgent || !appliesToUid(uid)) return false;\n\n  final NAI vpnAgent \u003d getVpnAgentForUid(uid, false);\n  if (null \u003d\u003d vpnAgent || isConnected() || !appliesToUid(uid)) return false;\n\n  return true;\n\n\n\nOnce that\u0027s done, notice you will almost always return at the first return false. Therefore, you almost never call getVpnAgentForUid with a true argument, and in that case forLockdown \u003d\u003d forLockdown is almost always false and when it\u0027s true the other conditions in getVpnAgentForUid are almost always true. Therefore it becomes very advantageous to move that test first in the loop.",
+      "range": {
+        "startLine": 1883,
+        "startChar": 0,
+        "endLine": 1898,
+        "endChar": 21
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd6b822_1187de02",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "doCapabilitiesApplyToUid",
+      "range": {
+        "startLine": 5905,
+        "startChar": 27,
+        "endLine": 5905,
+        "endChar": 49
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9a180b_aabf5254",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5932,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Can this happen ?",
+      "range": {
+        "startLine": 5932,
+        "startChar": 43,
+        "endLine": 5932,
+        "endChar": 72
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5e340f_9810c915",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5957,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "You may want to mention in a comment that this is the edge for connection, disconnection and VPN changing its UID ranges. It\u0027s safe because connection/disconnection of a VPN must always go through this, but it bears mentioning because it is not obvious to the casual observer that this is the path through which this goes.\n\nNote that IIUC the VPN changing its UIDs can\u0027t actually result in a blocked status change at the moment, but it could in principle.",
+      "range": {
+        "startLine": 5957,
+        "startChar": 12,
+        "endLine": 5957,
+        "endChar": 38
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedf25d8_47e71bde",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5961,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "This function reads to me like it should always do nothing at all if NAI is not a VPN. Maybe we want to return first ?\n\n  if (!nai.isVPN()) return;\n  if (nai.networkMisc.forLockdown) {\n    handle\n    return;\n  }\n\n(but do check that it\u0027s true that this should be a no-op if it\u0027s not a VPN ; I did my check, please do another)",
+      "range": {
+        "startLine": 5961,
+        "startChar": 7,
+        "endLine": 5961,
+        "endChar": 9
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1f8779_4300241f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6730,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Maybe replace the old comment with a new comment saying this is only called on the handler thread, which is necessary to ensure stability as isUidNetworkingWithVpnBlocked is called twice and must see the same VPN status as defined by the lockdown agent",
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0287392_d7f5c898",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Just make a new overload to keep the old behavior with the old signature",
+      "range": {
+        "startLine": 506,
+        "startChar": 8,
+        "endLine": 506,
+        "endChar": 24
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f9934d_40ccbc7c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Maybe \"MockNetworkAgent already connected\"",
+      "range": {
+        "startLine": 706,
+        "startChar": 29,
+        "endLine": 706,
+        "endChar": 67
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46532b96_7578cb6b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "Maybe \"moveToConnecting\"",
+      "range": {
+        "startLine": 769,
+        "startChar": 20,
+        "endLine": 769,
+        "endChar": 30
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0555a4e_5c0de74a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5992,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "apply",
+      "range": {
+        "startLine": 5992,
+        "startChar": 36,
+        "endLine": 5992,
+        "endChar": 43
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08d4333_d2a84303",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6010,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "You want to waitForIdle() here I think",
+      "range": {
+        "startLine": 6010,
+        "startChar": 8,
+        "endLine": 6010,
+        "endChar": 23
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9a86f9_125b0242",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6015,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:30:58Z",
+      "side": 1,
+      "message": "TEH annoyance : you\u0027ll also want a callback on the cell network and check that it\u0027s unblocked when this happens",
+      "range": {
+        "startLine": 6015,
+        "startChar": 8,
+        "endLine": 6015,
+        "endChar": 23
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
