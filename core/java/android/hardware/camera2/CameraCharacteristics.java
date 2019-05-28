@@ -3418,6 +3418,20 @@ public final class CameraCharacteristics extends CameraMetadata<CameraCharacteri
     public static final Key<int[]> DISTORTION_CORRECTION_AVAILABLE_MODES =
             new Key<int[]>("android.distortionCorrection.availableModes", int[].class);
 
+    /**
+     * <p>String for camera module vendor information.</p>
+     * <p>this value should be return name of module vendor not a specific number.</p>
+     * <p><b>Optional</b> - This value may be {@code null} on some devices.</p>
+     * <p><b>Full capability</b> -
+     * Present on all camera devices that report being {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL_FULL HARDWARE_LEVEL_FULL} devices in the
+     * {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL android.info.supportedHardwareLevel} key</p>
+     *
+     * @see CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL
+     * @hide
+     */
+    public static final Key<String> OEM_CAMERA_MODULE =
+            new Key<String>("android.oem.cameraModule", String.class);
+
     /*~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~
      * End generated code
      *~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~O@*/
