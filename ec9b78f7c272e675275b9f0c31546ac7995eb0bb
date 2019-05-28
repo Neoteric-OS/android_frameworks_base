@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9be20622_647b3816",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T09:08:47Z",
+      "side": 1,
+      "message": "As Chiachang points out in chat, what I suggest is not possible because you can\u0027t change a captured reference ; it must be final to be captured.\n\nAlternative design : store this in the callback :\n\n  final DR.C callback \u003d new DR.C() {\n    public String errorMsg \u003d null;\n    ...\n    public void onError() {\n      errorMsg \u003d e.getMessage();\n    }\n  }\n\n  ...\n  callback.errorMsg\n\nNow that I think about it, I think it\u0027s actually better than what I originally suggested.",
+      "parentUuid": "632e4d5d_3ef4bc2c",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 26
+      },
+      "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a27490_41eab5ac",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 10
