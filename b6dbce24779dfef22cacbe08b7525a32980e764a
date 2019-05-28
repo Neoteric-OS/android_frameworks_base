@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a423c653_2d70089b",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "So if not mDisableRootOnTeardown, you disable root on tear down ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aff30f_8a150ba6",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "Why do this ? You don\u0027t trust setUp to run again ?",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 38
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b79daa_113198f8",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "This function only applies an update that\u0027s already installed right ? Let\u0027s say that in a comment",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 57
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b169c2_8ed366d5",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "Try using kotlin.test.assertNotNull instead of the junit one to avoid having to say this. Not 100% sure how failure looks like, we should test first\n\nAlternatively (and probably better), just have getNetworkStackPid() return a String, and assert in there.",
+      "range": {
+        "startLine": 99,
+        "startChar": 45,
+        "endLine": 99,
+        "endChar": 48
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a29d41_9c8851d0",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "5 minutes ? Feeling generous :)",
+      "range": {
+        "startLine": 113,
+        "startChar": 52,
+        "endLine": 113,
+        "endChar": 75
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87cedbd1_f43a6833",
+        "filename": "packages/NetworkStack/tests/hostdriven/host/src/com/android/networkstack/hosttests/NetworkStackHostTests.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T07:16:50Z",
+      "side": 1,
+      "message": "Either use kotlin.test.fail (which returns Nothing) or throw instead of return here. A third alternative would be to write your own fail :\n\n  private fun myfail(msg: String): Nothing {\n    fail(msg)\n    throw...\n  }\n\nYou can then just say myfail() and don\u0027t need to return",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "b6dbce24779dfef22cacbe08b7525a32980e764a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
