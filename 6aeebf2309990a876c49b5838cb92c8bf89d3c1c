@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81ad99b_67c737f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-05-28T16:54:21Z",
+      "side": 1,
+      "message": "The commit message should say what the commit does, not state the problem.\n\nBluetoothProfileConnector: Invoke service disconnections with the correct profile ID",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 87
+      },
+      "revId": "6aeebf2309990a876c49b5838cb92c8bf89d3c1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
