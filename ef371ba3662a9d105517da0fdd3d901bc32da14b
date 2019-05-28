@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e71fd4f_f37bbf55",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7dae8a7_30e37bf7",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 29
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "950da0d6_f349405e",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95dcc22_1588febf",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "950da0d6_f349405e",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 66
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "80fa1c05_6ea503cf",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd23ae39_90189518",
+      "range": {
+        "startLine": 145,
+        "startChar": 32,
+        "endLine": 145,
+        "endChar": 74
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036154f3_09456202",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "07a76433_90915cd9",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036154f3_09456202",
+      "range": {
+        "startLine": 146,
+        "startChar": 27,
+        "endLine": 146,
+        "endChar": 83
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8208283_2f433ed3",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2019-05-27T14:50:40Z",
       "side": 1,
       "message": "...and while you\u0027re here, just pass the original errorMsg. You\u0027re not using this variable at all in logDnsResult if success is false, no sense computing it",
+      "range": {
+        "startLine": 148,
+        "startChar": 53,
+        "endLine": 148,
+        "endChar": 56
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72277096_e3544eb6",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Updated. I suspect you mean I do not use the msg if success is true?",
+      "parentUuid": "a8208283_2f433ed3",
       "range": {
         "startLine": 148,
         "startChar": 53,
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "f3c15dcd_77c77056",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95f3816b_3f8b5df7",
+      "range": {
+        "startLine": 156,
+        "startChar": 61,
+        "endLine": 156,
+        "endChar": 67
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c2a6a18_7a57f740",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0854daf3_d86cd473",
+      "range": {
+        "startLine": 156,
+        "startChar": 84,
+        "endLine": 156,
+        "endChar": 93
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d87c6c_11dd050b",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 5
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8adad5e8_7447d3fe",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d87c6c_11dd050b",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 27
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c53ee3_bc1fdcd3",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d21408_7d39871e",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-28T02:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c53ee3_bc1fdcd3",
+      "range": {
+        "startLine": 165,
+        "startChar": 12,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "ef371ba3662a9d105517da0fdd3d901bc32da14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
