@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f5d7891_538fd41c",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab3a119_ecc93f3e",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1aa47d7_33eaac3a",
         "filename": "core/java/com/android/internal/util/IState.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a2b25b5d_095efa43",
+        "filename": "core/java/com/android/internal/util/IState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1aa47d7_33eaac3a",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d24cd89b_53d0a18e",
         "filename": "core/java/com/android/internal/util/State.java",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f581f6ad_3dd874b0",
+        "filename": "core/java/com/android/internal/util/State.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d24cd89b_53d0a18e",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "e7341d6f_5c38ab56",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Then it means a state will get its entry data set before it is entered. I think it will expose many risks.",
+      "parentUuid": "74648ee5_44840e5c",
+      "range": {
+        "startLine": 1257,
+        "startChar": 12,
+        "endLine": 1257,
+        "endChar": 35
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a976ba9_af145d74",
         "filename": "core/java/com/android/internal/util/StateMachine.java",
         "patchSetId": 13
@@ -160,6 +256,30 @@
       "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e90f8f_158ed378",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a976ba9_af145d74",
+      "range": {
+        "startLine": 1456,
+        "startChar": 43,
+        "endLine": 1456,
+        "endChar": 46
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "34f6251a_201e4496",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e40181_32453959",
+      "range": {
+        "startLine": 631,
+        "startChar": 4,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ec8125_22848567",
         "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
         "patchSetId": 13
@@ -206,6 +350,30 @@
       "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0013cc6_667e2256",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ec8125_22848567",
+      "range": {
+        "startLine": 656,
+        "startChar": 36,
+        "endLine": 656,
+        "endChar": 46
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "907964a4_74f42f40",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "I think by testing getEntryData we indirectly test that enter(T data) is called and works correctly.\n\nSince enter(T data) is final we cannot override it to test it.",
+      "parentUuid": "0e9e07ce_ca8f5c6e",
+      "range": {
+        "startLine": 666,
+        "startChar": 24,
+        "endLine": 666,
+        "endChar": 29
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152cd68b_b28e38e4",
         "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
         "patchSetId": 13
@@ -243,6 +435,30 @@
       "writtenOn": "2019-05-16T07:50:30Z",
       "side": 1,
       "message": "This member is write-only. Why do you need a member to store the value of \u0027this\u0027 by the way ?",
+      "range": {
+        "startLine": 696,
+        "startChar": 46,
+        "endLine": 696,
+        "endChar": 53
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702fb57c_41c296de",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "I tried to follow the convention of the existing test code where they use \"mThisSm\", make the inner states non-final and make the StateMachine class non-static. But I agreed your comments on these.",
+      "parentUuid": "152cd68b_b28e38e4",
       "range": {
         "startLine": 696,
         "startChar": 46,
@@ -278,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "2d321499_ad940b8c",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91781575_db3d3bbc",
+      "range": {
+        "startLine": 697,
+        "startChar": 8,
+        "endLine": 697,
+        "endChar": 15
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3322c0e_866d93b9",
         "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
         "patchSetId": 13
@@ -298,6 +538,30 @@
       "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa57014_f591bbeb",
+        "filename": "core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-05-28T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3322c0e_866d93b9",
+      "range": {
+        "startLine": 737,
+        "startChar": 17,
+        "endLine": 738,
+        "endChar": 29
+      },
+      "revId": "809e9add54128a05a0a1b5e7b25dc16bcb56dde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
