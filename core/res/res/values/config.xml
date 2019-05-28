@@ -3590,4 +3590,7 @@
     <!-- Component name for default assistant on this device -->
     <string name="config_defaultAssistantComponentName"></string>
 
+    <!-- The character count of the minimum match for comparingn phone numbers -->
+    <integer name="config_phonenumber_compare_min_match">7</integer>
+
 </resources>
