@@ -2200,6 +2200,15 @@ public class AudioService extends IAudioService.Stub
             flags = updateFlagsForSystemAudio(flags);
         }
         mVolumeController.postVolumeChanged(streamType, flags);
+        if ((flags & AudioManager.FLAG_FIXED_VOLUME) == 0){
+            oldIndex = (oldIndex + 5) / 10;
+            index = (index + 5) / 10;
+            Intent intent = new Intent(AudioManager.VOLUME_CHANGED_ACTION);
+            intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, streamType);
+            intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
+            intent.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, oldIndex);
+            sendBroadcastToAll(intent);
+        }
     }
 
     // If Hdmi-CEC system audio mode is on, we show volume bar only when TV
@@ -5056,7 +5065,7 @@ public class AudioService extends IAudioService.Stub
                     }
                 }
             }
-            if (changed) {
+            /*if (changed) {
                 oldIndex = (oldIndex + 5) / 10;
                 index = (index + 5) / 10;
                 // log base stream changes to the event log
@@ -5073,7 +5082,7 @@ public class AudioService extends IAudioService.Stub
                 mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE_ALIAS,
                         mStreamVolumeAlias[mStreamType]);
                 sendBroadcastToAll(mVolumeChanged);
-            }
+            }*/
             return changed;
         }
 
