@@ -237,9 +237,22 @@ public class NetworkNotificationManager {
                     + getTransportName(transportType));
             return;
         }
-
-        final String channelId = highPriority ? SystemNotificationChannels.NETWORK_ALERTS :
-                SystemNotificationChannels.NETWORK_STATUS;
+        // Expectation is that silently update the notification without alerting user again if there
+        // is a existing notification for the network shown in the status bar. Note that
+        // setOnlyAlertOnce() will only work for the same id. The id used here is the
+        // NotificationType which is different in every type of notification. The possible identical
+        // id will be network id but network id can not be used here due to the the id field in a
+        // notification will be part of the notification metrics. It will break the metrics.
+        //
+        // Every notification should set a notification channel and each notification channel is
+        // defined with its own priority which will decide th behavior of the notification, e.g.
+        // sound alert. Thus, update the channelId if previous notification exists. The mechanism
+        // relies on the definition of each channel. If the behavior of each channel is changed,
+        // design should be updated accordingly.
+        final boolean hasPreviousNotification = previousNotifyType != null;
+        final String channelId = (highPriority && !hasPreviousNotification)
+                ? SystemNotificationChannels.NETWORK_ALERTS
+                : SystemNotificationChannels.NETWORK_STATUS;
         Notification.Builder builder = new Notification.Builder(mContext, channelId)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(notifyType == NotificationType.NETWORK_SWITCH)
