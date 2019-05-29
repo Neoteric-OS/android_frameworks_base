@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d5121aa_7f63606b",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T13:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a29ad3_d83738e0",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "03a83ecbb0a283f8e0692f31dd2bd2af8ecf6da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f07af1f_36668b60",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "03a83ecbb0a283f8e0692f31dd2bd2af8ecf6da6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa53601_2bab999d",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T13:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f07af1f_36668b60",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "03a83ecbb0a283f8e0692f31dd2bd2af8ecf6da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
