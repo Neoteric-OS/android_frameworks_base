@@ -99,6 +99,9 @@ public final class Zygote {
      */
     public static final int USE_APP_IMAGE_STARTUP_CACHE = 1 << 16;
 
+    /** Enable ignoring signal hooking of third-party. */
+    public static final int DEBUG_ENABLE_IGNORE_APP_SIGNAL_HANDLER = 1 << 17;
+
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = IVold.REMOUNT_MODE_NONE;
     /** Default external storage should be mounted. */
