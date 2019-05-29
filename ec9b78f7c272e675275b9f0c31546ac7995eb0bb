@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41f76d4d_7a15c34a",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T09:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96c91bd_8de1d8f2",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "632e4d5d_3ef4bc2c",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 10
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "65d6bdd4_4339d719",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T09:23:49Z",
+      "side": 1,
+      "message": "Thanks for all the suggestions here and in chat. I choose to catch the exception first and rethrow as UnknownHostException. The main reason is my initial intention for this commit to log the validation log properly so I keep the error not only for the caller but also log it in the logger. Otherwise, we may have it handled by the caller.",
+      "parentUuid": "9be20622_647b3816",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 26
+      },
+      "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a27490_41eab5ac",
         "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
         "patchSetId": 10
@@ -83,6 +131,30 @@
       "writtenOn": "2019-05-28T07:55:33Z",
       "side": 1,
       "message": "No point printing this as part of the message, it will be printed because it\u0027s part of the exception\n\nI think that it would help to print the host instead though.",
+      "range": {
+        "startLine": 115,
+        "startChar": 56,
+        "endLine": 115,
+        "endChar": 75
+      },
+      "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa4363b_1b68bd1b",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T09:23:49Z",
+      "side": 1,
+      "message": "update to print host instead.",
+      "parentUuid": "01a27490_41eab5ac",
       "range": {
         "startLine": 115,
         "startChar": 56,
@@ -115,6 +187,30 @@
       "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f214b115_b6ebbc39",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-05-29T09:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2d640a_b4a2e532",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "ec9b78f7c272e675275b9f0c31546ac7995eb0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
