@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a29ad3_d83738e0",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T12:44:47Z",
+      "side": 1,
+      "message": "Move this much closer to the use site, in l.135",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "03a83ecbb0a283f8e0692f31dd2bd2af8ecf6da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f07af1f_36668b60",
+        "filename": "packages/NetworkStack/src/com/android/networkstack/util/DnsUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T12:44:47Z",
+      "side": 1,
+      "message": "else {\n\n...I think otherwise you\u0027d crash when there is a valid answer because you can\u0027t completeExceptionally() after you complete()",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "03a83ecbb0a283f8e0692f31dd2bd2af8ecf6da6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
