@@ -1109,6 +1109,8 @@ static jlong CalculateCapabilities(JNIEnv* env, jint uid, jint gid, jintArray gi
     capabilities |= (1LL << CAP_NET_RAW);
     capabilities |= (1LL << CAP_NET_BIND_SERVICE);
     capabilities |= (1LL << CAP_SYS_NICE);
+    capabilities |= (1LL << CAP_NET_ADMIN);
+    ALOGE("%s: BT cap: %lu", __func__, (unsigned long)capabilities);
   }
 
   if (multiuser_get_app_id(uid) == AID_NETWORK_STACK) {
