@@ -76,6 +76,7 @@ import android.net.Proxy;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.BinderProxy;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
@@ -4429,8 +4430,12 @@ public final class ActivityThread extends ClientTransactionHandler {
 
     private void relaunchAllActivities() {
         for (Map.Entry<IBinder, ActivityClientRecord> entry : mActivities.entrySet()) {
-            final Activity activity = entry.getValue().activity;
-            if (!activity.mFinished) {
+            final ActivityClientRecord r = entry.getValue();
+            final Activity activity = r.activity;
+            final IBinder token = r.token;
+
+            // only relaunch normal Activity except ActivityGroup and TabHost‘s LocalActivity
+            if (token instanceof BinderProxy && !activity.mFinished) {
                 scheduleRelaunchActivity(entry.getKey());
             }
         }
