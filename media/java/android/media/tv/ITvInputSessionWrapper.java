@@ -34,6 +34,10 @@ import android.view.Surface;
 import com.android.internal.os.HandlerCaller;
 import com.android.internal.os.SomeArgs;
 
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+
+
 /**
  * Implements the internal ITvInputSession interface to convert incoming calls on to it back to
  * calls on the public TvInputSession interface, scheduling them on the main thread of the process.
@@ -74,6 +78,8 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
 
     private TvInputService.Session mTvInputSessionImpl;
     private TvInputService.RecordingSession mTvInputRecordingSessionImpl;
+    private WakeLock mWakeLock;
+
 
     private InputChannel mChannel;
     private TvInputEventReceiver mReceiver;
@@ -87,6 +93,8 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
         if (channel != null) {
             mReceiver = new TvInputEventReceiver(channel, context.getMainLooper());
         }
+        mWakeLock = ((PowerManager)context.getSystemService(Context.POWER_SERVICE)).newWakeLock(
+          PowerManager.FULL_WAKE_LOCK, context.getPackageName());
     }
 
     // For the recording session
@@ -95,6 +103,8 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
         mIsRecordingSession = true;
         mCaller = new HandlerCaller(context, null, this, true /* asyncHandler */);
         mTvInputRecordingSessionImpl = recordingSessionImpl;
+        mWakeLock = ((PowerManager)context.getSystemService(Context.POWER_SERVICE)).newWakeLock(
+          PowerManager.FULL_WAKE_LOCK, context.getPackageName());
     }
 
     @Override
@@ -102,6 +112,9 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
         if ((mIsRecordingSession && mTvInputRecordingSessionImpl == null)
                 || (!mIsRecordingSession && mTvInputSessionImpl == null)) {
             return;
+        }
+        if (mWakeLock != null) {
+            mWakeLock.acquire();
         }
 
         long startTime = System.nanoTime();
@@ -229,6 +242,9 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
             }
         }
         long durationMs = (System.nanoTime() - startTime) / (1000 * 1000);
+        if (mWakeLock != null) {
+            mWakeLock.release();
+        }
         if (durationMs > EXECUTE_MESSAGE_TIMEOUT_SHORT_MILLIS) {
             Log.w(TAG, "Handling message (" + msg.what + ") took too long time (duration="
                     + durationMs + "ms)");
