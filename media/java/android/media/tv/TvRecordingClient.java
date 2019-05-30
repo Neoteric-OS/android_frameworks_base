@@ -138,14 +138,16 @@ public class TvRecordingClient {
      */
     public void release() {
         if (DEBUG) Log.d(TAG, "release()");
+        mPendingAppPrivateCommands.clear();
         resetInternal();
     }
 
     private void resetInternal() {
         mSessionCallback = null;
-        mPendingAppPrivateCommands.clear();
         if (mSession != null) {
             mSession.release();
+            mIsTuned = false;
+            mIsRecordingStarted = false;
             mSession = null;
         }
     }
