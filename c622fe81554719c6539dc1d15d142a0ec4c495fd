@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bb9bbc9_f38f1e36",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-30T07:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cf3549_51e1e1ba",
+      "range": {
+        "startLine": 966,
+        "startChar": 71,
+        "endLine": 966,
+        "endChar": 88
+      },
+      "revId": "c622fe81554719c6539dc1d15d142a0ec4c495fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "154b1e0c_28c86e49",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c622fe81554719c6539dc1d15d142a0ec4c495fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c3e23e_28265924",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-30T07:11:46Z",
+      "side": 1,
+      "message": "It may or may not apply to the UID, so we can\u0027t delete that.",
+      "parentUuid": "154b1e0c_28c86e49",
+      "range": {
+        "startLine": 968,
+        "startChar": 63,
+        "endLine": 968,
+        "endChar": 86
+      },
+      "revId": "c622fe81554719c6539dc1d15d142a0ec4c495fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
