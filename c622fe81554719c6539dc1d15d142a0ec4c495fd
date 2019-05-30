@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17cf3549_51e1e1ba",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-30T07:03:53Z",
+      "side": 1,
+      "message": "This should say \"getActiveNetwork\". Also, would suggest expanding as follows:\n\nAlso, it guarantees that when a VPN applies to an app, the VPN will always be reported as the network by getDefaultNetwork and registerDefaultNetworkCallback. This in turn protects the invariant that bindProcessToNetwork(getDefaultNetwork()) behaves the same as using the default network.",
+      "range": {
+        "startLine": 966,
+        "startChar": 71,
+        "endLine": 966,
+        "endChar": 88
+      },
+      "revId": "c622fe81554719c6539dc1d15d142a0ec4c495fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154b1e0c_28c86e49",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-30T07:03:53Z",
+      "side": 1,
+      "message": "Now that all VPNs have NET_CAPABILITY_INTERNET, can we delete this code at line 1348 of ConnectivityService?\n\n        NetworkAgentInfo nai;\n        if (vpnNetId !\u003d NETID_UNSET) {\n            nai \u003d getNetworkAgentInfoForNetId(vpnNetId);\n            if (nai !\u003d null) {\n                final NetworkCapabilities requiredCaps \u003d\n                    createDefaultNetworkCapabilitiesForUid(uid);\n                if (requiredCaps.satisfiedByNetworkCapabilities(nai.networkCapabilities)) {\n                    return nai.network;\n                }\n            }\n        }",
+      "range": {
+        "startLine": 968,
+        "startChar": 63,
+        "endLine": 968,
+        "endChar": 86
+      },
+      "revId": "c622fe81554719c6539dc1d15d142a0ec4c495fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
