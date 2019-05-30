@@ -169,7 +169,7 @@ public class EditableInputConnection extends BaseInputConnection {
     }
 
     @Override
-    public boolean commitText(CharSequence text, int newCursorPosition) {
+    public boolean commitText(@NotNull CharSequence text, int newCursorPosition) {
         if (mTextView == null) {
             return super.commitText(text, newCursorPosition);
         }
