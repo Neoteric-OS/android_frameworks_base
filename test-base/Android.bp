@@ -96,3 +96,14 @@ java_library_static {
     ],
 }
 
+// Make the current.txt available for use by the cts/tests/signature tests.
+// ========================================================================
+filegroup {
+    name: "android-test-base-current.txt",
+	visibility: [
+	    "//cts/tests/signature/api",
+	],
+    srcs: [
+        "api/current.txt",
+    ],
+}
