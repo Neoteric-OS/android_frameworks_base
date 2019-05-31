@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54703f23_6d8d11a8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6636,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:28:19Z",
+      "side": 1,
+      "message": "Not sure what this comment really means. I can only interpret it as \"the control passes through this line only if networkAgent is a real VPN agent and not the lockdown VPN agent\", but by definition the control passes through this line for all agents including the lockdown VPN agent.\n\nMaybe you mean the capabilities of the lockdown agent will never change, so it\u0027s not useful to pass them if networkAgent is the lockdown agent, therefore we pass null ?",
+      "range": {
+        "startLine": 6636,
+        "startChar": 19,
+        "endLine": 6636,
+        "endChar": 46
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa786e9d_108040c5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6640,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:28:19Z",
+      "side": 1,
+      "message": "The real VPN agents can be in the CONNECTING state, and IIUC when such a VPN connects the control passes through here with oldInfo.isConnected() \u003d\u003d false and newInfo.isConnected() \u003d\u003d true. In this case, we pass null as the first arg and false as the second arg. Is this expected ? Maybe you meant something like\n\n  final NetworkCapabilities caps \u003d oldInfo.isConnected() || newInfo.isConnected()\n      ? networkAgent.networkCapabilities : null\n  handleLockdownOrVpnChanged(networkAgent, caps, caps);",
+      "range": {
+        "startLine": 6640,
+        "startChar": 24,
+        "endLine": 6640,
+        "endChar": 45
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

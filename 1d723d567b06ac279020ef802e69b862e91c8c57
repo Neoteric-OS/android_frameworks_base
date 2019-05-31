@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "994fc78d_da01aba7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5961,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:28:19Z",
+      "side": 1,
+      "message": "Possibly, but the reason I thought about this is I was kind of scared of the implementation. Suppose in the future we start having some networks that are not VPNs but only apply to some UIDs. Well, we will happily call mNMS.addVpnUidRanges, and mPermissionMonitor.onVpnUidRangesAdded. I think those were recently added by Rubin, and presumably in my review I missed saying we should not do this if not a VPN.\n\nThus I think it would be at least clearer if we just returned immediately when not VPN. Also faster – we\u0027re unconditionally creating three ArraySets for nothing at all all the time.",
+      "parentUuid": "d36658a6_483dba3b",
+      "range": {
+        "startLine": 5961,
+        "startChar": 7,
+        "endLine": 5961,
+        "endChar": 9
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1f8779_4300241f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -695,6 +719,30 @@
     },
     {
       "key": {
+        "uuid": "012f0922_c24dddde",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:28:19Z",
+      "side": 1,
+      "message": "Yes, setToConnecting is better than what I suggested",
+      "parentUuid": "94f790a7_35da58b2",
+      "range": {
+        "startLine": 769,
+        "startChar": 20,
+        "endLine": 769,
+        "endChar": 30
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0555a4e_5c0de74a",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -824,6 +872,30 @@
       "side": 1,
       "message": "Done,\nBTW, what is TEH?",
       "parentUuid": "0c9a86f9_125b0242",
+      "range": {
+        "startLine": 6015,
+        "startChar": 8,
+        "endLine": 6015,
+        "endChar": 23
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc9fe172_9a0c5ff2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6015,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:28:19Z",
+      "side": 1,
+      "message": "Ah\n\nIt\u0027s internet slang. https://www.urbandictionary.com/define.php?term\u003dteh\nIn this case I was using meaning 3 (or possibly 4), but read all for more context :)\n\n\nBut : not done ?  I meant something like this :\n\n  5989 : final TestNetworkCallback cellCallback \u003d new TestNetworkCallback()\n         final NetworkRequest cellRequest \u003d new NetworkRequest.Builder()\n             .addTransportType(TRANSPORT_CELLULAR).build()\n         mCm.registerNetworkCallback(cellRequest, cellCallback)\n\n  5992 : cellCallback.expectAvailable...\n\n  6004 : cellCallback.expectBlocked\n\n  6018 : cellCallback.expectUnblocked\n         cellCallback.expectNoCallback",
+      "parentUuid": "dae82446_79f35007",
       "range": {
         "startLine": 6015,
         "startChar": 8,
