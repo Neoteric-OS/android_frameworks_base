@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "e85fe57f_1a42e9d5",
+        "filename": "packages/SystemUI/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "I\u0027d recommend \"config_burn_in_prevention_statusbar_navbar\" (no camelCase).\nIdeally this config would default to the global burn-in protection setting.",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174d5fd_977103ad",
+        "filename": "packages/SystemUI/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "Use \"config_burn_in_prevention_shift_interval\" or something more specific.",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8765810_b6ce6242",
+        "filename": "packages/SystemUI/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "This should be changed to \"aod_burn_in_prevention_offset_x\".\nHow would backward compatibility be kept?",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4147d53c_2fbff4a5",
+        "filename": "packages/SystemUI/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "This should be changed to \"aod_burn_in_prevention_offset_y\".\nHow would backward compatibility be kept?",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f50daba_4a90b66a",
         "filename": "packages/SystemUI/res/values/dimens.xml",
         "patchSetId": 1
@@ -19,6 +87,115 @@
         "endLine": 943,
         "endChar": 42
       },
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7551ea3_acf47afe",
+        "filename": "packages/SystemUI/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "I agree with Pablo and Angelo, all the statusbar items are measured in x.0dp.\n--\nThis should be changed to \"burn_in_prevention_max_shift_y\".",
+      "parentUuid": "8f50daba_4a90b66a",
+      "range": {
+        "startLine": 943,
+        "startChar": 37,
+        "endLine": 943,
+        "endChar": 42
+      },
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426b84bd_d9edd40d",
+        "filename": "packages/SystemUI/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "This should be changed to \"burn_in_prevention_max_shift_x\".",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f53d6fa_baf4f8b5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BurnInProtectionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "\"config_burn_in_prevention_statusbar_navbar\"",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cae3818_e3558f3e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BurnInProtectionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "\"burn_in_prevention_max_shift_x\"",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9783662_697c7e80",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BurnInProtectionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "\"burn_in_prevention_max_shift_y\"",
+      "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541daea9_ece9830d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BurnInProtectionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1421169
+      },
+      "writtenOn": "2019-05-31T12:30:46Z",
+      "side": 1,
+      "message": "\"config_burn_in_prevention_shift_interval\"",
       "revId": "6272c6244d2b007eb6ad08fb682d77612555d1ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
