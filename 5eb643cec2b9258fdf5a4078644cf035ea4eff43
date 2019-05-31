@@ -45,6 +45,30 @@
       "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3274ad3_5155ad49",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6640,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-31T07:29:24Z",
+      "side": 1,
+      "message": "(of course I did not mean \"null as the first arg and false as the second arg\" but \"null as the first arg and networkAgent.networkCapabilities as the second arg\")",
+      "parentUuid": "fa786e9d_108040c5",
+      "range": {
+        "startLine": 6640,
+        "startChar": 24,
+        "endLine": 6640,
+        "endChar": 45
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
