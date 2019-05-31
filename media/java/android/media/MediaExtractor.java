@@ -440,6 +440,33 @@ final public class MediaExtractor {
         return psshMap;
     }
 
+    /* copy from frameworks/base/media/java/android/media/MediaDrm.java */
+    private static byte[] getByteArrayFromUUID(@NonNull UUID uuid) {
+        long msb = uuid.getMostSignificantBits();
+        long lsb = uuid.getLeastSignificantBits();
+
+        byte[] uuidBytes = new byte[16];
+        for (int i = 0; i < 8; ++i) {
+            uuidBytes[i] = (byte) (msb >>> (8 * (7 - i)));
+            uuidBytes[8 + i] = (byte) (lsb >>> (8 * (7 - i)));
+        }
+
+        return uuidBytes;
+    }
+
+    private native void nativeSetMediaDrmSession(
+            @NonNull byte[] uuid, @NonNull byte[] sessionId);
+
+    /**
+     * Pass the UUID and sessionId of MediaDrm.
+     * @param uuid The UUID of the MediaDrm shceme
+     * @param sessionId the sessionId for MediaDrm
+     */
+    public void setMediaDrmSession(
+            @NonNull UUID uuid, @NonNull byte[] sessionId) {
+        nativeSetMediaDrmSession(getByteArrayFromUUID(uuid), sessionId);
+    }
+
     @NonNull
     private native Map<String, Object> getFileFormatNative();
 

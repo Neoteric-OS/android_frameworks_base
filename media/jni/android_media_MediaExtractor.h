@@ -67,6 +67,10 @@ struct JMediaExtractor : public RefBase {
 
     bool getCachedDuration(int64_t *durationUs, bool *eos) const;
 
+    status_t setMediaDrmSession(
+            const Vector<uint8_t> &drmUuid,
+            const Vector<uint8_t> &sessionId) const;
+
 protected:
     virtual ~JMediaExtractor();
 
