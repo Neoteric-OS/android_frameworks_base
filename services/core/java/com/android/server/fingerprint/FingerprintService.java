@@ -221,26 +221,31 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
     private final TaskStackListener mTaskStackListener = new TaskStackListener() {
         @Override
         public void onTaskStackChanged() {
-            try {
-                if (!(mCurrentClient instanceof AuthenticationClient)) {
-                    return;
-                }
-                final String currentClient = mCurrentClient.getOwnerString();
-                if (isKeyguard(currentClient)) {
-                    return; // Keyguard is always allowed
-                }
-                List<ActivityManager.RunningTaskInfo> runningTasks = mActivityManager.getTasks(1);
-                if (!runningTasks.isEmpty()) {
-                    final String topPackage = runningTasks.get(0).topActivity.getPackageName();
-                    if (!topPackage.contentEquals(currentClient)) {
-                        Slog.e(TAG, "Stopping background authentication, top: " + topPackage
-                                + " currentClient: " + currentClient);
-                        mCurrentClient.stop(false /* initiatedByClient */);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (!(mCurrentClient instanceof AuthenticationClient)) {
+                            return;
+                        }
+                        final String currentClient = mCurrentClient.getOwnerString();
+                        if (isKeyguard(currentClient)) {
+                            return; // Keyguard is always allowed
+                        }
+                        List<ActivityManager.RunningTaskInfo> runningTasks = mActivityManager.getTasks(1);
+                        if (!runningTasks.isEmpty()) {
+                            final String topPackage = runningTasks.get(0).topActivity.getPackageName();
+                            if (!topPackage.contentEquals(currentClient)) {
+                                Slog.e(TAG, "Stopping background authentication, top: " + topPackage
+                                        + " currentClient: " + currentClient);
+                                mCurrentClient.stop(false /* initiatedByClient */);
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        Slog.e(TAG, "Unable to get running tasks", e);
                     }
                 }
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Unable to get running tasks", e);
-            }
+            });
         }
     };
 
