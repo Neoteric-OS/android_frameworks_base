@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a71298f_767e8123",
+        "filename": "test-base/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-06-01T01:07:12Z",
+      "side": 1,
+      "message": "tab (in other files as well)",
+      "revId": "7251c17fa00ba87e8c4f04e7e8484f3788d54349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
