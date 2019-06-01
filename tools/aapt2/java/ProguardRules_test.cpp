@@ -214,4 +214,12 @@ TEST(ProguardRulesTest, MenuRulesAreEmitted) {
   EXPECT_THAT(actual, Not(HasSubstr("com.foo.Bat")));
 }
 
+TEST(ProguardRulesTest, UsageLocationComparator) {
+  proguard::UsageLocation location1 = {{"pkg", ResourceType::kAttr, "x"}};
+  proguard::UsageLocation location2 = {{"pkg", ResourceType::kAttr, "y"}};
+
+  EXPECT_EQ(location1 < location2, true);
+  EXPECT_EQ(location2 < location1, false);
+}
+
 }  // namespace aapt
