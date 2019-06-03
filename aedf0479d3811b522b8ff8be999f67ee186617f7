@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba515a24_1536500d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2673,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-03T13:20:36Z",
+      "side": 1,
+      "message": "ISTM that (!wasPartial \u0026\u0026 nai.partialConnectivity) and (wasValidated \u0026\u0026 !nai.lastValidated) can\u0027t be true at the same time. It might be worth making that clear by adding an else {} clause.",
+      "revId": "aedf0479d3811b522b8ff8be999f67ee186617f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
