@@ -41,6 +41,7 @@ import android.content.Context;
 import android.net.ISocketKeepaliveCallback;
 import android.net.KeepalivePacketData;
 import android.net.NattKeepalivePacketData;
+import android.net.NattKeepalivePacketDataParcelable;
 import android.net.NetworkAgent;
 import android.net.NetworkUtils;
 import android.net.SocketKeepalive.InvalidPacketException;
@@ -327,10 +328,12 @@ public class KeepaliveTracker {
                 Log.d(TAG, "Starting keepalive " + mSlot + " on " + mNai.name());
                 switch (mType) {
                     case TYPE_NATT:
+                        NattKeepalivePacketDataParcelable parcelablePkt = ((NattKeepalivePacketData)mPacket).toStableParcelable();
                         mNai.asyncChannel.sendMessage(
-                                CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, 0 /* Unused */, mPacket);
+                                CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, 0 /* Unused */, parcelablePkt);
+                        // FIXME: telephony don't have APF now, do we need to change this?
                         mNai.asyncChannel
-                                .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
+                                .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, parcelablePkt);
                         break;
                     case TYPE_TCP:
                         try {

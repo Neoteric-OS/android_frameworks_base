@@ -27,6 +27,7 @@ import android.system.OsConstants;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -91,5 +92,19 @@ public final class NattKeepalivePacketData extends KeepalivePacketData implement
         parcel.dstAddress = dstAddress.getAddress();
         parcel.dstPort = dstPort;
         return parcel;
+    }
+
+    /**
+     * Convert this NattKeepalivePacketDataParcelable to a NattKeepalivePacketData.
+     */
+    @NonNull
+    public static NattKeepalivePacketData fromStableParcelable(NattKeepalivePacketDataParcelable parcel) {
+        try {
+            return NattKeepalivePacketData.nattKeepalivePacket(
+                    InetAddress.getByAddress(parcel.srcAddress), parcel.srcPort,
+                    InetAddress.getByAddress(parcel.dstAddress), parcel.dstPort);
+        } catch (UnknownHostException | InvalidPacketException unused) {
+            return null;
+        }
     }
 }
