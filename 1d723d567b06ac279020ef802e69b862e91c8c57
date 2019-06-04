@@ -905,6 +905,30 @@
       "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1afa885e_be3b167f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6015,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T04:48:27Z",
+      "side": 1,
+      "message": "Ack, I misunderstood your idea.\nAnd the above suggestion detects a no callback problem that happens when disconnected.\nI\u0027ll fix that first.\nKeeps this open for tracking.",
+      "parentUuid": "fc9fe172_9a0c5ff2",
+      "range": {
+        "startLine": 6015,
+        "startChar": 8,
+        "endLine": 6015,
+        "endChar": 23
+      },
+      "revId": "1d723d567b06ac279020ef802e69b862e91c8c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

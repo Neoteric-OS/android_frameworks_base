@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a985592_a2d7492c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T04:48:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d72f9bf_3b13a199",
+      "range": {
+        "startLine": 1891,
+        "startChar": 41,
+        "endLine": 1891,
+        "endChar": 66
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bfac4ad_46179417",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "daaf2955_821e581c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5910,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T04:48:27Z",
+      "side": 1,
+      "message": "for finding lockdown agent and vpn agent every time.\nMaybe two local HashMap\u003cuserId, agent\u003e will help.\nBut I\u0027m not if it is a good idea.\nEven if it is, we might want to put improvements into separate CLs.",
+      "parentUuid": "8bfac4ad_46179417",
+      "range": {
+        "startLine": 5910,
+        "startChar": 71,
+        "endLine": 5910,
+        "endChar": 72
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0702b1a_a05ac5cb",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2019-06-03T14:30:20Z",
       "side": 1,
       "message": "How is this whole loop (line 5911 to line 5948) different from simply doing something like:\n\n    for (final NetworkAgentInfo nai : mNetworkAgentInfos.values()) {\n        boolean metered \u003d nai.networkCapabilities.isMetered();\n        maybeNotifyNetworkBlocked(nai, metered, metered, mRestrictBackground, mRestrictBackground);\n    }\n\nIf it\u0027s the same, or if it\u0027s semantically equivalent, I would recommend replacing it with the simpler version I suggest, even if it performs a bit worse. VPNs don\u0027t connect/disconnect that often, and if this loop doesn\u0027t take too long, then I think it\u0027s better for it to be correct than for it to be as fast as possible.\n\nIf it\u0027s not the same, then... why? maybeNotifyNetworkBlocked looks like it\u0027s supposed to be idempotent and capable of calculating all blocked state for every request, because it calls isUidNetworkingWithVpnBlocked, which appears to take into account all state. So, if we call that method for every network on the system, presumably that should be enough.\n\nIf it\u0027s not enough, then why is it not enough? Is there a bug in maybeNotifyNetworkBlocked?",
+      "range": {
+        "startLine": 5911,
+        "startChar": 71,
+        "endLine": 5911,
+        "endChar": 72
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8878ac_196b7248",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5911,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T04:48:27Z",
+      "side": 1,
+      "message": "Consider a simpler example that we only have 2 conditions, data saver \u0026 VPN.\nSo we\u0027ll have two approaches to do this:\n1. use a single function that takes all information we needed. And pass current status to new/old parameter for unchanged parameters in the caller.\nmaybeNotify(oldDataSaver, newDataSaver, oldVpn, newVpn) {\n   oldBlocked \u003d oldDataSaver || oldVpn;\n   newBlocked \u003d newDataSaver || newVpn;\n   if(changed) notify();\n}\n2. or use a set of separate functions that only takes the information changed, and use current status globally stored.\nmaybeNotify1(oldDataSaver, newDataSaver) {\n   oldBlocked \u003d oldDataSaver || mCurVpn;\n   newBlocked \u003d newDataSaver || mCurVpn;\n   if(changed) notify();\n}\nmaybeNotify2(oldVpn, newVpn) {\n   oldBlocked \u003d mCurDataSaver || oldVpn;\n   newBlocked \u003d mCurDataSaver || newVpn;\n   if(changed) notify();\n}\nIf we are using maybeNotify1 for VPN changes event, the function cannot input VPN status change, but can only use mCurVpn. Thus the old/newBlocked might be both true or false based on mCurVpn. Thus, the callback cannot be fired since oldBlocked/newBlocked is always the same.\n\nTo reduce the parameters needed, we are using approach 2, where maybeNotifyNetworkBlocked takes the parameters other than VPN, and use current VPN status. By the example above we cannot call maybeNotifyNetworkBlocked. Is this making sense?",
+      "parentUuid": "f0702b1a_a05ac5cb",
       "range": {
         "startLine": 5911,
         "startChar": 71,
@@ -221,6 +293,30 @@
       "side": 1,
       "message": "(of course I did not mean \"null as the first arg and false as the second arg\" but \"null as the first arg and networkAgent.networkCapabilities as the second arg\")",
       "parentUuid": "fa786e9d_108040c5",
+      "range": {
+        "startLine": 6640,
+        "startChar": 24,
+        "endLine": 6640,
+        "endChar": 45
+      },
+      "revId": "5eb643cec2b9258fdf5a4078644cf035ea4eff43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12f0922_58b15678",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6640,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T04:48:27Z",
+      "side": 1,
+      "message": "I think I did not explain the idea clearly:\n\nGiven that we need to consider these conditions:\n 1. old lockdown uid list\n 2. new lockdown uid list\n 3. old VPN status\n 4. new VPN status\n 5. old VPN uid list\n 6. new VPN uid list\nWhat I\u0027m trying to do is make a function that takes either\n  handleLockdownOrVpnChanged(lockdown, cond1, cond2), or\n  handleLockdownOrVpnChanged(vpn, cond3 \u0026\u0026 cond5, cond4 \u0026\u0026 cond6)\nThus we can use a single function to handle these cases, and in the function we only need to deal with uid lists but don\u0027t have to worry about connected/disconnect status.\n\nNot sure if this is a good idea since it makes things harder to understand.\nAny thoughts?",
+      "parentUuid": "e3274ad3_5155ad49",
       "range": {
         "startLine": 6640,
         "startChar": 24,
