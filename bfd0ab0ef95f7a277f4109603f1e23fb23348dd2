@@ -22,6 +22,30 @@
       "revId": "bfd0ab0ef95f7a277f4109603f1e23fb23348dd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3373d062_d9b13cfd",
+        "filename": "media/java/android/media/tv/TvTrackInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-06-04T13:35:10Z",
+      "side": 1,
+      "message": "We just refers to OIPF DAE specification.\nwill change to getMimeType if you think that is more reasonable in AOSP world.\n\n\u003eI see the types defined in ETSI TS 102 812 V1.3.1 section 7.6\n\u003ebut why are they not listed in https://www.iana.org/assignments/media-types/media-types.xhtml\n\nI don\u0027t get your intention. I have no idea why IANA does not refer to above broadcast standard.\nIt would be appreciated if you kindly let me know what\u0027s your point.",
+      "parentUuid": "f683a690_626b01cc",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 29
+      },
+      "revId": "bfd0ab0ef95f7a277f4109603f1e23fb23348dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
