@@ -702,7 +702,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
         public final Display.Mode mMode;
 
         public DisplayModeRecord(SurfaceControl.PhysicalDisplayInfo phys) {
-            mMode = createMode(phys.width, phys.height, phys.refreshRate);
+            mMode = createMode(phys.width, phys.height, phys.refreshRate, phys.interlaced);
         }
 
         /**
@@ -717,7 +717,8 @@ final class LocalDisplayAdapter extends DisplayAdapter {
             int displayInfoRefreshRate = Float.floatToIntBits(info.refreshRate);
             return mMode.getPhysicalWidth() == info.width
                     && mMode.getPhysicalHeight() == info.height
-                    && modeRefreshRate == displayInfoRefreshRate;
+                    && modeRefreshRate == displayInfoRefreshRate
+                    && mMode.getInterlaced() == info.interlaced;
         }
 
         public String toString() {

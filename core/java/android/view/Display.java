@@ -1177,16 +1177,18 @@ public final class Display {
         private final int mWidth;
         private final int mHeight;
         private final float mRefreshRate;
+        private final boolean mInterlaced;
 
         /**
          * @hide
          */
         @UnsupportedAppUsage
-        public Mode(int modeId, int width, int height, float refreshRate) {
+        public Mode(int modeId, int width, int height, float refreshRate, boolean interlaced) {
             mModeId = modeId;
             mWidth = width;
             mHeight = height;
             mRefreshRate = refreshRate;
+            mInterlaced = interlaced;
         }
 
         /**
@@ -1236,14 +1238,22 @@ public final class Display {
         }
 
         /**
+         * Returns true if the mode is interlaced.
+         */
+        public boolean getInterlaced() {
+            return mInterlaced;
+        }
+
+        /**
          * Returns {@code true} if this mode matches the given parameters.
          *
          * @hide
          */
-        public boolean matches(int width, int height, float refreshRate) {
+        public boolean matches(int width, int height, float refreshRate, boolean interlaced) {
             return mWidth == width &&
                     mHeight == height &&
-                    Float.floatToIntBits(mRefreshRate) == Float.floatToIntBits(refreshRate);
+                    Float.floatToIntBits(mRefreshRate) == Float.floatToIntBits(refreshRate) &&
+                    mInterlaced == interlaced;
         }
 
         @Override
@@ -1255,7 +1265,8 @@ public final class Display {
                 return false;
             }
             Mode that = (Mode) other;
-            return mModeId == that.mModeId && matches(that.mWidth, that.mHeight, that.mRefreshRate);
+            return mModeId == that.mModeId &&
+                   matches(that.mWidth, that.mHeight, that.mRefreshRate, that.mInterlaced);
         }
 
         @Override
@@ -1265,6 +1276,7 @@ public final class Display {
             hash = hash * 17 + mWidth;
             hash = hash * 17 + mHeight;
             hash = hash * 17 + Float.floatToIntBits(mRefreshRate);
+            hash = hash * 17 + (mInterlaced ? 1 : 0);
             return hash;
         }
 
@@ -1275,6 +1287,7 @@ public final class Display {
                     .append(", width=").append(mWidth)
                     .append(", height=").append(mHeight)
                     .append(", fps=").append(mRefreshRate)
+                    .append(", ilaced=").append(mInterlaced)
                     .append("}")
                     .toString();
         }
@@ -1285,7 +1298,7 @@ public final class Display {
         }
 
         private Mode(Parcel in) {
-            this(in.readInt(), in.readInt(), in.readInt(), in.readFloat());
+            this(in.readInt(), in.readInt(), in.readInt(), in.readFloat(), in.readBoolean());
         }
 
         @Override
@@ -1294,6 +1307,7 @@ public final class Display {
             out.writeInt(mWidth);
             out.writeInt(mHeight);
             out.writeFloat(mRefreshRate);
+            out.writeBoolean(mInterlaced);
         }
 
         @SuppressWarnings("hiding")

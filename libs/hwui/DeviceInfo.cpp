@@ -37,6 +37,7 @@ static constexpr android::DisplayInfo sDummyDisplay {
         320.0,  // xdpi
         320.0,  // ydpi
         60.0,   // fps
+	false,	// interlaced
         2.0,    // density
         0,      // orientation
         false,  // secure?

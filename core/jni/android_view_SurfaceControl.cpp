@@ -56,6 +56,7 @@ static struct {
     jfieldID width;
     jfieldID height;
     jfieldID refreshRate;
+    jfieldID interlaced;
     jfieldID density;
     jfieldID xDpi;
     jfieldID yDpi;
@@ -572,6 +573,7 @@ static jobjectArray nativeGetDisplayConfigs(JNIEnv* env, jclass clazz,
         env->SetIntField(infoObj, gPhysicalDisplayInfoClassInfo.width, info.w);
         env->SetIntField(infoObj, gPhysicalDisplayInfoClassInfo.height, info.h);
         env->SetFloatField(infoObj, gPhysicalDisplayInfoClassInfo.refreshRate, info.fps);
+        env->SetBooleanField(infoObj, gPhysicalDisplayInfoClassInfo.interlaced, info.interlaced);
         env->SetFloatField(infoObj, gPhysicalDisplayInfoClassInfo.density, info.density);
         env->SetFloatField(infoObj, gPhysicalDisplayInfoClassInfo.xDpi, info.xdpi);
         env->SetFloatField(infoObj, gPhysicalDisplayInfoClassInfo.yDpi, info.ydpi);
@@ -1044,6 +1046,7 @@ int register_android_view_SurfaceControl(JNIEnv* env)
     gPhysicalDisplayInfoClassInfo.width =       GetFieldIDOrDie(env, clazz, "width", "I");
     gPhysicalDisplayInfoClassInfo.height =      GetFieldIDOrDie(env, clazz, "height", "I");
     gPhysicalDisplayInfoClassInfo.refreshRate = GetFieldIDOrDie(env, clazz, "refreshRate", "F");
+    gPhysicalDisplayInfoClassInfo.interlaced = GetFieldIDOrDie(env, clazz, "interlaced", "Z");
     gPhysicalDisplayInfoClassInfo.density =     GetFieldIDOrDie(env, clazz, "density", "F");
     gPhysicalDisplayInfoClassInfo.xDpi =        GetFieldIDOrDie(env, clazz, "xDpi", "F");
     gPhysicalDisplayInfoClassInfo.yDpi =        GetFieldIDOrDie(env, clazz, "yDpi", "F");

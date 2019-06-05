@@ -1025,6 +1025,8 @@ public class SurfaceControl implements Parcelable {
         @UnsupportedAppUsage
         public float refreshRate;
         @UnsupportedAppUsage
+        public boolean interlaced;
+        @UnsupportedAppUsage
         public float density;
         @UnsupportedAppUsage
         public float xDpi;
@@ -1055,6 +1057,7 @@ public class SurfaceControl implements Parcelable {
                     && width == other.width
                     && height == other.height
                     && refreshRate == other.refreshRate
+                    && interlaced == other.interlaced
                     && density == other.density
                     && xDpi == other.xDpi
                     && yDpi == other.yDpi
@@ -1072,6 +1075,7 @@ public class SurfaceControl implements Parcelable {
             width = other.width;
             height = other.height;
             refreshRate = other.refreshRate;
+            interlaced = other.interlaced;
             density = other.density;
             xDpi = other.xDpi;
             yDpi = other.yDpi;
@@ -1084,8 +1088,8 @@ public class SurfaceControl implements Parcelable {
         @Override
         public String toString() {
             return "PhysicalDisplayInfo{" + width + " x " + height + ", " + refreshRate + " fps, "
-                    + "density " + density + ", " + xDpi + " x " + yDpi + " dpi, secure " + secure
-                    + ", appVsyncOffset " + appVsyncOffsetNanos
+                    + "interlaced " + interlaced + "density " + density + ", " + xDpi + " x " + yDpi
+                    + " dpi, secure " + secure + ", appVsyncOffset " + appVsyncOffsetNanos
                     + ", bufferDeadline " + presentationDeadlineNanos + "}";
         }
     }

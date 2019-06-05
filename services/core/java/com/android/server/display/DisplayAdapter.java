@@ -129,9 +129,14 @@ abstract class DisplayAdapter {
         });
     }
 
-    public static Display.Mode createMode(int width, int height, float refreshRate) {
+    public static Display.Mode createMode(
+            int width, int height, float refreshRate, boolean interlaced) {
         return new Display.Mode(
-                NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate);
+                NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate, interlaced);
+    }
+
+    public static Display.Mode createMode(int width, int height, float refreshRate) {
+        return createMode(width, height, refreshRate, false);
     }
 
     public interface Listener {

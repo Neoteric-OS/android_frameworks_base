@@ -496,10 +496,16 @@ public final class DisplayInfo implements Parcelable {
     public int findDefaultModeByRefreshRate(float refreshRate) {
         Display.Mode[] modes = supportedModes;
         Display.Mode defaultMode = getDefaultMode();
-        for (int i = 0; i < modes.length; i++) {
-            if (modes[i].matches(
-                    defaultMode.getPhysicalWidth(), defaultMode.getPhysicalHeight(), refreshRate)) {
-                return modes[i].getModeId();
+
+        // First look for a non-interlaced mode, and then settle for interlaced
+        for (int i = 0; i < 2; i++) {
+            boolean interlaced = i == 1;
+            for (int j = 0; j < modes.length; j++) {
+                if (modes[j].matches(
+                        defaultMode.getPhysicalWidth(), defaultMode.getPhysicalHeight(),
+                        refreshRate, interlaced)) {
+                    return modes[j].getModeId();
+                }
             }
         }
         return 0;
