@@ -1016,8 +1016,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         dataConnectionStats.startMonitoring();
 
         mKeepaliveTracker = new KeepaliveTracker(mContext, mHandler);
-        mNotifier = new NetworkNotificationManager(mContext, mTelephonyManager,
-                mContext.getSystemService(NotificationManager.class));
+        mNotifier = createNetworkNotificationManager();
 
         final int dailyLimit = Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT,
@@ -3459,11 +3458,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void scheduleUnvalidatedPrompt(NetworkAgentInfo nai) {
-        if (VDBG) log("scheduleUnvalidatedPrompt " + nai.network);
+    @VisibleForTesting
+    protected void scheduleUnvalidatedPrompt(Network network, int delayMs) {
+        if (VDBG) log("scheduleUnvalidatedPrompt " + network);
         mHandler.sendMessageDelayed(
-                mHandler.obtainMessage(EVENT_PROMPT_UNVALIDATED, nai.network),
-                PROMPT_UNVALIDATED_DELAY_MS);
+                mHandler.obtainMessage(EVENT_PROMPT_UNVALIDATED, network), delayMs);
+    }
+
+    private void scheduleUnvalidatedPrompt(Network network) {
+        scheduleUnvalidatedPrompt(network, PROMPT_UNVALIDATED_DELAY_MS);
     }
 
     @Override
@@ -6558,7 +6561,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             networkAgent.networkMonitor().notifyNetworkConnected(
                     networkAgent.linkProperties, networkAgent.networkCapabilities);
-            scheduleUnvalidatedPrompt(networkAgent);
+            scheduleUnvalidatedPrompt(networkAgent.network);
 
             // Whether a particular NetworkRequest listen should cause signal strength thresholds to
             // be communicated to a particular NetworkAgent depends only on the network's immutable,
@@ -6988,6 +6991,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     MultinetworkPolicyTracker createMultinetworkPolicyTracker(Context c, Handler h, Runnable r) {
         return new MultinetworkPolicyTracker(c, h, r);
+    }
+
+    @VisibleForTesting
+    NetworkNotificationManager createNetworkNotificationManager() {
+        return new NetworkNotificationManager(mContext, mTelephonyManager,
+                mContext.getSystemService(NotificationManager.class));
     }
 
     @VisibleForTesting
