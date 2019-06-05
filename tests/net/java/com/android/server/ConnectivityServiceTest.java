@@ -199,6 +199,7 @@ import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
+import com.android.server.connectivity.NetworkNotificationManager;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
@@ -404,8 +405,12 @@ public class ConnectivityServiceTest {
         }
     }
 
-    private void waitForIdle() {
+    private void waitForServiceIdle() {
         HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+    }
+
+    private void waitForIdle() {
+        waitForServiceIdle();
         waitForIdle(mCellNetworkAgent, TIMEOUT_MS);
         waitForIdle(mWiFiNetworkAgent, TIMEOUT_MS);
         waitForIdle(mEthernetNetworkAgent, TIMEOUT_MS);
@@ -1892,6 +1897,50 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(callback);
     }
 
+    /** Expects the specified notification and returns the notification ID. */
+    private int expectNotification(TestNetworkAgentWrapper agent, NotificationType type,
+            boolean highPriority) {
+        ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(mNotificationManager).notifyAsUser(
+                eq(NetworkNotificationManager.tagFor(agent.getNetwork().netId)),
+                intCaptor.capture(), any(), eq(UserHandle.ALL));
+        int id = intCaptor.getValue();
+        assertEquals(type, NotificationType.getFromId(id));
+
+        return id;
+    }
+
+    private int expectValidationFailureWillNotify(TestNetworkAgentWrapper agent,
+            NotificationType type,  boolean highPriority) {
+        mService.scheduleUnvalidatedPrompt(agent.getNetwork(), 0 /*delayMs */);
+        waitForServiceIdle();
+        return expectNotification(agent, type, highPriority);
+    }
+
+    /**
+     * Expects that we clear the notification for the specified network. This generally only
+     * happens when the network disconnects. During normal usage the notification is also cleared
+     * by the system when the notification is tapped.
+     */
+    private void expectClearNotification(TestNetworkAgentWrapper agent, int expectedId) {
+        int netId = agent.getNetwork().netId;
+        verify(mNotificationManager).cancelAsUser(
+                eq(NetworkNotificationManager.tagFor(netId)),
+                eq(expectedId), eq(UserHandle.ALL));
+    }
+
+    private void expectValidationFailureWillNotNotify(TestNetworkAgentWrapper agent) {
+        mService.scheduleUnvalidatedPrompt(agent.getNetwork(), 0 /*delayMs */);
+        waitForServiceIdle();
+        verify(mNotificationManager, never()).notifyAsUser(anyString(), anyInt(), any(), any());
+    }
+
+    private void expectDisconnectAndClearNotifications(TestNetworkCallback callback,
+            TestNetworkAgentWrapper agent, int id) {
+        callback.expectCallback(CallbackEntry.LOST, agent);
+        expectClearNotification(agent, id);
+    }
+
     @Test
     public void testExplicitlySelected() throws Exception {
         NetworkRequest request = new NetworkRequest.Builder()
@@ -1911,8 +1960,12 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.connect(false);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
 
-        // Cell Remains the default.
+        // Cell remains the default.
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Expect a high-priority NO_INTERNET notification.
+        int id = expectValidationFailureWillNotify(mWiFiNetworkAgent, NotificationType.NO_INTERNET,
+                true);
 
         // Lower wifi's score to below than cell, and check that it doesn't disconnect because
         // it's explicitly selected.
@@ -1928,18 +1981,25 @@ public class ConnectivityServiceTest {
 
         // Disconnect wifi, and then reconnect, again with explicitlySelected=true.
         mWiFiNetworkAgent.disconnect();
-        callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        expectDisconnectAndClearNotifications(callback, mWiFiNetworkAgent, id);
+
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.explicitlySelected(true, false);
         mWiFiNetworkAgent.connect(false);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
 
+        // Expect a high-priority NO_INTERNET notification.
+        id = expectValidationFailureWillNotify(mWiFiNetworkAgent, NotificationType.NO_INTERNET,
+                true);
+
         // If the user chooses no on the "No Internet access, stay connected?" dialog, we ask the
         // network to disconnect.
         mCm.setAcceptUnvalidated(mWiFiNetworkAgent.getNetwork(), false, false);
-        callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        expectDisconnectAndClearNotifications(callback, mWiFiNetworkAgent, id);
+        reset(mNotificationManager);
 
         // Reconnect, again with explicitlySelected=true, but this time validate.
+        // Expect no notifications.
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.explicitlySelected(true, false);
         mWiFiNetworkAgent.connect(true);
@@ -1947,6 +2007,7 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
         callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
 
         // BUG: the network will no longer linger, even though it's validated and outscored.
         // TODO: fix this.
@@ -1969,16 +2030,19 @@ public class ConnectivityServiceTest {
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
         mEthernetNetworkAgent.disconnect();
         callback.expectCallback(CallbackEntry.LOST, mEthernetNetworkAgent);
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
 
         // Disconnect and reconnect with explicitlySelected=false and acceptUnvalidated=true.
         // Check that the network is not scored specially and that the device prefers cell data.
         mWiFiNetworkAgent.disconnect();
         callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.explicitlySelected(false, true);
         mWiFiNetworkAgent.connect(false);
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
 
         // Clean up.
         mWiFiNetworkAgent.disconnect();
@@ -2217,6 +2281,13 @@ public class ConnectivityServiceTest {
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
         callback.assertNoCallback();
 
+        // Expect a PARTIAL_CONNECTIVITY notification. The notification appears as soon as partial
+        // connectivity is detected, and is low priority because the network was not explicitly
+        // selected by the user. This happens if we reconnect to a network where the user previously
+        // accepted partial connectivity without checking "always".
+        int id = expectNotification(mWiFiNetworkAgent, NotificationType.PARTIAL_CONNECTIVITY,
+                false);
+
         // With HTTPS probe disabled, NetworkMonitor should pass the network validation with http
         // probe.
         mWiFiNetworkAgent.setNetworkPartialValid();
@@ -2229,7 +2300,7 @@ public class ConnectivityServiceTest {
         waitForIdle();
         verify(mWiFiNetworkAgent.mNetworkMonitor, times(1)).setAcceptPartialConnectivity();
 
-        // Need a trigger point to let NetworkMonitor tell ConnectivityService that network is
+        // Need a trigger point to let NetworkMonitor tell ConnectivityService that the network is
         // validated.
         mCm.reportNetworkConnectivity(mWiFiNetworkAgent.getNetwork(), true);
         callback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
@@ -2238,9 +2309,13 @@ public class ConnectivityServiceTest {
         assertTrue(nc.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY));
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
+        // Once the network validates, the notification disappears.
+        expectClearNotification(mWiFiNetworkAgent, id);
+
         // Disconnect and reconnect wifi with partial connectivity again.
         mWiFiNetworkAgent.disconnect();
         callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connectWithPartialConnectivity();
         callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
@@ -2248,20 +2323,28 @@ public class ConnectivityServiceTest {
 
         // Mobile data should be the default network.
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        callback.assertNoCallback();
+
+        // Expect a low-priority PARTIAL_CONNECTIVITY notification as soon as partial connectivity
+        // is detected.
+        id = expectNotification(mWiFiNetworkAgent, NotificationType.PARTIAL_CONNECTIVITY, false);
 
         // If the user chooses no, disconnect wifi immediately.
-        mCm.setAcceptPartialConnectivity(mWiFiNetworkAgent.getNetwork(), false/* accept */,
+        mCm.setAcceptPartialConnectivity(mWiFiNetworkAgent.getNetwork(), false /* accept */,
                 false /* always */);
         callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        expectClearNotification(mWiFiNetworkAgent, id);
+        reset(mNotificationManager);
 
         // If user accepted partial connectivity before, and device reconnects to that network
-        // again, but now the network has full connectivity. The network shouldn't contain
+        // again, but now the network has full connectivity, the network shouldn't contain
         // NET_CAPABILITY_PARTIAL_CONNECTIVITY.
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         // acceptUnvalidated is also used as setting for accepting partial networks.
         mWiFiNetworkAgent.explicitlySelected(true /* explicitlySelected */,
                 true /* acceptUnvalidated */);
         mWiFiNetworkAgent.connect(true);
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
 
         // If user accepted partial connectivity network before,
         // NetworkMonitor#setAcceptPartialConnectivity() will be called in
@@ -2292,9 +2375,11 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
         callback.expectCapabilitiesWith(NET_CAPABILITY_PARTIAL_CONNECTIVITY, mWiFiNetworkAgent);
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
+
         mWiFiNetworkAgent.setNetworkValid();
 
-        // Need a trigger point to let NetworkMonitor tell ConnectivityService that network is
+        // Need a trigger point to let NetworkMonitor tell ConnectivityService that the network is
         // validated.
         mCm.reportNetworkConnectivity(mWiFiNetworkAgent.getNetwork(), true);
         callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
@@ -2316,6 +2401,7 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
         callback.expectCapabilitiesWith(
                 NET_CAPABILITY_PARTIAL_CONNECTIVITY | NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+        expectValidationFailureWillNotNotify(mWiFiNetworkAgent);
         mWiFiNetworkAgent.disconnect();
         callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
     }

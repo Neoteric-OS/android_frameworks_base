@@ -337,7 +337,7 @@ public class NetworkNotificationManager {
     }
 
     @VisibleForTesting
-    static String tagFor(int id) {
+    public static String tagFor(int id) {
         return String.format("ConnectivityNotification:%d", id);
     }
 
