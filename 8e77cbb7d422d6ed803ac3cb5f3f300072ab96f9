@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3508420_c5a409fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "Please ensure this also works with named keys (adb shell input keyevent CRITICAL_COMMUNICATIONS_CHANNEL).",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e5f91b_af8f9aac",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "Please decode this and elaborate. An example of what might happen if this keyevent comes in would also be useful.",
+      "range": {
+        "startLine": 813,
+        "startChar": 27,
+        "endLine": 813,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc96458_4591267d",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "Why do we need suffix _BUTTON for these? Only joystick keys currently contain \"BUTTON\" in the keycode name and never at the end.",
+      "range": {
+        "startLine": 814,
+        "startChar": 66,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d482bc9e_ff1ed655",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "nit: extra new line",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8207ad5_cada3538",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "You need to update this one as well",
+      "range": {
+        "startLine": 2921,
+        "startChar": 30,
+        "endLine": 2921,
+        "endChar": 51
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9c4fb4_dec944bc",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "how is this used?",
+      "range": {
+        "startLine": 570,
+        "startChar": 61,
+        "endLine": 570,
+        "endChar": 94
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10506fbd_64ab958b",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "Usually these are named \"TAG\" and \"DEBUG\" in other parts of the framework.",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8a56bc_ccff424e",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-05T00:28:27Z",
+      "side": 1,
+      "message": "Key? Similar to GlobalKeyManager?",
+      "range": {
+        "startLine": 2269,
+        "startChar": 30,
+        "endLine": 2269,
+        "endChar": 36
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
