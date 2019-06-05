@@ -41,7 +41,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.provider.DeviceConfig;
+import android.provider.Settings;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -343,12 +343,12 @@ public class NetworkStackClient {
         // uptime is monotonic even after a framework restart
         final long uptime = SystemClock.elapsedRealtime();
         final long now = System.currentTimeMillis();
-        final long minCrashIntervalMs = DeviceConfig.getLong(DeviceConfig.NAMESPACE_CONNECTIVITY,
-                CONFIG_MIN_CRASH_INTERVAL_MS, DEFAULT_MIN_CRASH_INTERVAL_MS);
-        final long minUptimeBeforeCrash = DeviceConfig.getLong(DeviceConfig.NAMESPACE_CONNECTIVITY,
-                CONFIG_MIN_UPTIME_BEFORE_CRASH_MS, DEFAULT_MIN_UPTIME_BEFORE_CRASH_MS);
-        final boolean alwaysRatelimit = DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_CONNECTIVITY,
-                CONFIG_ALWAYS_RATELIMIT_NETWORKSTACK_CRASH, false);
+        final long minCrashIntervalMs = getLongConfigValue(
+                context, CONFIG_MIN_CRASH_INTERVAL_MS, DEFAULT_MIN_CRASH_INTERVAL_MS);
+        final long minUptimeBeforeCrash = getLongConfigValue(
+                context, CONFIG_MIN_UPTIME_BEFORE_CRASH_MS, DEFAULT_MIN_UPTIME_BEFORE_CRASH_MS);
+        final boolean alwaysRatelimit = getBoolConfigValue(
+                context, CONFIG_ALWAYS_RATELIMIT_NETWORKSTACK_CRASH, false);
 
         final SharedPreferences prefs = getSharedPreferences(context);
         final long lastCrashTime = tryGetLastCrashTime(prefs);
@@ -530,5 +530,31 @@ public class NetworkStackClient {
 
         pw.println();
         pw.println("pendingNetStackRequests length: " + requestsQueueLength);
+    }
+
+    private long getLongConfigValue(
+            @NonNull Context context, @NonNull String key, long defaultVal) {
+        // Temporary solution until DeviceConfig is available
+        try {
+            return Settings.Global.getLong(
+                    context.getContentResolver(), TAG + "_" + key, defaultVal);
+        } catch (Throwable e) {
+            logWtf("Could not obtain setting " + key, e);
+            return defaultVal;
+        }
+    }
+
+    private boolean getBoolConfigValue(
+            @NonNull Context context, @NonNull String key, boolean defaultVal) {
+        // Temporary solution until DeviceConfig is available
+        try {
+            return Settings.Global.getInt(
+                    context.getContentResolver(),
+                    TAG + "_" + key,
+                    defaultVal ? 1 : 0) != 0;
+        } catch (Throwable e) {
+            logWtf("Could not obtain setting " + key, e);
+            return defaultVal;
+        }
     }
 }
