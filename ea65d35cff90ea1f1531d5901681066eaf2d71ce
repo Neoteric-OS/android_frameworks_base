@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "39c96a08_b7cb16e4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5875,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-06T10:10:10Z",
+      "side": 1,
+      "message": "Thanks for suggestion, I\u0027ll take option 2 since it looks more straight forward to me.",
+      "parentUuid": "1c418a71_6ca464df",
+      "range": {
+        "startLine": 5875,
+        "startChar": 16,
+        "endLine": 5875,
+        "endChar": 18
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e922cd8e_1d60dc5a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "ac967f0b_4c6cb7a3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6584,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-06T10:10:10Z",
+      "side": 1,
+      "message": "I mean the uid list is changed when VPN is connecting in below line.\nhttps://cs.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java?q\u003dVpn.java\u0026dr\u0026l\u003d979\n\nSo for VPN, it will be:\n1. CONNECTING\n2. updateUid(nai, null, NC)\n3. CONNECTED\n\nWhat I\u0027m trying to do is to prevent from calling into handleLockdownOrVpnChanged(vpn, null, NC) at step 2 (l.5905).\nBut explicit do it after 3. (l.6586)\n\nI think this is most confusing part in this change.",
+      "parentUuid": "e922cd8e_1d60dc5a",
+      "range": {
+        "startLine": 6582,
+        "startChar": 16,
+        "endLine": 6584,
+        "endChar": 50
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f4ce5d_2838a789",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -128,6 +176,30 @@
       "writtenOn": "2019-06-06T09:21:31Z",
       "side": 1,
       "message": "This can\u0027t be true because the lockdown agent never goes to CONNECTED.",
+      "range": {
+        "startLine": 6585,
+        "startChar": 20,
+        "endLine": 6585,
+        "endChar": 57
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ba5677_0c1bdb6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6585,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-06T10:10:10Z",
+      "side": 1,
+      "message": "Yes, in my plan this is only for VPN. See above commments.",
+      "parentUuid": "12f4ce5d_2838a789",
       "range": {
         "startLine": 6585,
         "startChar": 20,
