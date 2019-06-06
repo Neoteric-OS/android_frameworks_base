@@ -165,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "6448b45c_46bbf39f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6584,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T13:06:49Z",
+      "side": 1,
+      "message": "I see. I\u0027m not sure it\u0027s necessary to write a comment ; I don\u0027t think we \"skip\" the update per se. By nature only a connected vpn has any impact on the result, so we only need to send the updates when it\u0027s connected. Maybe then strictly speaking \"everConnected\" is also not the right test in l.1872 ; we\u0027d want a \"isVpnInForce()\" method in NetworkInfo that would return\n\n  mState \u003d\u003d CONNECTED || mState \u003d\u003d SUSPENDED || mState \u003d\u003d CAPTIVE_PORTAL_CHECK\n\nor whatever is the right list for a VPN.\nOf course in reality VPNs only ever are CONNECTING or CONNECTED so it\u0027s the same in the end, but theoretically it\u0027s more correct.\n\nIn all cases, because the VPN becomes in force when in connects, so it\u0027s natural that you have an edge here. And you know, actually, because you are checking this correctly in l.1872, well it would not matter whether you skip evaluating the blocked status ! The function that sends the updates being idempotent, you could in principle call it absolutely whenever you want, and you\u0027d never get a call when there is no edge. In fact, in l.5900, you could absolutely afford not to check for everConnected and instead write :\n\n  if (!nai.isVPN()) return;\n  handleLockdownOrVpnChanged(nai, prevNc, newNc);\n  // If the agent is used for tracking lockdown VPN only, then it is unnecessary to update\n  // rules in native.\n  if (nai.networkMisc.forLockdown) return;\n\nThat would be slower (it would compute the values for nothing), but it would work, right ?　And because the edge is actually here, you have to do this here whether you do it or not in l.5900.",
+      "parentUuid": "ac967f0b_4c6cb7a3",
+      "range": {
+        "startLine": 6582,
+        "startChar": 16,
+        "endLine": 6584,
+        "endChar": 50
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f4ce5d_2838a789",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -200,6 +224,30 @@
       "side": 1,
       "message": "Yes, in my plan this is only for VPN. See above commments.",
       "parentUuid": "12f4ce5d_2838a789",
+      "range": {
+        "startLine": 6585,
+        "startChar": 20,
+        "endLine": 6585,
+        "endChar": 57
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c774227_cf216b34",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6585,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T13:06:49Z",
+      "side": 1,
+      "message": "My point is, if the control comes here, !forLockdown is necessarily true, so you don\u0027t have to test for it. Now, if you feel it\u0027s clearer maybe you can leave it as is, or maybe replace with a comment saying networkAgent can\u0027t be the lockdown agent because that one never goes to CONNECTED and therefore can\u0027t enter the test above.",
+      "parentUuid": "98ba5677_0c1bdb6d",
       "range": {
         "startLine": 6585,
         "startChar": 20,
