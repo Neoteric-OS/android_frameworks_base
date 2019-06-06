@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd0cd41_305f6788",
+        "filename": "core/java/com/android/internal/util/State.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "I don\u0027t understand how there could be unsupported app usage of this method. Can you explain your reasoning for adding this annotation ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780c9311_cf95ea14",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "Can you simply have .add take a Destination instead ? aosp/958303 simply adds the T, but you could have the entire Destination object there for simplicity.",
+      "range": {
+        "startLine": 893,
+        "startChar": 24,
+        "endLine": 893,
+        "endChar": 75
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4a05fb_54e8ec48",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "Maybe just \"a new state\"",
+      "range": {
+        "startLine": 926,
+        "startChar": 27,
+        "endLine": 926,
+        "endChar": 51
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5830f5e6_d2fd9f44",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "This is incorrect.\n\nEven if all your logic makes sure that the relevant entries in mStateStack only contain instances of states that can accept a T, this includes states whose parameter is a supertype of T.\n\nFor example, it could be legitimate to have a state \"ParentState\" with a RuntimeException as entry data, and a child state \"ChildState\" of that specialized to take an IllegalArgumentException. In this example, you\u0027d enter here with a stack of [ParentState, ChildState] where ParentState is an instance of State\u003cRuntimeException\u003e and ChildState is an instance of State\u003cIllegalArgumentException\u003e. Here you will be casting ParentState in a State\u003cIllegalArgumentException\u003e, which is not correct. It is not going to crash just yet (after all the parameter is erased, and in this place if all the code is correct then mStackState[i] is guaranteed to be a State\u003csuper T\u003e, and you\u0027re passing a T which is guaranteed to fit in a super T), but if enter() ever passes the incorrectly typed \u0027this\u0027 object to variant (even correct) code, you can end up with correct code that won\u0027t compile, or with code that compiles but crashes at runtime.\n(if you are interested, and to keep the exceptions as examples of T and super T, because of this cast you can find the compiler rejecting correct code that should be entitled to take any subclass of RuntimeException because it would incorrectly statically require a subclass of IllegalArgumentException ; and you can crash at runtime because it becomes possible to call with a RuntimeException without compile error code that expects an IllegalArgumentException).\n\n\nThis is a good illustration of why I was insisting on getting things statically typed all the way. Casting forfeits help from the compiler, we unfortunately have to live with type erasure here in Javaland, and variance issues are extremely difficult to get right without strict static type enforcement.\n\nUnfortunately I don\u0027t see a way to fix this with your current architecture. As long as you are pulling a State from mStateStack and invoking State\u003cT\u003e#enter on it, mStateStack would be required to be of a static type that knows about \u003cT\u003e, and you can\u0027t achieve that as long as it\u0027s a member that can contain unbounded \u0027T\u0027s. Locally the easiest fix is probably to instantiate and pass an array (or ArrayList) of State\u003csuper T\u003e, but I don\u0027t know if that makes for great design and it might only kick the can down the road and move the problem elsewhere.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 29,
+        "endLine": 1073,
+        "endChar": 43
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fb49a4_b5ccf27d",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "Maybe you want to add a few comments on why T1 extends T2. It\u0027s obvious when you know how it works but not everyone reading this already knows how it works :)",
+      "range": {
+        "startLine": 1195,
+        "startChar": 18,
+        "endLine": 1195,
+        "endChar": 23
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242db3dc_7eee722b",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "This cast almost certainly means Destination should take an IState\u003cT\u003e instead of a State\u003cT\u003e. If some actor creates a different, compliant implementation of IState\u003cT\u003e, this line would crash although all the plumbing is ready to support that different object.",
+      "range": {
+        "startLine": 1278,
+        "startChar": 65,
+        "endLine": 1278,
+        "endChar": 75
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3c93fa_523b834e",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T15:33:59Z",
+      "side": 1,
+      "message": "What does a null Destination mean in this context ? I have trouble picturing it.",
+      "range": {
+        "startLine": 1278,
+        "startChar": 42,
+        "endLine": 1278,
+        "endChar": 46
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
