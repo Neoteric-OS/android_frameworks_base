@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b97352ef_8c93b7ad",
+        "filename": "core/java/com/android/internal/util/State.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-07T14:01:58Z",
+      "side": 1,
+      "message": "It\u0027s good that you\u0027re paying attention to consistency and that you\u0027ve found this, so thanks for that. That being said, as the warden of all the code you are adding, you are expected to understand every single line of it, so please do take the time to look up the meaning of annotations you copy to make sure they are appropriate ; figure out why it\u0027s here, and reason whether it should apply to your new function.",
+      "parentUuid": "bd691503_9f59d28d",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "780c9311_cf95ea14",
         "filename": "core/java/com/android/internal/util/StateMachine.java",
         "patchSetId": 15
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Sorry I tried to cast the supertype to a subtype. Thanks for your detailed explanation.\n\nI agree that if we do not touch the stack we can not do the static type checking all the way. In your suggestion of passing in an array, if I understand correctly, this array contains the state entry chain and is used to replace the stack right ? If we do not do the stack refactoring soon can I just leave it  \"(State\u003c? super T\u003e) (mStateStack[i].state))\" for now ?",
       "parentUuid": "5830f5e6_d2fd9f44",
+      "range": {
+        "startLine": 1073,
+        "startChar": 29,
+        "endLine": 1073,
+        "endChar": 43
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662ab7c2_6c8bc8ec",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-07T14:01:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure it builds if you do this, but even if it does, it still does not give you the important bit : the consistency check. You still depend on the logic making sure that the relevant entries are of the correct generic type, and without compiler help that\u0027s extremely difficult. Fundamentally the problem with this cast here is less that it was incorrect than the fact that it\u0027s not safe. If it was safe of course you couldn\u0027t have gotten it wrong in the first place, but the thing is, because it\u0027s not safe, we don\u0027t know whether it\u0027s right.\n\n\nTo give you an example of what cast is safe and what is not :\n\nIn this design you have a Destination\u003cT\u003e object containing a State\u003cT\u003e state and a T entry. What this gives you (and that\u0027s the whole point) is that once you have a Destination\u003cT\u003e, you know that the state and the entry are compatible whatever T is. This stays true when you remove the generic parameter.\n\nTherefore, if you have a single instance of Destination with no constraints outside itself, you can safely cast it to Destination\u003cT\u003e and get the compiler to check everything downstream, as long as your code works for any T – and conversely it\u0027s not safe if you have any constraint on T. That works because it\u0027s impossible to begin with to MAKE a Destination object where the state and the entry are not compatible.\n\nBut if the instance has constraints outside itself, for example you have two Destination objects and they must have the same \u003cT\u003e, then you can\u0027t cast safely, because you can\u0027t get the compiler to actually check that the generic parameters are the same. It\u0027s entirely possible that these two objects have different parameters, therefore it\u0027s not safe to cast as if you knew it\u0027s true.\n\nIn this case, you are getting State objects from the stack, and passing a T as an argument. Anything at all can be stored in the stack. The stack is absolutely entitled to contain a State\u003cQ\u003e for any Q at that index, and you\u0027re trying to pass a T to that, however your logic requires that at that index you actually find a State\u003csuper T\u003e. That\u0027s why it\u0027s not safe.\n\n\nThe type system is here to help you, not to fight you. It\u0027s hard enough getting things right even with all the help you can get, and here the type system will save you if you just care to explain your design to it.",
+      "parentUuid": "21064630_0ff9d7b9",
       "range": {
         "startLine": 1073,
         "startChar": 29,
@@ -328,6 +376,30 @@
       "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69b39436_4a61a72c",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-07T14:01:58Z",
+      "side": 1,
+      "message": "I think it\u0027s extremely unlikely anyone is passing null here, but because this is internal you can just check if that can ever happen by looking at all invocations of this method. If you find that null is never passed, then disallow it and make it @NonNull, because indeed it makes very little sense.",
+      "parentUuid": "8fe0c7c8_78dbf9ba",
+      "range": {
+        "startLine": 1278,
+        "startChar": 42,
+        "endLine": 1278,
+        "endChar": 46
+      },
+      "revId": "a283c12512af5783ff7876d2ef76a681e886ea55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
