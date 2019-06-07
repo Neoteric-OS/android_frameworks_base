@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f6852313_42f5c6a1",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3369,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Please expand the acronym the first time you use it",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8e5f91b_af8f9aac",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -36,6 +53,30 @@
       "writtenOn": "2019-06-05T00:28:27Z",
       "side": 1,
       "message": "Please decode this and elaborate. An example of what might happen if this keyevent comes in would also be useful.",
+      "range": {
+        "startLine": 813,
+        "startChar": 27,
+        "endLine": 813,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8650390f_0de49814",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "If this is strictly for Push-To-Talk, why isn\u0027t it just called KEYCODE_PUSH_TO_TALK?",
+      "parentUuid": "c8e5f91b_af8f9aac",
       "range": {
         "startLine": 813,
         "startChar": 27,
@@ -64,6 +105,70 @@
         "startChar": 66,
         "endLine": 814,
         "endChar": 73
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b006caf_881cf59b",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "+1, please remove the BUTTON suffix.",
+      "parentUuid": "2cc96458_4591267d",
+      "range": {
+        "startLine": 814,
+        "startChar": 66,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c946aff9_6b0082de",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Can you explain a bit more about what this key physically looks like on devices and how applications or the system should interpret it? The latter should go into the javadoc as well.",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af80b88f_6620b54a",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Is there a CL for these?",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 825,
+        "endChar": 0
       },
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -151,6 +256,121 @@
         "endLine": 27,
         "endChar": 30
       },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4502cc9_f51536c8",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Also needs to be final.",
+      "parentUuid": "10506fbd_64ab958b",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7ba0c1_ce999262",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Should be false",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de04505_96bf60b5",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "should be final",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c33598b_e1fa4bd3",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Does this one method really warrant a whole class? Can\u0027t you just add it to the existing policy class?",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a936c17f_013ba6ab",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "What is this trying to do? I\u0027m fairly certain it\u0027s completely unnecessary.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 60
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9e0bc4_26c6e22e",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-06-07T18:45:25Z",
+      "side": 1,
+      "message": "Does this really need to be broadcast to everyone, or is there a single package per-device that would actually handle it?\n\nThis really feels like it should be part of GlobalKeyManager and not its own separate thing.",
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
