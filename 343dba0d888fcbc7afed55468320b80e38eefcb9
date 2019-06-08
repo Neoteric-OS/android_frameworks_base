@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a37cf9_fd2a6a4b",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-08T01:40:05Z",
+      "side": 1,
+      "message": "Remove these. They are not needed on new api.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 4,
+        "endLine": 1093,
+        "endChar": 24
+      },
+      "revId": "343dba0d888fcbc7afed55468320b80e38eefcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
