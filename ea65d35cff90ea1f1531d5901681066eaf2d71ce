@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3c54d1f1_d71961b2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6584,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-10T06:58:10Z",
+      "side": 1,
+      "message": "IIUC, you are suggesting check state inside handleLockdownOrVpnChanged, thus, we can call this whenever we want.\nHowever, take VPN connecting as example,inside handleLockdownOrVpnChanged(vpn, null, curNc)\nwe will only get capabilities from \"the other\" agent, and assuming curNc means a NC for the VPN that applies to uids.\n\nThus, to achieve the goal above, we need to check vpnnai.networkInfo.isVpnInForce() inside handleLockdownOrVpnChanged, but that only applies to current status of VPN.\nIf VPN is about to changing it\u0027s state, this might not be correct.\ne.g. \n1.updateNetworkInfo VPN to DISCONNECTED\n2.updateUids(vpn, curNc, null)\n3.handleLockdownOrVpnChanged(vpn, curNc, null)\n4.check vpnnai.networkInfo.isVpnInForce and it is false since the state is already DISCONNECTED\n5. blocked status no change (vpn disconnected -\u003e vpn disconnected)\n\nIIUC the only way is to pass the old/new status of VPN in the parameters, this is why handleLockdownOrVpnChanged has it\u0027s current form.\n\nBut anyway let\u0027s discuss this f2f.",
+      "parentUuid": "6448b45c_46bbf39f",
+      "range": {
+        "startLine": 6582,
+        "startChar": 16,
+        "endLine": 6584,
+        "endChar": 50
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f4ce5d_2838a789",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -257,6 +281,30 @@
       "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e908c6ab_f0b59725",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6585,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-10T06:58:10Z",
+      "side": 1,
+      "message": "Yes, in old patch I was leaving a comment that nobody can understand.\nLet me rephrase it.",
+      "parentUuid": "5c774227_cf216b34",
+      "range": {
+        "startLine": 6585,
+        "startChar": 20,
+        "endLine": 6585,
+        "endChar": 57
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
