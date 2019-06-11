@@ -470,6 +470,13 @@ public final class DnsResolver {
                 queryfd,
                 FD_EVENTS,
                 (fd, events) -> {
+                    // b/134310704
+                    // Unregister fd event listener before resNetworkResult is called to prevent
+                    // race condition caused by fd reused.
+                    // Otherwise, the next addOnFileDescriptorEventListener with the same fd might
+                    // not take effect because previous unregister procedure is not done.
+                    Looper.getMainLooper().getQueue().removeOnFileDescriptorEventListener(fd);
+
                     executor.execute(() -> {
                         DnsResponse resp = null;
                         ErrnoException exception = null;
@@ -490,6 +497,7 @@ public final class DnsResolver {
                         }
                         answerCallback.onAnswer(resp.answerbuf, resp.rcode);
                     });
+
                     // Unregister this fd listener
                     return 0;
                 });
