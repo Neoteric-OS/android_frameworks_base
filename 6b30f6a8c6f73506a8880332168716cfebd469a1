@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71ded6e4_e3fdc4d3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e254659_63c1c85f",
+      "range": {
+        "startLine": 1881,
+        "startChar": 34,
+        "endLine": 1881,
+        "endChar": 69
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39d30b8a_cadbeca1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cb6c77_4d8e8c37",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done, but IIUC the comment for this class is not correct?\nI feel it is self-explanatory so delete the comment.\nBut feel free to add comment if you think it is not.",
+      "parentUuid": "39d30b8a_cadbeca1",
+      "range": {
+        "startLine": 1884,
+        "startChar": 70,
+        "endLine": 1886,
+        "endChar": 71
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "c2dcc4a2_a2d50658",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c08266e_4e2771b6",
+      "range": {
+        "startLine": 1897,
+        "startChar": 12,
+        "endLine": 1897,
+        "endChar": 17
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d76870b_ce26d199",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done with another description, see if it works for you.",
+      "parentUuid": "8aa4d54a_ab801fe3",
+      "range": {
+        "startLine": 1897,
+        "startChar": 18,
+        "endLine": 1897,
+        "endChar": 33
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3c5fbc_6544cbc9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2166fb8a_5db30fdf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3c5fbc_6544cbc9",
+      "range": {
+        "startLine": 1904,
+        "startChar": 29,
+        "endLine": 1904,
+        "endChar": 40
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ba2c37b3_9657f60e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1920,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Done, you are correct.\nAlso rename back to doCapabilitiesApplyToUid since this could be a generic function that has nothing to do with vpn.",
+      "parentUuid": "235f692b_479c3f7d",
+      "range": {
+        "startLine": 1920,
+        "startChar": 12,
+        "endLine": 1920,
+        "endChar": 53
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386b3ba4_15f64a20",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2019-06-11T11:45:29Z",
       "side": 1,
       "message": "Sorry I just wrote that as an example but had not checked it at all. I don\u0027t think this is actually the right test.\n\nTo do things well, I think probably the right test would be something like this :\nOne of : VERIFYING_POOR_LINK, CAPTIVE_PORTAL_CHECK, CONNECTED, SUSPENDED, BLOCKED\n\nBut I think it\u0027s also fine (and maybe better, especially considering all these states are deprecated) to say something like this :\n\n  // VPNs can only ever send the IDLE, CONNECTING, CONNECTED, DISCONNECTED or FAILED detailed states.\n  // A VPN is not in force if it\u0027s in IDLE, DISCONNECTED or FAILED detailed status (they all map\n  // to the DISCONNECTED status). It\u0027s also not yet in force if CONNECTING.\n  // Therefore, a VPN is only ever in force when its state is CONNECTED.\n  return state \u003d\u003d DetailedState.CONNECTED;\n\nI just checked that this should be accurate, so if you agree this is better then let\u0027s just use this.\n(you may simplify the second, third and fourth sentences to to \"Out of these, the VPN is only in force when CONNECTED.\" if you prefer that)",
+      "range": {
+        "startLine": 1940,
+        "startChar": 16,
+        "endLine": 1941,
+        "endChar": 62
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9285cde_a66f42fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1941,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T15:10:24Z",
+      "side": 1,
+      "message": "Sorry that I didn\u0027t pay much attention to do my own check.\nThanks for writing this up.\nIf the above is correct, then do we want to just calls into isConnected()?",
+      "parentUuid": "386b3ba4_15f64a20",
       "range": {
         "startLine": 1940,
         "startChar": 16,
