@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "44c50c6b_33809a6e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6584,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-11T11:45:29Z",
+      "side": 1,
+      "message": "I like it.",
+      "parentUuid": "6190d7a5_e59f2a85",
+      "range": {
+        "startLine": 6582,
+        "startChar": 16,
+        "endLine": 6584,
+        "endChar": 50
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f4ce5d_2838a789",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -463,6 +487,30 @@
       "side": 1,
       "message": "Done.\n\nThis annoys me (or maybe you) that it cannot be done automatically.\nIIUC by checking the 8 indents with subsequent lines, this can be done with bash script which is used for manually checking, but\nmaybe we should contact someone who could help with preupload hook if this is a common problem?",
       "parentUuid": "7749aea5_52b71ea8",
+      "range": {
+        "startLine": 6587,
+        "startChar": 61,
+        "endLine": 6587,
+        "endChar": 62
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "599bc308_4f76389d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-11T11:45:29Z",
+      "side": 1,
+      "message": "There are autoformatters in use at Google (I suspect some people do this also in Android, but I don\u0027t know of any).\n\nNobody wants to do this manually, and nobody wants to point out style mistakes in code review, so I agree that we should have an auto-formatter. The only thing this is waiting for is someone motivated enough to find an autoformatter and do this. I don\u0027t think I\u0027m passionate enough about this to be the one doing it \u003c.\u003c",
+      "parentUuid": "279bbd95_a48f36e0",
       "range": {
         "startLine": 6587,
         "startChar": 61,
