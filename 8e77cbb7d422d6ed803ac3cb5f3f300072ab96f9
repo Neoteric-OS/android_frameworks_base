@@ -153,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "b884ac02_9a6568b6",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1065940
+      },
+      "writtenOn": "2019-06-11T09:10:05Z",
+      "side": 1,
+      "message": "Here\u0027s one example - https://www.airacommobility.com/is5201-intrinsically-safe-smartphone-52-p.asp it\u0027s a small red button. I think it\u0027s meant to send a alarm back to some operator (over LTE/WiFi), and perhaps activate some siren.",
+      "parentUuid": "c946aff9_6b0082de",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af80b88f_6620b54a",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -371,6 +389,24 @@
       "writtenOn": "2019-06-07T18:45:25Z",
       "side": 1,
       "message": "Does this really need to be broadcast to everyone, or is there a single package per-device that would actually handle it?\n\nThis really feels like it should be part of GlobalKeyManager and not its own separate thing.",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7c769e_4fe65cd0",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1065940
+      },
+      "writtenOn": "2019-06-11T09:10:05Z",
+      "side": 1,
+      "message": "Ideally I think there should be some way to limit which package gets the broadcast. Since there are multiple PTT apps I can foresee a case where a manufacturer has pre-installed one PTT app (e.g. Zebra Workforce Connect), but the customer wants to use another third party app (e.g. Genaker PTT). In that case both apps would get this intent, and there might be confusion.\n\nThe apps could handle this though, as they would anyway have to start a foreground service to listen to this event, and to keep a connection to the PTT server.",
+      "parentUuid": "af9e0bc4_26c6e22e",
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
