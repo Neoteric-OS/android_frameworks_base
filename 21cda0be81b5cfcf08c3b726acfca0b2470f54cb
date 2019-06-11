@@ -69,6 +69,30 @@
       "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae618b3_bacecf36",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6958,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2019-06-11T17:02:45Z",
+      "side": 1,
+      "message": "Yes, you\u0027re spot-on (btw the right user restriction is DISALLOW_CONFIG_PRIVATE_DNS)",
+      "parentUuid": "131a8468_a3959d3d",
+      "range": {
+        "startLine": 6958,
+        "startChar": 54,
+        "endLine": 6958,
+        "endChar": 84
+      },
+      "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
