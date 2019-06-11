@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4695400_177f08ca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6956,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-11T07:33:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to test for this. If dnsConfig is off, we also need to reset. I think you can afford to just put the string unconditionally.",
+      "range": {
+        "startLine": 6956,
+        "startChar": 12,
+        "endLine": 6956,
+        "endChar": 36
+      },
+      "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa336c2_ebca403d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6958,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-11T07:33:33Z",
+      "side": 1,
+      "message": "I\u0027m only realizing this now but I think we need to consult DevicePolicy about this. I don\u0027t think enterprise clients would be too happy if users could bypass the settings that DevicePolicy set on the device by resetting the network settings.\n\nEran, I think this is a question for you. What should happen if the user goes into Settings \u003e Networking \u003e Reset networking while the device is under DevicePolicy ? Presumably it should not override the settings set by DevicePolicy, but maybe you already have precedent about this workflow ?",
+      "range": {
+        "startLine": 6958,
+        "startChar": 54,
+        "endLine": 6958,
+        "endChar": 84
+      },
+      "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
