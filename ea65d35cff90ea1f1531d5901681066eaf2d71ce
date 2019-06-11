@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12483bbc_2f149801",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d2c9fe_d6caee8e",
+      "range": {
+        "startLine": 1870,
+        "startChar": 12,
+        "endLine": 1870,
+        "endChar": 69
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb79f23_1350d1b2",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4c045b31_f5f66621",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb79f23_1350d1b2",
+      "range": {
+        "startLine": 1880,
+        "startChar": 27,
+        "endLine": 1880,
+        "endChar": 51
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39a49209_927e3d34",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e0bf93_0ac91ae9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39a49209_927e3d34",
+      "range": {
+        "startLine": 1892,
+        "startChar": 19,
+        "endLine": 1893,
+        "endChar": 56
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +178,30 @@
       "side": 1,
       "message": "Thanks for suggestion, I\u0027ll take option 2 since it looks more straight forward to me.",
       "parentUuid": "1c418a71_6ca464df",
+      "range": {
+        "startLine": 5875,
+        "startChar": 16,
+        "endLine": 5875,
+        "endChar": 18
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ffe9bd_e08764e5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5875,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "bad news, Pair doesn\u0027t have way to modify it\u0027s content after being created.\nSearching for similar approach.",
+      "parentUuid": "39c96a08_b7cb16e4",
       "range": {
         "startLine": 5875,
         "startChar": 16,
@@ -210,6 +306,30 @@
       "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6190d7a5_e59f2a85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6584,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done,\nby offline discuss, in order to correctly evaluating VPN status, the new patch pass the old/new networkInfo into handleLockdownOrVpnChanged.\nSee if you like it.",
+      "parentUuid": "3c54d1f1_d71961b2",
+      "range": {
+        "startLine": 6582,
+        "startChar": 16,
+        "endLine": 6584,
+        "endChar": 50
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +451,30 @@
     },
     {
       "key": {
+        "uuid": "279bbd95_a48f36e0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6587,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done.\n\nThis annoys me (or maybe you) that it cannot be done automatically.\nIIUC by checking the 8 indents with subsequent lines, this can be done with bash script which is used for manually checking, but\nmaybe we should contact someone who could help with preupload hook if this is a common problem?",
+      "parentUuid": "7749aea5_52b71ea8",
+      "range": {
+        "startLine": 6587,
+        "startChar": 61,
+        "endLine": 6587,
+        "endChar": 62
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b953660a_59c4544b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -354,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "625f9534_cf7224fb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6066,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b953660a_59c4544b",
+      "range": {
+        "startLine": 6063,
+        "startChar": 8,
+        "endLine": 6066,
+        "endChar": 75
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57ba5344_d3fcbe71",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -374,6 +542,30 @@
       "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716828db_82de4341",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6075,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-11T03:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ba5344_d3fcbe71",
+      "range": {
+        "startLine": 6075,
+        "startChar": 23,
+        "endLine": 6075,
+        "endChar": 33
+      },
+      "revId": "ea65d35cff90ea1f1531d5901681066eaf2d71ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
