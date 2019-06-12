@@ -177,7 +177,6 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.net.VpnConfig;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
@@ -4901,7 +4900,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
@@ -4914,7 +4912,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyWifi),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(WIFI_IFNAME));
         reset(mStatsService);
@@ -4925,7 +4922,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
@@ -4936,7 +4932,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
@@ -4946,7 +4941,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
@@ -4957,7 +4951,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, never())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
@@ -4968,7 +4961,6 @@ public class ConnectivityServiceTest {
         verify(mStatsService, atLeastOnce())
                 .forceUpdateIfaces(
                         eq(onlyCell),
-                        eq(new VpnInfo[0]),
                         any(NetworkState[].class),
                         eq(MOBILE_IFNAME));
         reset(mStatsService);
