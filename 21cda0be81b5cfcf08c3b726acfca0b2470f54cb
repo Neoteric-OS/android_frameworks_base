@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43514de9_a355ace7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6956,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-06-12T03:42:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4695400_177f08ca",
+      "range": {
+        "startLine": 6956,
+        "startChar": 12,
+        "endLine": 6956,
+        "endChar": 36
+      },
+      "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa336c2_ebca403d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yes, you\u0027re spot-on (btw the right user restriction is DISALLOW_CONFIG_PRIVATE_DNS)",
       "parentUuid": "131a8468_a3959d3d",
+      "range": {
+        "startLine": 6958,
+        "startChar": 54,
+        "endLine": 6958,
+        "endChar": 84
+      },
+      "revId": "21cda0be81b5cfcf08c3b726acfca0b2470f54cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f703d1_e41cdfde",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6958,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-06-12T03:42:03Z",
+      "side": 1,
+      "message": "Thanks Jean and Eran for the suggestion. However, I noticed that DISALLOW_CONFIG_PRIVATE_DNS constant seems being deleted from aosp repo. Also removed from Android developer site (https://developer.android.com/reference/android/os/UserManager.html#DISALLOW_CONFIG_PRIVATE_DNS).\n\nDo we need to do this change in the internal master or qt-dev reop directly?",
+      "parentUuid": "7ae618b3_bacecf36",
       "range": {
         "startLine": 6958,
         "startChar": 54,
