@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dd1a698_8204a056",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "d3508420_c5a409fe",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6852313_42f5c6a1",
         "filename": "core/java/android/content/Intent.java",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2019-06-07T18:45:25Z",
       "side": 1,
       "message": "Please expand the acronym the first time you use it",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0054f0_36ab4c97",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3369,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "f6852313_42f5c6a1",
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -77,6 +119,30 @@
       "side": 1,
       "message": "If this is strictly for Push-To-Talk, why isn\u0027t it just called KEYCODE_PUSH_TO_TALK?",
       "parentUuid": "c8e5f91b_af8f9aac",
+      "range": {
+        "startLine": 813,
+        "startChar": 27,
+        "endLine": 813,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7f1c1b_8fa6409c",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "The phrase “mission-critical push-to-talk” or “mission-critical PTT” refers to a PTT product functionality that meets the requirements of public safety mission-critical voice communication, which include high availability/reliability, low latency, support for group calls and 1:1 calls, talker identification, device-to-device direct communications, emergency calling, clear audio quality, etc. The term “MCPTT” is now typically used to refer to 3GPP’s “Mission Critical Push to Talk (MCPTT) over LTE” standard, which is part of 3GPP Release 13, finalized in March 2016.\nHence the naming was used as Critical Communication. Critical communication is more of a broader term since these keys can be used for both making calls and also for messaging.",
+      "parentUuid": "8650390f_0de49814",
       "range": {
         "startLine": 813,
         "startChar": 27,
@@ -136,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "4d4958e1_843e7b80",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Agree, will remove",
+      "parentUuid": "8b006caf_881cf59b",
+      "range": {
+        "startLine": 814,
+        "startChar": 66,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c946aff9_6b0082de",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -171,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "47acf8b3_b4b42fbf",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "This is one of critical communication devices by Motorola Solutions: https://magnumelectronics.files.wordpress.com/2018/12/LEX-L11.jpg\nRed button is SOS button\nOnce user push SOS button, device will initiate emergency call to predefined user or group.\nWill update javadoc to describe SOS behavior in detail.",
+      "parentUuid": "b884ac02_9a6568b6",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af80b88f_6620b54a",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -182,6 +290,30 @@
       "writtenOn": "2019-06-07T18:45:25Z",
       "side": 1,
       "message": "Is there a CL for these?",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 825,
+        "endChar": 0
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b38ff40_f1c886e8",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "What is CL?",
+      "parentUuid": "af80b88f_6620b54a",
       "range": {
         "startLine": 823,
         "startChar": 0,
@@ -211,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "6dee3429_dc0f63b1",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "d482bc9e_ff1ed655",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8207ad5_cada3538",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -234,6 +384,30 @@
     },
     {
       "key": {
+        "uuid": "9f73c9b6_1be5c936",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "It has ben updated in \"native\" repository.",
+      "parentUuid": "a8207ad5_cada3538",
+      "range": {
+        "startLine": 2921,
+        "startChar": 30,
+        "endLine": 2921,
+        "endChar": 51
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9c4fb4_dec944bc",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 2
@@ -245,6 +419,30 @@
       "writtenOn": "2019-06-05T00:28:27Z",
       "side": 1,
       "message": "how is this used?",
+      "range": {
+        "startLine": 570,
+        "startChar": 61,
+        "endLine": 570,
+        "endChar": 94
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa10cf4_19e30809",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Critical communication device optionally can maintain emergency state. In emergency state device can beep and flash light, it depends on vendor implementation. If device in emergency state and user pressed SOS key, system will broadcast SOS_CANCEL intent to critical communication application to clear emergency. Will update PR with these logic.",
+      "parentUuid": "ec9c4fb4_dec944bc",
       "range": {
         "startLine": 570,
         "startChar": 61,
@@ -304,6 +502,30 @@
     },
     {
       "key": {
+        "uuid": "8f9ca6c1_2940c42f",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Agree, will do",
+      "parentUuid": "e4502cc9_f51536c8",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b7ba0c1_ce999262",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -315,6 +537,24 @@
       "writtenOn": "2019-06-07T18:45:25Z",
       "side": 1,
       "message": "Should be false",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc85909f_51116cd8",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Agree, will do",
+      "parentUuid": "0b7ba0c1_ce999262",
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -338,6 +578,24 @@
     },
     {
       "key": {
+        "uuid": "f941ca18_49fd82b4",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Agree, will do",
+      "parentUuid": "5de04505_96bf60b5",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33598b_e1fa4bd3",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -355,6 +613,24 @@
     },
     {
       "key": {
+        "uuid": "160d2dd0_a8fbce2f",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Because we want to add more logic into implementation, like maintaining emergency state, support of ACTION_CRITICAL_COMMUNICATION_SOS_CANCEL intent and more. I will update this PR soon.",
+      "parentUuid": "4c33598b_e1fa4bd3",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a936c17f_013ba6ab",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -366,6 +642,30 @@
       "writtenOn": "2019-06-07T18:45:25Z",
       "side": 1,
       "message": "What is this trying to do? I\u0027m fairly certain it\u0027s completely unnecessary.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 60
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fe2c1f_a764ad7b",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Without this code, if press PTT key then release it quickly, previously keyEvent will be replaced with new one. So, need to copy keyEvent here.",
+      "parentUuid": "a936c17f_013ba6ab",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -413,6 +713,24 @@
     },
     {
       "key": {
+        "uuid": "e1640cf7_fcf8a358",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Only one package will handle it in the same time. Will update PR soon.",
+      "parentUuid": "af9e0bc4_26c6e22e",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc8a56bc_ccff424e",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 2
@@ -424,6 +742,30 @@
       "writtenOn": "2019-06-05T00:28:27Z",
       "side": 1,
       "message": "Key? Similar to GlobalKeyManager?",
+      "range": {
+        "startLine": 2269,
+        "startChar": 30,
+        "endLine": 2269,
+        "endChar": 36
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0a843d_1c709cb9",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-12T16:16:11Z",
+      "side": 1,
+      "message": "Will rename it to Key. It is similar to GlobalKeyManager, but not the same. GlobalKeyManager just convert KeyCode to intent, and send it to particular component. But CriticalCommunicationKeyManager will have more logic. Will update soon.",
+      "parentUuid": "bc8a56bc_ccff424e",
       "range": {
         "startLine": 2269,
         "startChar": 30,
