@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2ff2ce69_11a465b2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-12T09:13:23Z",
+      "side": 1,
+      "message": "Done, I like rerunning treehugger.",
+      "parentUuid": "867c9645_daa644f6",
+      "range": {
+        "startLine": 1934,
+        "startChar": 19,
+        "endLine": 1934,
+        "endChar": 34
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dbd4d58_e045be51",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -68,6 +92,30 @@
       "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f782d5e_9138a354",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6726,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-12T09:13:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dbd4d58_e045be51",
+      "range": {
+        "startLine": 6726,
+        "startChar": 75,
+        "endLine": 6726,
+        "endChar": 76
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "e721f27b_15f1fd70",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6728,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-12T09:13:23Z",
+      "side": 1,
+      "message": "deleted.\nthis note is outdated since we now pass info to know if it is in force.",
+      "parentUuid": "7ac836e9_21840236",
+      "range": {
+        "startLine": 6728,
+        "startChar": 34,
+        "endLine": 6728,
+        "endChar": 43
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf7c2a3_d724a5d7",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -114,6 +186,30 @@
       "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fe76b0_a5a731ab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6787,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-12T09:13:23Z",
+      "side": 1,
+      "message": "Done, but outside of this loop.\nSuppose we could use existing NetworkRequest log with uid to guess what is happening.",
+      "parentUuid": "adf7c2a3_d724a5d7",
+      "range": {
+        "startLine": 6787,
+        "startChar": 63,
+        "endLine": 6787,
+        "endChar": 64
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
