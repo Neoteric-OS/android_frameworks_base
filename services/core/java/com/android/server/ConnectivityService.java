@@ -6885,6 +6885,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public void factoryReset() {
         enforceConnectivityInternalPermission();
+        Binder.withCleanCallingIdentity(() -> factoryResetInternal());
+    }
+
+    private void factoryResetInternal() {
+        enforceConnectivityInternalPermission();
 
         if (mUserManager.hasUserRestriction(UserManager.DISALLOW_NETWORK_RESET)) {
             return;
