@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2309cbb_c8cf5dec",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "👍 much much more readable I think.",
+      "range": {
+        "startLine": 1903,
+        "startChar": 24,
+        "endLine": 1905,
+        "endChar": 71
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "867c9645_daa644f6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "I\u0027m going to be a bad boy and say we should probably put this into a constant to be nicer with the GC. It\u0027s immutable anyway.\n\nOptional though. Don\u0027t bother rerunning treehugger for this",
+      "range": {
+        "startLine": 1934,
+        "startChar": 19,
+        "endLine": 1934,
+        "endChar": 34
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dbd4d58_e045be51",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6726,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "...which are read from the mUidRules member.",
+      "range": {
+        "startLine": 6726,
+        "startChar": 75,
+        "endLine": 6726,
+        "endChar": 76
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac836e9_21840236",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6728,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "\"as being in force\" maybe to keep the same wording as above",
+      "range": {
+        "startLine": 6728,
+        "startChar": 34,
+        "endLine": 6728,
+        "endChar": 43
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf7c2a3_d724a5d7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6787,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "I think aside from the new UID rules, everything goes through l.6751. That means maybe we should be adding a similar log here lest we erroneously think some callbacks were not called",
+      "range": {
+        "startLine": 6787,
+        "startChar": 63,
+        "endLine": 6787,
+        "endChar": 64
+      },
+      "revId": "e8dc1b9a3d4a0a3c21b0239f8fb2ad15d70c254e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

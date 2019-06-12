@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5f017ced_568b6d6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "Haha I need to start versioning my review comments, the comment was for an all version of the code I was posting\n\nYou\u0027re right of course.",
+      "parentUuid": "b8cb6c77_4d8e8c37",
+      "range": {
+        "startLine": 1884,
+        "startChar": 70,
+        "endLine": 1886,
+        "endChar": 71
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c08266e_4e2771b6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done with another description, see if it works for you.",
       "parentUuid": "8aa4d54a_ab801fe3",
+      "range": {
+        "startLine": 1897,
+        "startChar": 18,
+        "endLine": 1897,
+        "endChar": 33
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "542d6c1d_3bf2239a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "sure, it\u0027s better than what I wrote",
+      "parentUuid": "0d76870b_ce26d199",
       "range": {
         "startLine": 1897,
         "startChar": 18,
@@ -328,6 +376,30 @@
       "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b78870c_e7e6b44d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1941,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T06:31:17Z",
+      "side": 1,
+      "message": "I think so, unless Lorenzo has further objections considering the analysis, the comments, and the new methods to make the thing easier to understand.",
+      "parentUuid": "d9285cde_a66f42fa",
+      "range": {
+        "startLine": 1940,
+        "startChar": 16,
+        "endLine": 1941,
+        "endChar": 62
+      },
+      "revId": "6b30f6a8c6f73506a8880332168716cfebd469a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
