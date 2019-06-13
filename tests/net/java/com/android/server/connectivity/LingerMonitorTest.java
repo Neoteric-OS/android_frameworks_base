@@ -70,6 +70,7 @@ public class LingerMonitorTest {
     LingerMonitor mMonitor;
 
     @Mock ConnectivityService mConnService;
+    @Mock ConnectivityService.Dependencies mConnServiceDeps;
     @Mock IDnsResolver mDnsResolver;
     @Mock INetd mNetd;
     @Mock INetworkManagementService mNMS;
@@ -356,7 +357,7 @@ public class LingerMonitorTest {
         caps.addTransportType(transport);
         NetworkAgentInfo nai = new NetworkAgentInfo(null, null, new Network(netId), info, null,
                 caps, 50, mCtx, null, mMisc, mConnService, mNetd, mDnsResolver, mNMS,
-                NetworkFactory.SerialNumber.NONE);
+                NetworkFactory.SerialNumber.NONE, mConnServiceDeps);
         nai.everValidated = true;
         return nai;
     }

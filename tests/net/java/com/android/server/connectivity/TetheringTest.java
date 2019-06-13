@@ -77,6 +77,7 @@ import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
@@ -238,6 +239,15 @@ public class TetheringTest {
         StateMachine upstreamNetworkMonitorMasterSM;
         ArrayList<IpServer> ipv6CoordinatorNotifyList;
         int isTetheringSupportedCalls;
+
+        public MockTetheringDependencies() {
+            super(null);
+        }
+
+        @Override
+        public NetworkRequest getDefaultNetworkRequest() {
+            return null;
+        }
 
         public void reset() {
             upstreamNetworkMonitorMasterSM = null;

@@ -35,6 +35,28 @@ import java.util.ArrayList;
  * @hide
  */
 public class TetheringDependencies {
+    private final TetheringSettingsProvider mProvider;
+
+    /**
+     * Provider for tethering configuration that may change over time.
+     *
+     * <p>Typically this can be implemented in ConnectivityService to provide Tethering with
+     * state managed by ConnectivityService.
+     */
+    public interface TetheringSettingsProvider {
+        default boolean isTetheringSupported() {
+            return true;
+        }
+
+        default NetworkRequest getDefaultNetworkRequest() {
+            return null;
+        }
+    }
+
+    public TetheringDependencies(TetheringSettingsProvider provider) {
+        mProvider = provider;
+    }
+
     /**
      * Get a reference to the offload hardware interface to be used by tethering.
      */
@@ -69,14 +91,14 @@ public class TetheringDependencies {
      * Indicates whether tethering is supported on the device.
      */
     public boolean isTetheringSupported() {
-        return true;
+        return mProvider.isTetheringSupported();
     }
 
     /**
      * Get the NetworkRequest that should be fulfilled by the default network.
      */
     public NetworkRequest getDefaultNetworkRequest() {
-        return null;
+        return mProvider.getDefaultNetworkRequest();
     }
 
     /**
