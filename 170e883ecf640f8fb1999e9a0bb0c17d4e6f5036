@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49c29edd_c01134f1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-13T06:15:35Z",
+      "side": 1,
+      "message": "Actually you\u0027re right, this is a behaviour change. The userId becomes 0 no matter what the user ID of the caller was.\n\nIt looks like UserManager#hasUserRestriction only calls Os.getuid(), which here in ConnectivityService always returns 1000. So it should be unaffected.\n\nHowever, other code below that uses the userId will do the wrong thing. This will include the VPN reset calls at line line 6917 and below, which will reset the VPN for userId 0 regardless of the userId of the caller.",
+      "parentUuid": "fcb4423f_1b1087b2",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec66bf1_d00655bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
