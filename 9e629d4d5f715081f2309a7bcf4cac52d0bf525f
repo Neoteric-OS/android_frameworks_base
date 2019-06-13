@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d64e479_b70d2ebf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T06:59:04Z",
+      "side": 1,
+      "message": "Maybe \"notifications that are expected\" ?\n\nThey don\u0027t really happen all that often hopefully :) But they definitely are expected to happen in some known cases (e.g. ETHERNET in China) or in cases where the https request only fails because of bad luck in timing rather than network connectivity (e.g. entering a tunnel exactly at the right time to have the http probe succeed and https timeout).",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3435ab02_e9c5bae8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T06:59:04Z",
+      "side": 1,
+      "message": "Do we want to do this too ? It seems to me the same reasoning applies here.",
+      "range": {
+        "startLine": 206,
+        "startChar": 50,
+        "endLine": 206,
+        "endChar": 63
+      },
+      "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
