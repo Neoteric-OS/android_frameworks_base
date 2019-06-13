@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7711320_6bab39ab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-13T03:02:07Z",
+      "side": 1,
+      "message": "Not for this CL since it\u0027s just a revert, but per comment on VC the other day, should this instead do:\n\n    if (lp !\u003d null) {\n        interfaces.addAll(lp.getAllInterfaceNames());\n    }\n\nso that this code works for IPv4-only VPNs as well?\n\nIs this already fixed in a subsequent CL in this stack?",
+      "range": {
+        "startLine": 4398,
+        "startChar": 0,
+        "endLine": 4400,
+        "endChar": 17
+      },
+      "revId": "2e6b7807d5e8d0c52c724939b12ca02415e53efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
