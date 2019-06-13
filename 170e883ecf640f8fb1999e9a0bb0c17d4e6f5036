@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "002a421d_f24c9003",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T06:54:29Z",
+      "side": 1,
+      "message": "Yes I think something like this would preserve the behavior. You could also consider clearing the identity only around l.6900~6901, as these are the only lines needing NetworkStack access.",
+      "parentUuid": "a05db2de_159e24e1",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec66bf1_d00655bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
