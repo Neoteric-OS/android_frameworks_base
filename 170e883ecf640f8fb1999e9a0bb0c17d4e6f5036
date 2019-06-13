@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "fa3e5b1e_9b7103ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T07:03:25Z",
+      "side": 1,
+      "message": "Personally I\u0027m happy to leave that decision up to you in the Q timeframe because it should not affect devices that don\u0027t use the headless user0 devices, and because intuitively it does sound to me like this should probably reset for user 0 (and therefore, that it was broken in P), but I can\u0027t say I understand much about that model.\n\nSo at face value I\u0027d be happy with either decision, unless Lorenzo thinks strongly we should avoid any behavior change at this point in which case I\u0027d favor the only-around-memory-store fix.",
+      "parentUuid": "7a254e6e_88966f71",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec66bf1_d00655bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
