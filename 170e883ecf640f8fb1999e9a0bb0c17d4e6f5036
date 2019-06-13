@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb4423f_1b1087b2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T03:14:57Z",
+      "side": 1,
+      "message": "Won\u0027t this change mean the userId now becomes the ID of the system ?\nThat\u0027s fine on general Android where Settings runs as uid 0 anyway, but if your Settings run as UID 10, then it used to not pass the test in l.6924, and to not clear the credentials.\n\nIIUC that would be a bugfix actually, but do make sure this is not behavior that you desired and that is now broken – I don\u0027t know why this additional check was written (it was added by https://android-review.googlesource.com/c/platform/frameworks/base/+/233330/7/services/core/java/com/android/server/ConnectivityService.java at the same time as the code, with no specific comment on that).",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec66bf1_d00655bf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6925,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T03:14:57Z",
+      "side": 1,
+      "message": "The above comment nonwithstanding, with your change this is not needed any more.",
+      "range": {
+        "startLine": 6925,
+        "startChar": 20,
+        "endLine": 6925,
+        "endChar": 69
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
