@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "7a254e6e_88966f71",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1448200
+      },
+      "writtenOn": "2019-06-13T06:59:12Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll update the change to use something like\n\n@Override\npublic void factoryReset() {\n  // Mostly as is\n  ...\n  Binder.withCleanCallingIdentity(() -\u003e {\n    final IpMemoryStore ipMemoryStore \u003d IpMemoryStore.getMemoryStore(mContext);\n    ipMemoryStore.factoryReset();\n  });\n  // Continue as is\n  ...\n}\n\nBut just to clarify about Always on vpn, it seems like something Android Automotive might want to consider reseting for other admin users besides user 0, since user 0 will never open Settings in our user model? I think its safe to ignore for the Q timeframe, but worth revisiting in the R timeframe, if that makes it more comfortable for the Android networking team.",
+      "parentUuid": "002a421d_f24c9003",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec66bf1_d00655bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
