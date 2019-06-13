@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "992b9691_c79a3a32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-06-13T08:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d64e479_b70d2ebf",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3435ab02_e9c5bae8",
         "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-06-13T06:59:04Z",
       "side": 1,
       "message": "Do we want to do this too ? It seems to me the same reasoning applies here.",
+      "range": {
+        "startLine": 206,
+        "startChar": 50,
+        "endLine": 206,
+        "endChar": 63
+      },
+      "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfad883_c15529e7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-06-13T08:39:05Z",
+      "side": 1,
+      "message": "We have logic to show LOST_INTERNET notification in only WiFi. That looks specific to Wifi. If we see LOST_INTERNET with other transport type here, it looks like something not matched with our design and may deserve to show the error. Or we do not like to assume so? \n\nOther thought is that I am not sure if we would like to show all the LOST_INTERNET notification for other transport types.",
+      "parentUuid": "3435ab02_e9c5bae8",
       "range": {
         "startLine": 206,
         "startChar": 50,
