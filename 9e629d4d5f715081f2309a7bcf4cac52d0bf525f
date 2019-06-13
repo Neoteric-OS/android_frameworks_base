@@ -93,6 +93,30 @@
       "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af49930_9ecfcf53",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-13T08:49:25Z",
+      "side": 1,
+      "message": "Per offline conversation : LOST_INTERNET is only for the bad wifi avoidance \"feature\", so this is fundamentally about wifi. Thanks for the background, I now think you\u0027re right.",
+      "parentUuid": "6bfad883_c15529e7",
+      "range": {
+        "startLine": 206,
+        "startChar": 50,
+        "endLine": 206,
+        "endChar": 63
+      },
+      "revId": "9e629d4d5f715081f2309a7bcf4cac52d0bf525f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
