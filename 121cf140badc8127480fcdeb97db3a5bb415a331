@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d1a3ef6_58f6ea3c",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2019-06-13T15:20:54Z",
+      "side": 1,
+      "message": "Drop the \"if\" here to make this just an \"else\" clause.",
+      "range": {
+        "startLine": 1486,
+        "startChar": 15,
+        "endLine": 1486,
+        "endChar": 35
+      },
+      "revId": "121cf140badc8127480fcdeb97db3a5bb415a331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c6ee75_0d4c60d7",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2019-06-13T15:20:54Z",
+      "side": 1,
+      "message": "Drop the \"if\" here to make this just an \"else\" clause.",
+      "range": {
+        "startLine": 1524,
+        "startChar": 19,
+        "endLine": 1524,
+        "endChar": 28
+      },
+      "revId": "121cf140badc8127480fcdeb97db3a5bb415a331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
