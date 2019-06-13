@@ -521,8 +521,7 @@ public class ZenModeConfig implements Parcelable {
                     if (allowWhenScreenOff != null) {
                         readSuppressedEffects = true;
                         if (allowWhenScreenOff) {
-                            rt.suppressedVisualEffects |= SUPPRESSED_EFFECT_LIGHTS
-                                    | SUPPRESSED_EFFECT_FULL_SCREEN_INTENT;
+                            rt.suppressedVisualEffects |= SUPPRESSED_EFFECT_FULL_SCREEN_INTENT;
                         }
                     }
                     Boolean allowWhenScreenOn = unsafeBoolean(parser, ALLOW_ATT_SCREEN_ON);
@@ -539,7 +538,7 @@ public class ZenModeConfig implements Parcelable {
                     // only read from suppressed visual effects field if we haven't just migrated
                     // the values from allowOn/allowOff, lest we wipe out those settings
                     rt.suppressedVisualEffects = safeInt(parser, DISALLOW_ATT_VISUAL_EFFECTS,
-                            DEFAULT_SUPPRESSED_VISUAL_EFFECTS);
+                            DEFAULT_SUPPRESSED_VISUAL_EFFECTS) ^ SUPPRESSED_EFFECT_LIGHTS;
                 } else if (MANUAL_TAG.equals(tag)) {
                     rt.manualRule = readRuleXml(parser);
                 } else if (AUTOMATIC_TAG.equals(tag)) {
