@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "1494c387_37d283df",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6898,
+      "author": {
+        "id": 1448200
+      },
+      "writtenOn": "2019-06-13T16:31:36Z",
+      "side": 1,
+      "message": "I\u0027ve updated the code to wrap the IpMemoryStore with the cleared calling identity.\n\nI\u0027ll go ahead and leave it alone for the Q timeframe, as the first OEMs probably won\u0027t be dealing with VPN in Cars quite yet.\n\nI\u0027ll revisit with our product team about the use case of VPN and follow up sometime in the R timeframe.",
+      "parentUuid": "fa3e5b1e_9b7103ee",
+      "range": {
+        "startLine": 6898,
+        "startChar": 18,
+        "endLine": 6898,
+        "endChar": 24
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ec66bf1_d00655bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -213,6 +237,30 @@
       "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd10c594_54e5882a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6925,
+      "author": {
+        "id": 1448200
+      },
+      "writtenOn": "2019-06-13T16:31:36Z",
+      "side": 1,
+      "message": "Leaving as is, since the approach changed.",
+      "parentUuid": "568712e8_a50636d8",
+      "range": {
+        "startLine": 6925,
+        "startChar": 20,
+        "endLine": 6925,
+        "endChar": 69
+      },
+      "revId": "170e883ecf640f8fb1999e9a0bb0c17d4e6f5036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
