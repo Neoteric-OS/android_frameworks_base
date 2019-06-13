@@ -252,13 +252,15 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
     private final ConnectivityService mConnService;
+    private final ConnectivityService.Dependencies mDeps;
     private final Context mContext;
     private final Handler mHandler;
 
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context, Handler handler,
             NetworkMisc misc, ConnectivityService connService, INetd netd,
-            IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber) {
+            IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
+            ConnectivityService.Dependencies deps) {
         this.messenger = messenger;
         asyncChannel = ac;
         network = net;
@@ -268,6 +270,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         currentScore = score;
         clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
         mConnService = connService;
+        mDeps = deps;
         mContext = context;
         mHandler = handler;
         networkMisc = misc;
@@ -579,10 +582,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         if (newExpiry > 0) {
-            mLingerMessage = mConnService.makeWakeupMessage(
+            mLingerMessage = new WakeupMessage(
                     mContext, mHandler,
-                    "NETWORK_LINGER_COMPLETE." + network.netId,
-                    EVENT_NETWORK_LINGER_COMPLETE, this);
+                    "NETWORK_LINGER_COMPLETE." + network.netId /* cmdName */,
+                    EVENT_NETWORK_LINGER_COMPLETE /* cmd */,
+                    0 /* arg1 (unused) */, 0 /* arg2 (unused) */,
+                    this /* obj (NetworkAgentInfo) */);
             mLingerMessage.schedule(newExpiry);
         }
 
