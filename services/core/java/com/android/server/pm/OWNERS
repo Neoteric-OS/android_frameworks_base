@@ -1,13 +1,4 @@
-hackbod@android.com
-hackbod@google.com
-jsharkey@android.com
-jsharkey@google.com
-narayan@google.com
-patb@google.com
-svetoslavganov@android.com
-svetoslavganov@google.com
-toddke@android.com
-toddke@google.com
+include platform/frameworks/base:/core/java/android/content/pm/OWNERS
 
 # apex support
 per-file ApexManager.java = dariofreni@google.com
