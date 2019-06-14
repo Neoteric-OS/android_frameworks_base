@@ -17,8 +17,9 @@
 package com.android.settingslib.license;
 
 import android.content.Context;
-import androidx.annotation.VisibleForTesting;
 import android.util.Log;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.android.settingslib.R;
 import com.android.settingslib.utils.AsyncLoader;
@@ -39,7 +40,8 @@ public class LicenseHtmlLoader extends AsyncLoader<File> {
             "/odm/etc/NOTICE.xml.gz",
             "/oem/etc/NOTICE.xml.gz",
             "/product/etc/NOTICE.xml.gz",
-            "/product_services/etc/NOTICE.xml.gz"};
+            "/product_services/etc/NOTICE.xml.gz",
+            "/data/etc/NOTICE.xml.gz"};
     private static final String NOTICE_HTML_FILE_NAME = "NOTICE.html";
 
     private Context mContext;
