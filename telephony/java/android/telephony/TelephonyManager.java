@@ -93,8 +93,6 @@ import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.TelephonyProperties;
 
-import dalvik.system.VMRuntime;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.annotation.Retention;
@@ -4777,7 +4775,8 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony == null)
                 return DATA_ACTIVITY_NONE;
-            return telephony.getDataActivity();
+            return telephony.getDataActivityForSubId(
+                    getSubId(SubscriptionManager.getActiveDataSubscriptionId()));
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return DATA_ACTIVITY_NONE;
@@ -4825,7 +4824,8 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony == null)
                 return DATA_DISCONNECTED;
-            return telephony.getDataState();
+            return telephony.getDataStateForSubId(
+                    getSubId(SubscriptionManager.getActiveDataSubscriptionId()));
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return DATA_DISCONNECTED;
