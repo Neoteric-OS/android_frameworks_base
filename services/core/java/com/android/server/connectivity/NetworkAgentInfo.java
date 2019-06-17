@@ -155,9 +155,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Whether a captive portal was found during the last network validation attempt.
     public boolean lastCaptivePortalDetected;
 
-    // Indicates the user was notified of a successful captive portal login since a portal was
-    // last detected.
-    public boolean captivePortalLoginNotified;
+    // Indicates the user should be notified of a successful captive portal login when the network
+    // validates.
+    public volatile boolean shouldNotifyCaptivePortalLogin;
 
     // Set to true when partial connectivity was detected.
     public boolean partialConnectivity;
@@ -629,7 +629,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 + "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} "
                 + "everCaptivePortalDetected{" + everCaptivePortalDetected + "} "
                 + "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} "
-                + "captivePortalLoginNotified{" + captivePortalLoginNotified + "} "
+                + "shouldNotifyCaptivePortalLogin{" + shouldNotifyCaptivePortalLogin + "} "
                 + "partialConnectivity{" + partialConnectivity + "} "
                 + "acceptPartialConnectivity{" + networkMisc.acceptPartialConnectivity + "} "
                 + "clat{" + clatd + "} "

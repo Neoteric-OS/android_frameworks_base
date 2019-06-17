@@ -2613,9 +2613,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final boolean valid = ((msg.arg1 & NETWORK_VALIDATION_RESULT_VALID) != 0);
                     final boolean wasValidated = nai.lastValidated;
                     final boolean wasDefault = isDefaultNetwork(nai);
-                    if (nai.everCaptivePortalDetected && !nai.captivePortalLoginNotified
+                    if (nai.everCaptivePortalDetected && nai.shouldNotifyCaptivePortalLogin
                             && valid) {
-                        nai.captivePortalLoginNotified = true;
+                        nai.shouldNotifyCaptivePortalLogin = false;
                         showNetworkNotification(nai, NotificationType.LOGGED_IN);
                     }
 
@@ -2686,9 +2686,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         final int oldScore = nai.getCurrentScore();
                         nai.lastCaptivePortalDetected = visible;
                         nai.everCaptivePortalDetected |= visible;
-                        if (visible) {
-                            nai.captivePortalLoginNotified = false;
-                        }
                         if (nai.lastCaptivePortalDetected &&
                             Settings.Global.CAPTIVE_PORTAL_MODE_AVOID == getCaptivePortalMode()) {
                             if (DBG) log("Avoiding captive portal network: " + nai.name());
@@ -3497,6 +3494,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new CaptivePortal(new CaptivePortalImpl(network).asBinder()));
         appIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
 
+        // This runs in a random binder thread, but getNetworkAgentInfoForNetwork is thread-safe,
+        // and shouldNotifyCaptivePortalLogin is volatile.
+        final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
+        if (nai != null) {
+            nai.shouldNotifyCaptivePortalLogin = true;
+        }
         Binder.withCleanCallingIdentity(() ->
                 mContext.startActivityAsUser(appIntent, UserHandle.CURRENT));
     }

@@ -18,6 +18,7 @@ package com.android.server;
 
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
@@ -76,13 +77,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -137,6 +138,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
+import android.net.NetworkStack;
 import android.net.NetworkStackClient;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
@@ -150,6 +152,7 @@ import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -187,6 +190,7 @@ import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
+import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
@@ -279,6 +283,7 @@ public class ConnectivityServiceTest {
     @Mock NetworkStackClient mNetworkStack;
     @Mock PackageManager mPackageManager;
     @Mock UserManager mUserManager;
+    @Mock NotificationManager mNotificationManager;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -348,7 +353,7 @@ public class ConnectivityServiceTest {
         @Override
         public Object getSystemService(String name) {
             if (Context.CONNECTIVITY_SERVICE.equals(name)) return mCm;
-            if (Context.NOTIFICATION_SERVICE.equals(name)) return mock(NotificationManager.class);
+            if (Context.NOTIFICATION_SERVICE.equals(name)) return mNotificationManager;
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
             return super.getSystemService(name);
@@ -368,7 +373,13 @@ public class ConnectivityServiceTest {
         public PackageManager getPackageManager() {
             return mPackageManager;
         }
-   }
+
+        @Override
+        public void enforceCallingOrSelfPermission(String permission, String message) {
+            if (NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK.equals(permission)) return;
+            super.enforceCallingOrSelfPermission(permission, message);
+        }
+    }
 
     public void waitForIdle(int timeoutMsAsInt) {
         long timeoutMs = timeoutMsAsInt;
@@ -2853,6 +2864,9 @@ public class ConnectivityServiceTest {
 
         // Expect NET_CAPABILITY_VALIDATED onAvailable callback.
         validatedCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+        // Expect no notification to be shown when captive portal disappears by itself
+        verify(mNotificationManager, never()).notifyAsUser(
+                anyString(), eq(NotificationType.LOGGED_IN.eventId), any(), any());
 
         // Break network connectivity.
         // Expect NET_CAPABILITY_VALIDATED onLost callback.
@@ -2895,11 +2909,23 @@ public class ConnectivityServiceTest {
         verify(mWiFiNetworkAgent.mNetworkMonitor, timeout(TIMEOUT_MS).times(1))
                 .launchCaptivePortalApp();
 
+        // NetworkMonitor uses startCaptivePortal(Network, Bundle) (startCaptivePortalAppInternal)
+        final Bundle testBundle = new Bundle();
+        final String testKey = "testkey";
+        final String testValue = "testvalue";
+        testBundle.putString(testKey, testValue);
+        mCm.startCaptivePortalApp(wifiNetwork, testBundle);
+        final Intent signInIntent = mServiceContext.expectStartActivityIntent(TIMEOUT_MS);
+        assertEquals(ACTION_CAPTIVE_PORTAL_SIGN_IN, signInIntent.getAction());
+        assertEquals(testValue, signInIntent.getStringExtra(testKey));
+
         // Report that the captive portal is dismissed, and check that callbacks are fired
         mWiFiNetworkAgent.setNetworkValid();
         mWiFiNetworkAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
         validatedCallback.expectAvailableCallbacksValidated(mWiFiNetworkAgent);
         captivePortalCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
+        verify(mNotificationManager, times(1)).notifyAsUser(anyString(),
+                eq(NotificationType.LOGGED_IN.eventId), any(), eq(UserHandle.ALL));
 
         mCm.unregisterNetworkCallback(validatedCallback);
         mCm.unregisterNetworkCallback(captivePortalCallback);
