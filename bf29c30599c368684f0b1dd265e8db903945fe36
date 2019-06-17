@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4508d9d_e684502a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2019-06-17T19:56:06Z",
+      "side": 1,
+      "message": "please describe how this patchset is fixing the issue. I don\u0027t understand the proposed approach at all.",
+      "revId": "bf29c30599c368684f0b1dd265e8db903945fe36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
