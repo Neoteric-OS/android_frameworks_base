@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import android.app.Notification;
@@ -150,6 +151,9 @@ public class NetworkNotificationManager {
             name = TextUtils.isEmpty(extraInfo) ? nai.networkCapabilities.getSSID() : extraInfo;
             // Only notify for Internet-capable networks.
             if (!nai.networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)) return;
+            // Suppress notification for VPN network because the notification could be caused by
+            // VPN, not the underlying network.
+            if (nai.networkCapabilities.hasTransport(TRANSPORT_VPN)) return;
         } else {
             // Legacy notifications.
             transportType = TRANSPORT_CELLULAR;
@@ -175,84 +179,92 @@ public class NetworkNotificationManager {
         }
 
         Resources r = Resources.getSystem();
-        CharSequence title;
-        CharSequence details;
+        CharSequence title = null;
+        CharSequence details = null;
         int icon = getIcon(transportType, notifyType);
-        if (notifyType == NotificationType.NO_INTERNET) {
-            switch (transportType) {
-                case TRANSPORT_WIFI:
+        boolean expected = true;
+        switch (eventId) {
+            // NO_INTERNET and PARTIAL_CONNECTIVITY notification are currently only sent on wifi.
+            case SystemMessage.NOTE_NETWORK_NO_INTERNET:
+                if (transportType != TRANSPORT_WIFI) return;
+
+                title = r.getString(R.string.wifi_no_internet,
+                    WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
+                details = r.getString(R.string.wifi_no_internet_detailed);
+                break;
+            case SystemMessage.NOTE_NETWORK_PARTIAL_CONNECTIVITY:
+                if (transportType != TRANSPORT_WIFI) return;
+
+                title = r.getString(R.string.network_partial_connectivity,
+                    WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
+                details = r.getString(R.string.network_partial_connectivity_detailed);
+                break;
+            case SystemMessage.NOTE_NETWORK_LOST_INTERNET:
+                if (transportType != TRANSPORT_WIFI) {
+                    expected = false;
+                } else {
                     title = r.getString(R.string.wifi_no_internet,
                         WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
                     details = r.getString(R.string.wifi_no_internet_detailed);
-                    break;
-                default:
-                    // TODO: Display notifications for those networks that provide internet.
-                    // except VPN.
-                    return;
-            }
-
-        } else if (notifyType == NotificationType.PARTIAL_CONNECTIVITY) {
-            switch (transportType) {
-                case TRANSPORT_WIFI:
-                    title = r.getString(R.string.network_partial_connectivity,
-                        WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
-                    details = r.getString(R.string.network_partial_connectivity_detailed);
-                    break;
-                default:
-                    // TODO: Display notifications for those networks that provide internet.
-                    // except VPN.
-                    return;
-            }
-        } else if (notifyType == NotificationType.LOST_INTERNET &&
-                transportType == TRANSPORT_WIFI) {
-            title = r.getString(R.string.wifi_no_internet,
-                    WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
-            details = r.getString(R.string.wifi_no_internet_detailed);
-        } else if (notifyType == NotificationType.SIGN_IN) {
-            switch (transportType) {
-                case TRANSPORT_WIFI:
-                    title = r.getString(R.string.wifi_available_sign_in, 0);
-                    details = r.getString(R.string.network_available_sign_in_detailed,
+                }
+                break;
+            case SystemMessage.NOTE_NETWORK_LOGGED_IN:
+                if (transportType != TRANSPORT_WIFI) {
+                    expected = false;
+                } else {
+                    title = WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID());
+                    details = r.getString(R.string.captive_portal_logged_in_detailed);
+                }
+                break;
+            case SystemMessage.NOTE_NETWORK_SIGN_IN:
+                switch (transportType) {
+                    case TRANSPORT_WIFI:
+                        title = r.getString(R.string.wifi_available_sign_in, 0);
+                        details = r.getString(R.string.network_available_sign_in_detailed,
                             WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
-                    break;
-                case TRANSPORT_CELLULAR:
-                    title = r.getString(R.string.network_available_sign_in, 0);
-                    // TODO: Change this to pull from NetworkInfo once a printable
-                    // name has been added to it
-                    NetworkSpecifier specifier = nai.networkCapabilities.getNetworkSpecifier();
-                    int subId = SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
-                    if (specifier instanceof StringNetworkSpecifier) {
-                        try {
-                            subId = Integer.parseInt(
+                        break;
+                    case TRANSPORT_CELLULAR:
+                        title = r.getString(R.string.network_available_sign_in, 0);
+                        // TODO: Change this to pull from NetworkInfo once a printable
+                        // name has been added to it
+                        NetworkSpecifier specifier = nai.networkCapabilities.getNetworkSpecifier();
+                        int subId = SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
+                        if (specifier instanceof StringNetworkSpecifier) {
+                            try {
+                                subId = Integer.parseInt(
                                     ((StringNetworkSpecifier) specifier).specifier);
-                        } catch (NumberFormatException e) {
-                            Slog.e(TAG, "NumberFormatException on "
+                            } catch (NumberFormatException e) {
+                                Slog.e(TAG, "NumberFormatException on "
                                     + ((StringNetworkSpecifier) specifier).specifier);
+                            }
                         }
-                    }
 
-                    details = mTelephonyManager.createForSubscriptionId(subId)
+                        details = mTelephonyManager.createForSubscriptionId(subId)
                             .getNetworkOperatorName();
-                    break;
-                default:
-                    title = r.getString(R.string.network_available_sign_in, 0);
-                    details = r.getString(R.string.network_available_sign_in_detailed, name);
-                    break;
-            }
-        } else if (notifyType == NotificationType.LOGGED_IN) {
-            title = WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID());
-            details = r.getString(R.string.captive_portal_logged_in_detailed);
-        } else if (notifyType == NotificationType.NETWORK_SWITCH) {
-            String fromTransport = getTransportName(transportType);
-            String toTransport = getTransportName(getFirstTransportType(switchToNai));
-            title = r.getString(R.string.network_switch_metered, toTransport);
-            details = r.getString(R.string.network_switch_metered_detail, toTransport,
+                        break;
+                    default:
+                        title = r.getString(R.string.network_available_sign_in, 0);
+                        details = r.getString(R.string.network_available_sign_in_detailed, name);
+                        break;
+                }
+                break;
+            case SystemMessage.NOTE_NETWORK_SWITCH:
+                String fromTransport = getTransportName(transportType);
+                String toTransport = getTransportName(getFirstTransportType(switchToNai));
+                title = r.getString(R.string.network_switch_metered, toTransport);
+                details = r.getString(R.string.network_switch_metered_detail, toTransport,
                     fromTransport);
-        } else {
+                break;
+            default:
+                expected = false;
+                break;
+        }
+        if (!expected) {
             Slog.wtf(TAG, "Unknown notification type " + notifyType + " on network transport "
-                    + getTransportName(transportType));
+                + getTransportName(transportType));
             return;
         }
+
         // When replacing an existing notification for a given network, don't alert, just silently
         // update the existing notification. Note that setOnlyAlertOnce() will only work for the
         // same id, and the id used here is the NotificationType which is different in every type of
