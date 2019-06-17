@@ -49,7 +49,6 @@ import static android.telephony.CarrierConfigManager.KEY_DATA_WARNING_THRESHOLD_
 import static android.telephony.CarrierConfigManager.KEY_MONTHLY_DATA_CYCLE_DAY_INT;
 import static android.telephony.SubscriptionPlan.BYTES_UNLIMITED;
 import static android.telephony.SubscriptionPlan.LIMIT_BEHAVIOR_DISABLED;
-import static android.text.format.Time.TIMEZONE_UTC;
 
 import static com.android.server.net.NetworkPolicyManagerInternal.QUOTA_TYPE_JOBS;
 import static com.android.server.net.NetworkPolicyManagerInternal.QUOTA_TYPE_MULTIPATH;
@@ -128,7 +127,6 @@ import android.telephony.SubscriptionPlan;
 import android.telephony.TelephonyManager;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.text.TextUtils;
-import android.text.format.Time;
 import android.util.DataUnit;
 import android.util.Log;
 import android.util.Pair;
@@ -185,6 +183,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -869,7 +868,7 @@ public class NetworkPolicyManagerServiceTest {
         final long expectedCycle = parseTime("2007-11-05T00:00:00.000Z");
 
         final NetworkPolicy policy = new NetworkPolicy(
-                sTemplateWifi, 5, TIMEZONE_UTC, 1024L, 1024L, false);
+                sTemplateWifi, 5, "UTC", 1024L, 1024L, false);
         final long actualCycle = computeLastCycleBoundary(currentTime, policy);
         assertTimeEquals(expectedCycle, actualCycle);
     }
@@ -881,7 +880,7 @@ public class NetworkPolicyManagerServiceTest {
         final long expectedCycle = parseTime("2007-10-20T00:00:00.000Z");
 
         final NetworkPolicy policy = new NetworkPolicy(
-                sTemplateWifi, 20, TIMEZONE_UTC, 1024L, 1024L, false);
+                sTemplateWifi, 20, "UTC", 1024L, 1024L, false);
         final long actualCycle = computeLastCycleBoundary(currentTime, policy);
         assertTimeEquals(expectedCycle, actualCycle);
     }
@@ -893,7 +892,7 @@ public class NetworkPolicyManagerServiceTest {
         final long expectedCycle = parseTime("2007-01-30T00:00:00.000Z");
 
         final NetworkPolicy policy = new NetworkPolicy(
-                sTemplateWifi, 30, TIMEZONE_UTC, 1024L, 1024L, false);
+                sTemplateWifi, 30, "UTC", 1024L, 1024L, false);
         final long actualCycle = computeLastCycleBoundary(currentTime, policy);
         assertTimeEquals(expectedCycle, actualCycle);
     }
@@ -905,7 +904,7 @@ public class NetworkPolicyManagerServiceTest {
         final long expectedCycle = parseTime("2007-02-28T23:59:59.999Z");
 
         final NetworkPolicy policy = new NetworkPolicy(
-                sTemplateWifi, 30, TIMEZONE_UTC, 1024L, 1024L, false);
+                sTemplateWifi, 30, "UTC", 1024L, 1024L, false);
         final long actualCycle = computeLastCycleBoundary(currentTime, policy);
         assertTimeEquals(expectedCycle, actualCycle);
     }
@@ -913,7 +912,7 @@ public class NetworkPolicyManagerServiceTest {
     @Test
     public void testCycleBoundaryLeapYear() throws Exception {
         final NetworkPolicy policy = new NetworkPolicy(
-                sTemplateWifi, 29, TIMEZONE_UTC, 1024L, 1024L, false);
+                sTemplateWifi, 29, "UTC", 1024L, 1024L, false);
 
         assertTimeEquals(parseTime("2012-01-29T00:00:00.000Z"),
                 computeNextCycleBoundary(parseTime("2012-01-14T00:00:00.000Z"), policy));
@@ -1005,7 +1004,7 @@ public class NetworkPolicyManagerServiceTest {
 
         mPolicyListener.expect().onMeteredIfacesChanged(any());
         setNetworkPolicies(new NetworkPolicy(
-                sTemplateWifi, CYCLE_DAY, TIMEZONE_UTC, 1 * MB_IN_BYTES, 2 * MB_IN_BYTES, false));
+                sTemplateWifi, CYCLE_DAY, "UTC", 1 * MB_IN_BYTES, 2 * MB_IN_BYTES, false));
         mPolicyListener.waitAndVerify().onMeteredIfacesChanged(eq(new String[]{TEST_IFACE}));
 
         verify(mNetworkManager, atLeastOnce()).setInterfaceQuota(TEST_IFACE,
@@ -1243,8 +1242,7 @@ public class NetworkPolicyManagerServiceTest {
 
             mPolicyListener.expect().onMeteredIfacesChanged(any());
             setNetworkPolicies(new NetworkPolicy(
-                    sTemplateWifi, CYCLE_DAY, TIMEZONE_UTC, WARNING_DISABLED, LIMIT_DISABLED,
-                    true));
+                    sTemplateWifi, CYCLE_DAY, "UTC", WARNING_DISABLED, LIMIT_DISABLED, true));
             mPolicyListener.waitAndVerify().onMeteredIfacesChanged(eq(new String[]{TEST_IFACE}));
 
             verify(mNetworkManager, atLeastOnce()).setInterfaceQuota(TEST_IFACE,
@@ -1771,7 +1769,7 @@ public class NetworkPolicyManagerServiceTest {
     private static NetworkPolicy buildFakeMobilePolicy(int cycleDay, long warningBytes,
             long limitBytes, boolean inferred){
         final NetworkTemplate template = buildTemplateMobileAll(FAKE_SUBSCRIBER_ID);
-        return new NetworkPolicy(template, cycleDay, new Time().timezone, warningBytes,
+        return new NetworkPolicy(template, cycleDay, TimeZone.getDefault().getID(), warningBytes,
                 limitBytes, SNOOZE_NEVER, SNOOZE_NEVER, true, inferred);
     }
 
