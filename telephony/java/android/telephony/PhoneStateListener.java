@@ -409,7 +409,9 @@ public class PhoneStateListener {
      * and non-null Looper.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@link TelephonyManager#createForSubscriptionId(int)} and add a "
+            + "{@link PhoneStateListener} to it using {@link TelephonyManager#listen}")
     public PhoneStateListener(Integer subId, Looper looper) {
         this(subId, new HandlerExecutor(new Handler(looper)));
     }

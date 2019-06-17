@@ -229,7 +229,8 @@ public class ServiceState implements Parcelable {
      * IWLAN
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives =
+            "Use {@link TelephonyManager#NETWORK_TYPE_IWLAN} instead.")
     public static final int RIL_RADIO_TECHNOLOGY_IWLAN = 18;
 
     /**
@@ -308,14 +309,17 @@ public class ServiceState implements Parcelable {
     private String mDataOperatorAlphaLong;
     private String mDataOperatorAlphaShort;
     private String mDataOperatorNumeric;
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@link TelephonyManager#getServiceState} and "
+            + "{@code TelephonyManager#isManualNetworkSelectionAllowed} instead.")
     private boolean mIsManualNetworkSelection;
 
     private boolean mIsEmergencyOnly;
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private boolean mCssIndicator;
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives =
+            "Use {@link TelephonyManager#getServiceState} and {@code #getCdmaSystemId} instead.")
     private int mNetworkId;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private int mSystemId;
@@ -530,7 +534,9 @@ public class ServiceState implements Parcelable {
      *
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link #getState} or "
+            + "{@code NetworkRegistrationState#getRegState} instead.")
     public int getVoiceRegState() {
         return mVoiceRegState;
     }
@@ -545,7 +551,9 @@ public class ServiceState implements Parcelable {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(publicAlternatives = "Use {@code TelephonyManager.getServiceState()"
+            + ".getNetworkRegistrationState(NetworkRegistrationState.DOMAIN_PS, "
+            + "AccessNetworkConstants.TransportType.WWAN).getAccessNetworkTechnology()} instead.")
     public int getDataRegState() {
         return mDataRegState;
     }
@@ -606,7 +614,9 @@ public class ServiceState implements Parcelable {
      * @return roaming status
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@code ServiceState.getNetworkRegistrationState(NetworkRegistrationState.DOMAIN_CS,"
+            + "AccessNetworkConstants.TransportType.WWAN).getRoamingType()}")
     public boolean getVoiceRoaming() {
         return getVoiceRoamingType() != ROAMING_TYPE_NOT_ROAMING;
     }
@@ -630,7 +640,10 @@ public class ServiceState implements Parcelable {
      * @return roaming type
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@code TelephonyManager.getServiceState().getNetworkRegistrationState("
+            + "NetworkRegistrationState.DOMAIN_PS, AccessNetworkConstants.TransportType.WWAN)"
+            + ".isRoaming()} instead.")
     public boolean getDataRoaming() {
         return getDataRoamingType() != ROAMING_TYPE_NOT_ROAMING;
     }
@@ -655,7 +668,10 @@ public class ServiceState implements Parcelable {
      * @return roaming type
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@code SystemAPI ServiceState.getNetworkRegistrationState("
+            + "NetworkRegistrationState.DOMAIN_PS, AccessNetworkConstants.TransportType.WWAN)"
+            + ".getRoamingType()} instead.")
     public @RoamingType int getDataRoamingType() {
         final NetworkRegistrationInfo regState = getNetworkRegistrationInfo(
                 NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WWAN);
@@ -806,7 +822,8 @@ public class ServiceState implements Parcelable {
      * @return numeric format of operator, null if unregistered or unknown
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link #getOperatorNumeric()} instead.")
     public String getVoiceOperatorNumeric() {
         return mVoiceOperatorNumeric;
     }
@@ -1465,7 +1482,10 @@ public class ServiceState implements Parcelable {
         return RIL_RADIO_TECHNOLOGY_UNKNOWN;
     }
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(publicAlternatives = "Use "
+            + "{@code TelephonyManager.getServiceState().getNetworkRegistrationState("
+            + "NetworkRegistrationState.DOMAIN_PS, AccessNetworkConstants.TransportType.WWAN)"
+            + ".getAccessNetworkTechnology()} instead of internal RIL technologies.")
     public int getRilDataRadioTechnology() {
         return networkTypeToRilRadioTechnology(getDataNetworkType());
     }
@@ -1615,7 +1635,10 @@ public class ServiceState implements Parcelable {
      * @return Current data network type
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives = "Use "
+            + "{@code TelephonyManager.getServiceState()"
+            + ".getNetworkRegistrationState(NetworkRegistrationState.DOMAIN_PS, "
+            + "AccessNetworkConstants.TransportType.WWAN).getAccessNetworkTechnology()} instead.")
     public @TelephonyManager.NetworkType int getDataNetworkType() {
         final NetworkRegistrationInfo iwlanRegInfo = getNetworkRegistrationInfo(
                 NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WLAN);
