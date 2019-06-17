@@ -122,7 +122,7 @@ public class UnsupportedAppUsageProcessor extends AbstractProcessor {
         );
     }
 
-    private String encodeAnnotationProperties(AnnotationMirror annotation) {
+    private String encodeAnnotationProperties(AnnotationMirror annotation, String docComment) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> e
                 : annotation.getElementValues().entrySet()) {
@@ -132,6 +132,9 @@ public class UnsupportedAppUsageProcessor extends AbstractProcessor {
             sb.append(e.getKey().getSimpleName())
                     .append("=")
                     .append(URLEncoder.encode(e.getValue().toString()));
+        }
+        if (docComment != null) {
+            sb.append("docComment").append("=").append(URLEncoder.encode(docComment));
         }
         return sb.toString();
     }
@@ -150,6 +153,7 @@ public class UnsupportedAppUsageProcessor extends AbstractProcessor {
      */
     private String getAnnotationIndex(String signature, Element annotatedElement) {
         JavacElements javacElem = (JavacElements) processingEnv.getElementUtils();
+        String docComment = processingEnv.getElementUtils().getDocComment(annotatedElement);
         AnnotationMirror unsupportedAppUsage =
                 getUnsupportedAppUsageAnnotationMirror(annotatedElement);
         Pair<JCTree, JCTree.JCCompilationUnit> pair =
@@ -162,7 +166,7 @@ public class UnsupportedAppUsageProcessor extends AbstractProcessor {
                 lines.getColumnNumber(pair.fst.pos().getStartPosition()),
                 lines.getLineNumber(pair.fst.pos().getEndPosition(pair.snd.endPositions)),
                 lines.getColumnNumber(pair.fst.pos().getEndPosition(pair.snd.endPositions)),
-                encodeAnnotationProperties(unsupportedAppUsage));
+                encodeAnnotationProperties(unsupportedAppUsage, docComment));
     }
 
     /**
