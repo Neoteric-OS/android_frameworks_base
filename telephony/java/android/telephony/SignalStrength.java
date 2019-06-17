@@ -37,23 +37,29 @@ public class SignalStrength implements Parcelable {
     private static final boolean DBG = false;
 
     /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrength#SIGNAL_STRENGTH_NONE_OR_UNKNOWN} "
+            + " instead.")
     public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN =
             CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN; // = 0
     /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrength#SIGNAL_STRENGTH_POOR} instead.")
     public static final int SIGNAL_STRENGTH_POOR =
             CellSignalStrength.SIGNAL_STRENGTH_POOR; // = 1
     /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrength#SIGNAL_STRENGTH_MODERATE} instead.")
     public static final int SIGNAL_STRENGTH_MODERATE =
             CellSignalStrength.SIGNAL_STRENGTH_MODERATE; // = 2
     /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrength#SIGNAL_STRENGTH_GOOD} instead.")
     public static final int SIGNAL_STRENGTH_GOOD =
             CellSignalStrength.SIGNAL_STRENGTH_GOOD; // = 3
     /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrength#SIGNAL_STRENGTH_GREAT} instead.")
     public static final int SIGNAL_STRENGTH_GREAT =
             CellSignalStrength.SIGNAL_STRENGTH_GREAT; // = 4
     /** @hide */
@@ -507,7 +513,8 @@ public class SignalStrength implements Parcelable {
      * @hide
      */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link CellSignalStrengthLte#getRssi} instead.")
     public int getLteRssnr() {
         return mLte.getRssnr();
     }
