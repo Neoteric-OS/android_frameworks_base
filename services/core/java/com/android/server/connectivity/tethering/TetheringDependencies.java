@@ -88,9 +88,9 @@ public class TetheringDependencies {
     }
 
     /**
-     * Get default data subscription id to build TetheringConfiguration.
+     * Get active data subscription id to build TetheringConfiguration.
      */
-    public int getDefaultDataSubscriptionId() {
-        return SubscriptionManager.getDefaultDataSubscriptionId();
+    public int getActiveDataSubscriptionId() {
+        return SubscriptionManager.getActiveDataSubscriptionId();
     }
 }

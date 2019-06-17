@@ -100,6 +100,7 @@ import android.os.UserManager;
 import android.os.test.TestLooper;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
+import android.telephony.TelephonyManager;
 import android.test.mock.MockContentResolver;
 
 import androidx.test.filters.SmallTest;
@@ -147,6 +148,7 @@ public class TetheringTest {
     @Mock private MockableSystemProperties mSystemProperties;
     @Mock private OffloadHardwareInterface mOffloadHardwareInterface;
     @Mock private Resources mResources;
+    @Mock private TelephonyManager mTelephonyManager;
     @Mock private UsbManager mUsbManager;
     @Mock private WifiManager mWifiManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
@@ -193,6 +195,7 @@ public class TetheringTest {
         public Object getSystemService(String name) {
             if (Context.WIFI_SERVICE.equals(name)) return mWifiManager;
             if (Context.USB_SERVICE.equals(name)) return mUsbManager;
+            if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             return super.getSystemService(name);
         }
     }
@@ -276,7 +279,7 @@ public class TetheringTest {
         }
 
         @Override
-        public int getDefaultDataSubscriptionId() {
+        public int getActiveDataSubscriptionId() {
             return INVALID_SUBSCRIPTION_ID;
         }
     }
