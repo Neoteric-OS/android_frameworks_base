@@ -231,7 +231,8 @@ public class ServiceState implements Parcelable {
      * IWLAN
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives =
+            "Use {@link TelephonyManager#NETWORK_TYPE_IWLAN} instead.")
     public static final int RIL_RADIO_TECHNOLOGY_IWLAN = 18;
 
     /**
@@ -317,7 +318,8 @@ public class ServiceState implements Parcelable {
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private boolean mCssIndicator;
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives =
+            "Use {@link TelephonyManager#getServiceState} and {@link #getCdmaSystemId} instead.")
     private int mNetworkId;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private int mSystemId;

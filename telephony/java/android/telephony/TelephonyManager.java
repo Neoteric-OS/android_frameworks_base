@@ -93,8 +93,6 @@ import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.TelephonyProperties;
 
-import dalvik.system.VMRuntime;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.annotation.Retention;
@@ -321,7 +319,9 @@ public class TelephonyManager {
     /** @hide
     /* @deprecated - use getSystemService as described above */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@code context.getSystemService(Context.TELEPHONY_SERVICE)}"
+            + " instead.")
     public static TelephonyManager getDefault() {
         return sInstance;
     }
@@ -398,7 +398,8 @@ public class TelephonyManager {
     }
 
     /** {@hide} */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, publicAlternatives =
+            "Use {@code context.getSystemService(Context.TELEPHONY_SERVICE)} instead.")
     public static TelephonyManager from(Context context) {
         return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
@@ -2206,7 +2207,10 @@ public class TelephonyManager {
      * @param subId
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link TelephonyManager#getNetworkOperator()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getNetworkOperatorName()} instead.")
     public String getNetworkOperatorName(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getTelephonyProperty(phoneId, TelephonyProperties.PROPERTY_OPERATOR_ALPHA, "");
@@ -2234,7 +2238,10 @@ public class TelephonyManager {
      * @param subId
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link #getNetworkOperator()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getNetworkOperator()} instead.")
     public String getNetworkOperator(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getNetworkOperatorForPhone(phoneId);
@@ -2593,7 +2600,10 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link #getVoiceNetworkType()}: "
+            + "{@code TelephonyManage.createForSubscriptionId(int subId)"
+            + ".getVoiceNetworkType()} instead.")
     public int getVoiceNetworkType(int subId) {
         try{
             ITelephony telephony = getITelephony();
@@ -3078,7 +3088,11 @@ public class TelephonyManager {
      * @param subId for which SimOperator is returned
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use "
+            + "{@link #getSimOperator()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getSimOperator()} instead.")
     public String getSimOperator(int subId) {
         return getSimOperatorNumeric(subId);
     }
@@ -3092,7 +3106,11 @@ public class TelephonyManager {
      * @see #getSimState
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use "
+            + "{@link #getSimOperator()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getSimOperator()} instead.")
     public String getSimOperatorNumeric() {
         int subId = mSubId;
         if (!SubscriptionManager.isUsableSubIdValue(subId)) {
@@ -3135,7 +3153,9 @@ public class TelephonyManager {
      * @param phoneId for which SimOperator is returned
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link #getSimOperator()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId).getSimOperator()}.")
     public String getSimOperatorNumericForPhone(int phoneId) {
         return getTelephonyProperty(phoneId,
                 TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC, "");
@@ -3195,7 +3215,11 @@ public class TelephonyManager {
      * @param subId for which SimCountryIso is returned
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use "
+            + "{@link #getSimCountryIso()}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getSimCountryIso()} instead.")
     public String getSimCountryIso(int subId) {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         return getSimCountryIsoForPhone(phoneId);
@@ -3472,7 +3496,11 @@ public class TelephonyManager {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use "
+            + "{@link #getSubscriberId()}: "
+            + "{@code TelephonyManager createForSubscriptionId(int subId)"
+            + ".getSubscriberId()} instead.")
     public String getSubscriberId(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
@@ -9161,7 +9189,10 @@ public class TelephonyManager {
      * either READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE to retrieve the information.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P,
+            publicAlternatives = "Use {@link TelephonyManager#getServiceState}: "
+            + "{@code TelephonyManager.createForSubscriptionId(int subId)"
+            + ".getServiceState()} instead.")
     public ServiceState getServiceStateForSubscriber(int subId) {
         try {
             ITelephony service = getITelephony();
