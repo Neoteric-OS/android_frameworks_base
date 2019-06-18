@@ -1,0 +1,16 @@
+android_app {
+    name: "launchtool_app",
+    srcs: ["src/LaunchTool.kt"],
+    static_libs: [
+        "launcher-helper-lib",
+         "android-support-test",
+       "ub-uiautomator",
+        "androidx.test.runner",
+    ],
+}
+
+sh_binary {
+    name: "launchtool",
+    src: "launchtool",
+    required: ["launchtool_app"],
+}
