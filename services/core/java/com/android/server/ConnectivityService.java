@@ -2567,7 +2567,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
                     NetworkInfo info = (NetworkInfo) msg.obj;
-                    updateNetworkInfo(nai, info);
+                    updateNetworkInfo(nai, info, false);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
@@ -5519,8 +5519,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
-        nai.networkInfo = null;
-        updateNetworkInfo(nai, networkInfo);
+        updateNetworkInfo(nai, networkInfo, true);
         updateUids(nai, null, nai.networkCapabilities);
     }
 
@@ -6506,7 +6505,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo) {
+    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo,
+                                   boolean isNewCreated) {
         final NetworkInfo.State state = newInfo.getState();
         NetworkInfo oldInfo = null;
         final int oldScore = networkAgent.getCurrentScore();
@@ -6518,7 +6518,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (DBG) {
             log(networkAgent.name() + " EVENT_NETWORK_INFO_CHANGED, going from " +
-                    (oldInfo == null ? "null" : oldInfo.getState()) +
+                    (isNewCreated ? "initial" : (oldInfo == null ? "null" : oldInfo.getState())) +
                     " to " + state);
         }
 
@@ -6592,7 +6592,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // TODO(b/122649188): send the broadcast only to VPN users.
                 mProxyTracker.sendProxyBroadcast();
             }
-        } else if ((oldInfo != null && oldInfo.getState() == NetworkInfo.State.SUSPENDED) ||
+        } else if ((!isNewCreated &&
+                oldInfo != null && oldInfo.getState() == NetworkInfo.State.SUSPENDED) ||
                 state == NetworkInfo.State.SUSPENDED) {
             // going into or coming out of SUSPEND: re-score and notify
             if (networkAgent.getCurrentScore() != oldScore) {
