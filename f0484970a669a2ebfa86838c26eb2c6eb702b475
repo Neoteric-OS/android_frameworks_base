@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f965a9c6_3876e499",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-18T15:15:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the best name for a member, because when you see this you have no idea who decided and why. It\u0027s a good local var name because for a local var scope is essentially not an issue.\nI think this should be named after what it stores, namely whether the captive portal app was open. captiveLoginAppShown or something. That\u0027s enough to understand both how it\u0027s computed and to have an idea of where.\n\nThen in the function you could have a local saying\n\n  final boolean shouldNotifyCaptivePortalLogin \u003d captivePortalAppShown;\n\n...and it\u0027s clear ; a reader does not have to track the assignment and figure out where this is coming from.",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 58
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac78c907_2d713bd3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-18T15:15:27Z",
+      "side": 1,
+      "message": "This looks ad-hoc, like someone observed that failure and decided to just ignore the specific thing they were seeing without considering the meaning. Can\u0027t we just return unconditionally ?",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 380,
+        "endChar": 70
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d16b03_f528ecf8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-18T15:15:27Z",
+      "side": 1,
+      "message": "Then why does the test immediately above pass ? If it should bring up the captive portal, then why do you need to do l.2912~2920 and if it should not, then why does it pass ? Is it that the method is called but should ignore the call because of the missing bundle ? If that\u0027s the case, we should at least have a todo to remove it, but also remove the test above, unless there is a good reason we\u0027d want to test it\u0027s called but doesn\u0027t work ? O.o",
+      "range": {
+        "startLine": 2912,
+        "startChar": 11,
+        "endLine": 2912,
+        "endChar": 98
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
