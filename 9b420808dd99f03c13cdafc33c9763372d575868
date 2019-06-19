@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dafe3f5_6e87daa8",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-06-19T22:05:39Z",
+      "side": 1,
+      "message": "Does this mean the Sony amplifier\u0027s ARC connection fails for ARC init command sent to it when ARC is already established?",
+      "range": {
+        "startLine": 926,
+        "startChar": 12,
+        "endLine": 927,
+        "endChar": 37
+      },
+      "revId": "9b420808dd99f03c13cdafc33c9763372d575868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
