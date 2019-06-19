@@ -22,6 +22,30 @@
       "revId": "381337129656f1167c83669f858d5ca63530f800",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a32352_1907f28f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2982,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-06-19T05:29:10Z",
+      "side": 1,
+      "message": "I would like to use this api from https://android-review.googlesource.com/c/platform/packages/services/Telephony/+/977108/4/src/com/android/phone/CarrierConfigLoader.java. Because it must get appropriate SIM State from slotId. Other methods like TelephonyManger#getSimState have two methods, one has slotIndex as the parameter.",
+      "parentUuid": "2a07f164_9bb9548a",
+      "range": {
+        "startLine": 2976,
+        "startChar": 3,
+        "endLine": 2982,
+        "endChar": 52
+      },
+      "revId": "381337129656f1167c83669f858d5ca63530f800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
