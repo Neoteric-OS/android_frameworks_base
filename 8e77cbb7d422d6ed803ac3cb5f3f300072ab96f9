@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3491f4c8_bca0ee4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd1a698_8204a056",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6852313_42f5c6a1",
         "filename": "core/java/android/content/Intent.java",
         "patchSetId": 2
@@ -155,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "94d20c3f_085ec68d",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7f1c1b_8fa6409c",
+      "range": {
+        "startLine": 813,
+        "startChar": 27,
+        "endLine": 813,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cc96458_4591267d",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -223,6 +271,30 @@
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ee3fbf_fcf804cf",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4958e1_843e7b80",
+      "range": {
+        "startLine": 814,
+        "startChar": 66,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -361,6 +433,24 @@
     },
     {
       "key": {
+        "uuid": "822f33e2_09c07efb",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dee3429_dc0f63b1",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8207ad5_cada3538",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 2
@@ -455,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "e0304fb5_ba0b4454",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa10cf4_19e30809",
+      "range": {
+        "startLine": 570,
+        "startChar": 61,
+        "endLine": 570,
+        "endChar": 94
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10506fbd_64ab958b",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -526,6 +640,30 @@
     },
     {
       "key": {
+        "uuid": "dc17b685_a8490730",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9ca6c1_2940c42f",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7ba0c1_ce999262",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -558,6 +696,24 @@
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fedd09_f1f1e4df",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc85909f_51116cd8",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -596,6 +752,24 @@
     },
     {
       "key": {
+        "uuid": "31ff88b2_961c1918",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f941ca18_49fd82b4",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c33598b_e1fa4bd3",
         "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
         "patchSetId": 2
@@ -628,6 +802,24 @@
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae978a20_a5b69715",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "160d2dd0_a8fbce2f",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -675,6 +867,30 @@
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14816cc_aaba24d6",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fe2c1f_a764ad7b",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 60
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -731,6 +947,24 @@
     },
     {
       "key": {
+        "uuid": "2497709b_d5bc5dd4",
+        "filename": "services/core/java/com/android/server/policy/CriticalCommunicationButtonManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1640cf7_fcf8a358",
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8a56bc_ccff424e",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 2
@@ -775,6 +1009,30 @@
       "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787917e3_5390f8f3",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1435400
+      },
+      "writtenOn": "2019-06-19T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0a843d_1c709cb9",
+      "range": {
+        "startLine": 2269,
+        "startChar": 30,
+        "endLine": 2269,
+        "endChar": 36
+      },
+      "revId": "8e77cbb7d422d6ed803ac3cb5f3f300072ab96f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
