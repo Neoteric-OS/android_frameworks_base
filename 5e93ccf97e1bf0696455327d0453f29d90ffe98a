@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db8d0175_abe7b603",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-06-19T20:14:32Z",
+      "side": 1,
+      "message": "Long line. Git commit subjects are 50/72 (\u003c 50 chars recommended, wrap at 72)\n\nSuggest \"Test that NetworkStatsFactory gets VpnInfo for default-tracking VPNs\"\n\nIt\u0027s still longer than the recommended length, but it does stay on one line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1db55c_70e92c16",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-06-19T20:14:32Z",
+      "side": 1,
+      "message": "Is this primarily because mInterface is null? It seems like we set mNetworkAgent, but never mInterface? Perhaps we should be setting that as part of mockVpn.connect()?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 30
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa906748_6574bf6e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5693,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-06-19T20:14:32Z",
+      "side": 1,
+      "message": "Since these are Strings, perhaps just use assertArrayEquals?",
+      "range": {
+        "startLine": 5692,
+        "startChar": 0,
+        "endLine": 5693,
+        "endChar": 69
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
