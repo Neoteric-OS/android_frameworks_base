@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d0ca0dc_aa4a6633",
+        "filename": "core/java/android/hardware/hdmi/IHdmiControlService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-06-19T23:19:18Z",
+      "side": 1,
+      "message": "Who will use this API?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44247737_f2e527e3",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-06-19T23:19:18Z",
+      "side": 1,
+      "message": "An @AudioCode interface has been added in the pi-tv-dev branch:\npublic @interface AudioCodec {}\n\n    static final int AUDIO_CODEC_NONE \u003d 0x0;\n    static final int AUDIO_CODEC_LPCM \u003d 0x1; // Support LPCMs\n    static final int AUDIO_CODEC_DD \u003d 0x2; // Support DD\n    static final int AUDIO_CODEC_MPEG1 \u003d 0x3; // Support MPEG1\n    static final int AUDIO_CODEC_MP3 \u003d 0x4; // Support MP3\n    static final int AUDIO_CODEC_MPEG2 \u003d 0x5; // Support MPEG2\n    static final int AUDIO_CODEC_AAC \u003d 0x6; // Support AAC\n    static final int AUDIO_CODEC_DTS \u003d 0x7; // Support DTS\n    static final int AUDIO_CODEC_ATRAC \u003d 0x8; // Support ATRAC\n    static final int AUDIO_CODEC_ONEBITAUDIO \u003d 0x9; // Support One-Bit Audio\n    static final int AUDIO_CODEC_DDP \u003d 0xA; // Support DDP\n    static final int AUDIO_CODEC_DTSHD \u003d 0xB; // Support DTSHD\n    static final int AUDIO_CODEC_TRUEHD \u003d 0xC; // Support MLP/TRUE-HD\n    static final int AUDIO_CODEC_DST \u003d 0xD; // Support DST\n    static final int AUDIO_CODEC_WMAPRO \u003d 0xE; // Support WMA-Pro\n    static final int AUDIO_CODEC_MAX \u003d 0xF;",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f53802_983c9b97",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-06-19T23:19:18Z",
+      "side": 1,
+      "message": "Better to be after line 1473",
+      "range": {
+        "startLine": 1467,
+        "startChar": 15,
+        "endLine": 1467,
+        "endChar": 56
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c089c5c4_bf370442",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-06-19T23:19:18Z",
+      "side": 1,
+      "message": "We\u0027d better define this internally as an constants.\n\nAlso short audio descriptor could also describe SPDIF or other alternative link. Not necessary ARC according to the spec.",
+      "range": {
+        "startLine": 2334,
+        "startChar": 27,
+        "endLine": 2334,
+        "endChar": 62
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
