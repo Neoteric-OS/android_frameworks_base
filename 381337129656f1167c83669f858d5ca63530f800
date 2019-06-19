@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a07f164_9bb9548a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2982,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-06-19T01:04:49Z",
+      "side": 1,
+      "message": "why we need this as a new systemAPI and can we combine this two into a single API?",
+      "range": {
+        "startLine": 2976,
+        "startChar": 3,
+        "endLine": 2982,
+        "endChar": 52
+      },
+      "revId": "381337129656f1167c83669f858d5ca63530f800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
