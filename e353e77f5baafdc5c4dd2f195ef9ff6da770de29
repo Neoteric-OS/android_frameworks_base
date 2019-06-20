@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6354567e_d4ff0b01",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-20T04:32:15Z",
+      "side": 1,
+      "message": "Can you mark this @Deprecated as well, since it does not really do the right thing? Something like:\n\n    /**\n     * Make a socket address that packet socket can send packets to.\n     *\n     * @deprecated use #makePacketSocketAddress(int,int,byte[]) instead\n     */\n    @Deprecated\n    public static SocketAddress makePacketSocketAddress(int ifIndex, @NonNull byte[] hwAddr) {",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
