@@ -45,6 +45,30 @@
       "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a3afb9_6031aa7f",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-06-20T09:30:30Z",
+      "side": 1,
+      "message": "Good question. I think this should stay \"int\" here right now but I\u0027ve created b/135660232 to follow up.",
+      "parentUuid": "3e05979e_03026317",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
