@@ -62,6 +62,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.storage.StorageManager;
 import android.provider.MediaStore;
+import android.telephony.ims.RcsMessageManager;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.DisplayAdjustments;
@@ -4290,10 +4291,10 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve an
-     * {@link android.telephony.ims.RcsManager}.
+     * {@link RcsMessageManager}.
      * @hide
      */
-    public static final String TELEPHONY_RCS_SERVICE = "ircs";
+    public static final String TELEPHONY_RCS_MESSAGE_SERVICE = "ircsmessage";
 
      /**
      * Use with {@link #getSystemService(String)} to retrieve an
