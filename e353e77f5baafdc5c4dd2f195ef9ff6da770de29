@@ -22,6 +22,29 @@
       "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e05979e_03026317",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-06-20T04:56:01Z",
+      "side": 1,
+      "message": "should this just be a short?",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
