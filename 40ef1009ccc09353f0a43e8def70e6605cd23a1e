@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8a4922_952983c4",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-20T01:38:27Z",
+      "side": 1,
+      "message": "T",
+      "range": {
+        "startLine": 1153,
+        "startChar": 10,
+        "endLine": 1153,
+        "endChar": 21
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a484f1_880d040e",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-20T01:38:27Z",
+      "side": 1,
+      "message": "can this be a static import? And maybe used directly, no need to store in a variable?",
+      "range": {
+        "startLine": 1159,
+        "startChar": 22,
+        "endLine": 1159,
+        "endChar": 86
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6186254_a8f3fe67",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-20T01:38:27Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 1176,
+        "startChar": 38,
+        "endLine": 1176,
+        "endChar": 45
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8b73a1_d9907830",
+        "filename": "services/core/jni/com_android_server_input_InputManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-06-20T01:38:27Z",
+      "side": 1,
+      "message": "question: should we break after this? no need to continue the loop, right?",
+      "range": {
+        "startLine": 769,
+        "startChar": 12,
+        "endLine": 769,
+        "endChar": 45
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
