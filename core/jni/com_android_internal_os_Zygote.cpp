@@ -1119,13 +1119,25 @@ static jlong CalculateCapabilities(JNIEnv* env, jint uid, jint gid, jintArray gi
   }
 
   /*
-   * Grant CAP_BLOCK_SUSPEND to processes that belong to GID "wakelock"
+   * Grant CAP_NET_ADMIN/RAW to processes that belong to GID "net_admin/raw"
+   * and CAP_BLOCK_SUSPEND to those that belong to GID "wakelock"
    */
 
+  bool gid_net_admin_found = false;
+  bool gid_net_raw_found = false;
   bool gid_wakelock_found = false;
+
+  if (gid == AID_NET_ADMIN) {
+    gid_net_admin_found = true;
+  }
+  if (gid == AID_NET_RAW) {
+    gid_net_raw_found = true;
+  }
   if (gid == AID_WAKELOCK) {
     gid_wakelock_found = true;
-  } else if (gids != nullptr) {
+  }
+
+  if (gids != nullptr) {
     jsize gids_num = env->GetArrayLength(gids);
     ScopedIntArrayRO native_gid_proxy(env, gids);
 
@@ -1134,13 +1146,20 @@ static jlong CalculateCapabilities(JNIEnv* env, jint uid, jint gid, jintArray gi
     }
 
     for (int gids_index = 0; gids_index < gids_num; ++gids_index) {
-      if (native_gid_proxy[gids_index] == AID_WAKELOCK) {
-        gid_wakelock_found = true;
-        break;
+      switch (native_gid_proxy[gids_index]) {
+        case AID_NET_ADMIN: gid_net_admin_found = true; break;
+        case AID_NET_RAW:   gid_net_raw_found   = true; break;
+        case AID_WAKELOCK:  gid_wakelock_found  = true; break;
       }
     }
   }
 
+  if (gid_net_admin_found) {
+    capabilities |= (1LL << CAP_NET_ADMIN);
+  }
+  if (gid_net_raw_found) {
+    capabilities |= (1LL << CAP_NET_RAW);
+  }
   if (gid_wakelock_found) {
     capabilities |= (1LL << CAP_BLOCK_SUSPEND);
   }
