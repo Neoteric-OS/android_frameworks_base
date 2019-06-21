@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e71ec4_a3f1ad6d",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-06-21T22:58:44Z",
+      "side": 1,
+      "message": "Can\u0027t mark this as deprecated until users of asInterface are moved out.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "363233bf6138bcc125afb53674a52726b5f7e488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
