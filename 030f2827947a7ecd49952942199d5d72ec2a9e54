@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c85e37a_05555b8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-06-21T16:02:04Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "030f2827947a7ecd49952942199d5d72ec2a9e54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbc67ea6_173801be",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 1
