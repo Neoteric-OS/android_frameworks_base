@@ -22,6 +22,30 @@
       "revId": "363233bf6138bcc125afb53674a52726b5f7e488",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6ef9c3a_112c2c3e",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-06-21T23:16:45Z",
+      "side": 1,
+      "message": "I think you can always mark something as deprecated in Java without causing errors unless we are treating warnings as errors",
+      "parentUuid": "37e71ec4_a3f1ad6d",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "363233bf6138bcc125afb53674a52726b5f7e488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
