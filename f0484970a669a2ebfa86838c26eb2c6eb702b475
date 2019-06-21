@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79fef54a_a951907b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-21T09:55:39Z",
+      "side": 1,
+      "message": "Renamed to \"captivePortalAppLoginPending\", as this is reset to false when the network validates. Agreed the previous name was not very clear.",
+      "parentUuid": "f965a9c6_3876e499",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 58
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac78c907_2d713bd3",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7a32c63f_8c0e92fe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-21T09:55:39Z",
+      "side": 1,
+      "message": "The idea was to only ignore permissions that are known to require being ignored by this test, in case this helps catch cases where a permission check is done that was not expected when writing the test.\nIt\u0027s not likely that would happen, and cleaner code is better, so returning unconditionally as suggested.",
+      "parentUuid": "ac78c907_2d713bd3",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 380,
+        "endChar": 70
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d16b03_f528ecf8",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2019-06-18T15:15:27Z",
       "side": 1,
       "message": "Then why does the test immediately above pass ? If it should bring up the captive portal, then why do you need to do l.2912~2920 and if it should not, then why does it pass ? Is it that the method is called but should ignore the call because of the missing bundle ? If that\u0027s the case, we should at least have a todo to remove it, but also remove the test above, unless there is a good reason we\u0027d want to test it\u0027s called but doesn\u0027t work ? O.o",
+      "range": {
+        "startLine": 2912,
+        "startChar": 11,
+        "endLine": 2912,
+        "endChar": 98
+      },
+      "revId": "f0484970a669a2ebfa86838c26eb2c6eb702b475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac1af4f_f1df2a12",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-21T09:55:39Z",
+      "side": 1,
+      "message": "Good catch, the test above is obsolete. Historically the code would do:\nstartCaptivePortalApp(Network) -\u003e [CS] check it\u0027s a portal -\u003e [CS] send intent\n\nNow it\u0027s:\nstartCaptivePortalApp(Network) -\u003e [CS] check it\u0027s a portal -\u003e [CS] call INetworkMonitor.launchCaptivePortalApp -\u003e [NM] call CM.startCaptivePortalApp(Network, Bundle) -\u003e [CS] send intent\n\nso the test above that does:\nmCm.startCaptivePortalApp(Network)\nexpectNoIntent\n... with a mocked NetworkStack always does nothing since CM.startCaptivePortalApp(Network, Bundle) is never called.\n\nUpdated test to change expectNoIntent -\u003e expect INetworkMonitor.launchCaptivePortalApp not called.\n\nThis is one of those things that needs to get better coverage via the new integration tests.",
+      "parentUuid": "29d16b03_f528ecf8",
       "range": {
         "startLine": 2912,
         "startChar": 11,
