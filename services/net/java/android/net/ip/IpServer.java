@@ -433,14 +433,25 @@ public class IpServer extends StateMachine {
                 }
             }
             ifcg.clearFlag("running");
+
+            // TODO: this may throw if the interface is already gone. Do proper handling and
+            // simplify the DHCP server start/stop.
             mNMService.setInterfaceConfig(mIfaceName, ifcg);
 
-            if (!configureDhcp(enabled, (Inet4Address) addr, prefixLen)) {
+            if (enabled && !configureDhcp(true, (Inet4Address) addr, prefixLen)) {
                 return false;
             }
         } catch (Exception e) {
             mLog.e("Error configuring interface " + e);
             return false;
+        }
+
+        if (!enabled) {
+            try {
+                stopDhcp();
+            } catch (Exception e) {
+                mLog.e("Error stopping DHCP", e);
+            }
         }
 
         // Directly-connected route.
