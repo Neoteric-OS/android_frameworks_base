@@ -466,6 +466,7 @@ import com.android.server.am.NeededUriGrantsProto;
 import com.android.server.am.ProcessOomProto;
 import com.android.server.am.ProcessToGcProto;
 import com.android.server.am.StickyBroadcastProto;
+import com.android.server.compat.PlatformCompat;
 import com.android.server.firewall.IntentFirewall;
 import com.android.server.job.JobSchedulerInternal;
 import com.android.server.pm.Installer;
@@ -7670,6 +7671,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             checkTime(startTime, "attachApplicationLocked: immediately before bindApplication");
             bindApplicationTimeMillis = SystemClock.elapsedRealtime();
             mStackSupervisor.getActivityMetricsLogger().notifyBindApplication(app);
+            long[] disabledCompatChanges = PlatformCompat.get().getDisabledChanges(app.info);
             if (app.isolatedEntryPoint != null) {
                 // This is an isolated process which should just call an entry point instead of
                 // being bound to an application.
@@ -7685,7 +7687,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         new Configuration(getGlobalConfiguration()), app.compat,
                         getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
-                        buildSerial, isAutofillCompatEnabled);
+                        buildSerial, isAutofillCompatEnabled, disabledCompatChanges);
             } else {
                 thread.bindApplication(processName, appInfo, providers, null, profilerInfo,
                         null, null, null, testMode,
@@ -7694,7 +7696,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         new Configuration(getGlobalConfiguration()), app.compat,
                         getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
-                        buildSerial, isAutofillCompatEnabled);
+                        buildSerial, isAutofillCompatEnabled, disabledCompatChanges);
             }
             if (profilerInfo != null) {
                 profilerInfo.closeFd();
