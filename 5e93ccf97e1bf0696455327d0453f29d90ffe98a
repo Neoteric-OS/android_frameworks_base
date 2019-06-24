@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "b9a10779_c98bb1fd",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T12:42:10Z",
+      "side": 1,
+      "message": "How does this make sense for an externally-visible function? Usually calling a method xyzLocked is to communicate that some lock needs to be held before calling the function.\n\nBut how would such external code even know what lock to hold?",
+      "range": {
+        "startLine": 1154,
+        "startChar": 22,
+        "endLine": 1154,
+        "endChar": 37
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1db55c_70e92c16",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -59,6 +82,30 @@
       "writtenOn": "2019-06-19T20:14:32Z",
       "side": 1,
       "message": "Is this primarily because mInterface is null? It seems like we set mNetworkAgent, but never mInterface? Perhaps we should be setting that as part of mockVpn.connect()?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 30
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f9c6df_44dd35ec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T12:42:10Z",
+      "side": 1,
+      "message": "+1, we should avoid adding this method if possible.",
+      "parentUuid": "ce1db55c_70e92c16",
       "range": {
         "startLine": 1015,
         "startChar": 0,
