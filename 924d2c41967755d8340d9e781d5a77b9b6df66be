@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb8fe220_017b48ac",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2618,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T16:12:13Z",
+      "side": 1,
+      "message": "Do you actually need to check this? How can shouldNotifyCaptivePortalLogin be true if everCaptivePortalDetected is not true? Is it sufficient to say:\n\n    if (valid \u0026\u0026 nai.captivePortalAppLoginPending) {\n        // User is now logged in\n        nai.captivePortalAppLoginPending \u003d false;\n        showNetworkNotification(nai, NotificationType.LOGGED_IN);\n    }",
+      "range": {
+        "startLine": 2618,
+        "startChar": 24,
+        "endLine": 2618,
+        "endChar": 53
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5060427_253212d1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3499,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T16:12:13Z",
+      "side": 1,
+      "message": "on",
+      "range": {
+        "startLine": 3499,
+        "startChar": 21,
+        "endLine": 3499,
+        "endChar": 23
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebfd846_286f9c3f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T16:12:13Z",
+      "side": 1,
+      "message": "Suggest renaming to captivePortalAppStarted since the app could have closed.",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 56
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053e1730_81775c75",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T16:12:13Z",
+      "side": 1,
+      "message": "This isn\u0027t great. This test has survived so far without this sort of hack, and I think that\u0027s healthy. Is this needed for a specific permission(s) that\u0027s we can\u0027t put in the manifest? If so, then let\u0027s add that permission(s) here explicitly.",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 9
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
