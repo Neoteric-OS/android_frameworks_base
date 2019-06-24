@@ -81,7 +81,7 @@ public class NetworkStatsFactory {
     private static final Object sPersistentDataLock = new Object();
 
     /** Set containing info about active VPNs and their underlying networks. */
-    private static volatile VpnInfo[] sVpnInfos = new VpnInfo[0];
+    private volatile VpnInfo[] mVpnInfos = new VpnInfo[0];
 
     // A persistent snapshot of cumulative stats since device start
     @GuardedBy("sPersistentDataLock")
@@ -97,12 +97,13 @@ public class NetworkStatsFactory {
      * Because counters must never roll backwards, once a given interface is stacked on top of an
      * underlying interface, the stacked interface can never be stacked on top of
      * another interface. */
-    private static final ConcurrentHashMap<String, String> sStackedIfaces
+    private final ConcurrentHashMap<String, String> mStackedIfaces
             = new ConcurrentHashMap<>();
 
-    public static void noteStackedIface(String stackedIface, String baseIface) {
+    /** Informs the factory of a new stacked interface. */
+    public void noteStackedIface(String stackedIface, String baseIface) {
         if (stackedIface != null && baseIface != null) {
-            sStackedIfaces.put(stackedIface, baseIface);
+            mStackedIfaces.put(stackedIface, baseIface);
         }
     }
 
@@ -115,13 +116,8 @@ public class NetworkStatsFactory {
      *
      * @param vpnArray The snapshot of the currently-running VPNs.
      */
-    public static void updateVpnInfos(VpnInfo[] vpnArray) {
-        sVpnInfos = vpnArray.clone();
-    }
-
-    @VisibleForTesting
-    public static VpnInfo[] getVpnInfos() {
-        return sVpnInfos.clone();
+    public void updateVpnInfos(VpnInfo[] vpnArray) {
+        mVpnInfos = vpnArray.clone();
     }
 
     /**
@@ -132,7 +128,7 @@ public class NetworkStatsFactory {
      * {@link #noteStackedIface(String, String)}, but only interfaces noted before this method
      * is called are guaranteed to be included.
      */
-    public static String[] augmentWithStackedInterfaces(@Nullable String[] requiredIfaces) {
+    public String[] augmentWithStackedInterfaces(@Nullable String[] requiredIfaces) {
         if (requiredIfaces == NetworkStats.INTERFACES_ALL) {
             return null;
         }
@@ -142,7 +138,7 @@ public class NetworkStatsFactory {
         // elements as they existed upon construction exactly once, and may
         // (but are not guaranteed to) reflect any modifications subsequent to construction".
         // This is enough here.
-        for (Map.Entry<String, String> entry : sStackedIfaces.entrySet()) {
+        for (Map.Entry<String, String> entry : mStackedIfaces.entrySet()) {
             if (relatedIfaces.contains(entry.getKey())) {
                 relatedIfaces.add(entry.getValue());
             } else if (relatedIfaces.contains(entry.getValue())) {
@@ -158,15 +154,15 @@ public class NetworkStatsFactory {
      * Applies 464xlat adjustments with ifaces noted with {@link #noteStackedIface(String, String)}.
      * @see NetworkStats#apply464xlatAdjustments(NetworkStats, NetworkStats, Map, boolean)
      */
-    public static void apply464xlatAdjustments(NetworkStats baseTraffic,
+    public void apply464xlatAdjustments(NetworkStats baseTraffic,
             NetworkStats stackedTraffic, boolean useBpfStats) {
-        NetworkStats.apply464xlatAdjustments(baseTraffic, stackedTraffic, sStackedIfaces,
+        NetworkStats.apply464xlatAdjustments(baseTraffic, stackedTraffic, mStackedIfaces,
                 useBpfStats);
     }
 
     @VisibleForTesting
-    public static void clearStackedIfaces() {
-        sStackedIfaces.clear();
+    public void clearStackedIfaces() {
+        mStackedIfaces.clear();
     }
 
     public NetworkStatsFactory() {
@@ -330,7 +326,7 @@ public class NetworkStatsFactory {
         // code that will acquire other locks within the system server. See b/134244752.
         synchronized (sPersistentDataLock) {
             // Take a reference. If this gets swapped out, we still have the old reference.
-            final VpnInfo[] vpnArray = sVpnInfos;
+            final VpnInfo[] vpnArray = mVpnInfos;
             // Take a defensive copy. mPersistSnapshot is mutated in some cases below
             final NetworkStats prev = mPersistSnapshot.clone();
 
@@ -389,7 +385,7 @@ public class NetworkStatsFactory {
         // network, the overhead is their fault.
         // No locking here: apply464xlatAdjustments behaves fine with an add-only
         // ConcurrentHashMap.
-        delta.apply464xlatAdjustments(sStackedIfaces, mUseBpfStats);
+        delta.apply464xlatAdjustments(mStackedIfaces, mUseBpfStats);
 
         // Migrate data usage over a VPN to the TUN network.
         for (VpnInfo info : vpnArray) {

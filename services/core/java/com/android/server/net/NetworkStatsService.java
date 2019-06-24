@@ -130,6 +130,7 @@ import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FileRotator;
@@ -788,7 +789,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     public NetworkStats getDetailedUidStats(String[] requiredIfaces) {
         try {
             final String[] ifacesToQuery =
-                    NetworkStatsFactory.augmentWithStackedInterfaces(requiredIfaces);
+                    mStatsFactory.augmentWithStackedInterfaces(requiredIfaces);
             return getNetworkStatsUidDetail(ifacesToQuery);
         } catch (RemoteException e) {
             Log.wtf(TAG, "Error compiling UID stats", e);
@@ -840,7 +841,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     public void forceUpdateIfaces(
             Network[] defaultNetworks,
             NetworkState[] networkStates,
-            String activeIface) {
+            String activeIface,
+            VpnInfo[] vpnInfos) {
         checkNetworkStackPermission(mContext);
 
         final long token = Binder.clearCallingIdentity();
@@ -849,6 +851,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         } finally {
             Binder.restoreCallingIdentity(token);
         }
+
+        // Udate the VPN underlying interfaces only after the poll is made and tun data has been
+        // migrated.
+        mStatsFactory.updateVpnInfos(vpnInfos);
     }
 
     @Override
@@ -1660,7 +1666,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // fold tethering stats and operations into uid snapshot
         final NetworkStats tetherSnapshot = getNetworkStatsTethering(STATS_PER_UID);
         tetherSnapshot.filter(UID_ALL, ifaces, TAG_ALL);
-        NetworkStatsFactory.apply464xlatAdjustments(uidSnapshot, tetherSnapshot,
+        mStatsFactory.apply464xlatAdjustments(uidSnapshot, tetherSnapshot,
                 mUseBpfTrafficStats);
         uidSnapshot.combineAllValues(tetherSnapshot);
 
@@ -1671,7 +1677,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStats vtStats = telephonyManager.getVtDataUsage(STATS_PER_UID);
         if (vtStats != null) {
             vtStats.filter(UID_ALL, ifaces, TAG_ALL);
-            NetworkStatsFactory.apply464xlatAdjustments(uidSnapshot, vtStats,
+            mStatsFactory.apply464xlatAdjustments(uidSnapshot, vtStats,
                     mUseBpfTrafficStats);
             uidSnapshot.combineAllValues(vtStats);
         }
