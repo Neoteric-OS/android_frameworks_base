@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b96734_b212128c",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-06-24T12:15:42Z",
+      "side": 1,
+      "message": "As your comment in line.437/438, line.439 may throw if the interface is already gone. Thus, it may go to line.444 directly and return in line.446. How about just add the protection into catch function directly.\n        } catch (Exception e) {\n            mLog.e(\"Error configuring interface \" + e);\n            if (!enabled) {\n                try {\n                    stopDhcp();\n                } catch (Exception e) {\n                    mLog.e(\"Error stopping DHCP\", e);\n                }\n            }\n            return false;\n        }",
+      "range": {
+        "startLine": 441,
+        "startChar": 12,
+        "endLine": 441,
+        "endChar": 82
+      },
+      "revId": "2bb40fbec1799d5d374d879a0f6985fef64945c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
