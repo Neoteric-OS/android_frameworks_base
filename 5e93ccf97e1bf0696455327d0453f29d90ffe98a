@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "7f258849_9ccd19fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-24T05:53:28Z",
+      "side": 1,
+      "message": "The comments are public and they don\u0027t have access to this",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1db55c_70e92c16",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -40,6 +63,29 @@
         "startLine": 1015,
         "startChar": 0,
         "endLine": 1015,
+        "endChar": 30
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb5ff9e_9098047e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-24T05:53:28Z",
+      "side": 1,
+      "message": "Suggest `assertNetworkStatsFactoryVpnInfoContainsExactly`\nOptionally make the argument vararg to make this method more generic, but it doesn\u0027t matter too much as it\u0027s trivial for anyone needing that to do it",
+      "range": {
+        "startLine": 5688,
+        "startChar": 17,
+        "endLine": 5688,
         "endChar": 30
       },
       "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
