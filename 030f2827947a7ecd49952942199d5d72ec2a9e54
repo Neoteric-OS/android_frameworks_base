@@ -234,6 +234,30 @@
       "revId": "030f2827947a7ecd49952942199d5d72ec2a9e54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a7db871_40cd1fd1",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-06-24T09:59:12Z",
+      "side": 1,
+      "message": "`disabled` is android.util.LongArray (and using .add should always append to the end); mChanges is a android.util.LongSparseArray and from the public documentation https://developer.android.com/reference/android/util/LongSparseArray , iterating thru it with valueAt should yield already sorted keys",
+      "parentUuid": "d7d6b2e6_594839d7",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "030f2827947a7ecd49952942199d5d72ec2a9e54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
