@@ -308,7 +308,7 @@ interface INetworkManagementService
     /**
      * Return status of bandwidth control module.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q)
     boolean isBandwidthControlEnabled();
 
     /**

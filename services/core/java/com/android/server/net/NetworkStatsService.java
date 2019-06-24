@@ -375,11 +375,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     public void systemReady() {
         mSystemReady = true;
 
-        if (!isBandwidthControlEnabled()) {
-            Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
-            return;
-        }
-
         synchronized (mStatsLock) {
             // create data recorders along with historical rotators
             mDevRecorder = buildRecorder(PREFIX_DEV, mSettings.getDevConfig(), false);
@@ -1736,24 +1731,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void assertSystemReady() {
         if (!mSystemReady) {
             throw new IllegalStateException("System not ready");
-        }
-    }
-
-    private void assertBandwidthControlEnabled() {
-        if (!isBandwidthControlEnabled()) {
-            throw new IllegalStateException("Bandwidth module disabled");
-        }
-    }
-
-    private boolean isBandwidthControlEnabled() {
-        final long token = Binder.clearCallingIdentity();
-        try {
-            return mNetworkManager.isBandwidthControlEnabled();
-        } catch (RemoteException e) {
-            // ignored; service lives in system_server
-            return false;
-        } finally {
-            Binder.restoreCallingIdentity(token);
         }
     }
 
