@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af754359_8736537c",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "android server is not part of SDK, so there is no need for @hide annotation?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3388f62a_f873db66",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "This is not thread safe by design, right?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68de98ad_a1cfcc24",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "nit: not every change object needs a map by default, you can lazily create it instead to save some memory at runtime?",
+      "range": {
+        "startLine": 38,
+        "startChar": 57,
+        "endLine": 38,
+        "endChar": 75
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1307153_23f1f254",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "javadoc",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076fdd00_d8bb6977",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "your other methods take \"enabled\" as a parameter. Change this one too for consistency?",
+      "range": {
+        "startLine": 44,
+        "startChar": 86,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226981cb_98759c93",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "\u003cp\u003e",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88de2077_5fdcfa2d",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "final if you don\u0027t plan to introduce test specific override",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a8ca4a_b28d8d42",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "swap",
+      "range": {
+        "startLine": 52,
+        "startChar": 51,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3f598f_7ad9a7e8",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "Can we not expose this method for everyone, if it\u0027s only intended for config reader only?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bca8e6c_4f20b56d",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "not really needed?",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc771e5c_051d2b2c",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "Not sure why you need CompatChange to be its own class. Aren\u0027t devs going to work with PlatformCompat only? Is CompatChange meant to be package private?",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75e543b_d869aee9",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "we could probably keep this method non-public. adb command can invoke something like a receiver in the same package which can call this package private method?",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 117,
+        "endChar": 37
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438c5fdf_26b71827",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-24T11:00:26Z",
+      "side": 1,
+      "message": "\u003cp\u003e",
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
