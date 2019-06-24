@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f7f59e_15f0ae11",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-06-24T13:21:52Z",
+      "side": 1,
+      "message": "true -\u003e enabled ??",
+      "range": {
+        "startLine": 441,
+        "startChar": 31,
+        "endLine": 441,
+        "endChar": 35
+      },
+      "revId": "f2764db6362aff8ab1857e9f49f0a1596bd3c4c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
