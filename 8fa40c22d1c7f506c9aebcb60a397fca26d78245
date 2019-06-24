@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df69c0ac_109ee6d1",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Exactly; this package is not part of the SDK",
+      "parentUuid": "af754359_8736537c",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3388f62a_f873db66",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0abfc1fa_f69380b7",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "is a good question. I think it should be thread safe; system server uses binder do it definitely multithreaded. I\u0027ve added synchronicity in PlatformCompat so we don\u0027t need it here.",
+      "parentUuid": "3388f62a_f873db66",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68de98ad_a1cfcc24",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2019-06-24T11:00:26Z",
       "side": 1,
       "message": "nit: not every change object needs a map by default, you can lazily create it instead to save some memory at runtime?",
+      "range": {
+        "startLine": 38,
+        "startChar": 57,
+        "endLine": 38,
+        "endChar": 75
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c07cae_16889d99",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Fair point; done.",
+      "parentUuid": "68de98ad_a1cfcc24",
       "range": {
         "startLine": 38,
         "startChar": 57,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "5e4351a8_5039e420",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "`disabled` works as an override for `enableAfterTargetSdk` so inverting the sense of it doesn\u0027t quite feel right?",
+      "parentUuid": "076fdd00_d8bb6977",
+      "range": {
+        "startLine": 44,
+        "startChar": 86,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d0759b_d1aa7da6",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Well for consistency with the rest of the android.server package, we should *not* have javadoc :)\n\nAdded some.",
+      "parentUuid": "d1307153_23f1f254",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "226981cb_98759c93",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4aa063e_1afe40d8",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226981cb_98759c93",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d0b4dd08_e7a2d8f9",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88de2077_5fdcfa2d",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a8ca4a_b28d8d42",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5359b16_d49289ba",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a8ca4a_b28d8d42",
+      "range": {
+        "startLine": 52,
+        "startChar": 51,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "7df5816c_0a5795ce",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Yep, but the plan is that the config reading is done by SystemConfig (i.e. outside of this package)",
+      "parentUuid": "ad3f598f_7ad9a7e8",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bca8e6c_4f20b56d",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f419672_fd26b0f1",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "I was planning to allow the adb command to refer to changes by name",
+      "parentUuid": "1bca8e6c_4f20b56d",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "1577449e_5f9fde42",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Yes, I guess CompatChange is mostly an implementation detail. But see my comment on addChange - the code instantiating these will be in another package.",
+      "parentUuid": "bc771e5c_051d2b2c",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75e543b_d869aee9",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "532dd0d9_19b2be51",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure how the adb command will be implemented yet. One option is to add the functionality to ActivityManagerShellCommand, in which case this stuff will need to be public (it\u0027s in another package). I don\u0027t think using a receiver within the system server makes sense, it would just add a bunch of runtime overhead.",
+      "parentUuid": "e75e543b_d869aee9",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 117,
+        "endChar": 37
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438c5fdf_26b71827",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -292,6 +580,24 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4054e72f_e90815cf",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T13:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438c5fdf_26b71827",
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
