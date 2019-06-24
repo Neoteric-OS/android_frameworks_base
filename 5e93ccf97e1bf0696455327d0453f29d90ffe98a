@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "56f04fee_a5aadee2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-24T14:48:09Z",
+      "side": 1,
+      "message": "Yeah, external code is not suppose to be calling this. Its visibility is relaxed *only* for test purposes. In a way, it is similar to isCallerEstablishedOwnerLocked which we also override in MockVpn class in ConnectivityServiceTest.",
+      "parentUuid": "b9a10779_c98bb1fd",
+      "range": {
+        "startLine": 1154,
+        "startChar": 22,
+        "endLine": 1154,
+        "endChar": 37
+      },
+      "revId": "5e93ccf97e1bf0696455327d0453f29d90ffe98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce1db55c_70e92c16",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
