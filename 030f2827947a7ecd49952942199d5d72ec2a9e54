@@ -258,6 +258,30 @@
       "revId": "030f2827947a7ecd49952942199d5d72ec2a9e54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29a156f1_e94a3327",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-24T10:48:53Z",
+      "side": 1,
+      "message": "Indeed, good attention to detail :)\n\nI will remove the sort call and add a comment to this effect. There is already a test to verift this behaviour :)",
+      "parentUuid": "3a7db871_40cd1fd1",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "030f2827947a7ecd49952942199d5d72ec2a9e54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
