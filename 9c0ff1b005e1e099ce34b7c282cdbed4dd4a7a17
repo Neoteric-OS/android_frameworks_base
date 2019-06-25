@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c030c703_db5d443f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-25T11:42:12Z",
+      "side": 0,
+      "message": "Thanks for catching this.\n\nMaybe it should be in the test indeed, but let\u0027s keep the semantics for now.",
+      "parentUuid": "ecd69c3a_e2c77772",
+      "range": {
+        "startLine": 1822,
+        "startChar": 0,
+        "endLine": 1828,
+        "endChar": 13
+      },
+      "revId": "9c0ff1b005e1e099ce34b7c282cdbed4dd4a7a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128b2e89_9ad830f1",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "9c0ff1b005e1e099ce34b7c282cdbed4dd4a7a17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea26ceec_a2c2d425",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-25T11:42:12Z",
+      "side": 0,
+      "message": "Yes it\u0027s sufficient for tests to pass, and this is part of the reason I have the TrackRecord class : to have an expressive way to do this that doesn\u0027t preclude asserting that the next callback is the one we expect and eat up others without a way to find them again.",
+      "parentUuid": "128b2e89_9ad830f1",
+      "range": {
+        "startLine": 1843,
+        "startChar": 12,
+        "endLine": 1843,
+        "endChar": 34
+      },
+      "revId": "9c0ff1b005e1e099ce34b7c282cdbed4dd4a7a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
