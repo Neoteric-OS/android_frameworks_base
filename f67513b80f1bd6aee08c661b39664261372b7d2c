@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "154c331c_31713966",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-06-25T22:29:14Z",
+      "side": 1,
+      "message": "The code locations for linkToDeath and unlinkToDeath are not matched.\nPlease consider to move this in releaseHardware method.",
+      "range": {
+        "startLine": 628,
+        "startChar": 41,
+        "endLine": 628,
+        "endChar": 54
+      },
+      "revId": "f67513b80f1bd6aee08c661b39664261372b7d2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
