@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebb67d1a_c74288c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2618,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T04:07:22Z",
+      "side": 1,
+      "message": "I guess it could happen if some system code calls startCaptivePortalApp, but it\u0027s probably fine to show the notification in that case too: removed.",
+      "parentUuid": "eb8fe220_017b48ac",
+      "range": {
+        "startLine": 2618,
+        "startChar": 24,
+        "endLine": 2618,
+        "endChar": 53
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5060427_253212d1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d28531_c97161ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3499,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T04:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5060427_253212d1",
+      "range": {
+        "startLine": 3499,
+        "startChar": 21,
+        "endLine": 3499,
+        "endChar": 23
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,30 @@
       "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00b2788_b8aa6d3c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T04:07:22Z",
+      "side": 1,
+      "message": "This is what I did in patchset 2 but Jean mentioned that this looked like a ad-hoc hack.\nRestored the previous code and added comments to show the reasoning.",
+      "parentUuid": "053e1730_81775c75",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 9
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
