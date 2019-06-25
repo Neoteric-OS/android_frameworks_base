@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8516b6ca_f832b075",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2926,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-25T12:10:54Z",
+      "side": 1,
+      "message": "Have run this test multiple times? I wonder if the waitForIdle above is actually enough here.",
+      "range": {
+        "startLine": 2926,
+        "startChar": 50,
+        "endLine": 2926,
+        "endChar": 72
+      },
+      "revId": "0839a191bc7e0ac77b6c3a7ff64dba46a76b747c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
