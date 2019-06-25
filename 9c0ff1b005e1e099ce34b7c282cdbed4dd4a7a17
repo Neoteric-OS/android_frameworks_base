@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd69c3a_e2c77772",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T07:10:35Z",
+      "side": 0,
+      "message": "I think this is not included in the new utility (or maybe I missed it - that\u0027s a lot of code !)\nIs that fine ? Maybe it should be in the test instead ?",
+      "range": {
+        "startLine": 1822,
+        "startChar": 0,
+        "endLine": 1828,
+        "endChar": 13
+      },
+      "revId": "9c0ff1b005e1e099ce34b7c282cdbed4dd4a7a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128b2e89_9ad830f1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T07:10:35Z",
+      "side": 0,
+      "message": "The new expectCallbackThat only polls for the next callback and verifies it passes the test: is that sufficient for tests to pass ? If yes I guess it\u0027s fine to simplify the logic like that.",
+      "range": {
+        "startLine": 1843,
+        "startChar": 12,
+        "endLine": 1843,
+        "endChar": 34
+      },
+      "revId": "9c0ff1b005e1e099ce34b7c282cdbed4dd4a7a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
