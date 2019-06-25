@@ -163,6 +163,30 @@
       "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a1edb45_4fbcf183",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-25T12:34:00Z",
+      "side": 1,
+      "message": "Comments LGTM ; the important thing to me is that it\u0027s clear why this specific permission, rather than \"oh I special cased that because «otherwise the test fails»©\".",
+      "parentUuid": "e00b2788_b8aa6d3c",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 9
+      },
+      "revId": "924d2c41967755d8340d9e781d5a77b9b6df66be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

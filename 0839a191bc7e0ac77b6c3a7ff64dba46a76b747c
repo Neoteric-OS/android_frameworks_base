@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bde31337_c788b9b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3501,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-25T12:34:00Z",
+      "side": 1,
+      "message": "Is it actually enough that it\u0027s volatile ? In theory it\u0027s possible this thread yields for long enough that the network validates and sees this boolean false.\n\nI don\u0027t think this is a very realistic scenario though, nor is it damaging : it would have to have this thread sleep through the entire life of the captive portal app logging in, and its concrete effect would be to miss putting up the notification, rather than putting it up at the wrong time. So it\u0027s a purely academic concern, and I don\u0027t mind leaving it as is.",
+      "range": {
+        "startLine": 3501,
+        "startChar": 49,
+        "endLine": 3501,
+        "endChar": 57
+      },
+      "revId": "0839a191bc7e0ac77b6c3a7ff64dba46a76b747c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8516b6ca_f832b075",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 5
