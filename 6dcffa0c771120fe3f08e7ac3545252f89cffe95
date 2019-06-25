@@ -22,6 +22,30 @@
       "revId": "6dcffa0c771120fe3f08e7ac3545252f89cffe95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca7d0b9_a5d2e357",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-25T06:49:18Z",
+      "side": 1,
+      "message": "It can throw RuntimeException if mDhcpServer.stop throws a RemoteException, since this still uses rethrowFromSystemServer. This should probably be changed to some different handling though, as in ConnectivityService. Maybe not here to keep the change minimal ?",
+      "parentUuid": "499e8e23_06bf8121",
+      "range": {
+        "startLine": 450,
+        "startChar": 16,
+        "endLine": 450,
+        "endChar": 47
+      },
+      "revId": "6dcffa0c771120fe3f08e7ac3545252f89cffe95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
