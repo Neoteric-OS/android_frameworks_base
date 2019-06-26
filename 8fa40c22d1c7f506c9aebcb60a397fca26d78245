@@ -285,6 +285,54 @@
     },
     {
       "key": {
+        "uuid": "d0edb1be_f05e7a0e",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "Please revert for consistency :-)",
+      "parentUuid": "62f7beb1_293514f3",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "683fe047_b7bae985",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "Maybe addPakcageOverride(name, *disabled*) then?",
+      "parentUuid": "5e4351a8_5039e420",
+      "range": {
+        "startLine": 44,
+        "startChar": 86,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "226981cb_98759c93",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -473,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "f306de42_f302a473",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "The API just doesn\u0027t look \"clean\". I am sure we can improve usability of this class if we split it further, and move initialization into a separate class if needed. Can we keep this class responsibility to only allow devs query the state of the break (and anything directly used by devs only)?",
+      "parentUuid": "7df5816c_0a5795ce",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bca8e6c_4f20b56d",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -517,6 +589,30 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93103682_3699be21",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "This can be added later when adb support is introduced then? :-)",
+      "parentUuid": "2f419672_fd26b0f1",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {

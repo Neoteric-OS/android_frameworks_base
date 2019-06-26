@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a7c6c9_c70a974e",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598a9fbf_17eec4c1",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "where does the name come from?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2807b1fe_e4ac453b",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "nit: 0 is probably better?",
+      "range": {
+        "startLine": 49,
+        "startChar": 35,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d82ccb9_f3a480e6",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "effect",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e09e04b_77e8e375",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d190a7_840779f1",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": ".. after that package process is killed and restarted",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 42
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345964b0_3be86cfd",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "^w^removePackageOverride",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c23f90_c071e17d",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "I guess javax.annotation.concurrent.ThreadSafe isn\u0027t really used in android?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05da7ef5_7bb649ed",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "this potentially introduces a \"race\" where someone starts using PlatformCompat before it was fully initialized. Can we rather get SystemConfig (or whatever we decide to read apex/configs from) in ctor and poll it during init?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 73
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86295691_fb1f9d89",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "I think Andrei asked this already, but I can\u0027t find it anymore.. :-(\n\nDoes this ctor need to be visible? The unit test is in the same package?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d9282e_8c0a5b9a",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T14:33:47Z",
+      "side": 1,
+      "message": "can we add these methods later when we actually introduce debug/adb support?",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
