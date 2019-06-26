@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb631269_56b548e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2019-06-26T20:11:16Z",
+      "side": 1,
+      "message": "Changed to include the original TODO comment.",
+      "parentUuid": "3d038045_231211e4",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284a224b_53ebf8ac",
         "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "871608cb_635ca5a1",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2019-06-26T20:11:16Z",
+      "side": 1,
+      "message": "Hmm, OK\nI was under impression that presubmit hooks were put there for a reason and skipping them is not the right thing to do.",
+      "parentUuid": "284a224b_53ebf8ac",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9036c51_468edf57",
         "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "733291b219020902676151d0b83a9436ed5ca419",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95321d8_64cadbb0",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2019-06-26T20:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9036c51_468edf57",
+      "range": {
+        "startLine": 643,
+        "startChar": 74,
+        "endLine": 643,
+        "endChar": 75
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
