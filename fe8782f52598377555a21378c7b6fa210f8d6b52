@@ -257,6 +257,30 @@
     },
     {
       "key": {
+        "uuid": "1af9ebbf_f71f9f9c",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T16:03:48Z",
+      "side": 1,
+      "message": "+1. Just trying to educate myself by challenging you, if anything :-)\n\nI guess, since PlatformCompat is available as static, it sets the expectations that it may be available and fully initialed once someone calls get(). Edge case, but someone may decide to use that in static context during class loading or something?",
+      "parentUuid": "d1b6e4d0_bde9e716",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 73
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86295691_fb1f9d89",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 5
@@ -348,6 +372,30 @@
       "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ee9ab2_22576d52",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-26T16:03:48Z",
+      "side": 1,
+      "message": "Well, you are sort of defining how those future CLs should be shaped, which is backwards? Depending on how we decide to read/init config we may not need this methods at all.\n\nBased on the CL description some of these methods shouldn\u0027t be here, including this one?",
+      "parentUuid": "941c73d4_840f7a0f",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
