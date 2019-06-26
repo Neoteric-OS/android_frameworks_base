@@ -1708,6 +1708,16 @@ filegroup {
     ],
 }
 
+genrule {
+    name: "framework-annotation-proc-index",
+    srcs: [":framework-annotation-proc{.jar}"],
+    cmd: "unzip -qp $(in) unsupportedappusage/unsupportedappusage_index.csv > $(out)",
+    out: ["unsupportedappusage_index.csv"],
+    dist: {
+        targets: ["droidcore"],
+    },
+}
+
 // Creates an index of AIDL methods; used for adding UnsupportedAppUsage
 // annotations to private apis
 aidl_mapping {
