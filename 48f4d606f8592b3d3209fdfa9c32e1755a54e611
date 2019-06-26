@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f1b818e0_5d32f421",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-26T10:00:35Z",
+      "side": 1,
+      "message": "stupid question: why this cannot be moved to TestableNetworkCallback?",
+      "range": {
+        "startLine": 1719,
+        "startChar": 44,
+        "endLine": 1719,
+        "endChar": 58
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea336c24_a335d4e6",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 8
@@ -22,6 +45,29 @@
       "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b3196a0_377ec925",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-26T10:00:35Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 1724,
+        "startChar": 16,
+        "endLine": 1724,
+        "endChar": 19
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
