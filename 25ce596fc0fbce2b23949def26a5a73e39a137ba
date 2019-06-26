@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "702cdc4e_cb453ab1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-26T15:41:07Z",
+      "side": 1,
+      "message": "git convention is to give a 1 line summary of the CL, a blank line, then more context.\n\nhttps://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53\nhttps://chris.beams.io/posts/git-commit/",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "25ce596fc0fbce2b23949def26a5a73e39a137ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
