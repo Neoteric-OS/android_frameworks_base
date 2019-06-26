@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d038045_231211e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-26T19:57:02Z",
+      "side": 1,
+      "message": "This isn\u0027t really an argument. Why *should* the dexopt call do it? Can you expand the commit message a little? There\u0027s *zero* reason given for this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284a224b_53ebf8ac",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-26T19:57:02Z",
+      "side": 1,
+      "message": "Please avoid unnecessary changes. Base change to appease the linter or upload --no-verify.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9036c51_468edf57",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-26T19:57:02Z",
+      "side": 1,
+      "message": "\"is\"",
+      "range": {
+        "startLine": 643,
+        "startChar": 74,
+        "endLine": 643,
+        "endChar": 75
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
