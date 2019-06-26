@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "205274af_de21de7d",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-26T20:15:46Z",
+      "side": 1,
+      "message": "It pollutes this CL - more lines style fixup than the actual code. I\u0027d be happy to approve a base CL or a follow-up.",
+      "parentUuid": "871608cb_635ca5a1",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "733291b219020902676151d0b83a9436ed5ca419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9036c51_468edf57",
         "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
         "patchSetId": 3
