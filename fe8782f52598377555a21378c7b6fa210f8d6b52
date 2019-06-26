@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ec0b7cae_1d26b4f2",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-26T15:38:35Z",
+      "side": 1,
+      "message": "The name of the @ChangeId constant, via the annotation processor",
+      "parentUuid": "598a9fbf_17eec4c1",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2807b1fe_e4ac453b",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 5
@@ -209,6 +233,30 @@
     },
     {
       "key": {
+        "uuid": "d1b6e4d0_bde9e716",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-26T15:38:35Z",
+      "side": 1,
+      "message": "Yes, we should do something like that. It may not be a problem in practice, as long as we initialize this during system server startup (i.e. before any app can be started). We can address this when the config reading part is implemented.",
+      "parentUuid": "05da7ef5_7bb649ed",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 73
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86295691_fb1f9d89",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 5
@@ -232,6 +280,30 @@
     },
     {
       "key": {
+        "uuid": "a5f18750_bd0fe0a1",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-26T15:38:35Z",
+      "side": 1,
+      "message": "Same package, but tests can be in a different classloader when they\u0027re run (which ART considers a different package).\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/986926/1..5/services/core/java/com/android/server/compat/PlatformCompat.java#b41",
+      "parentUuid": "86295691_fb1f9d89",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2d9282e_8c0a5b9a",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 5
@@ -252,6 +324,30 @@
       "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941c73d4_840f7a0f",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-26T15:38:35Z",
+      "side": 1,
+      "message": "Well, *none* of the functionality in this CL is used yet. I\u0027d rather add it now so that future CLs can be more focussed.",
+      "parentUuid": "c2d9282e_8c0a5b9a",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
