@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3af423_3896553c",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-06-26T22:49:15Z",
+      "side": 1,
+      "message": "This won\u0027t work for any build that sets $OUT_DIR.  Can you file a feature request at go/soong-bug?  We will either need to make this an annotation tag (\":framework-annotation-proc{unsupportedappusage/unsupportedappusage_index.csv}\"), or special case it to be a custom file (\":framework-annotation-proc-csv\")",
+      "revId": "fb51659f3cd53c91ec5c1f533f54aa148b43b001",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
