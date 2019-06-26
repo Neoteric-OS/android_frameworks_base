@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8964b98c_ae07acc2",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-06-26T19:09:32Z",
+      "side": 1,
+      "message": "remove this comment. There\u0027s no create here anymore.",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 658,
+        "endChar": 56
+      },
+      "revId": "6debec9250807a7e5fdc5906e3a67ae1652091bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
