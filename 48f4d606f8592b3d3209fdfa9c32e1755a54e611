@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea336c24_a335d4e6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-06-26T04:07:52Z",
+      "side": 1,
+      "message": "If you need to respin this for some reason, maybe add a TODO to move this in the test ?\nIf this is ready to go otherwise, let\u0027s not re-run TH just for that.",
+      "range": {
+        "startLine": 1722,
+        "startChar": 12,
+        "endLine": 1722,
+        "endChar": 60
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
