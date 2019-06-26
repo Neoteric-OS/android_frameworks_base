@@ -22,6 +22,30 @@
       "revId": "6debec9250807a7e5fdc5906e3a67ae1652091bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a64e16_d6580d89",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2019-06-26T19:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8964b98c_ae07acc2",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 658,
+        "endChar": 56
+      },
+      "revId": "6debec9250807a7e5fdc5906e3a67ae1652091bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
