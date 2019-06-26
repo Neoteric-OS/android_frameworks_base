@@ -4846,30 +4846,33 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
                     null, 0, 0, options, userId, task, "startActivityFromRecents",
                     false /* validateIncomingUser */, null /* originatingPendingIntent */);
         } finally {
-            if (windowingMode == WINDOWING_MODE_SPLIT_SCREEN_PRIMARY && task != null) {
-                // If we are launching the task in the docked stack, put it into resizing mode so
-                // the window renders full-screen with the background filling the void. Also only
-                // call this at the end to make sure that tasks exists on the window manager side.
-                setResizingDuringAnimation(task);
+            try {
+                if (windowingMode == WINDOWING_MODE_SPLIT_SCREEN_PRIMARY && task != null) {
+                    // If we are launching the task in the docked stack, put it into resizing mode so
+                    // the window renders full-screen with the background filling the void. Also only
+                    // call this at the end to make sure that tasks exists on the window manager side.
+                    setResizingDuringAnimation(task);
 
-                final ActivityDisplay display = task.getStack().getDisplay();
-                final ActivityStack topSecondaryStack =
-                        display.getTopStackInWindowingMode(WINDOWING_MODE_SPLIT_SCREEN_SECONDARY);
-                if (topSecondaryStack.isActivityTypeHome()) {
-                    // If the home activity if the top split-screen secondary stack, then the
-                    // primary split-screen stack is in the minimized mode which means it can't
-                    // receive input keys, so we should move the focused app to the home app so that
-                    // window manager can correctly calculate the focus window that can receive
-                    // input keys.
-                    moveHomeStackToFront("startActivityFromRecents: homeVisibleInSplitScreen");
+                    final ActivityDisplay display = task.getStack().getDisplay();
+                    final ActivityStack topSecondaryStack =
+                            display.getTopStackInWindowingMode(WINDOWING_MODE_SPLIT_SCREEN_SECONDARY);
+                    if (topSecondaryStack.isActivityTypeHome()) {
+                        // If the home activity if the top split-screen secondary stack, then the
+                        // primary split-screen stack is in the minimized mode which means it can't
+                        // receive input keys, so we should move the focused app to the home app so that
+                        // window manager can correctly calculate the focus window that can receive
+                        // input keys.
+                        moveHomeStackToFront("startActivityFromRecents: homeVisibleInSplitScreen");
 
-                    // Immediately update the minimized docked stack mode, the upcoming animation
-                    // for the docked activity (WMS.overridePendingAppTransitionMultiThumbFuture)
-                    // will do the animation to the target bounds
-                    mWindowManager.checkSplitScreenMinimizedChanged(false /* animate */);
+                        // Immediately update the minimized docked stack mode, the upcoming animation
+                        // for the docked activity (WMS.overridePendingAppTransitionMultiThumbFuture)
+                        // will do the animation to the target bounds
+                        mWindowManager.checkSplitScreenMinimizedChanged(false /* animate */);
+                    }
                 }
+            } finally {
+                mWindowManager.continueSurfaceLayout();
             }
-            mWindowManager.continueSurfaceLayout();
         }
     }
 
