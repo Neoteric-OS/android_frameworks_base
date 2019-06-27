@@ -756,7 +756,7 @@ java_library {
     name: "framework-annotation-proc",
     defaults: ["framework-defaults"],
     // Use UsedByApps annotation processor
-    plugins: ["unsupportedappusage-annotation-processor"],
+    plugins: ["unsupportedappusage-annotation-processor", "compat-framework-annotation-processor"],
 }
 
 // A library including just UnsupportedAppUsage.java classes.
@@ -776,6 +776,17 @@ java_library {
 
     sdk_version: "core_current",
 }
+
+//java_library {
+//    name: "compat-annotation",
+//    host_supported: true,
+//    srcs: [
+//        "core/java/android/util/Log.java",
+//        ":unsupportedappusage_annotation_files",
+//    ],
+
+//    sdk_version: "core_current",
+//}
 
 // A temporary build target that is conditionally included on the bootclasspath if
 // android.test.base library has been removed and which provides support for
