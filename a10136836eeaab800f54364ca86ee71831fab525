@@ -22,6 +22,30 @@
       "revId": "a10136836eeaab800f54364ca86ee71831fab525",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe475f12_541c20bf",
+        "filename": "tools/processors/unsupportedappusage/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-06-27T14:17:41Z",
+      "side": 1,
+      "message": "FWIW, this seems to be adding an extra artifact. A cleaner approach could be just extracting the csv from the java_library that applies the java_plugin above, since it seems we have to extract the file from a jar regardless?\n\nThe annotation processor we have writes the csv as a java resource. All java resources created this way are part of the output .jar file after invoking javac. So, whichever java_library uses the plugin would have .csv file in its output .jar file. This would not create an extra artifact.",
+      "parentUuid": "550833f1_9801455d",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "a10136836eeaab800f54364ca86ee71831fab525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
