@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "550833f1_9801455d",
+        "filename": "tools/processors/unsupportedappusage/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T12:42:46Z",
+      "side": 1,
+      "message": "Interesting, looks like this worked in a way:\nhttps://android-build.googleplex.com/builds/pending/P9102264/aosp_arm64-eng/latest\n\nit\u0027s got a zip file there (with a .csv extension), which contains all the .class files as well as the .csv we want\n\nWhich implies we could add a rule to extract what we want from the .zip file and add just that as a build artifact?\n\nColin, is that a sane approach?",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "a10136836eeaab800f54364ca86ee71831fab525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
