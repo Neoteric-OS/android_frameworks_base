@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d7cf09_9b42895a",
+        "filename": "startop/apps/test/src/LayoutInflationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-06-27T01:54:03Z",
+      "side": 1,
+      "message": "nit: this comment probably fits better in ComplexLayoutInflation.java. This comment instead should just say it\u0027s a base class for the other layout activities.",
+      "revId": "5036e13c0e918dafe30a2e40c837a9f1f753d63b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d01322b_6c2c7b36",
+        "filename": "startop/apps/test/src/LayoutInflationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-06-27T01:54:03Z",
+      "side": 1,
+      "message": "nit: I\u0027d put a space after layout:",
+      "revId": "5036e13c0e918dafe30a2e40c837a9f1f753d63b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
