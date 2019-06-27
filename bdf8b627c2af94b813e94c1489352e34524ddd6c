@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fff0a97_8c1e63e3",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-06-27T18:26:35Z",
+      "side": 1,
+      "message": "You could avoid needing this if you put installable:false in framework-annotation-proc or moved the installable:true from framework-defaults to framework.",
+      "range": {
+        "startLine": 1721,
+        "startChar": 38,
+        "endLine": 1721,
+        "endChar": 44
+      },
+      "revId": "bdf8b627c2af94b813e94c1489352e34524ddd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
