@@ -22,6 +22,30 @@
       "revId": "b1669ecb8ac218dd5925655e48ecccd87dd6dd83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f7adb9_3025cbb5",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-06-27T00:36:52Z",
+      "side": 1,
+      "message": "Sorry, when value is inserted, all values where sent_time is older than one hour before the newly inserted rows sent_time will be removed.",
+      "parentUuid": "78e5de98_0ec75fae",
+      "range": {
+        "startLine": 3062,
+        "startChar": 65,
+        "endLine": 3063,
+        "endChar": 63
+      },
+      "revId": "b1669ecb8ac218dd5925655e48ecccd87dd6dd83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
