@@ -46,6 +46,30 @@
       "revId": "a10136836eeaab800f54364ca86ee71831fab525",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d0c0fc_00a6d329",
+        "filename": "tools/processors/unsupportedappusage/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-06-27T16:05:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe475f12_541c20bf",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "a10136836eeaab800f54364ca86ee71831fab525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

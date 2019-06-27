@@ -16,6 +16,24 @@
       "revId": "fb51659f3cd53c91ec5c1f533f54aa148b43b001",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a12489_78b62355",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-06-27T16:05:43Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve opened b/136151738 but  I think this new way of doing it by extracting from the jar file in the genrule instead is actually cleaner then adding a special tag, WDYT?",
+      "parentUuid": "bc3af423_3896553c",
+      "revId": "fb51659f3cd53c91ec5c1f533f54aa148b43b001",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
