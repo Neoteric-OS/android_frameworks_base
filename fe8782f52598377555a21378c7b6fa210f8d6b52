@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55de6b94_fa50121a",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a7c6c9_c70a974e",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "598a9fbf_17eec4c1",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 5
@@ -141,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "a26de6e1_4c51a731",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d82ccb9_f3a480e6",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3cfafae_e5a086c5",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e09e04b_77e8e375",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d190a7_840779f1",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 5
@@ -161,6 +233,30 @@
       "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830c01a8_157c907d",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Reworded.That logic is implemented elsewhere so not sure it makes sense to document it here.",
+      "parentUuid": "71d190a7_840779f1",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 42
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a6163b50_86f9218b",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345964b0_3be86cfd",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c23f90_c071e17d",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 5
@@ -207,6 +327,30 @@
       "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5189687e_bd93af91",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "I don\u0027t see any existing usage",
+      "parentUuid": "51c23f90_c071e17d",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -396,6 +540,30 @@
       "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eadce7d_7640237a",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "Updated the CL description.\n\nDoes it matter which bits of code we add first? Short of doing it all in one huge CL, later changes always run the risk of changing things added earlier.",
+      "parentUuid": "b8ee9ab2_22576d52",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "fe8782f52598377555a21378c7b6fa210f8d6b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

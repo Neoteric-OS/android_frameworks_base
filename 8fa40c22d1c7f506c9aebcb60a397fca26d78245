@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "968fe7f8_2a8baf70",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "I\u0027m trying to match the expected usage here. Inverting the sense in addPackageOverride seems more confusing, where disabled here really means \"we have a @Disabled annotation on the constant\".",
+      "parentUuid": "683fe047_b7bae985",
+      "range": {
+        "startLine": 44,
+        "startChar": 86,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "226981cb_98759c93",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -613,6 +637,30 @@
       "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ed0c36_98007390",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-06-27T15:31:46Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/frameworks/base/+/986926/5/services/core/java/com/android/server/compat/PlatformCompat.java#134",
+      "parentUuid": "93103682_3699be21",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "8fa40c22d1c7f506c9aebcb60a397fca26d78245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
