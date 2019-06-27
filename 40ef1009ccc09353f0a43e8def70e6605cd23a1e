@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48357bba_0d687b79",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2019-06-27T21:22:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b8a4922_952983c4",
+      "range": {
+        "startLine": 1153,
+        "startChar": 10,
+        "endLine": 1153,
+        "endChar": 21
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07a484f1_880d040e",
         "filename": "core/java/android/view/Window.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217bbbae_11f6fecb",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2019-06-27T21:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a484f1_880d040e",
+      "range": {
+        "startLine": 1159,
+        "startChar": 22,
+        "endLine": 1159,
+        "endChar": 86
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2390ba06_dd2be22f",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2019-06-27T21:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6186254_a8f3fe67",
+      "range": {
+        "startLine": 1176,
+        "startChar": 38,
+        "endLine": 1176,
+        "endChar": 45
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a8b73a1_d9907830",
         "filename": "services/core/jni/com_android_server_input_InputManagerService.cpp",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7b0d23_76df3282",
+        "filename": "services/core/jni/com_android_server_input_InputManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2019-06-27T21:22:24Z",
+      "side": 1,
+      "message": "Looks like we can just break, but we are simply flipping the boolean with this patch. Do you want us to add the break?",
+      "parentUuid": "0a8b73a1_d9907830",
+      "range": {
+        "startLine": 769,
+        "startChar": 12,
+        "endLine": 769,
+        "endChar": 45
+      },
+      "revId": "40ef1009ccc09353f0a43e8def70e6605cd23a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
