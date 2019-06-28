@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86065d94_7eee7958",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T09:59:30Z",
+      "side": 1,
+      "message": "This is completely asynchronous with no timing guarantees right ? If so, it may make the race less common, but won\u0027t fix it ?",
+      "range": {
+        "startLine": 1328,
+        "startChar": 37,
+        "endLine": 1328,
+        "endChar": 59
+      },
+      "revId": "17555ab9dc2bb2b5c9084e365620c2eebda16444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
