@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fd055b7_6842bf92",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T05:27:59Z",
+      "side": 1,
+      "message": "It can, but it should not. As opposed to everything else, this is not a general mechanic but a specific check for the semantics of this file. In other words, ConnectivityServiceTest wants this check, but CTS does not, so it does not belong in the general utility.",
+      "parentUuid": "f1b818e0_5d32f421",
+      "range": {
+        "startLine": 1719,
+        "startChar": 44,
+        "endLine": 1719,
+        "endChar": 58
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea336c24_a335d4e6",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2019-06-26T04:07:52Z",
       "side": 1,
       "message": "If you need to respin this for some reason, maybe add a TODO to move this in the test ?\nIf this is ready to go otherwise, let\u0027s not re-run TH just for that.",
+      "range": {
+        "startLine": 1722,
+        "startChar": 12,
+        "endLine": 1722,
+        "endChar": 60
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17b37312_3cb5b8ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T05:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea336c24_a335d4e6",
       "range": {
         "startLine": 1722,
         "startChar": 12,
@@ -68,6 +116,30 @@
       "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca754f4b_46aadec1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T05:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b3196a0_377ec925",
+      "range": {
+        "startLine": 1724,
+        "startChar": 16,
+        "endLine": 1724,
+        "endChar": 19
+      },
+      "revId": "48f4d606f8592b3d3209fdfa9c32e1755a54e611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
