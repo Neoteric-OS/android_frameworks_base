@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4269006_cfebf5f8",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T09:36:59Z",
+      "side": 1,
+      "message": "To make this a little more robust, can you have a synchronized function getConnectivityManager doing this ? By my reading this is only ever called by synchronized functions so it should be the same, but having that would make it harder to get wrong later.",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 26
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb2be17_d9d0f103",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T09:36:59Z",
+      "side": 1,
+      "message": "Also this should never ever happen, since you already have a netID that by necessity is coming from CS. You could probably afford to throw here ?",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 379,
+        "endChar": 30
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3903ab_86ae1ea4",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-28T09:36:59Z",
+      "side": 1,
+      "message": "This TODO looks more pressing to me with your change, any chance you\u0027d have a followup for it ?",
+      "range": {
+        "startLine": 383,
+        "startChar": 8,
+        "endLine": 383,
+        "endChar": 94
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
