@@ -35,16 +35,16 @@ import android.os.storage.StorageManager;
 import android.util.ArraySet;
 import android.util.Log;
 
-import com.android.server.pm.dex.DexManager;
 import com.android.server.LocalServices;
 import com.android.server.PinnerService;
+import com.android.server.pm.dex.DexManager;
 import com.android.server.pm.dex.DexoptOptions;
 
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * {@hide}
@@ -249,9 +249,16 @@ public class BackgroundDexOptService extends JobService {
             @Override
             public void run() {
                 int result = idleOptimization(pm, pkgs, BackgroundDexOptService.this);
-                if (result != OPTIMIZE_ABORT_BY_JOB_SCHEDULER) {
+                if (result == OPTIMIZE_PROCESSED) {
+                    Log.i(TAG, "Idle optimizations completed.");
+                } else if (result == OPTIMIZE_ABORT_NO_SPACE_LEFT) {
                     Log.w(TAG, "Idle optimizations aborted because of space constraints.");
-                    // If we didn't abort we ran to completion (or stopped because of space).
+                } else if (result == OPTIMIZE_ABORT_BY_JOB_SCHEDULER) {
+                    Log.w(TAG, "Idle optimizations aborted by job scheduler.");
+                } else {
+                    Log.w(TAG, "Idle optimizations ended with unexpected code: " + result);
+                }
+                if (result != OPTIMIZE_ABORT_BY_JOB_SCHEDULER) {
                     // Abandon our timeslice and do not reschedule.
                     jobFinished(jobParams, /* reschedule */ false);
                 }
@@ -294,6 +301,7 @@ public class BackgroundDexOptService extends JobService {
             ArraySet<String> failedPackageNames) {
         ArraySet<String> updatedPackages = new ArraySet<>();
         Set<String> unusedPackages = pm.getUnusedPackages(mDowngradeUnusedAppsThresholdInMillis);
+        boolean hadSomeLowSpaceFailure = false;
         // Only downgrade apps when space is low on device.
         // Threshold is selected above the lowStorageThreshold so that we can pro-actively clean
         // up disk before user hits the actual lowStorageThreshold.
@@ -333,6 +341,7 @@ public class BackgroundDexOptService extends JobService {
                 downgrade = false;
             } else {
                 // can't dexopt because of low space.
+                hadSomeLowSpaceFailure = true;
                 continue;
             }
 
@@ -369,7 +378,7 @@ public class BackgroundDexOptService extends JobService {
             }
         }
         notifyPinService(updatedPackages);
-        return OPTIMIZE_PROCESSED;
+        return hadSomeLowSpaceFailure ? OPTIMIZE_ABORT_NO_SPACE_LEFT : OPTIMIZE_PROCESSED;
     }
 
     private int reconcileSecondaryDexFiles(DexManager dm) {
