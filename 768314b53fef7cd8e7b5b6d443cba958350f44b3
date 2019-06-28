@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b75e41b2_4a761da9",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1241863
+      },
+      "writtenOn": "2019-06-28T18:44:52Z",
+      "side": 1,
+      "message": "@AudioCodec was added in July of 2018 and so hasn\u0027t made it to aosp yet https://googleplex-android-review.git.corp.google.com/q/I4aef89bee1075817d1e6b5d37408cfe011d44e68\n\nAgreed @AudioCodec is in pi-tv-dev and it is also in qt-tv-dev in frameworks/base/services/core/java/com/android/server/hdmi/Constants.java",
+      "parentUuid": "44247737_f2e527e3",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67f53802_983c9b97",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 7
