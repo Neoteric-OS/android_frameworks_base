@@ -22,6 +22,30 @@
       "revId": "17555ab9dc2bb2b5c9084e365620c2eebda16444",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60261762_fe7c30b7",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-06-28T11:43:42Z",
+      "side": 1,
+      "message": "In tethering, all of updateInterfaceIpState is called at the same thread. WifiManager#updateInterfaceIpState would have a binder call to WifiServiceImpl. In WifiServiceImpl, it post to its internal handler thread. Yes, updateInterfaceIpState is asynchronous, but the order is guaranteed. And tethering is the only user for updateInterfaceIpState. Wifi itself may possible use it to reset the value to IFACE_IP_MODE_UNSPECIFIED. Thus, I think this is fine in current model.",
+      "parentUuid": "86065d94_7eee7958",
+      "range": {
+        "startLine": 1328,
+        "startChar": 37,
+        "endLine": 1328,
+        "endChar": 59
+      },
+      "revId": "17555ab9dc2bb2b5c9084e365620c2eebda16444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
