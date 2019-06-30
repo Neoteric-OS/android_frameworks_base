@@ -354,12 +354,12 @@ public class TvView extends ViewGroup {
                 sMainTvView = NULL_TV_VIEW;
             }
         }
+        mPendingAppPrivateCommands.clear();
         resetInternal();
     }
 
     private void resetInternal() {
         mSessionCallback = null;
-        mPendingAppPrivateCommands.clear();
         if (mSession != null) {
             setSessionSurface(null);
             removeSessionOverlayView();
