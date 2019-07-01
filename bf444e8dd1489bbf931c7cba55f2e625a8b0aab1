@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97cddbf5_e763a86c",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-01T14:56:07Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Done.\n\n(the reason I did is because following the example set by the existing code here results in a checkstyle failure at upload time: \"Non-public, non-static field names start with m and are camel-cased. (e.g. mSize)\"... sigh. I disabled the check for now rather then introduce inconsistency).",
+      "parentUuid": "d778396e_906a86a7",
+      "range": {
+        "startLine": 706,
+        "startChar": 8,
+        "endLine": 706,
+        "endChar": 14
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8761cbce_dc4f8433",
         "filename": "core/java/android/app/AppCompatCallbacks.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34d7138_c0b31c43",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-01T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8761cbce_dc4f8433",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +155,30 @@
       "side": 1,
       "message": "Something like BitSet could be useful at some point. However, I guess we won\u0027t have a significant amount of ids for foreseeable future.",
       "parentUuid": "cce0a5c2_456f5a6b",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05a55e37_8ccb109d",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-01T14:56:07Z",
+      "side": 1,
+      "message": "Yes, I\u0027d speculated about that. Perhaps build a static mapping of changeId-\u003ebit at build time or similar. Let\u0027s see how the KISS approach scales first.",
+      "parentUuid": "ec569696_22106a98",
       "range": {
         "startLine": 55,
         "startChar": 19,
