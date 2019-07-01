@@ -68,6 +68,30 @@
       "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce0a5c2_456f5a6b",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-01T13:39:58Z",
+      "side": 1,
+      "message": "The aim is to minimize memory usage - a flat array is the smallest we can make this. And I believe a hashmap lookup is not always faster for small amounts of data.",
+      "parentUuid": "e0b0c39a_294176a3",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
