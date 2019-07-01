@@ -92,6 +92,30 @@
       "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec569696_22106a98",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-01T14:15:26Z",
+      "side": 1,
+      "message": "Something like BitSet could be useful at some point. However, I guess we won\u0027t have a significant amount of ids for foreseeable future.",
+      "parentUuid": "cce0a5c2_456f5a6b",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
