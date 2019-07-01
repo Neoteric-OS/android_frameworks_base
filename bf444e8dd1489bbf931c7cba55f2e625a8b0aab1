@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d778396e_906a86a7",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-01T13:17:31Z",
+      "side": 1,
+      "message": "does this need to be public?",
+      "range": {
+        "startLine": 706,
+        "startChar": 8,
+        "endLine": 706,
+        "endChar": 14
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8761cbce_dc4f8433",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-01T13:17:31Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b0c39a_294176a3",
+        "filename": "core/java/android/app/AppCompatCallbacks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-01T13:17:31Z",
+      "side": 1,
+      "message": "Why not hashmap for faster lookups?",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "bf444e8dd1489bbf931c7cba55f2e625a8b0aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
