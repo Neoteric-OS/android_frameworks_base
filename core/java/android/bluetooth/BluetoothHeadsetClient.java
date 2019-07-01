@@ -126,6 +126,12 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
             "android.bluetooth.headsetclient.profile.action.RESULT";
 
     /**
+     * Intent that notifies about vendor specific event arrival.
+     */
+    public static final String ACTION_VENDOR_SPECIFIC_HEADSETCLIENT_EVENT =
+            "android.bluetooth.headsetclient.profile.action.VENDOR_SPECIFIC_EVENT";
+
+    /**
      * Intent that notifies about the number attached to the last voice tag
      * recorded on AG.
      *
@@ -242,6 +248,27 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
      */
     public static final String EXTRA_CME_CODE =
             "android.bluetooth.headsetclient.extra.CME_CODE";
+
+    /**
+     * Extra for VENDOR_SPECIFIC_EVENT intent indicates Vendor ID.
+     */
+    public static final String EXTRA_VENDOR_ID =
+            "android.bluetooth.headsetclient.extra.VENDOR_ID";
+
+     /**
+     * Extra for VENDOR_SPECIFIC_EVENT intent indicates Vendor
+     * response code.
+     */
+    public static final String EXTRA_VENDOR_RESPONSE_CODE =
+            "android.bluetooth.headsetclient.extra.VENDOR_RESPONSE_CODE";
+
+     /**
+     * Extra for VENDOR_SPECIFIC_EVENT intent indicates Vendor
+     * response code.
+     */
+    public static final String EXTRA_VENDOR_RESPONSE_FULL_ARGS =
+            "android.bluetooth.headsetclient.extra.VENDOR_RESPONSE_FULL_ARGS";
+
 
     /* Extras for AG_FEATURES, extras type is boolean */
     // TODO verify if all of those are actually useful
@@ -579,6 +606,31 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
         if (service != null && isEnabled() && isValidDevice(device)) {
             try {
                 return service.startVoiceRecognition(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, Log.getStackTraceString(new Throwable()));
+            }
+        }
+        if (service == null) Log.w(TAG, "Proxy not attached to service");
+        return false;
+    }
+
+    /**
+     * Send vendor specific AT command.
+     *
+     * @param device remote device
+     * @param vendorId vendor number by Bluetooth SIG
+     * @param atCommand command to be sent
+     * @return <code>true</code> if command has been issued successfully; <code>false</code>
+     * otherwise.
+     */
+    public boolean sendVendorAtCommand(BluetoothDevice device, int vendorId,
+                                             String atCommand) {
+        if (DBG) log("sendVendorSpecificCommand()");
+        final IBluetoothHeadsetClient service =
+                getService();
+        if (service != null && isEnabled() && isValidDevice(device)) {
+            try {
+                return service.sendVendorAtCommand(device, vendorId, atCommand);
             } catch (RemoteException e) {
                 Log.e(TAG, Log.getStackTraceString(new Throwable()));
             }
