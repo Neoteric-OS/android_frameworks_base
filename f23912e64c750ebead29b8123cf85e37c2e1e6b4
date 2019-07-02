@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421265c0_398c11e8",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "nit: setting",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e19c019_ebbd9544",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "what\u0027s the thread-safety model for this - does the caller need to serialize?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed1ef10_74cabbec",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure if they\u0027re common in this part of the framework, but @Nullable annotations could be helpful",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9996ddf0_a89b3df7",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "@GuardedBy annotation would be helpful",
+      "range": {
+        "startLine": 36,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529f7a36_edae9af7",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 80,
+        "startChar": 64,
+        "endLine": 80,
+        "endChar": 68
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b59546a_908e3ac0",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "BTW, is this an implementation detail of LongSparseArray, or something that\u0027s actually guaranteed by the API contract? It seems unlikely it would ever change, but....",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ab1bb1_d1ce1775",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 122,
+        "startChar": 75,
+        "endLine": 122,
+        "endChar": 77
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10642246_880812ac",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-02T07:02:37Z",
+      "side": 1,
+      "message": "in what scenario is this expected? I\u0027m thinking about the case where you use \u0027adb\u0027 to override and you make a typo in the change ID - in that case returning an error would be nicer.",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
