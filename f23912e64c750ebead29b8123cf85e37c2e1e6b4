@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "52331a7a_25fc6239",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:42:48Z",
+      "side": 1,
+      "message": "(resolving)",
+      "parentUuid": "911aea15_0f6c03d1",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ab1bb1_d1ce1775",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 9
