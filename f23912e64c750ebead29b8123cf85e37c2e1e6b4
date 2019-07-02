@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "133ef655_115f0028",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "421265c0_398c11e8",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e19c019_ebbd9544",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9008be02_a7a97f73",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Yes, the synchronization is in CompatConfig.",
+      "parentUuid": "7e19c019_ebbd9544",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9a0c7015_695cc843",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed1ef10_74cabbec",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9996ddf0_a89b3df7",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11973e43_2ab7bcfc",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9996ddf0_a89b3df7",
+      "range": {
+        "startLine": 36,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b788780d_2ca8f245",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529f7a36_edae9af7",
+      "range": {
+        "startLine": 80,
+        "startChar": 64,
+        "endLine": 80,
+        "endChar": 68
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b59546a_908e3ac0",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2019-07-02T07:02:37Z",
       "side": 1,
       "message": "BTW, is this an implementation detail of LongSparseArray, or something that\u0027s actually guaranteed by the API contract? It seems unlikely it would ever change, but....",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911aea15_0f6c03d1",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "It\u0027s stated in the javadoc for LongSparseArray, so I assume contractual:\n\n   It is possible to iterate over the items in this container using\n   {@link #keyAt(int)} and {@link #valueAt(int)}. Iterating over the keys using\n   \u003ccode\u003ekeyAt(int)\u003c/code\u003e with ascending values of the index will return the\n   keys in ascending order, or the values corresponding to the keys in ascending\n   order in the case of \u003ccode\u003evalueAt(int)\u003c/code\u003e.\n\nhttp://cs/android/frameworks/base/core/java/android/util/LongSparseArray.java",
+      "parentUuid": "7b59546a_908e3ac0",
       "range": {
         "startLine": 81,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "92c1f968_acd00d02",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ab1bb1_d1ce1775",
+      "range": {
+        "startLine": 122,
+        "startChar": 75,
+        "endLine": 122,
+        "endChar": 77
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10642246_880812ac",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2019-07-02T07:02:37Z",
       "side": 1,
       "message": "in what scenario is this expected? I\u0027m thinking about the case where you use \u0027adb\u0027 to override and you make a typo in the change ID - in that case returning an error would be nicer.",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4782b365_8d72b353",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-02T09:37:23Z",
+      "side": 1,
+      "message": "I did this because it may be that we don\u0027t have config for all change IDs used in the code. For example, someone could add a call to isChangeEnabled(...) inlining a change ID there, but not specifying it as an annotated constant. In that case, we would still want to be able to override the change ID.\n\nBut perhaps we could/should be stricter? We could (for example) enforce in an annotation processor that all calls to isChangeEnabled(...) pass in an annotated constant. Or we could pull the IDs out of the methods calls themselves.\n\nMaybe the simplest thing to do is to warn is the change ID is not known? WDYT?",
+      "parentUuid": "10642246_880812ac",
       "range": {
         "startLine": 129,
         "startChar": 23,
