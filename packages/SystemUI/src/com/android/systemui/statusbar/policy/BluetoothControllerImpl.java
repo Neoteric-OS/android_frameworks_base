@@ -278,6 +278,14 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     }
 
     @Override
+    public  void onProfileConnectionStateChanged(CachedBluetoothDevice cachedDevice,
+            int state, int bluetoothProfile) {
+        mCachedState.remove(cachedDevice);
+        updateConnected();
+        mHandler.sendEmptyMessage(H.MSG_STATE_CHANGED);
+    }
+
+    @Override
     public void onActiveDeviceChanged(CachedBluetoothDevice activeDevice, int bluetoothProfile) {}
 
     @Override
