@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "27e8975e_42bb5971",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-03T10:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04079046_1eaddba8",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed1ef10_74cabbec",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 9
@@ -471,6 +495,30 @@
       "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a281ec_6fb4c658",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-03T10:27:08Z",
+      "side": 1,
+      "message": "We\u0027ll ensure a warning in the adb command for now. +andreionea who is implementing that.",
+      "parentUuid": "8128e173_a69f93e7",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
