@@ -569,7 +569,7 @@ public class KeyStore {
         }
         KeyCharacteristics characteristics = result.getKeyCharacteristics();
         if (characteristics == null) {
-            Log.e(TAG, "generateKeyInternal got empty key cheractariestics " + error);
+            Log.e(TAG, "generateKeyInternal got empty key characteristics " + error);
             return SYSTEM_ERROR;
         }
         outCharacteristics.shallowCopyFrom(characteristics);
