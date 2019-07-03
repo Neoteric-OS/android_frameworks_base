@@ -24,7 +24,6 @@ import android.util.Log;
 import android.util.Pair;
 
 import java.io.FileDescriptor;
-import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -413,45 +412,5 @@ public class NetworkUtils {
             dst.add(newPrefix);
         }
         return dst;
-    }
-
-    /**
-     * Returns how many IPv4 addresses match any of the prefixes in the passed ordered set.
-     *
-     * Obviously this returns an integral value between 0 and 2**32.
-     * The behavior is undefined if any of the prefixes is not an IPv4 prefix or if the
-     * set is not ordered smallest prefix to longer prefix.
-     *
-     * @param prefixes the set of prefixes, ordered by length
-     */
-    public static long routedIPv4AddressCount(final TreeSet<IpPrefix> prefixes) {
-        long routedIPCount = 0;
-        for (final IpPrefix prefix : deduplicatePrefixSet(prefixes)) {
-            if (!prefix.isIPv4()) {
-                Log.wtf(TAG, "Non-IPv4 prefix in routedIPv4AddressCount");
-            }
-            int rank = 32 - prefix.getPrefixLength();
-            routedIPCount += 1L << rank;
-        }
-        return routedIPCount;
-    }
-
-    /**
-     * Returns how many IPv6 addresses match any of the prefixes in the passed ordered set.
-     *
-     * This returns a BigInteger between 0 and 2**128.
-     * The behavior is undefined if any of the prefixes is not an IPv6 prefix or if the
-     * set is not ordered smallest prefix to longer prefix.
-     */
-    public static BigInteger routedIPv6AddressCount(final TreeSet<IpPrefix> prefixes) {
-        BigInteger routedIPCount = BigInteger.ZERO;
-        for (final IpPrefix prefix : deduplicatePrefixSet(prefixes)) {
-            if (!prefix.isIPv6()) {
-                Log.wtf(TAG, "Non-IPv6 prefix in routedIPv6AddressCount");
-            }
-            int rank = 128 - prefix.getPrefixLength();
-            routedIPCount = routedIPCount.add(BigInteger.ONE.shiftLeft(rank));
-        }
-        return routedIPCount;
     }
 }

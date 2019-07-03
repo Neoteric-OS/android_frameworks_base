@@ -58,7 +58,6 @@ import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
-import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnService;
@@ -114,7 +113,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -899,38 +897,6 @@ public class Vpn {
         // TODO: Stop setting the MTU in jniCreate and set it here.
 
         return lp;
-    }
-
-    /**
-     * Analyzes the passed LinkedProperties to figure out whether it routes to most of the IP space.
-     *
-     * This returns true if the passed LinkedProperties contains routes to either most of the IPv4
-     * space or to most of the IPv6 address space, where "most" is defined by the value of the
-     * MOST_IPV{4,6}_ADDRESSES_COUNT constants : if more than this number of addresses are matched
-     * by any of the routes, then it's decided that most of the space is routed.
-     * @hide
-     */
-    @VisibleForTesting
-    static boolean providesRoutesToMostDestinations(LinkProperties lp) {
-        final List<RouteInfo> routes = lp.getAllRoutes();
-        if (routes.size() > MAX_ROUTES_TO_EVALUATE) return true;
-        final Comparator<IpPrefix> prefixLengthComparator = IpPrefix.lengthComparator();
-        TreeSet<IpPrefix> ipv4Prefixes = new TreeSet<>(prefixLengthComparator);
-        TreeSet<IpPrefix> ipv6Prefixes = new TreeSet<>(prefixLengthComparator);
-        for (final RouteInfo route : routes) {
-            if (route.getType() == RouteInfo.RTN_UNREACHABLE) continue;
-            IpPrefix destination = route.getDestination();
-            if (destination.isIPv4()) {
-                ipv4Prefixes.add(destination);
-            } else {
-                ipv6Prefixes.add(destination);
-            }
-        }
-        if (NetworkUtils.routedIPv4AddressCount(ipv4Prefixes) > MOST_IPV4_ADDRESSES_COUNT) {
-            return true;
-        }
-        return NetworkUtils.routedIPv6AddressCount(ipv6Prefixes)
-                .compareTo(MOST_IPV6_ADDRESSES_COUNT) >= 0;
     }
 
     /**
