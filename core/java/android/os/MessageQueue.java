@@ -52,7 +52,7 @@ public final class MessageQueue {
 
     @UnsupportedAppUsage
     Message mMessages;
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29, publicAlternatives  = "{@code foo}")
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
     private SparseArray<FileDescriptorRecord> mFileDescriptorRecords;
     private IdleHandler[] mPendingIdleHandlers;
