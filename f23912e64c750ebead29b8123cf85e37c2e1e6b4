@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "04079046_1eaddba8",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-03T07:37:06Z",
+      "side": 1,
+      "message": "Can you add this to the docs of this class, or perhaps to the addPackage/removePackage methods? I\u0027ve been bitten by this often...",
+      "parentUuid": "9008be02_a7a97f73",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed1ef10_74cabbec",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 9
@@ -308,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "3001acef_a249a570",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-03T07:37:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "52331a7a_25fc6239",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ab1bb1_d1ce1775",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 9
@@ -390,6 +438,30 @@
       "side": 1,
       "message": "I did this because it may be that we don\u0027t have config for all change IDs used in the code. For example, someone could add a call to isChangeEnabled(...) inlining a change ID there, but not specifying it as an annotated constant. In that case, we would still want to be able to override the change ID.\n\nBut perhaps we could/should be stricter? We could (for example) enforce in an annotation processor that all calls to isChangeEnabled(...) pass in an annotated constant. Or we could pull the IDs out of the methods calls themselves.\n\nMaybe the simplest thing to do is to warn is the change ID is not known? WDYT?",
       "parentUuid": "10642246_880812ac",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "f23912e64c750ebead29b8123cf85e37c2e1e6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8128e173_a69f93e7",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-07-03T07:37:06Z",
+      "side": 1,
+      "message": "Eenforcing that all changeIds passed in are annotated constants also sounds attractive to me, not sure how complex that would be. For now just adding a warning here would be fine with me.",
+      "parentUuid": "4782b365_8d72b353",
       "range": {
         "startLine": 129,
         "startChar": 23,
