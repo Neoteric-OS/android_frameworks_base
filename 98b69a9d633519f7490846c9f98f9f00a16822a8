@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed94e3f2_cf5bc0a7",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-07-04T02:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4269006_cfebf5f8",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 26
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beb2be17_d9d0f103",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3c017d0e_97dfb3d6",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-07-04T02:30:13Z",
+      "side": 1,
+      "message": "This is what I thought in my first patch set fixing b/132766803 on Chrome OS, but we definitely saw this condition happening during CTS and crashing the system server (b/133367806).\n\nThis netid here comes directly from netd, not from ConnectivityService. For netd dns/connect events and tcp stats, the netid comes from the socket mark of the socket associated with the event.\n\nI am not sure what exactly cause netd to emit dns/connect events earlier than ConnectivityService being registered as a service, but I could definitely believe it to be the case.",
+      "parentUuid": "beb2be17_d9d0f103",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 379,
+        "endChar": 30
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3903ab_86ae1ea4",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20927c1_60281d07",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-07-04T02:30:13Z",
+      "side": 1,
+      "message": "No I don\u0027t have any follow up change to address this TODO.\n\nThis TODO was based on a quick conversion with lorenzo@ a couple of years ago about incorporating this whole class into ConnectivityService (or as a child class owned by ConnectivityService) instead of as a stand alone service (the initial design that was chosen before I joined). The main benefits would have been simpler interaction between both and less boilerplate (no Parcelable, ...).\n\nActually the whole NetdEventListener should be folded into Netd binder interface now that NetworkManagementService has been migrated to Binder.\n\nI don\u0027t think this TODO is relevant anymore if no more works on legacy metrics is planned. Especially if netd events logging is migrated to some other event uploader/collector, the metrics side of this file will pretty much disappear. Note that DevicePolicy will still need this service to do dns/connect logging as a separate consumer.",
+      "parentUuid": "bf3903ab_86ae1ea4",
+      "range": {
+        "startLine": 383,
+        "startChar": 8,
+        "endLine": 383,
+        "endChar": 94
+      },
+      "revId": "98b69a9d633519f7490846c9f98f9f00a16822a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

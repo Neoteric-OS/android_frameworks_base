@@ -22,6 +22,30 @@
       "revId": "c2eea249e3c43d9698f103d783d5715c0fc7fb09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa519ef_33ab59d2",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-07-04T02:30:13Z",
+      "side": 1,
+      "message": "\u003e if this happens it\u0027s a clear programming error,\n\nWe have seen it happen on P with code we don\u0027t modify on Chrome OS after we started registering NetworkAgents earlier, and the reason why I am sending this patch is to make it *not throw* an exception. I don\u0027t need to send a patch to make it throw if cm is null since it already throws a NPE on cm.getNetworkCapabilities() just below. See b/133367806 for.proof it happened.\n\nI am fine logging a wtf.\n\nThe error is in the architecture of how netd sends back events to the system server for a network. Either: \n 1) NetdEventListenerService needs to handle CM not being ready when it gets early netd events (this patch).\n 2) publishBinderService(mNetdListener.SERVICE_NAME, mNetdListener) needs to keep happening later than onStart(), on PHASE_SYSTEM_SERVICES_READY\n   2.1) but IpConnectivityMetrics still need to be registered in onStart() otherwise ConnectivityService will crash when registering events (this patch),\n   2.2) or IpConnectivityMetrics can still be registered on PHASE_SYSTEM_SERVICES_READY, but ConnectivityService must handle IpConnectivityMetrics not being available.\n 3) netd has to stop sending metrics events with netid before the system server can handles them properly.\n 4) netd has to send all the event metadata by itself so that NetdEventListenerService does not need to ask CM.",
+      "parentUuid": "c7d7a76b_7cc8f133",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 21
+      },
+      "revId": "c2eea249e3c43d9698f103d783d5715c0fc7fb09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
