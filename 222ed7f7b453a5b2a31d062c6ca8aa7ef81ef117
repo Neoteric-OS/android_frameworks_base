@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17501dbf_13989349",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-07-04T10:03:12Z",
+      "side": 1,
+      "message": "We should have a new TETHERING_ETHERNET type in ConnectivityManager. And a new method setEtherNetTethering() to call EtherNetManager.",
+      "range": {
+        "startLine": 385,
+        "startChar": 24,
+        "endLine": 385,
+        "endChar": 57
+      },
+      "revId": "222ed7f7b453a5b2a31d062c6ca8aa7ef81ef117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53703311_f7cc90dc",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-07-04T10:03:12Z",
+      "side": 1,
+      "message": "We should create therableEthernetRegexs for ethernet interface.",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 89
+      },
+      "revId": "222ed7f7b453a5b2a31d062c6ca8aa7ef81ef117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
