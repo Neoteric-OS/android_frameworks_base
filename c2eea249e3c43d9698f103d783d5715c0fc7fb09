@@ -46,6 +46,30 @@
       "revId": "c2eea249e3c43d9698f103d783d5715c0fc7fb09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263af124_324d9b10",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-07-04T05:59:38Z",
+      "side": 1,
+      "message": "After reconsidering my answer I actually don\u0027t have proof for sure that it could crash if getSystemService(ConnectivityManager.class) here. I only have proof when  getSystemService(ConnectivityManager.class) was called in the constructor of NetdEventListenerService.\n\nI still think it is risky though and I would not bet money on cm never being null here, since this codepath is triggered by netd, not by the system server.\n\nFor our P downstream branch we will keep the \"safer\" version. For aosp I will do what you suggested and throw an IllegalStateException.",
+      "parentUuid": "8aa519ef_33ab59d2",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 21
+      },
+      "revId": "c2eea249e3c43d9698f103d783d5715c0fc7fb09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
