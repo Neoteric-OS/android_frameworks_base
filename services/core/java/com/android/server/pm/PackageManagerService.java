@@ -10643,6 +10643,9 @@ public class PackageManagerService extends IPackageManager.Stub
                             + " to "
                             + (sharedUserSetting != null ? sharedUserSetting.name : "<nothing>")
                             + "; replacing with new");
+            if (pkgSettings.sharedUser != null) {
+                pkgSettings.sharedUser.removePackage(pkgSetting);
+            }
             pkgSetting = null;
         }
 
