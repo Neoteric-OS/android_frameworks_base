@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d7a76b_7cc8f133",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-04T01:58:53Z",
+      "side": 1,
+      "message": "Same comment as earlier : if this happens it\u0027s a clear programming error, so I think we should throw and not silently ignore. Or at the very very least Log.wtf, but I\u0027d prefer throw.",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 21
+      },
+      "revId": "c2eea249e3c43d9698f103d783d5715c0fc7fb09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
