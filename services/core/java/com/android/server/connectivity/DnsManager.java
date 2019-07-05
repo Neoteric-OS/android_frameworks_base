@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 
@@ -62,7 +63,9 @@ import java.util.stream.Collectors;
  * Encapsulate the management of DNS settings for networks.
  *
  * This class it NOT designed for concurrent access. Furthermore, all non-static
- * methods MUST be called from ConnectivityService's thread.
+ * methods MUST be called from ConnectivityService's thread. However, an exceptional
+ * case is getPrivateDnsConfig(Network) which is exclusively for
+ * ConnectivityService#dumpNetworkDiagnostics(), which is on a random binder thread.
  *
  * [ Private DNS ]
  * The code handling Private DNS is spread across several components, but this
@@ -235,7 +238,7 @@ public class DnsManager {
     private final IDnsResolver mDnsResolver;
     private final MockableSystemProperties mSystemProperties;
     // TODO: Replace these Maps with SparseArrays.
-    private final Map<Integer, PrivateDnsConfig> mPrivateDnsMap;
+    private final ConcurrentHashMap<Integer, PrivateDnsConfig> mPrivateDnsMap;
     private final Map<Integer, PrivateDnsValidationStatuses> mPrivateDnsValidationMap;
 
     private int mNumDnsEntries;
@@ -251,7 +254,7 @@ public class DnsManager {
         mContentResolver = mContext.getContentResolver();
         mDnsResolver = dnsResolver;
         mSystemProperties = sp;
-        mPrivateDnsMap = new HashMap<>();
+        mPrivateDnsMap = new ConcurrentHashMap<>();
         mPrivateDnsValidationMap = new HashMap<>();
 
         // TODO: Create and register ContentObservers to track every setting
@@ -265,6 +268,12 @@ public class DnsManager {
     public void removeNetwork(Network network) {
         mPrivateDnsMap.remove(network.netId);
         mPrivateDnsValidationMap.remove(network.netId);
+    }
+
+    // This is exclusively called by ConnectivityService#dumpNetworkDiagnostics() which
+    // is not on the ConnectivityService handler thread.
+    public PrivateDnsConfig getPrivateDnsConfig(Network network) {
+        return mPrivateDnsMap.getOrDefault(network.netId, PRIVATE_DNS_OFF);
     }
 
     public PrivateDnsConfig updatePrivateDns(Network network, PrivateDnsConfig cfg) {

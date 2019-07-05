@@ -24,8 +24,10 @@ import android.net.Network;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.TrafficStats;
+import android.net.shared.PrivateDnsConfig;
 import android.net.util.NetworkConstants;
 import android.os.SystemClock;
+import android.security.net.config.SystemCertificateSource;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructTimeval;
@@ -40,7 +42,9 @@ import libcore.io.IoUtils;
 import java.io.Closeable;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InterruptedIOException;
+import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -51,13 +55,31 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SNIHostName;
+import javax.net.ssl.SNIServerName;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManagerFactory;
 
 /**
  * NetworkDiagnostics
@@ -100,11 +122,14 @@ public class NetworkDiagnostics {
 
     private final Network mNetwork;
     private final LinkProperties mLinkProperties;
+    private final PrivateDnsConfig mPrivateDnsCfg;
     private final Integer mInterfaceIndex;
 
     private final long mTimeoutMs;
     private final long mStartTime;
     private final long mDeadlineTime;
+
+    protected final KeyStore mKeyStore;
 
     // A counter, initialized to the total number of measurements,
     // so callers can wait for completion.
@@ -163,16 +188,20 @@ public class NetworkDiagnostics {
     private final Map<Pair<InetAddress, InetAddress>, Measurement> mExplicitSourceIcmpChecks =
             new HashMap<>();
     private final Map<InetAddress, Measurement> mDnsUdpChecks = new HashMap<>();
+    private final Map<InetAddress, Measurement> mDnsTlsChecks = new HashMap<>();
     private final String mDescription;
 
 
-    public NetworkDiagnostics(Network network, LinkProperties lp, long timeoutMs) {
+    public NetworkDiagnostics(
+            Network network, LinkProperties lp, PrivateDnsConfig privateDnsCfg, long timeoutMs) {
         mNetwork = network;
         mLinkProperties = lp;
+        mPrivateDnsCfg = privateDnsCfg;
         mInterfaceIndex = getInterfaceIndex(mLinkProperties.getInterfaceName());
         mTimeoutMs = timeoutMs;
         mStartTime = now();
         mDeadlineTime = mStartTime + mTimeoutMs;
+        mKeyStore = makeSystemCertsKeyStore();
 
         // Hardcode measurements to TEST_DNS4 and TEST_DNS6 in order to test off-link connectivity.
         // We are free to modify mLinkProperties with impunity because ConnectivityService passes us
@@ -199,8 +228,18 @@ public class NetworkDiagnostics {
             }
         }
         for (InetAddress nameserver : mLinkProperties.getDnsServers()) {
-                prepareIcmpMeasurement(nameserver);
-                prepareDnsMeasurement(nameserver);
+            prepareIcmpMeasurement(nameserver);
+            prepareDnsMeasurement(nameserver);
+
+            // It won't perform hostname verification.
+            prepareDnsTlsMeasurement("", nameserver);
+        }
+
+        for (InetAddress tlsNameserver : mPrivateDnsCfg.ips) {
+            if (mLinkProperties.isReachable(tlsNameserver)) {
+                // mPrivateDnsCfg.hostname is not expected to be empty here.
+                prepareDnsTlsMeasurement(mPrivateDnsCfg.hostname, tlsNameserver);
+            }
         }
 
         mCountDownLatch = new CountDownLatch(totalMeasurementCount());
@@ -252,8 +291,19 @@ public class NetworkDiagnostics {
         }
     }
 
+    private void prepareDnsTlsMeasurement(String hostname, InetAddress target) {
+        // Overwriting the existing entry of mDnsTlsChecks if the hostname is explicitly set
+        // as we suppose the existing entry has an empty hostname.
+        if (!mDnsTlsChecks.containsKey(target) || !TextUtils.isEmpty(hostname)) {
+            Measurement measurement = new Measurement();
+            measurement.thread = new Thread(new DnsTlsCheck(hostname, target, measurement));
+            mDnsTlsChecks.put(target, measurement);
+        }
+    }
+
     private int totalMeasurementCount() {
-        return mIcmpChecks.size() + mExplicitSourceIcmpChecks.size() + mDnsUdpChecks.size();
+        return mIcmpChecks.size() + mExplicitSourceIcmpChecks.size() + mDnsUdpChecks.size()
+                + mDnsTlsChecks.size();
     }
 
     private void startMeasurements() {
@@ -266,6 +316,29 @@ public class NetworkDiagnostics {
         for (Measurement measurement : mDnsUdpChecks.values()) {
             measurement.thread.start();
         }
+        for (Measurement measurement : mDnsTlsChecks.values()) {
+            measurement.thread.start();
+        }
+    }
+
+    private KeyStore makeSystemCertsKeyStore() {
+        KeyStore ks = null;
+        try {
+            ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            ks.load(null, null);
+
+            // The instance will cache the system CaCerts.
+            Set<X509Certificate> certs = SystemCertificateSource.getInstance().getCertificates();
+            int index = 0;
+            for (X509Certificate cert : certs) {
+                ks.setCertificateEntry(String.valueOf(index), cert);
+                index++;
+            }
+        } catch (CertificateException | KeyStoreException | NoSuchAlgorithmException
+                | IOException e) {
+            e.printStackTrace();
+        }
+        return ks;
     }
 
     public void waitForMeasurements() {
@@ -297,6 +370,11 @@ public class NetworkDiagnostics {
                 measurements.add(entry.getValue());
             }
         }
+        for (Map.Entry<InetAddress, Measurement> entry : mDnsTlsChecks.entrySet()) {
+            if (entry.getKey() instanceof Inet4Address) {
+                measurements.add(entry.getValue());
+            }
+        }
 
         // IPv6 measurements second.
         for (Map.Entry<InetAddress, Measurement> entry : mIcmpChecks.entrySet()) {
@@ -311,6 +389,11 @@ public class NetworkDiagnostics {
             }
         }
         for (Map.Entry<InetAddress, Measurement> entry : mDnsUdpChecks.entrySet()) {
+            if (entry.getKey() instanceof Inet6Address) {
+                measurements.add(entry.getValue());
+            }
+        }
+        for (Map.Entry<InetAddress, Measurement> entry : mDnsTlsChecks.entrySet()) {
             if (entry.getKey() instanceof Inet6Address) {
                 measurements.add(entry.getValue());
             }
@@ -412,6 +495,13 @@ public class NetworkDiagnostics {
                     localAddr.getHostAddress(), inetSockAddr.getPort());
         }
 
+        protected String getLocalAddressString(SSLSocket socket) {
+            InetAddress addr = socket.getLocalAddress();
+            return String.format(
+                    (addr instanceof Inet6Address ? "[%s]:%d" : "%s:%d"),
+                    addr.getHostAddress(), socket.getLocalPort());
+        }
+
         @Override
         public void close() {
             IoUtils.closeQuietly(mFileDescriptor);
@@ -507,10 +597,10 @@ public class NetworkDiagnostics {
         private static final int RR_TYPE_AAAA = 28;
         private static final int PACKET_BUFSIZE = 512;
 
-        private final Random mRandom = new Random();
+        protected final Random mRandom = new Random();
 
         // Should be static, but the compiler mocks our puny, human attempts at reason.
-        private String responseCodeStr(int rcode) {
+        protected String responseCodeStr(int rcode) {
             try {
                 return DnsResponseCode.values()[rcode].toString();
             } catch (IndexOutOfBoundsException e) {
@@ -518,7 +608,7 @@ public class NetworkDiagnostics {
             }
         }
 
-        private final int mQueryType;
+        protected final int mQueryType;
 
         public DnsUdpCheck(InetAddress target, Measurement measurement) {
             super(target, measurement);
@@ -592,7 +682,7 @@ public class NetworkDiagnostics {
             close();
         }
 
-        private byte[] getDnsQueryPacket(String sixRandomDigits) {
+        protected byte[] getDnsQueryPacket(String sixRandomDigits) {
             byte[] rnd = sixRandomDigits.getBytes(StandardCharsets.US_ASCII);
             return new byte[] {
                 (byte) mRandom.nextInt(), (byte) mRandom.nextInt(),  // [0-1]   query ID
@@ -610,6 +700,139 @@ public class NetworkDiagnostics {
                 0, (byte) mQueryType,  // QTYPE
                 0, 1  // QCLASS, set to 1 = IN (Internet)
             };
+        }
+    }
+
+    private class DnsTlsCheck extends DnsUdpCheck {
+        private static final int TCP_CONNECT_TIMEOUT = 2500;
+        private static final int TCP_TIMEOUT = 2000;
+        private static final int DNS_TLS_PORT = 853;
+        private static final int DNS_HEADER_SIZE = 12;
+
+        private final String mHostname;
+        private SSLSocket mSslSocket;
+
+        public DnsTlsCheck(String hostname, InetAddress target, Measurement measurement) {
+            super(target, measurement);
+
+            mHostname = hostname;
+            mMeasurement.description = "DNS TLS dst{" + mTarget.getHostAddress() + "} hostname{"
+                    + mHostname + "}";
+        }
+
+        private void setupSSLSocket()
+                throws NoSuchAlgorithmException, IOException, KeyManagementException,
+                       KeyStoreException {
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(mKeyStore);
+
+            // Sync with netd resolver binding the version TLSv1.2.
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, tmf.getTrustManagers(), new SecureRandom());
+
+            mSslSocket = (SSLSocket) sslContext.getSocketFactory().createSocket();
+            mSslSocket.setSoTimeout(TCP_TIMEOUT);
+
+            // Set hostname in Client Hello message in order to perform hostname verification later.
+            if (!TextUtils.isEmpty(mHostname)) {
+                List<SNIServerName> names = new ArrayList<SNIServerName>();
+                names.add(new SNIHostName(mHostname));
+                SSLParameters params = mSslSocket.getSSLParameters();
+                params.setServerNames(names);
+                mSslSocket.setSSLParameters(params);
+            }
+        }
+
+        private void connectAndHandshake() throws IOException {
+            mSslSocket.connect(new InetSocketAddress(mTarget, DNS_TLS_PORT), TCP_CONNECT_TIMEOUT);
+
+            // Synchronous call for the negotiated handshake complete.
+            mSslSocket.startHandshake();
+        }
+
+        private boolean verifyHostname(String hostname) {
+            HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+            SSLSession session = mSslSocket.getSession();
+            if (session == null) {
+                return false;
+            }
+            if (!hv.verify(hostname, session)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void run() {
+            // Check if this measurement has already failed during setup.
+            if (mMeasurement.finishTime > 0) {
+                // If the measurement failed during construction it didn't
+                // decrement the countdown latch; do so here.
+                mCountDownLatch.countDown();
+                return;
+            }
+
+            try {
+                setupSSLSocket();
+                mMeasurement.startTime = now();
+                connectAndHandshake();
+            } catch (NoSuchAlgorithmException | IOException | KeyManagementException
+                     | KeyStoreException e) {
+                mMeasurement.recordFailure(e.toString());
+                return;
+            }
+
+            if (!TextUtils.isEmpty(mHostname)) {
+                if (!verifyHostname(mHostname)) {
+                    mMeasurement.recordFailure("Hostname verification failed");
+                    return;
+                }
+            }
+
+            mMeasurement.description += " src{" + getLocalAddressString(mSslSocket) + "}";
+
+            // This needs to be fixed length so it can be dropped into the pre-canned packet.
+            final String sixRandomDigits = String.valueOf(mRandom.nextInt(900000) + 100000);
+            mMeasurement.description += " qtype{" + mQueryType + "}"
+                    + " qname{" + sixRandomDigits + "-android-ds.metric.gstatic.com}";
+
+            // Build a trivial DNS packet.
+            final byte[] dnsPacket = getDnsQueryPacket(sixRandomDigits);
+
+            try {
+                OutputStream output = mSslSocket.getOutputStream();
+                ByteBuffer querySize = ByteBuffer.allocate(2);
+                querySize.putShort((short) dnsPacket.length);
+                output.write(querySize.array());
+                output.write(dnsPacket);
+
+                InputStream input = mSslSocket.getInputStream();
+                byte[] buf = new byte[2];
+                input.read(buf, 0, 2);
+                final short expectReplyLen = ByteBuffer.wrap(buf).getShort();
+
+                byte[] reply = new byte[expectReplyLen];
+                int read = 0;
+                while (read < expectReplyLen) {
+                    int n = input.read(reply, read, expectReplyLen - read);
+                    if (n < 0) break;
+                    read += n;
+                }
+
+                if (read == expectReplyLen && read > DNS_HEADER_SIZE) {
+                    mMeasurement.recordSuccess("1/1 " + responseCodeStr((int) (reply[3]) & 0x0f));
+                } else {
+                    mMeasurement.recordFailure("Unexpected answer length " + read);
+                }
+            } catch (IOException e) {
+                mMeasurement.recordFailure(e.toString());
+            }
+
+            try {
+                mSslSocket.close();
+            } catch (IOException ignored) {
+            }
         }
     }
 }
