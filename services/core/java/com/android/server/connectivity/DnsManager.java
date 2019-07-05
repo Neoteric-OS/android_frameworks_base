@@ -267,6 +267,12 @@ public class DnsManager {
         mPrivateDnsValidationMap.remove(network.netId);
     }
 
+    public PrivateDnsConfig getPrivateDnsConfig(Network network) {
+        final PrivateDnsConfig privateDnsCfg =
+                mPrivateDnsMap.getOrDefault(network.netId, PRIVATE_DNS_OFF);
+        return privateDnsCfg;
+    }
+
     public PrivateDnsConfig updatePrivateDns(Network network, PrivateDnsConfig cfg) {
         Slog.w(TAG, "updatePrivateDns(" + network + ", " + cfg + ")");
         return (cfg != null)
