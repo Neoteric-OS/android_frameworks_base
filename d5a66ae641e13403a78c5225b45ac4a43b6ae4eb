@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35979269_45f22a97",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T13:44:41Z",
+      "side": 1,
+      "message": "This manual before/after state tracking and diffing seems complex and difficult to keep correct. Is all this information really necessary? Why?\n\nAlso - what is missingCaps?",
+      "range": {
+        "startLine": 1870,
+        "startChar": 0,
+        "endLine": 1881,
+        "endChar": 9
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a48b020_33b91539",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1922,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T13:44:41Z",
+      "side": 1,
+      "message": "This class doesn\u0027t seem very valuable. In code that uses this, \"first\" and \"second\" are difficult to understand.\n\nMaybe use NetworkState instead? NetworkAgentInfo#getNetworkState looks like it\u0027s expensive because it does copies, but we could manually create the NetworkState objects using only the copies we need.",
+      "range": {
+        "startLine": 1915,
+        "startChar": 0,
+        "endLine": 1922,
+        "endChar": 5
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ca890c_82cb728a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T13:44:41Z",
+      "side": 1,
+      "message": "This seems quite brittle because it could break if the Vpn class changes. If it really depends on the implementation details of that class, then it should be a method of that class. (If we don\u0027t have that class here... then why don\u0027t we? Perhaps for VPNs we could add a pointer from the NetworkAgentInfo object to the Vpn object for that network? Is the problem that we can\u0027t do that because we\u0027re running on the wrong thread?)\n\nThat said, I\u0027m not convinced that this depends on the implementation details of Vpn. A VPN is \"in force\" if its UID rules are applied, right? If so, then... the class that applies those rules is ConnectivityService. So perhaps the logic here should use ConnectivityService internal data structures instead of looking at the state of the Vpn object.",
+      "range": {
+        "startLine": 1956,
+        "startChar": 0,
+        "endLine": 1960,
+        "endChar": 64
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0723af_4a24dbdc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6616,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T13:44:41Z",
+      "side": 1,
+      "message": "As written, this comment does not seem relevant. Perhaps it should explain why it matters that this agent is not a lockdown agent? (Also, not \"the\" lockdown agent, \"a\" lockdown agent. There can be more than one such agent on the system.)",
+      "range": {
+        "startLine": 6616,
+        "startChar": 69,
+        "endLine": 6616,
+        "endChar": 70
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
