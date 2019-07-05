@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a5553b0_eecc52ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "Can you provide an example of successful and failed output here in the commit message?",
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2294c6a_67f83a3a",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "It doesn\u0027t look safe to call this on a random binder thread, which is what ConnectivityService#dumpNetworkDiagnostics is doing. The comment at the top of this file says that the class is not thread safe and all methods must be called on the CS handler thread.\n\nIf PrivateDnsConfig is immutable (or never mutated), then it might be enough to change mPrivateDnsMap into a ConcurrentHashMap. But be careful because the guarantees provided  by ConcurrentHashMap are much weaker than putting a lock around the map.\n\nAt worst, you can put a lock around the map. But ideally we\u0027d find a way to do this without locking.",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 5
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be724068_1bc45075",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "Is it necessary to do all this work ourselves? What does it buy us compared to simply calling SSLSocketFactory.getDefault()?",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 96
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3ece9d_be74884e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "This is not a header, it\u0027s a length, right? If so, suggest not assuming that the length is \u003c 256. How about:\n\n    ByteBuffer header \u003d ByteBuffer.allocate(2);\n    header.putShort((short) dnsPacket.length);\n    output.write(header.array());",
+      "range": {
+        "startLine": 854,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 45
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d4da0c_8152a712",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#read-byte:A-int-int- suggests that n cannot be 0. Maybe replace with \"\u003c 0\"? Also - if this happens then the response was truncated. That should call recordFailure.",
+      "range": {
+        "startLine": 866,
+        "startChar": 26,
+        "endLine": 866,
+        "endChar": 30
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a032bb0d_68aaa07c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-05T14:22:06Z",
+      "side": 1,
+      "message": "Should there be a separator here between 1/1 and the rcode? Maybe something like \":\" or \" \"?",
+      "range": {
+        "startLine": 873,
+        "startChar": 47,
+        "endLine": 873,
+        "endChar": 52
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
