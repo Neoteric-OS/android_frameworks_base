@@ -71,6 +71,9 @@ public final class CompatConfig {
      *      overhead as much as possible.
      */
     public long[] getDisabledChanges(ApplicationInfo app) {
+        if ("android".equals(app.packageName)) {
+            return new long[0];
+        }
         LongArray disabled = new LongArray();
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
