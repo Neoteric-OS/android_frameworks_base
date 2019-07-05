@@ -27,6 +27,7 @@ import android.util.Slog;
 import com.android.internal.app.procstats.ProcessStats;
 import com.android.internal.app.procstats.ProcessState;
 import com.android.internal.os.BatteryStatsImpl;
+import com.android.server.compat.CompatConfig;
 
 import android.app.ActivityManager;
 import android.app.Dialog;
@@ -233,6 +234,8 @@ final class ProcessRecord {
     long startTime;
     // This will be same as {@link #uid} usually except for some apps used during factory testing.
     int startUid;
+
+    final long[] disabledCompatChanges;
 
     void setStartParams(int startUid, String hostingType, String hostingNameStr, String seInfo,
             long startTime) {
@@ -493,6 +496,12 @@ final class ProcessRecord {
                 pw.print(prefix); pw.print("  - "); pw.println(receivers.valueAt(i));
             }
         }
+        if (disabledCompatChanges.length > 0) {
+            pw.print(prefix); pw.println("Disabled compat changes:");
+            for (int i = 0; i < disabledCompatChanges.length; ++i) {
+                pw.print(prefix); pw.print("  - "); pw.println(disabledCompatChanges[i]);
+            }
+        }
     }
 
     ProcessRecord(ActivityManagerService _service, BatteryStatsImpl _batteryStats,
@@ -511,6 +520,7 @@ final class ProcessRecord {
         persistent = false;
         removed = false;
         lastStateTime = lastPssTime = nextPssTime = SystemClock.uptimeMillis();
+        disabledCompatChanges = CompatConfig.get().getDisabledChanges(_info);
     }
 
     public void setPid(int _pid) {

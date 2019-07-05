@@ -7660,7 +7660,6 @@ public class ActivityManagerService extends IActivityManager.Stub
             checkTime(startTime, "attachApplicationLocked: immediately before bindApplication");
             bindApplicationTimeMillis = SystemClock.elapsedRealtime();
             mStackSupervisor.getActivityMetricsLogger().notifyBindApplication(app);
-            long[] disabledCompatChanges = CompatConfig.get().getDisabledChanges(app.info);
             if (app.isolatedEntryPoint != null) {
                 // This is an isolated process which should just call an entry point instead of
                 // being bound to an application.
@@ -7676,7 +7675,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         new Configuration(getGlobalConfiguration()), app.compat,
                         getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
-                        buildSerial, isAutofillCompatEnabled, disabledCompatChanges);
+                        buildSerial, isAutofillCompatEnabled, app.disabledCompatChanges);
             } else {
                 thread.bindApplication(processName, appInfo, providers, null, profilerInfo,
                         null, null, null, testMode,
@@ -7685,7 +7684,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         new Configuration(getGlobalConfiguration()), app.compat,
                         getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
-                        buildSerial, isAutofillCompatEnabled, disabledCompatChanges);
+                        buildSerial, isAutofillCompatEnabled, app.disabledCompatChanges);
             }
             if (profilerInfo != null) {
                 profilerInfo.closeFd();
