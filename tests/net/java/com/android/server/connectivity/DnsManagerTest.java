@@ -258,4 +258,49 @@ public class DnsManagerTest {
         assertEquals("strictmode.com", cfgStrict.hostname);
         assertEquals(new InetAddress[0], cfgStrict.ips);
     }
+
+    @Test
+    public void testGetPrivateDnsConfigForNetwork() throws Exception {
+        final Network network = new Network(TEST_NETID);
+        final InetAddress dnsAddr = InetAddress.getByName("3.3.3.3");
+        final InetAddress[] tlsAddrs = new InetAddress[]{
+                InetAddress.getByName("6.6.6.6"),
+                InetAddress.getByName("2001:db8:66:66::1")
+        };
+        final String tlsName = "strictmode.com";
+        LinkProperties lp = new LinkProperties();
+        lp.addDnsServer(dnsAddr);
+
+        // The PrivateDnsConfig map is empty, so the default PRIVATE_DNS_OFF is returned.
+        PrivateDnsConfig privateDnsCfg = mDnsManager.getPrivateDnsConfig(network);
+        assertFalse(privateDnsCfg.useTls);
+        assertEquals("", privateDnsCfg.hostname);
+        assertEquals(new InetAddress[0], privateDnsCfg.ips);
+
+        // An entry with default PrivateDnsConfig is added to the PrivateDnsConfig map.
+        mDnsManager.updatePrivateDns(network, mDnsManager.getPrivateDnsConfig());
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        mDnsManager.updatePrivateDnsValidation(
+                new DnsManager.PrivateDnsValidationUpdate(TEST_NETID, dnsAddr, "", true));
+        mDnsManager.updatePrivateDnsStatus(TEST_NETID, lp);
+        privateDnsCfg = mDnsManager.getPrivateDnsConfig(network);
+        assertTrue(privateDnsCfg.useTls);
+        assertEquals("", privateDnsCfg.hostname);
+        assertEquals(new InetAddress[0], privateDnsCfg.ips);
+
+        // The original entry is overwritten by a new PrivateDnsConfig.
+        mDnsManager.updatePrivateDns(network, new PrivateDnsConfig(tlsName, tlsAddrs));
+        mDnsManager.updatePrivateDnsStatus(TEST_NETID, lp);
+        privateDnsCfg = mDnsManager.getPrivateDnsConfig(network);
+        assertTrue(privateDnsCfg.useTls);
+        assertEquals(tlsName, privateDnsCfg.hostname);
+        assertEquals(tlsAddrs, privateDnsCfg.ips);
+
+        // The network is removed, so the PrivateDnsConfig map becomes empty again.
+        mDnsManager.removeNetwork(network);
+        privateDnsCfg = mDnsManager.getPrivateDnsConfig(network);
+        assertFalse(privateDnsCfg.useTls);
+        assertEquals("", privateDnsCfg.hostname);
+        assertEquals(new InetAddress[0], privateDnsCfg.ips);
+    }
 }
