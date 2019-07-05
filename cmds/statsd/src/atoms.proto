@@ -171,6 +171,7 @@ message Atom {
         BluetoothSocketConnectionStateChanged bluetooth_socket_connection_state_changed = 171;
         DeviceIdentifierAccessDenied device_identifier_access_denied = 172;
         NetworkStackReported network_stack_reported = 182 [(log_from_module) = "network_stack"];
+        CompatibilityChangeReported compatibility_change_reported = 183; // [(allow_from_any_uid) = true];
     }
 
     // Pulled events will start at field 10000.
@@ -3117,4 +3118,24 @@ message DeviceIdentifierAccessDenied {
 
     // True if the package is privileged.
     optional bool is_priv_app = 4;
+}
+
+/**
+ * Logs when a compatibility change is affecting an app.
+ *
+ * Logged from:
+ *   frameworks/base/core/java/android/app/AppCompatCallbacks.java
+ */
+message CompatibilityChangeReported {
+    // The UID of the app being affected by the compatibilty change.
+    optional int32 uid = 1 [(is_uid) = true];
+
+    // The ID of the change affecting the app.
+    optional int64 change_id = 2;
+
+    // Is the change enabled? If false, it means that that apps behaviour was not actually
+    // affected. This is used to log "hypothetical breaks" to measure the potential impact
+    // of a change before it is enabled/implemented.
+    optional bool enabled = 3;
+
 }

@@ -232,7 +232,7 @@ void AnomalyTracker::declareAnomaly(const int64_t& timestampNs, const MetricDime
 
     // TODO: This should also take in the const MetricDimensionKey& key?
     android::util::stats_write(android::util::ANOMALY_DETECTED, mConfigKey.GetUid(),
-                               mConfigKey.GetId(), mAlert.id());
+                               mConfigKey.GetId(), (int64_t)mAlert.id());
 }
 
 void AnomalyTracker::detectAndDeclareAnomaly(const int64_t& timestampNs,
