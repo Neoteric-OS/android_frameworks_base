@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37fa84dd_b1bfc081",
+        "filename": "services/core/java/com/android/server/net/watchlist/NetworkWatchlistShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-08T03:31:48Z",
+      "side": 1,
+      "message": "Interestingly openFileForSystem is already sending the error to its own printwriter, so I expect this is kind of redundant. However I still think it\u0027s good as is, because it\u0027s the same thing we do on any exception at line 82 so I\u0027d favor consistency over non-redundancy especially in this kind of case",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "d7ebdb2a0b2590c861e3681dc70febc142570f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
