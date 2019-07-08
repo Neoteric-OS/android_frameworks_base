@@ -69,6 +69,30 @@
       "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc88ca4_687f2c26",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1447810
+      },
+      "writtenOn": "2019-07-08T09:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a3afb9_6031aa7f",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "e353e77f5baafdc5c4dd2f195ef9ff6da770de29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
