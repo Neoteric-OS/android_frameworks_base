@@ -22,6 +22,30 @@
       "revId": "d7ebdb2a0b2590c861e3681dc70febc142570f5e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3df26c88_0b59ebce",
+        "filename": "services/core/java/com/android/server/net/watchlist/NetworkWatchlistShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-07-08T14:32:51Z",
+      "side": 1,
+      "message": "Indeed it prints, but that print is guarded by DEBUG flag which is false. Thus, I was getting a bare \"Success\" with return code 0.",
+      "parentUuid": "37fa84dd_b1bfc081",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "d7ebdb2a0b2590c861e3681dc70febc142570f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
