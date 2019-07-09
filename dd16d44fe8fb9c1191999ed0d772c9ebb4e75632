@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dc720d7_cd42b43c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-07-09T09:11:51Z",
+      "side": 1,
+      "message": "When you do this, please add a Merged-In: \u003cID-in-internal\u003e to avoid the change getting merged to branches where it\u0027s already present.",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "dd16d44fe8fb9c1191999ed0d772c9ebb4e75632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
