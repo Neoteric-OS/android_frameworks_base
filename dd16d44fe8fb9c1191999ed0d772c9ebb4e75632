@@ -46,6 +46,30 @@
       "revId": "dd16d44fe8fb9c1191999ed0d772c9ebb4e75632",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e015337_fc8f800f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-07-09T09:36:37Z",
+      "side": 1,
+      "message": "Not sure. I think TreeHugger sometimes does a cherry-pick and sometimes does a merge. Maybe you get different behavior depending on which which strategy it uses (which might also be different from what you tested locally)?\n\nI would recommend always using Merged-In anyway, because you don\u0027t know whether your change is going to merge as seamlessly as it does in the branch you\u0027ve tested for all the branches it\u0027s going to merge to.",
+      "parentUuid": "525014b5_f1963f7b",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "dd16d44fe8fb9c1191999ed0d772c9ebb4e75632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
