@@ -70,6 +70,30 @@
       "revId": "dd16d44fe8fb9c1191999ed0d772c9ebb4e75632",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78f822a_6d3ecb0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-07-09T14:27:10Z",
+      "side": 1,
+      "message": "FYI, undoing the damage this CL caused took the whole day for the EMEA build cop. Not your fault -- presubmit should have flagged it, but should be sufficient evidence that using Merged-In is the way to go :).",
+      "parentUuid": "5e015337_fc8f800f",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "dd16d44fe8fb9c1191999ed0d772c9ebb4e75632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
