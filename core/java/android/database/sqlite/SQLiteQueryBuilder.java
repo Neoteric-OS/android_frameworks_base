@@ -673,7 +673,9 @@ public class SQLiteQueryBuilder {
      *   result.  This may include columns that do not appear in the
      *   table this SELECT is querying (i.e. mTables), but that do
      *   appear in one of the other tables in the UNION query that we
-     *   are constructing.
+     *   are constructing. This should include {@code
+     *   typeDiscriminatorColumn} for the type discriminator to be
+     *   included in the result.
      * @param columnsPresentInTable a Set of the names of the columns
      *   that appear in this table (i.e. in the table whose name is
      *   mTables).  Since columns in unionColumns include columns that
