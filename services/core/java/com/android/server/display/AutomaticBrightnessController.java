@@ -557,7 +557,7 @@ class AutomaticBrightnessController {
         final int N = mAmbientLightRingBuffer.size();
         long earliestValidTime = time;
         for (int i = N - 1; i >= 0; i--) {
-            if (mAmbientLightRingBuffer.getLux(i) <= mAmbientBrighteningThreshold) {
+            if (mAmbientLightRingBuffer.getLux(i) < mAmbientBrighteningThreshold) {
                 break;
             }
             earliestValidTime = mAmbientLightRingBuffer.getTime(i);
@@ -569,7 +569,7 @@ class AutomaticBrightnessController {
         final int N = mAmbientLightRingBuffer.size();
         long earliestValidTime = time;
         for (int i = N - 1; i >= 0; i--) {
-            if (mAmbientLightRingBuffer.getLux(i) >= mAmbientDarkeningThreshold) {
+            if (mAmbientLightRingBuffer.getLux(i) > mAmbientDarkeningThreshold) {
                 break;
             }
             earliestValidTime = mAmbientLightRingBuffer.getTime(i);
