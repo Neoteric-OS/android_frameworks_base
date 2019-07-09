@@ -22,6 +22,30 @@
       "revId": "f67513b80f1bd6aee08c661b39664261372b7d2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6bb394_e5c7ba8d",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-07-09T08:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "154c331c_31713966",
+      "range": {
+        "startLine": 628,
+        "startChar": 41,
+        "endLine": 628,
+        "endChar": 54
+      },
+      "revId": "f67513b80f1bd6aee08c661b39664261372b7d2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
