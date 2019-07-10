@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe5b401_780f07f3",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-07-10T00:48:45Z",
+      "side": 1,
+      "message": "This is not correct. The encoding should be according to C.S0005-D Table 2.7.1.3.2.4-4.\n\nMoreover where is this function actually called from? I don\u0027t see CdmaSmsAddress being populated in the encode code path. As in the places encodeCdmaSmsAddress() is called from, those places do not populate the callback address afaict.",
+      "revId": "b5d2c0092eeeb455a95e5d57a67ff9c16bb11926",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
