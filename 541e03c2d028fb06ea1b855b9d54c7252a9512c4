@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3a9037_534f3588",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-07-10T09:19:31Z",
+      "side": 1,
+      "message": "should we mark this one as deprecated?\n\nany use of this is a likely bug...",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "541e03c2d028fb06ea1b855b9d54c7252a9512c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
