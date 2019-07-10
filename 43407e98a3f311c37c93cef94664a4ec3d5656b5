@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c8ecda44_ee496d7e",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-07-10T06:33:42Z",
+      "side": 1,
+      "message": "PrivateDnsConfig is immutable as all of the members have final specifier. New PrivateDnsConfig objects are created in CS. So I changed to ConcurrentHashMap. Thanks!",
+      "parentUuid": "e2294c6a_67f83a3a",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 5
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be724068_1bc45075",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2019-07-05T14:22:06Z",
       "side": 1,
       "message": "Is it necessary to do all this work ourselves? What does it buy us compared to simply calling SSLSocketFactory.getDefault()?",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 96
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5b0197_9fa4aea1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-07-10T06:33:42Z",
+      "side": 1,
+      "message": "This SSLContext is used for a custom TrustManager which contains system certificates, which can distinguish trusted certificates sent from the servers in SSL handshakes. That\u0027s also what netd resolver does. And it throw the exception if the certificates are not trusted:\nFAILED: javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.\n\nSSLSocketFactory.getDefault() seems not able to set a custom TrustManager.",
+      "parentUuid": "be724068_1bc45075",
       "range": {
         "startLine": 778,
         "startChar": 0,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "195d2f76_ad9bd344",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-07-10T06:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce3ece9d_be74884e",
+      "range": {
+        "startLine": 854,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 45
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4d4da0c_8152a712",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 1
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "301f5206_1d2740f2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-07-10T06:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4d4da0c_8152a712",
+      "range": {
+        "startLine": 866,
+        "startChar": 26,
+        "endLine": 866,
+        "endChar": 30
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a032bb0d_68aaa07c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 1
@@ -131,6 +227,30 @@
       "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6dc23e_2409d966",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-07-10T06:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a032bb0d_68aaa07c",
+      "range": {
+        "startLine": 873,
+        "startChar": 47,
+        "endLine": 873,
+        "endChar": 52
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
