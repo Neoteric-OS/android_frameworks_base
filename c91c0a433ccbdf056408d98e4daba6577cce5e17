@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34293b06_0d234168",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-07-10T09:32:38Z",
+      "side": 1,
+      "message": "This is part of handleInterfaceServingStateInactive. How about do some change as below:\n1. Having a new function clearTetheringDownstream((IpServer who)) or have other better name.\n       private void clearTetheringDownstream((IpServer who)) {\n            mNotifyList.remove(who);\n            mIPv6TetheringCoordinator.removeActiveDownstream(who);\n            mOffload.excludeDownstreamInterface(who.interfaceName());\n            mForwardedDownstreams.remove(who);\n\n            // If this is a Wi-Fi interface, tell WifiManager of any errors.\n            if (who.interfaceType() \u003d\u003d TETHERING_WIFI) {\n                if (who.lastError() !\u003d TETHER_ERROR_NO_ERROR) {\n                    getWifiManager().updateInterfaceIpState(\n                            who.interfaceName(), IFACE_IP_MODE_CONFIGURATION_ERROR);\n                }\n            }\n       }\n2. replace handleInterfaceServingStateInactive to clearTetheringDownstream in TetherMasterSM#InitialState\n3. Change handleInterfaceServingStateInactive as below:\n        private void handleInterfaceServingStateInactive(IpServer who) {\n            clearTetheringDownstream(who);\n            if (who.interfaceType() \u003d\u003d TETHERING_WIFI\n                    \u0026\u0026 who.lastError() \u003d\u003d TETHER_ERROR_NO_ERROR) {\n                 getWifiManager().updateInterfaceIpState(\n                    who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED);\n            }\n        }\n4. Keep calling handleInterfaceServingStateInactive in TetherMasterSM#TetherModeAliveState",
+      "range": {
+        "startLine": 1442,
+        "startChar": 24,
+        "endLine": 1446,
+        "endChar": 25
+      },
+      "revId": "c91c0a433ccbdf056408d98e4daba6577cce5e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
