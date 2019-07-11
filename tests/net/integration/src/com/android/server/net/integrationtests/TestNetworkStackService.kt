@@ -45,6 +45,7 @@ import kotlin.collections.ArrayList
 import kotlin.test.fail
 
 private const val TEST_NETID = 42
+private const val TEST_INITIAL_REEVALUATE_DELAY_MS = 10_000
 
 class TestNetworkStackService : Service() {
     companion object {
@@ -73,6 +74,8 @@ class TestNetworkStackService : Service() {
         override fun getPrivateDnsBypassNetwork(network: Network?) = privateDnsBypassNetwork
         override fun sendNetworkConditionsBroadcast(context: Context, broadcast: Intent) = Unit
         override fun getDnsResolver() = dnsr
+        override fun getInitialReevaluateDelay() = TEST_INITIAL_REEVALUATE_DELAY_MS
+        override fun getIgnoreReevaluateAttempts() = 0
     }
 
     private inner class TestNetworkStackConnector(context: Context) :

@@ -30,8 +30,10 @@ import android.net.INetworkPolicyManager
 import android.net.INetworkStatsService
 import android.net.LinkProperties
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY
 import android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
+import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.net.NetworkRequest
 import android.net.NetworkStackClient
 import android.net.TestNetworkStackClient
@@ -176,8 +178,6 @@ class ConnectivityServiceIntegrationTest {
         context.addMockSystemService(Context.CONNECTIVITY_SERVICE, cm)
 
         service.systemReady()
-
-        validatedResponse()
     }
 
     private fun makeDependencies() : ConnectivityService.Dependencies {
@@ -190,6 +190,7 @@ class ConnectivityServiceIntegrationTest {
         doReturn(mock(MockableSystemProperties::class.java)).`when`(deps).systemProperties
         doReturn(TestNetIdManager()).`when`(deps).makeNetIdManager()
         doReturn(dnsManager).`when`(deps).makeDnsManager(any(), any(), any())
+        doReturn(noPrivateDnsConfig).`when`(dnsManager).getPrivateDnsConfig()
         return deps
     }
 
@@ -198,19 +199,53 @@ class ConnectivityServiceIntegrationTest {
         nsInstrumentation.clearAllState()
     }
 
-    private fun validatedDnsResponse() {
+    private fun addValidatedDnsResponse() {
         nsInstrumentation.addDnsResponse(DnsResponse("test.android.com", "192.168.0.1", -1))
         nsInstrumentation.addDnsResponse(DnsResponse("secure.test.android.com", "192.168.0.2", -1))
     }
 
-    private fun validatedResponse() {
-        validatedDnsResponse()
+    private fun addValidatedResponse() {
+        addValidatedDnsResponse()
 
         nsInstrumentation.addHttpResponse(HttpResponse(
                 "http://test.android.com",
                 responseCode = 204, contentLength = 42, redirectUrl = null))
         nsInstrumentation.addHttpResponse(HttpResponse(
                 "https://secure.test.android.com",
+                responseCode = 204, contentLength = 42, redirectUrl = null))
+    }
+
+    private fun addInvalidatedResponse() {
+        addValidatedDnsResponse()
+
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://test.android.com",
+                responseCode = 503, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "https://secure.test.android.com",
+                responseCode = 503, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://fallback1.android.com",
+                responseCode = 503, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://fallback2.android.com",
+                responseCode = 503, contentLength = 42, redirectUrl = null))
+    }
+
+    private fun addPartialConnectivityResponse() {
+        addValidatedDnsResponse()
+
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://test.android.com",
+                responseCode = 204, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "https://secure.test.android.com",
+                responseCode = 503, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://fallback1.android.com",
+                responseCode = 204, contentLength = 42, redirectUrl = null))
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "http://fallback2.android.com",
                 responseCode = 204, contentLength = 42, redirectUrl = null))
     }
 
@@ -223,11 +258,11 @@ class ConnectivityServiceIntegrationTest {
                 .build()
         val testCallback = mock(ConnectivityManager.NetworkCallback::class.java)
         cm.registerNetworkCallback(request, testCallback)
-        doReturn(noPrivateDnsConfig).`when`(dnsManager).getPrivateDnsConfig()
 
         val na = WrappedNetworkAgent(TRANSPORT_CELLULAR, LinkProperties(), context)
         networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
 
+        addValidatedResponse()
         na.addCapability(NET_CAPABILITY_INTERNET)
         na.connect()
 
@@ -236,6 +271,9 @@ class ConnectivityServiceIntegrationTest {
         verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
                 argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED) })
         assertEquals(2, nsInstrumentation.getRequestUrls().size)
+
+        na.disconnect()
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
     }
 
     @Test
@@ -252,6 +290,7 @@ class ConnectivityServiceIntegrationTest {
         val na = WrappedNetworkAgent(TRANSPORT_CELLULAR, LinkProperties(), context)
         networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
 
+        addValidatedResponse()
         na.addCapability(NET_CAPABILITY_INTERNET)
         na.connect()
 
@@ -260,5 +299,146 @@ class ConnectivityServiceIntegrationTest {
         verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
                 argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED) })
         assertEquals(2, nsInstrumentation.getRequestUrls().size)
+
+        na.disconnect()
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
+    }
+
+    @Test
+    fun reportNetworkConnectivityTest() {
+        // TODO: refactor with new test callback API
+        val request = NetworkRequest.Builder()
+                .clearCapabilities()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build()
+        val testCallback = mock(ConnectivityManager.NetworkCallback::class.java)
+        cm.registerNetworkCallback(request, testCallback)
+
+        val na = WrappedNetworkAgent(TRANSPORT_CELLULAR, LinkProperties(), context)
+        networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
+
+        addValidatedResponse()
+        na.addCapability(NET_CAPABILITY_INTERNET)
+        na.connect()
+
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onAvailable(eq(na.network),
+                any(), any(), anyBoolean())
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(2, nsInstrumentation.getRequestUrls().size)
+
+        addInvalidatedResponse()
+        cm.reportNetworkConnectivity(na.network, false)
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> !c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(5, nsInstrumentation.getRequestUrls().size)
+
+        addValidatedResponse()
+        cm.reportNetworkConnectivity(na.network, true)
+        verify(testCallback, timeout(TEST_TIMEOUT_MS).times(2))
+                .onCapabilitiesChanged(eq(na.network),
+                        argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(7, nsInstrumentation.getRequestUrls().size)
+
+        na.disconnect()
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
+    }
+
+    @Test
+    fun partialConntivityThenValidatedTest() {
+        // TODO: refactor with new test callback API
+        val request = NetworkRequest.Builder()
+                .clearCapabilities()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build()
+        val testCallback = mock(ConnectivityManager.NetworkCallback::class.java)
+        cm.registerNetworkCallback(request, testCallback)
+
+        val na = WrappedNetworkAgent(TRANSPORT_WIFI, LinkProperties(), context)
+        networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
+
+        addPartialConnectivityResponse()
+        na.addCapability(NET_CAPABILITY_INTERNET)
+        na.connect()
+
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onAvailable(eq(na.network),
+                any(), any(), anyBoolean())
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)
+                        && !c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(3, nsInstrumentation.getRequestUrls().size)
+
+        addValidatedResponse()
+        cm.reportNetworkConnectivity(na.network, true)
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED)
+                        && !c.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY) })
+        assertEquals(5, nsInstrumentation.getRequestUrls().size)
+
+        na.disconnect()
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
+    }
+
+    @Test
+    fun acceptPartialConnectivityTest() {
+        // TODO: refactor with new test callback API
+        val request = NetworkRequest.Builder()
+                .clearCapabilities()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build()
+        val testCallback = mock(ConnectivityManager.NetworkCallback::class.java)
+        cm.registerNetworkCallback(request, testCallback)
+
+        val na = WrappedNetworkAgent(TRANSPORT_WIFI, LinkProperties(), context)
+        networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
+
+        addPartialConnectivityResponse()
+        na.addCapability(NET_CAPABILITY_INTERNET)
+        na.connect()
+
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onAvailable(eq(na.network),
+                any(), any(), anyBoolean())
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)
+                        && !c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(3, nsInstrumentation.getRequestUrls().size)
+
+        cm.setAcceptPartialConnectivity(na.network, true /* accept */, false /* always */)
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_VALIDATED)
+                        && c.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY) })
+        assertEquals(3, nsInstrumentation.getRequestUrls().size)
+
+        na.disconnect()
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
+    }
+
+    @Test
+    fun notAcceptPartialConnectivityTest() {
+        // TODO: refactor with new test callback API
+        val request = NetworkRequest.Builder()
+                .clearCapabilities()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build()
+        val testCallback = mock(ConnectivityManager.NetworkCallback::class.java)
+        cm.registerNetworkCallback(request, testCallback)
+
+        val na = WrappedNetworkAgent(TRANSPORT_WIFI, LinkProperties(), context)
+        networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
+
+        addPartialConnectivityResponse()
+        na.addCapability(NET_CAPABILITY_INTERNET)
+        na.connect()
+
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onAvailable(eq(na.network),
+                any(), any(), anyBoolean())
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onCapabilitiesChanged(eq(na.network),
+                argThat { c -> c.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)
+                        && !c.hasCapability(NET_CAPABILITY_VALIDATED) })
+        assertEquals(3, nsInstrumentation.getRequestUrls().size)
+
+        cm.setAcceptPartialConnectivity(na.network, false /* accept */, false /* always */)
+        verify(testCallback, timeout(TEST_TIMEOUT_MS)).onLost(eq(na.network))
+        assertEquals(3, nsInstrumentation.getRequestUrls().size)
     }
 }
