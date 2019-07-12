@@ -3021,7 +3021,8 @@ public class ConnectivityServiceTest {
             };
         }
 
-        assertRunsInAtMost("Registering callbacks", REGISTER_TIME_LIMIT_MS, () -> {
+        // Registering callbacks should take less than this time limit.
+        assertRunsInAtMost(REGISTER_TIME_LIMIT_MS, "Registering callbacks", () -> {
             for (NetworkCallback cb : callbacks) {
                 mCm.registerNetworkCallback(request, cb);
             }
@@ -3057,7 +3058,7 @@ public class ConnectivityServiceTest {
                 NUM_REQUESTS, onLostDispatchingDuration, SWITCH_TIME_LIMIT_MS),
                 onLostDispatchingDuration <= SWITCH_TIME_LIMIT_MS);
 
-        assertRunsInAtMost("Unregistering callbacks", UNREGISTER_TIME_LIMIT_MS, () -> {
+        assertRunsInAtMost(UNREGISTER_TIME_LIMIT_MS, "Unregistering callbacks", () -> {
             for (NetworkCallback cb : callbacks) {
                 mCm.unregisterNetworkCallback(cb);
             }
