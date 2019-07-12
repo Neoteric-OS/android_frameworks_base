@@ -253,6 +253,7 @@ public class StatusBarWindowManager implements RemoteInputController.Callback, D
         applyBrightness(state);
         applyHasTopUi(state);
         applySleepToken(state);
+        applySecureFlag(state);
         if (mLp.copyFrom(mLpChanged) != 0) {
             mWindowManager.updateViewLayout(mStatusBarView, mLp);
         }
@@ -263,6 +264,14 @@ public class StatusBarWindowManager implements RemoteInputController.Callback, D
                 Log.e(TAG, "Failed to call setHasTopUi", e);
             }
             mHasTopUi = mHasTopUiChanged;
+        }
+    }
+
+    private void applySecureFlag(State state) {
+        if (state.bouncerShowing) {
+            mLpChanged.flags |= WindowManager.LayoutParams.FLAG_SECURE;
+        } else {
+            mLpChanged.flags &= ~WindowManager.LayoutParams.FLAG_SECURE;
         }
     }
 
