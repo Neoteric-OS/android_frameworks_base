@@ -2079,7 +2079,7 @@ public class MediaRouter {
                 if (mDeviceAddress != null) {
                     for (Display display : displays) {
                         if (display.getType() == Display.TYPE_WIFI
-                                && mDeviceAddress.equals(display.getAddress())) {
+                                && mDeviceAddress.equals(display.getAddress().toString())) {
                             return display;
                         }
                     }
