@@ -319,9 +319,15 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
         applyModalFlag(state);
         applyBrightness(state);
         applyHasTopUi(state);
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarWindowController.java
         applyNotTouchable(state);
         applyStatusBarColorSpaceAgnosticFlag(state);
         if (mLp != null && mLp.copyFrom(mLpChanged) != 0) {
+=======
+        applySleepToken(state);
+        applySecureFlag(state);
+        if (mLp.copyFrom(mLpChanged) != 0) {
+>>>>>>> Add secure for KeyguardBouncer:packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarWindowManager.java
             mWindowManager.updateViewLayout(mStatusBarView, mLp);
         }
         if (mHasTopUi != mHasTopUiChanged) {
@@ -343,6 +349,14 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
                         mCurrentState.keyguardOccluded,
                         mCurrentState.bouncerShowing);
             }
+        }
+    }
+
+    private void applySecureFlag(State state) {
+        if (state.bouncerShowing) {
+            mLpChanged.flags |= WindowManager.LayoutParams.FLAG_SECURE;
+        } else {
+            mLpChanged.flags &= ~WindowManager.LayoutParams.FLAG_SECURE;
         }
     }
 
