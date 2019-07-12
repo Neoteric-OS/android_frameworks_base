@@ -1878,13 +1878,10 @@ public final class SmsManager {
     private ArrayList<SmsMessage> createMessageListFromRawRecords(List<SmsRawData> records) {
         ArrayList<SmsMessage> messages = new ArrayList<SmsMessage>();
         if (records != null) {
-            int count = records.size();
-            for (int i = 0; i < count; i++) {
-                SmsRawData data = records.get(i);
-                // List contains all records, including "free" records (null)
-                if (data != null) {
-                    SmsMessage sms = SmsMessage.createFromEfRecord(i+1, data.getBytes(),
-                            getSubscriptionId());
+            for (SmsRawData record : records) {
+                if (record != null) {
+                    SmsMessage sms = SmsMessage.createFromEfRecord(record.getIndex(),
+                            record.getBytes(), getSubscriptionId());
                     if (sms != null) {
                         messages.add(sms);
                     }
