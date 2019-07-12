@@ -144,13 +144,11 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
-     * Create an SmsMessage from an SMS EF record.
+     * Creates an SmsMessage from an SMS EF record.
      *
-     * @param index Index of SMS record. This should be index in ArrayList
-     *              returned by RuimSmsInterfaceManager.getAllMessagesFromIcc + 1.
+     * @param index Index of SMS record.
      * @param data Record data.
      * @return An SmsMessage representing the record.
-     *
      * @hide
      */
     public static SmsMessage createFromEfRecord(int index, byte[] data) {

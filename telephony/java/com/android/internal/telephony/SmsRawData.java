@@ -21,24 +21,26 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- *  A parcelable holder class of byte[] for ISms aidl implementation
- */
+/** A parcelable holder class of byte[] pdu and an index for an SMS EF record. */
 public class SmsRawData implements Parcelable {
-    byte[] data;
+    byte[] mData;
+    int mIndex;
 
     //Static Methods
     @UnsupportedAppUsage
-    public static final Parcelable.Creator<SmsRawData> CREATOR
-            = new Parcelable.Creator<SmsRawData> (){
+    public static final Parcelable.Creator<SmsRawData> CREATOR =
+            new Parcelable.Creator<SmsRawData>() {
+        @Override
         public SmsRawData createFromParcel(Parcel source) {
             int size;
             size = source.readInt();
             byte[] data = new byte[size];
             source.readByteArray(data);
-            return new SmsRawData(data);
+            int index = source.readInt();
+            return new SmsRawData(data, index);
         }
 
+        @Override
         public SmsRawData[] newArray(int size) {
             return new SmsRawData[size];
         }
@@ -46,21 +48,29 @@ public class SmsRawData implements Parcelable {
 
     // Constructor
     @UnsupportedAppUsage
-    public SmsRawData(byte[] data) {
-        this.data = data;
+    public SmsRawData(byte[] data, int index) {
+        mData = data;
+        mIndex = index;
     }
 
     @UnsupportedAppUsage
     public byte[] getBytes() {
-        return data;
+        return mData;
     }
 
+    public int getIndex() {
+        return mIndex;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(data.length);
-        dest.writeByteArray(data);
+        dest.writeInt(mData.length);
+        dest.writeByteArray(mData);
+        dest.writeInt(mIndex);
     }
 }

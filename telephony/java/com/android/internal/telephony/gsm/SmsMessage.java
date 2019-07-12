@@ -160,13 +160,11 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
-     * Create an SmsMessage from an SMS EF record.
+     * Creates an SmsMessage from an SMS EF record.
      *
-     * @param index Index of SMS record. This should be index in ArrayList
-     *              returned by SmsManager.getAllMessagesFromSim + 1.
+     * @param index Index of SMS record.
      * @param data Record data.
      * @return An SmsMessage representing the record.
-     *
      * @hide
      */
     public static SmsMessage createFromEfRecord(int index, byte[] data) {
@@ -179,8 +177,7 @@ public class SmsMessage extends SmsMessageBase {
             // or STORED_UNSENT
             // See TS 51.011 10.5.3
             if ((data[0] & 1) == 0) {
-                Rlog.w(LOG_TAG,
-                        "SMS parsing failed: Trying to parse a free record");
+                Rlog.w(LOG_TAG, "SMS parsing failed: Trying to parse a free record");
                 return null;
             } else {
                 msg.mStatusOnIcc = data[0] & 0x07;
