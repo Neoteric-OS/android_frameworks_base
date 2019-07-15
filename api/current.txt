@@ -27147,7 +27147,7 @@ package android.net {
     method public void removeDefaultNetworkActiveListener(@NonNull android.net.ConnectivityManager.OnNetworkActiveListener);
     method @Deprecated public void reportBadNetwork(@Nullable android.net.Network);
     method public void reportNetworkConnectivity(@Nullable android.net.Network, boolean);
-    method public boolean requestBandwidthUpdate(@NonNull android.net.Network);
+    method @Deprecated public boolean requestBandwidthUpdate(@NonNull android.net.Network);
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityManager.NetworkCallback);
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityManager.NetworkCallback, @NonNull android.os.Handler);
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityManager.NetworkCallback, int);
