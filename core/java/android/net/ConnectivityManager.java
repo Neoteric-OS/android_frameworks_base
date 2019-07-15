@@ -3977,7 +3977,11 @@ public class ConnectivityManager {
      *
      * @param network {@link Network} specifying which network you're interested.
      * @return {@code true} on success, {@code false} if the {@link Network} is no longer valid.
+     * @deprecated This function can throw {@link IllegalStateException}.  Use
+     *             {@link #bindProcessToNetwork} instead.  {@code bindProcessToNetwork}
+     *             is a direct replacement.
      */
+    @Deprecated
     public boolean requestBandwidthUpdate(@NonNull Network network) {
         try {
             return mService.requestBandwidthUpdate(network);
