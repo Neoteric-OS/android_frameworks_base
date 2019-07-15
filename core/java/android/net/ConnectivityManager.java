@@ -3977,7 +3977,11 @@ public class ConnectivityManager {
      *
      * @param network {@link Network} specifying which network you're interested.
      * @return {@code true} on success, {@code false} if the {@link Network} is no longer valid.
+     * @deprecated Bandwidth updates will be provided asynchronously by the lower layers upon
+     *             significant change. On devices launched with {@link VERSION_CODES#Q} or higher
+     *             this call will be a no-op.
      */
+    @Deprecated
     public boolean requestBandwidthUpdate(@NonNull Network network) {
         try {
             return mService.requestBandwidthUpdate(network);
