@@ -143,10 +143,11 @@ public final class TelephonyScanManager {
                             for (int i = 0; i < parcelables.length; i++) {
                                 ci[i] = (CellInfo) parcelables[i];
                             }
-                            executor.execute(() -> {
-                                Rlog.d(TAG, "onResults: " + ci.toString());
-                                callback.onResults(Arrays.asList(ci));
-                            });
+                            Binder.withCleanCallingIdentity(() ->
+                                    executor.execute(() -> {
+                                        Rlog.d(TAG, "onResults: " + ci.toString());
+                                        callback.onResults(Arrays.asList(ci));
+                                    }));
                         } catch (Exception e) {
                             Rlog.e(TAG, "Exception in networkscan callback onResults", e);
                         }
@@ -154,20 +155,22 @@ public final class TelephonyScanManager {
                     case CALLBACK_SCAN_ERROR:
                         try {
                             final int errorCode = message.arg1;
-                            executor.execute(() -> {
-                                Rlog.d(TAG, "onError: " + errorCode);
-                                callback.onError(errorCode);
-                            });
+                            Binder.withCleanCallingIdentity(() ->
+                                    executor.execute(() -> {
+                                        Rlog.d(TAG, "onError: " + errorCode);
+                                        callback.onError(errorCode);
+                                    }));
                         } catch (Exception e) {
                             Rlog.e(TAG, "Exception in networkscan callback onError", e);
                         }
                         break;
                     case CALLBACK_SCAN_COMPLETE:
                         try {
-                            executor.execute(() -> {
-                                Rlog.d(TAG, "onComplete");
-                                callback.onComplete();
-                            });
+                            Binder.withCleanCallingIdentity(() ->
+                                    executor.execute(() -> {
+                                        Rlog.d(TAG, "onComplete");
+                                        callback.onComplete();
+                                    }));
                             mScanInfo.remove(message.arg2);
                         } catch (Exception e) {
                             Rlog.e(TAG, "Exception in networkscan callback onComplete", e);
