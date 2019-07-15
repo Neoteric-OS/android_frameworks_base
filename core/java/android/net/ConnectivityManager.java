@@ -473,6 +473,14 @@ public class ConnectivityManager {
     public static final int TETHERING_BLUETOOTH = 2;
 
     /**
+     * Wifi P2p tethering type.
+     * @see #startTethering(int, boolean, OnStartTetheringCallback)
+     * @hide
+     */
+    @SystemApi
+    public static final int TETHERING_WIFI_P2P = 3;
+
+    /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
      * @hide
