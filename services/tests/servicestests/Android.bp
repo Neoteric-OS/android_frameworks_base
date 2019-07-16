@@ -39,6 +39,7 @@ android_test {
         "platformprotosnano",
         "servicestests-utils",
         "xml-writer-device-lib",
+        "jobscheduler-service",
     ],
 
     aidl: {

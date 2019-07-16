@@ -91,7 +91,6 @@ import com.android.server.fingerprint.FingerprintService;
 import com.android.server.gpu.GpuService;
 import com.android.server.hdmi.HdmiControlService;
 import com.android.server.input.InputManagerService;
-import com.android.server.job.JobSchedulerService;
 import com.android.server.lights.LightsService;
 import com.android.server.media.MediaResourceMonitorService;
 import com.android.server.media.MediaRouterService;
@@ -1412,8 +1411,9 @@ public final class SystemServer {
                 traceEnd();
             }
 
+            // TODO(aml-jobscheduler): Think about how to do it properly.
             traceBeginAndSlog("StartJobScheduler");
-            mSystemServiceManager.startService(JobSchedulerService.class);
+            mSystemServiceManager.startService(JOB_SCHEDULER_SERVICE_CLASS);
             traceEnd();
 
             traceBeginAndSlog("StartSoundTrigger");

@@ -21,6 +21,7 @@ android_test {
         "services.core",
         "services.devicepolicy",
         "frameworks-base-testutils",
+        "jobscheduler-service",
         "androidx.test.runner",
         "mockito-target-extended-minus-junit4",
         "ShortcutManagerTestUtils",
