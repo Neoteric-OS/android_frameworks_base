@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "420e9314_5e4762c1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3982,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-16T14:17:55Z",
+      "side": 1,
+      "message": "Can we also change CS to make this call effectively be a no-op? Something like:\n\n    enforceAccessPermission();\n\n    if (Build.FIRST_SDK_INT \u003e\u003d 29) {\n        // No-op. For backwards compatibility, return true iff the network exists.\n        // TODO: delete the rest of this method once such devices are no longer supported.\n        return getNetworkAgentInfoForNetId(Network.netId) !\u003d null;\n    }",
+      "range": {
+        "startLine": 3982,
+        "startChar": 29,
+        "endLine": 3982,
+        "endChar": 44
+      },
+      "revId": "045de3d1795f1f67f271398aa717d91796664696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
