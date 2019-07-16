@@ -34,7 +34,7 @@ import java.util.List;
 public class JobSchedulerImpl extends JobScheduler {
     IJobScheduler mBinder;
 
-    /* package */ JobSchedulerImpl(IJobScheduler binder) {
+    public JobSchedulerImpl(IJobScheduler binder) {
         mBinder = binder;
     }
 
