@@ -17,6 +17,8 @@
 package android.net.util;
 
 import static com.android.internal.util.Preconditions.checkArgument;
+import static com.android.server.util.NetworkStackConstants.ETHER_MTU;
+import static com.android.server.util.NetworkStackConstants.IPV6_MIN_MTU;
 
 import android.net.MacAddress;
 import android.text.TextUtils;
@@ -40,11 +42,6 @@ public class InterfaceParams {
     public final int index;
     public final MacAddress macAddr;
     public final int defaultMtu;
-
-    // TODO: move the below to NetworkStackConstants when this class is moved to the NetworkStack.
-    private static final int ETHER_MTU = 1500;
-    private static final int IPV6_MIN_MTU = 1280;
-
 
     public static InterfaceParams getByName(String name) {
         final NetworkInterface netif = getNetworkInterfaceByName(name);
