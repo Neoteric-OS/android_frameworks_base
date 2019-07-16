@@ -352,13 +352,9 @@ public class ImsMmTelManager {
      * @param executor The executor the callback events should be run on.
      * @param c The {@link RegistrationCallback} to be added.
      * @see #unregisterImsRegistrationCallback(RegistrationCallback)
-     * @throws IllegalArgumentException if the subscription associated with this callback is not
-     * active (SIM is not inserted, ESIM inactive) or invalid, or a null {@link Executor} or
-     * {@link CapabilityCallback} callback.
-     * @throws ImsException if the subscription associated with this callback is valid, but
-     * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
-     * reason.
+     * @throws ImsException if the {@link ImsService} associated with the subscription is not
+     * available. This can happen if the service crashed or the subscription is no longer active,
+     * for example. See {@link ImsException#getCode()} for a more detailed reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerImsRegistrationCallback(@NonNull @CallbackExecutor Executor executor,
@@ -377,12 +373,7 @@ public class ImsMmTelManager {
         try {
             getITelephony().registerImsRegistrationCallback(mSubId, c.getBinder());
         } catch (ServiceSpecificException e) {
-            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
-                // Rethrow as runtime error to keep API compatible.
-                throw new IllegalArgumentException(e.getMessage());
-            } else {
-                throw new RuntimeException(e.getMessage());
-            }
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException | IllegalStateException e) {
             throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
@@ -427,13 +418,9 @@ public class ImsMmTelManager {
      * @param executor The executor the callback events should be run on.
      * @param c The MmTel {@link CapabilityCallback} to be registered.
      * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
-     * @throws IllegalArgumentException if the subscription associated with this callback is not
-     * active (SIM is not inserted, ESIM inactive) or invalid, or a null {@link Executor} or
-     * {@link CapabilityCallback} callback.
-     * @throws ImsException if the subscription associated with this callback is valid, but
-     * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
-     * reason.
+     * @throws ImsException if the {@link ImsService} associated with the subscription is not
+     * available. This can happen if the service crashed or the subscription is no longer active,
+     * for example. See {@link ImsException#getCode()} for a more detailed reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerMmTelCapabilityCallback(@NonNull @CallbackExecutor Executor executor,
@@ -452,12 +439,7 @@ public class ImsMmTelManager {
         try {
             getITelephony().registerMmTelCapabilityCallback(mSubId, c.getBinder());
         } catch (ServiceSpecificException e) {
-            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
-                // Rethrow as runtime error to keep API compatible.
-                throw new IllegalArgumentException(e.getMessage());
-            } else {
-                throw new RuntimeException(e.getMessage());
-            }
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }  catch (IllegalStateException e) {
@@ -506,11 +488,91 @@ public class ImsMmTelManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @return true if the user's setting for advanced calling is enabled, false otherwise.
+     * @deprecated Use {@link #isAdvancedCallingSettingEnabledC()} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isAdvancedCallingSettingEnabled() {
         try {
             return getITelephony().isAdvancedCallingSettingEnabled(mSubId);
+        } catch (ServiceSpecificException e) {
+            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
+                // Rethrow as runtime error to keep API compatible.
+                throw new IllegalArgumentException(e.getMessage());
+            } else {
+                throw new RuntimeException(e.getMessage());
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Query the user’s setting for “Advanced Calling” or "Enhanced 4G LTE", which is used to
+     * enable MmTel IMS features, depending on the carrier configuration for the current
+     * subscription. If this setting is enabled, IMS voice and video telephony over IWLAN/LTE will
+     * be enabled as long as the carrier has provisioned these services for the specified
+     * subscription. Other IMS services (SMS/UT) are not affected by this user setting and depend on
+     * carrier requirements.
+     * <p>
+     * Note: If the carrier configuration for advanced calling is not editable or hidden, this
+     * method will always return the default value.
+     *
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
+     * @see #setAdvancedCallingSettingEnabledC(boolean)
+     * @return true if the user's setting for advanced calling is enabled, false otherwise.
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean isAdvancedCallingSettingEnabledC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            return getITelephony().isAdvancedCallingSettingEnabled(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Modify the user’s setting for “Advanced Calling” or "Enhanced 4G LTE", which is used to
+     * enable MmTel IMS features, depending on the carrier configuration for the current
+     * subscription. If this setting is enabled, IMS voice and video telephony over IWLAN/LTE will
+     * be enabled as long as the carrier has provisioned these services for the specified
+     * subscription. Other IMS services (SMS/UT) are not affected by this user setting and depend on
+     * carrier requirements.
+     *
+     * Modifying this value may also trigger an IMS registration or deregistration, depending on
+     * whether or not the new value is enabled or disabled.
+     *
+     * Note: If the carrier configuration for advanced calling is not editable or hidden, this
+     * method will do nothing and will instead always use the default value.
+     *
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
+     * @see #isAdvancedCallingSettingEnabled()
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @deprecated Use {@link #setAdvancedCallingSettingEnabledC(boolean)} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setAdvancedCallingSettingEnabled(boolean isEnabled) {
+        try {
+            getITelephony().setAdvancedCallingSettingEnabled(mSubId, isEnabled);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -542,21 +604,18 @@ public class ImsMmTelManager {
      * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
-     * @see #isAdvancedCallingSettingEnabled()
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @see #isAdvancedCallingSettingEnabledC()
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
-    public void setAdvancedCallingSettingEnabled(boolean isEnabled) {
+    public void setAdvancedCallingSettingEnabledC(boolean isEnabled) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             getITelephony().setAdvancedCallingSettingEnabled(mSubId, isEnabled);
         } catch (ServiceSpecificException e) {
-            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
-                // Rethrow as runtime error to keep API compatible.
-                throw new IllegalArgumentException(e.getMessage());
-            } else {
-                throw new RuntimeException(e.getMessage());
-            }
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -627,7 +686,11 @@ public class ImsMmTelManager {
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @return true if the user’s “Video Calling” setting is currently enabled.
      * @see #setVtSettingEnabled(boolean)
+     * @deprecated Use {@link #isVtSettingEnabledC()} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVtSettingEnabled() {
         try {
@@ -645,11 +708,35 @@ public class ImsMmTelManager {
     }
 
     /**
+     * The user's setting for whether or not they have enabled the "Video Calling" setting.
+     *
+     * @return true if the user’s “Video Calling” setting is currently enabled.
+     * @see #setVtSettingEnabledC(boolean)
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean isVtSettingEnabledC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            return getITelephony().isVtSettingEnabled(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * Change the user's setting for Video Telephony and enable the Video Telephony capability.
      *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #isVtSettingEnabled()
+     * @deprecated Use {@link #setVtSettingEnabledC(boolean)} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVtSettingEnabled(boolean isEnabled) {
@@ -668,12 +755,36 @@ public class ImsMmTelManager {
     }
 
     /**
+     * Change the user's setting for Video Telephony and enable the Video Telephony capability.
+
+     * @see #isVtSettingEnabledC()
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setVtSettingEnabledC(boolean isEnabled) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            getITelephony().setVtSettingEnabled(mSubId, isEnabled);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * @return true if the user's setting for Voice over WiFi is enabled and false if it is not.
      *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #setVoWiFiSettingEnabled(boolean)
+     * @deprecated Use {@link #isVoWiFiSettingEnabled()} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVoWiFiSettingEnabled() {
         try {
@@ -691,13 +802,37 @@ public class ImsMmTelManager {
     }
 
     /**
+     * @return true if the user's setting for Voice over WiFi is enabled and false if it is not.
+     *
+     * @see #setVoWiFiSettingEnabledC(boolean)
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean isVoWiFiSettingEnabledC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            return getITelephony().isVoWiFiSettingEnabled(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * Sets the user's setting for whether or not Voice over WiFi is enabled.
      *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise=
+     * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise
      * @see #isVoWiFiSettingEnabled()
+     * @deprecated Use {@link #setVtSettingEnabledC(boolean)} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiSettingEnabled(boolean isEnabled) {
         try {
@@ -715,6 +850,27 @@ public class ImsMmTelManager {
     }
 
     /**
+     * Sets the user's setting for whether or not Voice over WiFi is enabled.
+     *
+     * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise
+     * @see #isVoWiFiSettingEnabledC()
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setVoWiFiSettingEnabledC(boolean isEnabled) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            getITelephony().setVoWiFiSettingEnabled(mSubId, isEnabled);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * Returns the user's voice over WiFi roaming setting associated with the current subscription.
      *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
@@ -722,7 +878,11 @@ public class ImsMmTelManager {
      * @return true if the user's setting for Voice over WiFi while roaming is enabled, false
      * if disabled.
      * @see #setVoWiFiRoamingSettingEnabled(boolean)
+     * @deprecated Use {@link #isVoWiFiRoamingSettingEnabledC()} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isVoWiFiRoamingSettingEnabled() {
         try {
@@ -740,6 +900,28 @@ public class ImsMmTelManager {
     }
 
     /**
+     * Returns the user's voice over WiFi roaming setting associated with the current subscription.
+     *
+     * @return true if the user's setting for Voice over WiFi while roaming is enabled, false
+     * if disabled.
+     * @see #setVoWiFiRoamingSettingEnabledC(boolean)
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean isVoWiFiRoamingSettingEnabledC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            return getITelephony().isVoWiFiRoamingSettingEnabled(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * Change the user's setting for Voice over WiFi while roaming.
      *
      * @param isEnabled true if the user's setting for Voice over WiFi while roaming is enabled,
@@ -747,7 +929,11 @@ public class ImsMmTelManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #isVoWiFiRoamingSettingEnabled()
+     * @deprecated Use {@link #setVoWiFiRoamingSettingEnabledC(boolean)} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingSettingEnabled(boolean isEnabled) {
         try {
@@ -759,6 +945,28 @@ public class ImsMmTelManager {
             } else {
                 throw new RuntimeException(e.getMessage());
             }
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Change the user's setting for Voice over WiFi while roaming.
+     *
+     * @param isEnabled true if the user's setting for Voice over WiFi while roaming is enabled,
+     *     false otherwise.
+     * @see #isVoWiFiRoamingSettingEnabledC()
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setVoWiFiRoamingSettingEnabledC(boolean isEnabled) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            getITelephony().setVoWiFiRoamingSettingEnabled(mSubId, isEnabled);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }
@@ -777,7 +985,10 @@ public class ImsMmTelManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #setVoWiFiSettingEnabled(boolean)
+     * @deprecated Used for temporarily enabling VoWiFi and setting VoWiFi mode on older devices
+     * for provisioning purposes.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiNonPersistent(boolean isCapable, int mode) {
         try {
@@ -805,11 +1016,70 @@ public class ImsMmTelManager {
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @see #setVoWiFiSettingEnabled(boolean)
+     * @deprecated Use {@link #getVoWiFiModeSettingC()} instead, which uses a checked ImsException
+     * to make it clear that operations can fail if the subscription ID being used becomes inactive.
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @WiFiCallingMode int getVoWiFiModeSetting() {
         try {
             return getITelephony().getVoWiFiModeSetting(mSubId);
+        } catch (ServiceSpecificException e) {
+            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
+                // Rethrow as runtime error to keep API compatible.
+                throw new IllegalArgumentException(e.getMessage());
+            } else {
+                throw new RuntimeException(e.getMessage());
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Returns the user's voice over WiFi Roaming mode setting associated with the device.
+     *
+     * @return The Voice over WiFi Mode preference set by the user, which can be one of the
+     * following:
+     * - {@link #WIFI_MODE_WIFI_ONLY}
+     * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     * - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * @see #setVoWiFiSettingEnabledC(boolean)
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public @WiFiCallingMode int getVoWiFiModeSettingC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
+        try {
+            return getITelephony().getVoWiFiModeSetting(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Set the user's preference for Voice over WiFi calling mode.
+     * @param mode The user's preference for the technology to register for IMS over, can be one of
+     *    the following:
+     * - {@link #WIFI_MODE_WIFI_ONLY}
+     * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     * - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @see #getVoWiFiModeSetting()
+     * @deprecated Use {@link #setVoWiFiModeSettingC(int)} instead, which uses a checked
+     * ImsException to make it clear that operations can fail if the subscription ID being used
+     * becomes inactive.
+     */
+    @Deprecated
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setVoWiFiModeSetting(@WiFiCallingMode int mode) {
+        try {
+            getITelephony().setVoWiFiModeSetting(mSubId, mode);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -829,14 +1099,44 @@ public class ImsMmTelManager {
      * - {@link #WIFI_MODE_WIFI_ONLY}
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #getVoWiFiModeSetting()
+     * @see #getVoWiFiModeSettingC()
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
-    public void setVoWiFiModeSetting(@WiFiCallingMode int mode) {
+    public void setVoWiFiModeSettingC(@WiFiCallingMode int mode) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             getITelephony().setVoWiFiModeSetting(mSubId, mode);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Set the user's preference for Voice over WiFi calling mode while the device is roaming on
+     * another network.
+     *
+     * @return The user's preference for the technology to register for IMS over when roaming on
+     *     another network, can be one of the following:
+     *     - {@link #WIFI_MODE_WIFI_ONLY}
+     *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     *     - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @see #setVoWiFiRoamingSettingEnabled(boolean)
+     * @deprecated Use {@link #getVoWiFiRoamingModeSettingC()} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
+     */
+    @Deprecated
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
+        try {
+            return getITelephony().getVoWiFiRoamingModeSetting(mSubId);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -858,14 +1158,44 @@ public class ImsMmTelManager {
      *     - {@link #WIFI_MODE_WIFI_ONLY}
      *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      *     - {@link #WIFI_MODE_WIFI_PREFERRED}
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #setVoWiFiRoamingSettingEnabled(boolean)
+     * @see #setVoWiFiRoamingSettingEnabledC(boolean)
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
+    public @WiFiCallingMode int getVoWiFiRoamingModeSettingC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             return getITelephony().getVoWiFiRoamingModeSetting(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Set the user's preference for Voice over WiFi mode while the device is roaming on another
+     * network.
+     *
+     * @param mode The user's preference for the technology to register for IMS over when roaming on
+     *     another network, can be one of the following:
+     *     - {@link #WIFI_MODE_WIFI_ONLY}
+     *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     *     - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @see #getVoWiFiRoamingModeSetting()
+     * @deprecated Use {@link #setVoWiFiRoamingModeSettingC(int)} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
+     */
+    @Deprecated
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setVoWiFiRoamingModeSetting(@WiFiCallingMode int mode) {
+        try {
+            getITelephony().setVoWiFiRoamingModeSetting(mSubId, mode);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -887,14 +1217,42 @@ public class ImsMmTelManager {
      *     - {@link #WIFI_MODE_WIFI_ONLY}
      *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      *     - {@link #WIFI_MODE_WIFI_PREFERRED}
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #getVoWiFiRoamingModeSetting()
+     * @see #getVoWiFiRoamingModeSettingC()
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
-    public void setVoWiFiRoamingModeSetting(@WiFiCallingMode int mode) {
+    public void setVoWiFiRoamingModeSettingC(@WiFiCallingMode int mode) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             getITelephony().setVoWiFiRoamingModeSetting(mSubId, mode);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Sets the capability of RTT for IMS calls placed on this subscription.
+     *
+     * Note: This does not affect the value of
+     * {@link android.provider.Settings.Secure#RTT_CALLING_MODE}, which is the global user setting
+     * for RTT. That value is enabled/disabled separately by the user through the Accessibility
+     * settings.
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @param isEnabled if true RTT should be enabled during calls made on this subscription.
+     * @deprecated Use {@link #setRttCapabilitySettingC(boolean)} instead, which uses a
+     * checked ImsException to make it clear that operations can fail if the subscription ID being
+     * used becomes inactive.
+     */
+    @Deprecated
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setRttCapabilitySetting(boolean isEnabled) {
+        try {
+            getITelephony().setRttCapabilitySetting(mSubId, isEnabled);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -914,14 +1272,38 @@ public class ImsMmTelManager {
      * {@link android.provider.Settings.Secure#RTT_CALLING_MODE}, which is the global user setting
      * for RTT. That value is enabled/disabled separately by the user through the Accessibility
      * settings.
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @param isEnabled if true RTT should be enabled during calls made on this subscription.
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
-    public void setRttCapabilitySetting(boolean isEnabled) {
+    public void setRttCapabilitySettingC(boolean isEnabled) throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             getITelephony().setRttCapabilitySetting(mSubId, isEnabled);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * @return true if TTY over VoLTE is supported
+     *
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @see android.telecom.TelecomManager#getCurrentTtyMode
+     * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
+     * @deprecated Use {@link #isTtyOverVolteEnabledC()} instead, which uses a checked ImsException
+     * to make it clear that operations can fail if the subscription ID being used becomes inactive.
+     */
+    @Deprecated
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    boolean isTtyOverVolteEnabled() {
+        try {
+            return getITelephony().isTtyOverVolteEnabled(mSubId);
         } catch (ServiceSpecificException e) {
             if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
                 // Rethrow as runtime error to keep API compatible.
@@ -937,22 +1319,19 @@ public class ImsMmTelManager {
     /**
      * @return true if TTY over VoLTE is supported
      *
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see android.telecom.TelecomManager#getCurrentTtyMode
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    boolean isTtyOverVolteEnabled() {
+    boolean isTtyOverVolteEnabledC() throws ImsException {
+        if (!isImsAvailableOnDevice()) {
+            throw new ImsException("IMS is not supported on this device.",
+                    ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        }
         try {
             return getITelephony().isTtyOverVolteEnabled(mSubId);
         } catch (ServiceSpecificException e) {
-            if (e.errorCode == ImsException.CODE_ERROR_INVALID_SUBSCRIPTION) {
-                // Rethrow as runtime error to keep API compatible.
-                throw new IllegalArgumentException(e.getMessage());
-            } else {
-                throw new RuntimeException(e.getMessage());
-            }
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
         }

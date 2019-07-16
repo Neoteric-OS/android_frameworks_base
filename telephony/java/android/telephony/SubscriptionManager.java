@@ -146,7 +146,7 @@ public class SubscriptionManager {
      * A content {@link Uri} used to receive updates on wfc enabled user setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription wfc enabled {@link ImsMmTelManager#isVoWiFiSettingEnabled()}
+     * subscription wfc enabled {@link ImsMmTelManager#isVoWiFiSettingEnabledC()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -161,11 +161,11 @@ public class SubscriptionManager {
 
     /**
      * A content {@link Uri} used to receive updates on advanced calling user setting
-     * @see ImsMmTelManager#isAdvancedCallingSettingEnabled().
+     * @see ImsMmTelManager#isAdvancedCallingSettingEnabledC().
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
      * subscription advanced calling enabled
-     * {@link ImsMmTelManager#isAdvancedCallingSettingEnabled()} while your app is running.
+     * {@link ImsMmTelManager#isAdvancedCallingSettingEnabledC()} while your app is running.
      * You can also use a {@link JobService} to ensure your app is notified of changes to the
      * {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -183,7 +183,7 @@ public class SubscriptionManager {
      * A content {@link Uri} used to receive updates on wfc mode setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription wfc mode {@link ImsMmTelManager#getVoWiFiModeSetting()}
+     * subscription wfc mode {@link ImsMmTelManager#getVoWiFiModeSettingC()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -200,7 +200,7 @@ public class SubscriptionManager {
      * A content {@link Uri} used to receive updates on wfc roaming mode setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription wfc roaming mode {@link ImsMmTelManager#getVoWiFiRoamingModeSetting()}
+     * subscription wfc roaming mode {@link ImsMmTelManager#getVoWiFiRoamingModeSettingC()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -219,7 +219,7 @@ public class SubscriptionManager {
      * setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription vt enabled {@link ImsMmTelManager#isVtSettingEnabled()}
+     * subscription vt enabled {@link ImsMmTelManager#isVtSettingEnabledC()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -237,7 +237,7 @@ public class SubscriptionManager {
      * A content {@link Uri} used to receive updates on wfc roaming enabled setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription wfc roaming enabled {@link ImsMmTelManager#isVoWiFiRoamingSettingEnabled()}
+     * subscription wfc roaming enabled {@link ImsMmTelManager#isVoWiFiRoamingSettingEnabledC()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
