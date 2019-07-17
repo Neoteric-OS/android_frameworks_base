@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6754404b_646a8bb8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-07-17T08:15:33Z",
+      "side": 1,
+      "message": "Agree this is complex.\n\nThe information needed to determine blocked/nonblocked are:\n  1. lockdown capabilities  (to see if applies to UID)\n  2. vpn capabilities   (to see if applies to UID)\n  3. vpn networkInfo  (to see if it\u0027s in force)\nIn order to compute the change, we will need to get before/after states respectively.\nso it\u0027s a 6-tuple about VPN \u0026 lockdown that we need to pass into maybeNotifyNetworkBlockedForNetworkRequest along with other conditions.\n\nSince all states are not going to change at the same time.\nSo for handleLockdownOrVpnChanged, we take the changing state (before/after) on either lockdown or vpn from the caller.\nAnd get the other one from current status, and put it into missingCaps, changed the name to \n otherState.\n\nOne option to simplify the logic is going back to the style of patch 7, which will looks like:\n if (changedNai.networkMisc.forLockdown) {\n    maybeNotifyNetworkBlockedForNetworkRequest(nai, nri, curMetered, curMetered,\n           mRestrictBackground, mRestrictBackground, prevNc, newNc,\n           otherState.networkInfo, otherState.networkInfo,\n           otherState.networkCapabilities, otherState.networkCapabilities);\n } else {\n    maybeNotifyNetworkBlockedForNetworkRequest(nai, nri, curMetered, curMetered,\n            mRestrictBackground, mRestrictBackground,\n            otherState.networkCapabilities, otherState.networkCapabilities,\n            prevInfo, newInfo, prevNc, newNc);\n }\n\nIn this way, we don\u0027t even need VpnCapsBeforeAfter, but we\u0027ll need to put the above code inside the double loops to fill the information to the exact position of parameters.\n(where jean does not like it in comment of patch 7)\n\nAny thoughts?",
+      "parentUuid": "35979269_45f22a97",
+      "range": {
+        "startLine": 1870,
+        "startChar": 0,
+        "endLine": 1881,
+        "endChar": 9
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a48b020_33b91539",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64b4ea7_7ff31541",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1922,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-07-17T08:15:33Z",
+      "side": 1,
+      "message": "done, great suggestion.",
+      "parentUuid": "7a48b020_33b91539",
+      "range": {
+        "startLine": 1915,
+        "startChar": 0,
+        "endLine": 1922,
+        "endChar": 5
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "842b3e73_dc3755f8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-07-17T08:15:33Z",
+      "side": 1,
+      "message": "Yes, looking into VPN object is one thing we should do, but we are also avoiding to hold the VPN lock on the internal handler thread.\nSo we are only use the networkInfo inside nai but not rely on Vpn object here.\nSo I\u0027m leaving this as is for now.",
+      "parentUuid": "35ca890c_82cb728a",
+      "range": {
+        "startLine": 1956,
+        "startChar": 0,
+        "endLine": 1960,
+        "endChar": 64
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b0723af_4a24dbdc",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2019-07-05T13:44:41Z",
       "side": 1,
       "message": "As written, this comment does not seem relevant. Perhaps it should explain why it matters that this agent is not a lockdown agent? (Also, not \"the\" lockdown agent, \"a\" lockdown agent. There can be more than one such agent on the system.)",
+      "range": {
+        "startLine": 6616,
+        "startChar": 69,
+        "endLine": 6616,
+        "endChar": 70
+      },
+      "revId": "d5a66ae641e13403a78c5225b45ac4a43b6ae4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d37b5f3_1f797eb3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6616,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-07-17T08:15:33Z",
+      "side": 1,
+      "message": "Well, it doesn\u0027t matter if the agent is lockdown or VPN.\nWhat I\u0027m trying to say is that only VPN agent goes here.\nSo I just delete the comments here, see if this works for you.",
+      "parentUuid": "4b0723af_4a24dbdc",
       "range": {
         "startLine": 6616,
         "startChar": 69,
