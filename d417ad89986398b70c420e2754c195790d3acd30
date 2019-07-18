@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "634541c6_3a9af4f6",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-07-18T00:46:29Z",
+      "side": 1,
+      "message": "well, this is still broken in 29...",
+      "range": {
+        "startLine": 322,
+        "startChar": 52,
+        "endLine": 322,
+        "endChar": 54
+      },
+      "revId": "d417ad89986398b70c420e2754c195790d3acd30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
