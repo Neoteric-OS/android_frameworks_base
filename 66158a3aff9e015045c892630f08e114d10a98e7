@@ -16,6 +16,52 @@
       "revId": "66158a3aff9e015045c892630f08e114d10a98e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0997be2_27f2e18f",
+        "filename": "core/jni/android_net_LocalSocketImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-07-19T14:10:33Z",
+      "side": 1,
+      "message": "To avoid ambiguity:\n\narray -\u003e Java inboundFileDescriptors array\n\nAFAICT, if folks are doing things right then this code won\u0027t trigger, the behavior change should just be a fix anyway. So I was assuming it wouldn\u0027t need a targetSdkVersion check.",
+      "range": {
+        "startLine": 149,
+        "startChar": 41,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "66158a3aff9e015045c892630f08e114d10a98e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c59bc4_bd010440",
+        "filename": "core/jni/android_net_LocalSocketImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-07-19T14:10:33Z",
+      "side": 1,
+      "message": "Talking of behavior changes, though....\n\nIf the sender clears their fd array, then I assume the received_fds.size() \u003d\u003d 0. Should the receiver clear its own array in all circumstances (and close as needed)? Effectively, should the new code be outside of the \"if (received_fds.size() \u003e 0) {\" check?",
+      "range": {
+        "startLine": 173,
+        "startChar": 65,
+        "endLine": 173,
+        "endChar": 72
+      },
+      "revId": "66158a3aff9e015045c892630f08e114d10a98e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
