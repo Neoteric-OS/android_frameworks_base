@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947c85c3_19b1fc0b",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "These two variables are unused ; can I trouble you to remove them in this patch ?",
+      "range": {
+        "startLine": 249,
+        "startChar": 20,
+        "endLine": 250,
+        "endChar": 39
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c095a5d_800369f7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "What is \"it\" ?",
+      "range": {
+        "startLine": 234,
+        "startChar": 15,
+        "endLine": 234,
+        "endChar": 17
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01104884_25026426",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Maybe you want to explain why : if there are IPs then there must have been a name that resolved to them.",
+      "range": {
+        "startLine": 240,
+        "startChar": 75,
+        "endLine": 240,
+        "endChar": 76
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3fa7d7_e823437e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "This says the code overwrites but it specifically does not. Also I don\u0027t understand \"explicitly\"  in this context",
+      "range": {
+        "startLine": 295,
+        "startChar": 11,
+        "endLine": 295,
+        "endChar": 58
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe56822b_8c463b1b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "null /* stream */, null /* password */",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 30
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b731b7_dd4815a5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Please don\u0027t leave irrelevant generated code in the code base. What do you want to do if any of these exceptions happen ? Having you think about it is the entire reason Java has checked exceptions.\n\nIf IOException or NoSuchAlgorithmException or CertificateException is thrown, you\u0027ll return an uninitialized keystore and crash later. Please use the try{} block with a much smaller scope, only try {} what can throw and behave appropriately in each case. (the try {} blocks at the bottom of this file look fine to me)",
+      "range": {
+        "startLine": 339,
+        "startChar": 12,
+        "endLine": 339,
+        "endChar": 32
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4237f74d_7d4015ab",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 499,
+        "startChar": 12,
+        "endLine": 499,
+        "endChar": 23
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b253ede_07f5328e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Could you please remove this member ? I think it obfuscates the code. You can just have setupSSLSocket() return the SSLSocket and pass it to connectAndHandshacke and verifyHostName.\n\nGenerally speaking it\u0027s not a great idea to have a member that\u0027s used in functions all called from the same place. It\u0027s simply clearer (and importantly, safer) to pass arguments.",
+      "range": {
+        "startLine": 713,
+        "startChar": 26,
+        "endLine": 713,
+        "endChar": 36
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a86cbd_8cce209b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "final (or inline)\n\nLikewise on the locals below : anything that can be final should be",
+      "range": {
+        "startLine": 726,
+        "startChar": 12,
+        "endLine": 726,
+        "endChar": 18
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c95a2dc_a99c1631",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "You can say\n\nfinal List\u003cSNIHostName\u003e names \u003d Collections.singletonList(new SNIHostName(mHostName));",
+      "range": {
+        "startLine": 739,
+        "startChar": 16,
+        "endLine": 740,
+        "endChar": 54
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeec1235_590e043d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Optional : you can replace all this with\n\nreturn session !\u003d null \u0026\u0026 hv.verify(hostname, session);\n\n...if you find it more readable.",
+      "range": {
+        "startLine": 757,
+        "startChar": 12,
+        "endLine": 764,
+        "endChar": 9
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e249b0_7b38a0ea",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "How can this happen exactly ?\n\nIIUC, mMeasurement is created in prepareDnsTlsMeasurement in l.298. This is put in a map, and in l.247 startMeasurements() will start the threads and run this code. Nobody, nowhere can have touched finishTime in between as far as I can tell.",
+      "range": {
+        "startLine": 769,
+        "startChar": 29,
+        "endLine": 769,
+        "endChar": 39
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497fbf05_77208786",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Can you please factor this to a method instead of copy-pasting ? Something like :\n\n  private boolean ensureMeasurementNecessary() {\n    if (mMeasurement.finishTime \u003c\u003d 0) return true;\n    mCountDownLatch.countDown();\n    return false;\n  }\n\nYou\u0027ll have to adjust the comments for this new context.",
+      "range": {
+        "startLine": 768,
+        "startChar": 11,
+        "endLine": 774,
+        "endChar": 13
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc5bdc4_b7f5e932",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do this before we try connecting ? If you need to do this after the handshake because it checks the session, then please rename verifyHostname to something more explicit.",
+      "range": {
+        "startLine": 786,
+        "startChar": 12,
+        "endLine": 792,
+        "endChar": 0
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79d89f4_9000ae0d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Your code will count all this as part of the measurement ; getting random values can take a variable amount of time. I think we should be doing those computations before we start the timer.",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 801,
+        "endChar": 72
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc447dc_71f62ef3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-19T10:48:03Z",
+      "side": 1,
+      "message": "Ideally you\u0027d have the whole thing wrapped in try-with-resources :\n\ntry (final SSLSocket \u003d setupSSLSocket()) {\n  // All the current code\n}\n\n...this will close the SSLSocket for you.",
+      "range": {
+        "startLine": 833,
+        "startChar": 27,
+        "endLine": 833,
+        "endChar": 32
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
