@@ -234,7 +234,7 @@ public class IpClientManager {
                     slot, KeepalivePacketDataUtil.toStableParcelable(pkt));
             return true;
         } catch (RemoteException e) {
-            log("Error adding Keepalive Packet Filter ", e);
+            log("Error adding NAT-T Keepalive Packet Filter ", e);
             return false;
         } finally {
             Binder.restoreCallingIdentity(token);
@@ -267,6 +267,38 @@ public class IpClientManager {
             return true;
         } catch (RemoteException e) {
             log("Failed setL2KeyAndGroupHint", e);
+            return false;
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    /**
+     * Abort FILS IP address setup process.
+     */
+    public boolean abortPreDhcpConnection() {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mIpClient.abortPreDhcpConnection();
+            return true;
+        } catch (RemoteException e) {
+            log("Failed aborting PreDhcpConnection", e);
+            return false;
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    /**
+     * notify FILS IP Address setup process completed.
+     */
+    public boolean completedPreDhcpConnection() {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            mIpClient.completedPreDhcpConnection();
+            return true;
+        } catch (RemoteException e) {
+            log("Failed completing PreDhcpConnection", e);
             return false;
         } finally {
             Binder.restoreCallingIdentity(token);
