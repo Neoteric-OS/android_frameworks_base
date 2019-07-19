@@ -772,7 +772,16 @@ public class Tethering extends BaseNetworkObserver {
                     case WifiManager.WIFI_AP_STATE_FAILED:
                     default:
                         disableWifiIpServingLocked(ifname, curState);
-                        mEntitlementMgr.stopProvisioningIfNeeded(TETHERING_WIFI);
+                        // There is race condition between #startTethering() and
+                        // WIFI_AP_STATE_DISABLED when hotspot is off/on quickly. Calling
+                        // #stopProvisioningIfNeeded in here may have problem due to the race.
+                        // See b/137034691#comment31. WIFI_AP_STATE_{DISABLED, DISABLING} is
+                        // always called after #stopTethering(), which already disabled it; and
+                        // for WIFI_AP_STATE_FAILED, callers are expected to call #stopTethering()
+                        // when it is received, as Settings does now.
+                        // TODO: Don't reply on caller to stop entitlement. Refactor the design
+                        // to call #stopProvisioningIfNeeded when IpServer leaving TETHERED state.
+                        // TODO: mWifiTetherRequested may also have this race condition.
                         break;
                 }
             }
