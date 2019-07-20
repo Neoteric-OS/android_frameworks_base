@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46d2dcd_53548534",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-07-20T05:43:57Z",
+      "side": 1,
+      "message": "Can\u0027t it just throw?",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 522,
+        "endChar": 13
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
