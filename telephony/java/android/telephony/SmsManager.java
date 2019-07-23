@@ -361,6 +361,33 @@ public final class SmsManager {
                 true /* persistMessage*/, ActivityThread.currentPackageName());
     }
 
+    /**
+     * Similar method as #sendTextMessage(String, String, String, PendingIntent, PendingIntent) With
+     * an additional argument.
+     *
+     * <p class="note"><strong>Note:</strong> This method is intended for internal use the Telephony
+     * framework and will never trigger an SMS disambiguation dialog. If this method is called on a
+     * device that has multiple active subscriptions, this {@link SmsManager} instance has been
+     * created with {@link #getDefault()}, and no user-defined default subscription is defined, the
+     * subscription ID associated with this message will be INVALID, which will result in the SMS
+     * being sent on the subscription associated with logical slot 0. Use
+     * {@link #getSmsManagerForSubscriptionId(int)} to ensure the SMS is sent on the correct
+     * subscription.
+     * </p>
+     *
+     * @param packageName serves as the default package name if
+     * {@link ActivityThread#currentPackageName()} is null.
+     * @hide
+     */
+    public void sendTextMessageExternal(
+            String destinationAddress, String scAddress, String text, PendingIntent sentIntent,
+            PendingIntent deliveryIntent, String packageName) {
+        sendTextMessageInternal(destinationAddress, scAddress, text, sentIntent, deliveryIntent,
+                true /* persistMessage*/,
+                ActivityThread.currentPackageName() == null
+                        ? packageName : ActivityThread.currentPackageName());
+    }
+
     private void sendTextMessageInternal(String destinationAddress, String scAddress,
             String text, PendingIntent sentIntent, PendingIntent deliveryIntent,
             boolean persistMessage, String packageName) {
