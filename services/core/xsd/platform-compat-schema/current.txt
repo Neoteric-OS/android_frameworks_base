@@ -1,0 +1,31 @@
+// Signature format: 2.0
+package platform.app.compat.config {
+
+  public class ChangeType {
+    ctor public ChangeType();
+    method public boolean getDisabled();
+    method public java.math.BigInteger getEnableAfterTargetSdk();
+    method public long getId();
+    method public String getName();
+    method public String getValue();
+    method public void setDisabled(boolean);
+    method public void setEnableAfterTargetSdk(java.math.BigInteger);
+    method public void setId(long);
+    method public void setName(String);
+    method public void setValue(String);
+  }
+
+  public class Config {
+    ctor public Config();
+    method public java.util.List<platform.app.compat.config.ChangeType> getCompatChange();
+  }
+
+  public class XmlParser {
+    ctor public XmlParser();
+    method public static platform.app.compat.config.Config read(java.io.InputStream) throws javax.xml.datatype.DatatypeConfigurationException, java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public static String readText(org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public static void skip(org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+  }
+
+}
+
