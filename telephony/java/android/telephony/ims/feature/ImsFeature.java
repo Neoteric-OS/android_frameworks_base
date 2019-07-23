@@ -132,15 +132,20 @@ public abstract class ImsFeature {
     public @interface ImsState {}
 
     /**
-     * This {@link ImsFeature}'s state is unavailable and should not be communicated with.
+     * This {@link ImsFeature}'s state is unavailable and should not be communicated with. This will
+     * remove all bindings back to the framework. Any attempt to communicate with the framework
+     * during this time will result in an {@link IllegalStateException}.
      */
     public static final int STATE_UNAVAILABLE = 0;
     /**
-     * This {@link ImsFeature} state is initializing and should not be communicated with.
+     * This {@link ImsFeature} state is initializing and should not be communicated with. This will
+     * remove all bindings back to the framework. Any attempt to communicate with the framework
+     * during this time will result in an {@link IllegalStateException}.
      */
     public static final int STATE_INITIALIZING = 1;
     /**
-     * This {@link ImsFeature} is ready for communication.
+     * This {@link ImsFeature} is ready for communication. Do not attempt to call framework methods
+     * until {@link #onFeatureReady()} is called.
      */
     public static final int STATE_READY = 2;
 
@@ -322,6 +327,13 @@ public abstract class ImsFeature {
     }
 
     /**
+     * @hide
+     */
+    protected final int getSlotId() {
+        return mSlotId;
+    }
+
+    /**
      * @return The current state of the feature, defined as {@link #STATE_UNAVAILABLE},
      * {@link #STATE_INITIALIZING}, or {@link #STATE_READY}.
      * @hide
@@ -490,7 +502,9 @@ public abstract class ImsFeature {
     public abstract void onFeatureRemoved();
 
     /**
-     * Called when the feature has been initialized and communication with the framework is set up.
+     * Called after this ImsFeature has been initialized and has been set to the
+     * {@link ImsState#STATE_READY} state.
+     * <p>
      * Any attempt by this feature to access the framework before this method is called will return
      * with an {@link IllegalStateException}.
      * The IMS provider should use this method to trigger registration for this feature on the IMS
