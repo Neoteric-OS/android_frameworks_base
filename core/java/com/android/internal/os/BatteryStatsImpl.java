@@ -1042,6 +1042,9 @@ public class BatteryStatsImpl extends BatteryStats {
 
     @Override
     public int getEstimatedBatteryCapacity() {
+        if (!(mEstimatedBatteryCapacity > 0) && mPowerProfile != null ) {
+            mEstimatedBatteryCapacity = (int) mPowerProfile.getBatteryCapacity();
+        }
         return mEstimatedBatteryCapacity;
     }
 
