@@ -22,6 +22,30 @@
       "revId": "1c030c61312f60b7c591f7b0e5c83d92ae582a74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793fb234_fd842e04",
+        "filename": "services/core/xsd/platform-compat-schema/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-07-24T13:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079d1422_da729064",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "1c030c61312f60b7c591f7b0e5c83d92ae582a74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
