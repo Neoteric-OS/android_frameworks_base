@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d01f9df6_2ac0520f",
+        "filename": "services/core/xsd/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-07-24T13:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "947a35a3_be89237a",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bddd189e_0782961a",
         "filename": "services/core/xsd/Android.bp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e70aafda_55198abd",
+        "filename": "services/core/xsd/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-07-24T13:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bddd189e_0782961a",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7489a47e_b0bff951",
         "filename": "services/core/xsd/platform-compat-config.xsd",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fdcd5e_4753f327",
+        "filename": "services/core/xsd/platform-compat-config.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-07-24T13:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7489a47e_b0bff951",
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
