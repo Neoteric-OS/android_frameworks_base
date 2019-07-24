@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a94ae5_1957504b",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-07-24T23:28:53Z",
+      "side": 1,
+      "message": "please expand (pust to talk).\n\nAlso, I know that historically we had very short descriptions on what these buttons do, but I suggest we provide a bit more explanation here. One question I would have, if I only look at these 2 new buttons is, how does C_C_CONTROL differ from C_C_SOS?\nMy guess is:\nCritical communication control can be used for initiating a 2-way communication between different nearby devices. For example, as long as the button is held, you can speak and broadcast your voice to the clients (like a walkie-talkie).\nIn the case of C_C_SOS, the button can simply be pressed and the action would be to send a distress signal to the base.",
+      "range": {
+        "startLine": 813,
+        "startChar": 27,
+        "endLine": 813,
+        "endChar": 30
+      },
+      "revId": "ec5d428e5f928f4084457c5e35dcfe1b527607d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
