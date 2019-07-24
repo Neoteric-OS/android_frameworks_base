@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947a35a3_be89237a",
+        "filename": "services/core/xsd/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-24T13:02:19Z",
+      "side": 1,
+      "message": "just platform-compat-config is sufficient?",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddd189e_0782961a",
+        "filename": "services/core/xsd/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-24T13:02:19Z",
+      "side": 1,
+      "message": "match the java package? Something like com.android.server.compat.{xsd,config}",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7489a47e_b0bff951",
+        "filename": "services/core/xsd/platform-compat-config.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-24T13:02:19Z",
+      "side": 1,
+      "message": "leave a comment with pointers on where this is used? Maybe just CompatConfig.java or PlatformCompat.java or tools/platform-compat?",
+      "revId": "adaf6ea4fc6c29e96eab00d72af436d706f16c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
