@@ -17,12 +17,25 @@
 package com.android.server.compat;
 
 import android.content.pm.ApplicationInfo;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.LongArray;
 import android.util.LongSparseArray;
+import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+
 
 /**
  * This class maintains state relating to platform compatibility changes.
@@ -32,6 +45,8 @@ import com.android.internal.annotations.VisibleForTesting;
  */
 public final class CompatConfig {
 
+    private static final String TAG = "CompatConfig";
+    private static final String CONFIG_FILE_SUFFIX = "platform_compat_config.xml";
     private static final CompatConfig sInstance = new CompatConfig();
 
     @GuardedBy("mChanges")
@@ -39,6 +54,20 @@ public final class CompatConfig {
 
     @VisibleForTesting
     public CompatConfig() {
+        File libraryDir = Environment.buildPath(
+                Environment.getRootDirectory(), "etc", "sysconfig");
+        for (File f : libraryDir.listFiles()) {
+            //TODO(b/138222363): Handle duplicate ids across config files.
+            if (f.getPath().endsWith(CONFIG_FILE_SUFFIX)) {
+                try (InputStream in = new BufferedInputStream(new FileInputStream(f))) {
+                    readConfig(in);
+                } catch (IOException e) {
+                    Slog.w(TAG, "Encountered an error while opening from compat config file "
+                            + f.getPath()
+                            + ": " + e.toString());
+                }
+            }
+        }
     }
 
     /**
@@ -167,6 +196,21 @@ public final class CompatConfig {
             }
         }
         return overrideExists;
+    }
+
+    void readConfig(InputStream input) {
+        try {
+            com.android.server.compat.config.Config config =
+                    com.android.server.compat.config.XmlParser.read(input);
+            for (com.android.server.compat.config.Change change : config.getCompatChange()) {
+                CompatChange c = new CompatChange(change.getId(), change.getName(),
+                        change.getEnableAfterTargetSdk(), change.getDisabled());
+                addChange(c);
+            }
+        } catch (IOException | DatatypeConfigurationException | XmlPullParserException e) {
+            Slog.w(TAG, "Encountered an error while reading/parsing compat config file:"
+                    + e.toString());
+        }
     }
 
 }

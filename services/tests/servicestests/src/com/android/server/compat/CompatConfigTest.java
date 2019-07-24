@@ -22,17 +22,35 @@ import android.content.pm.ApplicationInfo;
 
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.compat.annotation.Change;
+import com.android.compat.annotation.XmlWriter;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
 @RunWith(AndroidJUnit4.class)
 public class CompatConfigTest {
+
+    private static final String TAG = "CompatConfigTest";
 
     private ApplicationInfo makeAppInfo(String pName, int targetSdkVersion) {
         ApplicationInfo ai = new ApplicationInfo();
         ai.packageName = pName;
         ai.targetSdkVersion = targetSdkVersion;
         return ai;
+    }
+
+    private ByteArrayInputStream createInputWithChanges(Change[] changes) {
+        XmlWriter writer = new XmlWriter();
+        for (Change change: changes) {
+            writer.addChange(change);
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        writer.write(outputStream);
+        return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
     @Test
@@ -170,4 +188,20 @@ public class CompatConfigTest {
         sysApp.flags |= ApplicationInfo.FLAG_SYSTEM;
         assertThat(pc.isChangeEnabled(1234L, sysApp)).isTrue();
     }
+
+    @Test
+    public void testReadConfig() {
+        Change[] config = {new Change(1234L, "MY_CHANGE1", false, 2), new Change(1235L,
+                "MY_CHANGE2", true, null), new Change(1236L, "MY_CHANGE3", false, null)};
+
+        CompatConfig pc = new CompatConfig();
+        pc.readConfig(createInputWithChanges(config));
+
+        assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 1))).isFalse();
+        assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 3))).isTrue();
+        assertThat(pc.isChangeEnabled(1235L, makeAppInfo("com.some.package", 5))).isFalse();
+        assertThat(pc.isChangeEnabled(1236L, makeAppInfo("com.some.package", 1))).isTrue();
+    }
 }
+
+
