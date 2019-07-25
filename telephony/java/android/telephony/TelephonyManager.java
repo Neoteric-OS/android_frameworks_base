@@ -6401,7 +6401,7 @@ public class TelephonyManager {
      * Returns the response of authentication for the default subscription.
      * Returns null if the authentication hasn't been successful
      *
-     * <p>Requires Permission: READ_PRIVILEGED_PHONE_STATE or that the calling
+     * <p>Requires Permission: MODIFY_PHONE_STATE or that the calling
      * app has carrier privileges (see {@link #hasCarrierPrivileges}).
      *
      * @param appType the icc application type, like {@link #APPTYPE_USIM}
@@ -6416,9 +6416,7 @@ public class TelephonyManager {
      *   Authentication error, no memory space available
      *   Authentication error, no memory space available in EFMUK
      */
-    // TODO(b/73660190): This should probably require MODIFY_PHONE_STATE, not
-    // READ_PRIVILEGED_PHONE_STATE. It certainly shouldn't reference the permission in Javadoc since
-    // it's not public API.
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public String getIccAuthentication(int appType, int authType, String data) {
         return getIccAuthentication(getSubId(), appType, authType, data);
     }
@@ -6450,7 +6448,8 @@ public class TelephonyManager {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIccSimChallengeResponse(subId, appType, authType, data);
+            return info.getIccAuthentication(
+                    subId, appType, authType, data, mContext.getOpPackageName());
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {

@@ -43055,7 +43055,7 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) @NonNull public java.util.Map<java.lang.Integer,java.util.List<android.telephony.emergency.EmergencyNumber>> getEmergencyNumberList(int);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String[] getForbiddenPlmns();
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getGroupIdLevel1();
-    method public String getIccAuthentication(int, int, String);
+    method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public String getIccAuthentication(int, int, String);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getImei();
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getImei(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.READ_PHONE_STATE, android.Manifest.permission.READ_SMS, android.Manifest.permission.READ_PHONE_NUMBERS}) public String getLine1Number();
