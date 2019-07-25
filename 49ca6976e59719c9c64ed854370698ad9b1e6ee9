@@ -16,6 +16,24 @@
       "revId": "49ca6976e59719c9c64ed854370698ad9b1e6ee9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9b45f1_4b45e9ec",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecKeycode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1179935
+      },
+      "writtenOn": "2019-07-25T09:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72fa0f72_a8f557d3",
+      "revId": "49ca6976e59719c9c64ed854370698ad9b1e6ee9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
