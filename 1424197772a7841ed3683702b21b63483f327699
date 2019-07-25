@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba88c275_eeff8161",
+        "filename": "services/core/xsd/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-25T08:37:36Z",
+      "side": 1,
+      "message": "maybe .config would be better?",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "1424197772a7841ed3683702b21b63483f327699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
