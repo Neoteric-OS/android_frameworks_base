@@ -6442,7 +6442,7 @@ public class TelephonyManager {
      *   Authentication error, no memory space available in EFMUK
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q)
     public String getIccAuthentication(int subId, int appType, int authType, String data) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
