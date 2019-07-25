@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "b75dcbdc_38ffaac7",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-07-25T19:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65cea2d2_3fef0a4b",
+      "range": {
+        "startLine": 136,
+        "startChar": 27,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "d69cdd1606e91b7d5ec2c21639bf59235798368c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db208e01_b22b75e0",
         "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
         "patchSetId": 13
