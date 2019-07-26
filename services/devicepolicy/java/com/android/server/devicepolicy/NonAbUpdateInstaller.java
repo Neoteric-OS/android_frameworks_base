@@ -24,12 +24,13 @@ import android.os.RecoverySystem;
 import android.util.Log;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * Used for installing an update for <a href="https://source.android.com/devices/tech/ota/nonab">non
  * AB</a> devices.
  */
-class NonAbUpdateInstaller extends UpdateInstaller {
+class NonAbUpdateInstaller extends UpdateInstaller implements RecoverySystem.ProgressListener {
     NonAbUpdateInstaller(Context context,
             ParcelFileDescriptor updateFileDescriptor,
             StartInstallingUpdateCallback callback, DevicePolicyManagerService.Injector injector,
@@ -40,6 +41,7 @@ class NonAbUpdateInstaller extends UpdateInstaller {
     @Override
     public void installUpdateInThread() {
         try {
+            RecoverySystem.verifyPackage(mCopiedUpdateFile, this, null);
             RecoverySystem.installPackage(mContext, mCopiedUpdateFile);
             notifyCallbackOnSuccess();
         } catch (IOException e) {
@@ -47,6 +49,16 @@ class NonAbUpdateInstaller extends UpdateInstaller {
             notifyCallbackOnError(
                     InstallSystemUpdateCallback.UPDATE_ERROR_UNKNOWN,
                     Log.getStackTraceString(e));
+        } catch (GeneralSecurityException e) {
+            Log.w(TAG, "GeneralSecurity error while trying to install non AB update.", e);
+            notifyCallbackOnError(
+                    InstallSystemUpdateCallback.UPDATE_ERROR_UNKNOWN,
+                    Log.getStackTraceString(e));
         }
+    }
+
+    @Override
+    public void onProgress(int progress) {
+        return;
     }
 }
