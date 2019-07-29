@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5463e461_d66cd33d",
+        "filename": "services/net/java/android/net/HigherLayerProtocolParcelable.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-29T09:01:18Z",
+      "side": 1,
+      "message": "Layer2Packet?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "9bf6bdd3dcb873a61aa52b1be9456faa7106e3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83adff32_cefccc68",
+        "filename": "services/net/java/android/net/HigherLayerProtocolParcelable.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-29T09:01:18Z",
+      "side": 1,
+      "message": "payload?",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "9bf6bdd3dcb873a61aa52b1be9456faa7106e3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ad0962_16305e91",
+        "filename": "services/net/java/android/net/ip/IpClientUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-07-29T09:01:18Z",
+      "side": 1,
+      "message": "packets",
+      "range": {
+        "startLine": 183,
+        "startChar": 81,
+        "endLine": 183,
+        "endChar": 84
+      },
+      "revId": "9bf6bdd3dcb873a61aa52b1be9456faa7106e3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
