@@ -60,6 +60,7 @@ import java.util.Map;
  * @hide
  */
 public abstract class BatteryStats implements Parcelable {
+
     private static final String TAG = "BatteryStats";
 
     private static final boolean LOCAL_LOGV = false;
@@ -382,10 +383,16 @@ public abstract class BatteryStats implements Parcelable {
             Long.MAX_VALUE
     };
 
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+    public BatteryStats() {}
+
     /**
      * State for keeping track of counting information.
      */
     public static abstract class Counter {
+
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+        public Counter() {}
 
         /**
          * Returns the count associated with this Counter for the
@@ -488,6 +495,9 @@ public abstract class BatteryStats implements Parcelable {
      * State for keeping track of timing information.
      */
     public static abstract class Timer {
+
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+        public Timer() {}
 
         /**
          * Returns the count associated with this Timer for the
@@ -644,6 +654,9 @@ public abstract class BatteryStats implements Parcelable {
          * The statistics associated with a particular wake lock.
          */
         public static abstract class Wakelock {
+            @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+            public Wakelock() {}
+
             @UnsupportedAppUsage
             public abstract Timer getWakeTime(int type);
         }
@@ -918,6 +931,10 @@ public abstract class BatteryStats implements Parcelable {
         public abstract void getDeferredJobsLineLocked(StringBuilder sb, int which);
 
         public static abstract class Sensor {
+
+            @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+            public Sensor() {}
+
             /*
              * FIXME: it's not correct to use this magic value because it
              * could clash with a sensor handle (which are defined by
@@ -947,6 +964,9 @@ public abstract class BatteryStats implements Parcelable {
          * The statistics associated with a particular process.
          */
         public static abstract class Proc {
+
+            @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+            public Proc() {}
 
             public static class ExcessivePower {
                 public static final int TYPE_WAKE = 1;
@@ -1022,6 +1042,9 @@ public abstract class BatteryStats implements Parcelable {
          * The statistics associated with a particular package.
          */
         public static abstract class Pkg {
+
+            @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
+            public Pkg() {}
 
             /**
              * Returns information about all wakeup alarms that have been triggered for this
@@ -1525,6 +1548,8 @@ public abstract class BatteryStats implements Parcelable {
     }
 
     public final static class HistoryItem implements Parcelable {
+
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
         public HistoryItem next;
 
         // The time of this event in milliseconds, as per SystemClock.elapsedRealtime().
@@ -1840,6 +1865,7 @@ public abstract class BatteryStats implements Parcelable {
             numReadInts += (src.dataPosition()-start)/4;
         }
 
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
         public void clear() {
             time = 0;
             cmd = CMD_NULL;
@@ -1858,12 +1884,14 @@ public abstract class BatteryStats implements Parcelable {
             eventTag = null;
         }
 
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
         public void setTo(HistoryItem o) {
             time = o.time;
             cmd = o.cmd;
             setToCommon(o);
         }
 
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
         public void setTo(long time, byte cmd, HistoryItem o) {
             this.time = time;
             this.cmd = cmd;
@@ -1915,6 +1943,7 @@ public abstract class BatteryStats implements Parcelable {
                     && currentTime == o.currentTime;
         }
 
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
         public boolean same(HistoryItem o) {
             if (!sameNonEvent(o) || eventCode != o.eventCode) {
                 return false;
@@ -2297,6 +2326,7 @@ public abstract class BatteryStats implements Parcelable {
      *
      * {@hide}
      */
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public abstract long getMobileRadioActiveTime(long elapsedRealtimeUs, int which);
 
     /**
@@ -2653,6 +2683,7 @@ public abstract class BatteryStats implements Parcelable {
     public static final int NETWORK_WIFI_BG_TX_DATA = 9;
     public static final int NUM_NETWORK_ACTIVITY_TYPES = NETWORK_WIFI_BG_TX_DATA + 1;
 
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public abstract long getNetworkActivityBytes(int type, int which);
     public abstract long getNetworkActivityPackets(int type, int which);
 

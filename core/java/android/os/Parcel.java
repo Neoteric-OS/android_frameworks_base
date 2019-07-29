@@ -2945,6 +2945,7 @@ public final class Parcel {
     // Cache of previously looked up CREATOR.createFromParcel() methods for
     // particular classes.  Keys are the names of the classes, values are
     // Method objects.
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private static final HashMap<ClassLoader,HashMap<String,Parcelable.Creator<?>>>
         mCreators = new HashMap<>();
 

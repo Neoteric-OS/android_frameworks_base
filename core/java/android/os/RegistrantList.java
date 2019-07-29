@@ -17,7 +17,6 @@
 package android.os;
 
 import android.annotation.UnsupportedAppUsage;
-import android.os.Handler;         
 
 import java.util.ArrayList;
 
@@ -70,6 +69,7 @@ public class RegistrantList
         return registrants.size();
     }
 
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public synchronized Object
     get(int index)
     {

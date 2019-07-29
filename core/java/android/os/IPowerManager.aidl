@@ -46,6 +46,7 @@ interface IPowerManager
     void wakeUp(long time, String reason, String opPackageName);
     @UnsupportedAppUsage
     void goToSleep(long time, int reason, int flags);
+    @UnsupportedAppUsage(maxTargetSdk = 28)
     void nap(long time);
     @UnsupportedAppUsage
     boolean isInteractive();

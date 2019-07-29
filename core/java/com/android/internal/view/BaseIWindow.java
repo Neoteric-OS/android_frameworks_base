@@ -32,6 +32,10 @@ import android.view.PointerIcon;
 import com.android.internal.os.IResultReceiver;
 
 public class BaseIWindow extends IWindow.Stub {
+
+    @UnsupportedAppUsage(maxTargetSdk = android.os.Build.VERSION_CODES.P)
+    public BaseIWindow() {}
+
     private IWindowSession mSession;
     public int mSeq;
 
