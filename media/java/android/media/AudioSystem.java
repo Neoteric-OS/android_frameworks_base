@@ -54,6 +54,7 @@ public class AudioSystem
      * and attrs.xml and AudioManager.java.
      */
     /** Used to identify the default audio stream volume */
+    @TestApi
     public static final int STREAM_DEFAULT = -1;
     /** Used to identify the volume of audio streams for phone calls */
     public static final int STREAM_VOICE_CALL = 0;
@@ -94,6 +95,7 @@ public class AudioSystem
     // Expose only the getter method publicly so we can change it in the future
     private static final int NUM_STREAM_TYPES = 11;
     @UnsupportedAppUsage
+    @TestApi
     public static final int getNumStreamTypes() { return NUM_STREAM_TYPES; }
 
     public static final String[] STREAM_NAMES = new String[] {
