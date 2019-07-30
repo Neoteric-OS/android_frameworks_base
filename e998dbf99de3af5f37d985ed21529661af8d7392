@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb69ba0_296d4ebc",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-07-30T00:45:09Z",
+      "side": 1,
+      "message": "I don\u0027t understand why it\u0027s a bad idea to do this in InitialState (l.1129). Couldn\u0027t we simply run this code whether the state machine was in InitialState or in TetherModeAliveState ?",
+      "range": {
+        "startLine": 1331,
+        "startChar": 0,
+        "endLine": 1334,
+        "endChar": 72
+      },
+      "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
