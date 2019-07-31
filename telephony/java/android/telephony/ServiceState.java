@@ -1234,20 +1234,6 @@ public class ServiceState implements Parcelable {
         mDataOperatorNumeric = numeric;
     }
 
-    /** @hide */
-    public void setVoiceOperatorName(String longName, String shortName, String numeric) {
-        mVoiceOperatorAlphaLong = longName;
-        mVoiceOperatorAlphaShort = shortName;
-        mVoiceOperatorNumeric = numeric;
-    }
-
-    /** @hide */
-    public void setDataOperatorName(String longName, String shortName, String numeric) {
-        mDataOperatorAlphaLong = longName;
-        mDataOperatorAlphaShort = shortName;
-        mDataOperatorNumeric = numeric;
-    }
-
     /**
      * In CDMA, mOperatorAlphaLong can be set from the ERI text.
      * This is done from the GsmCdmaPhone and not from the ServiceStateTracker.
