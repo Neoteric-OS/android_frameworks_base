@@ -853,10 +853,6 @@ public final class PowerManagerService extends SystemService
         mContext.registerReceiver(new DreamReceiver(), filter, null, mHandler);
 
         filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_USER_SWITCHED);
-        mContext.registerReceiver(new UserSwitchedReceiver(), filter, null, mHandler);
-
-        filter = new IntentFilter();
         filter.addAction(Intent.ACTION_DOCK_EVENT);
         mContext.registerReceiver(new DockReceiver(), filter, null, mHandler);
     }
@@ -3776,12 +3772,10 @@ public final class PowerManagerService extends SystemService
         }
     }
 
-    private final class UserSwitchedReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            synchronized (mLock) {
-                handleSettingsChangedLocked();
-            }
+    @Override
+    public void onSwitchUser(@UserIdInt int newUserId) {
+        synchronized (mLock) {
+            handleSettingsChangedLocked();
         }
     }
 
