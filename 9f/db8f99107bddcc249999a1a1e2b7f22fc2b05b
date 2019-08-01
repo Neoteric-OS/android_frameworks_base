@@ -1,0 +1,9 @@
+Presubmit-Ready+1: Josh Gao <jmgao@google.com>
+Code-Review+2: John Reck <jreck@google.com>
+Code-Review+2: Andreas Gampe <agampe@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Josh Gao <jmgao@google.com>
+Submitted-at: Thu, 01 Aug 2019 04:02:45 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1094551
+Project: platform/frameworks/base
+Branch: refs/heads/master
