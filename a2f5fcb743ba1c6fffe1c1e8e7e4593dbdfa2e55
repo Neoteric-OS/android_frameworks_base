@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fb93461_cf74bff1",
+        "filename": "tests/net/java/com/android/server/NetIdManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-01T08:43:23Z",
+      "side": 1,
+      "message": "Do we want to test overflow case?\ne.g. release MIN_NET_ID+1 before this, and reserveNetId again",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "a2f5fcb743ba1c6fffe1c1e8e7e4593dbdfa2e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
