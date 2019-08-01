@@ -22,6 +22,30 @@
       "revId": "a2f5fcb743ba1c6fffe1c1e8e7e4593dbdfa2e55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f45290_4f62992f",
+        "filename": "tests/net/java/com/android/server/NetIdManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-01T08:47:09Z",
+      "side": 1,
+      "message": "Do you mean after this ? Like testing that NetIdManager still behaves properly after throwing once ?\nI think if I release and reserve that ID before this assert, this would be equivalent to what is already covered (reserve all 4 IDs, release 2, check that you can still reserve them)",
+      "parentUuid": "0fb93461_cf74bff1",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "a2f5fcb743ba1c6fffe1c1e8e7e4593dbdfa2e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
