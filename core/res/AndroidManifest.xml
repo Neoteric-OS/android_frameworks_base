@@ -565,6 +565,9 @@
     <protected-broadcast android:name="com.android.internal.location.ALARM_WAKEUP" />
     <protected-broadcast android:name="com.android.internal.location.ALARM_TIMEOUT" />
     <protected-broadcast android:name="android.intent.action.GLOBAL_BUTTON" />
+    <protected-broadcast android:name="android.intent.action.CRITICAL_COMMUNICATION_CONTROL_KEY" />
+    <protected-broadcast android:name="android.intent.action.CRITICAL_COMMUNICATION_SOS_KEY" />
+    <protected-broadcast android:name="android.intent.action.CRITICAL_COMMUNICATION_SOS_CANCEL" />
 
     <protected-broadcast android:name="android.intent.action.MANAGED_PROFILE_AVAILABLE" />
     <protected-broadcast android:name="android.intent.action.MANAGED_PROFILE_UNAVAILABLE" />
@@ -1790,6 +1793,11 @@
    <p>Not for use by third-party applications. -->
     <permission android:name="android.permission.NOTIFY_PENDING_SYSTEM_UPDATE"
         android:protectionLevel="signature|privileged" />
+
+    <!-- @hide Allows critical communication applications to handle critical communication.
+         intents and change emergency state. -->
+    <permission android:name="android.permission.CRITICAL_COMMUNICATION"
+        android:protectionLevel="normal" />
 
     <!-- =========================================== -->
     <!-- Permissions associated with camera and image capture -->

@@ -3377,6 +3377,55 @@ public class Intent implements Parcelable, Cloneable {
             "com.android.intent.action.SHOW_BRIGHTNESS_DIALOG";
 
     /**
+     * Broadcast Action: A critical communication control key was pressed. When the critical
+     * communication button is pressed or released the intent will be broadcasted with this
+     * intent action.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @BroadcastBehavior(includeBackground = true)
+    public static final String ACTION_CRITICAL_COMMUNICATION_CONTROL_KEY =
+            "android.intent.action.CRITICAL_COMMUNICATION_CONTROL_KEY";
+
+    /**
+     * Broadcast Action: A SOS key was pressed. The device shall broadcast the Emergency Key
+     * intent with this action when emergency mode is enabled.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @BroadcastBehavior(includeBackground = true)
+    public static final String ACTION_CRITICAL_COMMUNICATION_SOS_KEY =
+            "android.intent.action.CRITICAL_COMMUNICATION_SOS_KEY";
+
+    /**
+     * Broadcast Action: when emergency mode is cancelled (This is for device which requires to
+     * maintain the state of emergency) the device shall broadcast this intent action.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @BroadcastBehavior(includeBackground = true)
+    public static final String ACTION_CRITICAL_COMMUNICATION_SOS_CANCEL =
+            "android.intent.action.CRITICAL_COMMUNICATION_SOS_CANCEL";
+
+    /**
+     * Broadcast Action: when emergency mode is enabled, app shall broadcast this intent
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @BroadcastBehavior(includeBackground = true)
+    public static final String ACTION_CRITICAL_COMMUNICATION_APP_SOS =
+            "android.intent.action.CRITICAL_COMMUNICATION_APP_SOS";
+
+    /**
+     * Broadcast Action: when emergency mode is cancelled, app shall broadcast this intent
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @BroadcastBehavior(includeBackground = true)
+    public static final String ACTION_CRITICAL_COMMUNICATION_APP_SOS_CANCEL =
+            "android.intent.action.CRITICAL_COMMUNICATION_APP_SOS_CANCEL";
+
+    /**
      * Broadcast Action:  A global button was pressed.  Includes a single
      * extra field, {@link #EXTRA_KEY_EVENT}, containing the key event that
      * caused the broadcast.
