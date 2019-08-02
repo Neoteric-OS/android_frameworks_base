@@ -38,6 +38,10 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.android.internal.util.ArrayUtils;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -148,6 +152,13 @@ public class SubscriptionInfo implements Parcelable {
      */
     @Nullable
     private UiccAccessRule[] mAccessRules;
+
+    /**
+     * The carrier certificates for this subscription that are saved in carrier configs.
+     * The other carrier certificates are embedded on Uicc and stored as part of mAccessRules.
+     */
+    @Nullable
+    private UiccAccessRule[] mCarrierConfigAccessRules;
 
     /**
      * The string ID of the SIM card. It is the ICCID of the active profile for a UICC card and the
@@ -586,6 +597,28 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     *
+     * @param packageInfo
+     * @return
+     * @hide
+     */
+    public boolean hasCarrierPrivilegeStatusFromNonUiccCertificates(
+            PackageInfo packageInfo) {
+        UiccAccessRule[] carrierConfigAccessRules = getCarrierConfigAccessRules();
+
+        if (carrierConfigAccessRules != null) {
+            for (UiccAccessRule rule : carrierConfigAccessRules) {
+                if (rule.getCarrierPrivilegeStatus(packageInfo)
+                        == TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return the {@link UiccAccessRule}s dictating who is authorized to manage this subscription.
      * @throws UnsupportedOperationException if this subscription is not embedded.
      * @hide
@@ -597,6 +630,34 @@ public class SubscriptionInfo implements Parcelable {
         }
         if (mAccessRules == null) return null;
         return Arrays.asList(mAccessRules);
+    }
+
+    /**
+     * @return the {@link UiccAccessRule}s that are not stored on Uicc and stored in carrierConfigs
+     * dictating who is authorized to manage this subscription.
+     * @hide
+     */
+    public @Nullable UiccAccessRule[] getCarrierConfigAccessRules() {
+        return mCarrierConfigAccessRules;
+    }
+
+    /**
+     * set {@link UiccAccessRule}s that are not stored on Uicc and stored in carrierConfigs
+     * dictating who is authorized to manage this subscription.
+     * @hide
+     */
+    public void setCarrierConfigAccessRules(String[] certs) {
+        if (ArrayUtils.isEmpty(certs)) return;
+
+        mCarrierConfigAccessRules = new UiccAccessRule[certs.length];
+        try {
+            for (int i = 0; i < certs.length; i++) {
+                mCarrierConfigAccessRules[i] = new UiccAccessRule(
+                    MessageDigest.getInstance("SHA-256").digest(certs[i].getBytes()), null, 0);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("for setCarrierConfigAccessRules, SHA-256 must exist", e);
+        }
     }
 
     /**
