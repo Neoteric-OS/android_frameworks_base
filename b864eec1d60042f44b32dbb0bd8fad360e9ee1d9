@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7904fd9_95fd6346",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "947c85c3_19b1fc0b",
+      "range": {
+        "startLine": 249,
+        "startChar": 20,
+        "endLine": 250,
+        "endChar": 39
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c095a5d_800369f7",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c8ab77_9a007b20",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "What I want to comment here is that we don\u0027t perform hostname verification to these servers as what we does in opportunistic mode. Added more comments to be more understandable.",
+      "parentUuid": "6c095a5d_800369f7",
+      "range": {
+        "startLine": 234,
+        "startChar": 15,
+        "endLine": 234,
+        "endChar": 17
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2552c8f6_0d2b2682",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01104884_25026426",
+      "range": {
+        "startLine": 240,
+        "startChar": 75,
+        "endLine": 240,
+        "endChar": 76
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3fa7d7_e823437e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb13d7e_9858dc18",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Added more comments to make it more understandable.",
+      "parentUuid": "5a3fa7d7_e823437e",
+      "range": {
+        "startLine": 295,
+        "startChar": 11,
+        "endLine": 295,
+        "endChar": 58
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "396a8e6a_5a337bf5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe56822b_8c463b1b",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 30
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b731b7_dd4815a5",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2019-07-19T10:48:03Z",
       "side": 1,
       "message": "Please don\u0027t leave irrelevant generated code in the code base. What do you want to do if any of these exceptions happen ? Having you think about it is the entire reason Java has checked exceptions.\n\nIf IOException or NoSuchAlgorithmException or CertificateException is thrown, you\u0027ll return an uninitialized keystore and crash later. Please use the try{} block with a much smaller scope, only try {} what can throw and behave appropriately in each case. (the try {} blocks at the bottom of this file look fine to me)",
+      "range": {
+        "startLine": 339,
+        "startChar": 12,
+        "endLine": 339,
+        "endChar": 32
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9498fd_a0f8bee1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Just found I need not to implement this function by myself so I deleted it. If we call TrustManagerFactory.init() (at l.728) and pass the null KeyStore, TrustManagerFactory automatically helps us to get the default instance of KeyStore which contains system CaCerts.\n\nhttps://android.googlesource.com/platform/external/conscrypt/+/refs/heads/master/repackaged/common/src/main/java/com/android/org/conscrypt/TrustManagerFactoryImpl.java#65\n\n, and Platform.getDefaultCertKeyStore() is at\nhttps://android.googlesource.com/platform/external/conscrypt/+/refs/heads/master/repackaged/platform/src/main/java/com/android/org/conscrypt/Platform.java#491\n\nI commented at patchset-4 l.707.",
+      "parentUuid": "57b731b7_dd4815a5",
       "range": {
         "startLine": 339,
         "startChar": 12,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "45ce77e9_2477dd41",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4237f74d_7d4015ab",
+      "range": {
+        "startLine": 499,
+        "startChar": 12,
+        "endLine": 499,
+        "endChar": 23
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b253ede_07f5328e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bc5146_aeffbe2d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b253ede_07f5328e",
+      "range": {
+        "startLine": 713,
+        "startChar": 26,
+        "endLine": 713,
+        "endChar": 36
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "926ef83f_ea93d812",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a86cbd_8cce209b",
+      "range": {
+        "startLine": 726,
+        "startChar": 12,
+        "endLine": 726,
+        "endChar": 18
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c95a2dc_a99c1631",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a5e2fb_27954ee9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c95a2dc_a99c1631",
+      "range": {
+        "startLine": 739,
+        "startChar": 16,
+        "endLine": 740,
+        "endChar": 54
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4608cb49_5dda6ddb",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Much clearer. Thanks.",
+      "parentUuid": "eeec1235_590e043d",
+      "range": {
+        "startLine": 757,
+        "startChar": 12,
+        "endLine": 764,
+        "endChar": 9
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e249b0_7b38a0ea",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -266,6 +530,30 @@
       "writtenOn": "2019-07-19T10:48:03Z",
       "side": 1,
       "message": "How can this happen exactly ?\n\nIIUC, mMeasurement is created in prepareDnsTlsMeasurement in l.298. This is put in a map, and in l.247 startMeasurements() will start the threads and run this code. Nobody, nowhere can have touched finishTime in between as far as I can tell.",
+      "range": {
+        "startLine": 769,
+        "startChar": 29,
+        "endLine": 769,
+        "endChar": 39
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b613d0_32e25ced",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "The DnsTlsCheck constructor calls SimpleSocketCheck constructor. If the code somehow fails and goes into l.446, which mMeasurement.recordFailure() is called, the code will go into this if block.",
+      "parentUuid": "f4e249b0_7b38a0ea",
       "range": {
         "startLine": 769,
         "startChar": 29,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "be79dad8_3df3ed29",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497fbf05_77208786",
+      "range": {
+        "startLine": 768,
+        "startChar": 11,
+        "endLine": 774,
+        "endChar": 13
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc5bdc4_b7f5e932",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -321,6 +633,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbe84a3_fc3b7db9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done. Renamed to maybeDoHostnameVerification.",
+      "parentUuid": "ddc5bdc4_b7f5e932",
+      "range": {
+        "startLine": 786,
+        "startChar": 12,
+        "endLine": 792,
+        "endChar": 0
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4f59768d_d270e8f9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79d89f4_9000ae0d",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 801,
+        "endChar": 72
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbc447dc_71f62ef3",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 3
@@ -367,6 +727,30 @@
       "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e91ffd3_790572fe",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-02T14:53:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc447dc_71f62ef3",
+      "range": {
+        "startLine": 833,
+        "startChar": 27,
+        "endLine": 833,
+        "endChar": 32
+      },
+      "revId": "b864eec1d60042f44b32dbb0bd8fad360e9ee1d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
