@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "096704d5_a44cb4a2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "Any reason to use \"\" instead of null?",
+      "range": {
+        "startLine": 230,
+        "startChar": 37,
+        "endLine": 230,
+        "endChar": 39
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed2056f_a53e6195",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "when resolving the strict mode hostname, NetworkMonitor always queries for both A and AAAA records, even if the network is IPv4-only or IPv6-only.",
+      "range": {
+        "startLine": 234,
+        "startChar": 53,
+        "endLine": 235,
+        "endChar": 54
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f21c04_42ca9f89",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Also, it doesn\u0027t seem to match the code. It seems to me that no entries are overwritten: if an entry exists, then we skip it. Am I missing something?",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 75
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990c30be_edcadd8d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "Thanks for adding this comment. I think you could lessen the need for the comment by using a better method name, such as \"alreadyFailed\" or \"failedDuringConstruction\".",
+      "range": {
+        "startLine": 488,
+        "startChar": 26,
+        "endLine": 488,
+        "endChar": 52
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

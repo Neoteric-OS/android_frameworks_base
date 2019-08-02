@@ -113,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "3c7afab6_54268c18",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "In what case would using a custom TrustManager cause the measurements to differ? Only in rare cases such as \"netd thinks the cert is valid, but the system certificate validator thinks the cert has been revoked\"?\n\nIf so, it\u0027s probably better to just use the default validator here. Ideally the diagnostic code is as simple as possible. Also there doesn\u0027t seem to be much point in trying to emulate netd\u0027s behaviour here, because it will be very hard to keep the two in sync.",
+      "parentUuid": "eb5b0197_9fa4aea1",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 96
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce3ece9d_be74884e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 1
@@ -195,6 +219,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f4d4da0c_8152a712",
+      "range": {
+        "startLine": 866,
+        "startChar": 26,
+        "endLine": 866,
+        "endChar": 30
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1d5d73f_9316b84b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-02T17:46:52Z",
+      "side": 1,
+      "message": "Thanks. Should we call recordFailure if n \u003c 0?",
+      "parentUuid": "301f5206_1d2740f2",
       "range": {
         "startLine": 866,
         "startChar": 26,
