@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-// in android.app so ContextImpl has package access
 package android.app;
 
 import android.app.job.JobInfo;
@@ -29,6 +28,10 @@ import java.util.List;
 
 /**
  * Concrete implementation of the JobScheduler interface
+ *
+ * Note android.app.job is the better package to put this class, but we can't move it there
+ * because that'd break robolectric. Grr.
+ *
  * @hide 
  */
 public class JobSchedulerImpl extends JobScheduler {
