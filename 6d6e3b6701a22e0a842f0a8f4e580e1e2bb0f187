@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "79b62a01_68c58092",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Could you also post one error sample?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 153
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6764c2_c9bf35c4",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "You may want to update the comment.",
+      "range": {
+        "startLine": 240,
+        "startChar": 27,
+        "endLine": 240,
+        "endChar": 31
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f6469d_a2d52032",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Do you want to add a annotation @NonNull because you use the object directly w/o checking the nullability?",
+      "range": {
+        "startLine": 273,
+        "startChar": 48,
+        "endLine": 273,
+        "endChar": 55
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "096704d5_a44cb4a2",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 4
@@ -87,6 +156,121 @@
         "startChar": 26,
         "endLine": 488,
         "endChar": 52
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9233766_ebf3a18c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Will it be better to rename it as DnsCheck or something? Current architecture looks like DnsTls is kind of Udp extended check but actually it\u0027s not.",
+      "range": {
+        "startLine": 685,
+        "startChar": 38,
+        "endLine": 685,
+        "endChar": 49
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10ab796_5937904e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Nit: TCP_CONNECT_TIMEOUT_MS",
+      "range": {
+        "startLine": 686,
+        "startChar": 33,
+        "endLine": 686,
+        "endChar": 52
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984c566e_d16cef1d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Nit: TCP_TIMEOUT_MS",
+      "range": {
+        "startLine": 687,
+        "startChar": 33,
+        "endLine": 687,
+        "endChar": 44
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f85ee8f_51823149",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "Could we refactor this to getMeanSurementDescrption() or something? Line 756 and Line 768 are duplicated with code in DnsUdpCheck.run().",
+      "range": {
+        "startLine": 768,
+        "startChar": 16,
+        "endLine": 770,
+        "endChar": 90
+      },
+      "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfcbe78_5002a245",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-05T08:48:10Z",
+      "side": 1,
+      "message": "What happen if it fails first but succeeds then?",
+      "range": {
+        "startLine": 791,
+        "startChar": 16,
+        "endLine": 795,
+        "endChar": 17
       },
       "revId": "6d6e3b6701a22e0a842f0a8f4e580e1e2bb0f187",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
