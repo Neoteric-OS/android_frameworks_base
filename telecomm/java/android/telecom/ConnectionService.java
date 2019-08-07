@@ -195,6 +195,7 @@ public abstract class ConnectionService extends Service {
             new RemoteConnectionManager(this);
     private final List<Runnable> mPreInitializationConnectionRequests = new ArrayList<>();
     private final ConnectionServiceAdapter mAdapter = new ConnectionServiceAdapter();
+    private final List<String> mAbortedCallId = new ArrayList<>();
 
     private boolean mAreAccountsInitialized = false;
     private Conference sNullConference;
@@ -705,6 +706,12 @@ public abstract class ConnectionService extends Service {
                         final PhoneAccountHandle connectionManagerPhoneAccount =
                                 (PhoneAccountHandle) args.arg1;
                         final String id = (String) args.arg2;
+                        // Do not create connection for call Id that already aborted
+                        if (mAbortedCallId.contains(id)) {
+                            Log.i(this, "callId already aborted %s", id);
+                            mAbortedCallId.remove(id);
+                            break;
+                        }
                         final ConnectionRequest request = (ConnectionRequest) args.arg3;
                         final boolean isIncoming = args.argi1 == 1;
                         final boolean isUnknown = args.argi2 == 1;
@@ -1666,6 +1673,12 @@ public abstract class ConnectionService extends Service {
 
     private void abort(String callId) {
         Log.d(this, "abort %s", callId);
+        //mark call Id that is aborted
+        if (callId != null
+                && !mConnectionById.containsKey(callId)
+                && !mAbortedCallId.contains(callId)) {
+            mAbortedCallId.add(callId);
+        }
         findConnectionForAction(callId, "abort").onAbort();
     }
 
