@@ -1262,6 +1262,11 @@ doc_defaults {
     create_stubs: false,
 }
 
+doc_defaults {
+    name: "framework-dokka-docs-default",
+    create_stubs: false,
+}
+
 stubs_defaults {
     name: "metalava-api-stubs-default",
     srcs: [
@@ -1434,7 +1439,7 @@ droiddoc {
 }
 
 droiddoc {
-    name: "ds-docs",
+    name: "ds-docs-java",
     defaults: ["framework-docs-default"],
     srcs: [
         ":framework-doc-stubs",
@@ -1461,6 +1466,31 @@ droiddoc {
         " -samplegroup Views " +
         " -samplegroup Wearable -devsite -samplesdir development/samples/browseable ",
 }
+
+droiddoc {
+    name: "ds-docs-kt",
+    defaults: ["framework-dokka-docs-default"],
+    srcs: [
+        ":framework-doc-stubs",
+    ],
+    args: "-noJdkLink -links https://kotlinlang.org/api/latest/jvm/stdlib/^external/dokka/package-list " +
+    "-noStdlibLink",
+    proofread_file: "ds-dokka-proofread.txt",
+    dokka_enabled: true,
+}
+
+java_genrule {
+    name: "ds-docs",
+    tools: [
+        "soong_zip",
+    ],
+    srcs: [":ds-docs-java", ":ds-docs-kt"],
+    out: ["reference.zip"],
+    cmd: "unzip out/soong/.intermediates/frameworks/base/ds-docs-java/android_common/ds-docs-java-docs.zip -d $(genDir)"
+    +" && unzip out/soong/.intermediates/frameworks/base/ds-docs-kt/android_common/ds-docs-kt-docs.zip"
+    +" -d $(genDir)/en/reference/kotlin && $(location soong_zip) -o $(out) -D $(genDir)",
+}
+
 
 droiddoc {
     name: "ds-static-docs",
