@@ -48,6 +48,18 @@ public class JobParameters implements Parcelable {
     /** @hide */
     public static final int REASON_DEVICE_IDLE = JobProtoEnums.STOP_REASON_DEVICE_IDLE; // 4.
 
+    /**
+     * All the stop reason codes. This should be regarded as an immutable array at runtime.
+     * @hide
+     */
+    public static final int[] JOB_STOP_REASON_CODES = {
+            REASON_CANCELED,
+            REASON_CONSTRAINTS_NOT_SATISFIED,
+            REASON_PREEMPT,
+            REASON_TIMEOUT,
+            REASON_DEVICE_IDLE,
+    };
+
     /** @hide */
     public static String getReasonName(int reason) {
         switch (reason) {
