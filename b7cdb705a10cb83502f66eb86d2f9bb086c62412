@@ -22,6 +22,30 @@
       "revId": "b7cdb705a10cb83502f66eb86d2f9bb086c62412",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6d88e0_dd8bcb8e",
+        "filename": "packages/SystemUI/src/com/android/systemui/assist/AssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2019-08-07T02:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7673d7fe_f7b4db2a",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 88
+      },
+      "revId": "b7cdb705a10cb83502f66eb86d2f9bb086c62412",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
