@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7673d7fe_f7b4db2a",
+        "filename": "packages/SystemUI/src/com/android/systemui/assist/AssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2019-08-07T01:56:28Z",
+      "side": 1,
+      "message": "Not sure if this latter call will take into account changes in user setting of ASSIST_DISCLOSURE_ENABLED.  Maybe we should hook there instead?",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 88
+      },
+      "revId": "b7cdb705a10cb83502f66eb86d2f9bb086c62412",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
