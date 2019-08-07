@@ -752,26 +752,14 @@ java_library {
     name: "framework",
     defaults: ["framework-defaults"],
     javac_shard_size: 150,
-    required: [
-        "framework-platform-compat-config",
-        "libcore-platform-compat-config",
-    ],
 }
 
 java_library {
     name: "framework-annotation-proc",
     defaults: ["framework-defaults"],
     installable: false,
-    plugins: [
-        "unsupportedappusage-annotation-processor",
-        "compat-changeid-annotation-processor",
-    ],
-}
-
-platform_compat_config {
-    name: "framework-platform-compat-config",
-    prefix: "framework",
-    src: ":framework-annotation-proc",
+    // Use UsedByApps annotation processor
+    plugins: ["unsupportedappusage-annotation-processor"],
 }
 
 // A library including just UnsupportedAppUsage.java classes.
@@ -1274,6 +1262,11 @@ doc_defaults {
     create_stubs: false,
 }
 
+doc_defaults {
+    name: "framework-dokka-docs-default",
+    create_stubs: false,
+}
+
 stubs_defaults {
     name: "metalava-api-stubs-default",
     srcs: [
@@ -1446,7 +1439,7 @@ droiddoc {
 }
 
 droiddoc {
-    name: "ds-docs",
+    name: "ds-docs-java",
     defaults: ["framework-docs-default"],
     srcs: [
         ":framework-doc-stubs",
@@ -1473,6 +1466,34 @@ droiddoc {
         " -samplegroup Views " +
         " -samplegroup Wearable -devsite -samplesdir development/samples/browseable ",
 }
+
+droiddoc {
+    name: "ds-docs-kt",
+    defaults: ["framework-dokka-docs-default"],
+    srcs: [
+        ":framework-doc-stubs",
+    ],
+    args: "-noJdkLink -links https://kotlinlang.org/api/latest/jvm/stdlib/^external/dokka/package-list " +
+    "-noStdlibLink",
+    proofread_file: "ds-dokka-proofread.txt",
+    dokka_enabled: true,
+}
+
+java_genrule {
+    name: "ds-docs",
+    tools: [
+      "zip2zip",
+      "merge_zips",
+    ],
+    srcs: [":ds-docs-java", ":ds-docs-kt"],
+    out: ["ds-docs.zip"],
+    dist: {
+        targets: ["docs"],
+    },
+    cmd: "$(location zip2zip) -i $$(dirname $(location :ds-docs-kt))/ds-docs-kt-docs.zip -o $(genDir)/ds-docs-kt-moved.zip **/*:en/reference/kotlin &&" +
+         " $(location merge_zips) $(out) $$(dirname $(location :ds-docs-java))/ds-docs-java-docs.zip $(genDir)/ds-docs-kt-moved.zip",
+}
+
 
 droiddoc {
     name: "ds-static-docs",
