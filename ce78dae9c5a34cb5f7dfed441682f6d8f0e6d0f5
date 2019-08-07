@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d73b1f4_50e58db5",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-08-07T08:01:23Z",
+      "side": 1,
+      "message": "This could be null? Also it seems those two variables (*ZygoteState) are lazily created. Should you mimic what eg informZygotesOfUsapPoolStatus is doing?",
+      "range": {
+        "startLine": 654,
+        "startChar": 71,
+        "endLine": 654,
+        "endChar": 91
+      },
+      "revId": "ce78dae9c5a34cb5f7dfed441682f6d8f0e6d0f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
