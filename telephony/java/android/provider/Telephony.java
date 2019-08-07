@@ -24,7 +24,6 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
-import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -4032,9 +4031,11 @@ public final class Telephony {
          * ServiceState provider.
          * <p>
          * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-         * {@link ServiceState} while your app is running.  You can also use a {@link JobService} to
+         * {@link ServiceState} while your app is running.
+         * You can also use a {@link android.app.job.JobService} to
          * ensure your app is notified of changes to the {@link Uri} even when it is not running.
-         * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+         * Note, however, that using a {@link android.app.job.JobService}
+         * does not guarantee timely delivery of
          * updates to the {@link Uri}.
          *
          * @param subscriptionId the subscriptionId to receive updates on
@@ -4051,9 +4052,11 @@ public final class Telephony {
          * ServiceState provider.
          * <p>
          * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-         * {@link ServiceState} while your app is running.  You can also use a {@link JobService} to
+         * {@link ServiceState} while your app is running.  You can also use a
+         * {@link android.app.job.JobService} to
          * ensure your app is notified of changes to the {@link Uri} even when it is not running.
-         * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+         * Note, however, that using a {@link android.app.job.JobService}
+         * does not guarantee timely delivery of
          * updates to the {@link Uri}.
          *
          * @param subscriptionId the subscriptionId to receive updates on
@@ -4309,10 +4312,11 @@ public final class Telephony {
          * <p>
          * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
          * carrier identity {@link TelephonyManager#getSimCarrierId()}
-         * while your app is running. You can also use a {@link JobService} to ensure your app
+         * while your app is running. You can also use a {@link android.app.job.JobService}
+         * to ensure your app
          * is notified of changes to the {@link Uri} even when it is not running.
-         * Note, however, that using a {@link JobService} does not guarantee timely delivery of
-         * updates to the {@link Uri}.
+         * Note, however, that using a {@link android.app.job.JobService} does not guarantee
+         * timely delivery of updates to the {@link Uri}.
          *
          * @param subscriptionId the subscriptionId to receive updates on
          * @return the Uri used to observe carrier identity changes
@@ -4330,10 +4334,11 @@ public final class Telephony {
          * <p>
          * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
          * specific carrier identity {@link TelephonyManager#getSimSpecificCarrierId()}
-         * while your app is running. You can also use a {@link JobService} to ensure your app
+         * while your app is running. You can also use a {@link android.app.job.JobService}
+         * to ensure your app
          * is notified of changes to the {@link Uri} even when it is not running.
-         * Note, however, that using a {@link JobService} does not guarantee timely delivery of
-         * updates to the {@link Uri}.
+         * Note, however, that using a {@link android.app.job.JobService} does not guarantee timely
+         * delivery of updates to the {@link Uri}.
          *
          * @param subscriptionId the subscriptionId to receive updates on
          * @return the Uri used to observe specific carrier identity changes
