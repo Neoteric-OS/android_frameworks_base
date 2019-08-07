@@ -137,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "4bc30c33_04a970e4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-07T03:51:56Z",
+      "side": 1,
+      "message": "I mistakenly thought that the SSLContext instance got from SSLSocketFactory.getDefault() doesn\u0027t validate the server\u0027s certificates by system CAs.\nThe steps I tested this change were:\n1) reboot and dumpsys connectivity\n2) remove the CA required for dns.google\n3) dumpsys connectivity\n\nI supposed in step 3 DnsTls measurement should had failed but it succeeded. However if I changed the way to test it:\n1) reboot and remove the CA required for dns.google\n2) dumpsys connectivity\n\nStep 2 failed with the error java.security.cert.CertPathValidatorException which was what I expected.\n\nLooks like the SSLContext instance somehow caches the TrustManager so that the DnsTls measurement still succeed even though the CA has been removed. Anyway, assume that system CAs can\u0027t be removed since they are stored in /system, SSLSocketFactory.getDefault().createSocket() is enough for us.",
+      "parentUuid": "3c7afab6_54268c18",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 96
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce3ece9d_be74884e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 1
@@ -243,6 +267,30 @@
       "side": 1,
       "message": "Thanks. Should we call recordFailure if n \u003c 0?",
       "parentUuid": "301f5206_1d2740f2",
+      "range": {
+        "startLine": 866,
+        "startChar": 26,
+        "endLine": 866,
+        "endChar": 30
+      },
+      "revId": "43407e98a3f311c37c93cef94664a4ec3d5656b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d3770eb_3f326316",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-08-07T03:51:56Z",
+      "side": 1,
+      "message": "Yes, throw IOException to indicate EOF.",
+      "parentUuid": "d1d5d73f_9316b84b",
       "range": {
         "startLine": 866,
         "startChar": 26,
