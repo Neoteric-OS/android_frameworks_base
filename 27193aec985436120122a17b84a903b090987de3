@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352369fc_a5fb3923",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-08-07T17:12:53Z",
+      "side": 1,
+      "message": "Are you OK with this being called more than once per zygote ? the ABI-\u003ezygote mapping is many to one so this needs to be idempotent. LGTM if it is, even if it\u0027s a bit wasteful to call it more than once per zygote.",
+      "range": {
+        "startLine": 300,
+        "startChar": 8,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "27193aec985436120122a17b84a903b090987de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
