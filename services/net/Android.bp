@@ -1,19 +1,13 @@
 java_library_static {
     name: "services.net",
-    srcs: ["java/**/*.java"],
+    srcs: [
+        "java/**/*.java",
+        ":networkstack-shared-srcs",
+    ],
     static_libs: [
         "dnsresolver_aidl_interface-V2-java",
         "netd_aidl_interface-java",
+        "netlink-client",
         "networkstack-client",
-    ],
-}
-
-filegroup {
-    name: "services-networkstack-shared-srcs",
-    srcs: [
-        "java/android/net/ip/InterfaceController.java", // TODO: move to NetworkStack with tethering
-        "java/android/net/util/InterfaceParams.java", // TODO: move to NetworkStack with IpServer
-        "java/android/net/shared/*.java",
-        "java/android/net/netlink/*.java",
     ],
 }
