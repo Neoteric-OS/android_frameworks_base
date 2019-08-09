@@ -317,6 +317,10 @@ public class UserSwitcherController {
         if (overrideUseFullscreenUserSwitcher != DEFAULT) {
             return overrideUseFullscreenUserSwitcher != 0;
         }
+        // Return false if UserSwitcher disabled.
+        if(!UserManager.get(mContext).isUserSwitcherEnabled()) {
+            return false;
+        }
         // Otherwise default to the build setting.
         return mContext.getResources().getBoolean(R.bool.config_enableFullscreenUserSwitcher);
     }
