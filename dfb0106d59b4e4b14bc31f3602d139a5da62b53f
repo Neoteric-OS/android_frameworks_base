@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3326349_69962e96",
+        "filename": "startop/view_compiler/dex_builder_test/src/android/startop/test/ApkLayoutCompilerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-08-09T20:19:11Z",
+      "side": 1,
+      "message": "Nit: layout1 is a misleading variable name here",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "dfb0106d59b4e4b14bc31f3602d139a5da62b53f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69998bfc_3ee734e0",
+        "filename": "startop/view_compiler/dex_builder_test/src/android/startop/test/ApkLayoutCompilerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-08-09T20:19:11Z",
+      "side": 1,
+      "message": "Is this supposed to be R.layout.layout2?",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "dfb0106d59b4e4b14bc31f3602d139a5da62b53f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
