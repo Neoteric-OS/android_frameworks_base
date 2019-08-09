@@ -22,6 +22,30 @@
       "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b5d43d_d771cea9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2019-08-09T00:12:08Z",
+      "side": 1,
+      "message": "When doing this in InitialState, it will introduce the following two cases to call WifiManager#updateInterfaceIpState(who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED).\n1. IpServer#setInitialState(mInitialState)\n2. IpServer#BaseServingState#processMessage, case: CMD_TETHER_UNREQUESTED transitionTo(mInitialState)\nIt\u0027s not affected to current use cases, but unnecessary. The actual difference we noticed is that we have to modify test code in TetheringTest.java more to verify these unnecessary processes.\n\n(Please also look at b/134806980)",
+      "parentUuid": "8eb69ba0_296d4ebc",
+      "range": {
+        "startLine": 1331,
+        "startChar": 0,
+        "endLine": 1334,
+        "endChar": 72
+      },
+      "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
