@@ -210,7 +210,7 @@ public class PermissionMonitorTest {
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_INTERNAL));
 
         app = packageInfoWithPermissions(new String[] {
-            CHANGE_NETWORK_STATE, NETWORK_STACK
+                CHANGE_NETWORK_STATE, NETWORK_STACK
         }, PARTITION_SYSTEM);
         assertTrue(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertTrue(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
@@ -218,7 +218,7 @@ public class PermissionMonitorTest {
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_INTERNAL));
 
         app = packageInfoWithPermissions(new String[] {
-            CONNECTIVITY_USE_RESTRICTED_NETWORKS, CONNECTIVITY_INTERNAL
+                CONNECTIVITY_USE_RESTRICTED_NETWORKS, CONNECTIVITY_INTERNAL
         }, PARTITION_SYSTEM);
         assertFalse(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertFalse(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
@@ -243,7 +243,7 @@ public class PermissionMonitorTest {
         assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
         assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
         assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, NETWORK_STACK));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
+        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
         assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1,
                 CONNECTIVITY_USE_RESTRICTED_NETWORKS));
         assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
@@ -279,6 +279,7 @@ public class PermissionMonitorTest {
 
         assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
         assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CONNECTIVITY_INTERNAL));
     }
 
     private class NetdMonitor {
