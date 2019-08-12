@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff4ce96_066520be",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5909,
+      "author": {
+        "id": 1546095
+      },
+      "writtenOn": "2019-08-12T22:53:25Z",
+      "side": 1,
+      "message": "Is it possible to move this earlier in the app setup process? \n\nI know we need to check for debuggable, but can we attach at the same time that an agent attached via am start-activity --attach-agent would attach?",
+      "range": {
+        "startLine": 5909,
+        "startChar": 12,
+        "endLine": 5909,
+        "endChar": 27
+      },
+      "revId": "c0fce111c8b7c68ddb397ac7c65ac5c35a40da01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
