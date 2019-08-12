@@ -19,6 +19,7 @@ package android.service.print;
 
 option java_multiple_files = true;
 option java_outer_classname = "PrintServiceProto";
+option go_package = "android.service";
 
 import "frameworks/base/core/proto/android/content/component_name.proto";
 import "frameworks/base/libs/incident/proto/android/privacy.proto";

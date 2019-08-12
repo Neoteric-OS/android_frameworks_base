@@ -18,6 +18,7 @@ syntax = "proto2";
 option java_multiple_files = true;
 
 package com.android.server;
+option go_package = "android.server";
 
 import "frameworks/base/libs/incident/proto/android/privacy.proto";
 

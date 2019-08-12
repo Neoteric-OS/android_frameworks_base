@@ -19,6 +19,7 @@ package android.content;
 
 option java_package = "android.content";
 option java_multiple_files = true;
+option go_package = "android.content";
 
 import "frameworks/base/core/proto/android/content/component_name.proto";
 import "frameworks/base/core/proto/android/os/patternmatcher.proto";

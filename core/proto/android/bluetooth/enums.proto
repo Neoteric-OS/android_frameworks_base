@@ -19,6 +19,7 @@ package android.bluetooth;
 
 option java_outer_classname = "BluetoothProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.bluetooth";
 
 // Bluetooth connection states.
 enum ConnectionStateEnum {

@@ -19,6 +19,7 @@ package android.providers.settings;
 
 option java_multiple_files = true;
 option java_outer_classname = "SettingsServiceProto";
+option go_package = "android.providers";
 
 import "frameworks/base/core/proto/android/providers/settings/global.proto";
 import "frameworks/base/core/proto/android/providers/settings/secure.proto";

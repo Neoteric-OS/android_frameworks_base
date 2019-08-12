@@ -21,6 +21,7 @@ import "frameworks/base/core/proto/android/server/windowmanagerservice.proto";
 package com.android.server.wm;
 
 option java_multiple_files = true;
+option go_package = "android.server";
 
 /* represents a file full of window manager trace entries.
    Encoded, it should start with 0x9 0x57 0x49 0x4e 0x54 0x52 0x41 0x43 0x45 (.WINTRACE), such

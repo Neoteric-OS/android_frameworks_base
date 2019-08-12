@@ -19,6 +19,7 @@ package android.bluetooth.a2dp;
 
 option java_outer_classname = "BluetoothA2dpProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.bluetooth.a2dp";
 
 // A2dp playback state enum, defined from:
 // frameworks/base/core/java/android/bluetooth/BluetoothA2dp.java

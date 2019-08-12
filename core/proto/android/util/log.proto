@@ -20,6 +20,7 @@ package android.util;
 import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 option java_multiple_files = true;
+option go_package = "android.util";
 
 // Represents a Text Log in logd
 // Next Tag: 9

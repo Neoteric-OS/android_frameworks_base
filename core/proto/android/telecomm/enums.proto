@@ -19,6 +19,7 @@ package android.telecom;
 
 option java_outer_classname = "TelecomProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.telecom";
 
 /**
  * Call states, primarily used in CallState.java,

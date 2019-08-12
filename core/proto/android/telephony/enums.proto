@@ -19,6 +19,7 @@ package android.telephony;
 
 option java_outer_classname = "TelephonyProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.telephony";
 
 // Data conn. power states, primarily used by android/telephony/DataConnectionRealTimeInfo.java.
 enum DataConnectionPowerStateEnum {

@@ -18,6 +18,7 @@ syntax = "proto2";
 package com.android.service;
 
 option java_multiple_files = true;
+option go_package = "android.service";
 
 // It will be used by com.android.server.net.watchlist.ReportEncoder to
 // generate network watchlist report.

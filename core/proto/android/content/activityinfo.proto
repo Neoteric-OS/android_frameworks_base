@@ -17,6 +17,7 @@
 syntax = "proto2";
 package android.content;
 option java_multiple_files = true;
+option go_package = "android.content";
 
 message ActivityInfoProto {
     enum ScreenOrientation {

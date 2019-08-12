@@ -19,6 +19,7 @@ package android.service.notification;
 
 option java_multiple_files = true;
 option java_outer_classname = "NotificationServiceProto";
+option go_package = "android.service";
 
 import "frameworks/base/core/proto/android/app/notification_channel.proto";
 import "frameworks/base/core/proto/android/app/notification_channel_group.proto";

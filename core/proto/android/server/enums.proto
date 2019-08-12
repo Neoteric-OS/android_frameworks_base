@@ -19,6 +19,7 @@ package android.server;
 
 option java_outer_classname = "ServerProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.server";
 
 enum DeviceIdleModeEnum {
     // Device idle mode - not active.

@@ -16,6 +16,8 @@
 syntax = "proto2";
 package android.stats.dnsresolver;
 
+option go_package = "android.stats.dnsresolver";
+
 enum EventType {
     EVENT_UNKNOWN = 0;
     EVENT_GETADDRINFO = 1;

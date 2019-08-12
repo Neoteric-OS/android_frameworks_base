@@ -16,6 +16,8 @@
 
 syntax = "proto2";
 
+option go_package = "android.internal";
+
 package com.android.internal.app.procstats;
 
 message ProcessStatsProto {

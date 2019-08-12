@@ -20,6 +20,7 @@ package android.app.job;
 
 option java_outer_classname = "JobProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.app.job";
 
 // Reasons a job is stopped.
 // Primarily used in android.app.job.JobParameters.java.

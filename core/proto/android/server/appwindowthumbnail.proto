@@ -21,6 +21,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 package com.android.server.wm;
 option java_multiple_files = true;
+option go_package = "android.server";
 
 /**
  * Represents a {@link com.android.server.wm.AppWindowThumbnail} object.

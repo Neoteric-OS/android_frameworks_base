@@ -22,6 +22,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 package android.view;
 option java_multiple_files = true;
+option go_package = "android.view";
 
 /* represents WindowManager.LayoutParams */
 message WindowLayoutParamsProto {

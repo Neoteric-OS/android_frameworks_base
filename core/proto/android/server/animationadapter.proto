@@ -22,6 +22,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 package com.android.server.wm;
 option java_multiple_files = true;
+option go_package = "android.server";
 
 message AnimationAdapterProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;

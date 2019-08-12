@@ -36,6 +36,7 @@ import "frameworks/base/core/proto/android/util/common.proto";
 import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 option java_multiple_files = true;
+option go_package = "android.server";
 
 message ActivityManagerServiceProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;

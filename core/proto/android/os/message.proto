@@ -19,6 +19,7 @@ package android.os;
 
 import "frameworks/base/libs/incident/proto/android/privacy.proto";
 option java_multiple_files = true;
+option go_package = "android.os";
 
 message MessageProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;

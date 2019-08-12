@@ -21,6 +21,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "FingerprintServiceProto";
+option go_package = "android.server";
 
 message FingerprintServiceDumpProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;

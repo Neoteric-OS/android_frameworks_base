@@ -19,6 +19,7 @@ package android.service;
 
 option java_outer_classname = "ServiceProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.service";
 
 enum UsbEndPointType {
     USB_ENDPOINT_TYPE_XFER_CONTROL = 0;

@@ -19,6 +19,7 @@ syntax = "proto2";
 package com.android.server.job;
 
 option java_multiple_files = true;
+option go_package = "android.server";
 
 import "frameworks/base/core/proto/android/app/job/enums.proto";
 import "frameworks/base/core/proto/android/content/clipdata.proto";

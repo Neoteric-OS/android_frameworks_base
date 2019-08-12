@@ -19,6 +19,7 @@ package android.os;
 
 option java_outer_classname = "OsProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.os";
 
 // These constants are defined in hardware/interfaces/health/1.0/types.hal
 // They are primarily used by android/os/BatteryManager.java.

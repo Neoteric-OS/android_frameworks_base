@@ -19,6 +19,7 @@ package android.bluetooth.hci;
 
 option java_outer_classname = "BluetoothHciProtoEnums";
 option java_multiple_files = true;
+option go_package = "android.bluetooth.hci";
 
 // HCI command opcodes (OCF+OGF) from Bluetooth 5.0 specification Vol 2, Part E, Section 7
 // Original definition: system/bt/stack/include/hcidefs.h

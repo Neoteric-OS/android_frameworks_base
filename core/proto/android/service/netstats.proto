@@ -21,6 +21,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "NetworkStatsServiceProto";
+option go_package = "android.service";
 
 // Represents dumpsys from NetworkStatsService (netstats).
 message NetworkStatsServiceDumpProto {

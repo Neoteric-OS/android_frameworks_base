@@ -20,6 +20,7 @@ import "frameworks/base/libs/incident/proto/android/privacy.proto";
 
 option java_package = "android.content.pm";
 option java_multiple_files = true;
+option go_package = "android.content";
 
 package android.content.pm;
 

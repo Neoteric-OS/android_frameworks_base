@@ -20,6 +20,7 @@ package android;
 
 option java_package = "com.android.incident";
 option java_multiple_files = true;
+option go_package = "android.incident";
 
 import "google/protobuf/descriptor.proto";
 

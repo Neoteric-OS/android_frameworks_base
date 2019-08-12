@@ -18,6 +18,7 @@ syntax = "proto2";
 package android.providers.settings;
 
 option java_multiple_files = true;
+option go_package = "android.providers.settings";
 
 import "frameworks/base/core/proto/android/providers/settings/common.proto";
 import "frameworks/base/libs/incident/proto/android/privacy.proto";
