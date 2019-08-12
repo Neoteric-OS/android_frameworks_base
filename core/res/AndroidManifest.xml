@@ -1570,7 +1570,7 @@
     <permission android:name="android.permission.NFC_TRANSACTION_EVENT"
         android:protectionLevel="normal" />
 
-    <!-- @SystemApi Allows an internal user to use privileged ConnectivityManager APIs.
+    <!-- @deprecated @SystemApi Allows an internal user to use privileged ConnectivityManager APIs.
          @hide -->
     <permission android:name="android.permission.CONNECTIVITY_INTERNAL"
         android:protectionLevel="signature|privileged" />

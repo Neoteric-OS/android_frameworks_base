@@ -2530,7 +2530,7 @@ public class JobSchedulerService extends com.android.server.SystemService
         private void validateJobFlags(JobInfo job, int callingUid) {
             if ((job.getFlags() & JobInfo.FLAG_WILL_BE_FOREGROUND) != 0) {
                 getContext().enforceCallingOrSelfPermission(
-                        android.Manifest.permission.CONNECTIVITY_INTERNAL, TAG);
+                        android.Manifest.permission.NETWORK_STACK, TAG);
             }
             if ((job.getFlags() & JobInfo.FLAG_EXEMPT_FROM_APP_STANDBY) != 0) {
                 if (callingUid != Process.SYSTEM_UID) {

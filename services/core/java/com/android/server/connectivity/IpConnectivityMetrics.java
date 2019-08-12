@@ -276,7 +276,7 @@ final public class IpConnectivityMetrics extends SystemService {
 
         @Override
         public int logEvent(ConnectivityMetricsEvent event) {
-            enforceConnectivityInternalPermission();
+            enforceNetworkStackPermission();
             return append(event);
         }
 
@@ -299,8 +299,8 @@ final public class IpConnectivityMetrics extends SystemService {
             }
         }
 
-        private void enforceConnectivityInternalPermission() {
-            enforcePermission(android.Manifest.permission.CONNECTIVITY_INTERNAL);
+        private void enforceNetworkStackPermission() {
+            enforcePermission(android.Manifest.permission.NETWORK_STACK);
         }
 
         private void enforceDumpPermission() {

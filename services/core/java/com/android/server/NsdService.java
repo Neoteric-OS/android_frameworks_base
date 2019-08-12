@@ -16,19 +16,17 @@
 
 package com.android.server;
 
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.net.nsd.NsdServiceInfo;
 import android.net.nsd.DnsSdTxtRecord;
 import android.net.nsd.INsdManager;
 import android.net.nsd.NsdManager;
-import android.os.Binder;
-import android.os.HandlerThread;
+import android.net.nsd.NsdServiceInfo;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.UserHandle;
@@ -38,19 +36,18 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.AsyncChannel;
+import com.android.internal.util.DumpUtils;
+import com.android.internal.util.State;
+import com.android.internal.util.StateMachine;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
-
-import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.AsyncChannel;
-import com.android.internal.util.DumpUtils;
-import com.android.internal.util.Protocol;
-import com.android.internal.util.State;
-import com.android.internal.util.StateMachine;
 
 /**
  * Network Service Discovery Service handles remote service discovery operation requests by
@@ -565,7 +562,7 @@ public class NsdService extends INsdManager.Stub {
     }
 
     public void setEnabled(boolean isEnabled) {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.CONNECTIVITY_INTERNAL,
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
                 "NsdService");
         mNsdSettings.putEnabledStatus(isEnabled);
         notifyEnabled(isEnabled);
