@@ -70,6 +70,30 @@
       "revId": "c0fce111c8b7c68ddb397ac7c65ac5c35a40da01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0649a57a_79812819",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5909,
+      "author": {
+        "id": 1546095
+      },
+      "writtenOn": "2019-08-12T23:18:23Z",
+      "side": 1,
+      "message": "I guess it\u0027s a bit tricky, since the Context object actually handles ensuring the code_cache directory exists in the first place.\n\nThe data dir is available via LoadedApk#getDataDir(), so data.info.getDataDirFile().toPath().resolve(\"code_cache\"). \n\nI\u0027m not sure if we want to hardcode the code_cache dir like that, though it\u0027s currently hardcoded in ContextImpl.",
+      "parentUuid": "c48c2ac0_547ab551",
+      "range": {
+        "startLine": 5909,
+        "startChar": 12,
+        "endLine": 5909,
+        "endChar": 27
+      },
+      "revId": "c0fce111c8b7c68ddb397ac7c65ac5c35a40da01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
