@@ -16,7 +16,7 @@
 
 package com.android.server.net;
 
-import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
+import static android.Manifest.permission.NETWORK_STACK;
 import static android.provider.Settings.ACTION_VPN_SETTINGS;
 
 import android.app.Notification;
@@ -205,7 +205,7 @@ public class LockdownVpnTracker {
         mVpn.setLockdown(true);
 
         final IntentFilter resetFilter = new IntentFilter(ACTION_LOCKDOWN_RESET);
-        mContext.registerReceiver(mResetReceiver, resetFilter, CONNECTIVITY_INTERNAL, null);
+        mContext.registerReceiver(mResetReceiver, resetFilter, NETWORK_STACK, null);
 
         handleStateChangedLocked();
     }
