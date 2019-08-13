@@ -16,28 +16,28 @@
 
 package android.net.util;
 
+import static android.provider.Settings.Global.NETWORK_AVOID_BAD_WIFI;
+import static android.provider.Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE;
+
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Message;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.util.Slog;
+
+import com.android.internal.R;
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Arrays;
 import java.util.List;
-
-import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.R;
-
-import static android.provider.Settings.Global.NETWORK_AVOID_BAD_WIFI;
-import static android.provider.Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE;
 
 /**
  * A class to encapsulate management of the "Smart Networking" capability of
@@ -131,7 +131,12 @@ public class MultinetworkPolicyTracker {
      * Whether the device or carrier configuration disables avoiding bad wifi by default.
      */
     public boolean configRestrictsAvoidBadWifi() {
-        return (mContext.getResources().getInteger(R.integer.config_networkAvoidBadWifi) == 0);
+        return (getResourcesForActiveSub().getInteger(R.integer.config_networkAvoidBadWifi) == 0);
+    }
+
+    private Resources getResourcesForActiveSub() {
+        final int activeSubId = SubscriptionManager.getActiveDataSubscriptionId();
+        return SubscriptionManager.getResourcesForSubId(mContext, activeSubId);
     }
 
     /**
