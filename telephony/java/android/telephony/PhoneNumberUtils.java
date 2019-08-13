@@ -217,6 +217,9 @@ public class PhoneNumberUtils {
         }
 
         String scheme = uri.getScheme();
+        if (scheme == null) {
+            return null;
+        }
 
         if (scheme.equals("tel") || scheme.equals("sip")) {
             return uri.getSchemeSpecificPart();
@@ -231,6 +234,9 @@ public class PhoneNumberUtils {
 
         // Correctly read out the phone entry based on requested provider
         final String authority = uri.getAuthority();
+        if (authority == null) {
+            return null;
+        }
         if (Contacts.AUTHORITY.equals(authority)) {
             phoneColumn = Contacts.People.Phones.NUMBER;
         } else if (ContactsContract.AUTHORITY.equals(authority)) {
