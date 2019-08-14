@@ -2293,6 +2293,7 @@ public class ConnectivityManager {
                     android.Manifest.permission.TETHER_PRIVILEGED, "ConnectivityService");
         } else {
             int uid = Binder.getCallingUid();
+            if (Process.BLUETOOTH_UID == uid) return;
             // If callingPkg's uid is not same as Binder.getCallingUid(),
             // AppOpsService throws SecurityException.
             Settings.checkAndNoteWriteSettingsOperation(context, uid, callingPkg,
