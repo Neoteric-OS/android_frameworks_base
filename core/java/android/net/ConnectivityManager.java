@@ -50,6 +50,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
@@ -2293,6 +2294,10 @@ public class ConnectivityManager {
                     android.Manifest.permission.TETHER_PRIVILEGED, "ConnectivityService");
         } else {
             int uid = Binder.getCallingUid();
+            UserHandle.getAppId(uid);
+            // If this has been called by the system server or the bluetooth process, accept
+            // the request. TODO (b/134649258) : remove this
+            if (Process.BLUETOOTH_UID == uid || Process.SYSTEM_UID == uid) return;
             // If callingPkg's uid is not same as Binder.getCallingUid(),
             // AppOpsService throws SecurityException.
             Settings.checkAndNoteWriteSettingsOperation(context, uid, callingPkg,
