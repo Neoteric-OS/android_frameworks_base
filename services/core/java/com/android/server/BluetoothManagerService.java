@@ -777,6 +777,15 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     // Clear all apps using BLE scan only mode.
     private void clearBleApps() {
+        for (Map.Entry<IBinder, ClientDeathRecipient> entry : mBleApps.entrySet()) {
+            IBinder token = entry.getKey();
+            ClientDeathRecipient deathRec = entry.getValue();
+            try {
+                token.unlinkToDeath(deathRec, 0);
+            } catch (NoSuchElementException e) {
+                Log.e(TAG, "clearBleApps: error unlinking to death", e);
+            }
+        }
         mBleApps.clear();
     }
 
@@ -821,32 +830,41 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         if (DBG) {
             Slog.d(TAG, "Calling sendBrEdrDownCallback callbacks");
         }
-
-        if (mBluetooth == null) {
-            Slog.w(TAG, "Bluetooth handle is null");
-            return;
+        try {
+            mBluetoothLock.readLock().lock();
+            if (!checkAndTryStayAtBleOn() && mBluetooth != null) {
+                mBluetooth.onBrEdrDown();
+            }
+        } catch (RemoteException e) {
+            Slog.e(TAG, "onBrEdrDown() failed.", e);
+        } finally {
+            mBluetoothLock.readLock().unlock();
         }
 
-        if (isBleAppPresent()) {
+    }
+
+    /**
+     * Check and try to stay at BLE_ON state, all Gatt connections would be
+     * disconnected if Bluetooth is okay to stay at BLE_ON, otherwise clear
+     * all registered BLE apps.
+     *
+     * @return true if positive on stay at BLE_ON, false otherwise.
+     */
+    private boolean checkAndTryStayAtBleOn() {
+        try {
+            mBluetoothLock.readLock().lock();
+            if (mBluetoothGatt == null || !isBleAppPresent()) {
+                clearBleApps();
+                return false;
+            }
             // Need to stay at BLE ON. Disconnect all Gatt connections
-            try {
-                mBluetoothGatt.unregAll();
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Unable to disconnect all apps.", e);
-            }
-        } else {
-            try {
-                mBluetoothLock.readLock().lock();
-                if (mBluetooth != null) {
-                    mBluetooth.onBrEdrDown();
-                }
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Call to onBrEdrDown() failed.", e);
-            } finally {
-                mBluetoothLock.readLock().unlock();
-            }
+            mBluetoothGatt.unregAll();
+        } catch (RemoteException e) {
+            Slog.e(TAG, "unregAll() failed.", e);
+        } finally {
+            mBluetoothLock.readLock().unlock();
         }
-
+        return true;
     }
 
     public boolean enableNoAutoConnect(String packageName) {
