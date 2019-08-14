@@ -442,6 +442,16 @@ public class ConnectivityManager {
             "android.net.conn.PROMPT_PARTIAL_CONNECTIVITY";
 
     /**
+     * Action used to display a dialog that asks the user whether to stay connected to a network
+     * that has private DNS broken. This intent is used to start the dialog in settings via
+     * startActivity.
+     *
+     * @hide
+     */
+    public static final String ACTION_PROMPT_PRIVATE_DNS_BROKEN =
+            "android.net.conn.PROMPT_PRIVATE_DNS_BROKEN";
+
+    /**
      * Invalid tethering type.
      * @see #startTethering(int, boolean, OnStartTetheringCallback)
      * @hide
