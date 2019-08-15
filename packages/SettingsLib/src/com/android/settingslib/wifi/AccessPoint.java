@@ -48,10 +48,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.text.Spannable;
-import android.text.SpannableString;
+import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.style.TtsSpan;
 import android.util.ArraySet;
 import android.util.Log;
 
@@ -757,10 +755,7 @@ public class AccessPoint implements Comparable<AccessPoint> {
     }
 
     public CharSequence getSsid() {
-        final SpannableString str = new SpannableString(ssid);
-        str.setSpan(new TtsSpan.TelephoneBuilder(ssid).build(), 0, ssid.length(),
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        return str;
+        return ssid;
     }
 
     public String getConfigName() {
@@ -1248,7 +1243,14 @@ public class AccessPoint implements Comparable<AccessPoint> {
                         NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY)) {
                     return context.getString(R.string.wifi_limited_connection);
                 } else if (!nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-                    return context.getString(R.string.wifi_connected_no_internet);
+                    final String mode = Settings.Global.getString(context.getContentResolver(),
+                            Settings.Global.PRIVATE_DNS_MODE);
+                    if (TextUtils.equals(ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME,
+                            mode) && nc.isPrivateDnsBroken()) {
+                        return context.getString(R.string.wifi_private_dns_blocked);
+                    } else {
+                        return context.getString(R.string.wifi_connected_no_internet);
+                    }
                 }
             }
         }

@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +48,6 @@ import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.SpannableString;
 import android.text.format.DateUtils;
-import android.text.style.TtsSpan;
 
 import com.android.settingslib.R;
 import com.android.settingslib.utils.ThreadUtils;
@@ -104,18 +102,13 @@ public class AccessPointTest {
     }
 
     @Test
-    public void testSsidIsTelephoneSpan() {
+    public void testSsidIsSpannableString_returnFalse() {
         final Bundle bundle = new Bundle();
         bundle.putString("key_ssid", TEST_SSID);
         final AccessPoint ap = new AccessPoint(InstrumentationRegistry.getTargetContext(), bundle);
         final CharSequence ssid = ap.getSsid();
 
-        assertThat(ssid instanceof SpannableString).isTrue();
-
-        TtsSpan[] spans = ((SpannableString) ssid).getSpans(0, TEST_SSID.length(), TtsSpan.class);
-
-        assertThat(spans.length).isEqualTo(1);
-        assertThat(spans[0].getType()).isEqualTo(TtsSpan.TYPE_TELEPHONE);
+        assertThat(ssid instanceof SpannableString).isFalse();
     }
 
     @Test
