@@ -29,6 +29,7 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.PlaybackState;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -52,8 +53,8 @@ public class PipNotification {
     private final PipManager mPipManager = PipManager.getInstance();
 
     private final NotificationManager mNotificationManager;
-    private final Notification.Builder mNotificationBuilder;
 
+    private Context mContext;
     private MediaController mMediaController;
     private String mDefaultTitle;
     private int mDefaultIconResId;
@@ -61,10 +62,12 @@ public class PipNotification {
     private boolean mNotified;
     private String mTitle;
     private Bitmap mArt;
+    private int mLastUser;
 
     private PipManager.Listener mPipListener = new PipManager.Listener() {
         @Override
-        public void onPipEntered() {
+        public void onPipEntered(int userId) {
+            mLastUser = userId;
             updateMediaControllerMetadata();
             notifyPipNotification();
         }
@@ -144,16 +147,10 @@ public class PipNotification {
     };
 
     public PipNotification(Context context) {
+        mContext = context;
+        mLastUser = 0;
         mNotificationManager = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
-
-        mNotificationBuilder = new Notification.Builder(context, NotificationChannels.TVPIP)
-                .setLocalOnly(true)
-                .setOngoing(false)
-                .setCategory(Notification.CATEGORY_SYSTEM)
-                .extend(new Notification.TvExtender()
-                        .setContentIntent(createPendingIntent(context, ACTION_MENU))
-                        .setDeleteIntent(createPendingIntent(context, ACTION_CLOSE)));
 
         mPipManager.addListener(mPipListener);
         mPipManager.addMediaListener(mPipMediaListener);
@@ -181,24 +178,34 @@ public class PipNotification {
 
     private void notifyPipNotification() {
         mNotified = true;
-        mNotificationBuilder
-                .setShowWhen(true)
+
+        // Build a new notification
+        final Notification.Builder builder = new Notification.Builder(mContext,
+                NotificationChannels.TVPIP)
+                .setLocalOnly(true)
+                .setOngoing(false)
+                .setCategory(Notification.CATEGORY_SYSTEM)
+                .extend(new Notification.TvExtender()
+                        .setContentIntent(createPendingIntent(mContext, ACTION_MENU))
+                        .setDeleteIntent(createPendingIntent(mContext, ACTION_CLOSE)));
+
+        builder.setShowWhen(true)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(mDefaultIconResId)
                 .setContentTitle(!TextUtils.isEmpty(mTitle) ? mTitle : mDefaultTitle);
         if (mArt != null) {
-            mNotificationBuilder.setStyle(new Notification.BigPictureStyle()
-                    .bigPicture(mArt));
+            builder.setStyle(new Notification.BigPictureStyle().bigPicture(mArt));
         } else {
-            mNotificationBuilder.setStyle(null);
+            builder.setStyle(null);
         }
-        mNotificationManager.notify(NOTIFICATION_TAG, SystemMessage.NOTE_TV_PIP,
-                mNotificationBuilder.build());
+        mNotificationManager.notifyAsUser(NOTIFICATION_TAG, SystemMessage.NOTE_TV_PIP,
+                builder.build(), UserHandle.of(mLastUser));
     }
 
     private void dismissPipNotification() {
         mNotified = false;
-        mNotificationManager.cancel(NOTIFICATION_TAG, SystemMessage.NOTE_TV_PIP);
+        mNotificationManager.cancelAsUser(NOTIFICATION_TAG, SystemMessage.NOTE_TV_PIP,
+                UserHandle.of(mLastUser));
     }
 
     private boolean updateMediaControllerMetadata() {
