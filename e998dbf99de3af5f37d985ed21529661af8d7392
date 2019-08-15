@@ -46,6 +46,30 @@
       "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfc6c47_3ecf62a0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-15T06:22:31Z",
+      "side": 1,
+      "message": "I tend to think that in this case, consistency and code simplicity are more important than avoid this small amount of unnecessary work.\n\nI agree with you this is not necessary, but as long as it\u0027s not harmful, I think we should simply do it in all cases, even if that requires adjusting the test. If we just do this in all cases, the code gets much simpler, and calling handleInterfaceServiceStateInactive is always fine to mark the interface inactive, which I think will help future readers of the code.\n\nI don\u0027t feel extremely strongly though. Mark, do you have any opinion ? If you disagree with me I\u0027m willing to let this go.",
+      "parentUuid": "c2b5d43d_d771cea9",
+      "range": {
+        "startLine": 1331,
+        "startChar": 0,
+        "endLine": 1334,
+        "endChar": 72
+      },
+      "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
