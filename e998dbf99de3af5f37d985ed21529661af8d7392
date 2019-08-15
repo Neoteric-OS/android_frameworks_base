@@ -70,6 +70,30 @@
       "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d41523_e8678f53",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-15T07:37:53Z",
+      "side": 1,
+      "message": "Previous, I like Daichi\u0027s design. Looking the code again. Now I prefer Jean\u0027s suggestion. Not only for code simplicity. More important is that I found this change would let tethering flow be different between single downstream and multiple downstreams. See below case:\nON/OFF hotspot:\nTethering Master state machine: initial --hotspot ON:#clearTetheringDownstream()--\u003e Alive --hotspot OFF:#handleInterfaceServingStateInactive()--\u003e initial\n\nTurn ON usb tethering, then ON/OFF hotspot\n1. USB tethering ON so, state machine already going from initial to alive.\n2. Hotspot ON/OFF would be : alive --hotspot ON:#handleInterfaceServingStateInactive()--\u003e alive --hotsopt OFF:#handleInterfaceServingStateInactive--\u003e initial",
+      "parentUuid": "9dfc6c47_3ecf62a0",
+      "range": {
+        "startLine": 1331,
+        "startChar": 0,
+        "endLine": 1334,
+        "endChar": 72
+      },
+      "revId": "e998dbf99de3af5f37d985ed21529661af8d7392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
