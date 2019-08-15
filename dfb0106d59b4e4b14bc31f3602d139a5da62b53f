@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8fb0f07c_94a97182",
+        "filename": "startop/view_compiler/dex_builder_test/src/android/startop/test/ApkLayoutCompilerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-08-15T22:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3326349_69962e96",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "dfb0106d59b4e4b14bc31f3602d139a5da62b53f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69998bfc_3ee734e0",
         "filename": "startop/view_compiler/dex_builder_test/src/android/startop/test/ApkLayoutCompilerTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "dfb0106d59b4e4b14bc31f3602d139a5da62b53f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef86f8e_f7f992ac",
+        "filename": "startop/view_compiler/dex_builder_test/src/android/startop/test/ApkLayoutCompilerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-08-15T22:21:51Z",
+      "side": 1,
+      "message": "Yup. Fixed.",
+      "parentUuid": "69998bfc_3ee734e0",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "dfb0106d59b4e4b14bc31f3602d139a5da62b53f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
