@@ -244,8 +244,8 @@ java_defaults {
     },
 }
 
-// Collection of classes that are generated from non-Java files that are not listed in
-// framework_srcs. These have no or very limited dependency to the framework.
+// Dependencies (classes, java_resources etc.) that are not listed in framework_srcs.
+// These have no or very limited dependency to the framework.
 java_library {
     name: "framework-internal-utils",
     static_libs: [
@@ -278,6 +278,7 @@ java_library {
         "android.hardware.vibrator-V1.3-java",
         "android.hardware.wifi-V1.0-java-constants",
         "devicepolicyprotosnano",
+        "mimemap",
 
         "com.android.sysprop.apex",
         "PlatformProperties",
