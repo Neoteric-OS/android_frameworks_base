@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b36360d_e51a7be3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2303,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-19T12:21:16Z",
+      "side": 1,
+      "message": "Since callingPkg would always be com.android.bluetooth, this would raise exception if caller uid is same as com.android.bluetooth. Thus, this change is: only allow bluetooth and system to call this API.",
+      "range": {
+        "startLine": 2303,
+        "startChar": 65,
+        "endLine": 2303,
+        "endChar": 80
+      },
+      "revId": "16c693c57cd970923a17ccb606dd3238a7bc7326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
