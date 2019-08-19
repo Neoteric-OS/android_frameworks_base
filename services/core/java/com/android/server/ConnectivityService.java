@@ -4825,7 +4825,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Settings.Global.putInt(cr, Settings.Global.AIRPLANE_MODE_ON, encodeBool(enable));
             Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
             intent.putExtra("state", enable);
-            mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+            mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
         } finally {
             Binder.restoreCallingIdentity(ident);
         }
