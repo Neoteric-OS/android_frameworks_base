@@ -46,6 +46,30 @@
       "revId": "16c693c57cd970923a17ccb606dd3238a7bc7326",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42c4fe9_ff721ecd",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2303,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-19T12:30:32Z",
+      "side": 1,
+      "message": "(...I mean, if coming from WiFi for example)",
+      "parentUuid": "79c8f885_eb962b91",
+      "range": {
+        "startLine": 2303,
+        "startChar": 65,
+        "endLine": 2303,
+        "endChar": 80
+      },
+      "revId": "16c693c57cd970923a17ccb606dd3238a7bc7326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
