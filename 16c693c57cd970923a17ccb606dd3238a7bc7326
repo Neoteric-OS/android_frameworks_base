@@ -70,6 +70,30 @@
       "revId": "16c693c57cd970923a17ccb606dd3238a7bc7326",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e0804f_f964e035",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2303,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-19T12:48:20Z",
+      "side": 1,
+      "message": "Yes, wifi and other downstream usage would not be affected.\nI just mean if it come from bluetooth binder its calling package would always be com.android.bluetooth. Thus, setbluetoothTethering would only allowed for system and bluetooth. If there is a Paly APP uid 12345, it call setBluetoothTethering. #enforceTetherChangePermission here would reject it because its uid is not the same as bluetooth even it already have write setting permission in non entitlement supported case.",
+      "parentUuid": "c42c4fe9_ff721ecd",
+      "range": {
+        "startLine": 2303,
+        "startChar": 65,
+        "endLine": 2303,
+        "endChar": 80
+      },
+      "revId": "16c693c57cd970923a17ccb606dd3238a7bc7326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
