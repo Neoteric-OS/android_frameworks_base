@@ -1439,7 +1439,17 @@ public class AccountManagerService
 
     @Override
     public void onServiceChanged(AuthenticatorDescription desc, int userId, boolean removed) {
-        validateAccountsInternal(getUserAccounts(userId), false /* invalidateAuthenticatorCache */);
+        UserAccounts accounts = null;
+        // Race condition: userId was stopped or removed now, just bail, or we could end up in
+        // populating the acount database while the whole user data directory is being destroyed
+        synchronized (mUsers) {
+            UserAccounts accounts = mUsers.get(userId);
+            if (accounts == null) {
+                Slog.i(TAG, "onServiceChanged: user " + userId + " was removed");
+                return;
+            }
+        }
+        validateAccountsInternal(accounts, false /* invalidateAuthenticatorCache */);
     }
 
     @Override
