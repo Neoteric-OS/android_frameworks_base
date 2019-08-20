@@ -17,7 +17,6 @@
 package android.security;
 
 import android.annotation.UnsupportedAppUsage;
-import android.app.ActivityManager;
 import android.app.ActivityThread;
 import android.app.Application;
 import android.app.KeyguardManager;
@@ -44,24 +43,24 @@ import android.security.keystore.KeyExpiredException;
 import android.security.keystore.KeyNotYetValidException;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.security.keystore.KeyProtection;
 import android.security.keystore.KeystoreResponse;
-import android.security.keystore.StrongBoxUnavailableException;
 import android.security.keystore.UserNotAuthenticatedException;
 import android.util.Log;
+
 import com.android.org.bouncycastle.asn1.ASN1InputStream;
 import com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import java.math.BigInteger;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
 import sun.security.util.ObjectIdentifier;
 import sun.security.x509.AlgorithmId;
 
@@ -557,7 +556,9 @@ public class KeyStore {
         KeyCharacteristicsPromise promise = new KeyCharacteristicsPromise();
         int error = mBinder.generateKey(promise, alias, args, entropy, uid, flags);
         if (error != NO_ERROR) {
-            Log.e(TAG, "generateKeyInternal failed on request " + error);
+            if (error != KEY_ALREADY_EXISTS) {
+                Log.e(TAG, "generateKeyInternal failed on request " + error);
+            }
             return error;
         }
 
@@ -585,6 +586,9 @@ public class KeyStore {
             if (error == KEY_ALREADY_EXISTS) {
                 mBinder.del(alias, uid);
                 error = generateKeyInternal(alias, args, entropy, uid, flags, outCharacteristics);
+            }
+            if (error != NO_ERROR) {
+                Log.e(TAG, "generateKey failed with error code: " + error);
             }
             return error;
         } catch (RemoteException e) {
