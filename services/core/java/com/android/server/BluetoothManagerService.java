@@ -161,6 +161,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     // used inside handler thread
     private boolean mQuietEnable = false;
     private boolean mEnable;
+    private static boolean sInUnbindProgress = false;
 
     private static CharSequence timeToLog(long timestamp) {
         return android.text.format.DateFormat.format("MM-dd HH:mm:ss", timestamp);
@@ -1093,6 +1094,10 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     @Override
     public void unbindBluetoothProfileService(int bluetoothProfile,
             IBluetoothProfileServiceConnection proxy) {
+        if (sInUnbindProgress) {
+            return;
+        }
+
         synchronized (mProfileServices) {
             Integer profile = new Integer(bluetoothProfile);
             ProfileServiceConnections psc = mProfileServices.get(profile);
@@ -1114,6 +1119,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     private void unbindAllBluetoothProfileServices() {
         synchronized (mProfileServices) {
+            sInUnbindProgress = true;
             for (Integer i : mProfileServices.keySet()) {
                 ProfileServiceConnections psc = mProfileServices.get(i);
                 try {
@@ -1124,6 +1130,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 psc.removeAllProxies();
             }
             mProfileServices.clear();
+            sInUnbindProgress = false;
         }
     }
 

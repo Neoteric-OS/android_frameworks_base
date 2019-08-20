@@ -54,6 +54,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
     private static final String TAG = "BluetoothHeadset";
     private static final boolean DBG = true;
     private static final boolean VDBG = false;
+    private static boolean sInUnbindProgress = false;
 
     /**
      * Intent used to broadcast the change in connection state of the Headset
@@ -380,6 +381,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
 
     private void doUnbind() {
         synchronized (mConnection) {
+            sInUnbindProgress = true;
             if (mService != null) {
                 if (VDBG) Log.d(TAG, "Unbinding service...");
                 try {
@@ -391,6 +393,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
                     mService = null;
                 }
             }
+            sInUnbindProgress = false;
         }
     }
 
@@ -1166,7 +1169,11 @@ public final class BluetoothHeadset implements BluetoothProfile {
         @Override
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            doUnbind();
+                if (!sInUnbindProgress) {
+                    doUnbind();
+                } else {
+                    Log.d(TAG, "doUnbind is in progress,continue other things");
+                }
             mHandler.sendMessage(mHandler.obtainMessage(
                     MESSAGE_HEADSET_SERVICE_DISCONNECTED));
         }
