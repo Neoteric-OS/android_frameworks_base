@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a7f663_f1ba7b23",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-08-20T15:03:48Z",
+      "side": 1,
+      "message": "Nit: No reason for a javadoc comment.",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 11
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d116a0a5_c703905e",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-08-20T15:03:48Z",
+      "side": 1,
+      "message": "Maybe expand on this. Suggestion:\n\nSet the MimeMap that the core library uses to look up MIME types and file extensions. This can extend or override mappings recognized by IANA.",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 20
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f59c5e_52195c2f",
+        "filename": "mime/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-08-20T15:03:48Z",
+      "side": 1,
+      "message": "For the record: My understanding is that this is being kept separate because tobiast@ is anticipating the addition of an updateable \"mime map module\" at some point in the future.\n\nOtherwise, I would suggest the code/resources just be built into framework.jar",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
