@@ -3111,6 +3111,7 @@ package android.net {
     field public static final int TETHERING_BLUETOOTH = 2; // 0x2
     field public static final int TETHERING_USB = 1; // 0x1
     field public static final int TETHERING_WIFI = 0; // 0x0
+    field public static final int TETHER_ERROR_DNSPROXYSERVER_ERROR = 14; // 0xe
     field public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN = 13; // 0xd
     field public static final int TETHER_ERROR_NO_ERROR = 0; // 0x0
     field public static final int TETHER_ERROR_PROVISION_FAILED = 11; // 0xb

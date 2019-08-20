@@ -20,6 +20,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.Network;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
+import android.net.dnsproxy.IDnsProxyServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
 
 /** @hide */
@@ -29,4 +30,5 @@ oneway interface INetworkStackConnector {
     void makeNetworkMonitor(in Network network, String name, in INetworkMonitorCallbacks cb);
     void makeIpClient(in String ifName, in IIpClientCallbacks callbacks);
     void fetchIpMemoryStore(in IIpMemoryStoreCallbacks cb);
+    void makeDnsProxyServer(in String ifName, in IDnsProxyServerCallbacks cb);
 }

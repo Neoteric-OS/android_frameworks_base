@@ -42,6 +42,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -205,6 +206,10 @@ public class TetheringTest {
     }
 
     public class MockIpServerDependencies extends IpServer.Dependencies {
+        MockIpServerDependencies() {
+            super(null);
+        }
+
         @Override
         public RouterAdvertisementDaemon getRouterAdvertisementDaemon(
                 InterfaceParams ifParams) {
@@ -283,7 +288,7 @@ public class TetheringTest {
         }
 
         @Override
-        public IpServer.Dependencies getIpServerDependencies() {
+        public IpServer.Dependencies getIpServerDependencies(Context context) {
             return mIpServerDependencies;
         }
 
@@ -533,7 +538,8 @@ public class TetheringTest {
         verifyInterfaceServingModeStarted();
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
+        verify(mNMService, times(1)).startTetheringWithConfiguration(anyBoolean(),
+                any(String[].class));
         verifyNoMoreInteractions(mNMService);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
@@ -773,7 +779,8 @@ public class TetheringTest {
         verifyInterfaceServingModeStarted();
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
+        verify(mNMService, times(1)).startTetheringWithConfiguration(anyBoolean(),
+                any(String[].class));
         verifyNoMoreInteractions(mNMService);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
@@ -863,7 +870,8 @@ public class TetheringTest {
         // This is called, but will throw.
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
         // This never gets called because of the exception thrown above.
-        verify(mNMService, times(0)).startTethering(any(String[].class));
+        verify(mNMService, times(0)).startTetheringWithConfiguration(anyBoolean(),
+                any(String[].class));
         // When the master state machine transitions to an error state it tells
         // downstream interfaces, which causes us to tell Wi-Fi about the error
         // so it can take down AP mode.
