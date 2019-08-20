@@ -2647,6 +2647,32 @@ public class CarrierConfigManager {
             "opportunistic_network_data_switch_hysteresis_time_long";
 
     /**
+<<<<<<< HEAD   (abb938 Merge "[Bugfix]audioservice:fix voice_call default volume" i)
+=======
+     * Controls hysteresis time in milli seconds for which OpportunisticNetworkService
+     * will wait before switching data from opportunistic network to primary network.
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_EXIT_HYSTERESIS_TIME_LONG =
+            "opportunistic_network_data_switch_exit_hysteresis_time_long";
+
+    /**
+     * Controls whether to do ping test before switching data to opportunistic network.
+     * This carrier config is used to disable this feature.
+     * @hide
+     */
+    public static final String KEY_PING_TEST_BEFORE_DATA_SWITCH_BOOL =
+            "ping_test_before_data_switch_bool";
+
+    /**
+     * Controls time in milli seconds until DcTracker reevaluates 5G connection state.
+     * @hide
+     */
+    public static final String KEY_5G_WATCHDOG_TIME_MS_LONG =
+            "5g_watchdog_time_long";
+
+    /**
+>>>>>>> CHANGE (1431ab Handle 5G meteredness in telephony framework)
      * Indicates zero or more emergency number prefix(es), because some carrier requires
      * if users dial an emergency number address with a specific prefix, the combination of the
      * prefix and the address is also a valid emergency number to dial. For example, an emergency
@@ -3384,6 +3410,14 @@ public class CarrierConfigManager {
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_ENTRY_OR_EXIT_HYSTERESIS_TIME_LONG, 10000);
         /* Default value is 10 seconds. */
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_HYSTERESIS_TIME_LONG, 10000);
+<<<<<<< HEAD   (abb938 Merge "[Bugfix]audioservice:fix voice_call default volume" i)
+=======
+        /* Default value is 3 seconds. */
+        sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_EXIT_HYSTERESIS_TIME_LONG, 3000);
+        sDefaults.putBoolean(KEY_PING_TEST_BEFORE_DATA_SWITCH_BOOL, true);
+        /* Default value is 1 hour. */
+        sDefaults.putLong(KEY_5G_WATCHDOG_TIME_MS_LONG, 3600000);
+>>>>>>> CHANGE (1431ab Handle 5G meteredness in telephony framework)
         sDefaults.putAll(Gps.getDefaults());
         sDefaults.putAll(Wifi.getDefaults());
         sDefaults.putIntArray(KEY_CDMA_ENHANCED_ROAMING_INDICATOR_FOR_HOME_NETWORK_INT_ARRAY,
