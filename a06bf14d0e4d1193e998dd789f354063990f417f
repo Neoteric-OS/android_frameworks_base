@@ -16,6 +16,24 @@
       "revId": "a06bf14d0e4d1193e998dd789f354063990f417f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375a3691_9ede85c0",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-08-20T11:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d78e51b_0be6da67",
+      "revId": "a06bf14d0e4d1193e998dd789f354063990f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
