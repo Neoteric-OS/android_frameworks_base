@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfca60e_b012534e",
+        "filename": "mime/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-08-20T15:15:53Z",
+      "side": 1,
+      "message": "For the record: My understanding is that this is being kept separate because tobiast@ is anticipating the addition of an updateable \"mime map module\" at some point in the future.\n\nOtherwise, I would suggest the code/resources just be built into framework.jar\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nJeff, there\u0027s a fair amount of build infrastructure being added for a few resource files / source files on the assumption that there will be an updateable module dedicated to mimetypes some time soon. Unless there\u0027s firm plans in place I\u0027m inclined to suggest that it is left for whoever factors out modules in the future to work out the right way to slice the build rules / modules.",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "2009be87d1de84583233aaf6b53e90eb6189ffe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
