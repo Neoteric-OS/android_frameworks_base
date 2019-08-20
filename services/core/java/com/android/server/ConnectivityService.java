@@ -5387,6 +5387,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void handleRegisterNetworkFactory(NetworkFactoryInfo nfi) {
         if (DBG) log("Got NetworkFactory Messenger for " + nfi.name);
+        if (TextUtils.isEmpty(nfi.name) || nfi.messenger == null) return;
         mNetworkFactoryInfos.put(nfi.messenger, nfi);
         nfi.asyncChannel.connect(mContext, mTrackerHandler, nfi.messenger);
     }
