@@ -1091,11 +1091,16 @@ public class AccountManagerService
      * Validate internal set of accounts against installed authenticators for
      * given user. Clears cached authenticators before validating.
      */
-    public void validateAccounts(int userId) {
-        final UserAccounts accounts = getUserAccounts(userId);
+    public boolean validateAccounts(int userId) {
+        final UserAccounts accounts = getUserAccounts(userId, false);
+        if (accounts == null) {
+            Slog.w(TAG, "validateAccounts: user " + userId + " not exist");
+            return false;
+        }
         // Invalidate user-specific cache to make sure we catch any
         // removed authenticators.
         validateAccountsInternal(accounts, true /* invalidateAuthenticatorCache */);
+        return true;
     }
 
     /**
@@ -1289,8 +1294,15 @@ public class AccountManagerService
     }
 
     protected UserAccounts getUserAccounts(int userId) {
+        return getUserAccounts(userId, true);
+    }
+
+    protected UserAccounts getUserAccounts(int userId, boolean create) {
         synchronized (mUsers) {
             UserAccounts accounts = mUsers.get(userId);
+            if (!create && accounts == null) {
+                return null;
+            }
             boolean validateAccounts = false;
             if (accounts == null) {
                 File preNDbFile = new File(mInjector.getPreNDatabaseName(userId));
@@ -1415,7 +1427,14 @@ public class AccountManagerService
             mLocalUnlockedUsers.put(userId, true);
         }
         if (userId < 1) return;
-        mHandler.post(() -> syncSharedAccounts(userId));
+        mHandler.post(() -> {
+            try {
+                syncSharedAccounts(userId);
+            } catch (Exception e) {
+                // Race condition: the user might be removed
+                Slog.w(TAG, "failed to sync shared accounts for user " + userId, e);
+            }
+        });
     }
 
     private void syncSharedAccounts(int userId) {
@@ -1439,7 +1458,13 @@ public class AccountManagerService
 
     @Override
     public void onServiceChanged(AuthenticatorDescription desc, int userId, boolean removed) {
-        validateAccountsInternal(getUserAccounts(userId), false /* invalidateAuthenticatorCache */);
+        // Race condition: userId was removed
+        UserAccounts accounts = getUserAccounts(userId, false);
+        if (accounts == null) {
+            Slog.d(TAG, "onServiceChanged: user " + userId + " not exist");
+            return;
+        }
+        validateAccountsInternal(accounts, false /* invalidateAuthenticatorCache */);
     }
 
     @Override

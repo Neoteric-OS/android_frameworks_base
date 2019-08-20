@@ -1789,7 +1789,9 @@ public class SyncManager {
 
     private void onUserUnlocked(int userId) {
         // Make sure that accounts we're about to use are valid.
-        AccountManagerService.getSingleton().validateAccounts(userId);
+        if (!AccountManagerService.getSingleton().validateAccounts(userId)) {
+            return;
+        }
 
         mSyncAdapters.invalidateCache(userId);
 
