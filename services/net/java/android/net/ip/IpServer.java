@@ -22,6 +22,7 @@ import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 import static android.net.util.NetworkConstants.asByte;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
@@ -30,12 +31,15 @@ import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkStackClient;
 import android.net.RouteInfo;
 import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
 import android.net.dhcp.IDhcpServer;
+import android.net.dnsproxy.DnsProxyServerCallbacks;
+import android.net.dnsproxy.IDnsProxyServer;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
@@ -130,6 +134,10 @@ public class IpServer extends StateMachine {
     }
 
     public static class Dependencies {
+        private final Context mContext;
+        public Dependencies(Context context) {
+            mContext = context;
+        }
         public RouterAdvertisementDaemon getRouterAdvertisementDaemon(InterfaceParams ifParams) {
             return new RouterAdvertisementDaemon(ifParams);
         }
@@ -148,6 +156,31 @@ public class IpServer extends StateMachine {
         public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
                 DhcpServerCallbacks cb) {
             NetworkStackClient.getInstance().makeDhcpServer(ifName, params, cb);
+        }
+
+        /**
+         * Create a DnsProxyServer instance to be used by IpServer.
+         */
+        public void makeDnsProxyServer(String ifName, DnsProxyServerCallbacks cb) {
+            NetworkStackClient.getInstance().makeDnsProxyServer(ifName, cb);
+        }
+
+        /**
+         * Get Network by Interface set.
+         */
+        public Network getNetworkByIfaceSet(InterfaceSet ifaceSet) {
+            ConnectivityManager cm = (ConnectivityManager)
+                    mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            Network upstreamNetwork = null;
+            for (Network network : cm.getAllNetworks()) {
+                String lpIfname = cm.getLinkProperties(network).getInterfaceName();
+                for (String ifname : ifaceSet.ifnames) {
+                    if (ifname.equals(lpIfname)) {
+                        upstreamNetwork = network;
+                    }
+                }
+            }
+            return upstreamNetwork;
         }
     }
 
@@ -189,6 +222,7 @@ public class IpServer extends StateMachine {
     private final int mInterfaceType;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
+    private final boolean mUsingLegacyDnsProxy;
 
     private final Dependencies mDeps;
 
@@ -209,11 +243,14 @@ public class IpServer extends StateMachine {
     private int mDhcpServerStartIndex = 0;
     private IDhcpServer mDhcpServer;
     private RaParams mLastRaParams;
+    private int mDnsProxyServerStartIndex = 0;
+    private IDnsProxyServer mDnsProxyServer;
 
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetworkManagementService nMService, INetworkStatsService statsService,
-            Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            Callback callback, boolean usingLegacyDhcp, boolean usingLegacyDnsProxy,
+            Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
@@ -225,6 +262,7 @@ public class IpServer extends StateMachine {
         mInterfaceType = interfaceType;
         mLinkProperties = new LinkProperties();
         mUsingLegacyDhcp = usingLegacyDhcp;
+        mUsingLegacyDnsProxy = usingLegacyDnsProxy;
         mDeps = deps;
         resetLinkProperties();
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
@@ -379,6 +417,91 @@ public class IpServer extends StateMachine {
         } else {
             stopDhcp();
             return true;
+        }
+    }
+
+    private class DnsProxyServerCallbacksImpl extends DnsProxyServerCallbacks {
+        private final int mStartIndex;
+
+        private DnsProxyServerCallbacksImpl(int startIndex) {
+            mStartIndex = startIndex;
+        }
+
+        @Override
+        public void onDnsProxyServerCreated(int statusCode, IDnsProxyServer server)
+                throws RemoteException {
+            getHandler().post(() -> {
+                // We are on the handler thread: mDnsProxyServerStartIndex can be read safely.
+                if (mStartIndex != mDnsProxyServerStartIndex) {
+                    // This start request is obsolete. When the |server| binder token goes out of
+                    // scope, the garbage collector will finalize it, which causes the network
+                    // stack process garbage collector to collect the server itself.
+                    return;
+                }
+
+                if (statusCode != STATUS_SUCCESS) {
+                    mLog.e("Error obtaining DnsProxy server: " + statusCode);
+                    handleError();
+                    return;
+                }
+
+                mDnsProxyServer = server;
+                try {
+                    mDnsProxyServer.start(mDeps.getNetworkByIfaceSet(mUpstreamIfaceSet),
+                            new OnHandlerStatusCallback() {
+                                @Override
+                                public void callback(int startStatusCode) {
+                                    if (startStatusCode != STATUS_SUCCESS) {
+                                        mLog.e("Error starting DnsProxy server: "
+                                                + startStatusCode);
+                                        handleError();
+                                    }
+                                }
+                            });
+                } catch (RemoteException e) {
+                    e.rethrowFromSystemServer();
+                }
+            });
+        }
+
+        private void handleError() {
+            mLastError = ConnectivityManager.TETHER_ERROR_DNSPROXYSERVER_ERROR;
+            transitionTo(mInitialState);
+        }
+    }
+
+    private void startDnsProxy() {
+        if (mUsingLegacyDnsProxy) {
+            return;
+        }
+        mDnsProxyServerStartIndex++;
+        mDeps.makeDnsProxyServer(
+                mIfaceName, new DnsProxyServerCallbacksImpl(mDnsProxyServerStartIndex));
+    }
+
+    private void stopDnsProxy() {
+        if (mUsingLegacyDnsProxy) {
+            return;
+        }
+        // Make all previous start requests obsolete so servers are not started later
+        mDnsProxyServerStartIndex++;
+
+        if (mDnsProxyServer != null) {
+            try {
+                mDnsProxyServer.stop(new OnHandlerStatusCallback() {
+                    @Override
+                    public void callback(int statusCode) {
+                        if (statusCode != STATUS_SUCCESS) {
+                            mLog.e("Error stopping DnsProxy server: " + statusCode);
+                            mLastError = ConnectivityManager.TETHER_ERROR_DNSPROXYSERVER_ERROR;
+                            // Not much more we can do here
+                        }
+                    }
+                });
+                mDnsProxyServer = null;
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
         }
     }
 
@@ -850,12 +973,14 @@ public class IpServer extends StateMachine {
         @Override
         public void exit() {
             cleanupUpstream();
+            stopDnsProxy();
             super.exit();
         }
 
         private void cleanupUpstream() {
             if (mUpstreamIfaceSet == null) return;
 
+            stopDnsProxy();
             for (String ifname : mUpstreamIfaceSet.ifnames) cleanupUpstreamInterface(ifname);
             mUpstreamIfaceSet = null;
         }
@@ -925,6 +1050,7 @@ public class IpServer extends StateMachine {
                             return true;
                         }
                     }
+                    startDnsProxy();
                     break;
                 default:
                     return false;

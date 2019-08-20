@@ -52,6 +52,10 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+// Avoid conflict
+// TODO: fix order of this import
+import android.net.dnsproxy.IDnsProxyServerCallbacks;
+
 /**
  * Service used to communicate with the network stack, which is running in a separate module.
  * @hide
@@ -174,6 +178,21 @@ public class NetworkStackClient {
         requestConnector(connector -> {
             try {
                 connector.makeNetworkMonitor(network, name, cb);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        });
+    }
+
+    /**
+     * Create a DnsProxy server according to the specified parameters.
+     *
+     * <p>The server will be returned asynchronously through the provided callbacks.
+     */
+    public void makeDnsProxyServer(final String ifName, final IDnsProxyServerCallbacks cb) {
+        requestConnector(connector -> {
+            try {
+                connector.makeDnsProxyServer(ifName, cb);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }

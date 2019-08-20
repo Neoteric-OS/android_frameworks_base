@@ -2799,6 +2799,8 @@ public class ConnectivityManager {
     /** {@hide} */
     @SystemApi
     public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN  = 13;
+    /** {@hide} */
+    public static final int TETHER_ERROR_DNSPROXYSERVER_ERROR = 14;
 
     /**
      * Get a more detailed error code after a Tethering or Untethering

@@ -1154,11 +1154,13 @@ public class Tethering extends BaseNetworkObserver {
                     : new String[0];
             try {
                 // TODO: Find a more accurate method name (startDHCPv4()?).
-                mNMService.startTethering(dhcpRanges);
+                mNMService.startTetheringWithConfiguration(cfg.enableLegacyDnsProxyServer,
+                        dhcpRanges);
             } catch (Exception e) {
                 try {
                     mNMService.stopTethering();
-                    mNMService.startTethering(dhcpRanges);
+                    mNMService.startTetheringWithConfiguration(cfg.enableLegacyDnsProxyServer,
+                            dhcpRanges);
                 } catch (Exception ee) {
                     mLog.e(ee);
                     transitionTo(mStartTetheringErrorState);
@@ -1227,7 +1229,7 @@ public class Tethering extends BaseNetworkObserver {
                 mLog.i("Found upstream interface(s): " + ifaces);
             }
 
-            if (ifaces != null) {
+            if (ifaces != null && mConfig.enableLegacyDnsProxyServer) {
                 setDnsForwarders(ns.network, ns.linkProperties);
             }
             notifyDownstreamsOfNewUpstreamIface(ifaces);
@@ -1891,7 +1893,8 @@ public class Tethering extends BaseNetworkObserver {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
-                             mDeps.getIpServerDependencies()));
+                             mConfig.enableLegacyDnsProxyServer,
+                             mDeps.getIpServerDependencies(mContext)));
         mTetherStates.put(iface, tetherState);
         tetherState.ipServer.start();
     }

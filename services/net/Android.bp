@@ -41,6 +41,8 @@ aidl_interface {
         "java/android/net/dhcp/DhcpServingParamsParcel.aidl",
         "java/android/net/dhcp/IDhcpServer.aidl",
         "java/android/net/dhcp/IDhcpServerCallbacks.aidl",
+        "java/android/net/dnsproxy/IDnsProxyServer.aidl",
+        "java/android/net/dnsproxy/IDnsProxyServerCallbacks.aidl",
         "java/android/net/ip/IIpClient.aidl",
         "java/android/net/ip/IIpClientCallbacks.aidl",
     ],
@@ -68,7 +70,7 @@ java_library_static {
         "dnsresolver_aidl_interface-V2-java",
         "ipmemorystore-client",
         "netd_aidl_interface-java",
-        "networkstack-aidl-interfaces-V3-java",
+        "networkstack-aidl-interfaces-java",
     ],
 }
 
