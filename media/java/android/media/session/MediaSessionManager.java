@@ -75,29 +75,33 @@ public final class MediaSessionManager {
      */
     public static final int RESULT_MEDIA_KEY_HANDLED = 1;
     private final ISessionManager mService;
+    private final OnMediaKeyEventDispatchedListenerStub mOnMediaKeyEventDispatchedListenerStub =
+            new OnMediaKeyEventDispatchedListenerStub();
+    private final OnMediaKeyEventSessionChangedListenerStub
+            mOnMediaKeyEventSessionChangedListenerStub =
+            new OnMediaKeyEventSessionChangedListenerStub();
 
     private final Object mLock = new Object();
     @GuardedBy("mLock")
-    private final ArrayMap<OnActiveSessionsChangedListener, SessionsChangedWrapper> mListeners
-            = new ArrayMap<OnActiveSessionsChangedListener, SessionsChangedWrapper>();
+    private final ArrayMap<OnActiveSessionsChangedListener, SessionsChangedWrapper> mListeners =
+            new ArrayMap<OnActiveSessionsChangedListener, SessionsChangedWrapper>();
     @GuardedBy("mLock")
     private final ArrayMap<OnSession2TokensChangedListener, Session2TokensChangedWrapper>
             mSession2TokensListeners = new ArrayMap<>();
     @GuardedBy("mLock")
-    private final CallbackStub mCbStub = new CallbackStub();
+    private final Map<OnMediaKeyEventDispatchedListener, Executor>
+            mOnMediaKeyEventDispatchedListeners = new HashMap<>();
     @GuardedBy("mLock")
-    private final Map<Callback, Handler> mCallbacks = new HashMap<>();
+    private final Map<OnMediaKeyEventSessionChangedListener, Executor>
+            mMediaKeyEventSessionChangedCallbacks = new HashMap<>();
     @GuardedBy("mLock")
-    private MediaSession.Token mCurMediaButtonSession;
+    private String mCurMediaKeyEventSessionPackage;
     @GuardedBy("mLock")
-    private ComponentName mCurMediaButtonReceiver;
+    private MediaSession.Token mCurMediaKeyEventSession;
 
     private Context mContext;
     private OnVolumeKeyLongPressListenerImpl mOnVolumeKeyLongPressListener;
     private OnMediaKeyListenerImpl mOnMediaKeyListener;
-    // TODO: Remove mLegacyCallback once Bluetooth app stop calling setCallback() method.
-    @GuardedBy("mLock")
-    private Callback mLegacyCallback;
 
     /**
      * @hide
@@ -753,84 +757,118 @@ public final class MediaSessionManager {
     }
 
     /**
-     * Set a {@link Callback}.
+     * Add a {@link OnMediaKeyEventDispatchedListener}.
      *
-     * <p>System can only have a single callback, and the callback can only be set by
-     * Bluetooth service process.
-     *
-     * @param callback A {@link Callback}. {@code null} to reset.
-     * @param handler The handler on which the callback should be invoked, or {@code null}
-     *            if the callback should be invoked on the calling thread's looper.
+     * @param executor The executor on which the callback should be invoked
+     * @param listener A {@link OnMediaKeyEventDispatchedListener}.
      * @hide
      */
-    // TODO: Remove this method once Bluetooth app stop calling it.
-    public void setCallback(@Nullable Callback callback, @Nullable Handler handler) {
+    @SystemApi
+    @RequiresPermission(value = android.Manifest.permission.MEDIA_CONTENT_CONTROL)
+    public void addOnMediaKeyEventDispatchedCallback(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull OnMediaKeyEventDispatchedListener listener) {
+        if (executor == null) {
+            throw new NullPointerException("executor shouldn't be null");
+        }
+        if (listener == null) {
+            throw new NullPointerException("listener shouldn't be null");
+        }
         synchronized (mLock) {
-            if (mLegacyCallback != null) {
-                unregisterCallback(mLegacyCallback);
-            }
-            mLegacyCallback = callback;
-            if (callback != null) {
-                registerCallback(callback, handler);
+            try {
+                mOnMediaKeyEventDispatchedListeners.put(listener, executor);
+                if (mOnMediaKeyEventDispatchedListeners.size() == 1) {
+                    mService.addOnMediaKeyEventDispatchedListener(
+                            mOnMediaKeyEventDispatchedListenerStub);
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to set media key listener", e);
             }
         }
     }
 
     /**
-     * Register a {@link Callback}.
+     * Remove a {@link OnMediaKeyEventDispatchedListener}.
      *
-     * @param callback A {@link Callback}.
-     * @param handler The handler on which the callback should be invoked, or {@code null}
-     *            if the callback should be invoked on the calling thread's looper.
+     * @param listener A {@link OnMediaKeyEventDispatchedListener}.
      * @hide
      */
     @SystemApi
     @RequiresPermission(value = android.Manifest.permission.MEDIA_CONTENT_CONTROL)
-    public void registerCallback(@NonNull Callback callback, @Nullable Handler handler) {
-        if (callback == null) {
-            throw new NullPointerException("callback shouldn't be null");
+    public void removeOnMediaKeyEventDispatchedListener(
+            @NonNull OnMediaKeyEventDispatchedListener listener) {
+        if (listener == null) {
+            throw new NullPointerException("listener shouldn't be null");
         }
         synchronized (mLock) {
             try {
-                if (handler == null) {
-                    handler = new Handler();
-                }
-                mCallbacks.put(callback, handler);
-                if (mCurMediaButtonSession != null) {
-                    handler.post(() -> callback.onAddressedPlayerChanged(mCurMediaButtonSession));
-                } else if (mCurMediaButtonReceiver != null) {
-                    handler.post(() -> callback.onAddressedPlayerChanged(mCurMediaButtonReceiver));
-                }
-
-                if (mCallbacks.size() == 1) {
-                    mService.registerCallback(mCbStub);
+                mOnMediaKeyEventDispatchedListeners.remove(listener);
+                if (mOnMediaKeyEventDispatchedListeners.size() == 0) {
+                    mService.removeOnMediaKeyEventDispatchedListener(
+                            mOnMediaKeyEventDispatchedListenerStub);
                 }
             } catch (RemoteException e) {
-                Log.e(TAG, "Failed to set media key callback", e);
+                Log.e(TAG, "Failed to set media key event dispatched listener", e);
             }
         }
     }
 
     /**
-     * Unregister a {@link Callback}.
+     * Add a {@link OnMediaKeyEventDispatchedListener}.
      *
-     * @param callback A {@link Callback}.
+     * @param executor The executor on which the callback should be invoked
+     * @param listener A {@link OnMediaKeyEventSessionChangedListener}.
      * @hide
      */
     @SystemApi
     @RequiresPermission(value = android.Manifest.permission.MEDIA_CONTENT_CONTROL)
-    public void unregisterCallback(@NonNull Callback callback) {
-        if (callback == null) {
-            throw new NullPointerException("callback shouldn't be null");
+    public void addOnMediaKeyEventSessionChangedListener(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull OnMediaKeyEventSessionChangedListener listener) {
+        if (executor == null) {
+            throw new NullPointerException("executor shouldn't be null");
+        }
+        if (listener == null) {
+            throw new NullPointerException("listener shouldn't be null");
         }
         synchronized (mLock) {
             try {
-                mCallbacks.remove(callback);
-                if (mCallbacks.size() == 0) {
-                    mService.unregisterCallback(mCbStub);
+                mMediaKeyEventSessionChangedCallbacks.put(listener, executor);
+                executor.execute(
+                        () -> listener.onMediaKeyEventSessionChanged(
+                                mCurMediaKeyEventSessionPackage, mCurMediaKeyEventSession));
+                if (mMediaKeyEventSessionChangedCallbacks.size() == 1) {
+                    mService.addOnMediaKeyEventSessionChangedListener(
+                            mOnMediaKeyEventSessionChangedListenerStub);
                 }
             } catch (RemoteException e) {
-                Log.e(TAG, "Failed to set media key callback", e);
+                Log.e(TAG, "Failed to set media key listener", e);
+            }
+        }
+    }
+
+    /**
+     * Remove a {@link OnMediaKeyEventSessionChangedListener}.
+     *
+     * @param listener A {@link OnMediaKeyEventSessionChangedListener}.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(value = android.Manifest.permission.MEDIA_CONTENT_CONTROL)
+    public void removeOnMediaKeyEventSessionChangedListener(
+            @NonNull OnMediaKeyEventSessionChangedListener listener) {
+        if (listener == null) {
+            throw new NullPointerException("listener shouldn't be null");
+        }
+        synchronized (mLock) {
+            try {
+                mMediaKeyEventSessionChangedCallbacks.remove(listener);
+                if (mMediaKeyEventSessionChangedCallbacks.size() == 0) {
+                    mService.removeOnMediaKeyEventSessionChangedListener(
+                            mOnMediaKeyEventSessionChangedListenerStub);
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to set media key listener", e);
             }
         }
     }
@@ -892,54 +930,51 @@ public final class MediaSessionManager {
     }
 
     /**
-     * Callbacks for the media session service.
-     *
-     * <p>Called when a media key event is dispatched or the addressed player is changed.
-     * The addressed player is either the media session or the media button receiver that will
-     * receive media key events.
+     * Callback to receive when the media session service
      * @hide
      */
     @SystemApi
-    public static abstract class Callback {
+    public interface OnMediaKeyEventDispatchedListener {
         /**
-         * Called when a media key event is dispatched to the media session
-         * through the media session service.
+         * Called when a media key event is dispatched through the media session service. The
+         * session token can be {@link null} if the framework has sent the media key event to the
+         * media button receiver to revive the media app's playback.
+         *
+         * the session is dead when , but the framework sent
          *
          * @param event Dispatched media key event.
-         * @param sessionToken The media session's token.
+         * @param packageName Package
+         * @param sessionToken The media session's token. Can be {@code null}.
          */
-        public abstract void onMediaKeyEventDispatched(KeyEvent event,
-                MediaSession.Token sessionToken);
+        default void onMediaKeyEventDispatched(@NonNull KeyEvent event, @NonNull String packageName,
+                @NonNull MediaSession.Token sessionToken) { }
+    }
 
+    /**
+     * Callback to receive changes in the media key event session, which would receive the media key
+     * event.
+     * @hide
+     */
+    @SystemApi
+    public interface OnMediaKeyEventSessionChangedListener {
         /**
-         * Called when a media key event is dispatched to the media button receiver
-         * through the media session service.
-         * <p>MediaSessionService may broadcast key events to the media button receiver
-         * when reviving playback after the media session is released.
-         *
-         * @param event Dispatched media key event.
-         * @param mediaButtonReceiver The media button receiver.
-         */
-        public abstract void onMediaKeyEventDispatched(KeyEvent event,
-                ComponentName mediaButtonReceiver);
+         * Called when the media button session is changed to a media session.
+         * <p>
+         * MediaSession
+         * <p>
+         * Package name may be empty if it's the
+         * Session can be null
+         * Session token can be
+         * {@code null} if the media button session is unset. In that case, framework would dispatch
+         * to the latest media button session's media button receiver.
+         * <p>It would be called immediately after the {@link #onMediaKeyEventSessionChanged}.
 
-        /**
-         * Called when the addressed player is changed to a media session.
-         * <p>One of the {@ #onAddressedPlayerChanged} will be also called immediately after
-         * {@link #registerCallback} if the addressed player exists.
          *
-         * @param sessionToken The media session's token.
+         * @param packageName The package name who would receive the media key event. Can be empty.
+         * @param sessionToken The media session's token. Can be {@code null.}
          */
-        public abstract void onAddressedPlayerChanged(MediaSession.Token sessionToken);
-
-        /**
-         * Called when the addressed player is changed to the media button receiver.
-         * <p>One of the {@ #onAddressedPlayerChanged} will be also called immediately after
-         * {@link #registerCallback} if the addressed player exists.
-         *
-         * @param mediaButtonReceiver The media button receiver.
-         */
-        public abstract void onAddressedPlayerChanged(ComponentName mediaButtonReceiver);
+        default void onMediaKeyEventSessionChanged(@NonNull String packageName,
+                @Nullable MediaSession.Token sessionToken) { }
     }
 
     /**
@@ -1141,50 +1176,35 @@ public final class MediaSessionManager {
         }
     }
 
-    private final class CallbackStub extends ICallback.Stub {
+    private final class OnMediaKeyEventDispatchedListenerStub
+            extends IOnMediaKeyEventDispatchedListener.Stub {
 
         @Override
-        public void onMediaKeyEventDispatchedToMediaSession(KeyEvent event,
+        public void onMediaKeyEventDispatched(KeyEvent event, String packageName,
                 MediaSession.Token sessionToken) {
             synchronized (mLock) {
-                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
-                    e.getValue().post(
-                            () -> e.getKey().onMediaKeyEventDispatched(event, sessionToken));
+                for (Map.Entry<OnMediaKeyEventDispatchedListener, Executor> e
+                        : mOnMediaKeyEventDispatchedListeners.entrySet()) {
+                    e.getValue().execute(
+                            () -> e.getKey().onMediaKeyEventDispatched(event, packageName,
+                                    sessionToken));
                 }
             }
         }
+    }
 
+    private final class OnMediaKeyEventSessionChangedListenerStub
+            extends IOnMediaKeyEventSessionChangedListener.Stub {
         @Override
-        public void onMediaKeyEventDispatchedToMediaButtonReceiver(KeyEvent event,
-                ComponentName mediaButtonReceiver) {
+        public void onMediaKeyEventSessionChanged(String packageName,
+                MediaSession.Token sessionToken) {
             synchronized (mLock) {
-                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
-                    e.getValue().post(
-                            () -> e.getKey().onMediaKeyEventDispatched(event, mediaButtonReceiver));
-                }
-            }
-        }
-
-        @Override
-        public void onAddressedPlayerChangedToMediaSession(MediaSession.Token sessionToken) {
-            synchronized (mLock) {
-                mCurMediaButtonSession = sessionToken;
-                mCurMediaButtonReceiver = null;
-                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
-                    e.getValue().post(() -> e.getKey().onAddressedPlayerChanged(sessionToken));
-                }
-            }
-        }
-
-        @Override
-        public void onAddressedPlayerChangedToMediaButtonReceiver(
-                ComponentName mediaButtonReceiver) {
-            synchronized (mLock) {
-                mCurMediaButtonSession = null;
-                mCurMediaButtonReceiver = mediaButtonReceiver;
-                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
-                    e.getValue().post(() -> e.getKey().onAddressedPlayerChanged(
-                            mediaButtonReceiver));
+                mCurMediaKeyEventSessionPackage = packageName;
+                mCurMediaKeyEventSession = sessionToken;
+                for (Map.Entry<OnMediaKeyEventSessionChangedListener, Executor> e
+                        : mMediaKeyEventSessionChangedCallbacks.entrySet()) {
+                    e.getValue().execute(() -> e.getKey().onMediaKeyEventSessionChanged(packageName,
+                            sessionToken));
                 }
             }
         }
