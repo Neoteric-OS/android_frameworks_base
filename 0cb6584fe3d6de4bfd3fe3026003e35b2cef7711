@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8878dc19_e5aeffea",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-08-20T07:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4917ba5_35be8413",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 7
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b8ab4e_f2949cfd",
         "filename": "core/java/android/os/INetworkManagementService.aidl",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba23d01_cdcd2f36",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-08-20T07:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b8ab4e_f2949cfd",
+      "range": {
+        "startLine": 155,
+        "startChar": 14,
+        "endLine": 155,
+        "endChar": 20
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +163,54 @@
       "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fbf40d_99b61e2e",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-08-20T07:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f3444e6_31e8a803",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 83
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8b4c625_dde0a4cb",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-08-20T07:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbc80ec_92c2c68f",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 29
+      },
+      "revId": "0cb6584fe3d6de4bfd3fe3026003e35b2cef7711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
