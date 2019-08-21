@@ -41,6 +41,12 @@ enum { WHAT_RUN_REPORT = 1, WHAT_SEND_BACKLOG_TO_DROPBOX = 2 };
 #define DEFAULT_BYTES_SIZE_LIMIT (20 * 1024 * 1024)        // 20MB
 #define DEFAULT_REFACTORY_PERIOD_MS (24 * 60 * 60 * 1000)  // 1 Day
 
+// Skip these sections (for dumpstate only)
+// Skip logs (1100 - 1108) and traces (1200 - 1202) because they are already in the bug report.
+#define SKIPPED_DUMPSTATE_SECTIONS { \
+            1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, /* Logs */ \
+            1200, 1201, 1202, /* Native, hal, java traces */ }
+
 namespace android {
 namespace os {
 namespace incidentd {
@@ -237,6 +243,38 @@ Status IncidentService::reportIncidentToStream(const IncidentReportArgs& args,
     }
 
     mHandler->scheduleRunReport(new ReportRequest(args, listener, fd));
+
+    return Status::ok();
+}
+
+Status IncidentService::reportIncidentToDumpstate(const unique_fd& stream,
+        const sp<IIncidentReportStatusListener>& listener) {
+    uid_t caller = IPCThreadState::self()->getCallingUid();
+    if (caller != AID_ROOT && caller != AID_SHELL) {
+        ALOGW("Calling uid %d does not have permission: only ROOT or SHELL allowed", caller);
+        return Status::fromExceptionCode(Status::EX_SECURITY, "Only ROOT or SHELL allowed");
+    }
+
+    ALOGD("Stream incident report to dumpstate");
+    IncidentReportArgs incidentArgs;
+    // Privacy policy for dumpstate incident reports is always EXPLICIT.
+    incidentArgs.setPrivacyPolicy(PRIVACY_POLICY_EXPLICIT);
+
+    int skipped[] = SKIPPED_DUMPSTATE_SECTIONS;
+    for (const Section** section = SECTION_LIST; *section; section++) {
+        const int id = (*section)->id;
+        if (std::find(std::begin(skipped), std::end(skipped), id) == std::end(skipped)) {
+            incidentArgs.addSection(id);
+        }
+    }
+
+    // The ReportRequest takes ownership of the fd, so we need to dup it.
+    int fd = dup(stream.get());
+    if (fd < 0) {
+        return Status::fromStatusT(-errno);
+    }
+
+    mHandler->scheduleRunReport(new ReportRequest(incidentArgs, listener, fd));
 
     return Status::ok();
 }
