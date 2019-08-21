@@ -70,6 +70,30 @@
       "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6606ea26_81ba7e1f",
+        "filename": "core/java/android/provider/SettingsStringUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-08-21T08:57:28Z",
+      "side": 1,
+      "message": "Just daily use, and I\u0027m also working on dump the illegal component name string",
+      "parentUuid": "d75c6d3a_cbc29ea1",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
