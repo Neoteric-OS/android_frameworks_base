@@ -22,6 +22,30 @@
       "revId": "13b0b1a73dc5155a0d0f206f45b83cbbbbf987c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1378bb_ead82770",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2336,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-08-21T07:36:03Z",
+      "side": 0,
+      "message": "Reusing readComponentNamesFromSettingLocked and persistComponentNamesToSettingLocked simplifies the code logic, and avoid the potential illegal component name bug",
+      "parentUuid": "3d357a92_3e8dbd47",
+      "range": {
+        "startLine": 2336,
+        "startChar": 14,
+        "endLine": 2336,
+        "endChar": 33
+      },
+      "revId": "13b0b1a73dc5155a0d0f206f45b83cbbbbf987c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
