@@ -85,6 +85,9 @@ public final class MacAddress implements Parcelable {
     private static final long OUI_MASK = MacAddress.fromString("ff:ff:ff:0:0:0").mAddr;
     private static final long NIC_MASK = MacAddress.fromString("0:0:0:ff:ff:ff").mAddr;
     private static final MacAddress BASE_GOOGLE_MAC = MacAddress.fromString("da:a1:19:0:0:0");
+    /** Default wifi MAC address used for a special purpose **/
+    private static final MacAddress DEFAULT_MAC_ADDRESS =
+            MacAddress.fromString(WifiInfo.DEFAULT_MAC_ADDRESS);
 
     // Internal representation of the MAC address as a single 8 byte long.
     // The encoding scheme sets the two most significant bytes to 0. The 6 bytes of the
@@ -367,7 +370,7 @@ public final class MacAddress implements Parcelable {
         addr &= ~MULTICAST_MASK;
         MacAddress mac = new MacAddress(addr);
         // WifiInfo.DEFAULT_MAC_ADDRESS is being used for another purpose, so do not use it here.
-        if (mac.toString().equals(WifiInfo.DEFAULT_MAC_ADDRESS)) {
+        if (mac.equals(DEFAULT_MAC_ADDRESS)) {
             return createRandomUnicastAddress();
         }
         return mac;
@@ -390,10 +393,6 @@ public final class MacAddress implements Parcelable {
         addr |= LOCALLY_ASSIGNED_MASK;
         addr &= ~MULTICAST_MASK;
         MacAddress mac = new MacAddress(addr);
-        // WifiInfo.DEFAULT_MAC_ADDRESS is being used for another purpose, so do not use it here.
-        if (mac.toString().equals(WifiInfo.DEFAULT_MAC_ADDRESS)) {
-            return createRandomUnicastAddress(base, r);
-        }
         return mac;
     }
 
