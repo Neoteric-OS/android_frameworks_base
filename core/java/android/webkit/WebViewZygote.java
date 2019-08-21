@@ -53,15 +53,37 @@ public class WebViewZygote {
      * will not be started.
      */
     @GuardedBy("sLock")
+
     private static boolean sMultiprocessEnabled = false;
+
+    private static final String[] WEBVIEW_ZYGOTE_PROCESS_NAME = new String[] {
+            "webview_zygote",
+    };
 
     public static ZygoteProcess getProcess() {
         synchronized (sLock) {
-            if (sZygote != null) return sZygote;
+            //webveiw_zygote process maybe crashed in some unexpected situations, and the process
+            //is gone,but the process reference is still there in AMS, when AMS try to use it to
+            //fork a new webview_service, it will throw excetption, so we need to make sure the
+            //webview_zygote process is still alive before use it to fork a new process, if it
+            //has gone, give it a chance to restart it.
+            if (sZygote != null && isWebViewZygoteAlive()) {
+                return sZygote;
+            } else if (sZygote != null) {
+                Log.e(LOGTAG, "webview_zygote is gone, need to be restarted");
+                sZygote.close();
+                sZygote = null;
+            }
 
             connectToZygoteIfNeededLocked();
             return sZygote;
         }
+    }
+
+    private static boolean isWebViewZygoteAlive() {
+        boolean processAlive = false;
+        int[] nativePids = Process.getPidsForCommands(WEBVIEW_ZYGOTE_PROCESS_NAME);
+        return nativePids != null && nativePids.length >= 1;
     }
 
     public static String getPackageName() {
