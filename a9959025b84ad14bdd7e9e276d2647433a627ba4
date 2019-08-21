@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e7bb5692_95d6f5b7",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-08-21T15:57:46Z",
+      "side": 1,
+      "message": "Moving this to follow-up CL https://android-review.googlesource.com/c/platform/frameworks/base/+/1106507 so that I don\u0027t need to re-start Treehugger on this CL, let\u0027s have the discussion there (if Treehugger fails then I\u0027ll probably merge the CL down into this base CL).\n\nFor now, I\u0027ve used:\n\n* Replace libcore\u0027s minimal default mapping between MIME types and file\n* extensions with a mapping that\u0027s suitable for Android. Android\u0027s mapping\n* contains many more entries that are derived from IANA registrations but\n* with several customizations (extensions, overrides).",
+      "parentUuid": "a8ed0674_50224a42",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 20
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f59c5e_52195c2f",
         "filename": "mime/Android.bp",
         "patchSetId": 1
