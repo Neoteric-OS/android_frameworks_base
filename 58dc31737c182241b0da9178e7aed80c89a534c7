@@ -46,6 +46,30 @@
       "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75c6d3a_cbc29ea1",
+        "filename": "core/java/android/provider/SettingsStringUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1371409
+      },
+      "writtenOn": "2019-08-21T08:29:08Z",
+      "side": 1,
+      "message": "\u003e I think it might be more propriate that let the caller fix what they passed in\n\nAgree. Did your device hit this issue after cts tests?",
+      "parentUuid": "90cd4a93_9c12c132",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
