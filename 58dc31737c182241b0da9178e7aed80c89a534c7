@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fedd430_6ed4a093",
+        "filename": "core/java/android/provider/SettingsStringUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1371409
+      },
+      "writtenOn": "2019-08-21T07:20:07Z",
+      "side": 1,
+      "message": "I think a null checking here is a better way to resolve the issue.",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
