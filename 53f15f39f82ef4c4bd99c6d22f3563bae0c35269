@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23976069_57ae79e8",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-08-21T13:48:52Z",
+      "side": 1,
+      "message": "FYI I know that this order isn\u0027t great, but I believe it can avoid merge conflicts with downstream branches. If we care about the order (I suspect we do), then I suggest that we reorder the entries here in a separate set of CLs on internal and AOSP master.",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 18
+      },
+      "revId": "53f15f39f82ef4c4bd99c6d22f3563bae0c35269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

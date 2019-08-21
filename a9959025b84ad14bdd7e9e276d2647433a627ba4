@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00cecea1_2c536bc6",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-08-21T13:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a7f663_f1ba7b23",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 11
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d116a0a5_c703905e",
         "filename": "core/java/com/android/internal/os/RuntimeInit.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0ab91291_8a6c2459",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-08-21T13:48:52Z",
+      "side": 1,
+      "message": "How about the following sentence, which I\u0027ve now added MimeMapImpl\u0027s toplevel javadoc:\n\n * The default mapping is loaded from data files that start with some mappings\n * recognized by IANA plus some custom extensions and overrides.\n\nI\u0027d rather keep any documentation of what kind of mapping this is in MimeMapImpl.java or similar rather than here - this code here doesn\u0027t seem like it should need to care about this detail.",
+      "parentUuid": "d116a0a5_c703905e",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 20
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f59c5e_52195c2f",
         "filename": "mime/Android.bp",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3019be0_c0d65038",
+        "filename": "mime/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-08-21T13:48:52Z",
+      "side": 1,
+      "message": "My understanding is that your understanding (a) is correct, (b) has been acknowledged by Jeff.",
+      "parentUuid": "07f59c5e_52195c2f",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
