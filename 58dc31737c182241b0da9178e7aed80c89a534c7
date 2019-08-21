@@ -22,6 +22,30 @@
       "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cd4a93_9c12c132",
+        "filename": "core/java/android/provider/SettingsStringUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-08-21T07:30:10Z",
+      "side": 1,
+      "message": "Thought about it too, but that would totaly cover the mistake, right?\nI think it might be more propriate that let the caller fix what they passed in",
+      "parentUuid": "6fedd430_6ed4a093",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "58dc31737c182241b0da9178e7aed80c89a534c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
