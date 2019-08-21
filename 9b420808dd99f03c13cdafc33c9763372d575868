@@ -22,6 +22,30 @@
       "revId": "9b420808dd99f03c13cdafc33c9763372d575868",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729b68d7_2d042c48",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1478077
+      },
+      "writtenOn": "2019-08-21T14:38:24Z",
+      "side": 1,
+      "message": "Yes, Sony AMP sent \u003cInitiate ARC\u003e and \u003cSet System Audio mode\u003e [on] before system sends \u003c\u003cRequest ARC Initiation\u003e and cause CEC bus busy which will cause TV disable ARC.",
+      "parentUuid": "6dafe3f5_6e87daa8",
+      "range": {
+        "startLine": 926,
+        "startChar": 12,
+        "endLine": 927,
+        "endChar": 37
+      },
+      "revId": "9b420808dd99f03c13cdafc33c9763372d575868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
