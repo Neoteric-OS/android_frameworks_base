@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a8ed0674_50224a42",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-08-21T14:16:53Z",
+      "side": 1,
+      "message": "Personally, I think this is exactly where you want to describe what you\u0027re doing and why. This is configuring the Android runtime and where readers want to understand what is different from a bare runtime.\n\nMinimum I think you should change the comment to:\n\n\"Replace the default mapping between MIME types and file extensions.\"\n- since you are specializing the default libcore behavior to something more Androidy.\n\nMaybe add if you don\u0027t want to repeat yourself:\n\"See MimeMapImpl for details.\"",
+      "parentUuid": "0ab91291_8a6c2459",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 20
+      },
+      "revId": "a9959025b84ad14bdd7e9e276d2647433a627ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f59c5e_52195c2f",
         "filename": "mime/Android.bp",
         "patchSetId": 1
