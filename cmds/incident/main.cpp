@@ -165,6 +165,26 @@ get_dest(const char* arg)
 }
 
 // ================================================================================
+static int
+stream_output(const int read_fd, const int write_fd) {
+    while (true) {
+        uint8_t buf[4096];
+        ssize_t amt = TEMP_FAILURE_RETRY(read(read_fd, buf, sizeof(buf)));
+        if (amt < 0) {
+            break;
+        } else if (amt == 0) {
+            break;
+        }
+
+        ssize_t wamt = TEMP_FAILURE_RETRY(write(write_fd, buf, amt));
+        if (wamt != amt) {
+            return errno;
+        }
+    }
+    return 0;
+}
+
+// ================================================================================
 static void
 usage(FILE* out)
 {
@@ -175,6 +195,8 @@ usage(FILE* out)
     fprintf(out, "OPTIONS\n");
     fprintf(out, "  -b           (default) print the report to stdout (in proto format)\n");
     fprintf(out, "  -d           send the report into dropbox\n");
+    fprintf(out, "  -u           print a full report to stdout for dumpstate to zip as a bug\n");
+    fprintf(out, "               report. SECTION is ignored. Should only be called by dumpstate.\n");
     fprintf(out, "  -l           list available sections\n");
     fprintf(out, "  -p           privacy spec, LOCAL, EXPLICIT or AUTOMATIC\n");
     fprintf(out, "\n");
@@ -187,12 +209,12 @@ main(int argc, char** argv)
 {
     Status status;
     IncidentReportArgs args;
-    enum { DEST_DROPBOX, DEST_STDOUT } destination = DEST_STDOUT;
+    enum { DEST_DROPBOX, DEST_STDOUT, DEST_DUMPSTATE } destination = DEST_STDOUT;
     int dest = -1; // default
 
     // Parse the args
     int opt;
-    while ((opt = getopt(argc, argv, "bhdlp:")) != -1) {
+    while ((opt = getopt(argc, argv, "bhdlp:u")) != -1) {
         switch (opt) {
             case 'h':
                 usage(stdout);
@@ -205,6 +227,9 @@ main(int argc, char** argv)
                 break;
             case 'd':
                 destination = DEST_DROPBOX;
+                break;
+            case 'u':
+                destination = DEST_DUMPSTATE;
                 break;
             case 'p':
                 dest = get_dest(optarg);
@@ -270,16 +295,16 @@ main(int argc, char** argv)
 
         // Wait for the result and print out the data they send.
         //IPCThreadState::self()->joinThreadPool();
-
-        while (true) {
-            int amt = splice(fds[0], NULL, STDOUT_FILENO, NULL, 4096, 0);
-            fprintf(stderr, "spliced %d bytes\n", amt);
-            if (amt < 0) {
-                return errno;
-            } else if (amt == 0) {
-                return 0;
-            }
+        return stream_output(fds[0], STDOUT_FILENO);
+    } else if (destination == DEST_DUMPSTATE) {
+        // Call into the service
+        sp<StatusListener> listener(new StatusListener());
+        status = service->reportIncidentToDumpstate(writeEnd, listener);
+        if (!status.isOk()) {
+            fprintf(stderr, "reportIncident returned \"%s\"\n", status.toString8().string());
+            return 1;
         }
+        return stream_output(fds[0], STDOUT_FILENO);
     } else {
         status = service->reportIncident(args);
         if (!status.isOk()) {

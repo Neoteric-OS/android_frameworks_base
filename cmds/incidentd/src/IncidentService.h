@@ -106,6 +106,9 @@ public:
                                           const sp<IIncidentReportStatusListener>& listener,
                                           const unique_fd& stream);
 
+    virtual Status reportIncidentToDumpstate(const unique_fd& stream,
+            const sp<IIncidentReportStatusListener>& listener);
+
     virtual Status systemRunning();
 
     // Implement commands for debugging purpose.
