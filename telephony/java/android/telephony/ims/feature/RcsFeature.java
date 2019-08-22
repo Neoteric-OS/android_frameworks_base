@@ -20,9 +20,14 @@ import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
+import android.os.SystemProperties;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionManager;
 import android.telephony.ims.RcsContactUceCapability;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsRcsFeature;
@@ -374,6 +379,35 @@ public class RcsFeature extends ImsFeature {
     public RcsPresenceExchangeImplBase getPresenceExchangeImpl() {
         // Base Implementation, override to implement functionality.
         return new RcsPresenceExchangeImplBase();
+    }
+
+    /**
+     * @param slotId Which slot want to use RCS feature.
+     * @return true if the device and carrier support RCS.
+     * @hide
+     */
+    public static boolean isRcsSupported(Context context, int slotId) {
+        int[] subIds = SubscriptionManager.getSubId(slotId);
+        if (subIds != null) {
+            return isRcsSupportedByDevice() && isRcsSupportedByCarrier(context, subIds[0]);
+        }
+        return false;
+    }
+
+    private static boolean isRcsSupportedByCarrier(Context context, int subId) {
+        CarrierConfigManager configManager = context.getSystemService(CarrierConfigManager.class);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfigForSubId(subId);
+            if (b != null) {
+                return b.getBoolean(CarrierConfigManager.KEY_USE_RCS_PRESENCE_BOOL, false);
+            }
+        }
+        return true;
+    }
+
+    private static boolean isRcsSupportedByDevice() {
+        String rcsSupported = SystemProperties.get("persist.rcs.supported");
+        return "1".equals(rcsSupported);
     }
 
     /**{@inheritDoc}*/
