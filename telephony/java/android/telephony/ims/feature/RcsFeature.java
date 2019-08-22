@@ -20,9 +20,14 @@ import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
+import android.os.SystemProperties;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionManager;
 import android.telephony.ims.RcsContactUceCapability;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsRcsFeature;
@@ -32,6 +37,7 @@ import android.telephony.ims.stub.RcsPresenceExchangeImplBase;
 import android.telephony.ims.stub.RcsSipOptionsImplBase;
 import android.util.Log;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.FunctionalUtils;
 
 import java.lang.annotation.Retention;
@@ -52,6 +58,8 @@ import java.util.concurrent.Executor;
 public class RcsFeature extends ImsFeature {
 
     private static final String LOG_TAG = "RcsFeature";
+
+    private static final String CONFIG_OF_RCS_IS_SUPPORT_BY_DEVICE = "persist.rcs.supported";
 
     private static final class RcsFeatureBinder extends IImsRcsFeature.Stub {
         // Reference the outer class in order to have better test coverage metrics instead of
@@ -374,6 +382,81 @@ public class RcsFeature extends ImsFeature {
     public RcsPresenceExchangeImplBase getPresenceExchangeImpl() {
         // Base Implementation, override to implement functionality.
         return new RcsPresenceExchangeImplBase();
+    }
+
+    /**
+     * Testing interface used to mock SubscriptionManager in testing
+     * @hide
+     */
+    @VisibleForTesting
+    public interface SubscriptionManagerProxy {
+        /**
+         * Mock-able interface for {@link SubscriptionManager#getSubId(int)} used for testing.
+         */
+        int getSubId(int slotId);
+    }
+
+    /**
+     * Testing interface used to mock Systemproperty in testing
+     * @hide
+     */
+    @VisibleForTesting
+    public interface SystempropertyProxy {
+        /**
+         * Mock-able interface for {@link SystemProperties#get(String)} used for testing.
+         */
+        String getRcsConfigOfSupported();
+    }
+
+    private static SystempropertyProxy sSystempropertyProxy = new SystempropertyProxy() {
+        @Override
+        public String getRcsConfigOfSupported() {
+            String rcsSupported = SystemProperties.get(CONFIG_OF_RCS_IS_SUPPORT_BY_DEVICE);
+            return rcsSupported;
+        }
+    };
+
+    private static SubscriptionManagerProxy
+            sSubscriptionManagerProxy = new SubscriptionManagerProxy() {
+                @Override
+                public int getSubId(int slotId) {
+                    int[] subIds = SubscriptionManager.getSubId(slotId);
+                    if (subIds != null) {
+                        Log.e(LOG_TAG, "getSubId : " + subIds[0]);
+                        // This is done in all other places getSubId is used.
+                        return subIds[0];
+                    }
+                    return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+                }
+            };
+
+    /**
+     * @param slotId Which slot want to use RCS feature.
+     * @return true if the device and carrier support RCS.
+     * @hide
+     */
+    public static boolean isRcsSupported(Context context, int slotId) {
+        int subId = sSubscriptionManagerProxy.getSubId(slotId);
+        Log.e(LOG_TAG, "RCS is supported by device : " + isRcsSupportedByDevice()
+                +  "/ RCS is supported by carrier : " + isRcsSupportedByCarrier(context, subId));
+        return isRcsSupportedByDevice() && isRcsSupportedByCarrier(context, subId);
+    }
+
+    private static boolean isRcsSupportedByCarrier(Context context, int subId) {
+        CarrierConfigManager configManager =
+                (CarrierConfigManager) context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfigForSubId(subId);
+            if (b != null) {
+                return b.getBoolean(CarrierConfigManager.KEY_USE_RCS_PRESENCE_BOOL, false);
+            }
+        }
+        return true;
+    }
+
+    private static boolean isRcsSupportedByDevice() {
+        String rcsSupported = sSystempropertyProxy.getRcsConfigOfSupported();
+        return "1".equals(rcsSupported);
     }
 
     /**{@inheritDoc}*/
