@@ -19,12 +19,16 @@ package com.android.server.hdmi;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.IHdmiControlCallback;
+import android.util.Slog;
+
 
 /**
  * Feature action that handles System Audio initiated by AVR devices.
  */
 // Seq #33
 final class SystemAudioActionFromAvr extends SystemAudioAction {
+    private static final String TAG = "SystemAudioActionFromAvr";
+
     /**
      * Constructor
      *
@@ -49,7 +53,11 @@ final class SystemAudioActionFromAvr extends SystemAudioAction {
 
     private void handleSystemAudioActionFromAvr() {
         if (mTargetAudioStatus == tv().isSystemAudioActivated()) {
-            finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+            if (!tv().hasAction(SystemAudioStatusAction.class)) {
+                startAudioStatusAction();
+            } else {
+                finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+            }
             return;
         }
         if (tv().isProhibitMode()) {
@@ -65,7 +73,15 @@ final class SystemAudioActionFromAvr extends SystemAudioAction {
 
         if (mTargetAudioStatus) {
             setSystemAudioMode(true);
-            startAudioStatusAction();
+            Slog.w(TAG, "mTargetAudioStatus is on, call sendRequestShortAudioDescriptor()");
+            HdmiCecLocalDeviceTv tv = tv();
+            HdmiDeviceInfo avr = tv.getAvrDeviceInfo();
+            if (tv.isConnectedToArcPort(avr.getPhysicalAddress())
+                    && tv.isDirectConnectAddress(avr.getPhysicalAddress())) {
+                sendRequestShortAudioDescriptor();
+            } else {
+                startAudioStatusAction();
+            }
         } else {
             setSystemAudioMode(false);
             finishWithCallback(HdmiControlManager.RESULT_SUCCESS);

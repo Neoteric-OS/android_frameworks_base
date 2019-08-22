@@ -73,9 +73,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private boolean mArcEstablished = false;
 
+    private boolean mAtmosSupported = false;
+
     // Stores whether ARC feature is enabled per port.
     // True by default for all the ARC-enabled ports.
     private final SparseBooleanArray mArcFeatureEnabled = new SparseBooleanArray();
+
+
+    protected List<Byte> mAvrSupporedFormats = new ArrayList<Byte>();
 
     // Whether the System Audio Control feature is enabled or not. True by default.
     @GuardedBy("mLock")
@@ -687,6 +692,56 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Override
     @ServiceThreadOnly
+    protected boolean handleReportShortAudioDescriptor(HdmiCecMessage message) {
+           assertRunOnServiceThread();
+           // Even if TV not asked, still deal with <Report SAD> on Received
+           Slog.w(TAG, "handleReportShortAudioDescriptor");
+           byte params[] = message.getParams();
+           setShortAudioDescriptor(params);
+           return true;
+    }
+
+    void setAtmosSuppotedEnabled(int setatmos) {
+         assertRunOnServiceThread();
+         if (setatmos != 0) {
+             Slog.w(TAG, "AVR support ATMOS");
+             mAtmosSupported = true;
+         } else {
+             mAtmosSupported = false;
+         }
+         notifyAtmosSupported(mAtmosSupported);
+     }
+
+    void notifyAtmosSupported(boolean atmosenable) {
+            mService.notifyAtmosSupported(atmosenable);
+    }
+
+    void setShortAudioDescriptor(byte[] params) {
+        Slog.w(TAG, "setShortAudioDescriptor");
+        int size = params.length;
+        int num = size / 3;
+        if (num < 1 || (params.length % 3) != 0 ) {
+            return;
+        }
+
+        for (int i = 0; i < size; i++ ) {
+            Slog.i(TAG, "SAD[" + i + "]:" + params[i]);
+            mAvrSupporedFormats.add(params[i]);
+            if( i % 3 == 0 ) {
+                switch (params[i] & Constants.AUDIO_FORMAT_MASK) {
+                    case Constants.AUDIO_FORMAT_DDP:
+                        Slog.i(TAG, "AVR support DDP");
+                        setAtmosSuppotedEnabled(params[i + 2] % 2);
+                        break;
+                    default:
+                        break;
+                 }
+             }
+        }
+    }
+
+    @Override
+    @ServiceThreadOnly
     protected boolean handleTextViewOn(HdmiCecMessage message) {
         assertRunOnServiceThread();
 
@@ -817,6 +872,23 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
     }
 
+    private void sendRequestShortAudioDescriptor() {
+        mService.sendCecCommand(
+            HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(mAddress,
+                    getAvrDeviceInfo().getLogicalAddress(),
+                    new int[] { (int)Constants.AUDIO_CODEC_DD, (int)Constants.AUDIO_CODEC_DDP,
+                            (int)Constants.AUDIO_CODEC_AAC, (int)Constants.AUDIO_CODEC_DTS}),
+                    new HdmiControlService.SendMessageCallback() {
+                        @Override
+                        public void onSendCompleted(int error) {
+                            if (error != SendMessageResult.SUCCESS) {
+                                HdmiLogger.debug("Failed to send <Request Short Audio Descriptor>:"
+                                                 + error);
+                            }
+                        }
+                    });
+    }
+
     // # Seq 25
     void setSystemAudioMode(boolean on) {
         if (!isSystemAudioControlFeatureEnabled() && on) {
@@ -827,10 +899,16 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         HdmiLogger.debug("System Audio Mode change[old:%b new:%b]",
                 mService.isSystemAudioActivated(), on);
         updateAudioManagerForSystemAudio(on);
+        if (on) {
+            sendRequestShortAudioDescriptor();
+        }
         synchronized (mLock) {
             if (mService.isSystemAudioActivated() != on) {
                 mService.setSystemAudioActivated(on);
                 mService.announceSystemAudioModeChange(on);
+                if (on == false) {
+                    mAvrSupporedFormats.clear();
+                }
             }
             if (on && !mArcEstablished) {
                 startArcAction(true);
@@ -982,7 +1060,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
     }
 
-    private boolean isDirectConnectAddress(int physicalAddress) {
+    protected boolean isDirectConnectAddress(int physicalAddress) {
         return (physicalAddress & Constants.ROUTING_PATH_TOP_MASK) == physicalAddress;
     }
 
@@ -1557,6 +1635,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         if (!connected) {
             removeCecSwitches(portId);
         }
+        if (mAtmosSupported && !connected && getAvrDeviceInfo() != null &&
+                            portId == getAvrDeviceInfo().getPortId()) {
+            mAtmosSupported = false;
+            notifyAtmosSupported(false);
+        }
+
         // Tv device will have permanent HotplugDetectionAction.
         List<HotplugDetectionAction> hotplugActions = getActions(HotplugDetectionAction.class);
         if (!hotplugActions.isEmpty()) {

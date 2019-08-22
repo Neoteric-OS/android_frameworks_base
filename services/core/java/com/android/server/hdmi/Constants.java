@@ -223,6 +223,9 @@ final class Constants {
     static final int AUDIO_CODEC_WMAPRO = 0xE; // Support WMA-Pro
     static final int AUDIO_CODEC_MAX = 0xF;
 
+    static final int AUDIO_FORMAT_MASK = 0xF8;
+    static final int AUDIO_FORMAT_DDP = 0x50;
+
     @StringDef({
         AUDIO_DEVICE_ARC_IN,
         AUDIO_DEVICE_SPDIF,
@@ -402,6 +405,8 @@ final class Constants {
      */
     static final String PROPERTY_STRIP_AUDIO_TV_NO_SYSTEM_AUDIO =
         "persist.sys.hdmi.property_strip_audio_tv_no_system_audio";
+
+    static final String AVR_CAPABILITY_DDP_ATMOS = "avr_capability_ddp_atmos";
 
     static final int RECORDING_TYPE_DIGITAL_RF = 1;
     static final int RECORDING_TYPE_ANALOGUE_RF = 2;

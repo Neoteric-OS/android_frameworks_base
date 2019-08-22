@@ -1756,6 +1756,24 @@ public class HdmiControlService extends SystemService {
         }
 
         @Override
+        public byte[] getAvrSupportedAudioFormat() {
+               enforceAccessPermission();
+               HdmiCecLocalDeviceTv tv = tv();
+               if (tv == null) {
+                   return null;
+               }
+               int size = tv.mAvrSupporedFormats.size();
+               if (!tv.isSystemAudioActivated()) {
+                   return null;
+               }
+               byte[] array = new byte[size];
+               for (int i = 0; i < size; i++) {
+                    array[i] = tv.mAvrSupporedFormats.get(i);
+               }
+               return array;
+        }
+
+        @Override
         public void setInputChangeListener(final IHdmiInputChangeListener listener) {
             enforceAccessPermission();
             HdmiControlService.this.setInputChangeListener(listener);
@@ -2849,6 +2867,11 @@ public class HdmiControlService extends SystemService {
     void setCecOption(int key, boolean value) {
         assertRunOnServiceThread();
         mCecController.setOption(key, value);
+    }
+
+    @ServiceThreadOnly
+    void notifyAtmosSupported(boolean supported) {
+        HdmiControlService.this.writeBooleanSetting(Constants.AVR_CAPABILITY_DDP_ATMOS, supported);
     }
 
     @ServiceThreadOnly

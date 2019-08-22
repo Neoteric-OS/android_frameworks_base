@@ -240,6 +240,20 @@ public final class HdmiTvClient extends HdmiClient {
         }
     }
 
+    /**
+     * Get AVR supported audio format.
+     *
+     * @hide
+     */
+    public byte[] getAvrSupportedAudioFormat() {
+        try {
+            return mService.getAvrSupportedAudioFormat();
+        } catch (RemoteException e) {
+            Log.e(TAG, "getAvrSupportedAudioFormat threw exception ", e);
+            return null;
+        }
+    }
+
     private static IHdmiRecordListener getListenerWrapper(final HdmiRecordListener callback) {
         return new IHdmiRecordListener.Stub() {
             @Override
