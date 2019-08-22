@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53281355_f39b70a0",
+        "filename": "core/java/android/hardware/hdmi/IHdmiControlService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2019-08-22T14:45:57Z",
+      "side": 1,
+      "message": "APP could call this API to get AVR supported Audio format",
+      "parentUuid": "0d0ca0dc_aa4a6633",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44247737_f2e527e3",
         "filename": "services/core/java/com/android/server/hdmi/Constants.java",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "65115b34_3258a75c",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2019-08-22T14:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b75e41b2_4a761da9",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f53802_983c9b97",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 7
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "cb95e419_44d4ab5d",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2019-08-22T14:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f53802_983c9b97",
+      "range": {
+        "startLine": 1467,
+        "startChar": 15,
+        "endLine": 1467,
+        "endChar": 56
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c089c5c4_bf370442",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 7
@@ -115,6 +187,30 @@
       "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22240f40_bd43b7ee",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2019-08-22T14:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c089c5c4_bf370442",
+      "range": {
+        "startLine": 2334,
+        "startChar": 27,
+        "endLine": 2334,
+        "endChar": 62
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
