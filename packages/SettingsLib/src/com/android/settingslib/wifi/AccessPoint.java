@@ -1248,7 +1248,15 @@ public class AccessPoint implements Comparable<AccessPoint> {
                         NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY)) {
                     return context.getString(R.string.wifi_limited_connection);
                 } else if (!nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-                    return context.getString(R.string.wifi_connected_no_internet);
+                    final String mode = android.provider.Settings.Global.getString(
+                            context.getContentResolver(),
+                            android.provider.Settings.Global.PRIVATE_DNS_MODE);
+                    if (TextUtils.equals(ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME,
+                            mode) && nc.isPrivateDnsBroken()) {
+                        return context.getString(R.string.private_dns_broken);
+                    } else {
+                        return context.getString(R.string.wifi_connected_no_internet);
+                    }
                 }
             }
         }
