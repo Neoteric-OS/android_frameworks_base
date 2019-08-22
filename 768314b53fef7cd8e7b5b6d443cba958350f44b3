@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "833a63de_2170d677",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-08-22T17:47:05Z",
+      "side": 1,
+      "message": "This is not fixed. tv could be null and cause null ptr exception",
+      "parentUuid": "cb95e419_44d4ab5d",
+      "range": {
+        "startLine": 1467,
+        "startChar": 15,
+        "endLine": 1467,
+        "endChar": 56
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c089c5c4_bf370442",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 7
@@ -235,6 +259,30 @@
       "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64938c04_a6c6c25d",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-08-22T17:47:05Z",
+      "side": 1,
+      "message": "Not seems done in patch 9",
+      "parentUuid": "22240f40_bd43b7ee",
+      "range": {
+        "startLine": 2334,
+        "startChar": 27,
+        "endLine": 2334,
+        "endChar": 62
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
