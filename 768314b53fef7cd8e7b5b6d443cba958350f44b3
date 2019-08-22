@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b69dd787_3f6735a9",
+        "filename": "core/java/android/hardware/hdmi/IHdmiControlService.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2019-08-22T14:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53281355_f39b70a0",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "768314b53fef7cd8e7b5b6d443cba958350f44b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44247737_f2e527e3",
         "filename": "services/core/java/com/android/server/hdmi/Constants.java",
         "patchSetId": 7
