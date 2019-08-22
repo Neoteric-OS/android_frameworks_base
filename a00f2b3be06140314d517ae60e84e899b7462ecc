@@ -22,6 +22,30 @@
       "revId": "a00f2b3be06140314d517ae60e84e899b7462ecc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68c0e4f_42560fff",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/SmsEnvelope.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-22T23:56:13Z",
+      "side": 1,
+      "message": "No. I\u0027v nerver seen other carriers which use this CT specific ID yet.",
+      "parentUuid": "6a1f3b06_54b3a72a",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 46
+      },
+      "revId": "a00f2b3be06140314d517ae60e84e899b7462ecc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
