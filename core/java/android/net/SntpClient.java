@@ -25,6 +25,7 @@ import com.android.internal.util.TrafficStatsConstants;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 
 /**
@@ -88,15 +89,17 @@ public class SntpClient {
      */
     public boolean requestTime(String host, int timeout, Network network) {
         final Network networkForResolv = network.getPrivateDnsBypassingCopy();
-        InetAddress address = null;
         try {
-            address = networkForResolv.getByName(host);
-        } catch (Exception e) {
-            EventLogTags.writeNtpFailure(host, e.toString());
-            if (DBG) Log.d(TAG, "request time failed: " + e);
-            return false;
+            InetAddress[] addresses = networkForResolv.getAllByName(host);
+            for (int i = 0; i < addresses.length; i++) {
+                if (requestTime(addresses[i], NTP_PORT, timeout, network)) return true;
+            }
+        } catch (UnknownHostException e) {
+            Log.w(TAG, "Unknown host: " + host);
         }
-        return requestTime(address, NTP_PORT, timeout, networkForResolv);
+
+        if (DBG) Log.d(TAG, "request time failed");
+        return false;
     }
 
     public boolean requestTime(InetAddress address, int port, int timeout, Network network) {
@@ -127,6 +130,13 @@ public class SntpClient {
             socket.receive(response);
             final long responseTicks = SystemClock.elapsedRealtime();
             final long responseTime = requestTime + (responseTicks - requestTicks);
+
+            // check reference timestamp
+            if (!isClockSynchronized(buffer)) {
+                Log.w(TAG, "NTP server(" + address.toString()
+                        + ")'s clock has not been synchronized.");
+                return false;
+            }
 
             // extract the results
             final byte leap = (byte) ((buffer[0] >> 6) & 0x3);
@@ -180,6 +190,12 @@ public class SntpClient {
     public boolean requestTime(String host, int timeout) {
         Log.w(TAG, "Shame on you for calling the hidden API requestTime()!");
         return false;
+    }
+
+    private boolean isClockSynchronized(byte[] buffer) {
+        // Returns error if the reference timestamp buffer is 0.
+        return read32(buffer, REFERENCE_TIME_OFFSET) != 0L
+                || read32(buffer, REFERENCE_TIME_OFFSET + 4) != 0L;
     }
 
     /**
