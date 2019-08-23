@@ -19,7 +19,7 @@ package com.android.server.timedetector;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.AlarmManager;
-import android.app.timedetector.TimeSignal;
+import android.app.timedetector.NitzTimeSignal;
 import android.content.Intent;
 import android.util.Slog;
 import android.util.TimestampedValue;
@@ -65,15 +65,10 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
     }
 
     @Override
-    public void suggestTime(@NonNull TimeSignal timeSignal) {
-        if (!TimeSignal.SOURCE_ID_NITZ.equals(timeSignal.getSourceId())) {
-            Slog.w(TAG, "Ignoring signal from unsupported source: " + timeSignal);
-            return;
-        }
-
+    public void suggestNitzTime(@NonNull NitzTimeSignal nitzTimeSignal) {
         // NITZ logic
 
-        TimestampedValue<Long> newNitzUtcTime = timeSignal.getUtcTime();
+        TimestampedValue<Long> newNitzUtcTime = nitzTimeSignal.getUtcTime();
         boolean nitzTimeIsValid = validateNewNitzTime(newNitzUtcTime, mLastNitzTime);
         if (!nitzTimeIsValid) {
             return;
@@ -86,8 +81,7 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
 
         // Historically, Android has sent a telephony broadcast only when setting the time using
         // NITZ.
-        final boolean sendNetworkBroadcast =
-                TimeSignal.SOURCE_ID_NITZ.equals(timeSignal.getSourceId());
+        final boolean sendNetworkBroadcast = true;
 
         final TimestampedValue<Long> newUtcTime = newNitzUtcTime;
         setSystemClockIfRequired(newUtcTime, sendNetworkBroadcast);

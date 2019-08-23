@@ -41,16 +41,16 @@ public final class TimeDetector {
     }
 
     /**
-     * Suggests the current time to the detector. The detector may ignore the signal if better
-     * signals are available such as those that come from more reliable sources or were
-     * determined more recently.
+     * Suggests the current time to the detector from an NITZ source. The detector may ignore the
+     * signal if better signals are available such as those that come from more reliable sources or
+     * were determined more recently.
      */
-    public void suggestTime(@NonNull TimeSignal timeSignal) {
+    public void suggestNitzTime(@NonNull NitzTimeSignal nitzTimeSignal) {
         if (DEBUG) {
-            Log.d(TAG, "suggestTime called: " + timeSignal);
+            Log.d(TAG, "suggestNitzTime called: " + nitzTimeSignal);
         }
         try {
-            mITimeDetectorService.suggestTime(timeSignal);
+            mITimeDetectorService.suggestNitzTime(nitzTimeSignal);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

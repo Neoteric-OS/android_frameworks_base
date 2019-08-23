@@ -24,41 +24,39 @@ import android.util.TimestampedValue;
 import java.util.Objects;
 
 /**
- * A time signal from a named source. The value consists of the number of milliseconds elapsed since
+ * A time signal from NITZ. The value consists of the number of milliseconds elapsed since
  * 1/1/1970 00:00:00 UTC and the time according to the elapsed realtime clock when that number was
  * established. The elapsed realtime clock is considered accurate but volatile, so time signals
  * must not be persisted across device resets.
  *
  * @hide
  */
-public final class TimeSignal implements Parcelable {
+public final class NitzTimeSignal implements Parcelable {
 
-    public static final Parcelable.Creator<TimeSignal> CREATOR =
-            new Parcelable.Creator<TimeSignal>() {
-                public TimeSignal createFromParcel(Parcel in) {
-                    return TimeSignal.createFromParcel(in);
+    public static final Parcelable.Creator<NitzTimeSignal> CREATOR =
+            new Parcelable.Creator<NitzTimeSignal>() {
+                public NitzTimeSignal createFromParcel(Parcel in) {
+                    return NitzTimeSignal.createFromParcel(in);
                 }
 
-                public TimeSignal[] newArray(int size) {
-                    return new TimeSignal[size];
+                public NitzTimeSignal[] newArray(int size) {
+                    return new NitzTimeSignal[size];
                 }
             };
 
-    public static final String SOURCE_ID_NITZ = "nitz";
-
-    private final String mSourceId;
+    private final String mNitzDebugString;
     private final TimestampedValue<Long> mUtcTime;
 
-    public TimeSignal(String sourceId, TimestampedValue<Long> utcTime) {
-        mSourceId = Objects.requireNonNull(sourceId);
+    public NitzTimeSignal(String nitzDebugString, TimestampedValue<Long> utcTime) {
+        mNitzDebugString = Objects.requireNonNull(nitzDebugString);
         mUtcTime = Objects.requireNonNull(utcTime);
     }
 
-    private static TimeSignal createFromParcel(Parcel in) {
-        String sourceId = in.readString();
+    private static NitzTimeSignal createFromParcel(Parcel in) {
+        String nitzDebugString = in.readString();
         TimestampedValue<Long> utcTime =
                 TimestampedValue.readFromParcel(in, null /* classLoader */, Long.class);
-        return new TimeSignal(sourceId, utcTime);
+        return new NitzTimeSignal(nitzDebugString, utcTime);
     }
 
     @Override
@@ -68,13 +66,13 @@ public final class TimeSignal implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(mSourceId);
+        dest.writeString(mNitzDebugString);
         TimestampedValue.writeToParcel(dest, mUtcTime);
     }
 
     @NonNull
-    public String getSourceId() {
-        return mSourceId;
+    public String getNitzDebugString() {
+        return mNitzDebugString;
     }
 
     @NonNull
@@ -90,20 +88,20 @@ public final class TimeSignal implements Parcelable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TimeSignal that = (TimeSignal) o;
-        return Objects.equals(mSourceId, that.mSourceId)
+        NitzTimeSignal that = (NitzTimeSignal) o;
+        return Objects.equals(mNitzDebugString, that.mNitzDebugString)
                 && Objects.equals(mUtcTime, that.mUtcTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mSourceId, mUtcTime);
+        return Objects.hash(mNitzDebugString, mUtcTime);
     }
 
     @Override
     public String toString() {
         return "TimeSignal{"
-                + "mSourceId='" + mSourceId + '\''
+                + "mNitzDebugString='" + mNitzDebugString + '\''
                 + ", mUtcTime=" + mUtcTime
                 + '}';
     }

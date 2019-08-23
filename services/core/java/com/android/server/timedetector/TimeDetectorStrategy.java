@@ -18,7 +18,7 @@ package com.android.server.timedetector;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.app.timedetector.TimeSignal;
+import android.app.timedetector.NitzTimeSignal;
 import android.content.Intent;
 import android.util.TimestampedValue;
 
@@ -71,8 +71,8 @@ public interface TimeDetectorStrategy {
     /** Initialize the strategy. */
     void initialize(@NonNull Callback callback);
 
-    /** Process the suggested time. */
-    void suggestTime(@NonNull TimeSignal timeSignal);
+    /** Process the suggested time from NITZ. */
+    void suggestNitzTime(@NonNull NitzTimeSignal nitzTimeSignal);
 
     /** Handle the auto-time setting being toggled on or off. */
     void handleAutoTimeDetectionToggle(boolean enabled);
