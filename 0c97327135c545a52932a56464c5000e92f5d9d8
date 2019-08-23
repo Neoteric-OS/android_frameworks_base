@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29fe7901_1c3fbe9d",
+        "filename": "core/java/android/content/pm/PackageManagerInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-08-23T20:59:10Z",
+      "side": 1,
+      "message": "revert",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "0c97327135c545a52932a56464c5000e92f5d9d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
