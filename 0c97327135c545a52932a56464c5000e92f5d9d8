@@ -22,6 +22,30 @@
       "revId": "0c97327135c545a52932a56464c5000e92f5d9d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b7ec14_ce9b5ac0",
+        "filename": "core/java/android/content/pm/PackageManagerInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-26T00:31:41Z",
+      "side": 1,
+      "message": "I reverted the changes to this file in the other CL and moved them to this CL.\n\n(I assume that\u0027s what you mean by \"revert\" here.)",
+      "parentUuid": "29fe7901_1c3fbe9d",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "0c97327135c545a52932a56464c5000e92f5d9d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
