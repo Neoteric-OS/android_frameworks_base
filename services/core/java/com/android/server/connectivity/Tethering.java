@@ -201,6 +201,25 @@ public class Tethering extends BaseNetworkObserver {
     // True iff. WiFi tethering should be started when soft AP is ready.
     private boolean mWifiTetherRequested;
     private Network mTetherUpstream;
+    private final static int[] CONNECTED_DEVICE_ICON_ARRAY = {
+            com.android.internal.R.drawable.hotspot_ic_stat_notify,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_1,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_2,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_3,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_4,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_5,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_6,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_7,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_8,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_9,
+            com.android.internal.R.drawable.hotspot_ic_stat_notify_shared_10
+    };
+    private int noOfDevCon = -1;
+    private static final String AP_STA_CHANGES = "com.android.server.wifi.AP_STA_CHANGES";
+
+    private boolean wifiTethered = false;
+    private boolean usbTethered = false;
+    private boolean bluetoothTethered = false;
 
     public Tethering(Context context, INetworkManagementService nmService,
             INetworkStatsService statsService, INetworkPolicyManager policyManager,
@@ -290,6 +309,7 @@ public class Tethering extends BaseNetworkObserver {
         filter.addAction(CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+        filter.addAction(AP_STA_CHANGES);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
 
         filter = new IntentFilter();
@@ -539,9 +559,9 @@ public class Tethering extends BaseNetworkObserver {
         final ArrayList<String> localOnlyList = new ArrayList<>();
         final ArrayList<String> erroredList = new ArrayList<>();
 
-        boolean wifiTethered = false;
-        boolean usbTethered = false;
-        boolean bluetoothTethered = false;
+        wifiTethered = false;
+        usbTethered = false;
+        bluetoothTethered = false;
 
         final TetheringConfiguration cfg = mConfig;
 
@@ -584,21 +604,38 @@ public class Tethering extends BaseNetworkObserver {
                     "error", TextUtils.join(",", erroredList)));
         }
 
+        showDefaultNotification();
+    }
+
+    private void showDefaultNotification() {
+
         if (usbTethered) {
             if (wifiTethered || bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_general,
+                        com.android.internal.R.string.tethered_multiple_active_title,
+                                com.android.internal.R.string.tethered_notification_message);
             } else {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
+                showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_usb,
+                        com.android.internal.R.string.tethered_usb_only_active_title,
+                                com.android.internal.R.string.tethered_notification_message);
             }
         } else if (wifiTethered) {
             if (bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_general,
+                        com.android.internal.R.string.tethered_multiple_active_title,
+                                com.android.internal.R.string.tethered_notification_message);
+            } else {
+                showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_wifi,
+                        com.android.internal.R.string.tethered_hotspot_only_active_title,
+                                com.android.internal.R.string.tethered_notification_message);
             } else {
                 /* We now have a status bar icon for WifiTethering, so drop the notification */
                 clearTetheredNotification();
             }
         } else if (bluetoothTethered) {
-            showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
+            showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_bluetooth,
+                    com.android.internal.R.string.tethered_bluetooth_only_active_title,
+                            com.android.internal.R.string.tethered_notification_message);
         } else {
             clearTetheredNotification();
         }
@@ -610,11 +647,6 @@ public class Tethering extends BaseNetworkObserver {
 
     @VisibleForTesting
     protected void showTetheredNotification(int id, boolean tetheringOn) {
-        NotificationManager notificationManager =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager == null) {
-            return;
-        }
         int icon = 0;
         switch(id) {
           case SystemMessage.NOTE_TETHER_USB:
@@ -627,6 +659,34 @@ public class Tethering extends BaseNetworkObserver {
           default:
             icon = com.android.internal.R.drawable.stat_sys_tether_general;
             break;
+        }
+        int titleId;
+        int messageId;
+        if (tetheringOn) {
+            titleId = com.android.internal.R.string.tethered_notification_title;
+            messageId = com.android.internal.R.string.tethered_notification_message;
+        } else {
+            titleId = com.android.internal.R.string.disable_tether_notification_title;
+            messageId = com.android.internal.R.string.disable_tether_notification_message;
+        }
+        showTetheredNotification(icon, titleId, messageId);
+    }
+
+    private void showTetheredNotification(int icon, int titleId, int messageId) {
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            return;
+        }
+
+        if (wifiTethered && !usbTethered) {
+            noOfDevCon = ((WifiManager)mContext.getSystemService(Context.WIFI_SERVICE))
+                    .getConnectedDevList().size();
+            if (noOfDevCon < CONNECTED_DEVICE_ICON_ARRAY.length){
+                icon = CONNECTED_DEVICE_ICON_ARRAY[noOfDevCon];
+            }else{
+                icon = com.android.internal.R.drawable.stat_sys_tether_wifi;
+            }
         }
 
         if (mLastNotificationId != 0) {
@@ -646,15 +706,18 @@ public class Tethering extends BaseNetworkObserver {
                 null, UserHandle.CURRENT);
 
         Resources r = Resources.getSystem();
-        final CharSequence title;
-        final CharSequence message;
+        CharSequence title = r.getText(titleId);
+        CharSequence message = r.getText(messageId);
 
-        if (tetheringOn) {
-            title = r.getText(com.android.internal.R.string.tethered_notification_title);
-            message = r.getText(com.android.internal.R.string.tethered_notification_message);
-        } else {
-            title = r.getText(com.android.internal.R.string.disable_tether_notification_title);
-            message = r.getText(com.android.internal.R.string.disable_tether_notification_message);
+        if (wifiTethered && !usbTethered
+                    && noOfDevCon >0) {
+            if(noOfDevCon == 1) {
+                message = String.format(mContext.getResources()
+                    .getString(com.android.internal.R.string.oneDevConn), noOfDevCon);
+            } else {
+                message = String.format(mContext.getResources()
+                    .getString(com.android.internal.R.string.numDevConn), noOfDevCon);
+            }
         }
 
         if (mTetheredNotificationBuilder == null) {
@@ -671,7 +734,7 @@ public class Tethering extends BaseNetworkObserver {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pi);
-        mLastNotificationId = id;
+        mLastNotificationId = icon;
 
         notificationManager.notifyAsUser(null, mLastNotificationId,
                 mTetheredNotificationBuilder.buildInto(new Notification()), UserHandle.ALL);
@@ -703,6 +766,8 @@ public class Tethering extends BaseNetworkObserver {
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 mLog.log("OBSERVED configuration changed");
                 updateConfiguration();
+            else if (action.equals(AP_STA_CHANGES)) {
+                 showDefaultNotification();
             }
         }
 
