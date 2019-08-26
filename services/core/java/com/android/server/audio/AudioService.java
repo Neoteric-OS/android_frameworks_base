@@ -868,7 +868,12 @@ public class AudioService extends IAudioService.Stub
 
         if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_HDMI_CEC)) {
             synchronized (mHdmiClientLock) {
+                mHdmiCecSink = false;
                 mHdmiManager = mContext.getSystemService(HdmiControlManager.class);
+                if (mHdmiManager != null) {
+                    mHdmiManager.addHdmiControlStatusChangeListener(
+                        mHdmiControlStatusChangeListenerCallback);
+                }
                 mHdmiTvClient = mHdmiManager.getTvClient();
                 if (mHdmiTvClient != null) {
                     mFixedVolumeDevices &= ~AudioSystem.DEVICE_ALL_HDMI_SYSTEM_AUDIO_AND_SPEAKER;
@@ -879,7 +884,6 @@ public class AudioService extends IAudioService.Stub
                     mFixedVolumeDevices &= ~AudioSystem.DEVICE_OUT_HDMI;
                     mFullVolumeDevices |= AudioSystem.DEVICE_OUT_HDMI;
                 }
-                mHdmiCecSink = false;
                 mHdmiAudioSystemClient = mHdmiManager.getAudioSystemClient();
             }
         }
@@ -5603,6 +5607,202 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    private void updateAudioRoutes(int device, int state)
+    {
+        int connType = 0;
+
+        if (device == AudioSystem.DEVICE_OUT_WIRED_HEADSET) {
+            connType = AudioRoutesInfo.MAIN_HEADSET;
+        } else if (device == AudioSystem.DEVICE_OUT_WIRED_HEADPHONE ||
+                   device == AudioSystem.DEVICE_OUT_LINE) {
+            connType = AudioRoutesInfo.MAIN_HEADPHONES;
+        } else if (device == AudioSystem.DEVICE_OUT_HDMI ||
+                device == AudioSystem.DEVICE_OUT_HDMI_ARC) {
+            connType = AudioRoutesInfo.MAIN_HDMI;
+        } else if (device == AudioSystem.DEVICE_OUT_USB_DEVICE||
+                device == AudioSystem.DEVICE_OUT_USB_HEADSET) {
+            connType = AudioRoutesInfo.MAIN_USB;
+        }
+
+        synchronized (mCurAudioRoutes) {
+            if (connType != 0) {
+                int newConn = mCurAudioRoutes.mainType;
+                if (state != 0) {
+                    newConn |= connType;
+                } else {
+                    newConn &= ~connType;
+                }
+                if (newConn != mCurAudioRoutes.mainType) {
+                    mCurAudioRoutes.mainType = newConn;
+                    sendMsg(mAudioHandler, MSG_REPORT_NEW_ROUTES,
+                            SENDMSG_NOOP, 0, 0, null, 0);
+                }
+            }
+        }
+    }
+
+    private void sendDeviceConnectionIntent(int device, int state, String address,
+            String deviceName) {
+        if (DEBUG_DEVICES) {
+            Slog.i(TAG, "sendDeviceConnectionIntent(dev:0x" + Integer.toHexString(device) +
+                    " state:0x" + Integer.toHexString(state) + " address:" + address +
+                    " name:" + deviceName + ");");
+        }
+        Intent intent = new Intent();
+
+        if (device == AudioSystem.DEVICE_OUT_WIRED_HEADSET) {
+            intent.setAction(Intent.ACTION_HEADSET_PLUG);
+            intent.putExtra("microphone", 1);
+        } else if (device == AudioSystem.DEVICE_OUT_WIRED_HEADPHONE ||
+                   device == AudioSystem.DEVICE_OUT_LINE) {
+            intent.setAction(Intent.ACTION_HEADSET_PLUG);
+            intent.putExtra("microphone",  0);
+        } else if (device == AudioSystem.DEVICE_OUT_USB_HEADSET) {
+            intent.setAction(Intent.ACTION_HEADSET_PLUG);
+            intent.putExtra("microphone",
+                    AudioSystem.getDeviceConnectionState(AudioSystem.DEVICE_IN_USB_HEADSET, "")
+                        == AudioSystem.DEVICE_STATE_AVAILABLE ? 1 : 0);
+        } else if (device == AudioSystem.DEVICE_IN_USB_HEADSET) {
+            if (AudioSystem.getDeviceConnectionState(AudioSystem.DEVICE_OUT_USB_HEADSET, "")
+                    == AudioSystem.DEVICE_STATE_AVAILABLE) {
+                intent.setAction(Intent.ACTION_HEADSET_PLUG);
+                intent.putExtra("microphone", 1);
+            } else {
+                // do not send ACTION_HEADSET_PLUG when only the input side is seen as changing
+                return;
+            }
+        } else if (device == AudioSystem.DEVICE_OUT_HDMI ||
+                device == AudioSystem.DEVICE_OUT_HDMI_ARC) {
+            configureHdmiPlugIntent(intent, state);
+        }
+
+        if (intent.getAction() == null) {
+            return;
+        }
+
+        intent.putExtra(CONNECT_INTENT_KEY_STATE, state);
+        intent.putExtra(CONNECT_INTENT_KEY_ADDRESS, address);
+        intent.putExtra(CONNECT_INTENT_KEY_PORT_NAME, deviceName);
+
+        intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            ActivityManager.broadcastStickyIntent(intent, UserHandle.USER_ALL);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    private static final int DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG =
+            AudioSystem.DEVICE_OUT_WIRED_HEADSET | AudioSystem.DEVICE_OUT_WIRED_HEADPHONE |
+            AudioSystem.DEVICE_OUT_LINE |
+            AudioSystem.DEVICE_OUT_ALL_USB;
+
+    private void onSetWiredDeviceConnectionState(int device, int state, String address,
+            String deviceName, String caller) {
+        if (DEBUG_DEVICES) {
+            Slog.i(TAG, "onSetWiredDeviceConnectionState(dev:" + Integer.toHexString(device)
+                    + " state:" + Integer.toHexString(state)
+                    + " address:" + address
+                    + " deviceName:" + deviceName
+                    + " caller: " + caller + ");");
+        }
+
+        synchronized (mConnectedDevices) {
+            if ((state == 0) && ((device & DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG) != 0)) {
+                setBluetoothA2dpOnInt(true, "onSetWiredDeviceConnectionState state 0");
+            }
+
+            if (!handleDeviceConnection(state == 1, device, address, deviceName)) {
+                // change of connection state failed, bailout
+                return;
+            }
+            if (state != 0) {
+                if ((device & DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG) != 0) {
+                    setBluetoothA2dpOnInt(false, "onSetWiredDeviceConnectionState state not 0");
+                }
+                if ((device & mSafeMediaVolumeDevices) != 0) {
+                    sendMsg(mAudioHandler,
+                            MSG_CHECK_MUSIC_ACTIVE,
+                            SENDMSG_REPLACE,
+                            0,
+                            0,
+                            caller,
+                            MUSIC_ACTIVE_POLL_PERIOD_MS);
+                }
+                if ((device & AudioSystem.DEVICE_OUT_HDMI) != 0) {
+                    checkAddAllFixedVolumeDevices(AudioSystem.DEVICE_OUT_HDMI,
+                            "onSetWiredDeviceConnectionState");
+                    // Television devices without CEC service apply software volume on HDMI output
+                    if (isPlatformTelevision()) {
+                        synchronized (mHdmiClientLock) {
+                            if (mHdmiManager != null && mHdmiPlaybackClient != null) {
+                                updateHdmiCecSinkLocked(mHdmiCecSink | false);
+                            }
+                        }
+                    }
+                    sendEnabledSurroundFormats(mContentResolver, true);
+                }
+            } else {
+                if (isPlatformTelevision() && ((device & AudioSystem.DEVICE_OUT_HDMI) != 0)) {
+                    synchronized (mHdmiClientLock) {
+                        if (mHdmiManager != null) {
+                            updateHdmiCecSinkLocked(mHdmiCecSink | false);
+                        }
+                    }
+                }
+            }
+            sendDeviceConnectionIntent(device, state, address, deviceName);
+            updateAudioRoutes(device, state);
+        }
+    }
+
+    private void configureHdmiPlugIntent(Intent intent, int state) {
+        intent.setAction(AudioManager.ACTION_HDMI_AUDIO_PLUG);
+        intent.putExtra(AudioManager.EXTRA_AUDIO_PLUG_STATE, state);
+        if (state == 1) {
+            ArrayList<AudioPort> ports = new ArrayList<AudioPort>();
+            int[] portGeneration = new int[1];
+            int status = AudioSystem.listAudioPorts(ports, portGeneration);
+            if (status == AudioManager.SUCCESS) {
+                for (AudioPort port : ports) {
+                    if (port instanceof AudioDevicePort) {
+                        final AudioDevicePort devicePort = (AudioDevicePort) port;
+                        if (devicePort.type() == AudioManager.DEVICE_OUT_HDMI ||
+                                devicePort.type() == AudioManager.DEVICE_OUT_HDMI_ARC) {
+                            // format the list of supported encodings
+                            int[] formats = AudioFormat.filterPublicFormats(devicePort.formats());
+                            if (formats.length > 0) {
+                                ArrayList<Integer> encodingList = new ArrayList(1);
+                                for (int format : formats) {
+                                    // a format in the list can be 0, skip it
+                                    if (format != AudioFormat.ENCODING_INVALID) {
+                                        encodingList.add(format);
+                                    }
+                                }
+                                int[] encodingArray = new int[encodingList.size()];
+                                for (int i = 0 ; i < encodingArray.length ; i++) {
+                                    encodingArray[i] = encodingList.get(i);
+                                }
+                                intent.putExtra(AudioManager.EXTRA_ENCODINGS, encodingArray);
+                            }
+                            // find the maximum supported number of channels
+                            int maxChannels = 0;
+                            for (int mask : devicePort.channelMasks()) {
+                                int channelCount = AudioFormat.channelCountFromOutChannelMask(mask);
+                                if (channelCount > maxChannels) {
+                                    maxChannels = channelCount;
+                                }
+                            }
+                            intent.putExtra(AudioManager.EXTRA_MAX_CHANNEL_COUNT, maxChannels);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Receiver for misc intent broadcasts the Phone app cares about.
      */
@@ -6144,31 +6344,36 @@ public class AudioService extends IAudioService.Stub
     //     are transformed into key events for the HDMI playback client.
     //==========================================================================================
 
-    private class MyDisplayStatusCallback implements HdmiPlaybackClient.DisplayStatusCallback {
-        public void onComplete(int status) {
+    @GuardedBy("mHdmiClientLock")
+    private void updateHdmiCecSinkLocked(boolean hdmiCecSink) {
+        mHdmiCecSink = hdmiCecSink;
+        if (mHdmiCecSink) {
+            if (DEBUG_VOL) {
+                Log.d(TAG, "CEC sink: setting HDMI as full vol device");
+            }
+            mFullVolumeDevices |= AudioSystem.DEVICE_OUT_HDMI;
+        } else {
+            if (DEBUG_VOL) {
+                Log.d(TAG, "TV, no CEC: setting HDMI as regular vol device");
+            }
+            // Android TV devices without CEC service apply software volume on
+            // HDMI output
+            mFullVolumeDevices &= ~AudioSystem.DEVICE_OUT_HDMI;
+        }
+
+        checkAddAllFixedVolumeDevices(AudioSystem.DEVICE_OUT_HDMI,
+            "HdmiPlaybackClient.DisplayStatusCallback");
+    }
+
+    private class MyHdmiControlStatusChangeListenerCallback
+            implements HdmiControlManager.HdmiControlStatusChangeListener {
+        public void onStatusChange(boolean isCecEnabled, boolean isCecAvailable) {
             synchronized (mHdmiClientLock) {
-                if (mHdmiManager != null) {
-                    mHdmiCecSink = (status != HdmiControlManager.POWER_STATUS_UNKNOWN);
-                    // Television devices without CEC service apply software volume on HDMI output
-                    if (mHdmiCecSink) {
-                        if (DEBUG_VOL) {
-                            Log.d(TAG, "CEC sink: setting HDMI as full vol device");
-                        }
-                        mFullVolumeDevices |= AudioSystem.DEVICE_OUT_HDMI;
-                    } else {
-                        if (DEBUG_VOL) {
-                            Log.d(TAG, "TV, no CEC: setting HDMI as regular vol device");
-                        }
-                        // Android TV devices without CEC service apply software volume on
-                        // HDMI output
-                        mFullVolumeDevices &= ~AudioSystem.DEVICE_OUT_HDMI;
-                    }
-                    checkAddAllFixedVolumeDevices(AudioSystem.DEVICE_OUT_HDMI,
-                            "HdmiPlaybackClient.DisplayStatusCallback");
-                }
+                if (mHdmiManager == null) return;
+                updateHdmiCecSinkLocked(isCecEnabled ? isCecAvailable : false);
             }
         }
-    }
+    };
 
     private final Object mHdmiClientLock = new Object();
 
@@ -6185,12 +6390,14 @@ public class AudioService extends IAudioService.Stub
     @GuardedBy("mHdmiClientLock")
     private HdmiPlaybackClient mHdmiPlaybackClient;
     // true if we are a set-top box, an HDMI sink is connected and it supports CEC.
+    @GuardedBy("mHdmiClientLock")
     private boolean mHdmiCecSink;
     // Set only when device is an audio system.
     @GuardedBy("mHdmiClientLock")
     private HdmiAudioSystemClient mHdmiAudioSystemClient;
 
-    private MyDisplayStatusCallback mHdmiDisplayStatusCallback = new MyDisplayStatusCallback();
+    private MyHdmiControlStatusChangeListenerCallback mHdmiControlStatusChangeListenerCallback =
+        new MyHdmiControlStatusChangeListenerCallback();
 
     @Override
     public int setHdmiSystemAudioSupported(boolean on) {
