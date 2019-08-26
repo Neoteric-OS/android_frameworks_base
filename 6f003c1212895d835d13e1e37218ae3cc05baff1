@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "a9d71d74_9243018e",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "You don\u0027t need to say \"this.\" explicitly (likewise below). If you think just saying disconnect() is too confusing I suggest you name the agent.",
+      "range": {
+        "startLine": 446,
+        "startChar": 12,
+        "endLine": 446,
+        "endChar": 16
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d96b44_7e79d78d",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Can you please factorize all this duplicated code ?\n\nfun captivePortalTest(block: (TestNetworkAgent, CaptivePortal, TestNetworkCallback) -\u003e Unit) {\n  val callback \u003d getTestableNetworkCallback()\n\n  getCaptivePortalNetworkAgent(callback).run {\n      val captiveportal \u003d getCaptivePortal(this)\n\n      block(this, captiveportal, callback)\n\n      disconnect()\n      callback.expectCallback(CallbackRecord.LOST, this)\n      verify(notifier, timeout(TEST_TIMEOUT_MS)).clearNotification(eq(network.netId))\n    }\n}\n\nfun captivePortalTest_Dismissed() \u003d captivePortalTest { agent, captivePortal, callback -\u003e\n    callback.expectCapabilitiesWithout(NET_CAPABILITY_CAPTIVE_PORTAL, agent)\n    callback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, agent)\n    assertEquals(3, nsInstrumentation.getRequestUrls().size)\n}",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 5
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88caab8a_fbd81534",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Did the linter let you get away with these two spaces ? 😀",
+      "range": {
+        "startLine": 495,
+        "startChar": 66,
+        "endLine": 495,
+        "endChar": 68
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f38ea1_4f65a4bc",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Are you sure it\u0027s that ? I think it\u0027s better to just say \"Captive portal app was not started\"",
+      "range": {
+        "startLine": 497,
+        "startChar": 49,
+        "endLine": 497,
+        "endChar": 92
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2e26ae_87041975",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Optional : I think \"apply\" is clearer here",
+      "range": {
+        "startLine": 499,
+        "startChar": 33,
+        "endLine": 499,
+        "endChar": 37
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b46d2dcd_53548534",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
         "patchSetId": 3
@@ -18,6 +133,99 @@
         "startChar": 0,
         "endLine": 522,
         "endChar": 13
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3beaf007_6b02e95e",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "b46d2dcd_53548534",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 522,
+        "endChar": 13
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1429666e_ffd53776",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/NetworkStackInstrumentationConnector.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "This is really confusing to use. It\u0027s never expected that a method called get() will change the state.\n\nI suggest instead you just have a condition variable and a method that waits for the captive portal to start. Something like :\n\nprivate val captivePortalLatch \u003d ConditionVariable()\n\nfun signalCaptivePortalAppStarted() \u003d captivePortalLatch.open()\n\noverride fun waitForCaptivePortalAppToStart(timeoutMs: Long): Boolean {\n  if (captivePortalLatch.wait(timeoutMs)) {\n    captivePortalLatch.close()\n    return true\n  } else {\n    return false\n  }\n}",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 5
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7425224_0193c0dc",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Space before \"{\" and only 4 spaces indent",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebb6bbe_31d40f3a",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-26T11:49:48Z",
+      "side": 1,
+      "message": "Does it work if you say \u0027Unit\u0027 here instead of null ? It\u0027s the default choice when you don\u0027t have anything to return.",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 20
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
