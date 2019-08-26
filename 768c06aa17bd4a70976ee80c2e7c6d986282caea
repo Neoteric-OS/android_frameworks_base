@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1c6bb31_a7e89da8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-08-26T09:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e83951ae_dc5b9d30",
+      "range": {
+        "startLine": 477,
+        "startChar": 5,
+        "endLine": 477,
+        "endChar": 67
+      },
+      "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36d7d7ed_71292cb8",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ba491781_93aef67a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-08-26T09:43:42Z",
+      "side": 1,
+      "message": "use 0 because it is dummy for p2p.",
+      "parentUuid": "36d7d7ed_71292cb8",
+      "range": {
+        "startLine": 814,
+        "startChar": 87,
+        "endLine": 814,
+        "endChar": 92
+      },
+      "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b805c9_88aa1128",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2019-07-30T11:01:02Z",
       "side": 1,
       "message": "nit: maybe also adding TETHERING_WIFI_P2P. This case should not happen in current code because you already adding the protection in line.803, just for code consistent with TETHERING_WIFI. I am fine if you think this is redundant.",
+      "range": {
+        "startLine": 870,
+        "startChar": 12,
+        "endLine": 870,
+        "endChar": 61
+      },
+      "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f02c379_7b25453f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-08-26T09:43:42Z",
+      "side": 1,
+      "message": "I pass tetheringType to this function to avoid breaking things and would clean correct stuff.",
+      "parentUuid": "19b805c9_88aa1128",
       "range": {
         "startLine": 870,
         "startChar": 12,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c5060852_20a4e68e",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-08-26T09:43:42Z",
+      "side": 1,
+      "message": "tethering don\u0027t use it, but it is one element of  p2p connection changed action.\nIt should be better to give a complete pseudo event for tests.",
+      "parentUuid": "9da1e0f1_93096ece",
+      "range": {
+        "startLine": 445,
+        "startChar": 20,
+        "endLine": 445,
+        "endChar": 31
+      },
+      "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a75637d_9512742a",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d68393_c1f6c756",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-08-26T09:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a75637d_9512742a",
+      "range": {
+        "startLine": 1112,
+        "startChar": 8,
+        "endLine": 1112,
+        "endChar": 71
+      },
+      "revId": "768c06aa17bd4a70976ee80c2e7c6d986282caea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
