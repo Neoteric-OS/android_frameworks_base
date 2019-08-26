@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add733a6_7f45b584",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 683,
+        "startChar": 11,
+        "endLine": 683,
+        "endChar": 24
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4952c4df_832fcc55",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 686,
+        "startChar": 43,
+        "endLine": 686,
+        "endChar": 57
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1882f74d_d3a053af",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "It would be nice if you could provide a test header to parse as part of a unit test, that way we know if there are any regressions.",
+      "range": {
+        "startLine": 696,
+        "startChar": 22,
+        "endLine": 696,
+        "endChar": 43
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecb559b_e4ca74e3",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 698,
+        "startChar": 40,
+        "endLine": 698,
+        "endChar": 54
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86a30d2_0219d5bd",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "Does this need an import statement?",
+      "range": {
+        "startLine": 699,
+        "startChar": 12,
+        "endLine": 699,
+        "endChar": 30
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98859c71_3dcda8e3",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "If this bit is true, it has user data? It is a little confusing because we only parse user data below if this bit is 0, which is \"no user data\"",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 45
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cdb833_827b374c",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "This includes the length of MSG_ENCODING and NUM_FIELDS in the len?",
+      "range": {
+        "startLine": 741,
+        "startChar": 16,
+        "endLine": 741,
+        "endChar": 27
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef229135_d2c0c94d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-26T20:06:18Z",
+      "side": 1,
+      "message": "Is it valid for dataBits to be less than remainingBits? Shouldn\u0027t they be equal?",
+      "range": {
+        "startLine": 757,
+        "startChar": 23,
+        "endLine": 757,
+        "endChar": 48
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
