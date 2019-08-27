@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "64c24fdc_c8a46f9c",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-27T17:02:44Z",
+      "side": 1,
+      "message": "Yes, that will work",
+      "parentUuid": "cc43881d_81a8dacd",
+      "range": {
+        "startLine": 704,
+        "startChar": 41,
+        "endLine": 704,
+        "endChar": 43
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98859c71_3dcda8e3",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
@@ -295,6 +319,30 @@
       "side": 1,
       "message": "For CT FDEA WAP, it should be 0 always.\nActually, 4 bits(1 bit HEADER_IND + 3 bits) are reserved as 0.",
       "parentUuid": "98859c71_3dcda8e3",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 45
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec82068b_1709e5da",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-27T17:02:44Z",
+      "side": 1,
+      "message": "Should sms.mBearerData.hasUserDataHeader \u003d (inStream.read(1) \u003d\u003d 0) then? Is there any reason to set this bit for the bearer data if 1 is a failure?",
+      "parentUuid": "041273d1_72f09c5e",
       "range": {
         "startLine": 724,
         "startChar": 28,
@@ -354,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "f32f6725_1fd23286",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-27T17:02:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2729f4b_04c469f7",
+      "range": {
+        "startLine": 741,
+        "startChar": 16,
+        "endLine": 741,
+        "endChar": 27
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef229135_d2c0c94d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
@@ -398,6 +470,30 @@
       "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbd9b1c_ae1ba92a",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-08-27T17:02:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc80cebf_51940227",
+      "range": {
+        "startLine": 757,
+        "startChar": 23,
+        "endLine": 757,
+        "endChar": 48
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
