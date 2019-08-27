@@ -61,6 +61,22 @@ aidl_interface {
     ],
 }
 
+aidl_interface {
+    name: "tethering-aidl-interfaces",
+    local_include_dir: "java",
+    srcs: [
+        "java/android/net/ITetheringConnector.aidl",
+    ],
+    backend: {
+        ndk: {
+            enabled: false,
+        },
+        cpp: {
+            enabled: false,
+        },
+    },
+}
+
 java_library_static {
     name: "services.net",
     srcs: ["java/**/*.java"],
@@ -69,6 +85,7 @@ java_library_static {
         "ipmemorystore-client",
         "netd_aidl_interface-V2-java",
         "networkstack-aidl-interfaces-V3-java",
+        "tethering-aidl-interfaces-java",
     ],
 }
 
@@ -92,5 +109,12 @@ filegroup {
         "java/android/net/util/InterfaceParams.java", // TODO: move to NetworkStack with IpServer
         "java/android/net/shared/*.java",
         "java/android/net/netlink/*.java",
+    ],
+}
+
+filegroup {
+    name: "services-tethering-shared-srcs",
+    srcs: [
+        ":framework-annotations",
     ],
 }
