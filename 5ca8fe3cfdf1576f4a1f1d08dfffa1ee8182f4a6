@@ -22,6 +22,30 @@
       "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39abf56_448689e0",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-08-27T23:34:38Z",
+      "side": 1,
+      "message": "This adds the two parcelable declarations in frameworks/native/aidl but they cause no harm because AIDL compiler ignores the declarations.\n\nAnd there is no overlap between libbinder_aidl and framework_native_aidl.",
+      "parentUuid": "8bdd0fef_2dfbabfa",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
