@@ -228,6 +228,11 @@ applications that come with the platform
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.android.tethering">
+        <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
+        <permission name="android.permission.TETHER_PRIVILEGED"/>
+    </privapp-permissions>
+
     <privapp-permissions package="com.android.server.telecom">
         <permission name="android.permission.BIND_CONNECTION_SERVICE"/>
         <permission name="android.permission.BIND_INCALL_SERVICE"/>
