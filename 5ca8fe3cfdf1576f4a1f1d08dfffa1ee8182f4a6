@@ -46,6 +46,30 @@
       "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9593c2d_e720d541",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-08-27T23:42:22Z",
+      "side": 1,
+      "message": "Oh, sorry, I didn\u0027t see that these were different binder parcelables. I guess we can\u0027t move them either without updating many include_dirs. Thanks!",
+      "parentUuid": "e39abf56_448689e0",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
