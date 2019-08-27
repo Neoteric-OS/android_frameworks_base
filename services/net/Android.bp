@@ -69,6 +69,7 @@ java_library_static {
         "ipmemorystore-client",
         "netd_aidl_interface-java",
         "networkstack-aidl-interfaces-V3-java",
+        "tethering-library",
     ],
 }
 
