@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d96d214e_9f48895a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-27T06:12:27Z",
+      "side": 1,
+      "message": "1. do we want to mention atest PermissionMonitorTest?\n2. Is it better if we add corresponding test code to invoke onPackageChanged in PermissionMonitorTest#testPackageUpdate ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57b7569_1fdfd8bb",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-27T06:12:27Z",
+      "side": 1,
+      "message": "question: do you recall why we want to use PackageListObserver instead of calling it from CS at the time CS received ACTION_PACKAGE_* intents?\nIIUC the change was made in aosp/885995\nIt looks strange to me that we have 2 places receiving package added/removed/replaced event.",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
