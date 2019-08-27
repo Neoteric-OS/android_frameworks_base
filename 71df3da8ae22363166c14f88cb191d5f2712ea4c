@@ -69,6 +69,30 @@
       "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11730723_828a06b0",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-08-27T07:24:07Z",
+      "side": 1,
+      "message": "You mean ConnectivityService#onPackageXXX() and PermissionMonitor#onPackageXXX?\n\nAs you may notice ConnectivityService#onPackageXXX() is triggered by broadcasts while PermissionMonitor#onPackageXXX is directly called by PackageManagerService synchronously during the last steps of adding/deleting/updating a package, in this way, Netd knowns about this change much quickly and avoid any unnecessary internet permission synchronization releated issues.\nJust my opinion, ^_^",
+      "parentUuid": "f57b7569_1fdfd8bb",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
