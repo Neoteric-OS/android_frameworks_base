@@ -4068,6 +4068,16 @@ public final class Telephony {
         public static final String GEOMETRIES = "geometries";
 
         /**
+         * Geo-Fencing Maximum Wait Time, a device shall allow to determine its position meeting
+         * operator policy. If the device is unable to determine its position meeting operator
+         * policy within the GeoFencing Maximum Wait Time, it shall present the alert to the user
+         * and discontinue further positioning determination for the alert.
+         *
+         * <P>Type: INTEGER</P>
+         */
+        public static final String MAXIMUM_WAIT_TIME = "maximum_wait_time";
+
+        /**
          * Query columns for instantiating {@link android.telephony.CellBroadcastMessage} objects.
          */
         public static final String[] QUERY_COLUMNS = {
@@ -4117,7 +4127,8 @@ public final class Telephony {
                 CMAS_CERTAINTY,
                 RECEIVED_TIME,
                 MESSAGE_BROADCASTED,
-                GEOMETRIES
+                GEOMETRIES,
+                MAXIMUM_WAIT_TIME
         };
     }
 
