@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdd0fef_2dfbabfa",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-08-27T17:16:57Z",
+      "side": 1,
+      "message": "this includes additional AIDL files?\n\nIt seems some are duplicated, like framework_native_aidl_binder is in libbinder_aidl. Sorry I didn\u0027t notice this before.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
