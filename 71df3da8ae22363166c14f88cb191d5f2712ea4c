@@ -117,6 +117,30 @@
       "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27df5884_149da519",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-27T08:45:57Z",
+      "side": 1,
+      "message": "Right. The reason we did it this way is that the PackageListObserver is run inline by PackageManagerService during the app add/remove/replace operation. Thus, when an app is installed, the callback is guaranteed to complete before the app can run. This ensures the app cannot run and do network operations before its permissions have been updated.\n\nAs for having this done in two places: agreed. Chenbo had a CL to clean this up - https://android-review.googlesource.com/c/platform/frameworks/base/+/962078 . You might want to take a look at that, or maybe even adopt it.",
+      "parentUuid": "11730723_828a06b0",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "71df3da8ae22363166c14f88cb191d5f2712ea4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
