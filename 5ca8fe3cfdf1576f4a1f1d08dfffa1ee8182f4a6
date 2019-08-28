@@ -70,6 +70,30 @@
       "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a314e114_c679badd",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-08-28T00:07:16Z",
+      "side": 1,
+      "message": "Yeah, it will be tough.",
+      "parentUuid": "e9593c2d_e720d541",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "5ca8fe3cfdf1576f4a1f1d08dfffa1ee8182f4a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
