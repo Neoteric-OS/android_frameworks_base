@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0addcffb_edf71e56",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-28T05:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764e0f50_c61b358b",
+      "range": {
+        "startLine": 696,
+        "startChar": 22,
+        "endLine": 696,
+        "endChar": 43
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecb559b_e4ca74e3",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "6b2b8fdb_91095947",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-28T05:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c24fdc_c8a46f9c",
+      "range": {
+        "startLine": 704,
+        "startChar": 41,
+        "endLine": 704,
+        "endChar": 43
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98859c71_3dcda8e3",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
@@ -352,6 +400,30 @@
       "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d57c05_bea4df82",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-28T05:27:01Z",
+      "side": 1,
+      "message": "HEADER_IND is for User Data *Header*. Not for User Data.",
+      "parentUuid": "ec82068b_1709e5da",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 45
+      },
+      "revId": "1e69f84a3278ac27572775b2b20109b15c1ac392",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
