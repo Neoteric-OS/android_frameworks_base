@@ -3405,7 +3405,7 @@ public class AudioService extends IAudioService.Stub
         // The caller identity must be cleared after getScoClient() because it is needed if a new
         // client is created.
         final long ident = Binder.clearCallingIdentity();
-        client.incCount(scoAudioMode);
+        client.requestScoState(BluetoothHeadset.STATE_AUDIO_CONNECTED, scoAudioMode);
         Binder.restoreCallingIdentity(ident);
     }
 
@@ -3421,7 +3421,8 @@ public class AudioService extends IAudioService.Stub
         // and this must be done on behalf of system server to make sure permissions are granted.
         final long ident = Binder.clearCallingIdentity();
         if (client != null) {
-            client.decCount();
+            client.requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED,
+                    SCO_MODE_VIRTUAL_CALL);
         }
         Binder.restoreCallingIdentity(ident);
     }
@@ -3430,78 +3431,40 @@ public class AudioService extends IAudioService.Stub
     private class ScoClient implements IBinder.DeathRecipient {
         private IBinder mCb; // To be notified of client's death
         private int mCreatorPid;
-        private int mStartcount; // number of SCO connections started by this client
 
         ScoClient(IBinder cb) {
             mCb = cb;
             mCreatorPid = Binder.getCallingPid();
-            mStartcount = 0;
+        }
+
+        public void registerDeathRecipent() {
+            synchronized(mScoClients) {
+                try {
+                    this.mCb.linkToDeath(this, 0);
+                } catch (RemoteException e) {
+                    Log.w(TAG, "ScoClient could not link to " + this.mCb + " binder death");
+                }
+            }
+        }
+
+        public void unregisterDeathRecipent() {
+            synchronized(mScoClients) {
+                try {
+                    this.mCb.unlinkToDeath(this, 0);
+                } catch (NoSuchElementException e) {
+                    Log.w(TAG, "ScoClient could not not unregistered to binder");
+                }
+            }
         }
 
         public void binderDied() {
             synchronized(mScoClients) {
                 Log.w(TAG, "SCO client died");
-                int index = mScoClients.indexOf(this);
-                if (index < 0) {
-                    Log.w(TAG, "unregistered SCO client died");
-                } else {
-                    clearCount(true);
-                    mScoClients.remove(this);
-                }
+                this.unregisterDeathRecipent();
+                this.requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED,
+                        SCO_MODE_VIRTUAL_CALL);
+                mScoClients.remove(this);
             }
-        }
-
-        public void incCount(int scoAudioMode) {
-            synchronized(mScoClients) {
-                requestScoState(BluetoothHeadset.STATE_AUDIO_CONNECTED, scoAudioMode);
-                if (mStartcount == 0) {
-                    try {
-                        mCb.linkToDeath(this, 0);
-                    } catch (RemoteException e) {
-                        // client has already died!
-                        Log.w(TAG, "ScoClient  incCount() could not link to "+mCb+" binder death");
-                    }
-                }
-                mStartcount++;
-            }
-        }
-
-        public void decCount() {
-            synchronized(mScoClients) {
-                if (mStartcount == 0) {
-                    Log.w(TAG, "ScoClient.decCount() already 0");
-                } else {
-                    mStartcount--;
-                    if (mStartcount == 0) {
-                        try {
-                            mCb.unlinkToDeath(this, 0);
-                        } catch (NoSuchElementException e) {
-                            Log.w(TAG, "decCount() going to 0 but not registered to binder");
-                        }
-                    }
-                    requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED, 0);
-                }
-            }
-        }
-
-        public void clearCount(boolean stopSco) {
-            synchronized(mScoClients) {
-                if (mStartcount != 0) {
-                    try {
-                        mCb.unlinkToDeath(this, 0);
-                    } catch (NoSuchElementException e) {
-                        Log.w(TAG, "clearCount() mStartcount: "+mStartcount+" != 0 but not registered to binder");
-                    }
-                }
-                mStartcount = 0;
-                if (stopSco) {
-                    requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED, 0);
-                }
-            }
-        }
-
-        public int getCount() {
-            return mStartcount;
         }
 
         public IBinder getBinder() {
@@ -3512,22 +3475,11 @@ public class AudioService extends IAudioService.Stub
             return mCreatorPid;
         }
 
-        public int totalCount() {
-            synchronized(mScoClients) {
-                int count = 0;
-                for (ScoClient mScoClient : mScoClients) {
-                    count += mScoClient.getCount();
-                }
-                return count;
-            }
-        }
-
         private void requestScoState(int state, int scoAudioMode) {
             checkScoAudioState();
-            int clientCount = totalCount();
-            if (clientCount != 0) {
+            if (mScoClients.size() != 1) {
                 Log.i(TAG, "requestScoState: state=" + state + ", scoAudioMode=" + scoAudioMode
-                        + ", clientCount=" + clientCount);
+                        + ", mScoClients=" + mScoClients.size());
                 return;
             }
             if (state == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
@@ -3595,12 +3547,14 @@ public class AudioService extends IAudioService.Stub
                             mScoAudioState = SCO_STATE_ACTIVE_INTERNAL;
                             broadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_CONNECTED);
                             break;
+                        case SCO_STATE_ACTIVE_INTERNAL:
+                            Log.w(TAG, "requestScoState: already in ACTIVE mode, simply return");
+                            break;
                         default:
                             Log.w(TAG, "requestScoState: failed to connect in state "
                                     + mScoAudioState + ", scoAudioMode=" + scoAudioMode);
                             broadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_DISCONNECTED);
                             break;
-
                     }
                 }
             } else if (state == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
@@ -3668,6 +3622,7 @@ public class AudioService extends IAudioService.Stub
             }
             if (create) {
                 ScoClient newClient = new ScoClient(cb);
+                newClient.registerDeathRecipent();
                 mScoClients.add(newClient);
                 return newClient;
             }
@@ -3677,17 +3632,17 @@ public class AudioService extends IAudioService.Stub
 
     public void clearAllScoClients(int exceptPid, boolean stopSco) {
         synchronized(mScoClients) {
-            ScoClient savedClient = null;
-            for (ScoClient cl : mScoClients) {
+            Iterator<ScoClient> iter =  mScoClients.iterator();
+            while(iter.hasNext()) {
+                ScoClient cl = iter.next();
                 if (cl.getPid() != exceptPid) {
-                    cl.clearCount(stopSco);
-                } else {
-                    savedClient = cl;
+                    if (stopSco) {
+                        cl.requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED,
+                                SCO_MODE_VIRTUAL_CALL);
+                    }
+                    cl.unregisterDeathRecipent();
+                    iter.remove();
                 }
-            }
-            mScoClients.clear();
-            if (savedClient != null) {
-                mScoClients.add(savedClient);
             }
         }
     }
