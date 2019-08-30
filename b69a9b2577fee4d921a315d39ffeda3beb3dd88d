@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "950a41fa_b8ae5120",
+        "filename": "tests/net/java/com/android/server/NetIdManagerTest.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-30T03:11:31Z",
+      "side": 1,
+      "message": "Before doing this can you test that we don\u0027t reuse eagerly before looping ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "b69a9b2577fee4d921a315d39ffeda3beb3dd88d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
