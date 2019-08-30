@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3ecf60e_72a7f14b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3269,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "javadoc style nit:\nadd \u003cp\u003e before paragraphs\n\nIt appears things in this class do not follow this, so feel free to ignore.",
+      "range": {
+        "startLine": 3269,
+        "startChar": 11,
+        "endLine": 3269,
+        "endChar": 12
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e466e3a_1e4c15aa",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "should this be \u0027callbacks\u0027? since registerDefaultNetworkCallback does not accept NetworkRequest as an arg.",
+      "range": {
+        "startLine": 3272,
+        "startChar": 86,
+        "endLine": 3272,
+        "endChar": 94
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba562365_bfc94bf4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3308,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "white-space",
+      "range": {
+        "startLine": 3308,
+        "startChar": 61,
+        "endLine": 3308,
+        "endChar": 62
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657d1992_1a645758",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "Consider adding a similar note related to behavior difference you pointed out in onAvailable (with requestNetwork). Something along the lines of...\n\n\u003cp\u003eNote, this may not get called for callbacks registered with {@link ConnectivityManager#requestNetwork}. See also {@link #onAvailable} for more info.",
+      "range": {
+        "startLine": 3326,
+        "startChar": 20,
+        "endLine": 3326,
+        "endChar": 26
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a7e9aa_50bf7a51",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3362,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "getLinkProperties to draw context with onLinkPropertiesChanged",
+      "range": {
+        "startLine": 3362,
+        "startChar": 34,
+        "endLine": 3362,
+        "endChar": 56
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1dc4091_11c21866",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "I think we should use something better than \u0027found\u0027.\nHow about \"...if none is currently connected\"?",
+      "range": {
+        "startLine": 3649,
+        "startChar": 91,
+        "endLine": 3649,
+        "endChar": 96
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4c5128_8b311da4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "{@link NetworkRequest}, or ...passed {@link NetworkCapabilities} (part of {@code request})\nOR\nupdate \u0027@param request\u0027 so that it talks about NetworkCapabilities...something like: \"{@link NetworkRequest} describing the {@link NetworkCapabilities} of the requested network\"\n\n\nalthough NetworkCapabilities are added to the request, it may not be evident to someone reading this without knowing about how to create a NetworkRequest",
+      "range": {
+        "startLine": 3649,
+        "startChar": 14,
+        "endLine": 3649,
+        "endChar": 33
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2407b33_3b381af2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-08-30T15:08:53Z",
+      "side": 1,
+      "message": "off",
+      "range": {
+        "startLine": 3655,
+        "startChar": 82,
+        "endLine": 3655,
+        "endChar": 84
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
