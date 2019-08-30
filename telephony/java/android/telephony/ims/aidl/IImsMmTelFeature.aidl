@@ -54,8 +54,8 @@ interface IImsMmTelFeature {
     void setSmsListener(IImsSmsListener l);
     oneway void sendSms(in int token, int messageRef, String format, String smsc, boolean retry,
             in byte[] pdu);
-    oneway void acknowledgeSms(int token, int messageRef, int result);
-    oneway void acknowledgeSmsReport(int token, int messageRef, int result);
+    oneway void acknowledgeSms(int token, int result);
+    oneway void acknowledgeSmsReport(int token, int result);
     String getSmsFormat();
     oneway void onSmsReady();
 }

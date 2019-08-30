@@ -176,16 +176,16 @@ public class MmTelFeature extends ImsFeature {
         }
 
         @Override
-        public void acknowledgeSms(int token, int messageRef, int result) {
+        public void acknowledgeSms(int token, int result) {
             synchronized (mLock) {
-                MmTelFeature.this.acknowledgeSms(token, messageRef, result);
+                MmTelFeature.this.acknowledgeSms(token, result);
             }
         }
 
         @Override
-        public void acknowledgeSmsReport(int token, int messageRef, int result) {
+        public void acknowledgeSmsReport(int token, int result) {
             synchronized (mLock) {
-                MmTelFeature.this.acknowledgeSmsReport(token, messageRef, result);
+                MmTelFeature.this.acknowledgeSmsReport(token, result);
             }
         }
 
@@ -666,14 +666,12 @@ public class MmTelFeature extends ImsFeature {
         getSmsImplementation().sendSms(token, messageRef, format, smsc, isRetry, pdu);
     }
 
-    private void acknowledgeSms(int token, int messageRef,
-            @ImsSmsImplBase.DeliverStatusResult int result) {
-        getSmsImplementation().acknowledgeSms(token, messageRef, result);
+    private void acknowledgeSms(int token, @ImsSmsImplBase.DeliverStatusResult int result) {
+        getSmsImplementation().acknowledgeSms(token, result);
     }
 
-    private void acknowledgeSmsReport(int token, int messageRef,
-            @ImsSmsImplBase.StatusReportResult int result) {
-        getSmsImplementation().acknowledgeSmsReport(token, messageRef, result);
+    private void acknowledgeSmsReport(int token, @ImsSmsImplBase.StatusReportResult int result) {
+        getSmsImplementation().acknowledgeSmsReport(token, result);
     }
 
     private void onSmsReady() {
