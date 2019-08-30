@@ -3265,42 +3265,75 @@ public class ConnectivityManager {
 
         /**
          * Called when the framework connects and has declared a new network ready for use.
-         * This callback may be called more than once if the {@link Network} that is
-         * satisfying the request changes. This will always immediately be followed by a
-         * call to {@link #onCapabilitiesChanged(Network, NetworkCapabilities)} then by a
-         * call to {@link #onLinkPropertiesChanged(Network, LinkProperties)}, and a call to
-         * {@link #onBlockedStatusChanged(Network, boolean)}.
+         *
+         * <p>This callback may be called more than once if the {@link Network} that is
+         * satisfying the request changes. For callbacks registered with
+         * {@link #registerNetworkCallback}, multiple networks may be available at the same
+         * time, and onAvailable will be called for each of these as they appear. For callbacks
+         * registered with {@link #requestNetwork} and {@link #registerDefaultNetworkCallback},
+         * this means the network passed as an argument is the new best network for this request.
+         * The previously-best network may have disconnected, or it may still be around and the
+         * newly-best network may simply be better.
+         *
+         * <p>Starting with {@link android.os.Build.VERSION_CODES#O}, this will always immediately
+         * be followed by a call to {@link #onCapabilitiesChanged(Network, NetworkCapabilities)}
+         * then by a call to {@link #onLinkPropertiesChanged(Network, LinkProperties)}, and a call
+         * to {@link #onBlockedStatusChanged(Network, boolean)}.
+         *
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions (there is no guarantee the objects
+         * returned by these methods will be current). Instead, wait for a call to
+         * {@link #onCapabilitiesChanged(Network, NetworkCapabilities)} and
+         * {@link #onLinkPropertiesChanged(Network, LinkProperties)} whose arguments are guaranteed
+         * to be well-ordered with respect to other callbacks.
          *
          * @param network The {@link Network} of the satisfying network.
          */
         public void onAvailable(@NonNull Network network) {}
 
         /**
-         * Called when the network is about to be disconnected.  Often paired with an
-         * {@link NetworkCallback#onAvailable} call with the new replacement network
-         * for graceful handover.  This may not be called if we have a hard loss
-         * (loss without warning).  This may be followed by either a
-         * {@link NetworkCallback#onLost} call or a
-         * {@link NetworkCallback#onAvailable} call for this network depending
-         * on whether we lose or regain it.
+         * Called when the network is about to be lost, typically because there are no outstanding
+         * requests left for it. This may be paired with a {@link NetworkCallback#onAvailable} call
+         * with the new replacement network for graceful handover. This method is not guaranteed
+         * to be called before {@link NetworkCallback#onLost} is called, for example in case a
+         * network is suddenly disconnected.
          *
-         * @param network The {@link Network} that is about to be disconnected.
-         * @param maxMsToLive The time in ms the framework will attempt to keep the
-         *                     network connected.  Note that the network may suffer a
-         *                     hard loss at any time.
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions.
+         *
+         * @param network The {@link Network} that is about to be lost.
+         * @param maxMsToLive The time in milliseconds the system intends to keep the network
+         *                    connected for graceful handover; note that the network may still
+         *                    suffer a hard loss at any time.
          */
         public void onLosing(@NonNull Network network, int maxMsToLive) {}
 
         /**
-         * Called when the framework has a hard loss of the network or when the
-         * graceful failure ends.
+         * Called when a network no longer satisfies the criteria for this request or callback.
+         *
+         * <p>This means the network was disconnected, or has lost capabilities that were requested.
+         *
+         * <p>If the callback was registered with requestNetwork() or
+         * registerDefaultNetworkCallback(), it will only be invoked against the last network
+         * returned by onAvailable() when that network is lost and no other network satisfies
+         * the criteria of the request.
+         *
+         * <p>If the callback was registered with registerNetworkCallback() it will be called for
+         * each network which no longer satisfies the criteria of the callback.
+         *
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions ; if you do this, these methods may
+         * return an outdated or even a null object.
          *
          * @param network The {@link Network} lost.
          */
         public void onLost(@NonNull Network network) {}
 
         /**
-         * Called if no network is found in the timeout time specified in
+         * Called if no network is found within the timeout time specified in
          * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)} call or if the
          * requested network request cannot be fulfilled (whether or not a timeout was
          * specified). When this callback is invoked the associated
@@ -3310,8 +3343,15 @@ public class ConnectivityManager {
         public void onUnavailable() {}
 
         /**
-         * Called when the network the framework connected to for this request
-         * changes capabilities but still satisfies the stated need.
+         * Called when the network corresponding to this request changes capabilities but still
+         * satisfies the stated need.
+         *
+         * <p>Starting with {@link android.os.Build.VERSION_CODES#O} this method is guaranteed
+         * to be called immediately after {@link #onAvailable}.
+         *
+         * <p>DO NOT call {@link #getLinkProperties(Network)} or other synchronous
+         * ConnectivityManager methods in this callback as this is prone to race conditions (the
+         * returned objects are not guaranteed to be current).
          *
          * @param network The {@link Network} whose capabilities have changed.
          * @param networkCapabilities The new {@link android.net.NetworkCapabilities} for this
@@ -3321,8 +3361,15 @@ public class ConnectivityManager {
                 @NonNull NetworkCapabilities networkCapabilities) {}
 
         /**
-         * Called when the network the framework connected to for this request
-         * changes {@link LinkProperties}.
+         * Called when the network corresponding to this request changes {@link LinkProperties}.
+         *
+         * <p>Starting with {@link android.os.Build.VERSION_CODES#O} this method is guaranteed
+         * to be called immediately after {@link #onAvailable}.
+         *
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or other synchronous
+         * ConnectivityManager methods in this callback as this is prone to race conditions (the
+         * returned objects are not guaranteed to be current).
+         *
          *
          * @param network The {@link Network} whose link properties have changed.
          * @param linkProperties The new {@link LinkProperties} for this network.
@@ -3331,12 +3378,18 @@ public class ConnectivityManager {
                 @NonNull LinkProperties linkProperties) {}
 
         /**
-         * Called when the network the framework connected to for this request
-         * goes into {@link NetworkInfo.State#SUSPENDED}.
-         * This generally means that while the TCP connections are still live,
-         * temporarily network data fails to transfer.  Specifically this is used
-         * on cellular networks to mask temporary outages when driving through
-         * a tunnel, etc.
+         * Called when the network the framework connected to for this request suspends data
+         * transmission temporarily.
+         *
+         * <p>This generally means that while the TCP connections are still live temporarily
+         * network data fails to transfer. To give a specific example, this is used on cellular
+         * networks to mask temporary outages when driving through a tunnel, etc.
+         *
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions (there is no guarantee the objects
+         * returned by these methods will be current).
+         *
          * @hide
          */
         public void onNetworkSuspended(@NonNull Network network) {}
@@ -3345,12 +3398,23 @@ public class ConnectivityManager {
          * Called when the network the framework connected to for this request
          * returns from a {@link NetworkInfo.State#SUSPENDED} state. This should always be
          * preceded by a matching {@link NetworkCallback#onNetworkSuspended} call.
+
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions (there is no guarantee the objects
+         * returned by these methods will be current).
+         *
          * @hide
          */
         public void onNetworkResumed(@NonNull Network network) {}
 
         /**
          * Called when access to the specified network is blocked or unblocked.
+         *
+         * <p>DO NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions (there is no guarantee the objects
+         * returned by these methods will be current).
          *
          * @param network The {@link Network} whose blocked status has changed.
          * @param blocked The blocked status of this {@link Network}.
@@ -3588,13 +3652,49 @@ public class ConnectivityManager {
     /**
      * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}.
      *
-     * This {@link NetworkRequest} will live until released via
-     * {@link #unregisterNetworkCallback(NetworkCallback)} or the calling application exits. A
-     * version of the method which takes a timeout is
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)}.
-     * Status of the request can be followed by listening to the various
-     * callbacks described in {@link NetworkCallback}.  The {@link Network}
-     * can be used to direct traffic to the network.
+     * <p>This method will attempt to find the best network that matches the passed
+     * {@link NetworkRequest}, and to bring up one that does if none currently satisfies the
+     * criteria.
+     * As long as this request is outstanding, the platform will try to keep up the best network
+     * matching this request, and to find better ones if available. If a better match is found,
+     * the platform will switch this request to the now-best network and inform the app of the
+     * newly best network by calling {@link NetworkCallback#onAvailable(Network)} on the passed
+     * callback. Note that the platform will not try to keep up any other network than the best
+     * one currently matching the request ; an outmatched network can be disconnected by the
+     * platform at any time to conserve power if no other outstanding request requires it to be
+     * kept up.
+     *
+     * <p>For example, an application could use this method to obtain a connected cellular network
+     * even if the device is currently on an Ethernet network with its cellular radio turned off.
+     * This would bring up the device radio to connect the cellular network. Or, an application
+     * could let the system know it wants a network supporting sending MMSes, and have the system
+     * inform it through the passed {@link NetworkCallback} of the currently best unmetered network.
+     *
+     * <p>The status of the request can be followed by listening to the various callbacks described
+     * in {@link NetworkCallback}. This is how the application will learn about the specific
+     * characteristics of the network through
+     * {@link NetworkCallback#onCapabilitiesChanged(Network, NetworkCapabilities)} and
+     * {@link NetworkCallback#onLinkPropertiesChanged(Network, LinkProperties)}. The
+     * {@link NetworkCallback} will only hear about the best network matching it at any given time,
+     * therefore when a better network matching the request comes up, only the
+     * {@link NetworkCallback#onAvailable(Network)} method is called with the new network and no
+     * further updates are given about the previously-best network, unless it becomes the best
+     * again at some later time. All callbacks will be called on the Connectivity thread of
+     * the application. {@see #requestNetwork(NetworkRequest, NetworkCallback, Handler)} to change
+     * where the callbacks are called.
+     * The {@link Network} object passed to the callback can be used to direct traffic to the
+     * network.
+     *
+     * <p>This{@link NetworkRequest} will live until released via
+     * {@link #unregisterNetworkCallback(NetworkCallback)} or the calling application exits, at
+     * which point the system may let go of the network at any time.
+     *
+     * <p>A version of this method which takes a timeout is
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)}, that an app can use to only
+     * wait for a limited amount of time for the network to become unavailable. If the request
+     * times out in this fashion, the passed callback will receive a call to
+     * {@link NetworkCallback#onUnavailable()}.
+     *
      * <p>It is presently unsupported to request a network with mutable
      * {@link NetworkCapabilities} such as
      * {@link NetworkCapabilities#NET_CAPABILITY_VALIDATED} or
@@ -3602,7 +3702,7 @@ public class ConnectivityManager {
      * as these {@code NetworkCapabilities} represent states that a particular
      * network may never attain, and whether a network will attain these states
      * is unknown prior to bringing up the network so the framework does not
-     * know how to go about satisfing a request with these capabilities.
+     * know how to go about satisfying a request with these capabilities.
      *
      * <p>This method requires the caller to hold either the
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
@@ -3625,34 +3725,17 @@ public class ConnectivityManager {
     /**
      * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}.
      *
-     * This {@link NetworkRequest} will live until released via
-     * {@link #unregisterNetworkCallback(NetworkCallback)} or the calling application exits. A
-     * version of the method which takes a timeout is
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)}.
-     * Status of the request can be followed by listening to the various
-     * callbacks described in {@link NetworkCallback}.  The {@link Network}
-     * can be used to direct traffic to the network.
-     * <p>It is presently unsupported to request a network with mutable
-     * {@link NetworkCapabilities} such as
-     * {@link NetworkCapabilities#NET_CAPABILITY_VALIDATED} or
-     * {@link NetworkCapabilities#NET_CAPABILITY_CAPTIVE_PORTAL}
-     * as these {@code NetworkCapabilities} represent states that a particular
-     * network may never attain, and whether a network will attain these states
-     * is unknown prior to bringing up the network so the framework does not
-     * know how to go about satisfying a request with these capabilities.
+     * This method behaves identically to {@link #requestNetwork(NetworkRequest, NetworkCallback)}
+     * but runs all the callbacks on the passed Handler.
      *
-     * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
-     * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
+     * <p>This method has the same permission requirements as
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} and throws the same exceptions in
+     * the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
      *                        the callback must not be shared - it uniquely specifies this request.
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
-     * @throws IllegalArgumentException if {@code request} contains invalid network capabilities.
-     * @throws SecurityException if missing the appropriate permissions.
-     * @throws RuntimeException if request limit per UID is exceeded.
      */
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
@@ -3677,10 +3760,9 @@ public class ConnectivityManager {
      * timeout) - {@link #registerNetworkCallback(NetworkRequest, NetworkCallback)} is provided
      * for that purpose. Calling this method will attempt to bring up the requested network.
      *
-     * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
-     * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
+     * <p>This method has the same permission requirements as
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} and throws the same exceptions in
+     * the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
@@ -3688,9 +3770,6 @@ public class ConnectivityManager {
      * @param timeoutMs The time in milliseconds to attempt looking for a suitable network
      *                  before {@link NetworkCallback#onUnavailable()} is called. The timeout must
      *                  be a positive value (i.e. >0).
-     * @throws IllegalArgumentException if {@code request} contains invalid network capabilities.
-     * @throws SecurityException if missing the appropriate permissions.
-     * @throws RuntimeException if request limit per UID is exceeded.
      */
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, int timeoutMs) {
@@ -3703,21 +3782,13 @@ public class ConnectivityManager {
      * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}, limited
      * by a timeout.
      *
-     * This function behaves identically to the version without timeout, but if a suitable
-     * network is not found within the given time (in milliseconds) the
-     * {@link NetworkCallback#onUnavailable} callback is called. The request can still be
-     * released normally by calling {@link #unregisterNetworkCallback(NetworkCallback)} but does
-     * not have to be released if timed-out (it is automatically released). Unregistering a
-     * request that timed out is not an error.
+     * This method behaves identically to
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)} but runs all the callbacks
+     * on the passed Handler.
      *
-     * <p>Do not use this method to poll for the existence of specific networks (e.g. with a small
-     * timeout) - {@link #registerNetworkCallback(NetworkRequest, NetworkCallback)} is provided
-     * for that purpose. Calling this method will attempt to bring up the requested network.
-     *
-     * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
-     * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
+     * <p>This method has the same permission requirements as
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)} and throws the same exceptions
+     * in the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
@@ -3725,9 +3796,6 @@ public class ConnectivityManager {
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
      * @param timeoutMs The time in milliseconds to attempt looking for a suitable network
      *                  before {@link NetworkCallback#onUnavailable} is called.
-     * @throws IllegalArgumentException if {@code request} contains invalid network capabilities.
-     * @throws SecurityException if missing the appropriate permissions.
-     * @throws RuntimeException if request limit per UID is exceeded.
      */
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler, int timeoutMs) {
