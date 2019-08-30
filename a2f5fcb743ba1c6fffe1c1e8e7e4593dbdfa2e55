@@ -94,6 +94,30 @@
       "revId": "a2f5fcb743ba1c6fffe1c1e8e7e4593dbdfa2e55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c354e8f2_dbd53f02",
+        "filename": "tests/net/java/com/android/server/NetIdManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-30T06:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97736036_c9a32741",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "a2f5fcb743ba1c6fffe1c1e8e7e4593dbdfa2e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
