@@ -19,6 +19,7 @@ package com.android.server.net;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.provider.Settings.ACTION_VPN_SETTINGS;
 
+import android.annotation.NonNull;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,6 +33,7 @@ import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkInfo.State;
+import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.security.Credentials;
 import android.security.KeyStore;
@@ -68,6 +70,7 @@ public class LockdownVpnTracker {
     private final Context mContext;
     private final INetworkManagementService mNetService;
     private final ConnectivityService mConnService;
+    private final Handler mHandler;
     private final Vpn mVpn;
     private final VpnProfile mProfile;
 
@@ -86,11 +89,16 @@ public class LockdownVpnTracker {
         return KeyStore.getInstance().contains(Credentials.LOCKDOWN_VPN);
     }
 
-    public LockdownVpnTracker(Context context, INetworkManagementService netService,
-            ConnectivityService connService, Vpn vpn, VpnProfile profile) {
+    public LockdownVpnTracker(@NonNull Context context,
+            @NonNull INetworkManagementService netService,
+            @NonNull ConnectivityService connService,
+            @NonNull Handler handler,
+            @NonNull Vpn vpn,
+            @NonNull VpnProfile profile) {
         mContext = Preconditions.checkNotNull(context);
         mNetService = Preconditions.checkNotNull(netService);
         mConnService = Preconditions.checkNotNull(connService);
+        mHandler = Preconditions.checkNotNull(handler);
         mVpn = Preconditions.checkNotNull(vpn);
         mProfile = Preconditions.checkNotNull(profile);
 
@@ -205,7 +213,7 @@ public class LockdownVpnTracker {
         mVpn.setLockdown(true);
 
         final IntentFilter resetFilter = new IntentFilter(ACTION_LOCKDOWN_RESET);
-        mContext.registerReceiver(mResetReceiver, resetFilter, CONNECTIVITY_INTERNAL, null);
+        mContext.registerReceiver(mResetReceiver, resetFilter, CONNECTIVITY_INTERNAL, mHandler);
 
         handleStateChangedLocked();
     }

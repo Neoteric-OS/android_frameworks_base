@@ -4550,7 +4550,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     Slog.w(TAG, "VPN for user " + user + " not ready yet. Skipping lockdown");
                     return false;
                 }
-                setLockdownTracker(new LockdownVpnTracker(mContext, mNMS, this, vpn, profile));
+                setLockdownTracker(
+                        new LockdownVpnTracker(mContext, mNMS, this, mHandler, vpn, profile));
             } else {
                 setLockdownTracker(null);
             }
