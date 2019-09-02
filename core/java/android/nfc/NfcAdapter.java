@@ -1770,6 +1770,44 @@ public final class NfcAdapter {
     }
 
     /**
+     * Sets a target NFC configure file name.
+     * <p>This API is for OEMs to manage NFC common settings dynamically.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    public boolean setNfcConfigFileName(@NonNull String filename) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.setNfcConfigFileName(filename);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
+     * Sets a target NFC vendor configure file name.
+     * <p>This API is for OEMs to manage vendor proprietary settings dynamically.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    public boolean setNfcVendorConfigFileName(@NonNull String filename) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.setNfcVendorConfigFileName(filename);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
      * Enable NDEF Push feature.
      * <p>This API is for the Settings application.
      * @hide
