@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c36a72_d3594323",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3408,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-09-02T23:54:29Z",
+      "side": 1,
+      "message": "there is no reason why client would be null here",
+      "range": {
+        "startLine": 3408,
+        "startChar": 0,
+        "endLine": 3408,
+        "endChar": 29
+      },
+      "revId": "effe7ca1de5094d1d2a9a8d5475d7ddf310c1d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37ada19_74e67f3b",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3636,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-09-02T23:54:29Z",
+      "side": 1,
+      "message": "call cl.unregisterDeathRecipent()",
+      "range": {
+        "startLine": 3636,
+        "startChar": 0,
+        "endLine": 3636,
+        "endChar": 58
+      },
+      "revId": "effe7ca1de5094d1d2a9a8d5475d7ddf310c1d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf343a80_f809046b",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-09-02T23:54:29Z",
+      "side": 1,
+      "message": "line length",
+      "range": {
+        "startLine": 3637,
+        "startChar": 0,
+        "endLine": 3637,
+        "endChar": 105
+      },
+      "revId": "effe7ca1de5094d1d2a9a8d5475d7ddf310c1d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10397916_fb9b03ae",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3639,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-09-02T23:54:29Z",
+      "side": 1,
+      "message": "mScoClients.remove(cl) must be called regardless of \"stopSco\"",
+      "range": {
+        "startLine": 3639,
+        "startChar": 0,
+        "endLine": 3639,
+        "endChar": 17
+      },
+      "revId": "effe7ca1de5094d1d2a9a8d5475d7ddf310c1d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
