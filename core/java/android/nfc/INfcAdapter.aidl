@@ -71,5 +71,7 @@ interface INfcAdapter
     boolean isNfcSecureEnabled();
     boolean deviceSupportsNfcSecure();
     boolean setNfcSecure(boolean enable);
+    boolean setNfcConfigFileName(String filename);
+    boolean setNfcVendorConfigFileName(String filename);
 
 }
